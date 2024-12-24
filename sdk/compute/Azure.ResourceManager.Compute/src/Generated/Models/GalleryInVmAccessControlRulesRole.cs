@@ -11,8 +11,8 @@ using System.Linq;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The properties of an Access Control Rule RoleAssignment. </summary>
-    public partial class AccessControlRulesRoleAssignment
+    /// <summary> The properties of an Access Control Rule Role. </summary>
+    public partial class GalleryInVmAccessControlRulesRole
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,38 +46,38 @@ namespace Azure.ResourceManager.Compute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccessControlRulesRoleAssignment"/>. </summary>
-        /// <param name="role"> The name of the role. </param>
-        /// <param name="identities"> A list of identities that can access the privileges defined by the role. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="role"/> or <paramref name="identities"/> is null. </exception>
-        public AccessControlRulesRoleAssignment(string role, IEnumerable<string> identities)
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlRulesRole"/>. </summary>
+        /// <param name="name"> The name of the role. </param>
+        /// <param name="privileges"> A list of privileges needed by this role. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="privileges"/> is null. </exception>
+        public GalleryInVmAccessControlRulesRole(string name, IEnumerable<string> privileges)
         {
-            Argument.AssertNotNull(role, nameof(role));
-            Argument.AssertNotNull(identities, nameof(identities));
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(privileges, nameof(privileges));
 
-            Role = role;
-            Identities = identities.ToList();
+            Name = name;
+            Privileges = privileges.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessControlRulesRoleAssignment"/>. </summary>
-        /// <param name="role"> The name of the role. </param>
-        /// <param name="identities"> A list of identities that can access the privileges defined by the role. </param>
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlRulesRole"/>. </summary>
+        /// <param name="name"> The name of the role. </param>
+        /// <param name="privileges"> A list of privileges needed by this role. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessControlRulesRoleAssignment(string role, IList<string> identities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GalleryInVmAccessControlRulesRole(string name, IList<string> privileges, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Role = role;
-            Identities = identities;
+            Name = name;
+            Privileges = privileges;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessControlRulesRoleAssignment"/> for deserialization. </summary>
-        internal AccessControlRulesRoleAssignment()
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlRulesRole"/> for deserialization. </summary>
+        internal GalleryInVmAccessControlRulesRole()
         {
         }
 
         /// <summary> The name of the role. </summary>
-        public string Role { get; set; }
-        /// <summary> A list of identities that can access the privileges defined by the role. </summary>
-        public IList<string> Identities { get; }
+        public string Name { get; set; }
+        /// <summary> A list of privileges needed by this role. </summary>
+        public IList<string> Privileges { get; }
     }
 }

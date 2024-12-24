@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class ExecutedValidation : IUtf8JsonSerializable, IJsonModel<ExecutedValidation>
+    public partial class GalleryImageExecutedValidation : IUtf8JsonSerializable, IJsonModel<GalleryImageExecutedValidation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ExecutedValidation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryImageExecutedValidation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ExecutedValidation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GalleryImageExecutedValidation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecutedValidation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryImageExecutedValidation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecutedValidation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryImageExecutedValidation)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(ExecutedValidationType))
@@ -71,19 +71,19 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        ExecutedValidation IJsonModel<ExecutedValidation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        GalleryImageExecutedValidation IJsonModel<GalleryImageExecutedValidation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecutedValidation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryImageExecutedValidation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecutedValidation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryImageExecutedValidation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeExecutedValidation(document.RootElement, options);
+            return DeserializeGalleryImageExecutedValidation(document.RootElement, options);
         }
 
-        internal static ExecutedValidation DeserializeExecutedValidation(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static GalleryImageExecutedValidation DeserializeGalleryImageExecutedValidation(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -133,38 +133,38 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ExecutedValidation(type, status, version, executionTime, serializedAdditionalRawData);
+            return new GalleryImageExecutedValidation(type, status, version, executionTime, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ExecutedValidation>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<GalleryImageExecutedValidation>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecutedValidation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryImageExecutedValidation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExecutedValidation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryImageExecutedValidation)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ExecutedValidation IPersistableModel<ExecutedValidation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        GalleryImageExecutedValidation IPersistableModel<GalleryImageExecutedValidation>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ExecutedValidation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryImageExecutedValidation>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeExecutedValidation(document.RootElement, options);
+                        return DeserializeGalleryImageExecutedValidation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExecutedValidation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryImageExecutedValidation)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ExecutedValidation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GalleryImageExecutedValidation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

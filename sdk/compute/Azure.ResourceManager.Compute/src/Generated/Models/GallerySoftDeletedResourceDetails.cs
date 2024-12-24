@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.Compute.Models
 {
     /// <summary> The details information of soft-deleted resource. </summary>
-    public partial class GallerySoftDeleted : TrackedResourceData
+    public partial class GallerySoftDeletedResourceDetails : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,13 +47,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="GallerySoftDeleted"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GallerySoftDeletedResourceDetails"/>. </summary>
         /// <param name="location"> The location. </param>
-        public GallerySoftDeleted(AzureLocation location) : base(location)
+        public GallerySoftDeletedResourceDetails(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="GallerySoftDeleted"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GallerySoftDeletedResourceDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="softDeletedArtifactType"> artifact type of the soft-deleted resource. </param>
         /// <param name="softDeletedOn"> The timestamp for when the resource is soft-deleted. In dateTime offset format. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GallerySoftDeleted(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier resourceArmId, SoftDeletedArtifactType? softDeletedArtifactType, DateTimeOffset? softDeletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal GallerySoftDeletedResourceDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ResourceIdentifier resourceArmId, GallerySoftDeletedArtifactType? softDeletedArtifactType, DateTimeOffset? softDeletedOn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ResourceArmId = resourceArmId;
             SoftDeletedArtifactType = softDeletedArtifactType;
@@ -72,15 +72,15 @@ namespace Azure.ResourceManager.Compute.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="GallerySoftDeleted"/> for deserialization. </summary>
-        internal GallerySoftDeleted()
+        /// <summary> Initializes a new instance of <see cref="GallerySoftDeletedResourceDetails"/> for deserialization. </summary>
+        internal GallerySoftDeletedResourceDetails()
         {
         }
 
         /// <summary> arm id of the soft-deleted resource. </summary>
         public ResourceIdentifier ResourceArmId { get; set; }
         /// <summary> artifact type of the soft-deleted resource. </summary>
-        public SoftDeletedArtifactType? SoftDeletedArtifactType { get; set; }
+        public GallerySoftDeletedArtifactType? SoftDeletedArtifactType { get; set; }
         /// <summary> The timestamp for when the resource is soft-deleted. In dateTime offset format. </summary>
         public DateTimeOffset? SoftDeletedOn { get; set; }
     }

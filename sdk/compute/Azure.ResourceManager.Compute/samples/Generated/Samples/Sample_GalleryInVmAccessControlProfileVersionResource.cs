@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Samples
             {
                 TargetLocations = { new TargetRegion("West US"), new TargetRegion("South Central US"), new TargetRegion("East US") },
                 ExcludeFromLatest = false,
-                Mode = AccessControlRulesMode.Audit,
+                Mode = GalleryInVmAccessControlRulesMode.Audit,
                 DefaultAccess = ComputeGalleryEndpointAccess.Allow,
             };
             ArmOperation<GalleryInVmAccessControlProfileVersionResource> lro = await galleryInVmAccessControlProfileVersion.UpdateAsync(WaitUntil.Completed, patch);

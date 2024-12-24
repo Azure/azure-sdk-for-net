@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> This is the executed Validation. </summary>
-    public partial class ExecutedValidation
+    /// <summary> This is the validations profile of a Gallery Image Version. </summary>
+    public partial class GalleryImageValidationsProfile
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,33 +45,31 @@ namespace Azure.ResourceManager.Compute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ExecutedValidation"/>. </summary>
-        internal ExecutedValidation()
+        /// <summary> Initializes a new instance of <see cref="GalleryImageValidationsProfile"/>. </summary>
+        internal GalleryImageValidationsProfile()
         {
+            ExecutedValidations = new ChangeTrackingList<GalleryImageExecutedValidation>();
+            PlatformAttributes = new ChangeTrackingList<ComputeGalleryPlatformAttribute>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ExecutedValidation"/>. </summary>
-        /// <param name="executedValidationType"> This property specifies the type of image version validation. </param>
-        /// <param name="status"> This property specifies the status of the validationProfile of the image version. </param>
-        /// <param name="version"> This property specifies the valid version of the validation. </param>
-        /// <param name="executionOn"> This property specifies the starting timestamp. </param>
+        /// <summary> Initializes a new instance of <see cref="GalleryImageValidationsProfile"/>. </summary>
+        /// <param name="validationETag"> The published time of the image version. </param>
+        /// <param name="executedValidations"></param>
+        /// <param name="platformAttributes"> This specifies the pub, offer, sku and version of the image version metadata. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExecutedValidation(string executedValidationType, ComputeGalleryValidationStatus? status, string version, DateTimeOffset? executionOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GalleryImageValidationsProfile(string validationETag, IReadOnlyList<GalleryImageExecutedValidation> executedValidations, IReadOnlyList<ComputeGalleryPlatformAttribute> platformAttributes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ExecutedValidationType = executedValidationType;
-            Status = status;
-            Version = version;
-            ExecutionOn = executionOn;
+            ValidationETag = validationETag;
+            ExecutedValidations = executedValidations;
+            PlatformAttributes = platformAttributes;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> This property specifies the type of image version validation. </summary>
-        public string ExecutedValidationType { get; }
-        /// <summary> This property specifies the status of the validationProfile of the image version. </summary>
-        public ComputeGalleryValidationStatus? Status { get; }
-        /// <summary> This property specifies the valid version of the validation. </summary>
-        public string Version { get; }
-        /// <summary> This property specifies the starting timestamp. </summary>
-        public DateTimeOffset? ExecutionOn { get; }
+        /// <summary> The published time of the image version. </summary>
+        public string ValidationETag { get; }
+        /// <summary> Gets the executed validations. </summary>
+        public IReadOnlyList<GalleryImageExecutedValidation> ExecutedValidations { get; }
+        /// <summary> This specifies the pub, offer, sku and version of the image version metadata. </summary>
+        public IReadOnlyList<ComputeGalleryPlatformAttribute> PlatformAttributes { get; }
     }
 }

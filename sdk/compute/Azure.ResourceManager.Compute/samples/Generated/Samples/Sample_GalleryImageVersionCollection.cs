@@ -94,7 +94,7 @@ IsExcludedFromLatest = false,
                 },
                 SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
-                    BlockDeletionBeforeEndOfLife = false,
+                    IsBlockedDeletionBeforeEndOfLife = false,
                     AllowDeletionOfReplicatedLocations = false,
                 },
             };
@@ -186,7 +186,7 @@ IsExcludedFromLatest = false,
                 },
                 SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
-                    BlockDeletionBeforeEndOfLife = false,
+                    IsBlockedDeletionBeforeEndOfLife = false,
                     AllowDeletionOfReplicatedLocations = false,
                 },
             };
@@ -278,7 +278,7 @@ IsExcludedFromLatest = false,
                 },
                 SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
-                    BlockDeletionBeforeEndOfLife = false,
+                    IsBlockedDeletionBeforeEndOfLife = false,
                     AllowDeletionOfReplicatedLocations = false,
                 },
             };
@@ -376,7 +376,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
                 },
                 SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
-                    BlockDeletionBeforeEndOfLife = false,
+                    IsBlockedDeletionBeforeEndOfLife = false,
                     AllowDeletionOfReplicatedLocations = false,
                 },
             };
@@ -436,7 +436,7 @@ IsExcludedFromLatest = false,
                 },
                 SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
-                    BlockDeletionBeforeEndOfLife = false,
+                    IsBlockedDeletionBeforeEndOfLife = false,
                     AllowDeletionOfReplicatedLocations = false,
                 },
             };
@@ -528,7 +528,7 @@ IsExcludedFromLatest = false,
                 },
                 SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
-                    BlockDeletionBeforeEndOfLife = false,
+                    IsBlockedDeletionBeforeEndOfLife = false,
                     AllowDeletionOfReplicatedLocations = false,
                 },
             };
@@ -626,7 +626,7 @@ Id = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{res
                 },
                 SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
-                    BlockDeletionBeforeEndOfLife = false,
+                    IsBlockedDeletionBeforeEndOfLife = false,
                     AllowDeletionOfReplicatedLocations = false,
                 },
             };
@@ -715,7 +715,7 @@ StorageAccountId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resou
                 },
                 SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
-                    BlockDeletionBeforeEndOfLife = false,
+                    IsBlockedDeletionBeforeEndOfLife = false,
                     AllowDeletionOfReplicatedLocations = false,
                 },
                 SecurityUefiSettings = new GalleryImageVersionUefiSettings
@@ -826,7 +826,7 @@ StorageAccountId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resou
                 },
                 SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
-                    BlockDeletionBeforeEndOfLife = false,
+                    IsBlockedDeletionBeforeEndOfLife = false,
                     AllowDeletionOfReplicatedLocations = false,
                 },
             };
@@ -1014,7 +1014,7 @@ IsExcludedFromLatest = false,
                 },
                 SafetyProfile = new GalleryImageVersionSafetyProfile
                 {
-                    BlockDeletionBeforeEndOfLife = false,
+                    IsBlockedDeletionBeforeEndOfLife = false,
                     AllowDeletionOfReplicatedLocations = false,
                 },
             };

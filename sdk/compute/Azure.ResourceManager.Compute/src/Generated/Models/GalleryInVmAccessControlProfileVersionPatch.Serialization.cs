@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.Compute.Models
             DateTimeOffset? publishedDate = default;
             GalleryProvisioningState? provisioningState = default;
             ReplicationStatus replicationStatus = default;
-            AccessControlRulesMode? mode = default;
+            GalleryInVmAccessControlRulesMode? mode = default;
             ComputeGalleryEndpointAccess? defaultAccess = default;
-            AccessControlRules rules = default;
+            GalleryInVmAccessControlRules rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            mode = new AccessControlRulesMode(property0.Value.GetString());
+                            mode = new GalleryInVmAccessControlRulesMode(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("defaultAccess"u8))
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            rules = AccessControlRules.DeserializeAccessControlRules(property0.Value, options);
+                            rules = GalleryInVmAccessControlRules.DeserializeGalleryInVmAccessControlRules(property0.Value, options);
                             continue;
                         }
                     }

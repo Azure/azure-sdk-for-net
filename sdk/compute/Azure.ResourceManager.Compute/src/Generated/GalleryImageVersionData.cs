@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.Compute
         /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
         /// <param name="securityProfile"> The security profile of a gallery image version. </param>
-        /// <param name="enableRestore"> Indicates if this is a soft-delete resource restoration request. </param>
+        /// <param name="isRestoreEnabled"> Indicates if this is a soft-delete resource restoration request. </param>
         /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, ImageVersionSecurityProfile securityProfile, bool? enableRestore, ValidationsProfile validationsProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, ImageVersionSecurityProfile securityProfile, bool? isRestoreEnabled, GalleryImageValidationsProfile validationsProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             PublishingProfile = publishingProfile;
             ProvisioningState = provisioningState;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute
             SafetyProfile = safetyProfile;
             ReplicationStatus = replicationStatus;
             SecurityProfile = securityProfile;
-            EnableRestore = enableRestore;
+            IsRestoreEnabled = isRestoreEnabled;
             ValidationsProfile = validationsProfile;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -116,8 +116,8 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary> Indicates if this is a soft-delete resource restoration request. </summary>
-        public bool? EnableRestore { get; set; }
+        public bool? IsRestoreEnabled { get; set; }
         /// <summary> This is the validations profile of a Gallery Image Version. </summary>
-        public ValidationsProfile ValidationsProfile { get; }
+        public GalleryImageValidationsProfile ValidationsProfile { get; }
     }
 }

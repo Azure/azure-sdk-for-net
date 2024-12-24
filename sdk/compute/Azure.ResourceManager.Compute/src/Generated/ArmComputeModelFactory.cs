@@ -3310,10 +3310,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="safetyProfile"> This is the safety profile of the Gallery Image Version. </param>
         /// <param name="replicationStatus"> This is the replication status of the gallery image version. </param>
         /// <param name="securityUefiSettings"> The security profile of a gallery image version. </param>
-        /// <param name="enableRestore"> Indicates if this is a soft-delete resource restoration request. </param>
+        /// <param name="isRestoreEnabled"> Indicates if this is a soft-delete resource restoration request. </param>
         /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
         /// <returns> A new <see cref="Compute.GalleryImageVersionData"/> instance for mocking. </returns>
-        public static GalleryImageVersionData GalleryImageVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, GalleryImageVersionPublishingProfile publishingProfile = null, GalleryProvisioningState? provisioningState = null, GalleryImageVersionStorageProfile storageProfile = null, GalleryImageVersionSafetyProfile safetyProfile = null, ReplicationStatus replicationStatus = null, GalleryImageVersionUefiSettings securityUefiSettings = null, bool? enableRestore = null, ValidationsProfile validationsProfile = null)
+        public static GalleryImageVersionData GalleryImageVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, GalleryImageVersionPublishingProfile publishingProfile = null, GalleryProvisioningState? provisioningState = null, GalleryImageVersionStorageProfile storageProfile = null, GalleryImageVersionSafetyProfile safetyProfile = null, ReplicationStatus replicationStatus = null, GalleryImageVersionUefiSettings securityUefiSettings = null, bool? isRestoreEnabled = null, GalleryImageValidationsProfile validationsProfile = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -3330,7 +3330,7 @@ namespace Azure.ResourceManager.Compute.Models
                 safetyProfile,
                 replicationStatus,
                 securityUefiSettings != null ? new ImageVersionSecurityProfile(securityUefiSettings, serializedAdditionalRawData: null) : null,
-                enableRestore,
+                isRestoreEnabled,
                 validationsProfile,
                 serializedAdditionalRawData: null);
         }
@@ -3424,13 +3424,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="allowDeletionOfReplicatedLocations"> Indicates whether or not removing this Gallery Image Version from replicated regions is allowed. </param>
         /// <param name="isReportedForPolicyViolation"> Indicates whether this image has been reported as violating Microsoft's policies. </param>
         /// <param name="policyViolations"> A list of Policy Violations that have been reported for this Gallery Image Version. </param>
-        /// <param name="blockDeletionBeforeEndOfLife"> Indicates whether or not the deletion is blocked for this Gallery Image Version if its End Of Life has not expired. </param>
+        /// <param name="isBlockedDeletionBeforeEndOfLife"> Indicates whether or not the deletion is blocked for this Gallery Image Version if its End Of Life has not expired. </param>
         /// <returns> A new <see cref="Models.GalleryImageVersionSafetyProfile"/> instance for mocking. </returns>
-        public static GalleryImageVersionSafetyProfile GalleryImageVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations = null, bool? isReportedForPolicyViolation = null, IEnumerable<GalleryImageVersionPolicyViolation> policyViolations = null, bool? blockDeletionBeforeEndOfLife = null)
+        public static GalleryImageVersionSafetyProfile GalleryImageVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations = null, bool? isReportedForPolicyViolation = null, IEnumerable<GalleryImageVersionPolicyViolation> policyViolations = null, bool? isBlockedDeletionBeforeEndOfLife = null)
         {
             policyViolations ??= new List<GalleryImageVersionPolicyViolation>();
 
-            return new GalleryImageVersionSafetyProfile(allowDeletionOfReplicatedLocations, serializedAdditionalRawData: null, isReportedForPolicyViolation, policyViolations?.ToList(), blockDeletionBeforeEndOfLife);
+            return new GalleryImageVersionSafetyProfile(allowDeletionOfReplicatedLocations, serializedAdditionalRawData: null, isReportedForPolicyViolation, policyViolations?.ToList(), isBlockedDeletionBeforeEndOfLife);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.GalleryImageVersionPolicyViolation"/>. </summary>
@@ -3464,28 +3464,28 @@ namespace Azure.ResourceManager.Compute.Models
             return new RegionalReplicationStatus(region, state, details, progress, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ValidationsProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GalleryImageValidationsProfile"/>. </summary>
         /// <param name="validationETag"> The published time of the image version. </param>
         /// <param name="executedValidations"></param>
         /// <param name="platformAttributes"> This specifies the pub, offer, sku and version of the image version metadata. </param>
-        /// <returns> A new <see cref="Models.ValidationsProfile"/> instance for mocking. </returns>
-        public static ValidationsProfile ValidationsProfile(string validationETag = null, IEnumerable<ExecutedValidation> executedValidations = null, IEnumerable<ComputeGalleryPlatformAttribute> platformAttributes = null)
+        /// <returns> A new <see cref="Models.GalleryImageValidationsProfile"/> instance for mocking. </returns>
+        public static GalleryImageValidationsProfile GalleryImageValidationsProfile(string validationETag = null, IEnumerable<GalleryImageExecutedValidation> executedValidations = null, IEnumerable<ComputeGalleryPlatformAttribute> platformAttributes = null)
         {
-            executedValidations ??= new List<ExecutedValidation>();
+            executedValidations ??= new List<GalleryImageExecutedValidation>();
             platformAttributes ??= new List<ComputeGalleryPlatformAttribute>();
 
-            return new ValidationsProfile(validationETag, executedValidations?.ToList(), platformAttributes?.ToList(), serializedAdditionalRawData: null);
+            return new GalleryImageValidationsProfile(validationETag, executedValidations?.ToList(), platformAttributes?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExecutedValidation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GalleryImageExecutedValidation"/>. </summary>
         /// <param name="executedValidationType"> This property specifies the type of image version validation. </param>
         /// <param name="status"> This property specifies the status of the validationProfile of the image version. </param>
         /// <param name="version"> This property specifies the valid version of the validation. </param>
         /// <param name="executionOn"> This property specifies the starting timestamp. </param>
-        /// <returns> A new <see cref="Models.ExecutedValidation"/> instance for mocking. </returns>
-        public static ExecutedValidation ExecutedValidation(string executedValidationType = null, ComputeGalleryValidationStatus? status = null, string version = null, DateTimeOffset? executionOn = null)
+        /// <returns> A new <see cref="Models.GalleryImageExecutedValidation"/> instance for mocking. </returns>
+        public static GalleryImageExecutedValidation GalleryImageExecutedValidation(string executedValidationType = null, ComputeGalleryValidationStatus? status = null, string version = null, DateTimeOffset? executionOn = null)
         {
-            return new ExecutedValidation(executedValidationType, status, version, executionOn, serializedAdditionalRawData: null);
+            return new GalleryImageExecutedValidation(executedValidationType, status, version, executionOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ComputeGalleryPlatformAttribute"/>. </summary>
@@ -3512,7 +3512,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.GalleryImageVersionPatch"/> instance for mocking. </returns>
-        public static GalleryImageVersionPatch GalleryImageVersionPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GalleryImageVersionPublishingProfile publishingProfile = null, GalleryProvisioningState? provisioningState = null, GalleryImageVersionStorageProfile storageProfile = null, GalleryImageVersionSafetyProfile safetyProfile = null, ReplicationStatus replicationStatus = null, GalleryImageVersionUefiSettings securityUefiSettings = null, bool? restore = null, ValidationsProfile validationsProfile = null, IDictionary<string, string> tags = null)
+        public static GalleryImageVersionPatch GalleryImageVersionPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, GalleryImageVersionPublishingProfile publishingProfile = null, GalleryProvisioningState? provisioningState = null, GalleryImageVersionStorageProfile storageProfile = null, GalleryImageVersionSafetyProfile safetyProfile = null, ReplicationStatus replicationStatus = null, GalleryImageVersionUefiSettings securityUefiSettings = null, bool? restore = null, GalleryImageValidationsProfile validationsProfile = null, IDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -3704,7 +3704,7 @@ namespace Azure.ResourceManager.Compute.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.GallerySoftDeleted"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.GallerySoftDeletedResourceDetails"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3714,12 +3714,12 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="resourceArmId"> arm id of the soft-deleted resource. </param>
         /// <param name="softDeletedArtifactType"> artifact type of the soft-deleted resource. </param>
         /// <param name="softDeletedOn"> The timestamp for when the resource is soft-deleted. In dateTime offset format. </param>
-        /// <returns> A new <see cref="Models.GallerySoftDeleted"/> instance for mocking. </returns>
-        public static GallerySoftDeleted GallerySoftDeleted(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceIdentifier resourceArmId = null, SoftDeletedArtifactType? softDeletedArtifactType = null, DateTimeOffset? softDeletedOn = null)
+        /// <returns> A new <see cref="Models.GallerySoftDeletedResourceDetails"/> instance for mocking. </returns>
+        public static GallerySoftDeletedResourceDetails GallerySoftDeletedResourceDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ResourceIdentifier resourceArmId = null, GallerySoftDeletedArtifactType? softDeletedArtifactType = null, DateTimeOffset? softDeletedOn = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new GallerySoftDeleted(
+            return new GallerySoftDeletedResourceDetails(
                 id,
                 name,
                 resourceType,
@@ -3813,7 +3813,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="defaultAccess"> This property allows you to specify if the requests will be allowed to access the host endpoints. Possible values are: 'Allow', 'Deny'. </param>
         /// <param name="rules"> This is the Access Control Rules specification for an inVMAccessControlProfile version. </param>
         /// <returns> A new <see cref="Compute.GalleryInVmAccessControlProfileVersionData"/> instance for mocking. </returns>
-        public static GalleryInVmAccessControlProfileVersionData GalleryInVmAccessControlProfileVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<TargetRegion> targetLocations = null, bool? excludeFromLatest = null, DateTimeOffset? publishedOn = null, GalleryProvisioningState? provisioningState = null, ReplicationStatus replicationStatus = null, AccessControlRulesMode? mode = null, ComputeGalleryEndpointAccess? defaultAccess = null, AccessControlRules rules = null)
+        public static GalleryInVmAccessControlProfileVersionData GalleryInVmAccessControlProfileVersionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, IEnumerable<TargetRegion> targetLocations = null, bool? excludeFromLatest = null, DateTimeOffset? publishedOn = null, GalleryProvisioningState? provisioningState = null, ReplicationStatus replicationStatus = null, GalleryInVmAccessControlRulesMode? mode = null, ComputeGalleryEndpointAccess? defaultAccess = null, GalleryInVmAccessControlRules rules = null)
         {
             tags ??= new Dictionary<string, string>();
             targetLocations ??= new List<TargetRegion>();
@@ -3851,7 +3851,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="rules"> This is the Access Control Rules specification for an inVMAccessControlProfile version. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.GalleryInVmAccessControlProfileVersionPatch"/> instance for mocking. </returns>
-        public static GalleryInVmAccessControlProfileVersionPatch GalleryInVmAccessControlProfileVersionPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<TargetRegion> targetLocations = null, bool? excludeFromLatest = null, DateTimeOffset? publishedOn = null, GalleryProvisioningState? provisioningState = null, ReplicationStatus replicationStatus = null, AccessControlRulesMode? mode = null, ComputeGalleryEndpointAccess? defaultAccess = null, AccessControlRules rules = null, IDictionary<string, string> tags = null)
+        public static GalleryInVmAccessControlProfileVersionPatch GalleryInVmAccessControlProfileVersionPatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IEnumerable<TargetRegion> targetLocations = null, bool? excludeFromLatest = null, DateTimeOffset? publishedOn = null, GalleryProvisioningState? provisioningState = null, ReplicationStatus replicationStatus = null, GalleryInVmAccessControlRulesMode? mode = null, ComputeGalleryEndpointAccess? defaultAccess = null, GalleryInVmAccessControlRules rules = null, IDictionary<string, string> tags = null)
         {
             targetLocations ??= new List<TargetRegion>();
             tags ??= new Dictionary<string, string>();
@@ -4569,7 +4569,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GalleryImageVersionData GalleryImageVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, GalleryImageVersionUefiSettings securityUefiSettings)
         {
-            return GalleryImageVersionData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, publishingProfile: publishingProfile, provisioningState: provisioningState, storageProfile: storageProfile, safetyProfile: safetyProfile, replicationStatus: replicationStatus, securityUefiSettings: securityUefiSettings, enableRestore: default, validationsProfile: default);
+            return GalleryImageVersionData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, publishingProfile: publishingProfile, provisioningState: provisioningState, storageProfile: storageProfile, safetyProfile: safetyProfile, replicationStatus: replicationStatus, securityUefiSettings: securityUefiSettings, isRestoreEnabled: default, validationsProfile: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.GalleryImageVersionSafetyProfile" />. </summary>
@@ -4580,7 +4580,7 @@ namespace Azure.ResourceManager.Compute.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static GalleryImageVersionSafetyProfile GalleryImageVersionSafetyProfile(bool? allowDeletionOfReplicatedLocations, bool? isReportedForPolicyViolation, IEnumerable<GalleryImageVersionPolicyViolation> policyViolations)
         {
-            return GalleryImageVersionSafetyProfile(allowDeletionOfReplicatedLocations: allowDeletionOfReplicatedLocations, isReportedForPolicyViolation: isReportedForPolicyViolation, policyViolations: policyViolations, blockDeletionBeforeEndOfLife: default);
+            return GalleryImageVersionSafetyProfile(allowDeletionOfReplicatedLocations: allowDeletionOfReplicatedLocations, isReportedForPolicyViolation: isReportedForPolicyViolation, policyViolations: policyViolations, isBlockedDeletionBeforeEndOfLife: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Compute.Models.GalleryImageVersionPatch" />. </summary>

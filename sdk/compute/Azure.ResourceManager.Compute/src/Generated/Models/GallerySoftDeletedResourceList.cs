@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="GallerySoftDeletedResourceList"/>. </summary>
         /// <param name="value"> A list of soft-deleted resources. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal GallerySoftDeletedResourceList(IEnumerable<GallerySoftDeleted> value)
+        internal GallerySoftDeletedResourceList(IEnumerable<GallerySoftDeletedResourceDetails> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="value"> A list of soft-deleted resources. </param>
         /// <param name="nextLink"> The uri to fetch the next page of soft-deleted resources. Call ListNext() with this to fetch the next page of soft-deleted resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GallerySoftDeletedResourceList(IReadOnlyList<GallerySoftDeleted> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GallerySoftDeletedResourceList(IReadOnlyList<GallerySoftDeletedResourceDetails> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Compute.Models
         }
 
         /// <summary> A list of soft-deleted resources. </summary>
-        public IReadOnlyList<GallerySoftDeleted> Value { get; }
+        public IReadOnlyList<GallerySoftDeletedResourceDetails> Value { get; }
         /// <summary> The uri to fetch the next page of soft-deleted resources. Call ListNext() with this to fetch the next page of soft-deleted resources. </summary>
         public string NextLink { get; }
     }

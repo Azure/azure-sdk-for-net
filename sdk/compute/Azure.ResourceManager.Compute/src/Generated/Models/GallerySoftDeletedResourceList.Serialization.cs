@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IReadOnlyList<GallerySoftDeleted> value = default;
+            IReadOnlyList<GallerySoftDeletedResourceDetails> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<GallerySoftDeleted> array = new List<GallerySoftDeleted>();
+                    List<GallerySoftDeletedResourceDetails> array = new List<GallerySoftDeletedResourceDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(GallerySoftDeleted.DeserializeGallerySoftDeleted(item, options));
+                        array.Add(GallerySoftDeletedResourceDetails.DeserializeGallerySoftDeletedResourceDetails(item, options));
                     }
                     value = array;
                     continue;

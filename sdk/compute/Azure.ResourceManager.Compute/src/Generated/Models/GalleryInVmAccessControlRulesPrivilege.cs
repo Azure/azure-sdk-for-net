@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    /// <summary> The properties of an Access Control Rule Identity. </summary>
-    public partial class AccessControlRulesIdentity
+    /// <summary> The properties of an Access Control Rule Privilege. </summary>
+    public partial class GalleryInVmAccessControlRulesPrivilege
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,47 +45,43 @@ namespace Azure.ResourceManager.Compute.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AccessControlRulesIdentity"/>. </summary>
-        /// <param name="name"> The name of the identity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        public AccessControlRulesIdentity(string name)
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlRulesPrivilege"/>. </summary>
+        /// <param name="name"> The name of the privilege. </param>
+        /// <param name="path"> The HTTP path corresponding to the privilege. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="path"/> is null. </exception>
+        public GalleryInVmAccessControlRulesPrivilege(string name, string path)
         {
             Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(path, nameof(path));
 
             Name = name;
+            Path = path;
+            QueryParameters = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessControlRulesIdentity"/>. </summary>
-        /// <param name="name"> The name of the identity. </param>
-        /// <param name="userName"> The username corresponding to this identity. </param>
-        /// <param name="groupName"> The groupName corresponding to this identity. </param>
-        /// <param name="exePath"> The path to the executable. </param>
-        /// <param name="processName"> The process name of the executable. </param>
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlRulesPrivilege"/>. </summary>
+        /// <param name="name"> The name of the privilege. </param>
+        /// <param name="path"> The HTTP path corresponding to the privilege. </param>
+        /// <param name="queryParameters"> The query parameters to match in the path. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AccessControlRulesIdentity(string name, string userName, string groupName, string exePath, string processName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GalleryInVmAccessControlRulesPrivilege(string name, string path, IDictionary<string, string> queryParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
-            UserName = userName;
-            GroupName = groupName;
-            ExePath = exePath;
-            ProcessName = processName;
+            Path = path;
+            QueryParameters = queryParameters;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AccessControlRulesIdentity"/> for deserialization. </summary>
-        internal AccessControlRulesIdentity()
+        /// <summary> Initializes a new instance of <see cref="GalleryInVmAccessControlRulesPrivilege"/> for deserialization. </summary>
+        internal GalleryInVmAccessControlRulesPrivilege()
         {
         }
 
-        /// <summary> The name of the identity. </summary>
+        /// <summary> The name of the privilege. </summary>
         public string Name { get; set; }
-        /// <summary> The username corresponding to this identity. </summary>
-        public string UserName { get; set; }
-        /// <summary> The groupName corresponding to this identity. </summary>
-        public string GroupName { get; set; }
-        /// <summary> The path to the executable. </summary>
-        public string ExePath { get; set; }
-        /// <summary> The process name of the executable. </summary>
-        public string ProcessName { get; set; }
+        /// <summary> The HTTP path corresponding to the privilege. </summary>
+        public string Path { get; set; }
+        /// <summary> The query parameters to match in the path. </summary>
+        public IDictionary<string, string> QueryParameters { get; }
     }
 }

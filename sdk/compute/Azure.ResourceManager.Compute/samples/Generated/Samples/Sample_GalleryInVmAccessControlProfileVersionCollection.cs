@@ -46,26 +46,26 @@ namespace Azure.ResourceManager.Compute.Samples
             {
                 TargetLocations = { new TargetRegion("West US"), new TargetRegion("South Central US") },
                 ExcludeFromLatest = false,
-                Mode = AccessControlRulesMode.Audit,
+                Mode = GalleryInVmAccessControlRulesMode.Audit,
                 DefaultAccess = ComputeGalleryEndpointAccess.Allow,
-                Rules = new AccessControlRules
+                Rules = new GalleryInVmAccessControlRules
                 {
-                    Privileges = {new AccessControlRulesPrivilege("GoalState", "/machine")
+                    Privileges = {new GalleryInVmAccessControlRulesPrivilege("GoalState", "/machine")
 {
 QueryParameters =
 {
 ["comp"] = "goalstate"
 },
 }},
-                    Roles = { new AccessControlRulesRole("Provisioning", new string[] { "GoalState" }) },
-                    Identities = {new AccessControlRulesIdentity("WinPA")
+                    Roles = { new GalleryInVmAccessControlRulesRole("Provisioning", new string[] { "GoalState" }) },
+                    Identities = {new GalleryInVmAccessControlRulesIdentity("WinPA")
 {
 UserName = "SYSTEM",
 GroupName = "Administrators",
 ExePath = "C:\\Windows\\System32\\cscript.exe",
 ProcessName = "cscript",
 }},
-                    RoleAssignments = { new AccessControlRulesRoleAssignment("Provisioning", new string[] { "WinPA" }) },
+                    RoleAssignments = { new GalleryInVmAccessControlRulesRoleAssignment("Provisioning", new string[] { "WinPA" }) },
                 },
             };
             ArmOperation<GalleryInVmAccessControlProfileVersionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, inVmAccessControlProfileVersionName, data);

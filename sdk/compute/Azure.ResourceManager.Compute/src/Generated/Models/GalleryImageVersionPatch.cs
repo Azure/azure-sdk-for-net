@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="validationsProfile"> This is the validations profile of a Gallery Image Version. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryImageVersionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, ImageVersionSecurityProfile securityProfile, bool? restore, ValidationsProfile validationsProfile, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal GalleryImageVersionPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, GalleryImageVersionPublishingProfile publishingProfile, GalleryProvisioningState? provisioningState, GalleryImageVersionStorageProfile storageProfile, GalleryImageVersionSafetyProfile safetyProfile, ReplicationStatus replicationStatus, ImageVersionSecurityProfile securityProfile, bool? restore, GalleryImageValidationsProfile validationsProfile, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             PublishingProfile = publishingProfile;
             ProvisioningState = provisioningState;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Indicates if this is a soft-delete resource restoration request. </summary>
         public bool? Restore { get; set; }
         /// <summary> This is the validations profile of a Gallery Image Version. </summary>
-        public ValidationsProfile ValidationsProfile { get; }
+        public GalleryImageValidationsProfile ValidationsProfile { get; }
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
     }

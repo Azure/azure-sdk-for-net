@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.Compute.Models
 {
-    public partial class AccessControlRules : IUtf8JsonSerializable, IJsonModel<AccessControlRules>
+    public partial class GalleryInVmAccessControlRules : IUtf8JsonSerializable, IJsonModel<GalleryInVmAccessControlRules>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AccessControlRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<GalleryInVmAccessControlRules>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<AccessControlRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GalleryInVmAccessControlRules>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessControlRules>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryInVmAccessControlRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessControlRules)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryInVmAccessControlRules)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Privileges))
@@ -91,19 +91,19 @@ namespace Azure.ResourceManager.Compute.Models
             }
         }
 
-        AccessControlRules IJsonModel<AccessControlRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        GalleryInVmAccessControlRules IJsonModel<GalleryInVmAccessControlRules>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessControlRules>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryInVmAccessControlRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccessControlRules)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryInVmAccessControlRules)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeAccessControlRules(document.RootElement, options);
+            return DeserializeGalleryInVmAccessControlRules(document.RootElement, options);
         }
 
-        internal static AccessControlRules DeserializeAccessControlRules(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static GalleryInVmAccessControlRules DeserializeGalleryInVmAccessControlRules(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -111,10 +111,10 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            IList<AccessControlRulesPrivilege> privileges = default;
-            IList<AccessControlRulesRole> roles = default;
-            IList<AccessControlRulesIdentity> identities = default;
-            IList<AccessControlRulesRoleAssignment> roleAssignments = default;
+            IList<GalleryInVmAccessControlRulesPrivilege> privileges = default;
+            IList<GalleryInVmAccessControlRulesRole> roles = default;
+            IList<GalleryInVmAccessControlRulesIdentity> identities = default;
+            IList<GalleryInVmAccessControlRulesRoleAssignment> roleAssignments = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,10 +125,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<AccessControlRulesPrivilege> array = new List<AccessControlRulesPrivilege>();
+                    List<GalleryInVmAccessControlRulesPrivilege> array = new List<GalleryInVmAccessControlRulesPrivilege>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessControlRulesPrivilege.DeserializeAccessControlRulesPrivilege(item, options));
+                        array.Add(GalleryInVmAccessControlRulesPrivilege.DeserializeGalleryInVmAccessControlRulesPrivilege(item, options));
                     }
                     privileges = array;
                     continue;
@@ -139,10 +139,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<AccessControlRulesRole> array = new List<AccessControlRulesRole>();
+                    List<GalleryInVmAccessControlRulesRole> array = new List<GalleryInVmAccessControlRulesRole>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessControlRulesRole.DeserializeAccessControlRulesRole(item, options));
+                        array.Add(GalleryInVmAccessControlRulesRole.DeserializeGalleryInVmAccessControlRulesRole(item, options));
                     }
                     roles = array;
                     continue;
@@ -153,10 +153,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<AccessControlRulesIdentity> array = new List<AccessControlRulesIdentity>();
+                    List<GalleryInVmAccessControlRulesIdentity> array = new List<GalleryInVmAccessControlRulesIdentity>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessControlRulesIdentity.DeserializeAccessControlRulesIdentity(item, options));
+                        array.Add(GalleryInVmAccessControlRulesIdentity.DeserializeGalleryInVmAccessControlRulesIdentity(item, options));
                     }
                     identities = array;
                     continue;
@@ -167,10 +167,10 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    List<AccessControlRulesRoleAssignment> array = new List<AccessControlRulesRoleAssignment>();
+                    List<GalleryInVmAccessControlRulesRoleAssignment> array = new List<GalleryInVmAccessControlRulesRoleAssignment>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AccessControlRulesRoleAssignment.DeserializeAccessControlRulesRoleAssignment(item, options));
+                        array.Add(GalleryInVmAccessControlRulesRoleAssignment.DeserializeGalleryInVmAccessControlRulesRoleAssignment(item, options));
                     }
                     roleAssignments = array;
                     continue;
@@ -181,38 +181,38 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AccessControlRules(privileges ?? new ChangeTrackingList<AccessControlRulesPrivilege>(), roles ?? new ChangeTrackingList<AccessControlRulesRole>(), identities ?? new ChangeTrackingList<AccessControlRulesIdentity>(), roleAssignments ?? new ChangeTrackingList<AccessControlRulesRoleAssignment>(), serializedAdditionalRawData);
+            return new GalleryInVmAccessControlRules(privileges ?? new ChangeTrackingList<GalleryInVmAccessControlRulesPrivilege>(), roles ?? new ChangeTrackingList<GalleryInVmAccessControlRulesRole>(), identities ?? new ChangeTrackingList<GalleryInVmAccessControlRulesIdentity>(), roleAssignments ?? new ChangeTrackingList<GalleryInVmAccessControlRulesRoleAssignment>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<AccessControlRules>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<GalleryInVmAccessControlRules>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessControlRules>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryInVmAccessControlRules>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AccessControlRules)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryInVmAccessControlRules)} does not support writing '{options.Format}' format.");
             }
         }
 
-        AccessControlRules IPersistableModel<AccessControlRules>.Create(BinaryData data, ModelReaderWriterOptions options)
+        GalleryInVmAccessControlRules IPersistableModel<GalleryInVmAccessControlRules>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<AccessControlRules>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<GalleryInVmAccessControlRules>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeAccessControlRules(document.RootElement, options);
+                        return DeserializeGalleryInVmAccessControlRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccessControlRules)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryInVmAccessControlRules)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<AccessControlRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GalleryInVmAccessControlRules>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

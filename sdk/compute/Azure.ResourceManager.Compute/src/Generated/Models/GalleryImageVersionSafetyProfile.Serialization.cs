@@ -50,10 +50,10 @@ namespace Azure.ResourceManager.Compute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(BlockDeletionBeforeEndOfLife))
+            if (Optional.IsDefined(IsBlockedDeletionBeforeEndOfLife))
             {
                 writer.WritePropertyName("blockDeletionBeforeEndOfLife"u8);
-                writer.WriteBooleanValue(BlockDeletionBeforeEndOfLife.Value);
+                writer.WriteBooleanValue(IsBlockedDeletionBeforeEndOfLife.Value);
             }
         }
 

@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Compute.Samples
             // invoke the operation and iterate over the result
             string artifactType = "images";
             string artifactName = "myGalleryImageName";
-            await foreach (GallerySoftDeleted item in gallery.GetSoftDeletedResourcesByArtifactNameAsync(artifactType, artifactName))
+            await foreach (GallerySoftDeletedResourceDetails item in gallery.GetSoftDeletedResourcesByArtifactNameAsync(artifactType, artifactName))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
