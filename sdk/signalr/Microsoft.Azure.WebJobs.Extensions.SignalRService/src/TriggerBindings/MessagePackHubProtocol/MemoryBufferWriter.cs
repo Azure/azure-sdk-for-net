@@ -1,23 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-#nullable enable
-
 using System;
 using System.Buffers;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Microsoft.AspNetCore.Internal;
 
+/// <summary>
+/// Copied from https://github.com/dotnet/aspnetcore/blob/0825def633c99d9fdd74e47e69bcde3935a5fe74/
+/// </summary>
 internal sealed class MemoryBufferWriter : Stream, IBufferWriter<byte>
 {
     [ThreadStatic]
-    private static MemoryBufferWriter? _cachedInstance;
+    private static MemoryBufferWriter _cachedInstance;
 
 #if DEBUG
     private bool _inUse;
@@ -26,8 +26,8 @@ internal sealed class MemoryBufferWriter : Stream, IBufferWriter<byte>
     private readonly int _minimumSegmentSize;
     private int _bytesWritten;
 
-    private List<CompletedBuffer>? _completedSegments;
-    private byte[]? _currentSegment;
+    private List<CompletedBuffer> _completedSegments;
+    private byte[] _currentSegment;
     private int _position;
 
     public MemoryBufferWriter(int minimumSegmentSize = 4096)
@@ -146,7 +146,6 @@ internal sealed class MemoryBufferWriter : Stream, IBufferWriter<byte>
         return CopyToSlowAsync(destination, cancellationToken);
     }
 
-    [MemberNotNull(nameof(_currentSegment))]
     private void EnsureCapacity(int sizeHint)
     {
         // This does the Right Thing. It only subtracts _position from the current segment length if it's non-null.
@@ -166,7 +165,6 @@ internal sealed class MemoryBufferWriter : Stream, IBufferWriter<byte>
         AddSegment(sizeHint);
     }
 
-    [MemberNotNull(nameof(_currentSegment))]
     private void AddSegment(int sizeHint = 0)
     {
         if (_currentSegment != null)

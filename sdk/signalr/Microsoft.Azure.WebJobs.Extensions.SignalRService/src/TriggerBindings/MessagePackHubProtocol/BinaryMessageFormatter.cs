@@ -1,11 +1,14 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Buffers;
 
 namespace Microsoft.AspNetCore.Internal;
 
+/// <summary>
+/// Copied from https://github.com/dotnet/aspnetcore/blob/0825def633c99d9fdd74e47e69bcde3935a5fe74/
+/// </summary>
 internal static class BinaryMessageFormatter
 {
     public static void WriteLengthPrefix(long length, IBufferWriter<byte> output)
