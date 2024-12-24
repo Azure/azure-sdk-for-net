@@ -5,7 +5,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Developer.LoadTesting.Models;
@@ -13,14 +12,14 @@ using Azure.Developer.LoadTesting.Models;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary>
-    /// Represents a long-running operation for TestRun.
+    /// Represents a long running operation for Test Profile Run.
     /// </summary>
-    public class TestRunResultOperation : Operation<TestRun>
+    public class TestProfileRunResultOperation : Operation<TestProfileRun>
     {
         private bool _completed;
-        private Response<TestRun> _response;
-        private TestRun _value;
-        private readonly string _testRunId;
+        private Response<TestProfileRun> _response;
+        private TestProfileRun _value;
+        private readonly string _testProfileRunId;
         private readonly LoadTestRunClient _client;
         private readonly List<string> _terminalStatus = new()
             {
@@ -32,9 +31,10 @@ namespace Azure.Developer.LoadTesting
         /// <summary>
         /// Value.
         /// </summary>
-        public override TestRun Value
+        public override TestProfileRun Value
         {
-            get {
+            get
+            {
                 if (HasCompleted && !HasValue)
                 {
                     throw new InvalidOperationException("The operation is not complete.");
@@ -47,7 +47,7 @@ namespace Azure.Developer.LoadTesting
         }
 
         /// <summary>
-        /// HasValue.
+        /// HasValue
         /// </summary>
         public override bool HasValue => _completed;
 
@@ -57,21 +57,21 @@ namespace Azure.Developer.LoadTesting
         public override string Id { get; }
 
         /// <summary>
-        /// HasCompleted.
+        /// HasCompleted
         /// </summary>
         public override bool HasCompleted => _completed;
 
         /// <summary>
-        /// TestRunResultOperation.
+        /// TestProfileRunResultOperation.
         /// </summary>
-        protected TestRunResultOperation() { }
+        protected TestProfileRunResultOperation() { }
 
         /// <summary>
-        /// TestRunResultOperation.
+        /// TestProfileRunResultOperation.
         /// </summary>
-        public TestRunResultOperation(string testRunId, LoadTestRunClient client, Response<TestRun> initialResponse = null)
+        public TestProfileRunResultOperation(string testProfileRunId, LoadTestRunClient client, Response<TestProfileRun> initialResponse = null)
         {
-            _testRunId = Id = testRunId;
+            _testProfileRunId = Id = testProfileRunId;
             _client = client;
             _completed = false;
             if (initialResponse != null)
@@ -100,7 +100,7 @@ namespace Azure.Developer.LoadTesting
                 return GetRawResponse();
             }
 
-            _response = _client.GetTestRun(_testRunId);
+            _response = _client.GetTestProfileRun(_testProfileRunId);
             _value = _response.Value;
 
             return GetCompletionResponse();
@@ -118,7 +118,7 @@ namespace Azure.Developer.LoadTesting
 
             try
             {
-                _response = await _client.GetTestRunAsync(_testRunId).ConfigureAwait(false);
+                _response = await _client.GetTestProfileRunAsync(_testProfileRunId).ConfigureAwait(false);
                 _value = _response.Value;
             }
             catch
@@ -131,9 +131,9 @@ namespace Azure.Developer.LoadTesting
 
         private Response GetCompletionResponse()
         {
-            string testRunStatus = _value.Status.ToString();
+            string testProfileRunStatus = _value.Status.ToString();
 
-            if (_terminalStatus.Contains(testRunStatus))
+            if (_terminalStatus.Contains(testProfileRunStatus))
             {
                 _completed = true;
             }
