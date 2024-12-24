@@ -1,20 +1,20 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Threading.Tasks;
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Azure.Communication.CallAutomation
 {
     /// <summary>The result from playing audio.</summary>
-    public class PlayResult
+    public class InterruptAudioAndAnnounceResult
     {
         private CallAutomationEventProcessor _evHandler;
         private string _callConnectionId;
         private string _operationContext;
 
-        internal PlayResult()
+        internal InterruptAudioAndAnnounceResult()
         {
         }
 
@@ -41,7 +41,10 @@ namespace Azure.Communication.CallAutomation
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
                 && (filter.GetType() == typeof(PlayCompleted)
-                || filter.GetType() == typeof(PlayFailed)),
+                || filter.GetType() == typeof(PlayStarted)
+                || filter.GetType() == typeof(PlayFailed)
+                || filter.GetType() == typeof(PlayPaused)
+                || filter.GetType() == typeof(PlayResumed)),
                 cancellationToken);
 
             return SetReturnedEvent(returnedEvent);
@@ -63,7 +66,10 @@ namespace Azure.Communication.CallAutomation
                 => filter.CallConnectionId == _callConnectionId
                 && (filter.OperationContext == _operationContext || _operationContext is null)
                 && (filter.GetType() == typeof(PlayCompleted)
-                || filter.GetType() == typeof(PlayFailed)),
+                || filter.GetType() == typeof(PlayStarted)
+                || filter.GetType() == typeof(PlayFailed)
+                || filter.GetType() == typeof(PlayPaused)
+                || filter.GetType() == typeof(PlayResumed)),
                 cancellationToken).ConfigureAwait(false);
 
             return SetReturnedEvent(returnedEvent);
@@ -74,6 +80,12 @@ namespace Azure.Communication.CallAutomation
             PlayEventResult result = default;
             switch (returnedEvent)
             {
+                case PlayCompleted:
+                    result = new PlayEventResult(true, (PlayCompleted)returnedEvent, null, null, null, null);
+                    break;
+                case PlayFailed:
+                    result = new PlayEventResult(false, null, (PlayFailed)returnedEvent, null, null, null);
+                    break;
                 case PlayStarted:
                     result = new PlayEventResult(true, null, null, (PlayStarted)returnedEvent, null, null);
                     break;
@@ -82,12 +94,6 @@ namespace Azure.Communication.CallAutomation
                     break;
                 case PlayResumed:
                     result = new PlayEventResult(true, null, null, null, null, (PlayResumed)returnedEvent);
-                    break;
-                case PlayCompleted:
-                    result = new PlayEventResult(true, (PlayCompleted)returnedEvent, null, null, null, null);
-                    break;
-                case PlayFailed:
-                    result = result = new PlayEventResult(false, null, (PlayFailed)returnedEvent, null, null, null);
                     break;
                 default:
                     throw new NotSupportedException(returnedEvent.GetType().Name);
