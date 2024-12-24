@@ -6,11 +6,11 @@
 
 - Upgraded api-version tag from 'package-2024-07-01' to 'package-2024-03-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b09c9ec927456021dc549e111fa2cac3b4b00659/specification/compute/resource-manager/readme.md.
     - Added new classes named `GalleryInVmAccessControlProfileCollection`, `ComputeGalleryValidationProfile`, `GalleryImageExecutedValidation`, `AdditionalReplicaSet`, `GallerySoftDeleted`, `GallerySoftDeletedResourceList`, `ComputeGalleryEndpointAccess`, `ComputeGalleryEndpointTypes`, and `ComputeGalleryPlatformAttribute`.
-    - Added a new property named `BlockDeletionBeforeEndOfLife` to `GalleryImageVersionSafertyProfile` class.
+    - Added a new property named `IsBlockedDeletionBeforeEndOfLife` to `GalleryImageVersionSafertyProfile` class.
     - Added a new property named `StartsAtVersion` to `GalleryImageFeature` class.
     - Added a new property named `AllowUpdateImage` to `GalleryImageData` class.
     - Added new properties named `ValidationsProfile` and `EnableRestore` to `GalleryImageVersionData` class.
-    - Added a new property named `EnableRestore` to `GalleryImageVersionPatch` class.
+    - Added a new property named `IsRestoreEnabled` to `GalleryImageVersionPatch` class.
     - Added a new property named `SecurityUefiSettings` to `GalleryList` class.
     - Added a new property named `ScriptBehaviorAfterReboot` to `UserARtifactSettings` class.
     - Added a new property named `AdditionalReplicaSets` to `TargetRegion` class.
