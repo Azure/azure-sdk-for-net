@@ -1,7 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text.RegularExpressions;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
@@ -9,33 +11,81 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 /// <summary>
 /// Contains environment variable names used by the Playwright service.
 /// </summary>
-public class ServiceEnvironmentVariable
+/// <remarks>
+/// Initializes a new instance of the <see cref="ServiceOs"/> structure.
+/// </remarks>
+/// <param name="value">The string value of the instance.</param>
+public readonly struct ServiceEnvironmentVariable(string value) : IEquatable<ServiceEnvironmentVariable>
 {
+    private const string PlaywrightServiceAccessTokenValue = "PLAYWRIGHT_SERVICE_ACCESS_TOKEN";
+    private const string PlaywrightServiceUriValue = "PLAYWRIGHT_SERVICE_URL";
+    private const string PlaywrightServiceExposeNetworkValue = "PLAYWRIGHT_SERVICE_EXPOSE_NETWORK";
+    private const string PlaywrightServiceOsValue = "PLAYWRIGHT_SERVICE_OS";
+    private const string PlaywrightServiceRunIdValue = "PLAYWRIGHT_SERVICE_RUN_ID";
+
+    private readonly string _value = value ?? throw new ArgumentNullException(nameof(value));
+
     /// <summary>
     /// The environment variable for the Playwright service access token.
     /// </summary>
-    public static readonly string PlaywrightServiceAccessToken = "PLAYWRIGHT_SERVICE_ACCESS_TOKEN";
+    public static ServiceEnvironmentVariable PlaywrightServiceAccessToken { get; } = new ServiceEnvironmentVariable(PlaywrightServiceAccessTokenValue);
 
     /// <summary>
     /// The environment variable for the Playwright service URL.
     /// </summary>
-    public static readonly string PlaywrightServiceUri = "PLAYWRIGHT_SERVICE_URL";
+    public static ServiceEnvironmentVariable PlaywrightServiceUri { get; } = new ServiceEnvironmentVariable(PlaywrightServiceUriValue);
 
     /// <summary>
     /// The environment variable for exposing the Playwright service network.
     /// </summary>
-    public static readonly string PlaywrightServiceExposeNetwork = "PLAYWRIGHT_SERVICE_EXPOSE_NETWORK";
+    public static ServiceEnvironmentVariable PlaywrightServiceExposeNetwork { get; } = new ServiceEnvironmentVariable(PlaywrightServiceExposeNetworkValue);
 
     /// <summary>
     /// The environment variable for the Playwright service operating system.
     /// </summary>
-    public static readonly string PlaywrightServiceOs = "PLAYWRIGHT_SERVICE_OS";
+    public static ServiceEnvironmentVariable PlaywrightServiceOs { get; } = new ServiceEnvironmentVariable(PlaywrightServiceOsValue);
 
     /// <summary>
     /// The environment variable for the Playwright service run ID.
     /// </summary>
-    public static readonly string PlaywrightServiceRunId = "PLAYWRIGHT_SERVICE_RUN_ID";
-};
+    public static ServiceEnvironmentVariable PlaywrightServiceRunId { get; } = new ServiceEnvironmentVariable(PlaywrightServiceRunIdValue);
+
+    /// <summary>
+    /// Determines if two <see cref="ServiceEnvironmentVariable"/> values are the same.
+    /// </summary>
+    /// <param name="left">The first <see cref="ServiceEnvironmentVariable"/> to compare.</param>
+    /// <param name="right">The second <see cref="ServiceEnvironmentVariable"/> to compare.</param>
+    /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+    public static bool operator ==(ServiceEnvironmentVariable left, ServiceEnvironmentVariable right) => left.Equals(right);
+
+    /// <summary>
+    /// Determines if two <see cref="ServiceEnvironmentVariable"/> values are different.
+    /// </summary>
+    /// <param name="left">The first <see cref="ServiceEnvironmentVariable"/> to compare.</param>
+    /// <param name="right">The second <see cref="ServiceEnvironmentVariable"/> to compare.</param>
+    /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
+    public static bool operator !=(ServiceEnvironmentVariable left, ServiceEnvironmentVariable right) => !left.Equals(right);
+
+    /// <summary>
+    /// Converts a string to a <see cref="ServiceEnvironmentVariable"/>.
+    /// </summary>
+    /// <param name="value">The string value to convert.</param>
+    public static implicit operator ServiceEnvironmentVariable(string value) => new ServiceEnvironmentVariable(value);
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override bool Equals(object? obj) => obj is ServiceEnvironmentVariable other && Equals(other);
+
+    /// <inheritdoc/>
+    public bool Equals(ServiceEnvironmentVariable other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+    /// <inheritdoc/>
+    public override string ToString() => _value;
+}
 
 /// <summary>
 /// Contains constants for supported operating systems on Microsoft Playwright Testing.
@@ -56,18 +106,63 @@ internal class ServiceOs
 /// <summary>
 /// Contains constants for authentication methods.
 /// </summary>
-public class ServiceAuthType
+/// /// <remarks>
+/// Initializes a new instance of the <see cref="ServiceAuthType"/> structure.
+/// </remarks>
+/// <param name="value">The string value of the instance.</param>
+public readonly struct ServiceAuthType(string value) : IEquatable<ServiceAuthType>
 {
+    private const string EntraIdValue = "EntraId";
+    private const string AccessTokenValue = "AccessToken";
+
+    private readonly string _value = value ?? throw new ArgumentNullException(nameof(value));
+
     /// <summary>
     /// Entra ID authentication method.
     /// </summary>
-    public static readonly string EntraId = "EntraId";
+    public static ServiceAuthType EntraId { get; } = new ServiceAuthType(EntraIdValue);
 
     /// <summary>
     /// Access token authentication method.
     /// </summary>
-    public static readonly string AccessToken = "AccessToken";
-};
+    public static ServiceAuthType AccessToken { get; } = new ServiceAuthType(AccessTokenValue);
+
+    /// <summary>
+    /// Determines if two <see cref="ServiceAuthType"/> values are the same.
+    /// </summary>
+    /// <param name="left">The first <see cref="ServiceAuthType"/> to compare.</param>
+    /// <param name="right">The second <see cref="ServiceAuthType"/> to compare.</param>
+    /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+    public static bool operator ==(ServiceAuthType left, ServiceAuthType right) => left.Equals(right);
+
+    /// <summary>
+    /// Determines if two <see cref="ServiceAuthType"/> values are different.
+    /// </summary>
+    /// <param name="left">The first <see cref="ServiceAuthType"/> to compare.</param>
+    /// <param name="right">The second <see cref="ServiceAuthType"/> to compare.</param>
+    /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
+    public static bool operator !=(ServiceAuthType left, ServiceAuthType right) => !left.Equals(right);
+
+    /// <summary>
+    /// Converts a string to a <see cref="ServiceAuthType"/>.
+    /// </summary>
+    /// <param name="value">The string value to convert.</param>
+    public static implicit operator ServiceAuthType(string value) => new ServiceAuthType(value);
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override bool Equals(object? obj) => obj is ServiceAuthType other && Equals(other);
+
+    /// <inheritdoc/>
+    public bool Equals(ServiceAuthType other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+    /// <inheritdoc/>
+    public override string ToString() => _value;
+}
 
 /// <summary>
 /// Contains constants for Azure token credential types.
@@ -133,62 +228,116 @@ internal class AzureTokenCredentialType
 /// <summary>
 /// Contains constants for run setting keys.
 /// </summary>
-public class RunSettingKey
+/// /// /// <remarks>
+/// Initializes a new instance of the <see cref="RunSettingKey"/> structure.
+/// </remarks>
+/// <param name="value">The string value of the instance.</param>
+public readonly struct RunSettingKey(string value) : IEquatable<RunSettingKey>
 {
+    private const string RunNameValue = "RunName";
+    private const string NumberOfTestWorkersValue = "NumberOfTestWorkers";
+    private const string EnableResultPublishValue = "EnableResultPublish";
+    private const string EnableGitHubSummaryValue = "EnableGitHubSummary";
+    private const string ManagedIdentityClientIdValue = "ManagedIdentityClientId";
+    private const string AzureTokenCredentialTypeValue = "AzureTokenCredentialType";
+    private const string UseCloudHostedBrowsersValue = "UseCloudHostedBrowsers";
+    private const string ServiceAuthTypeValue = "ServiceAuthType";
+    private const string ExposeNetworkValue = "ExposeNetwork";
+    private const string RunIdValue = "RunId";
+    private const string OsValue = "Os";
+
+    private readonly string _value = value ?? throw new ArgumentNullException(nameof(value));
+
     /// <summary>
     /// The operating system setting key.
     /// </summary>
-    public static readonly string Os = "Os";
+    public static RunSettingKey OS { get; } = new RunSettingKey(OsValue);
 
     /// <summary>
     /// The run ID setting key.
     /// </summary>
-    public static readonly string RunId = "RunId";
+    public static RunSettingKey RunId { get; } = new RunSettingKey(RunIdValue);
 
     /// <summary>
     /// The expose network setting key.
     /// </summary>
-    public static readonly string ExposeNetwork = "ExposeNetwork";
+    public static RunSettingKey ExposeNetwork { get; } = new RunSettingKey(ExposeNetworkValue);
 
     /// <summary>
     /// The default authentication setting key.
     /// </summary>
-    public static readonly string ServiceAuthType = "ServiceAuthType";
+    public static RunSettingKey ServiceAuthType { get; } = new RunSettingKey(ServiceAuthTypeValue);
 
     /// <summary>
     /// The use cloud-hosted browsers setting key.
     /// </summary>
-    public static readonly string UseCloudHostedBrowsers = "UseCloudHostedBrowsers";
+    public static RunSettingKey UseCloudHostedBrowsers { get; } = new RunSettingKey(UseCloudHostedBrowsersValue);
 
     /// <summary>
     /// The Azure token credential type setting key.
     /// </summary>
-    public static readonly string AzureTokenCredentialType = "AzureTokenCredentialType";
+    public static RunSettingKey AzureTokenCredentialType { get; } = new RunSettingKey(AzureTokenCredentialTypeValue);
 
     /// <summary>
     /// The managed identity client ID setting key.
     /// </summary>
-    public static readonly string ManagedIdentityClientId = "ManagedIdentityClientId";
+    public static RunSettingKey ManagedIdentityClientId { get; } = new RunSettingKey(ManagedIdentityClientIdValue);
 
     /// <summary>
     /// Enable GitHub summary setting key.
     /// </summary>
-    public static readonly string EnableGitHubSummary = "EnableGitHubSummary";
+    public static RunSettingKey EnableGitHubSummary { get; } = new RunSettingKey(EnableGitHubSummaryValue);
 
     /// <summary>
     /// Enable Result publish.
     /// </summary>
-    public static readonly string EnableResultPublish = "EnableResultPublish";
+    public static RunSettingKey EnableResultPublish { get; } = new RunSettingKey(EnableResultPublishValue);
 
     /// <summary>
     /// Number of NUnit test workers.
     /// </summary>
-    public static readonly string NumberOfTestWorkers = "NumberOfTestWorkers";
+    public static RunSettingKey NumberOfTestWorkers { get; } = new RunSettingKey(NumberOfTestWorkersValue);
 
     /// <summary>
     /// The run name setting key.
     /// </summary>
-    public static readonly string RunName = "RunName";
+    public static RunSettingKey RunName { get; } = new RunSettingKey(RunNameValue);
+
+    /// <summary>
+    /// Determines if two <see cref="RunSettingKey"/> values are the same.
+    /// </summary>
+    /// <param name="left">The first <see cref="RunSettingKey"/> to compare.</param>
+    /// <param name="right">The second <see cref="RunSettingKey"/> to compare.</param>
+    /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are the same; otherwise, false.</returns>
+    public static bool operator ==(RunSettingKey left, RunSettingKey right) => left.Equals(right);
+
+    /// <summary>
+    /// Determines if two <see cref="RunSettingKey"/> values are different.
+    /// </summary>
+    /// <param name="left">The first <see cref="RunSettingKey"/> to compare.</param>
+    /// <param name="right">The second <see cref="RunSettingKey"/> to compare.</param>
+    /// <returns>True if <paramref name="left"/> and <paramref name="right"/> are different; otherwise, false.</returns>
+    public static bool operator !=(RunSettingKey left, RunSettingKey right) => !left.Equals(right);
+
+    /// <summary>
+    /// Converts a string to a <see cref="RunSettingKey"/>.
+    /// </summary>
+    /// <param name="value">The string value to convert.</param>
+    public static implicit operator RunSettingKey(string value) => new RunSettingKey(value);
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override bool Equals(object? obj) => obj is RunSettingKey other && Equals(other);
+
+    /// <inheritdoc/>
+    public bool Equals(RunSettingKey other) => string.Equals(_value, other._value, StringComparison.Ordinal);
+
+    /// <inheritdoc/>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override int GetHashCode() => _value?.GetHashCode() ?? 0;
+
+    /// <inheritdoc/>
+    public override string ToString() => _value;
 }
 
 internal class Constants

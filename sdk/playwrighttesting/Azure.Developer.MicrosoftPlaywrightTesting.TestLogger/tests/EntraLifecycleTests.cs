@@ -30,7 +30,7 @@ public class EntraLifecycleTests
     [TearDown]
     public void TearDown()
     {
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, null);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), null);
     }
 
     [Test]
@@ -43,7 +43,7 @@ public class EntraLifecycleTests
     [Test]
     public void Constructor_WhenAccessTokenEnvironmentIsSetButTokenIsNotValid_DoesNotInitializeEntraToken()
     {
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, "valid_token");
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString().ToString(), "valid_token");
         EntraLifecycle entraLifecycle = new();
         Assert.That(entraLifecycle._entraIdAccessToken, Is.Null);
     }
@@ -55,7 +55,7 @@ public class EntraLifecycleTests
         {
             {"aid", "account-id-guid"},
         });
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, token);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
         EntraLifecycle entraLifecycle = new();
         Assert.That(entraLifecycle._entraIdAccessToken, Is.Null);
     }
@@ -67,7 +67,7 @@ public class EntraLifecycleTests
         {
             {"accountId", "account-id-guid"},
         });
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, token);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
         EntraLifecycle entraLifecycle = new();
         Assert.That(entraLifecycle._entraIdAccessToken, Is.Null);
     }
@@ -76,7 +76,7 @@ public class EntraLifecycleTests
     public void Constructor_WhenJWTValidationThrowsException_DoesNotInitializeEntraToken()
     {
         var token = GetToken(new Dictionary<string, object>());
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, token);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
         jsonWebTokenHandlerMock
             .Setup(x => x.ReadJsonWebToken(token))
@@ -90,7 +90,7 @@ public class EntraLifecycleTests
     {
         DateTime expiry = DateTime.UtcNow.AddMinutes(10);
         var token = GetToken(new Dictionary<string, object>(), expiry);
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, token);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
         EntraLifecycle entraLifecycle = new();
         Assert.Multiple(() =>
         {
@@ -109,9 +109,9 @@ public class EntraLifecycleTests
             .ReturnsAsync(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
         EntraLifecycle entraLifecycle = new(defaultAzureCredentialMock.Object);
         await entraLifecycle.FetchEntraIdAccessTokenAsync();
-        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken), Is.EqualTo(token));
+        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString()), Is.EqualTo(token));
 
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, null);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), null);
     }
 
     [Test]
@@ -128,7 +128,7 @@ public class EntraLifecycleTests
         Assert.That(entraLifecycle._entraIdAccessToken, Is.EqualTo(token));
         Assert.That(entraLifecycle._entraIdAccessTokenExpiry, Is.EqualTo((int)expiry.ToUnixTimeSeconds()));
 
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, null);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), null);
     }
 
     [Test]
@@ -143,7 +143,7 @@ public class EntraLifecycleTests
         EntraLifecycle entraLifecycle = new(defaultAzureCredentialMock.Object);
         await entraLifecycle.FetchEntraIdAccessTokenAsync();
 
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, null);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), null);
     }
 
     [Test]

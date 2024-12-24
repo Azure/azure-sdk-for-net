@@ -20,7 +20,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
         private readonly CloudRunMetadata _cloudRunMetadata;
         private readonly ICloudRunErrorParser _cloudRunErrorParser;
         private readonly ILogger _logger;
-        private static string AccessToken { get => $"Bearer {Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken)}"; set { } }
+        private static string AccessToken { get => $"Bearer {Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString())}"; set { } }
         private static string CorrelationId { get => Guid.NewGuid().ToString(); set { } }
         private static readonly JsonSerializerOptions _jsonSerializerOptions = new() { DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull };
 

@@ -4,6 +4,7 @@
 using System;
 using System.Runtime.InteropServices;
 using Azure.Core;
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Identity;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
@@ -13,44 +14,103 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 /// </summary>
 public class PlaywrightServiceOptions
 {
-    internal OSPlatform? Os { get; set; }
-    internal string? RunId { get; set; }
-    internal string? ExposeNetwork { get; set; }
-    internal string ServiceAuth { get; set; }
-    internal bool UseCloudHostedBrowsers { get; set; }
-    internal TokenCredential AzureTokenCredential { get; set; }
-
+    private OSPlatform? _os;
     /// <summary>
-    /// Initializes a new instance of the <see cref="PlaywrightServiceOptions"/> class.
+    /// Gets or sets the operating system for Playwright service.
     /// </summary>
-    /// <param name="os">The operating system.</param>
-    /// <param name="runId">The run ID.</param>
-    /// <param name="exposeNetwork">The network exposure.</param>
-    /// <param name="serviceAuth">The default authentication mechanism.</param>
-    /// <param name="useCloudHostedBrowsers">Whether to use cloud-hosted browsers.</param>
-    /// <param name="azureTokenCredentialType">The Azure token credential type.</param>
-    /// <param name="managedIdentityClientId">The managed identity client ID.</param>
-    public PlaywrightServiceOptions(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, string? useCloudHostedBrowsers = null, string? azureTokenCredentialType = null, string? managedIdentityClientId = null)
+    public OSPlatform? OS
     {
-        Os = os;
-        RunId = runId;
-        ExposeNetwork = exposeNetwork;
-        ServiceAuth = serviceAuth ?? ServiceAuthType.EntraId;
-        UseCloudHostedBrowsers = string.IsNullOrEmpty(useCloudHostedBrowsers) || bool.Parse(useCloudHostedBrowsers!);
-        AzureTokenCredential = GetTokenCredential(azureTokenCredentialType, managedIdentityClientId);
-        Validate();
+        get => _os;
+        set
+        {
+            if (value != null && value != OSPlatform.Linux && value != OSPlatform.Windows)
+            {
+                throw new ArgumentException($"Invalid value for OS. Supported values are {OSPlatform.Linux}, {OSPlatform.Windows}");
+            }
+            _os = value;
+        }
     }
 
-    private void Validate()
+    private string? _runId;
+    /// <summary>
+    /// Gets or sets the run ID.
+    /// </summary>
+    public string? RunId
     {
-        if (Os != null && Os != OSPlatform.Linux && Os != OSPlatform.Windows)
+        get => _runId;
+        set => _runId = value;
+    }
+
+    private string? _exposeNetwork;
+    /// <summary>
+    /// Gets or sets the expose network field for remote browsers.
+    /// </summary>
+    public string? ExposeNetwork
+    {
+        get => _exposeNetwork;
+        set => _exposeNetwork = value;
+    }
+
+    private ServiceAuthType _serviceAuth = ServiceAuthType.EntraId;
+    /// <summary>
+    /// Gets or sets the default authentication mechanism.
+    /// </summary>
+    public ServiceAuthType ServiceAuth
+    {
+        get => _serviceAuth;
+        set
         {
-            throw new Exception($"Invalid value for {nameof(Os)}: {Os}. Supported values are {ServiceOs.Linux} and {ServiceOs.Windows}");
+            if (value != ServiceAuthType.EntraId && value != ServiceAuthType.AccessToken)
+            {
+                throw new ArgumentException($"Invalid value for ServiceAuth. Supported values are {ServiceAuthType.EntraId}, {ServiceAuthType.AccessToken}");
+            }
+            _serviceAuth = value;
         }
-        if (!string.IsNullOrEmpty(ServiceAuth) && ServiceAuth != ServiceAuthType.EntraId && ServiceAuth != ServiceAuthType.AccessToken)
-        {
-            throw new Exception($"Invalid value for {nameof(ServiceAuth)}: {ServiceAuth}. Supported values are {ServiceAuthType.EntraId} and {ServiceAuthType.AccessToken}");
-        }
+    }
+
+    private bool _useCloudHostedBrowsers = true;
+    /// <summary>
+    /// Gets or sets a flag indicating whether to use cloud-hosted browsers.
+    /// </summary>
+    public bool UseCloudHostedBrowsers
+    {
+        get => _useCloudHostedBrowsers;
+        set => _useCloudHostedBrowsers = value;
+    }
+
+    internal TokenCredential AzureTokenCredential
+    {
+        get => GetTokenCredential(TokenCredentialType, ManagedIdentityClientId);
+    }
+
+    private string? _tokenCredentialType;
+    /// <summary>
+    /// Gets or sets the Azure token credential type.
+    /// </summary>
+    public string? TokenCredentialType
+    {
+        get => _tokenCredentialType;
+        set => _tokenCredentialType = value;
+    }
+
+    private string? _managedIdentityClientId;
+    /// <summary>
+    /// Gets or sets the managed identity client ID.
+    /// </summary>
+    public string? ManagedIdentityClientId
+    {
+        get => _managedIdentityClientId;
+        set => _managedIdentityClientId = value;
+    }
+
+    private IFrameworkLogger? _frameworkLogger;
+    /// <summary>
+    /// Gets or sets the logger.
+    /// </summary>
+    public IFrameworkLogger? FrameworkLogger
+    {
+        get => _frameworkLogger;
+        set => _frameworkLogger = value;
     }
 
     private static TokenCredential GetTokenCredential(string? azureTokenCredentialType, string? managedIdentityClientId)
