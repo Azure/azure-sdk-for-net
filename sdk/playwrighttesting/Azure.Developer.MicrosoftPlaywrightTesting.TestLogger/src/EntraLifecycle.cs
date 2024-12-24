@@ -5,6 +5,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Identity;
 using Microsoft.IdentityModel.JsonWebTokens;
@@ -33,6 +34,24 @@ internal class EntraLifecycle
         {
             var tokenRequestContext = new TokenRequestContext(Constants.s_entra_access_token_scopes);
             AccessToken accessToken = await _tokenCredential.GetTokenAsync(tokenRequestContext, cancellationToken).ConfigureAwait(false);
+            _entraIdAccessToken = accessToken.Token;
+            _entraIdAccessTokenExpiry = accessToken.ExpiresOn.ToUnixTimeSeconds();
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), _entraIdAccessToken);
+            return;
+        }
+        catch (Exception ex)
+        {
+            _frameworkLogger?.Error(ex.ToString());
+            throw new Exception(Constants.s_no_auth_error);
+        }
+    }
+
+    internal void FetchEntraIdAccessToken(CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            var tokenRequestContext = new TokenRequestContext(Constants.s_entra_access_token_scopes);
+            AccessToken accessToken = _tokenCredential.GetToken(tokenRequestContext, cancellationToken);
             _entraIdAccessToken = accessToken.Token;
             _entraIdAccessTokenExpiry = accessToken.ExpiresOn.ToUnixTimeSeconds();
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), _entraIdAccessToken);

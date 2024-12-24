@@ -193,7 +193,7 @@ public class PlaywrightServiceTests
     }
 
     [Test]
-    public void Initialize_WhenServiceEnpointIsNotSet_NoOP()
+    public void InitializeAsync_WhenServiceEnpointIsNotSet_NoOP()
     {
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), null);
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
@@ -205,7 +205,7 @@ public class PlaywrightServiceTests
     }
 
     [Test]
-    public void Initialize_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsSet_FetchesEntraIdAccessToken()
+    public void InitializeAsync_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsSet_FetchesEntraIdAccessToken()
     {
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
@@ -225,7 +225,7 @@ public class PlaywrightServiceTests
     }
 
     [Test]
-    public void Initialize_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsSetAndCredentialsArePassed_FetchesEntraIdAccessTokenUsedPassedCredentials()
+    public void InitializeAsync_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsSetAndCredentialsArePassed_FetchesEntraIdAccessTokenUsedPassedCredentials()
     {
         var tokenCredential = new Mock<TokenCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
@@ -244,7 +244,7 @@ public class PlaywrightServiceTests
     }
 
     [Test]
-    public void Initialize_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsSetButScalableExecutionIsDisabled_DeletesServiceUrlEnvVariable()
+    public void InitializeAsync_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsSetButScalableExecutionIsDisabled_DeletesServiceUrlEnvVariable()
     {
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
@@ -267,7 +267,7 @@ public class PlaywrightServiceTests
     }
 
     [Test]
-    public void Initialize_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsNotSet_FetchesEntraIdAccessToken()
+    public void InitializeAsync_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsNotSet_FetchesEntraIdAccessToken()
     {
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
@@ -284,7 +284,7 @@ public class PlaywrightServiceTests
     }
 
     [Test]
-    public void Initialize_WhenFetchesEntraIdAccessToken_SetsUpRotationHandler()
+    public void InitializeAsync_WhenFetchesEntraIdAccessToken_SetsUpRotationHandler()
     {
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
@@ -302,7 +302,7 @@ public class PlaywrightServiceTests
     }
 
     [Test]
-    public void Initialize_WhenFailsToFetchEntraIdAccessToken_ThrowsException()
+    public void InitializeAsync_WhenFailsToFetchEntraIdAccessToken_ThrowsException()
     {
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
@@ -316,7 +316,7 @@ public class PlaywrightServiceTests
     }
 
     [Test]
-    public void Initialize_WhenEntraIdAccessTokenFailsAndMptPatIsSet_ThrowsException()
+    public void InitializeAsync_WhenEntraIdAccessTokenFailsAndMptPatIsSet_ThrowsException()
     {
         var token = GetToken(new Dictionary<string, object>
         {
@@ -334,7 +334,7 @@ public class PlaywrightServiceTests
     }
 
     [Test]
-    public void Initialize_WhenEntraIdAccessTokenFailsAndMptPatIsNotSet_ThrowsException()
+    public void InitializeAsync_WhenEntraIdAccessTokenFailsAndMptPatIsNotSet_ThrowsException()
     {
         var token = GetToken(new Dictionary<string, object>
         {
@@ -351,7 +351,7 @@ public class PlaywrightServiceTests
     }
 
     [Test]
-    public void Initialize_WhenEntraIdAccessTokenFailsAndMptPatIsNotValid_ThrowsError()
+    public void InitializeAsync_WhenEntraIdAccessTokenFailsAndMptPatIsNotValid_ThrowsError()
     {
         var token = "sample token";
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
@@ -365,7 +365,7 @@ public class PlaywrightServiceTests
     }
 
     [Test]
-    public void Initialize_WhenEntraIdAccessTokenFailsAndMptPatTokenParsingReturnsNull_ThrowsError()
+    public void InitializeAsync_WhenEntraIdAccessTokenFailsAndMptPatTokenParsingReturnsNull_ThrowsError()
     {
         var token = "sample token";
         Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
@@ -385,7 +385,7 @@ public class PlaywrightServiceTests
     }
 
     [Test]
-    public void Initialize_WhenEntraIdAccessTokenFailsAndMptPatIsExpired_ThrowsError()
+    public void InitializeAsync_WhenEntraIdAccessTokenFailsAndMptPatIsExpired_ThrowsError()
     {
         var token = GetToken(new Dictionary<string, object>
         {
@@ -400,6 +400,241 @@ public class PlaywrightServiceTests
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: new JsonWebTokenHandler());
 
         Assert.That(() => service.InitializeAsync().Wait(), Throws.Exception);
+    }
+
+    [Test]
+    public void InitializeAsync_WhenDefaultAuthIsMptPATAndPATIsSet_DoesNotSetUpRotationHandler()
+    {
+        var token = GetToken(new Dictionary<string, object>
+        {
+            {"aid", "eastus_bd830e63-6120-40cb-8cd7-f0739502d888"},
+        });
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
+        var testRubric = new Dictionary<string, string>
+        {
+            { "url", "wss://eastus.api.playwright.microsoft.com/accounts/eastus_bd830e63-6120-40cb-8cd7-f0739502d888/browsers" },
+            { "workspaceId", "eastus_bd830e63-6120-40cb-8cd7-f0739502d888" },
+            { "region", "eastus" },
+            { "domain", "playwright.microsoft.com" }
+        };
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), $"{testRubric["url"]}");
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null);
+        PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: new JsonWebTokenHandler(), serviceAuth: ServiceAuthType.AccessToken.ToString());
+        service.InitializeAsync().Wait();
+        Assert.That(service.RotationTimer, Is.Null);
+    }
+
+    // avc
+
+    [Test]
+    public void Initialize_WhenServiceEnpointIsNotSet_NoOP()
+    {
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), null);
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
+        PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object);
+        service.Initialize();
+        defaultAzureCredentialMock.Verify(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Never);
+    }
+
+    [Test]
+    public void Initialize_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsSet_FetchesEntraIdAccessToken()
+    {
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        var token = "valid_token";
+        defaultAzureCredentialMock
+            .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .Returns(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), "access_token");
+        PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object);
+        service.Initialize();
+        defaultAzureCredentialMock.Verify(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
+
+        service.RotationTimer!.Dispose();
+
+        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString()), Is.Not.Null);
+    }
+
+    [Test]
+    public void Initialize_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsSetAndCredentialsArePassed_FetchesEntraIdAccessTokenUsedPassedCredentials()
+    {
+        var tokenCredential = new Mock<TokenCredential>();
+        var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        var token = "valid_token";
+        tokenCredential
+            .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .Returns(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), "access_token");
+        PlaywrightService service = new(credential: tokenCredential.Object, new PlaywrightServiceOptions());
+        service.Initialize();
+        tokenCredential.Verify(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
+
+        service.RotationTimer!.Dispose();
+
+        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString()), Is.Not.Null);
+    }
+
+    [Test]
+    public void Initialize_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsSetButScalableExecutionIsDisabled_DeletesServiceUrlEnvVariable()
+    {
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        var token = "valid_token";
+        defaultAzureCredentialMock
+            .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .Returns(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), "access_token");
+        PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, useCloudHostedBrowsers: false);
+
+        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString()), Is.Not.Null);
+
+        service.Initialize();
+        defaultAzureCredentialMock.Verify(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Never);
+
+        Assert.That(service.RotationTimer, Is.Null);
+
+        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString()), Is.Null);
+    }
+
+    [Test]
+    public void Initialize_WhenDefaultAuthIsEntraIdAccessTokenAndAccessTokenEnvironmentVariableIsNotSet_FetchesEntraIdAccessToken()
+    {
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        var token = "valid_token";
+        defaultAzureCredentialMock
+            .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .Returns(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
+        PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object);
+        service.Initialize();
+        defaultAzureCredentialMock.Verify(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
+
+        service.RotationTimer!.Dispose();
+    }
+
+    [Test]
+    public void Initialize_WhenFetchesEntraIdAccessToken_SetsUpRotationHandler()
+    {
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        var token = "valid_token";
+        defaultAzureCredentialMock
+            .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .Returns(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
+        PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object);
+        service.Initialize();
+        defaultAzureCredentialMock.Verify(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()), Times.Once);
+        Assert.That(service.RotationTimer, Is.Not.Null);
+
+        service.RotationTimer!.Dispose();
+    }
+
+    [Test]
+    public void Initialize_WhenFailsToFetchEntraIdAccessToken_ThrowsException()
+    {
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+        defaultAzureCredentialMock
+            .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .Throws(new Exception());
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, jsonWebTokenHandlerMock.Object, null);
+        PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object);
+        Exception? ex = Assert.Throws<Exception>(() => service.Initialize());
+        Assert.That(ex!.Message, Is.EqualTo(Constants.s_no_auth_error));
+    }
+
+    [Test]
+    public void Initialize_WhenEntraIdAccessTokenFailsAndMptPatIsSet_ThrowsException()
+    {
+        var token = GetToken(new Dictionary<string, object>
+        {
+            {"aid", "account-id-guid"},
+        });
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        defaultAzureCredentialMock
+            .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .Throws(new Exception());
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null);
+        PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: new JsonWebTokenHandler());
+        Exception? ex = Assert.Throws<Exception>(() => service.Initialize());
+        Assert.That(ex!.Message, Is.EqualTo(Constants.s_no_auth_error));
+    }
+
+    [Test]
+    public void Initialize_WhenEntraIdAccessTokenFailsAndMptPatIsNotSet_ThrowsException()
+    {
+        var token = GetToken(new Dictionary<string, object>
+        {
+            {"aid", "account-id-guid"},
+        });
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        defaultAzureCredentialMock
+            .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .Throws(new Exception());
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null);
+        PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: new JsonWebTokenHandler());
+        Exception? ex = Assert.Throws<Exception>(() => service.Initialize());
+        Assert.That(ex!.Message, Is.EqualTo(Constants.s_no_auth_error));
+    }
+
+    [Test]
+    public void Initialize_WhenEntraIdAccessTokenFailsAndMptPatIsNotValid_ThrowsError()
+    {
+        var token = "sample token";
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        defaultAzureCredentialMock
+            .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .Throws(new Exception());
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null);
+        PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: new JsonWebTokenHandler());
+        Assert.That(() => service.Initialize(), Throws.Exception);
+    }
+
+    [Test]
+    public void Initialize_WhenEntraIdAccessTokenFailsAndMptPatTokenParsingReturnsNull_ThrowsError()
+    {
+        var token = "sample token";
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
+        var jsonWebTokenHandlerMock = new Mock<JsonWebTokenHandler>();
+#pragma warning disable CS8625 // Cannot convert null literal to non-nullable reference type.
+        jsonWebTokenHandlerMock
+            .Setup(x => x.ReadJsonWebToken(It.IsAny<string>()))
+            .Returns(value: null);
+#pragma warning restore CS8625 // Cannot convert null literal to non-nullable reference type.
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        defaultAzureCredentialMock
+            .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .Throws(new Exception());
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null);
+        PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: jsonWebTokenHandlerMock.Object);
+        Assert.That(() => service.Initialize(), Throws.Exception);
+    }
+
+    [Test]
+    public void Initialize_WhenEntraIdAccessTokenFailsAndMptPatIsExpired_ThrowsError()
+    {
+        var token = GetToken(new Dictionary<string, object>
+        {
+            {"aid", "account-id-guid"},
+        }, DateTime.UtcNow.AddMinutes(-1));
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), token);
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        defaultAzureCredentialMock
+            .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .Throws(new Exception());
+        var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null);
+        PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: new JsonWebTokenHandler());
+
+        Assert.That(() => service.Initialize(), Throws.Exception);
     }
 
     [Test]
@@ -421,7 +656,7 @@ public class PlaywrightServiceTests
         var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
         var entraLifecycleMock = new Mock<EntraLifecycle>(defaultAzureCredentialMock.Object, new JsonWebTokenHandler(), null);
         PlaywrightService service = new(entraLifecycle: entraLifecycleMock.Object, jsonWebTokenHandler: new JsonWebTokenHandler(), serviceAuth: ServiceAuthType.AccessToken.ToString());
-        service.InitializeAsync().Wait();
+        service.Initialize();
         Assert.That(service.RotationTimer, Is.Null);
     }
 

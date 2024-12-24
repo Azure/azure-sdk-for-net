@@ -157,7 +157,67 @@ public class EntraLifecycleTests
           Exception? ex = Assert.ThrowsAsync<Exception>(async () =>
         await entraLifecycle.FetchEntraIdAccessTokenAsync());
 
-    Assert.That(ex!.Message, Is.EqualTo(Constants.s_no_auth_error));
+        Assert.That(ex!.Message, Is.EqualTo(Constants.s_no_auth_error));
+    }
+
+    [Test]
+    public void FetchEntraIdAccessToken_WhenTokenIsFetched_SetsEnvironmentVariable()
+    {
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        var token = "valid_token";
+        defaultAzureCredentialMock
+            .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .Returns(new AccessToken(token, DateTimeOffset.UtcNow.AddMinutes(10)));
+        EntraLifecycle entraLifecycle = new(defaultAzureCredentialMock.Object);
+        entraLifecycle.FetchEntraIdAccessToken();
+        Assert.That(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString()), Is.EqualTo(token));
+
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), null);
+    }
+
+    [Test]
+    public void FetchEntraIdAccessToken_WhenTokenIsFetched_SetsTokenAndExpiry()
+    {
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        var token = "valid_token";
+        DateTimeOffset expiry = DateTimeOffset.UtcNow.AddMinutes(10);
+        defaultAzureCredentialMock
+            .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .Returns(new AccessToken(token, expiry));
+        EntraLifecycle entraLifecycle = new(defaultAzureCredentialMock.Object);
+        entraLifecycle.FetchEntraIdAccessToken();
+        Assert.That(entraLifecycle._entraIdAccessToken, Is.EqualTo(token));
+        Assert.That(entraLifecycle._entraIdAccessTokenExpiry, Is.EqualTo((int)expiry.ToUnixTimeSeconds()));
+
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), null);
+    }
+
+    [Test]
+    public void FetchEntraIdAccessToken_WhenTokenIsFetched_ReturnVoid()
+    {
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        var token = "valid_token";
+        DateTimeOffset expiry = DateTimeOffset.UtcNow.AddMinutes(10);
+        defaultAzureCredentialMock
+            .Setup(x => x.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new AccessToken(token, expiry));
+        EntraLifecycle entraLifecycle = new(defaultAzureCredentialMock.Object);
+        entraLifecycle.FetchEntraIdAccessToken();
+
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), null);
+    }
+
+    [Test]
+    public void FetchEntraIdAccessToken_WhenThrowsError()
+    {
+        var defaultAzureCredentialMock = new Mock<DefaultAzureCredential>();
+        defaultAzureCredentialMock
+            .Setup(x => x.GetToken(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .Throws(new Exception("sample exception"));
+        EntraLifecycle entraLifecycle = new(defaultAzureCredentialMock.Object);
+        Exception? ex = Assert.Throws<Exception>(() => entraLifecycle.FetchEntraIdAccessToken());
+
+        Assert.That(ex!.Message, Is.EqualTo(Constants.s_no_auth_error));
     }
 
     [Test]

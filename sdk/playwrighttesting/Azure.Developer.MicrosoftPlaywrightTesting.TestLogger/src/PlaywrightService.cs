@@ -245,6 +245,36 @@ public class PlaywrightService
     }
 
     /// <summary>
+    /// Initialises the resources used to setup entra id authentication.
+    /// </summary>
+    public void Initialize(CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrEmpty(ServiceEndpoint))
+        {
+            _frameworkLogger?.Info("Exiting initialization as service endpoint is not set.");
+            return;
+        }
+        if (!UseCloudHostedBrowsers)
+        {
+            // Since playwright-dotnet checks PLAYWRIGHT_SERVICE_ACCESS_TOKEN and PLAYWRIGHT_SERVICE_URL to be set, remove PLAYWRIGHT_SERVICE_URL so that tests are run locally.
+            // If customers use GetConnectOptionsAsync, after setting disableScalableExecution, an error will be thrown.
+            _frameworkLogger?.Info("Disabling scalable execution since UseCloudHostedBrowsers is set to false.");
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), null);
+            return;
+        }
+        // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler
+        if (ServiceAuth == ServiceAuthType.AccessToken)
+        {
+            _frameworkLogger?.Info("Auth mechanism is Access Token.");
+            ValidateMptPAT();
+            return;
+        }
+        _frameworkLogger?.Info("Auth mechanism is Entra Id.");
+        _entraLifecycle!.FetchEntraIdAccessToken(cancellationToken);
+        RotationTimer = new Timer(RotationHandlerAsync, null, TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes), TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes));
+    }
+
+    /// <summary>
     /// Cleans up the resources used to setup entra id authentication.
     /// </summary>
     public void Cleanup()
