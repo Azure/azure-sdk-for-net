@@ -1,5 +1,5 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT License.
 
 using System;
 using System.Buffers;
@@ -11,69 +11,54 @@ using MessagePack.Formatters;
 using MessagePack.Resolvers;
 
 using Microsoft.AspNetCore.Connections;
-using Microsoft.Extensions.Options;
 
 namespace Microsoft.AspNetCore.SignalR.Protocol;
 
+#nullable enable
+
 /// <summary>
 /// Implements the SignalR Hub Protocol using MessagePack.
+/// A trimmed version of https://github.com/dotnet/aspnetcore/blob/0825def633c99d9fdd74e47e69bcde3935a5fe74/
 /// </summary>
-public class MessagePackHubProtocol : IHubProtocol
+internal class MessagePackHubProtocol : IHubProtocol
 {
     private const string ProtocolName = "messagepack";
     private const int ProtocolVersion = 2;
     private readonly DefaultMessagePackHubProtocolWorker _worker;
+    private readonly MessagePackSerializerOptions _messagePackSerializerOptions =
+        MessagePackSerializerOptions
+            .Standard
+            .WithResolver(SignalRResolver.Instance)
+            .WithSecurity(MessagePackSecurity.UntrustedData);
 
-    /// <inheritdoc />
     public string Name => ProtocolName;
 
-    /// <inheritdoc />
     public int Version => ProtocolVersion;
 
-    /// <inheritdoc />
     public TransferFormat TransferFormat => TransferFormat.Binary;
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="MessagePackHubProtocol"/> class.
-    /// </summary>
     public MessagePackHubProtocol()
-        : this(Options.Create(new MessagePackHubProtocolOptions()))
-    { }
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="MessagePackHubProtocol"/> class.
-    /// </summary>
-    /// <param name="options">The options used to initialize the protocol.</param>
-    public MessagePackHubProtocol(IOptions<MessagePackHubProtocolOptions> options)
     {
-        ArgumentNullThrowHelper.ThrowIfNull(options);
-
-        _worker = new DefaultMessagePackHubProtocolWorker(options.Value.SerializerOptions);
+        _worker = new DefaultMessagePackHubProtocolWorker(_messagePackSerializerOptions);
     }
 
-    /// <inheritdoc />
     public bool IsVersionSupported(int version)
     {
         return version <= Version;
     }
 
-    /// <inheritdoc />
+#if NETSTANDARD2_0
+    public bool TryParseMessage(ref ReadOnlySequence<byte> input, IInvocationBinder binder, out HubMessage? message)
+#else
     public bool TryParseMessage(ref ReadOnlySequence<byte> input, IInvocationBinder binder, [NotNullWhen(true)] out HubMessage? message)
-        => _worker.TryParseMessage(ref input, binder, out message);
+#endif
+        => throw new NotImplementedException();
 
-    /// <inheritdoc />
     public void WriteMessage(HubMessage message, IBufferWriter<byte> output)
         => _worker.WriteMessage(message, output);
 
-    /// <inheritdoc />
     public ReadOnlyMemory<byte> GetMessageBytes(HubMessage message)
         => _worker.GetMessageBytes(message);
-
-    internal static MessagePackSerializerOptions CreateDefaultMessagePackSerializerOptions() =>
-        MessagePackSerializerOptions
-            .Standard
-            .WithResolver(SignalRResolver.Instance)
-            .WithSecurity(MessagePackSecurity.UntrustedData);
 
     internal sealed class SignalRResolver : IFormatterResolver
     {
