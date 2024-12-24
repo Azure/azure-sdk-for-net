@@ -1,14 +1,18 @@
 # Release History
 
-## 1.10.0-beta.2 (Unreleased)
+## 1.10.0 (2024-12-20)
 
 ### Features Added
 
-### Breaking Changes
+- Upgraded api-version tag from 'package-2024-03' to 'package-2024-05'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/5dc3201e0fd56e77cd54d8f79867af4d3f57a51b/specification/network/resource-manager/readme.md.
 
 ### Bugs Fixed
 
+- Fixed an issue that the `AzureFirewallIPGroups` can't handle number type `ChangeNumber`.
+
 ### Other Changes
+
+- Upgraded Azure.Core from 1.42.0 to 1.44.1
 
 ## 1.10.0-beta.1 (2024-12-11)
 
@@ -325,7 +329,7 @@ networkClient.SubscriptionId = subscriptionId;
 var vnet = new VirtualNetwork()
 {
     Location = "westus",
-    AddressSpace = new AddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16" } },
+    AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = new List<string>() { "10.0.0.0/16" } },
     Subnets = new List<Subnet>()
     {
         new Subnet()

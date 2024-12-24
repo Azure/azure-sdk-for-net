@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "test", "value" } },
                 GatewayIPAddress = gatewayIp,
-                LocalNetworkAddressSpace = new AddressSpace()
+                LocalNetworkAddressSpace = new VirtualNetworkAddressSpace()
                 {
                     AddressPrefixes = { "192.168.0.0/16", }
                 }
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.Network.Tests
             var vnetData1 = new VirtualNetworkData()
             {
                 Location = location1,
-                AddressSpace = new AddressSpace()
+                AddressSpace = new VirtualNetworkAddressSpace()
                 {
                     AddressPrefixes = { "10.54.0.0/16", }
                 },
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Network.Tests
             var vnetData2 = new VirtualNetworkData()
             {
                 Location = location2,
-                AddressSpace = new AddressSpace()
+                AddressSpace = new VirtualNetworkAddressSpace()
                 {
                     AddressPrefixes = { "10.55.0.0/16", }
                 },
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "test", "value" } },
                 GatewayIPAddress = gatewayIp,
-                LocalNetworkAddressSpace = new AddressSpace()
+                LocalNetworkAddressSpace = new VirtualNetworkAddressSpace()
                 {
                     AddressPrefixes = { addressPrefixes, }
                 }
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.Network.Tests
             Assert.AreEqual(addressPrefixes, getLocalNetworkGatewayResponse.Value.Data.LocalNetworkAddressSpace.AddressPrefixes[0].ToString());
 
             // 3A. UpdateLocalNetworkgateway API :- LocalNetworkGatewayResource LocalNetworkAddressSpace from "192.168.0.0/16" => "200.168.0.0/16"
-            getLocalNetworkGatewayResponse.Value.Data.LocalNetworkAddressSpace = new AddressSpace() { AddressPrefixes = { newAddressPrefixes, } };
+            getLocalNetworkGatewayResponse.Value.Data.LocalNetworkAddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { newAddressPrefixes, } };
 
             putLocalNetworkGatewayResponseOperation = await localNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, localNetworkGatewayName, getLocalNetworkGatewayResponse.Value.Data);
             putLocalNetworkGatewayResponse = await putLocalNetworkGatewayResponseOperation.WaitForCompletionAsync();
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "test", "value" } },
                 GatewayIPAddress = gatewayIp,
-                LocalNetworkAddressSpace = new AddressSpace()
+                LocalNetworkAddressSpace = new VirtualNetworkAddressSpace()
                 {
                     AddressPrefixes = { "192.168.0.0/16", }
                 },
@@ -794,7 +794,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "test", "value" } },
                 GatewayIPAddress = gatewayIp,
-                LocalNetworkAddressSpace = new AddressSpace()
+                LocalNetworkAddressSpace = new VirtualNetworkAddressSpace()
                 {
                     AddressPrefixes = { "192.168.0.0/16", }
                 }
@@ -996,7 +996,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "test", "value" } },
                 GatewayIPAddress = gatewayIp,
-                LocalNetworkAddressSpace = new AddressSpace()
+                LocalNetworkAddressSpace = new VirtualNetworkAddressSpace()
                 {
                     AddressPrefixes = { "192.168.0.0/16", }
                 }
@@ -1227,7 +1227,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "test", "value" } },
                 GatewayIPAddress = gatewayIp,
-                LocalNetworkAddressSpace = new AddressSpace()
+                LocalNetworkAddressSpace = new VirtualNetworkAddressSpace()
                 {
                     AddressPrefixes = { "192.168.0.0/16", }
                 }
@@ -1302,7 +1302,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "test", "value" } },
                 GatewayIPAddress = gatewayIp,
-                LocalNetworkAddressSpace = new AddressSpace() { AddressPrefixes = { "192.168.0.0/16", } }
+                LocalNetworkAddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "192.168.0.0/16", } }
             };
 
             var localNetworkGatewayCollection = GetResourceGroup(resourceGroupName).GetLocalNetworkGateways();
@@ -1359,7 +1359,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 VpnClientConfiguration = new VpnClientConfiguration()
                 {
-                    VpnClientAddressPool = new AddressSpace() { AddressPrefixes = { addressPrefixes } }
+                    VpnClientAddressPool = new VirtualNetworkAddressSpace() { AddressPrefixes = { addressPrefixes } }
                 }
             };
 
@@ -1386,7 +1386,7 @@ namespace Azure.ResourceManager.Network.Tests
             // 3.Update P2S VPNClient Address Pool
             getVirtualNetworkGatewayResponse.Value.Data.VpnClientConfiguration = new VpnClientConfiguration()
             {
-                VpnClientAddressPool = new AddressSpace() { AddressPrefixes = { newAddressPrefixes } }
+                VpnClientAddressPool = new VirtualNetworkAddressSpace() { AddressPrefixes = { newAddressPrefixes } }
             };
             getVirtualNetworkGatewayResponse.Value.Data.VpnClientConfiguration.VpnClientAddressPool.AddressPrefixes.Add(newAddressPrefixes);
             putVirtualNetworkGatewayResponseOperation = await virtualNetworkGatewayCollection.CreateOrUpdateAsync(WaitUntil.Completed, virtualNetworkGatewayName, getVirtualNetworkGatewayResponse.Value.Data);
@@ -1605,7 +1605,7 @@ namespace Azure.ResourceManager.Network.Tests
             var vnet1 = new VirtualNetworkData()
             {
                 Location = location,
-                AddressSpace = new AddressSpace() { AddressPrefixes = { "10.1.0.0/16" } },
+                AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.1.0.0/16" } },
                 Subnets = { new SubnetData() { Name = gatewaySubnetName, AddressPrefix = "10.1.1.0/24" } }
             };
             PublicIPAddressResource publicIPAddress = await CreateDefaultPublicIpAddress(gw1IpName, resourceGroupName, gw1IpDomainNameLabel, location);
@@ -1634,7 +1634,7 @@ namespace Azure.ResourceManager.Network.Tests
             var vnet2 = new VirtualNetworkData()
             {
                 Location = location,
-                AddressSpace = new AddressSpace() { AddressPrefixes = { "10.2.0.0/16" } },
+                AddressSpace = new VirtualNetworkAddressSpace() { AddressPrefixes = { "10.2.0.0/16" } },
                 Subnets = { new SubnetData() { Name = gatewaySubnetName, AddressPrefix = "10.2.1.0/24", } }
             };
             var vnet2Operation = await virtualNetworkCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnet2Name, vnet2);
@@ -1784,7 +1784,7 @@ namespace Azure.ResourceManager.Network.Tests
                 },
                 VpnClientConfiguration = new VpnClientConfiguration()
                 {
-                    VpnClientAddressPool = new AddressSpace()
+                    VpnClientAddressPool = new VirtualNetworkAddressSpace()
                     {
                         AddressPrefixes = { addressPrefixes },
                     }
@@ -1826,7 +1826,7 @@ namespace Azure.ResourceManager.Network.Tests
             string newAddressPrefixes = "200.168.0.0/16";
             getVirtualNetworkGatewayResponse.Value.Data.VpnClientConfiguration = new VpnClientConfiguration()
             {
-                VpnClientAddressPool = new AddressSpace()
+                VpnClientAddressPool = new VirtualNetworkAddressSpace()
                 {
                     AddressPrefixes = { newAddressPrefixes }
                 },
@@ -1881,7 +1881,7 @@ namespace Azure.ResourceManager.Network.Tests
                 Location = location,
                 Tags = { { "test", "value" } },
                 GatewayIPAddress = gatewayIp,
-                LocalNetworkAddressSpace = new AddressSpace()
+                LocalNetworkAddressSpace = new VirtualNetworkAddressSpace()
                 {
                     AddressPrefixes = { "192.168.0.0/16", }
                 }

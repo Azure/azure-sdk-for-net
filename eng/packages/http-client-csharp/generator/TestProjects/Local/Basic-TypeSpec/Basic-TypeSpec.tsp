@@ -15,13 +15,24 @@ import "@azure-tools/typespec-azure-core";
     basicTypeSpecUrl: string,
   }
 )
-@useAuth(ApiKeyAuth<ApiKeyLocation.header, "my-api-key">)
+@useAuth(ApiKeyAuth<ApiKeyLocation.header, "my-api-key"> | AadToken)
 namespace BasicTypeSpec;
 
 using TypeSpec.Http;
 using TypeSpec.Versioning;
 using Azure.ClientGenerator.Core;
 using Azure.Core;
+
+@doc("The Azure Active Directory OAuth2 Flow")
+model AadToken
+  is OAuth2Auth<[
+    {
+      type: OAuth2FlowType.authorizationCode;
+      authorizationUrl: "https://login.microsoftonline.com/common/oauth2/v2.0/authorize";
+      tokenUrl: "https://login.microsoftonline.com/common/oauth2/token";
+      scopes: ["https://theservice.azure.com/.default"];
+    }
+  ]>;
 
 enum Versions {
   `2024-07-16-preview`,

@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System.IO;
@@ -14,17 +14,17 @@ namespace Azure.Generator.Tests.Common
             [CallerMemberName] string method = "",
             [CallerFilePath] string filePath = "")
         {
-            return File.ReadAllText(GetAssetFileOrDirectoryPath(true, parameters, method, filePath));
+            return File.ReadAllText(GetAssetFileOrDirectoryPath(true, parameters, method, filePath)).Replace("\r\n", "\n");
         }
 
-        public static string GetAssetFileOrDirectoryPath(
+        private static string GetAssetFileOrDirectoryPath(
             bool isFile,
             string? parameters = null,
             [CallerMemberName] string method = "",
             [CallerFilePath] string filePath = "")
         {
 
-            var callingClass =  Path.GetFileName(filePath).Split('.').First();
+            var callingClass = Path.GetFileName(filePath).Split('.').First();
             var paramString = parameters is null ? string.Empty : $"({parameters})";
             var extName = isFile ? ".cs" : string.Empty;
 
