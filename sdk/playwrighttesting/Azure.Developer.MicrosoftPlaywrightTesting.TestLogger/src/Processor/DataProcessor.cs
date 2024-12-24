@@ -7,6 +7,7 @@ using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using Microsoft.Extensions.Logging;
 using System.Linq;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
 using System.Text.Json;

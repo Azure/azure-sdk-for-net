@@ -3,13 +3,13 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
@@ -595,7 +595,14 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
             serviceClientMock.Setup(sc => sc.GetTestRunResultsUri()).Returns(newTestResultsSasUri);
             TestResultsUri? result = testProcessor.CheckAndRenewSasUri();
             Assert.AreEqual(newTestResultsSasUri, result);
-            loggerMock.Verify(l => l.Info(It.IsAny<string>()), Times.AtLeastOnce);
+            loggerMock!.Verify(
+                logger => logger.Log(
+                    LogLevel.Information,
+                    It.IsAny<EventId>(),
+                    It.Is<It.IsAnyType>((state, type) => true),
+                    It.IsAny<Exception>(),
+                    It.IsAny<Func<It.IsAnyType, Exception, string>>()),
+                Times.Once);
         }
         [Test]
         public void CheckAndRenewSasUri_WhenUriNotExpired_DoesNotFetchNewSasUri()
@@ -611,7 +618,14 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Processor
             TestResultsUri? result = testProcessor.CheckAndRenewSasUri();
             Assert.AreEqual(validTestResultsSasUri, result);
             serviceClientMock.Verify(sc => sc.GetTestRunResultsUri(), Times.Never);
-            loggerMock.Verify(l => l.Info(It.IsAny<string>()), Times.Never);
+            loggerMock.Verify(
+                l => l.Log(
+                    LogLevel.Information,
+                    It.IsAny<EventId>(),
+                    It.Is<It.IsAnyType>((state, type) => true),
+                    It.IsAny<Exception>(),
+                    It.IsAny<Func<It.IsAnyType, Exception, string>>()),
+                Times.Never);
         }
     }
 }

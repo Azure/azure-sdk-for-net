@@ -9,7 +9,7 @@ using System.Security.Cryptography;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
-using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
+using Microsoft.Extensions.Logging;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
 using Microsoft.IdentityModel.JsonWebTokens;
 
@@ -151,7 +151,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
 
                 if (!string.IsNullOrEmpty(aid)) // Custom Token
                 {
-                    _logger.Info("Custom Token parsing");
+                    _logger.LogInformation("Custom Token parsing");
                     tokenDetails.aid = aid;
                     tokenDetails.oid = inputToken.Claims.FirstOrDefault(c => c.Type == "oid")?.Value ?? string.Empty;
                     tokenDetails.id = inputToken.Claims.FirstOrDefault(c => c.Type == "id")?.Value ?? string.Empty;
@@ -159,7 +159,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
                 }
                 else // Entra Token
                 {
-                    _logger.Info("Entra Token parsing");
+                    _logger.LogInformation("Entra Token parsing");
                     tokenDetails.aid = Environment.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_WORKSPACE_ID) ?? string.Empty;
                     tokenDetails.oid = inputToken.Claims.FirstOrDefault(c => c.Type == "oid")?.Value ?? string.Empty;
                     tokenDetails.id = string.Empty;
@@ -199,20 +199,21 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
                     if (!isSasValidityGreaterThanCurrentTimePlus10Minutes)
                     {
                         // Log if SAS is close to expiry
-                        _logger.Info(
-                            $"Sas rotation required because close to expiry, SasUriValidTillTime: {timestampFromIsoString}, CurrentTime: {currentTimestampPlus10Minutes}"
+                        _logger.LogInformation(
+                            "Sas rotation required because close to expiry, SasUriValidTillTime: {timestampFromIsoString}, CurrentTime: {currentTimestampPlus10Minutes}",
+                            timestampFromIsoString, currentTimestampPlus10Minutes
                         );
                     }
 
                     return isSasValidityGreaterThanCurrentTimePlus10Minutes;
                 }
 
-                _logger.Info("Sas rotation required because expiry param not found.");
+                _logger.LogInformation("Sas rotation required because expiry param not found.");
                 return false;
             }
             catch (Exception ex)
             {
-                _logger.Info($"Sas rotation required because of {ex.Message}.");
+                _logger.LogInformation("Sas rotation required because of {ErrorMessage}.", ex.Message);
                 return false;
             }
         }

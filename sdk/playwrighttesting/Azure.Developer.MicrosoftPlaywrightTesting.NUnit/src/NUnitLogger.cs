@@ -3,13 +3,12 @@
 
 using System;
 using Microsoft.Extensions.Logging;
+using NUnit.Framework;
 
-namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
+namespace Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
 
-internal class Logger : ILogger
+internal class NUnitLogger : ILogger
 {
-    internal static string? SdkLogLevel => Environment.GetEnvironmentVariable(Constants.s_pLAYWRIGHT_SERVICE_DEBUG);
-
     public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception? exception, Func<TState, Exception?, string> formatter)
     {
         if (!IsEnabled(logLevel))
@@ -30,7 +29,7 @@ internal class Logger : ILogger
 
     public bool IsEnabled(LogLevel logLevel)
     {
-        return Enum.TryParse(SdkLogLevel, out LogLevel configuredLevel) && logLevel >= configuredLevel;
+        return true;
     }
 
     IDisposable? ILogger.BeginScope<TState>(TState state)
@@ -42,6 +41,19 @@ internal class Logger : ILogger
     {
         System.IO.TextWriter writer = (level == LogLevel.Error || level == LogLevel.Warning || level == LogLevel.Critical) ? Console.Error : Console.Out;
         writer.WriteLine($"{DateTime.Now} [{level}]: {message}");
+
+        if (level == LogLevel.Debug)
+        {
+            TestContext.WriteLine($"[MPT-NUnit]: {message}");
+        }
+        else if (level == LogLevel.Error || level == LogLevel.Critical)
+        {
+            TestContext.Error.WriteLine($"[MPT-NUnit]: {message}");
+        }
+        else
+        {
+            TestContext.Progress.WriteLine($"[MPT-NUnit]: {message}");
+        }
     }
 };
 

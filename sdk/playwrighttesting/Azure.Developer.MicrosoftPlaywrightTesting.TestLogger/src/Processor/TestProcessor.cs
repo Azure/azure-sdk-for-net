@@ -13,6 +13,7 @@ using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
 {
@@ -57,7 +58,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
         {
             try
             {
-                _logger.Info("Initialising test run");
+                _logger.LogInformation("Initialising test run");
                 if (!_cloudRunMetadata.EnableResultPublish || FatalTestExecution)
                 {
                     return;
@@ -67,25 +68,25 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 TestRunDto? testRun = _serviceClient.PatchTestRunInfo(run);
                 if (testRun == null)
                 {
-                    _logger.Error("Failed to patch test run info");
+                    _logger.LogError("Failed to patch test run info");
                     FatalTestExecution = true;
                     return;
                 }
-                _logger.Info("Successfully patched test run - init");
+                _logger.LogInformation("Successfully patched test run - init");
                 TestRunShardDto? testShard = _serviceClient.PostTestRunShardInfo(shard);
                 if (testShard == null)
                 {
-                    _logger.Error("Failed to patch test run shard info");
+                    _logger.LogError("Failed to patch test run shard info");
                     FatalTestExecution = true;
                     return;
                 }
                 _testRunShard = testShard;
-                _logger.Info("Successfully patched test run shard - init");
+                _logger.LogInformation("Successfully patched test run shard - init");
                 _consoleWriter.WriteLine($"\nInitializing reporting for this test run. You can view the results at: {_cloudRunMetadata.PortalUrl!}");
             }
             catch (Exception ex)
             {
-                _logger.Error($"Failed to initialise test run: {ex}");
+                _logger.LogError("Failed to initialise test run: {ex}", ex);
                 FatalTestExecution = true;
             }
         }
@@ -133,23 +134,23 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             catch (Exception ex)
             {
                 // test case processing failures should not stop the test run
-                _logger.Error($"Failed to process test case result: {ex}");
+                _logger.LogError("Failed to process test case result: {ex}", ex);
             }
         }
         public void TestRunCompleteHandler(object? sender, TestRunCompleteEventArgs e)
         {
-            _logger.Info("Test run complete handler - start");
+            _logger.LogInformation("Test run complete handler - start");
             if (_cloudRunMetadata.EnableResultPublish && !FatalTestExecution)
             {
                 try
                 {
                     var body = new UploadTestResultsRequest() { Value = TestResults };
                     _serviceClient.UploadBatchTestResults(body);
-                    _logger.Info("Successfully uploaded test results");
+                    _logger.LogInformation("Successfully uploaded test results");
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error($"Failed to upload test results: {ex}");
+                    _logger.LogError("Failed to upload test results: {ex}", ex);
                 }
                 try
                 {
@@ -164,7 +165,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                                 sasUri = CheckAndRenewSasUri();
                                 if (sasUri == null)
                                 {
-                                    _logger.Warning("SAS URI is empty");
+                                    _logger.LogWarning("SAS URI is empty");
                                     continue; // allow recovery from temporary reporter API failures. In the future, we might consider shortciruiting the upload process.
                                 }
 
@@ -175,19 +176,19 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                             }
                             else
                             {
-                                _logger.Info("Couldn't find rawResult for Id: " + testResult.TestExecutionId);
+                                _logger.LogInformation("Couldn't find rawResult for Id: {TestExecutionId}", testResult.TestExecutionId);
                             }
                         }
-                        _logger.Info("Successfully uploaded raw test results");
+                        _logger.LogInformation("Successfully uploaded raw test results");
                     }
                     else
                     {
-                        _logger.Error("SAS URI is empty");
+                        _logger.LogError("SAS URI is empty");
                     }
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error($"Failed to upload artifacts: {ex}");
+                    _logger.LogError("Failed to upload artifacts: {ex}", ex);
                 }
             }
             EndTestRun(e);
@@ -205,10 +206,10 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                     foreach (var attachmentData in attachmentSet.Attachments)
                     {
                         var filePath = attachmentData.Uri.LocalPath;
-                        _logger.Info($"Uploading attachment: {filePath}");
+                        _logger.LogInformation("Uploading attachment: {filePath}", filePath);
                         if (!File.Exists( filePath ))
                         {
-                            _logger.Error($"Attachment file not found: {filePath}");
+                            _logger.LogError("Attachment file not found: {filePath}", filePath);
                             continue;
                         }
                         try
@@ -223,14 +224,14 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                             }
                             else
                             {
-                                _logger.Error($"Attachment file Upload Failed: {filePath}");
+                                _logger.LogError("Attachment file Upload Failed: {filePath}", filePath);
                             }
                         }
                         catch (Exception ex)
                         {
                             var error = $"Cannot Upload '{filePath}' file: {ex.Message}";
 
-                            _logger.Error(error);
+                            _logger.LogError("{error}", error);
                         }
                     }
                 }
@@ -243,7 +244,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
             if (_testResultsSasUri == null || !reporterUtils.IsTimeGreaterThanCurrentPlus10Minutes(_testResultsSasUri.Uri))
             {
                 _testResultsSasUri = _serviceClient.GetTestRunResultsUri();
-                _logger.Info($"Fetched SAS URI with validity: {_testResultsSasUri?.ExpiresAt} and access: {_testResultsSasUri?.AccessLevel}.");
+                _logger.LogInformation("Fetched SAS URI with validity: {ExpiresAt} and access: {AccessLevel}.", _testResultsSasUri?.ExpiresAt, _testResultsSasUri?.AccessLevel);
             }
             return _testResultsSasUri;
         }
@@ -256,11 +257,11 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 {
                     _testRunShard = GetTestRunEndShard(e);
                     _serviceClient.PostTestRunShardInfo(_testRunShard);
-                    _logger.Info("Successfully ended test run shard");
+                    _logger.LogInformation("Successfully ended test run shard");
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error($"Failed to end test run shard: {ex}");
+                    _logger.LogError("Failed to end test run shard: {ex}", ex);
                 }
                 _consoleWriter.WriteLine($"\nTest Report: {_cloudRunMetadata.PortalUrl!}");
                 if (_cloudRunMetadata.EnableGithubSummary)
@@ -323,7 +324,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error($"Error writing Markdown summary: {ex}");
+                    _logger.LogError("Error writing Markdown summary: {ex}", ex);
                 }
             }
         }

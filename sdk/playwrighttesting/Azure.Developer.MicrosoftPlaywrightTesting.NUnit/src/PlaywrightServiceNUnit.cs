@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
-using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
+using Microsoft.Extensions.Logging;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
 
@@ -17,7 +17,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
 [SetUpFixture]
 public class PlaywrightServiceNUnit : PlaywrightService
 {
-    private static NUnitFrameworkLogger nunitFrameworkLogger { get; } = new();
+    private static NUnitLogger nunitLogger { get; } = new();
     private static readonly string? s_useCloudHostedBrowsers = TestContext.Parameters.Get(RunSettingKey.UseCloudHostedBrowsers.ToString());
     private static readonly string? s_serviceAuthType = TestContext.Parameters.Get(RunSettingKey.ServiceAuthType.ToString());
     /// <summary>
@@ -40,7 +40,8 @@ public class PlaywrightServiceNUnit : PlaywrightService
         ServiceAuth = string.IsNullOrEmpty(s_serviceAuthType) ? default : new ServiceAuthType(s_serviceAuthType!),
         UseCloudHostedBrowsers = !string.IsNullOrEmpty(s_useCloudHostedBrowsers) && bool.Parse(s_useCloudHostedBrowsers),
         TokenCredentialType = TestContext.Parameters.Get(RunSettingKey.AzureTokenCredentialType.ToString()),
-        ManagedIdentityClientId = TestContext.Parameters.Get(RunSettingKey.ManagedIdentityClientId.ToString())
+        ManagedIdentityClientId = TestContext.Parameters.Get(RunSettingKey.ManagedIdentityClientId.ToString()),
+        Logger = nunitLogger
     };
 
     /// <summary>
@@ -52,7 +53,7 @@ public class PlaywrightServiceNUnit : PlaywrightService
     {
         if (!UseCloudHostedBrowsers)
             return;
-        nunitFrameworkLogger.Info("\nRunning tests using Microsoft Playwright Testing service.\n");
+        nunitLogger.LogInformation("\nRunning tests using Microsoft Playwright Testing service.\n");
 
         await InitializeAsync().ConfigureAwait(false);
     }

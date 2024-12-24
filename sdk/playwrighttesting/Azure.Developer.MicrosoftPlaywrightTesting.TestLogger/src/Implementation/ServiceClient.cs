@@ -11,6 +11,7 @@ using System.Text.Json;
 using Azure.Core.Diagnostics;
 using System.Diagnostics.Tracing;
 using System.Net;
+using Microsoft.Extensions.Logging;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
 {
@@ -31,7 +32,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
             _logger = logger ?? new Logger();
             AzureEventSourceListener listener = new(delegate (EventWrittenEventArgs eventData, string text)
             {
-                _logger.Info($"[{eventData.Level}] {eventData.EventSource.Name}: {text}");
+                _logger.LogInformation("[{EventDataLevel}] {EventDataSourceName}: {text}", eventData.Level, eventData.EventSource.Name, text);
             }, EventLevel.Informational);
             var clientOptions = new TestReportingClientOptions();
             clientOptions.Diagnostics.IsLoggingEnabled = true;
@@ -149,7 +150,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
             }
             catch (Exception ex)
             {
-                _logger.Error(ex.Message);
+                _logger.LogError("{ex.Message}", ex.Message);
             }
         }
     }

@@ -1,9 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Threading.Tasks;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
-using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
+using Microsoft.Extensions.Logging;
 using Moq;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Implementation
@@ -30,7 +31,14 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Implementa
 
             await _blobService!.UploadBufferAsync(uri, buffer, fileRelativePath);
 
-            _loggerMock!.Verify(logger => logger.Error(It.IsAny<string>()), Times.Once);
+            _loggerMock!.Verify(
+                logger => logger.Log(
+                    LogLevel.Error,
+                    It.IsAny<EventId>(),
+                    It.Is<It.IsAnyType>((state, type) => true),
+                    It.IsAny<Exception>(),
+                    It.IsAny<Func<It.IsAnyType, Exception, string>>()),
+                Times.Once);
         }
 
         [Test]
@@ -42,7 +50,14 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Implementa
 
             _blobService!.UploadBuffer(uri, buffer, fileRelativePath);
 
-            _loggerMock!.Verify(logger => logger.Error(It.IsAny<string>()), Times.Once);
+            _loggerMock!.Verify(
+                logger => logger.Log(
+                    LogLevel.Error,
+                    It.IsAny<EventId>(),
+                    It.Is<It.IsAnyType>((state, type) => true),
+                    It.IsAny<Exception>(),
+                    It.IsAny<Func<It.IsAnyType, Exception, string>>()),
+                Times.Once);
         }
 
         [Test]

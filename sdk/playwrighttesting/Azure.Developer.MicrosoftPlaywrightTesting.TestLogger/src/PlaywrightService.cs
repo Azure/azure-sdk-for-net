@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.JsonWebTokens;
 using System;
 using System.Collections.Generic;
@@ -137,7 +138,7 @@ public class PlaywrightService
 
     private readonly EntraLifecycle? _entraLifecycle;
     private readonly JsonWebTokenHandler? _jsonWebTokenHandler;
-    private readonly IFrameworkLogger? _frameworkLogger;
+    private readonly ILogger? _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PlaywrightService"/> class.
@@ -151,20 +152,19 @@ public class PlaywrightService
         serviceAuth: options.ServiceAuth,
         useCloudHostedBrowsers: options.UseCloudHostedBrowsers,
         credential: credential ?? options.AzureTokenCredential,
-        frameworkLogger: options.FrameworkLogger
+        logger: options.Logger
     )
     {
         // No-op
     }
 
-    internal PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, ServiceAuthType? serviceAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? credential = null, IFrameworkLogger? frameworkLogger = null)
+    internal PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, ServiceAuthType? serviceAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? credential = null, ILogger? logger = null)
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
             return;
-        _frameworkLogger = frameworkLogger;
+        _logger = logger;
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
-        _entraLifecycle = entraLifecycle ?? new EntraLifecycle(credential, _jsonWebTokenHandler, _frameworkLogger);
-        _frameworkLogger = frameworkLogger;
+        _entraLifecycle = entraLifecycle ?? new EntraLifecycle(credential, _jsonWebTokenHandler, _logger);
         InitializePlaywrightServiceEnvironmentVariables(GetServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
     }
 
@@ -198,7 +198,7 @@ public class PlaywrightService
         }
         if (string.IsNullOrEmpty(GetAuthToken()))
         {
-            _frameworkLogger?.Error("Access token not found when trying to call GetConnectOptionsAsync.");
+            _logger?.LogError("Access token not found when trying to call GetConnectOptionsAsync.");
             throw new Exception(Constants.s_no_auth_error);
         }
 
@@ -221,25 +221,25 @@ public class PlaywrightService
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
         {
-            _frameworkLogger?.Info("Exiting initialization as service endpoint is not set.");
+            _logger?.LogInformation("Exiting initialization as service endpoint is not set.");
             return;
         }
         if (!UseCloudHostedBrowsers)
         {
             // Since playwright-dotnet checks PLAYWRIGHT_SERVICE_ACCESS_TOKEN and PLAYWRIGHT_SERVICE_URL to be set, remove PLAYWRIGHT_SERVICE_URL so that tests are run locally.
             // If customers use GetConnectOptionsAsync, after setting disableScalableExecution, an error will be thrown.
-            _frameworkLogger?.Info("Disabling scalable execution since UseCloudHostedBrowsers is set to false.");
+            _logger?.LogInformation("Disabling scalable execution since UseCloudHostedBrowsers is set to false.");
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), null);
             return;
         }
         // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler
         if (ServiceAuth == ServiceAuthType.AccessToken)
         {
-            _frameworkLogger?.Info("Auth mechanism is Access Token.");
+            _logger?.LogInformation("Auth mechanism is Access Token.");
             ValidateMptPAT();
             return;
         }
-        _frameworkLogger?.Info("Auth mechanism is Entra Id.");
+        _logger?.LogInformation("Auth mechanism is Entra Id.");
         await _entraLifecycle!.FetchEntraIdAccessTokenAsync(cancellationToken).ConfigureAwait(false);
         RotationTimer = new Timer(RotationHandlerAsync, null, TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes), TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes));
     }
@@ -251,25 +251,25 @@ public class PlaywrightService
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
         {
-            _frameworkLogger?.Info("Exiting initialization as service endpoint is not set.");
+            _logger?.LogInformation("Exiting initialization as service endpoint is not set.");
             return;
         }
         if (!UseCloudHostedBrowsers)
         {
             // Since playwright-dotnet checks PLAYWRIGHT_SERVICE_ACCESS_TOKEN and PLAYWRIGHT_SERVICE_URL to be set, remove PLAYWRIGHT_SERVICE_URL so that tests are run locally.
             // If customers use GetConnectOptionsAsync, after setting disableScalableExecution, an error will be thrown.
-            _frameworkLogger?.Info("Disabling scalable execution since UseCloudHostedBrowsers is set to false.");
+            _logger?.LogInformation("Disabling scalable execution since UseCloudHostedBrowsers is set to false.");
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), null);
             return;
         }
         // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler
         if (ServiceAuth == ServiceAuthType.AccessToken)
         {
-            _frameworkLogger?.Info("Auth mechanism is Access Token.");
+            _logger?.LogInformation("Auth mechanism is Access Token.");
             ValidateMptPAT();
             return;
         }
-        _frameworkLogger?.Info("Auth mechanism is Entra Id.");
+        _logger?.LogInformation("Auth mechanism is Entra Id.");
         _entraLifecycle!.FetchEntraIdAccessToken(cancellationToken);
         RotationTimer = new Timer(RotationHandlerAsync, null, TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes), TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes));
     }
@@ -279,7 +279,7 @@ public class PlaywrightService
     /// </summary>
     public void Cleanup()
     {
-        _frameworkLogger?.Info("Cleaning up Playwright service resources.");
+        _logger?.LogInformation("Cleaning up Playwright service resources.");
         RotationTimer?.Dispose();
     }
 
@@ -287,7 +287,7 @@ public class PlaywrightService
     {
         if (_entraLifecycle!.DoesEntraIdAccessTokenRequireRotation())
         {
-            _frameworkLogger?.Info("Rotating Entra Id access token.");
+            _logger?.LogInformation("Rotating Entra Id access token.");
             await _entraLifecycle.FetchEntraIdAccessTokenAsync().ConfigureAwait(false);
         }
     }
@@ -409,7 +409,7 @@ public class PlaywrightService
         }
         catch (Exception ex)
         {
-            _frameworkLogger?.Error(ex.ToString());
+            _logger?.LogError("{Error}", ex.ToString());
             throw;
         }
     }

@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using Azure.Core;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Identity;
+using Microsoft.Extensions.Logging;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
@@ -103,14 +104,14 @@ public class PlaywrightServiceOptions
         set => _managedIdentityClientId = value;
     }
 
-    private IFrameworkLogger? _frameworkLogger;
+    private ILogger? _logger;
     /// <summary>
     /// Gets or sets the logger.
     /// </summary>
-    public IFrameworkLogger? FrameworkLogger
+    public ILogger? Logger
     {
-        get => _frameworkLogger;
-        set => _frameworkLogger = value;
+        get => _logger;
+        set => _logger = value;
     }
 
     private static TokenCredential GetTokenCredential(string? azureTokenCredentialType, string? managedIdentityClientId)

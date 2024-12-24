@@ -12,6 +12,7 @@ using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor;
 using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.Extensions.Logging;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
@@ -132,18 +133,15 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             return;
         }
         // setup entra rotation handlers
-        IFrameworkLogger frameworkLogger = new VSTestFrameworkLogger(_logger);
         try
         {
-            _playwrightService = new PlaywrightService(null, playwrightServiceSettings!.RunId, null, playwrightServiceSettings.ServiceAuth, null, entraLifecycle: null, jsonWebTokenHandler: _jsonWebTokenHandler, credential: playwrightServiceSettings.AzureTokenCredential, frameworkLogger: frameworkLogger);
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-            _playwrightService.InitializeAsync().GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+            _playwrightService = new PlaywrightService(null, playwrightServiceSettings!.RunId, null, playwrightServiceSettings.ServiceAuth, null, entraLifecycle: null, jsonWebTokenHandler: _jsonWebTokenHandler, credential: playwrightServiceSettings.AzureTokenCredential, logger: _logger);
+            _playwrightService.Initialize();
         }
         catch (Exception ex)
         {
             // We have checks for access token and base url in the next block, so we can ignore the exception here.
-            _logger.Error("Failed to initialize PlaywrightService: " + ex);
+            _logger.LogError("Failed to initialize PlaywrightService: {ex}", ex);
         }
 
         var cloudRunId = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId.ToString());
@@ -191,6 +189,6 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         };
 
         _testProcessor = new TestProcessor(cloudRunMetadata, cIInfo);
-        _logger.Info("Playwright Service Reporter Initialized");
+        _logger.LogInformation("Playwright Service Reporter Initialized");
     }
 }
