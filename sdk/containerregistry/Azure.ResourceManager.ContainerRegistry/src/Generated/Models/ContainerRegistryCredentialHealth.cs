@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> The PipelineRunSourceProperties. </summary>
-    public partial class PipelineRunSourceProperties
+    /// <summary> The health of the auth credential. </summary>
+    public partial class ContainerRegistryCredentialHealth
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,32 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PipelineRunSourceProperties"/>. </summary>
-        public PipelineRunSourceProperties()
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCredentialHealth"/>. </summary>
+        internal ContainerRegistryCredentialHealth()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PipelineRunSourceProperties"/>. </summary>
-        /// <param name="sourceType"> The type of the source. </param>
-        /// <param name="name"> The name of the source. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryCredentialHealth"/>. </summary>
+        /// <param name="status"> The health status of credential. </param>
+        /// <param name="errorCode"> Error code representing the health check error. </param>
+        /// <param name="errorMessage"> Descriptive message representing the health check error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PipelineRunSourceProperties(PipelineRunSourceType? sourceType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerRegistryCredentialHealth(ContainerRegistryCredentialHealthStatus? status, string errorCode, string errorMessage, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SourceType = sourceType;
-            Name = name;
+            Status = status;
+            ErrorCode = errorCode;
+            ErrorMessage = errorMessage;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of the source. </summary>
-        [WirePath("type")]
-        public PipelineRunSourceType? SourceType { get; set; }
-        /// <summary> The name of the source. </summary>
-        [WirePath("name")]
-        public string Name { get; set; }
+        /// <summary> The health status of credential. </summary>
+        [WirePath("status")]
+        public ContainerRegistryCredentialHealthStatus? Status { get; }
+        /// <summary> Error code representing the health check error. </summary>
+        [WirePath("errorCode")]
+        public string ErrorCode { get; }
+        /// <summary> Descriptive message representing the health check error. </summary>
+        [WirePath("errorMessage")]
+        public string ErrorMessage { get; }
     }
 }

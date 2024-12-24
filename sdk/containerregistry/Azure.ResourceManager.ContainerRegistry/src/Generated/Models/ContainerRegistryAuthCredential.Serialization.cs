@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             ContainerRegistryCredentialName? name = default;
             string usernameSecretIdentifier = default;
             string passwordSecretIdentifier = default;
-            CredentialHealth credentialHealth = default;
+            ContainerRegistryCredentialHealth credentialHealth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    credentialHealth = CredentialHealth.DeserializeCredentialHealth(property.Value, options);
+                    credentialHealth = ContainerRegistryCredentialHealth.DeserializeContainerRegistryCredentialHealth(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
                 },
                 Source = new ImportPipelineSourceProperties(new Uri("https://myvault.vault.azure.net/secrets/acrimportsas"))
                 {
-                    PipelineSourceType = PipelineSourceType.AzureStorageBlobContainer,
+                    ContainerRegistryPipelineSourceType = ContainerRegistryPipelineSourceType.AzureStorageBlobContainer,
                     Uri = new Uri("https://accountname.blob.core.windows.net/containername"),
                 },
                 Options = { ContainerRegistryPipelineOption.OverwriteTags, ContainerRegistryPipelineOption.DeleteSourceBlobOnSuccess, ContainerRegistryPipelineOption.ContinueOnErrors },

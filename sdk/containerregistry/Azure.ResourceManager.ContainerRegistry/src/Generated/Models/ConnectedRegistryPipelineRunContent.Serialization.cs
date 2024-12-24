@@ -15,11 +15,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class PipelineRunContent : IUtf8JsonSerializable, IJsonModel<PipelineRunContent>
+    public partial class ConnectedRegistryPipelineRunContent : IUtf8JsonSerializable, IJsonModel<ConnectedRegistryPipelineRunContent>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PipelineRunContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ConnectedRegistryPipelineRunContent>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PipelineRunContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConnectedRegistryPipelineRunContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PipelineRunContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedRegistryPipelineRunContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PipelineRunContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectedRegistryPipelineRunContent)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(PipelineResourceId))
@@ -83,19 +83,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
         }
 
-        PipelineRunContent IJsonModel<PipelineRunContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ConnectedRegistryPipelineRunContent IJsonModel<ConnectedRegistryPipelineRunContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PipelineRunContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedRegistryPipelineRunContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PipelineRunContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectedRegistryPipelineRunContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePipelineRunContent(document.RootElement, options);
+            return DeserializeConnectedRegistryPipelineRunContent(document.RootElement, options);
         }
 
-        internal static PipelineRunContent DeserializePipelineRunContent(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ConnectedRegistryPipelineRunContent DeserializeConnectedRegistryPipelineRunContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             ResourceIdentifier pipelineResourceId = default;
             IList<string> artifacts = default;
-            PipelineRunSourceProperties source = default;
-            PipelineRunTargetProperties target = default;
+            ContainerRegistryPipelineRunSourceProperties source = default;
+            ContainerRegistryPipelineRunTargetProperties target = default;
             string catalogDigest = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    source = PipelineRunSourceProperties.DeserializePipelineRunSourceProperties(property.Value, options);
+                    source = ContainerRegistryPipelineRunSourceProperties.DeserializeContainerRegistryPipelineRunSourceProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("target"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    target = PipelineRunTargetProperties.DeserializePipelineRunTargetProperties(property.Value, options);
+                    target = ContainerRegistryPipelineRunTargetProperties.DeserializeContainerRegistryPipelineRunTargetProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("catalogDigest"u8))
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PipelineRunContent(
+            return new ConnectedRegistryPipelineRunContent(
                 pipelineResourceId,
                 artifacts ?? new ChangeTrackingList<string>(),
                 source,
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<PipelineRunContent>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ConnectedRegistryPipelineRunContent>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PipelineRunContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedRegistryPipelineRunContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -303,26 +303,26 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PipelineRunContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectedRegistryPipelineRunContent)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PipelineRunContent IPersistableModel<PipelineRunContent>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ConnectedRegistryPipelineRunContent IPersistableModel<ConnectedRegistryPipelineRunContent>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PipelineRunContent>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ConnectedRegistryPipelineRunContent>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePipelineRunContent(document.RootElement, options);
+                        return DeserializeConnectedRegistryPipelineRunContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PipelineRunContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectedRegistryPipelineRunContent)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PipelineRunContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConnectedRegistryPipelineRunContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

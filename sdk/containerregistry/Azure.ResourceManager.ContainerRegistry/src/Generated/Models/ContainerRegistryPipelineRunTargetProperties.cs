@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> The TLS certificate properties of the connected registry login server. </summary>
-    public partial class TlsCertificateProperties
+    /// <summary> The ContainerRegistryPipelineRunTargetProperties. </summary>
+    public partial class ContainerRegistryPipelineRunTargetProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,27 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TlsCertificateProperties"/>. </summary>
-        internal TlsCertificateProperties()
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPipelineRunTargetProperties"/>. </summary>
+        public ContainerRegistryPipelineRunTargetProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="TlsCertificateProperties"/>. </summary>
-        /// <param name="locationType"> The type of certificate location. </param>
-        /// <param name="certificateLocation"> Indicates the location of the certificates. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryPipelineRunTargetProperties"/>. </summary>
+        /// <param name="targetType"> The type of the target. </param>
+        /// <param name="name"> The name of the target. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TlsCertificateProperties(TlsCertificateLocationType? locationType, string certificateLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerRegistryPipelineRunTargetProperties(ContainerRegistryPipelineRunTargetType? targetType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            LocationType = locationType;
-            CertificateLocation = certificateLocation;
+            TargetType = targetType;
+            Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of certificate location. </summary>
+        /// <summary> The type of the target. </summary>
         [WirePath("type")]
-        public TlsCertificateLocationType? LocationType { get; }
-        /// <summary> Indicates the location of the certificates. </summary>
-        [WirePath("location")]
-        public string CertificateLocation { get; }
+        public ContainerRegistryPipelineRunTargetType? TargetType { get; set; }
+        /// <summary> The name of the target. </summary>
+        [WirePath("name")]
+        public string Name { get; set; }
     }
 }

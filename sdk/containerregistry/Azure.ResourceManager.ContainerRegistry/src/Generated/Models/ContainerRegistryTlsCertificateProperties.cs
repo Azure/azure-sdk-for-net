@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    /// <summary> The PipelineRunTargetProperties. </summary>
-    public partial class PipelineRunTargetProperties
+    /// <summary> The TLS certificate properties of the connected registry login server. </summary>
+    public partial class ContainerRegistryTlsCertificateProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,27 +45,27 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PipelineRunTargetProperties"/>. </summary>
-        public PipelineRunTargetProperties()
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTlsCertificateProperties"/>. </summary>
+        internal ContainerRegistryTlsCertificateProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PipelineRunTargetProperties"/>. </summary>
-        /// <param name="targetType"> The type of the target. </param>
-        /// <param name="name"> The name of the target. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainerRegistryTlsCertificateProperties"/>. </summary>
+        /// <param name="certificateType"> The type of certificate location. </param>
+        /// <param name="certificateLocation"> Indicates the location of the certificates. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PipelineRunTargetProperties(PipelineRunTargetType? targetType, string name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerRegistryTlsCertificateProperties(ContainerRegistryCertificateType? certificateType, string certificateLocation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            TargetType = targetType;
-            Name = name;
+            CertificateType = certificateType;
+            CertificateLocation = certificateLocation;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The type of the target. </summary>
+        /// <summary> The type of certificate location. </summary>
         [WirePath("type")]
-        public PipelineRunTargetType? TargetType { get; set; }
-        /// <summary> The name of the target. </summary>
-        [WirePath("name")]
-        public string Name { get; set; }
+        public ContainerRegistryCertificateType? CertificateType { get; }
+        /// <summary> Indicates the location of the certificates. </summary>
+        [WirePath("location")]
+        public string CertificateLocation { get; }
     }
 }

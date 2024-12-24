@@ -51,19 +51,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ArchivePackageSourceProperties"/>. </summary>
-        /// <param name="packageSourceType"> The type of package source for a archive. </param>
+        /// <param name="sourceType"> The type of package source for a archive. </param>
         /// <param name="uri"> The external repository url. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ArchivePackageSourceProperties(PackageSourceType? packageSourceType, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ArchivePackageSourceProperties(ArchivePackageSourceType? sourceType, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            PackageSourceType = packageSourceType;
+            SourceType = sourceType;
             Uri = uri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The type of package source for a archive. </summary>
         [WirePath("type")]
-        public PackageSourceType? PackageSourceType { get; set; }
+        public ArchivePackageSourceType? SourceType { get; set; }
         /// <summary> The external repository url. </summary>
         [WirePath("url")]
         public Uri Uri { get; set; }

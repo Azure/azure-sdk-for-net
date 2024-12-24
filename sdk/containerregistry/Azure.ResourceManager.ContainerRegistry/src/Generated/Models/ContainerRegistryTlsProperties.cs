@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="status"> Indicates whether HTTPS is enabled for the login server. </param>
         /// <param name="certificate"> The certificate used to configure HTTPS for the login server. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryTlsProperties(ContainerRegistryTlsStatus? status, TlsCertificateProperties certificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerRegistryTlsProperties(ContainerRegistryTlsStatus? status, ContainerRegistryTlsCertificateProperties certificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             Certificate = certificate;
@@ -66,6 +66,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public ContainerRegistryTlsStatus? Status { get; }
         /// <summary> The certificate used to configure HTTPS for the login server. </summary>
         [WirePath("certificate")]
-        public TlsCertificateProperties Certificate { get; }
+        public ContainerRegistryTlsCertificateProperties Certificate { get; }
     }
 }

@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 throw new FormatException($"The model {nameof(ArchivePackageSourceProperties)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(PackageSourceType))
+            if (Optional.IsDefined(SourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(PackageSourceType.Value.ToString());
+                writer.WriteStringValue(SourceType.Value.ToString());
             }
             if (Optional.IsDefined(Uri))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            PackageSourceType? type = default;
+            ArchivePackageSourceType? type = default;
             Uri url = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    type = new PackageSourceType(property.Value.GetString());
+                    type = new ArchivePackageSourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("url"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PackageSourceType), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceType), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
@@ -134,10 +134,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             else
             {
-                if (Optional.IsDefined(PackageSourceType))
+                if (Optional.IsDefined(SourceType))
                 {
                     builder.Append("  type: ");
-                    builder.AppendLine($"'{PackageSourceType.Value.ToString()}'");
+                    builder.AppendLine($"'{SourceType.Value.ToString()}'");
                 }
             }
 

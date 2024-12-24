@@ -35,10 +35,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 throw new FormatException($"The model {nameof(ImportPipelineSourceProperties)} does not support writing '{format}' format.");
             }
 
-            if (Optional.IsDefined(PipelineSourceType))
+            if (Optional.IsDefined(ContainerRegistryPipelineSourceType))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(PipelineSourceType.Value.ToString());
+                writer.WriteStringValue(ContainerRegistryPipelineSourceType.Value.ToString());
             }
             if (Optional.IsDefined(Uri))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            PipelineSourceType? type = default;
+            ContainerRegistryPipelineSourceType? type = default;
             Uri uri = default;
             Uri keyVaultUri = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    type = new PipelineSourceType(property.Value.GetString());
+                    type = new ContainerRegistryPipelineSourceType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("uri"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PipelineSourceType), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerRegistryPipelineSourceType), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("  type: ");
@@ -142,10 +142,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
             else
             {
-                if (Optional.IsDefined(PipelineSourceType))
+                if (Optional.IsDefined(ContainerRegistryPipelineSourceType))
                 {
                     builder.Append("  type: ");
-                    builder.AppendLine($"'{PipelineSourceType.Value.ToString()}'");
+                    builder.AppendLine($"'{ContainerRegistryPipelineSourceType.Value.ToString()}'");
                 }
             }
 

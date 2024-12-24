@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             {
                 PackageSource = new ArchivePackageSourceProperties
                 {
-                    PackageSourceType = PackageSourceType.Remote,
+                    SourceType = ArchivePackageSourceType.Remote,
                     Uri = new Uri("string"),
                 },
                 PublishedVersion = "string",

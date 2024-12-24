@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="passwordSecretIdentifier"> KeyVault Secret URI for accessing the password. </param>
         /// <param name="credentialHealth"> This provides data pertaining to the health of the auth credential. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryAuthCredential(ContainerRegistryCredentialName? name, string usernameSecretIdentifier, string passwordSecretIdentifier, CredentialHealth credentialHealth, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerRegistryAuthCredential(ContainerRegistryCredentialName? name, string usernameSecretIdentifier, string passwordSecretIdentifier, ContainerRegistryCredentialHealth credentialHealth, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             UsernameSecretIdentifier = usernameSecretIdentifier;
@@ -76,6 +76,6 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public string PasswordSecretIdentifier { get; set; }
         /// <summary> This provides data pertaining to the health of the auth credential. </summary>
         [WirePath("credentialHealth")]
-        public CredentialHealth CredentialHealth { get; }
+        public ContainerRegistryCredentialHealth CredentialHealth { get; }
     }
 }

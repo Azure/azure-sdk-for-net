@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            AzureADAuthenticationAsArmPolicyStatus? status = default;
+            AadAuthenticationAsArmPolicyStatus? status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    status = new AzureADAuthenticationAsArmPolicyStatus(property.Value.GetString());
+                    status = new AadAuthenticationAsArmPolicyStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

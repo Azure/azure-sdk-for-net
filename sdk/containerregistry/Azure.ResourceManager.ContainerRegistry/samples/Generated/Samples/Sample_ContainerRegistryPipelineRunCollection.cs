@@ -43,13 +43,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             string pipelineRunName = "myPipelineRun";
             ContainerRegistryPipelineRunData data = new ContainerRegistryPipelineRunData
             {
-                Request = new PipelineRunContent
+                Request = new ConnectedRegistryPipelineRunContent
                 {
                     PipelineResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.ContainerRegistry/registries/myRegistry/exportPipelines/myExportPipeline"),
                     Artifacts = { "sourceRepository/hello-world", "sourceRepository2@sha256:00000000000000000000000000000000000" },
-                    Target = new PipelineRunTargetProperties
+                    Target = new ContainerRegistryPipelineRunTargetProperties
                     {
-                        TargetType = PipelineRunTargetType.AzureStorageBlob,
+                        TargetType = ContainerRegistryPipelineRunTargetType.AzureStorageBlob,
                         Name = "myblob.tar.gz",
                     },
                 },
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             string pipelineRunName = "myPipelineRun";
             ContainerRegistryPipelineRunData data = new ContainerRegistryPipelineRunData
             {
-                Request = new PipelineRunContent
+                Request = new ConnectedRegistryPipelineRunContent
                 {
                     PipelineResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.ContainerRegistry/registries/myRegistry/importPipelines/myImportPipeline"),
-                    Source = new PipelineRunSourceProperties
+                    Source = new ContainerRegistryPipelineRunSourceProperties
                     {
-                        SourceType = PipelineRunSourceType.AzureStorageBlob,
+                        SourceType = ContainerRegistryPipelineRunSourceType.AzureStorageBlob,
                         Name = "myblob.tar.gz",
                     },
                     CatalogDigest = "sha256@",

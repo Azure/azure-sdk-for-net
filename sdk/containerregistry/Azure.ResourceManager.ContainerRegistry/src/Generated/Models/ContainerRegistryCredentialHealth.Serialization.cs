@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
-    public partial class CredentialHealth : IUtf8JsonSerializable, IJsonModel<CredentialHealth>
+    public partial class ContainerRegistryCredentialHealth : IUtf8JsonSerializable, IJsonModel<ContainerRegistryCredentialHealth>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CredentialHealth>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerRegistryCredentialHealth>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CredentialHealth>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerRegistryCredentialHealth>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CredentialHealth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryCredentialHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CredentialHealth)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryCredentialHealth)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Status))
@@ -67,19 +67,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             }
         }
 
-        CredentialHealth IJsonModel<CredentialHealth>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerRegistryCredentialHealth IJsonModel<ContainerRegistryCredentialHealth>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CredentialHealth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryCredentialHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CredentialHealth)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryCredentialHealth)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCredentialHealth(document.RootElement, options);
+            return DeserializeContainerRegistryCredentialHealth(document.RootElement, options);
         }
 
-        internal static CredentialHealth DeserializeCredentialHealth(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerRegistryCredentialHealth DeserializeContainerRegistryCredentialHealth(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            CredentialHealthStatus? status = default;
+            ContainerRegistryCredentialHealthStatus? status = default;
             string errorCode = default;
             string errorMessage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    status = new CredentialHealthStatus(property.Value.GetString());
+                    status = new ContainerRegistryCredentialHealthStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("errorCode"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CredentialHealth(status, errorCode, errorMessage, serializedAdditionalRawData);
+            return new ContainerRegistryCredentialHealth(status, errorCode, errorMessage, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -198,9 +198,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<CredentialHealth>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerRegistryCredentialHealth>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CredentialHealth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryCredentialHealth>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -209,26 +209,26 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CredentialHealth)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryCredentialHealth)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CredentialHealth IPersistableModel<CredentialHealth>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerRegistryCredentialHealth IPersistableModel<ContainerRegistryCredentialHealth>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CredentialHealth>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryCredentialHealth>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCredentialHealth(document.RootElement, options);
+                        return DeserializeContainerRegistryCredentialHealth(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CredentialHealth)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryCredentialHealth)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CredentialHealth>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerRegistryCredentialHealth>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

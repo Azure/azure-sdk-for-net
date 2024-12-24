@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             ResourceType type = default;
             SystemData systemData = default;
             ContainerRegistryProvisioningState? provisioningState = default;
-            PipelineRunContent request = default;
+            ConnectedRegistryPipelineRunContent request = default;
             PipelineRunResult response = default;
             string forceUpdateTag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                             {
                                 continue;
                             }
-                            request = PipelineRunContent.DeserializePipelineRunContent(property0.Value, options);
+                            request = ConnectedRegistryPipelineRunContent.DeserializeConnectedRegistryPipelineRunContent(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("response"u8))

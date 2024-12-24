@@ -171,18 +171,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="status"> Indicates whether HTTPS is enabled for the login server. </param>
         /// <param name="certificate"> The certificate used to configure HTTPS for the login server. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryTlsProperties"/> instance for mocking. </returns>
-        public static ContainerRegistryTlsProperties ContainerRegistryTlsProperties(ContainerRegistryTlsStatus? status = null, TlsCertificateProperties certificate = null)
+        public static ContainerRegistryTlsProperties ContainerRegistryTlsProperties(ContainerRegistryTlsStatus? status = null, ContainerRegistryTlsCertificateProperties certificate = null)
         {
             return new ContainerRegistryTlsProperties(status, certificate, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TlsCertificateProperties"/>. </summary>
-        /// <param name="locationType"> The type of certificate location. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryTlsCertificateProperties"/>. </summary>
+        /// <param name="certificateType"> The type of certificate location. </param>
         /// <param name="certificateLocation"> Indicates the location of the certificates. </param>
-        /// <returns> A new <see cref="Models.TlsCertificateProperties"/> instance for mocking. </returns>
-        public static TlsCertificateProperties TlsCertificateProperties(TlsCertificateLocationType? locationType = null, string certificateLocation = null)
+        /// <returns> A new <see cref="Models.ContainerRegistryTlsCertificateProperties"/> instance for mocking. </returns>
+        public static ContainerRegistryTlsCertificateProperties ContainerRegistryTlsCertificateProperties(ContainerRegistryCertificateType? certificateType = null, string certificateLocation = null)
         {
-            return new TlsCertificateProperties(locationType, certificateLocation, serializedAdditionalRawData: null);
+            return new ContainerRegistryTlsCertificateProperties(certificateType, certificateLocation, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConnectedRegistryStatusDetail"/>. </summary>
@@ -240,19 +240,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="passwordSecretIdentifier"> KeyVault Secret URI for accessing the password. </param>
         /// <param name="credentialHealth"> This provides data pertaining to the health of the auth credential. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryAuthCredential"/> instance for mocking. </returns>
-        public static ContainerRegistryAuthCredential ContainerRegistryAuthCredential(ContainerRegistryCredentialName? name = null, string usernameSecretIdentifier = null, string passwordSecretIdentifier = null, CredentialHealth credentialHealth = null)
+        public static ContainerRegistryAuthCredential ContainerRegistryAuthCredential(ContainerRegistryCredentialName? name = null, string usernameSecretIdentifier = null, string passwordSecretIdentifier = null, ContainerRegistryCredentialHealth credentialHealth = null)
         {
             return new ContainerRegistryAuthCredential(name, usernameSecretIdentifier, passwordSecretIdentifier, credentialHealth, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CredentialHealth"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryCredentialHealth"/>. </summary>
         /// <param name="status"> The health status of credential. </param>
         /// <param name="errorCode"> Error code representing the health check error. </param>
         /// <param name="errorMessage"> Descriptive message representing the health check error. </param>
-        /// <returns> A new <see cref="Models.CredentialHealth"/> instance for mocking. </returns>
-        public static CredentialHealth CredentialHealth(CredentialHealthStatus? status = null, string errorCode = null, string errorMessage = null)
+        /// <returns> A new <see cref="Models.ContainerRegistryCredentialHealth"/> instance for mocking. </returns>
+        public static ContainerRegistryCredentialHealth ContainerRegistryCredentialHealth(ContainerRegistryCredentialHealthStatus? status = null, string errorCode = null, string errorMessage = null)
         {
-            return new CredentialHealth(status, errorCode, errorMessage, serializedAdditionalRawData: null);
+            return new ContainerRegistryCredentialHealth(status, errorCode, errorMessage, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryExportPipelineData"/>. </summary>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="response"> The response of a pipeline run. </param>
         /// <param name="forceUpdateTag"> How the pipeline run should be forced to recreate even if the pipeline run configuration has not changed. </param>
         /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryPipelineRunData"/> instance for mocking. </returns>
-        public static ContainerRegistryPipelineRunData ContainerRegistryPipelineRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ContainerRegistryProvisioningState? provisioningState = null, PipelineRunContent request = null, PipelineRunResult response = null, string forceUpdateTag = null)
+        public static ContainerRegistryPipelineRunData ContainerRegistryPipelineRunData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, ContainerRegistryProvisioningState? provisioningState = null, ConnectedRegistryPipelineRunContent request = null, PipelineRunResult response = null, string forceUpdateTag = null)
         {
             return new ContainerRegistryPipelineRunData(
                 id,

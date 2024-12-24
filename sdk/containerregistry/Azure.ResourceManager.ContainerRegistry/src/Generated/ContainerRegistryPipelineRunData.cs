@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         /// <param name="response"> The response of a pipeline run. </param>
         /// <param name="forceUpdateTag"> How the pipeline run should be forced to recreate even if the pipeline run configuration has not changed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerRegistryPipelineRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerRegistryProvisioningState? provisioningState, PipelineRunContent request, PipelineRunResult response, string forceUpdateTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ContainerRegistryPipelineRunData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ContainerRegistryProvisioningState? provisioningState, ConnectedRegistryPipelineRunContent request, PipelineRunResult response, string forceUpdateTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             Request = request;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerRegistry
         public ContainerRegistryProvisioningState? ProvisioningState { get; }
         /// <summary> The request parameters for a pipeline run. </summary>
         [WirePath("properties.request")]
-        public PipelineRunContent Request { get; set; }
+        public ConnectedRegistryPipelineRunContent Request { get; set; }
         /// <summary> The response of a pipeline run. </summary>
         [WirePath("properties.response")]
         public PipelineRunResult Response { get; }

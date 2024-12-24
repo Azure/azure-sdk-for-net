@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         internal AzureADAuthenticationAsArmPolicy AzureADAuthenticationAsArmPolicy { get; set; }
         /// <summary> The value that indicates whether the policy is enabled or not. </summary>
         [WirePath("azureADAuthenticationAsArmPolicy.status")]
-        public AzureADAuthenticationAsArmPolicyStatus? AzureADAuthenticationAsArmStatus
+        public AadAuthenticationAsArmPolicyStatus? AzureADAuthenticationAsArmStatus
         {
             get => AzureADAuthenticationAsArmPolicy is null ? default : AzureADAuthenticationAsArmPolicy.Status;
             set

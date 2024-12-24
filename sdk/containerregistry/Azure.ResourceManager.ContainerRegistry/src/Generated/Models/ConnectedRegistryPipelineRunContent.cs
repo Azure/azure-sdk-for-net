@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
     /// <summary> The request properties provided for a pipeline run. </summary>
-    public partial class PipelineRunContent
+    public partial class ConnectedRegistryPipelineRunContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,13 +46,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PipelineRunContent"/>. </summary>
-        public PipelineRunContent()
+        /// <summary> Initializes a new instance of <see cref="ConnectedRegistryPipelineRunContent"/>. </summary>
+        public ConnectedRegistryPipelineRunContent()
         {
             Artifacts = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PipelineRunContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConnectedRegistryPipelineRunContent"/>. </summary>
         /// <param name="pipelineResourceId"> The resource ID of the pipeline to run. </param>
         /// <param name="artifacts">
         /// List of source artifacts to be transferred by the pipeline.
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="target"> The target properties of the pipeline run. </param>
         /// <param name="catalogDigest"> The digest of the tar used to transfer the artifacts. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PipelineRunContent(ResourceIdentifier pipelineResourceId, IList<string> artifacts, PipelineRunSourceProperties source, PipelineRunTargetProperties target, string catalogDigest, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConnectedRegistryPipelineRunContent(ResourceIdentifier pipelineResourceId, IList<string> artifacts, ContainerRegistryPipelineRunSourceProperties source, ContainerRegistryPipelineRunTargetProperties target, string catalogDigest, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PipelineResourceId = pipelineResourceId;
             Artifacts = artifacts;
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         public IList<string> Artifacts { get; }
         /// <summary> The source properties of the pipeline run. </summary>
         [WirePath("source")]
-        public PipelineRunSourceProperties Source { get; set; }
+        public ContainerRegistryPipelineRunSourceProperties Source { get; set; }
         /// <summary> The target properties of the pipeline run. </summary>
         [WirePath("target")]
-        public PipelineRunTargetProperties Target { get; set; }
+        public ContainerRegistryPipelineRunTargetProperties Target { get; set; }
         /// <summary> The digest of the tar used to transfer the artifacts. </summary>
         [WirePath("catalogDigest")]
         public string CatalogDigest { get; set; }

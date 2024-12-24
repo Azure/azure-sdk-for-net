@@ -7,9 +7,8 @@ azure-arm: true
 csharp: true
 library-name: ContainerRegistry
 namespace: Azure.ResourceManager.ContainerRegistry
-# default tag is a preview version
 require: https://github.com/Azure/azure-rest-api-specs/blob/0a27976a58c16279e827bda36004d1b74b3d922a/specification/containerregistry/resource-manager/readme.md
-tag: package-2024-11-preview
+#tag: package-2024-11-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -22,8 +21,8 @@ modelerfour:
 use-model-reader-writer: true
 enable-bicep-serialization: true
 
-# mgmt-debug:
-#   show-serialized-names: true
+#mgmt-debug:
+#  show-serialized-names: true
 
 format-by-name-rules:
   'tenantId': 'uuid'
@@ -69,11 +68,9 @@ keep-plural-enums:
 prepend-rp-prefix:
   - AgentPool
   - AgentPoolListResult
-  - AgentPoolPatch
   - AgentPoolQueueStatus
   - AgentProperties
   - Archive
-  - ArchivePatch
   - ArchiveVersion
   - AuthCredential
   - BaseImageDependency
@@ -81,8 +78,10 @@ prepend-rp-prefix:
   - BaseImageTrigger
   - BaseImageTriggerType
   - CacheRule
-  - CacheRuleData
+  - CertificateType
   - CredentialName
+  - CredentialHealth
+  - CredentialHealthStatus
   - Credentials
   - CredentialSet
   - DockerBuildStep
@@ -108,6 +107,11 @@ prepend-rp-prefix:
   - PasswordName
   - PipelineOptions
   - PipelineRun
+  - PipelineRunSourceProperties
+  - PipelineRunSourceType
+  - PipelineRunTargetProperties
+  - PipelineRunTargetType
+  - PipelineSourceType
   - PlatformProperties
   - Policies
   - PolicyStatus
@@ -116,12 +120,10 @@ prepend-rp-prefix:
   - QuarantinePolicy
   - Replication
   - ReplicationListResult
-  - ReplicationPatch
   - RetentionPolicy
   - Run
   - RunGetLogResult
   - RunListResult
-  - RunPatch
   - RunStatus
   - RunType
   - SecretObject
@@ -132,13 +134,13 @@ prepend-rp-prefix:
   - SourceTriggerEvent
   - Task
   - TaskListResult
-  - TaskPatch
   - TaskRun
   - TaskRunListResult
   - TaskStatus
   - TaskStepProperties
   - TimerTrigger
   - TimerTriggerDescriptor
+  - TlsCertificateProperties
   - TlsProperties
   - TlsStatus
   - Token
@@ -156,7 +158,6 @@ prepend-rp-prefix:
   - Webhook
   - WebhookAction
   - WebhookListResult
-  - WebhookPatch
   - WebhookStatus
   - ZoneRedundancy
 
@@ -236,7 +237,6 @@ rename-mapping:
   ImageUpdateTrigger.id: -|uuid
   SourceTriggerDescriptor.id: -|uuid
   EventContent.id: -|uuid
-  Event.id: -|uuid
   EventInfo.id: -|uuid
   Request.id: -|uuid
   ActivationProperties: ConnectedRegistryActivation
@@ -250,10 +250,9 @@ rename-mapping:
   StatusDetailProperties.type: StatusDetailType
   StatusDetailProperties.correlationId: -|uuid
   AuditLogStatus: ConnectedRegistryAuditLogStatus
-  CertificateType: TlsCertificateLocationType
   GenerateCredentialsParameters: ContainerRegistryGenerateCredentialsContent
   LogLevel: ConnectedRegistryLogLevel
-  PipelineRunRequest: PipelineRunContent
+  PipelineRunRequest: ConnectedRegistryPipelineRunContent
   PipelineRunResponse: PipelineRunResult
   ProgressProperties: PipelineProgress
   SyncProperties: ConnectedRegistrySyncProperties
@@ -264,6 +263,8 @@ rename-mapping:
   TlsCertificateProperties.location: CertificateLocation
   TokenCredentialsProperties: ContainerRegistryTokenCredentials
   ImportSource.registryUri: RegistryAddress
+  AzureADAuthenticationAsArmPolicyStatus: AadAuthenticationAsArmPolicyStatus
+  PackageSourceType: ArchivePackageSourceType
 
 override-operation-name:
   Schedules_ScheduleRun: ScheduleRun

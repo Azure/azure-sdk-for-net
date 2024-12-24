@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="ImportPipelineSourceProperties"/>. </summary>
-        /// <param name="pipelineSourceType"> The type of source for the import pipeline. </param>
+        /// <param name="containerRegistryPipelineSourceType"> The type of source for the import pipeline. </param>
         /// <param name="uri">
         /// The source uri of the import pipeline.
         /// When 'AzureStorageBlob': "https://accountName.blob.core.windows.net/containerName/blobName"
@@ -64,9 +64,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// </param>
         /// <param name="keyVaultUri"> They key vault secret uri to obtain the source storage SAS token. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImportPipelineSourceProperties(PipelineSourceType? pipelineSourceType, Uri uri, Uri keyVaultUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImportPipelineSourceProperties(ContainerRegistryPipelineSourceType? containerRegistryPipelineSourceType, Uri uri, Uri keyVaultUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            PipelineSourceType = pipelineSourceType;
+            ContainerRegistryPipelineSourceType = containerRegistryPipelineSourceType;
             Uri = uri;
             KeyVaultUri = keyVaultUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The type of source for the import pipeline. </summary>
         [WirePath("type")]
-        public PipelineSourceType? PipelineSourceType { get; set; }
+        public ContainerRegistryPipelineSourceType? ContainerRegistryPipelineSourceType { get; set; }
         /// <summary>
         /// The source uri of the import pipeline.
         /// When 'AzureStorageBlob': "https://accountName.blob.core.windows.net/containerName/blobName"
