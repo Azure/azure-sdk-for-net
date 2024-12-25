@@ -2058,7 +2058,7 @@ namespace Azure.Analytics.Defender.Easm
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssetResourcesRequest(filter, orderby, skip, maxpagesize, mark, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssetResourcesNextPageRequest(nextLink, filter, orderby, skip, maxpagesize, mark, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AssetResource.DeserializeAssetResource(e), ClientDiagnostics, _pipeline, "EasmClient.GetAssetResources", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AssetResource.DeserializeAssetResource(e), ClientDiagnostics, _pipeline, "EasmClient.GetAssetResources", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Retrieve a list of assets for the provided search parameters. </summary>
@@ -2074,7 +2074,7 @@ namespace Azure.Analytics.Defender.Easm
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssetResourcesRequest(filter, orderby, skip, maxpagesize, mark, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssetResourcesNextPageRequest(nextLink, filter, orderby, skip, maxpagesize, mark, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AssetResource.DeserializeAssetResource(e), ClientDiagnostics, _pipeline, "EasmClient.GetAssetResources", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AssetResource.DeserializeAssetResource(e), ClientDiagnostics, _pipeline, "EasmClient.GetAssetResources", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -2105,7 +2105,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssetResourcesRequest(filter, orderby, skip, maxpagesize, mark, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssetResourcesNextPageRequest(nextLink, filter, orderby, skip, maxpagesize, mark, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetAssetResources", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetAssetResources", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -2136,7 +2136,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssetResourcesRequest(filter, orderby, skip, maxpagesize, mark, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssetResourcesNextPageRequest(nextLink, filter, orderby, skip, maxpagesize, mark, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetAssetResources", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetAssetResources", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Retrieve a list of data connections. </summary>
@@ -2149,7 +2149,7 @@ namespace Azure.Analytics.Defender.Easm
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDataConnectionsRequest(skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDataConnectionsNextPageRequest(nextLink, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DataConnection.DeserializeDataConnection(e), ClientDiagnostics, _pipeline, "EasmClient.GetDataConnections", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DataConnection.DeserializeDataConnection(e), ClientDiagnostics, _pipeline, "EasmClient.GetDataConnections", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Retrieve a list of data connections. </summary>
@@ -2162,7 +2162,7 @@ namespace Azure.Analytics.Defender.Easm
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDataConnectionsRequest(skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDataConnectionsNextPageRequest(nextLink, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DataConnection.DeserializeDataConnection(e), ClientDiagnostics, _pipeline, "EasmClient.GetDataConnections", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DataConnection.DeserializeDataConnection(e), ClientDiagnostics, _pipeline, "EasmClient.GetDataConnections", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -2190,7 +2190,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDataConnectionsRequest(skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDataConnectionsNextPageRequest(nextLink, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDataConnections", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDataConnections", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -2218,7 +2218,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDataConnectionsRequest(skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDataConnectionsNextPageRequest(nextLink, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDataConnections", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDataConnections", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Retrieve a list of discovery group for the provided search parameters. </summary>
@@ -2232,7 +2232,7 @@ namespace Azure.Analytics.Defender.Easm
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoveryGroupsRequest(filter, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoveryGroupsNextPageRequest(nextLink, filter, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DiscoveryGroup.DeserializeDiscoveryGroup(e), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryGroups", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DiscoveryGroup.DeserializeDiscoveryGroup(e), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryGroups", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Retrieve a list of discovery group for the provided search parameters. </summary>
@@ -2246,7 +2246,7 @@ namespace Azure.Analytics.Defender.Easm
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoveryGroupsRequest(filter, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoveryGroupsNextPageRequest(nextLink, filter, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DiscoveryGroup.DeserializeDiscoveryGroup(e), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryGroups", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DiscoveryGroup.DeserializeDiscoveryGroup(e), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryGroups", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -2275,7 +2275,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoveryGroupsRequest(filter, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoveryGroupsNextPageRequest(nextLink, filter, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryGroups", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryGroups", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -2304,7 +2304,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoveryGroupsRequest(filter, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoveryGroupsNextPageRequest(nextLink, filter, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryGroups", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryGroups", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Retrieve a collection of discovery run results for a discovery group with a given groupName. </summary>
@@ -2323,7 +2323,7 @@ namespace Azure.Analytics.Defender.Easm
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoveryGroupRunsRequest(groupName, filter, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoveryGroupRunsNextPageRequest(nextLink, groupName, filter, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DiscoveryRunResult.DeserializeDiscoveryRunResult(e), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryGroupRuns", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DiscoveryRunResult.DeserializeDiscoveryRunResult(e), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryGroupRuns", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Retrieve a collection of discovery run results for a discovery group with a given groupName. </summary>
@@ -2342,7 +2342,7 @@ namespace Azure.Analytics.Defender.Easm
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoveryGroupRunsRequest(groupName, filter, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoveryGroupRunsNextPageRequest(nextLink, groupName, filter, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DiscoveryRunResult.DeserializeDiscoveryRunResult(e), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryGroupRuns", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DiscoveryRunResult.DeserializeDiscoveryRunResult(e), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryGroupRuns", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -2376,7 +2376,7 @@ namespace Azure.Analytics.Defender.Easm
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoveryGroupRunsRequest(groupName, filter, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoveryGroupRunsNextPageRequest(nextLink, groupName, filter, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryGroupRuns", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryGroupRuns", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -2410,7 +2410,7 @@ namespace Azure.Analytics.Defender.Easm
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoveryGroupRunsRequest(groupName, filter, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoveryGroupRunsNextPageRequest(nextLink, groupName, filter, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryGroupRuns", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryGroupRuns", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Retrieve a list of disco templates for the provided search parameters. </summary>
@@ -2424,7 +2424,7 @@ namespace Azure.Analytics.Defender.Easm
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoveryTemplatesRequest(filter, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoveryTemplatesNextPageRequest(nextLink, filter, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DiscoveryTemplate.DeserializeDiscoveryTemplate(e), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryTemplates", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => DiscoveryTemplate.DeserializeDiscoveryTemplate(e), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryTemplates", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Retrieve a list of disco templates for the provided search parameters. </summary>
@@ -2438,7 +2438,7 @@ namespace Azure.Analytics.Defender.Easm
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoveryTemplatesRequest(filter, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoveryTemplatesNextPageRequest(nextLink, filter, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DiscoveryTemplate.DeserializeDiscoveryTemplate(e), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryTemplates", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => DiscoveryTemplate.DeserializeDiscoveryTemplate(e), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryTemplates", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -2467,7 +2467,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoveryTemplatesRequest(filter, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoveryTemplatesNextPageRequest(nextLink, filter, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryTemplates", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryTemplates", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -2496,7 +2496,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDiscoveryTemplatesRequest(filter, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDiscoveryTemplatesNextPageRequest(nextLink, filter, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryTemplates", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetDiscoveryTemplates", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Retrieve a list of saved filters for the provided search parameters. </summary>
@@ -2510,7 +2510,7 @@ namespace Azure.Analytics.Defender.Easm
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSavedFiltersRequest(filter, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSavedFiltersNextPageRequest(nextLink, filter, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SavedFilter.DeserializeSavedFilter(e), ClientDiagnostics, _pipeline, "EasmClient.GetSavedFilters", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SavedFilter.DeserializeSavedFilter(e), ClientDiagnostics, _pipeline, "EasmClient.GetSavedFilters", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Retrieve a list of saved filters for the provided search parameters. </summary>
@@ -2524,7 +2524,7 @@ namespace Azure.Analytics.Defender.Easm
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSavedFiltersRequest(filter, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSavedFiltersNextPageRequest(nextLink, filter, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SavedFilter.DeserializeSavedFilter(e), ClientDiagnostics, _pipeline, "EasmClient.GetSavedFilters", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SavedFilter.DeserializeSavedFilter(e), ClientDiagnostics, _pipeline, "EasmClient.GetSavedFilters", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -2553,7 +2553,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSavedFiltersRequest(filter, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSavedFiltersNextPageRequest(nextLink, filter, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetSavedFilters", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetSavedFilters", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -2582,7 +2582,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSavedFiltersRequest(filter, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSavedFiltersNextPageRequest(nextLink, filter, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetSavedFilters", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetSavedFilters", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Retrieve a list of tasks for the provided search parameters. </summary>
@@ -2597,7 +2597,7 @@ namespace Azure.Analytics.Defender.Easm
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(filter, orderby, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, filter, orderby, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TaskResource.DeserializeTaskResource(e), ClientDiagnostics, _pipeline, "EasmClient.GetTasks", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TaskResource.DeserializeTaskResource(e), ClientDiagnostics, _pipeline, "EasmClient.GetTasks", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Retrieve a list of tasks for the provided search parameters. </summary>
@@ -2612,7 +2612,7 @@ namespace Azure.Analytics.Defender.Easm
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(filter, orderby, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, filter, orderby, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TaskResource.DeserializeTaskResource(e), ClientDiagnostics, _pipeline, "EasmClient.GetTasks", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TaskResource.DeserializeTaskResource(e), ClientDiagnostics, _pipeline, "EasmClient.GetTasks", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -2642,7 +2642,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(filter, orderby, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, filter, orderby, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetTasks", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetTasks", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -2672,7 +2672,7 @@ namespace Azure.Analytics.Defender.Easm
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(filter, orderby, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, filter, orderby, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetTasks", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EasmClient.GetTasks", "value", "nextLink", maxpagesize, context);
         }
 
         internal HttpMessage CreateGetAssetResourcesRequest(string filter, string orderby, int? skip, int? maxpagesize, string mark, RequestContext context)
