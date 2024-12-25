@@ -85,7 +85,7 @@ namespace Azure.Analytics.Purview.Workflows
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(viewMode, timeWindow, orderby, runStatuses, workflowIds, requestors, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowRunsNextPageRequest(nextLink, viewMode, timeWindow, orderby, runStatuses, workflowIds, requestors, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WorkflowRunsClient.GetWorkflowRuns", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WorkflowRunsClient.GetWorkflowRuns", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -113,7 +113,7 @@ namespace Azure.Analytics.Purview.Workflows
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetWorkflowRunsRequest(viewMode, timeWindow, orderby, runStatuses, workflowIds, requestors, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetWorkflowRunsNextPageRequest(nextLink, viewMode, timeWindow, orderby, runStatuses, workflowIds, requestors, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WorkflowRunsClient.GetWorkflowRuns", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "WorkflowRunsClient.GetWorkflowRuns", "value", "nextLink", maxpagesize, context);
         }
 
         internal HttpMessage CreateGetWorkflowRunsRequest(string viewMode, string timeWindow, string orderby, IEnumerable<string> runStatuses, IEnumerable<string> workflowIds, IEnumerable<string> requestors, int? maxpagesize, RequestContext context)
