@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Cross region restore is not supported for Continuous backup, need further investigation.")]
         public async Task TestCrossRegionRestore()
         {
             _restorableDatabaseAccount = await GetDatabaseAccountForSpecificAPI(AccountType.PitrSql, AzureLocation.WestCentralUS);

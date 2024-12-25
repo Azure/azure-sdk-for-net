@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             ResourceRestoreParameters RestoreParameters = new ResourceRestoreParameters
             {
                 RestoreSource = restoreSource,
-                RestoreTimestampInUtc = timestampInUtc.AddSeconds(60),
+                RestoreTimestampInUtc = timestampInUtc.AddSeconds(10),
                 IsRestoreWithTtlDisabled = true
             };
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 CreateMode = CosmosDBAccountCreateMode.Restore
             };
             // TODO: use original tags see defect: https://github.com/Azure/autorest.csharp/issues/1590
-            var updateOptions = new CosmosDBSqlContainerCreateOrUpdateContent(AzureLocation.WestUS, resource);
+            var updateOptions = new CosmosDBSqlContainerCreateOrUpdateContent(container.Data.Location, resource);
 
             // restore
             var container3 = (await SqlContainerCollection.CreateOrUpdateAsync(WaitUntil.Completed, _containerName, updateOptions)).Value;
