@@ -1073,10 +1073,10 @@
 # ServiceOwners:                                                   @alexmahonic @PriyankaHariharan @apmehrotra
 
 # PRLabel: %Elastic
-/sdk/elastic/Azure.ResourceManager.*/                              @jkore1911 @ArthurMa1978
+/sdk/elastic/Azure.ResourceManager.*/                              @ArthurMa1978
 
 # ServiceLabel: %%Elastic %Mgmt
-# ServiceOwners:                                                   @jkore1911 @ArthurMa1978
+# ServiceOwners:                                                   @ArthurMa1978
 
 # ######## Eng Sys ########
 /eng/                                                              @hallipr @weshaggard @benbp
