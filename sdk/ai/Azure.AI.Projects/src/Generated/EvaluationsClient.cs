@@ -641,7 +641,7 @@ namespace Azure.AI.Projects
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEvaluationsRequest(maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEvaluationsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Evaluation.DeserializeEvaluation(e), ClientDiagnostics, _pipeline, "EvaluationsClient.GetEvaluations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Evaluation.DeserializeEvaluation(e), ClientDiagnostics, _pipeline, "EvaluationsClient.GetEvaluations", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -654,7 +654,7 @@ namespace Azure.AI.Projects
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEvaluationsRequest(maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEvaluationsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Evaluation.DeserializeEvaluation(e), ClientDiagnostics, _pipeline, "EvaluationsClient.GetEvaluations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Evaluation.DeserializeEvaluation(e), ClientDiagnostics, _pipeline, "EvaluationsClient.GetEvaluations", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -682,7 +682,7 @@ namespace Azure.AI.Projects
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEvaluationsRequest(maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEvaluationsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EvaluationsClient.GetEvaluations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EvaluationsClient.GetEvaluations", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -710,7 +710,7 @@ namespace Azure.AI.Projects
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetEvaluationsRequest(maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetEvaluationsNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EvaluationsClient.GetEvaluations", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EvaluationsClient.GetEvaluations", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -723,7 +723,7 @@ namespace Azure.AI.Projects
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EvaluationSchedule.DeserializeEvaluationSchedule(e), ClientDiagnostics, _pipeline, "EvaluationsClient.GetSchedules", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => EvaluationSchedule.DeserializeEvaluationSchedule(e), ClientDiagnostics, _pipeline, "EvaluationsClient.GetSchedules", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Resource list operation template. </summary>
@@ -736,7 +736,7 @@ namespace Azure.AI.Projects
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EvaluationSchedule.DeserializeEvaluationSchedule(e), ClientDiagnostics, _pipeline, "EvaluationsClient.GetSchedules", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => EvaluationSchedule.DeserializeEvaluationSchedule(e), ClientDiagnostics, _pipeline, "EvaluationsClient.GetSchedules", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -764,7 +764,7 @@ namespace Azure.AI.Projects
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EvaluationsClient.GetSchedules", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EvaluationsClient.GetSchedules", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -792,7 +792,7 @@ namespace Azure.AI.Projects
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSchedulesRequest(maxCount, skip, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSchedulesNextPageRequest(nextLink, maxCount, skip, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EvaluationsClient.GetSchedules", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "EvaluationsClient.GetSchedules", "value", "nextLink", maxpagesize, context);
         }
 
         internal HttpMessage CreateGetEvaluationRequest(string id, RequestContext context)
