@@ -1,14 +1,12 @@
 # Release History
 
-## 1.0.0-beta.6 (Unreleased)
+## 1.0.0 (2024-12-26)
+
+This package is the first stable release of the Azure Elastic management library.
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded api-version tag to 'package-2024-03-01'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/700bd7b4e10d2bd83672ee56fd6aedcf7e195a06/specification/elastic/resource-manager/readme.md.
 
 ## 1.0.0-beta.5 (2024-10-01)
 
