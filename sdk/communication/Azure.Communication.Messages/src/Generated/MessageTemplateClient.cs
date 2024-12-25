@@ -75,7 +75,7 @@ namespace Azure.Communication.Messages
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTemplatesRequest(channelId, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTemplatesNextPageRequest(nextLink, channelId, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => MessageTemplateItem.DeserializeMessageTemplateItem(e), ClientDiagnostics, _pipeline, "MessageTemplateClient.GetTemplates", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => MessageTemplateItem.DeserializeMessageTemplateItem(e), ClientDiagnostics, _pipeline, "MessageTemplateClient.GetTemplates", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> List all templates for given Azure Communication Services channel. </summary>
@@ -88,7 +88,7 @@ namespace Azure.Communication.Messages
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTemplatesRequest(channelId, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTemplatesNextPageRequest(nextLink, channelId, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => MessageTemplateItem.DeserializeMessageTemplateItem(e), ClientDiagnostics, _pipeline, "MessageTemplateClient.GetTemplates", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => MessageTemplateItem.DeserializeMessageTemplateItem(e), ClientDiagnostics, _pipeline, "MessageTemplateClient.GetTemplates", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -116,7 +116,7 @@ namespace Azure.Communication.Messages
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTemplatesRequest(channelId, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTemplatesNextPageRequest(nextLink, channelId, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "MessageTemplateClient.GetTemplates", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "MessageTemplateClient.GetTemplates", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace Azure.Communication.Messages
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTemplatesRequest(channelId, maxpagesize, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTemplatesNextPageRequest(nextLink, channelId, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "MessageTemplateClient.GetTemplates", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "MessageTemplateClient.GetTemplates", "value", "nextLink", maxpagesize, context);
         }
 
         internal HttpMessage CreateGetTemplatesRequest(Guid channelId, int? maxpagesize, RequestContext context)
