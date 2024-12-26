@@ -123,13 +123,13 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             var restorableAccounts = await (await ArmClient.GetDefaultSubscriptionAsync()).GetRestorableCosmosDBAccountsAsync().ToEnumerableAsync();
             var restorableDatabaseAccount = restorableAccounts.SingleOrDefault(account => account.Data.AccountName == _databaseAccount.Data.Name);
             DateTimeOffset timestampInUtc = DateTimeOffset.FromUnixTimeSeconds((int)container.Data.Resource.Timestamp.Value);
-            AddDelayInSeconds(60);
+            AddDelayInSeconds(120);
 
             String restoreSource = restorableDatabaseAccount.Id;
             ResourceRestoreParameters RestoreParameters = new ResourceRestoreParameters
             {
                 RestoreSource = restoreSource,
-                RestoreTimestampInUtc = timestampInUtc.AddSeconds(10),
+                RestoreTimestampInUtc = timestampInUtc.AddSeconds(80),
                 IsRestoreWithTtlDisabled = true
             };
 
