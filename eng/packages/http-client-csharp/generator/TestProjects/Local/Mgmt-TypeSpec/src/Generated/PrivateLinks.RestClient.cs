@@ -20,7 +20,7 @@ namespace MgmtTypeSpec
 
         private static ResponseClassifier PipelineMessageClassifier200202 => _pipelineMessageClassifier200202 = new StatusCodeClassifier(stackalloc ushort[] { 200, 202 });
 
-        internal HttpMessage CreateGetAllPrivateLinkResourcesRequest(string resourceGroupName, RequestContext context)
+        internal HttpMessage CreateGetAllPrivateLinkResourcesRequest(string subscriptionId, string resourceGroupName, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -28,7 +28,7 @@ namespace MgmtTypeSpec
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(_subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/privateLinkResources", false);
@@ -38,7 +38,7 @@ namespace MgmtTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateStartRequest(string resourceGroupName, string privateLinkResourcenName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateStartRequest(string subscriptionId, string resourceGroupName, string privateLinkResourcenName, RequestContent content, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200202);
             Request request = message.Request;
@@ -46,7 +46,7 @@ namespace MgmtTypeSpec
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(_subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/privateLinkResources/", false);

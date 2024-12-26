@@ -51,7 +51,7 @@ public class AzureClientPlugin : ClientModelPlugin
         AddSharedSourceDirectory(sharedSourceDirectory);
         if (IsAzureArm.Value)
         {
-            AddVisitor(new AzureVisitor());
+            AddVisitor(new AzureArmVisitor());
         }
     }
 

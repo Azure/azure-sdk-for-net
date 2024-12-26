@@ -23,7 +23,7 @@ namespace MgmtTypeSpec
 
         private static ResponseClassifier PipelineMessageClassifier202204 => _pipelineMessageClassifier202204 = new StatusCodeClassifier(stackalloc ushort[] { 202, 204 });
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string fooName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string fooName, RequestContent content, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
@@ -31,7 +31,7 @@ namespace MgmtTypeSpec
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(_subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
@@ -44,7 +44,7 @@ namespace MgmtTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string fooName, RequestContext context)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string fooName, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -52,7 +52,7 @@ namespace MgmtTypeSpec
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(_subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
@@ -63,7 +63,7 @@ namespace MgmtTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string fooName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string fooName, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202204);
             Request request = message.Request;
@@ -71,7 +71,7 @@ namespace MgmtTypeSpec
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(_subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
@@ -82,7 +82,7 @@ namespace MgmtTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName, RequestContext context)
+        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -90,7 +90,7 @@ namespace MgmtTypeSpec
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(_subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId, true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/foos", false);
