@@ -20,7 +20,7 @@ namespace Azure.AI.Vision.Face.Samples
 
             #region Snippet:CreateLivenessWithVerifySessionAsync
             var parameters = new CreateLivenessWithVerifySessionContent(LivenessOperationMode.Passive) {
-                SendResultsToClient = true,
+                // SendResultsToClient = true,
                 DeviceCorrelationId = Guid.NewGuid().ToString(),
             };
 
@@ -31,8 +31,8 @@ namespace Azure.AI.Vision.Face.Samples
             var sessionId = createResponse.Value.SessionId;
             Console.WriteLine($"Session created, SessionId: {sessionId}");
             Console.WriteLine($"AuthToken: {createResponse.Value.AuthToken}");
-            Console.WriteLine($"VerifyImage.FaceRectangle: {createResponse.Value.VerifyImage.FaceRectangle.Top}, {createResponse.Value.VerifyImage.FaceRectangle.Left}, {createResponse.Value.VerifyImage.FaceRectangle.Width}, {createResponse.Value.VerifyImage.FaceRectangle.Height}");
-            Console.WriteLine($"VerifyImage.QualityForRecognition: {createResponse.Value.VerifyImage.QualityForRecognition}");
+            // Console.WriteLine($"VerifyImage.FaceRectangle: {createResponse.Value.VerifyImage.FaceRectangle.Top}, {createResponse.Value.VerifyImage.FaceRectangle.Left}, {createResponse.Value.VerifyImage.FaceRectangle.Width}, {createResponse.Value.VerifyImage.FaceRectangle.Height}");
+            // Console.WriteLine($"VerifyImage.QualityForRecognition: {createResponse.Value.VerifyImage.QualityForRecognition}");
             #endregion
 
             if (deleteSession)
@@ -52,43 +52,43 @@ namespace Azure.AI.Vision.Face.Samples
             #region Snippet:GetLivenessWithVerifySessionResultAsync
             var getResultResponse = await sessionClient.GetLivenessWithVerifySessionResultAsync(sessionId);
             var sessionResult = getResultResponse.Value;
-            Console.WriteLine($"Id: {sessionResult.Id}");
-            Console.WriteLine($"CreatedDateTime: {sessionResult.CreatedDateTime}");
-            Console.WriteLine($"SessionExpired: {sessionResult.SessionExpired}");
-            Console.WriteLine($"DeviceCorrelationId: {sessionResult.DeviceCorrelationId}");
-            Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {sessionResult.AuthTokenTimeToLiveInSeconds}");
-            Console.WriteLine($"Status: {sessionResult.Status}");
-            Console.WriteLine($"SessionStartDateTime: {sessionResult.SessionStartDateTime}");
-            if (sessionResult.Result != null) {
-                WriteLivenessWithVerifySessionAuditEntry(sessionResult.Result);
-            }
+            // Console.WriteLine($"Id: {sessionResult.Id}");
+            // Console.WriteLine($"CreatedDateTime: {sessionResult.CreatedDateTime}");
+            // Console.WriteLine($"SessionExpired: {sessionResult.SessionExpired}");
+            // Console.WriteLine($"DeviceCorrelationId: {sessionResult.DeviceCorrelationId}");
+            // Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {sessionResult.AuthTokenTimeToLiveInSeconds}");
+            // Console.WriteLine($"Status: {sessionResult.Status}");
+            // Console.WriteLine($"SessionStartDateTime: {sessionResult.SessionStartDateTime}");
+            // if (sessionResult.Result != null) {
+            //     WriteLivenessWithVerifySessionAuditEntry(sessionResult.Result);
+            // }
             #endregion
 
             #region Snippet:GetLivenessWithVerifySessionAuditEntriesAsync
-            var getAuditEntriesResponse = await sessionClient.GetLivenessWithVerifySessionAuditEntriesAsync(sessionId);
-            foreach (var auditEntry in getAuditEntriesResponse.Value)
-            {
-                WriteLivenessWithVerifySessionAuditEntry(auditEntry);
-            }
+            // var getAuditEntriesResponse = await sessionClient.GetLivenessWithVerifySessionAuditEntriesAsync(sessionId);
+            // foreach (var auditEntry in getAuditEntriesResponse.Value)
+            // {
+            //     WriteLivenessWithVerifySessionAuditEntry(auditEntry);
+            // }
             #endregion
         }
 
-        public async Task ListDetectLivenessWithVerifySessionsAsync()
-        {
-            var sessionClient = CreateSessionClient();
+        // public async Task ListDetectLivenessWithVerifySessionsAsync()
+        // {
+        //     var sessionClient = CreateSessionClient();
 
-            #region Snippet:GetLivenessWithVerifySessionsAsync
-            var listResponse = await sessionClient.GetLivenessWithVerifySessionsAsync();
-            foreach (var session in listResponse.Value)
-            {
-                Console.WriteLine($"SessionId: {session.Id}");
-                Console.WriteLine($"CreatedDateTime: {session.CreatedDateTime}");
-                Console.WriteLine($"SessionExpired: {session.SessionExpired}");
-                Console.WriteLine($"DeviceCorrelationId: {session.DeviceCorrelationId}");
-                Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {session.AuthTokenTimeToLiveInSeconds}");
-                Console.WriteLine($"SessionStartDateTime: {session.SessionStartDateTime}");
-            }
-            #endregion
-        }
+        //     #region Snippet:GetLivenessWithVerifySessionsAsync
+        //     var listResponse = await sessionClient.GetLivenessWithVerifySessionsAsync();
+        //     foreach (var session in listResponse.Value)
+        //     {
+        //         Console.WriteLine($"SessionId: {session.Id}");
+        //         Console.WriteLine($"CreatedDateTime: {session.CreatedDateTime}");
+        //         Console.WriteLine($"SessionExpired: {session.SessionExpired}");
+        //         Console.WriteLine($"DeviceCorrelationId: {session.DeviceCorrelationId}");
+        //         Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {session.AuthTokenTimeToLiveInSeconds}");
+        //         Console.WriteLine($"SessionStartDateTime: {session.SessionStartDateTime}");
+        //     }
+        //     #endregion
+        // }
     }
 }

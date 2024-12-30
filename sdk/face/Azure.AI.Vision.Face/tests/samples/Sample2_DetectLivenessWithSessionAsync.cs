@@ -18,7 +18,7 @@ namespace Azure.AI.Vision.Face.Samples
 
             #region Snippet:CreateLivenessSessionAsync
             var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive) {
-                SendResultsToClient = true,
+                // SendResultsToClient = true,
                 DeviceCorrelationId = Guid.NewGuid().ToString(),
             };
 
@@ -46,43 +46,43 @@ namespace Azure.AI.Vision.Face.Samples
             #region Snippet:GetLivenessSessionResultAsync
             var getResultResponse = await sessionClient.GetLivenessSessionResultAsync(sessionId);
             var sessionResult = getResultResponse.Value;
-            Console.WriteLine($"Id: {sessionResult.Id}");
-            Console.WriteLine($"CreatedDateTime: {sessionResult.CreatedDateTime}");
-            Console.WriteLine($"SessionExpired: {sessionResult.SessionExpired}");
-            Console.WriteLine($"DeviceCorrelationId: {sessionResult.DeviceCorrelationId}");
-            Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {sessionResult.AuthTokenTimeToLiveInSeconds}");
-            Console.WriteLine($"Status: {sessionResult.Status}");
-            Console.WriteLine($"SessionStartDateTime: {sessionResult.SessionStartDateTime}");
-            if (sessionResult.Result != null) {
-                WriteLivenessSessionAuditEntry(sessionResult.Result);
-            }
+            // Console.WriteLine($"Id: {sessionResult.Id}");
+            // Console.WriteLine($"CreatedDateTime: {sessionResult.CreatedDateTime}");
+            // Console.WriteLine($"SessionExpired: {sessionResult.SessionExpired}");
+            // Console.WriteLine($"DeviceCorrelationId: {sessionResult.DeviceCorrelationId}");
+            // Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {sessionResult.AuthTokenTimeToLiveInSeconds}");
+            // Console.WriteLine($"Status: {sessionResult.Status}");
+            // Console.WriteLine($"SessionStartDateTime: {sessionResult.SessionStartDateTime}");
+            // if (sessionResult.Result != null) {
+            //     WriteLivenessSessionAuditEntry(sessionResult.Result);
+            // }
             #endregion
 
             #region Snippet:GetLivenessSessionAuditEntriesAsync
-            var getAuditEntriesResponse = await sessionClient.GetLivenessSessionAuditEntriesAsync(sessionId);
-            foreach (var auditEntry in getAuditEntriesResponse.Value)
-            {
-                WriteLivenessSessionAuditEntry(auditEntry);
-            }
+            // var getAuditEntriesResponse = await sessionClient.GetLivenessSessionAuditEntriesAsync(sessionId);
+            // foreach (var auditEntry in getAuditEntriesResponse.Value)
+            // {
+            //     WriteLivenessSessionAuditEntry(auditEntry);
+            // }
             #endregion
         }
 
-        public async Task ListDetectLivenessSessionsAsync()
-        {
-            var sessionClient = CreateSessionClient();
+        // public async Task ListDetectLivenessSessionsAsync()
+        // {
+        //     var sessionClient = CreateSessionClient();
 
-            #region Snippet:GetLivenessSessionsAsync
-            var listResponse = await sessionClient.GetLivenessSessionsAsync();
-            foreach (var session in listResponse.Value)
-            {
-                Console.WriteLine($"SessionId: {session.Id}");
-                Console.WriteLine($"CreatedDateTime: {session.CreatedDateTime}");
-                Console.WriteLine($"SessionExpired: {session.SessionExpired}");
-                Console.WriteLine($"DeviceCorrelationId: {session.DeviceCorrelationId}");
-                Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {session.AuthTokenTimeToLiveInSeconds}");
-                Console.WriteLine($"SessionStartDateTime: {session.SessionStartDateTime}");
-            }
-            #endregion
-        }
+        //     #region Snippet:GetLivenessSessionsAsync
+        //     var listResponse = await sessionClient.GetLivenessSessionsAsync();
+        //     foreach (var session in listResponse.Value)
+        //     {
+        //         Console.WriteLine($"SessionId: {session.Id}");
+        //         Console.WriteLine($"CreatedDateTime: {session.CreatedDateTime}");
+        //         Console.WriteLine($"SessionExpired: {session.SessionExpired}");
+        //         Console.WriteLine($"DeviceCorrelationId: {session.DeviceCorrelationId}");
+        //         Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {session.AuthTokenTimeToLiveInSeconds}");
+        //         Console.WriteLine($"SessionStartDateTime: {session.SessionStartDateTime}");
+        //     }
+        //     #endregion
+        // }
     }
 }
