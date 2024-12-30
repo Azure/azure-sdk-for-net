@@ -169,7 +169,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            if (_drainModeManager?.IsDrainModeEnabled ?? false)
+            if (!_drainModeManager?.IsDrainModeEnabled ?? true)
             {
                 _executionCancellationTokenSource.Cancel();
             }
