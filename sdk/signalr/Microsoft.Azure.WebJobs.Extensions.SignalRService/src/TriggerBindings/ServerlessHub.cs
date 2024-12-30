@@ -37,7 +37,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         internal ServiceHubContext HubContext => _hubContext as ServiceHubContext;
 
-        internal string ConnectionName => SignalRTriggerUtils.GetConnectionNameFromAttribute(GetType()) ?? Constants.AzureSignalRConnectionStringName;
+        internal string ConnectionName => SignalRTriggerUtils.GetConnectionNameFromAttribute(GetType()) ?? Constants.AzureSignalRConnectionName;
 
         /// <summary>
         /// Leave the parameters to be null when called by Azure Function infrastructure.
@@ -64,16 +64,16 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             /// <summary>
             /// Initializes a new instance of the <see cref="SignalRConnectionAttribute"/> class.
             /// </summary>
-            /// <param name="connectionStringSetting">Gets or sets the app setting name that contains the Azure SignalR connection string.</param>
-            public SignalRConnectionAttribute(string connectionStringSetting)
+            /// <param name="connection">Gets or sets the app setting name that contains the Azure SignalR connection string.</param>
+            public SignalRConnectionAttribute(string connection)
             {
-                Connection = connectionStringSetting;
+                Connection = connection;
             }
 
             /// <summary>
             /// Gets or sets the app setting name that contains the Azure SignalR connection string.
             /// </summary>
-            public string Connection { get; set; } = Constants.AzureSignalRConnectionStringName;
+            public string Connection { get; set; } = Constants.AzureSignalRConnectionName;
         }
 
         /// <summary>

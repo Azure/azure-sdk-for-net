@@ -62,7 +62,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     {
         protected NegotiationBaseAttribute() { }
         public string[] ClaimTypeList { get { throw null; } set { } }
-        public string ConnectionStringSetting { get { throw null; } set { } }
+        public string Connection { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string HubName { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
@@ -110,7 +110,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         [System.AttributeUsageAttribute(System.AttributeTargets.Class)]
         protected internal partial class SignalRConnectionAttribute : System.Attribute, Microsoft.Azure.WebJobs.IConnectionProvider
         {
-            public SignalRConnectionAttribute(string connectionStringSetting) { }
+            public SignalRConnectionAttribute(string connection) { }
             public string Connection { get { throw null; } set { } }
         }
     }
@@ -137,7 +137,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     public partial class SignalRAttribute : System.Attribute
     {
         public SignalRAttribute() { }
-        public string ConnectionStringSetting { get { throw null; } set { } }
+        public string Connection { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string HubName { get { throw null; } set { } }
     }
@@ -172,7 +172,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     public partial class SignalREndpointsAttribute : System.Attribute
     {
         public SignalREndpointsAttribute() { }
-        public string ConnectionStringSetting { get { throw null; } set { } }
+        public string Connection { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string HubName { get { throw null; } set { } }
     }
@@ -263,7 +263,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public SignalRTriggerAttribute(string hubName, string category, string @event, params string[] parameterNames) { }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string Category { get { throw null; } }
-        public string ConnectionStringSetting { get { throw null; } set { } }
+        public string Connection { get { throw null; } set { } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
         public string Event { get { throw null; } }
         [Microsoft.Azure.WebJobs.Description.AutoResolveAttribute]
@@ -297,6 +297,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
     }
     public static partial class StaticServiceHubContextStore
     {
-        public static Microsoft.Azure.WebJobs.Extensions.SignalRService.IServiceHubContextStore Get(string connectionStringSetting = "AzureSignalRConnectionString") { throw null; }
+        public static Microsoft.Azure.WebJobs.Extensions.SignalRService.IServiceHubContextStore Get(string connection = "AzureSignalRConnectionString") { throw null; }
     }
 }

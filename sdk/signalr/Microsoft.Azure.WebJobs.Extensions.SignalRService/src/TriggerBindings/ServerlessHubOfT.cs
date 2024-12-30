@@ -94,7 +94,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         private ServiceHubContext<T> GetHubContext(IServiceManagerStore serviceManagerStore)
         {
-            var connectionName = SignalRTriggerUtils.GetConnectionNameFromAttribute(GetType()) ?? Constants.AzureSignalRConnectionStringName;
+            var connectionName = SignalRTriggerUtils.GetConnectionNameFromAttribute(GetType()) ?? Constants.AzureSignalRConnectionName;
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult().
             return serviceManagerStore.GetOrAddByConnectionStringKey(connectionName).GetAsync<T>(HubName).GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().

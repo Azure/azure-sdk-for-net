@@ -40,7 +40,7 @@ Azure PowerShell snippet:
 Get-AzSignalRKey -ResourceGroupName <your-resource-name> -Name <your-resource-name>
 ```
 
-The `ConnectionStringSetting` property of SignalR bindings (including `SignalRAttribute`, `SignalRConnectionInfoAttribute`, `SignalRTriggerAttribute` etc.) is used to specify the configuration property that stores the connection string. If not specified, the property `AzureSignalRConnectionString` is expected to contain the connection string.
+The `Connection` property of SignalR bindings (including `SignalRAttribute`, `SignalRConnectionInfoAttribute`, `SignalRTriggerAttribute` etc.) is used to specify the configuration property that stores the connection string. If not specified, the property `AzureSignalRConnectionString` is expected to contain the connection string.
 
 For local development, use the `local.settings.json` file to store the connection string:
 

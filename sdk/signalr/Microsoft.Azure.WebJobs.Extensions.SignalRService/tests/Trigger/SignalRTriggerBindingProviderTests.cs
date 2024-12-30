@@ -114,8 +114,8 @@ namespace SignalRServiceExtension.Tests
         [Fact]
         public async Task BindingDataTest_WithCustomConnectionString()
         {
-            var bindingProvider = CreateBindingProvider(connectionStringSetting: CustomConnctionStringSetting);
-            var parameter = typeof(TestNonServerlessHub_CustomConnectionStringSetting).GetMethod(nameof(TestNonServerlessHub_CustomConnectionStringSetting.TestFunction), BindingFlags.Instance | BindingFlags.NonPublic).GetParameters()[0];
+            var bindingProvider = CreateBindingProvider(connection: CustomConnctionStringSetting);
+            var parameter = typeof(TestNonServerlessHub_CustomConnection).GetMethod(nameof(TestNonServerlessHub_CustomConnection.TestFunction), BindingFlags.Instance | BindingFlags.NonPublic).GetParameters()[0];
             var context = new TriggerBindingProviderContext(parameter, default);
             var binding = await bindingProvider.TryCreateAsync(context);
             var dataProvider = await binding.BindAsync(new SignalRTriggerEvent { Context = new InvocationContext() }, null);
@@ -127,19 +127,19 @@ namespace SignalRServiceExtension.Tests
             Assert.NotNull(groups);
         }
 
-        private class TestNonServerlessHub_CustomConnectionStringSetting
+        private class TestNonServerlessHub_CustomConnection
         {
             internal void TestFunction(
-            [SignalRTrigger("hub", "connections", null, ConnectionStringSetting = CustomConnctionStringSetting)]
+            [SignalRTrigger("hub", "connections", null, Connection = CustomConnctionStringSetting)]
             InvocationContext context)
             {
             }
         }
 
-        private SignalRTriggerBindingProvider CreateBindingProvider(Exception exception = null, string connectionStringSetting = Constants.AzureSignalRConnectionStringName)
+        private SignalRTriggerBindingProvider CreateBindingProvider(Exception exception = null, string connection = Constants.AzureSignalRConnectionName)
         {
             var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
-            configuration[connectionStringSetting] = "Endpoint=http://localhost;AccessKey=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789;Version=1.0;";
+            configuration[connection] = "Endpoint=http://localhost;AccessKey=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789;Version=1.0;";
             configuration["Serverless_ExpressionBindings_HubName"] = "test_hub";
             configuration["Serverless_ExpressionBindings_HubCategory"] = "connections";
             configuration["Serverless_ExpressionBindings_HubEvent"] = "connected";

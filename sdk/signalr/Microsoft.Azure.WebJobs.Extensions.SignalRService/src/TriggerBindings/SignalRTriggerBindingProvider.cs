@@ -52,7 +52,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             var resolvedAttribute = GetParameterResolvedAttribute(attribute, parameterInfo);
             ValidateSignalRTriggerAttributeBinding(resolvedAttribute);
 
-            var hubContextStore = _managerStore.GetOrAddByConnectionStringKey(resolvedAttribute.ConnectionStringSetting);
+            var hubContextStore = _managerStore.GetOrAddByConnectionStringKey(resolvedAttribute.Connection);
 
             var hubContext = await hubContextStore.GetAsync(resolvedAttribute.HubName).ConfigureAwait(false);
 
@@ -66,7 +66,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             var category = attribute.Category;
             var @event = attribute.Event;
             var parameterNames = attribute.ParameterNames ?? Array.Empty<string>();
-            var connectionStringSetting = attribute.ConnectionStringSetting;
+            var connection = attribute.Connection;
 
             // We have two models for C#, one is function based model which also work in multiple language
             // Another one is class based model, which is highly close to SignalR itself but must keep some conventions.
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 hubName = declaredType.Name;
                 category = GetCategoryFromMethodName(method.Name);
                 @event = GetEventFromMethodName(method.Name, category);
-                connectionStringSetting = SignalRTriggerUtils.GetConnectionNameFromAttribute(declaredType) ?? attribute.ConnectionStringSetting;
+                connection = SignalRTriggerUtils.GetConnectionNameFromAttribute(declaredType) ?? attribute.Connection;
             }
             else
             {
@@ -112,15 +112,15 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 ? parameterNamesFromAttribute
                 : parameterNames;
 
-            return new SignalRTriggerAttribute(hubName, category, @event, parameterNames) { ConnectionStringSetting = connectionStringSetting };
+            return new SignalRTriggerAttribute(hubName, category, @event, parameterNames) { Connection = connection };
         }
 
         private static void ValidateSignalRTriggerAttributeBinding(SignalRTriggerAttribute attribute)
         {
-            if (string.IsNullOrWhiteSpace(attribute.ConnectionStringSetting))
+            if (string.IsNullOrWhiteSpace(attribute.Connection))
             {
                 throw new InvalidOperationException(
-                    $"{nameof(SignalRTriggerAttribute)}.{nameof(SignalRConnectionInfoAttribute.ConnectionStringSetting)} is not allowed to be null or whitespace.");
+                    $"{nameof(SignalRTriggerAttribute)}.{nameof(SignalRConnectionInfoAttribute.Connection)} is not allowed to be null or whitespace.");
             }
             ValidateParameterNames(attribute.ParameterNames);
         }

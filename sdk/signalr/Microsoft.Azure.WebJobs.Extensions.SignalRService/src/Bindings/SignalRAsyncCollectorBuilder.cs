@@ -17,7 +17,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 
         public async Task<IAsyncCollector<T>> ConvertAsync(SignalRAttribute input, CancellationToken cancellationToken)
         {
-            var client = await Utils.GetAzureSignalRClientAsync(input.ConnectionStringSetting, input.HubName, _managerStore).ConfigureAwait(false);
+            var client = await Utils.GetAzureSignalRClientAsync(input.Connection, input.HubName, _managerStore).ConfigureAwait(false);
             return new SignalRAsyncCollector<T>(client);
         }
     }

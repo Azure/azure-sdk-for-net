@@ -44,7 +44,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// <summary>
         /// Connection string that connect to Azure SignalR Service
         /// </summary>
-        public string ConnectionStringSetting { get; set; } = Constants.AzureSignalRConnectionStringName;
+        public string Connection { get; set; } = Constants.AzureSignalRConnectionName;
 
         /// <summary>
         /// The hub of request belongs to.

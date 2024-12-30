@@ -36,7 +36,7 @@ namespace SignalRServiceExtension.Tests
             var expectedName = "John Doe";
             var expectedIat = "1516239022";
             var claimTypeList = new string[] { "name", "iat" };
-            var connectionStringKey = Constants.AzureSignalRConnectionStringName;
+            var connectionStringKey = Constants.AzureSignalRConnectionName;
             var configDict = new Dictionary<string, string>() { { Constants.ServiceTransportTypeName, "Transient" }, { connectionStringKey, connectionString } };
             var configuration = new ConfigurationBuilder().AddInMemoryCollection(configDict).Build();
             var serviceManagerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()), new TestRouter());

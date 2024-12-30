@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+
 using Microsoft.Azure.SignalR.Common;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
@@ -19,9 +20,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+
 using Moq;
+
 using SignalRServiceExtension.Tests.Utils;
 using SignalRServiceExtension.Tests.Utils.Loggings;
+
 using Xunit;
 using Xunit.Abstractions;
 
@@ -48,19 +52,19 @@ namespace SignalRServiceExtension.Tests
 
         public static Dictionary<string, string> ConnStrOutsideOfAttrConfigDict = new Dictionary<string, string>
         {
-            [Constants.AzureSignalRConnectionStringName] = DefaultConnectionString,
+            [Constants.AzureSignalRConnectionName] = DefaultConnectionString,
         };
 
         public static Dictionary<string, string> DiffConfigKeySameConnStrConfigDict = new Dictionary<string, string>
         {
             [AttrConnStrConfigKey] = DefaultConnectionString,
-            [Constants.AzureSignalRConnectionStringName] = DefaultConnectionString
+            [Constants.AzureSignalRConnectionName] = DefaultConnectionString
         };
 
         public static Dictionary<string, string> DiffConfigKeyDiffConnStrConfigDict = new Dictionary<string, string>
         {
             [AttrConnStrConfigKey] = DefaultAttributeConnectionString,
-            [Constants.AzureSignalRConnectionStringName] = DefaultConnectionString
+            [Constants.AzureSignalRConnectionName] = DefaultConnectionString
         };
 
         public static Dictionary<string, string> MultiConnStrOutsideOfAttrConfigDict = new Dictionary<string, string>
@@ -111,14 +115,14 @@ namespace SignalRServiceExtension.Tests
         [Theory]
         [MemberData(nameof(SignalRAttributeTestData))]
         [MemberData(nameof(SignalRConnectionInfoAttributeTestData))]
-        public async Task ConnectionStringSettingFacts(Type classType, Dictionary<string, string> configDict)
+        public async Task ConnectionFacts(Type classType, Dictionary<string, string> configDict)
         {
             _curConfigDict = configDict;
             await CreateTestTask(classType, configDict);
         }
 
         [Fact]
-        public async Task SignalRAttribute_MissingConnectionStringSettingFacts()
+        public async Task SignalRAttribute_MissingConnectionFacts()
         {
             var task = CreateTestTask(typeof(SignalRFunctions), null);
             var exception = await Assert.ThrowsAsync<FunctionInvocationException>(() => task);
@@ -126,7 +130,7 @@ namespace SignalRServiceExtension.Tests
         }
 
         [Fact]
-        public async Task SignalRConnectionInfoAttribute_MissingConnectionStringSettingFacts()
+        public async Task SignalRConnectionInfoAttribute_MissingConnectionFacts()
         {
             var task = CreateTestTask(typeof(SignalRConnectionInfoFunctions), null);
             var exception = await Assert.ThrowsAsync<FunctionInvocationException>(() => task);
@@ -225,7 +229,7 @@ namespace SignalRServiceExtension.Tests
 
         public class SignalRFunctionsWithCustomizedKey
         {
-            public async Task Func([SignalR(HubName = DefaultHubName, ConnectionStringSetting = AttrConnStrConfigKey)] IAsyncCollector<SignalRMessage> signalRMessages)
+            public async Task Func([SignalR(HubName = DefaultHubName, Connection = AttrConnStrConfigKey)] IAsyncCollector<SignalRMessage> signalRMessages)
             {
                 await SimulateSendingMessage(signalRMessages);
                 Assert.NotNull(((ServiceManagerStore)StaticServiceHubContextStore.ServiceManagerStore).GetByConfigurationKey(AttrConnStrConfigKey));
@@ -237,19 +241,19 @@ namespace SignalRServiceExtension.Tests
             public async Task Func([SignalR(HubName = DefaultHubName)] IAsyncCollector<SignalRMessage> signalRMessages)
             {
                 await SimulateSendingMessage(signalRMessages);
-                Assert.NotNull(((ServiceManagerStore)StaticServiceHubContextStore.ServiceManagerStore).GetByConfigurationKey(Constants.AzureSignalRConnectionStringName));
+                Assert.NotNull(((ServiceManagerStore)StaticServiceHubContextStore.ServiceManagerStore).GetByConfigurationKey(Constants.AzureSignalRConnectionName));
             }
         }
 
         public class SignalRFunctionsWithMultiKeys
         {
-            public async Task Func1([SignalR(HubName = DefaultHubName, ConnectionStringSetting = Constants.AzureSignalRConnectionStringName)] IAsyncCollector<SignalRMessage> signalRMessages)
+            public async Task Func1([SignalR(HubName = DefaultHubName, Connection = Constants.AzureSignalRConnectionName)] IAsyncCollector<SignalRMessage> signalRMessages)
             {
                 await SimulateSendingMessage(signalRMessages);
-                Assert.NotNull(((ServiceManagerStore)StaticServiceHubContextStore.ServiceManagerStore).GetByConfigurationKey(Constants.AzureSignalRConnectionStringName));
+                Assert.NotNull(((ServiceManagerStore)StaticServiceHubContextStore.ServiceManagerStore).GetByConfigurationKey(Constants.AzureSignalRConnectionName));
             }
 
-            public async Task Func2([SignalR(HubName = DefaultHubName, ConnectionStringSetting = AttrConnStrConfigKey)] IAsyncCollector<SignalRMessage> signalRMessages)
+            public async Task Func2([SignalR(HubName = DefaultHubName, Connection = AttrConnStrConfigKey)] IAsyncCollector<SignalRMessage> signalRMessages)
             {
                 await SimulateSendingMessage(signalRMessages);
                 Assert.NotNull(((ServiceManagerStore)StaticServiceHubContextStore.ServiceManagerStore).GetByConfigurationKey(AttrConnStrConfigKey));
@@ -262,7 +266,7 @@ namespace SignalRServiceExtension.Tests
 
         public class SignalRConnectionInfoFunctionsWithCustomizedKey
         {
-            public void Func([SignalRConnectionInfo(UserId = DefaultUserId, HubName = DefaultHubName, ConnectionStringSetting = AttrConnStrConfigKey)] SignalRConnectionInfo connectionInfo)
+            public void Func([SignalRConnectionInfo(UserId = DefaultUserId, HubName = DefaultHubName, Connection = AttrConnStrConfigKey)] SignalRConnectionInfo connectionInfo)
             {
                 UpdateFunctionOutConnectionString(connectionInfo, AttrConnStrConfigKey);
             }
@@ -272,18 +276,18 @@ namespace SignalRServiceExtension.Tests
         {
             public void Func([SignalRConnectionInfo(UserId = DefaultUserId, HubName = DefaultHubName)] SignalRConnectionInfo connectionInfo)
             {
-                UpdateFunctionOutConnectionString(connectionInfo, Constants.AzureSignalRConnectionStringName);
+                UpdateFunctionOutConnectionString(connectionInfo, Constants.AzureSignalRConnectionName);
             }
         }
 
         public class SignalRConnectionInfoFunctionsWithMultiKeys
         {
-            public void Func1([SignalRConnectionInfo(UserId = DefaultUserId, HubName = DefaultHubName, ConnectionStringSetting = Constants.AzureSignalRConnectionStringName)] SignalRConnectionInfo connectionInfo)
+            public void Func1([SignalRConnectionInfo(UserId = DefaultUserId, HubName = DefaultHubName, Connection = Constants.AzureSignalRConnectionName)] SignalRConnectionInfo connectionInfo)
             {
-                UpdateFunctionOutConnectionString(connectionInfo, Constants.AzureSignalRConnectionStringName);
+                UpdateFunctionOutConnectionString(connectionInfo, Constants.AzureSignalRConnectionName);
             }
 
-            public void Func2([SignalRConnectionInfo(UserId = DefaultUserId, HubName = DefaultHubName, ConnectionStringSetting = AttrConnStrConfigKey)] SignalRConnectionInfo connectionInfo)
+            public void Func2([SignalRConnectionInfo(UserId = DefaultUserId, HubName = DefaultHubName, Connection = AttrConnStrConfigKey)] SignalRConnectionInfo connectionInfo)
             {
                 UpdateFunctionOutConnectionString(connectionInfo, AttrConnStrConfigKey);
             }

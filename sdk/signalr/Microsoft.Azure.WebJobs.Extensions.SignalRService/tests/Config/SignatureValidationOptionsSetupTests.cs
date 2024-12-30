@@ -35,7 +35,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public void OptionsConfigureTest(string connectionString, IEnumerable<ServiceEndpoint> serviceEndpoints, bool expectedValidationRequirement, string[] expectedAccessKey)
         {
             var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
-            configuration[Constants.AzureSignalRConnectionStringName] = connectionString;
+            configuration[Constants.AzureSignalRConnectionName] = connectionString;
             var signalROptions = new SignalROptions()
             {
                 ServiceTransportType = ServiceTransportType.Persistent
@@ -45,7 +45,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
                 signalROptions.ServiceEndpoints.Add(endpoint);
             }
             var serviceManagerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(signalROptions));
-            var hubContextStore = serviceManagerStore.GetOrAddByConnectionStringKey(Constants.AzureSignalRConnectionStringName);
+            var hubContextStore = serviceManagerStore.GetOrAddByConnectionStringKey(Constants.AzureSignalRConnectionName);
             var signatureValidationOptions = hubContextStore.SignatureValidationOptions.CurrentValue;
             Assert.Equal(expectedValidationRequirement, signatureValidationOptions.RequireValidation);
             if (expectedValidationRequirement)
@@ -58,12 +58,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         public void OptionsHotReloadTest()
         {
             var configuration = new ConfigurationRoot(new List<IConfigurationProvider>() { new MemoryConfigurationProvider(new()) });
-            configuration[Constants.AzureSignalRConnectionStringName] = AadConnectionString;
+            configuration[Constants.AzureSignalRConnectionName] = AadConnectionString;
             var serviceManagerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()));
-            var options = serviceManagerStore.GetOrAddByConnectionStringKey(Constants.AzureSignalRConnectionStringName).SignatureValidationOptions;
+            var options = serviceManagerStore.GetOrAddByConnectionStringKey(Constants.AzureSignalRConnectionName).SignatureValidationOptions;
             Assert.False(options.CurrentValue.RequireValidation);
 
-            configuration[Constants.AzureSignalRConnectionStringName] = AccessKeyConnectionString;
+            configuration[Constants.AzureSignalRConnectionName] = AccessKeyConnectionString;
             configuration.Reload();
             Assert.True(options.CurrentValue.RequireValidation);
             Assert.Equal(FakeAccessKey, options.CurrentValue.AccessKeys.Single());

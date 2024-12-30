@@ -23,7 +23,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
             SignalRNegotiationAttribute input, CancellationToken cancellationToken)
         {
             var serviceHubContext = await _serviceManagerStore
-                .GetOrAddByConnectionStringKey(input.ConnectionStringSetting)
+                .GetOrAddByConnectionStringKey(input.Connection)
                 .GetAsync(input.HubName).ConfigureAwait(false) as ServiceHubContext;
             var endpoints = serviceHubContext.GetServiceEndpoints();
             var endpointConnectionInfo = await Task.WhenAll(endpoints.Select(async e =>

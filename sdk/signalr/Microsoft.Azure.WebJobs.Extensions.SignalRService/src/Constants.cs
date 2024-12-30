@@ -5,7 +5,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
 {
     internal static class Constants
     {
-        public const string AzureSignalRConnectionStringName = "AzureSignalRConnectionString";
+        public const string AzureSignalRConnectionName = "AzureSignalRConnectionString";
         public const string AzureSignalREndpoints = "Azure:SignalR:Endpoints";
         public const string AzureSignalRHubProtocol = "Azure:SignalR:HubProtocol";
         public static string AzureSignalRNewtonsoftCamelCase = $"{AzureSignalRHubProtocol}:NewtonsoftJson:CamelCase";

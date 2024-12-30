@@ -14,7 +14,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests
 {
     public class TriggerProviderForStronglyTypedHubTests
     {
-        private const string CustomConnectionStringSetting = "ConnectionStringSetting";
+        private const string CustomConnection = "Connection";
 
         [Fact]
         public void ResolveAttributeParameterTest()
@@ -77,10 +77,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests
             Assert.ThrowsAsync<NotSupportedException>(() => bindingProvider.TryCreateAsync(context));
         }
 
-        private SignalRTriggerBindingProvider CreateBindingProvider(Exception exception = null, string connectionStringSetting = Constants.AzureSignalRConnectionStringName)
+        private SignalRTriggerBindingProvider CreateBindingProvider(Exception exception = null, string connection = Constants.AzureSignalRConnectionName)
         {
             var configuration = new ConfigurationBuilder().AddInMemoryCollection().Build();
-            configuration[connectionStringSetting] = "Endpoint=http://localhost;AccessKey=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789;Version=1.0;";
+            configuration[connection] = "Endpoint=http://localhost;AccessKey=ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789;Version=1.0;";
             configuration["Serverless_ExpressionBindings_HubName"] = "test_hub";
             configuration["Serverless_ExpressionBindings_HubCategory"] = "connections";
             configuration["Serverless_ExpressionBindings_HubEvent"] = "connected";

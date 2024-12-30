@@ -12,9 +12,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// <summary>
         /// Get a <see cref="IServiceHubContextStore"/> instance.
         /// </summary>
-        /// <param name="connectionStringSetting">The name of config item which contains connection information.</param>
-        public static IServiceHubContextStore Get(string connectionStringSetting = Constants.AzureSignalRConnectionStringName) =>
-            ServiceManagerStore.GetOrAddByConnectionStringKey(connectionStringSetting);
+        /// <param name="connection">The name of config item which contains connection information.</param>
+        public static IServiceHubContextStore Get(string connection = Constants.AzureSignalRConnectionName) =>
+            ServiceManagerStore.GetOrAddByConnectionStringKey(connection);
 
         internal static IServiceManagerStore ServiceManagerStore { get; set; }
     }

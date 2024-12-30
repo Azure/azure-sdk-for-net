@@ -100,15 +100,15 @@ namespace SignalRServiceExtension.Tests
             var mock = new Mock<IEndpointRouter>();
             var connectionStrings = FakeEndpointUtils.GetFakeConnectionString(2).ToArray();
             var configuration = new ConfigurationRoot(new List<IConfigurationProvider>() { new MemoryConfigurationProvider(new()) });
-            configuration[Constants.AzureSignalRConnectionStringName] = connectionStrings[0];
+            configuration[Constants.AzureSignalRConnectionName] = connectionStrings[0];
             // Only persistent mode supports hot reload.
             configuration[Constants.ServiceTransportTypeName] = "Persistent";
             var managerStore = new ServiceManagerStore(configuration, NullLoggerFactory.Instance, SingletonAzureComponentFactory.Instance, Options.Create(new SignalROptions()), mock.Object);
-            var hubContextStore = managerStore.GetOrAddByConnectionStringKey(Constants.AzureSignalRConnectionStringName);
+            var hubContextStore = managerStore.GetOrAddByConnectionStringKey(Constants.AzureSignalRConnectionName);
             var hubContext = await hubContextStore.GetAsync("hub") as ServiceHubContext;
             await hubContext.ClientManager.UserExistsAsync("a");
 
-            configuration[Constants.AzureSignalRConnectionStringName] = connectionStrings[1];
+            configuration[Constants.AzureSignalRConnectionName] = connectionStrings[1];
             configuration.Reload();
             await Task.Delay(6000);
             await hubContext.ClientManager.UserExistsAsync("a");

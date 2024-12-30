@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService
         /// <summary>
         /// Gets or sets the app setting name that contains the Azure SignalR connection string.
         /// </summary>
-        public string ConnectionStringSetting { get; set; } = Constants.AzureSignalRConnectionStringName;
+        public string Connection { get; set; } = Constants.AzureSignalRConnectionName;
 
         /// <summary>
         /// Gets or sets the hub name.

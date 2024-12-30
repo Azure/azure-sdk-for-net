@@ -6,6 +6,7 @@
 
 ### Breaking Changes
 * Remove .NET 6.0 support.
+* Rename `ConnectionStringSetting` property for all bindings to `Connection`.
 
 ### Bugs Fixed
 * Correctly support returning result for SignalR invocation in MessagePack protocol from isolated-worker process.
