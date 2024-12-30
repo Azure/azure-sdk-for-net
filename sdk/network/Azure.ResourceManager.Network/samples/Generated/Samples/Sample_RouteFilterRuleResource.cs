@@ -10,45 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_RouteFilterRuleResource
     {
-        // RouteFilterRuleDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_RouteFilterRuleDelete()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/RouteFilterRuleDelete.json
-            // this example is just showing the usage of "RouteFilterRules_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this RouteFilterRuleResource created on azure
-            // for more information of creating RouteFilterRuleResource, please refer to the document of RouteFilterRuleResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string routeFilterName = "filterName";
-            string ruleName = "ruleName";
-            ResourceIdentifier routeFilterRuleResourceId = RouteFilterRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routeFilterName, ruleName);
-            RouteFilterRuleResource routeFilterRule = client.GetRouteFilterRuleResource(routeFilterRuleResourceId);
-
-            // invoke the operation
-            await routeFilterRule.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // RouteFilterRuleGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_RouteFilterRuleGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/RouteFilterRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/RouteFilterRuleGet.json
             // this example is just showing the usage of "RouteFilterRules_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -75,12 +47,38 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RouteFilterRuleCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_RouteFilterRuleDelete()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/RouteFilterRuleDelete.json
+            // this example is just showing the usage of "RouteFilterRules_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this RouteFilterRuleResource created on azure
+            // for more information of creating RouteFilterRuleResource, please refer to the document of RouteFilterRuleResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string routeFilterName = "filterName";
+            string ruleName = "ruleName";
+            ResourceIdentifier routeFilterRuleResourceId = RouteFilterRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, routeFilterName, ruleName);
+            RouteFilterRuleResource routeFilterRule = client.GetRouteFilterRuleResource(routeFilterRuleResourceId);
+
+            // invoke the operation
+            await routeFilterRule.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_RouteFilterRuleCreate()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/RouteFilterRuleCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/RouteFilterRuleCreate.json
             // this example is just showing the usage of "RouteFilterRules_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,14 +96,11 @@ namespace Azure.ResourceManager.Network.Samples
             RouteFilterRuleResource routeFilterRule = client.GetRouteFilterRuleResource(routeFilterRuleResourceId);
 
             // invoke the operation
-            RouteFilterRuleData data = new RouteFilterRuleData()
+            RouteFilterRuleData data = new RouteFilterRuleData
             {
                 Access = NetworkAccess.Allow,
                 RouteFilterRuleType = RouteFilterRuleType.Community,
-                Communities =
-{
-"12076:5030","12076:5040"
-},
+                Communities = { "12076:5030", "12076:5040" },
             };
             ArmOperation<RouteFilterRuleResource> lro = await routeFilterRule.UpdateAsync(WaitUntil.Completed, data);
             RouteFilterRuleResource result = lro.Value;

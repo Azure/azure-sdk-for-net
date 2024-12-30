@@ -17,9 +17,14 @@ namespace Azure.Storage.Files.Shares
         /// ToString
         /// </summary>
         /// <returns>string</returns>
-        public static string ToAttributesString(this NtfsFileAttributes attributes)
+        public static string ToAttributesString(this NtfsFileAttributes? attributes)
         {
-            var stringBuilder = new StringBuilder();
+            if (attributes == null)
+            {
+                return null;
+            }
+
+            StringBuilder stringBuilder = new StringBuilder();
 
             if ((attributes & NtfsFileAttributes.ReadOnly) == NtfsFileAttributes.ReadOnly)
             {

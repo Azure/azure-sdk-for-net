@@ -10,7 +10,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
-require: https://github.com/Azure/azure-rest-api-specs/blob/4f68529971f845e8757c2b2a746d78ceb91854cd/specification/compute/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/b09c9ec927456021dc549e111fa2cac3b4b00659/specification/compute/resource-manager/readme.md
+#tag: package-2024-03-03
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -20,7 +21,9 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
-use-write-core: true
+
+#mgmt-debug:
+#  show-serialized-names: true
 
 update-required-copy:
   GalleryImage: OSType
@@ -125,9 +128,6 @@ prepend-rp-prefix:
 - PublicIPAddressSkuName
 - PublicIPAddressSkuTier
 - StatusLevelTypes
-
-# mgmt-debug:
-#   show-serialized-names: true
 
 rename-mapping:
   DiskSecurityTypes.ConfidentialVM_VMGuestStateOnlyEncryptedWithPlatformKey: ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey
@@ -262,7 +262,8 @@ rename-mapping:
   VirtualMachineScaleSetUpdateNetworkConfiguration.properties.disableTcpStateTracking: IsTcpStateTrackingDisabled
   AlternativeOption: ImageAlternativeOption
   AlternativeType: ImageAlternativeType
-  VirtualMachineScaleSet.properties.constrainedMaximumCapacity : IsMaximumCapacityConstrained
+  VirtualMachineScaleSetProperties.constrainedMaximumCapacity : IsMaximumCapacityConstrained
+  VirtualMachineScaleSetUpdateProperties: VirtualMachineScaleSetPatchProperties
   RollingUpgradePolicy.maxSurge : IsMaxSurgeEnabled
   ScheduledEventsProfile: ComputeScheduledEventsProfile
   ExpandTypeForListVMs: GetVirtualMachineExpandType
@@ -282,7 +283,24 @@ rename-mapping:
   SkuProfile : ComputeSkuProfile
   SkuProfileVMSize : ComputeSkuProfileVMSize
   AllocationStrategy : ComputeAllocationStrategy
-  
+  GalleryImageVersion.properties.restore: IsRestoreEnabled
+  EndpointAccess: ComputeGalleryEndpointAccess
+  EndpointTypes: ComputeGalleryEndpointTypes
+  GallerySoftDeletedResource : GallerySoftDeletedResourceDetails
+  GallerySoftDeletedResource.properties.softDeletedTime: -|date-time
+  PlatformAttribute: ComputeGalleryPlatformAttribute
+  ValidationStatus: ComputeGalleryValidationStatus
+  AccessControlRules: GalleryInVmAccessControlRules
+  AccessControlRulesIdentity: GalleryInVmAccessControlRulesIdentity
+  AccessControlRulesMode: GalleryInVmAccessControlRulesMode
+  AccessControlRulesPrivilege: GalleryInVmAccessControlRulesPrivilege
+  AccessControlRulesRole: GalleryInVmAccessControlRulesRole
+  AccessControlRulesRoleAssignment: GalleryInVmAccessControlRulesRoleAssignment
+  ValidationsProfile: GalleryImageValidationsProfile
+  SoftDeletedArtifactTypes: GallerySoftDeletedArtifactType
+  GalleryImageVersionSafetyProfile.blockDeletionBeforeEndOfLife: IsBlockedDeletionBeforeEndOfLife
+  ExecutedValidation: GalleryImageExecutedValidation
+
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
   - from: common.json
@@ -391,6 +409,17 @@ directive:
       $.dummyProperty = {
         "type": "string",
         "description": "This is a dummy property to prevent flattening."
-      };      
-    
+      };
+  # add additionalproperties to a few models to support private properties supported by the service
+  - from: virtualMachineScaleSet.json
+    where: $.definitions
+    transform: >
+      $.VirtualMachineScaleSetProperties.additionalProperties = true;
+      $.VirtualMachineScaleSet.properties.properties["x-ms-client-flatten"] = false;
+      $.VirtualMachineScaleSetUpdate.properties.properties["x-ms-client-flatten"] = false;
+      $.UpgradePolicy.additionalProperties = true;
+  - from: computeRPCommon.json
+    where: $.definitions.VMSizeProperties
+    transform: >
+      $.additionalProperties = true;
 ```

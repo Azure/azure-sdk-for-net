@@ -6,6 +6,10 @@ using Azure.Core.Pipeline;
 using Microsoft.Generator.CSharp.ClientModel.Providers;
 using Microsoft.Generator.CSharp.Expressions;
 using Microsoft.Generator.CSharp.Primitives;
+using Microsoft.Generator.CSharp.Providers;
+using Microsoft.Generator.CSharp.Snippets;
+using Microsoft.Generator.CSharp.Statements;
+using System.Threading;
 using static Microsoft.Generator.CSharp.Snippets.Snippet;
 
 namespace Azure.Generator.Providers.Abstraction
@@ -25,11 +29,12 @@ namespace Azure.Generator.Providers.Abstraction
 
         public override CSharpType PipelinePolicyType => typeof(HttpPipelinePolicy);
 
+        public override CSharpType? KeyCredentialType => typeof(AzureKeyCredential);
+
+        public override CSharpType? TokenCredentialType => typeof(TokenCredential);
+
         public override ValueExpression Create(ValueExpression options, ValueExpression perRetryPolicies)
             => Static(typeof(HttpPipelineBuilder)).Invoke(nameof(HttpPipelineBuilder.Build), [options, perRetryPolicies]);
-
-        public override HttpMessageApi CreateMessage()
-            => new HttpMessageProvider(Original.Invoke(nameof(HttpPipeline.CreateMessage)));
 
         public override ValueExpression CreateMessage(HttpRequestOptionsApi requestOptions, ValueExpression responseClassifier)
             => Original.Invoke(nameof(HttpPipeline.CreateMessage), requestOptions, responseClassifier).As<HttpMessage>();
@@ -37,15 +42,38 @@ namespace Azure.Generator.Providers.Abstraction
         public override ClientPipelineApi FromExpression(ValueExpression expression)
             => new HttpPipelineProvider(expression);
 
-        public override ValueExpression PerRetryPolicy(params ValueExpression[] arguments)
-            => Empty; // TODO: implement with default retry policy for Azure
+        public override ValueExpression KeyAuthorizationPolicy(ValueExpression credential, ValueExpression headerName, ValueExpression? keyPrefix = null)
+            => New.Instance(typeof(AzureKeyCredentialPolicy), keyPrefix != null ? [credential, headerName, keyPrefix] : [credential, headerName]);
 
-        public override InvokeMethodExpression Send(HttpMessageApi message)
-            => Original.Invoke(nameof(HttpPipeline.Send), [message, Default]);
-
-        public override InvokeMethodExpression SendAsync(HttpMessageApi message)
-            => Original.Invoke(nameof(HttpPipeline.SendAsync), [message, Default], true);
+        public override ValueExpression TokenAuthorizationPolicy(ValueExpression credential, ValueExpression scopes)
+            => New.Instance(typeof(BearerTokenAuthenticationPolicy), credential, scopes);
 
         public override ClientPipelineApi ToExpression() => this;
+
+        public override MethodBodyStatement[] ProcessMessage(HttpMessageApi message, HttpRequestOptionsApi options)
+            => BuildProcessMessage(message, options, false);
+
+        public override MethodBodyStatement[] ProcessMessageAsync(HttpMessageApi message, HttpRequestOptionsApi options)
+            => BuildProcessMessage(message, options, true);
+
+        private MethodBodyStatement[] BuildProcessMessage(HttpMessageApi message, HttpRequestOptionsApi options, bool isAsync)
+        {
+            var userCancellationToken = new ParameterProvider("userCancellationToken", $"", new CSharpType(typeof(CancellationToken)));
+            var statusOption = new ParameterProvider("statusOption", $"", new CSharpType(typeof(ErrorOptions)));
+            return
+            [
+                new VariableTupleExpression(false, userCancellationToken, statusOption).Assign(options.Invoke("Parse")).Terminate(),
+                Original.Invoke(isAsync ? nameof(HttpPipeline.SendAsync) : nameof(HttpPipeline.Send), [message, userCancellationToken], isAsync).Terminate(),
+                MethodBodyStatement.EmptyLine,
+                new IfStatement(message.Response().IsError().And(new BinaryOperatorExpression("&", options.NullConditional().Property("ErrorOptions"), options.NoThrow()).NotEqual(options.NoThrow())))
+                {
+                    isAsync
+                    ? Throw(AzureClientPlugin.Instance.TypeFactory.ClientResponseApi.ToExpression().CreateAsync(message.Response()))
+                    : Throw(New.Instance(AzureClientPlugin.Instance.TypeFactory.ClientResponseApi.ClientResponseExceptionType, message.Response()))
+                },
+                MethodBodyStatement.EmptyLine,
+                Return(message.Response())
+            ];
+        }
     }
 }

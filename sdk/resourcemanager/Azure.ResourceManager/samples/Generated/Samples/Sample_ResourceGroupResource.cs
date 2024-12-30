@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
     public partial class Sample_ResourceGroupResource
     {
-        // Force delete all the Virtual Machines and Virtual Machine Scale Sets in a resource group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ForceDeleteAllTheVirtualMachinesAndVirtualMachineScaleSetsInAResourceGroup()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/ForceDeleteVMsAndVMSSInResourceGroup.json
@@ -39,12 +39,11 @@ namespace Azure.ResourceManager.Resources.Samples
             string forceDeletionTypes = "Microsoft.Compute/virtualMachines,Microsoft.Compute/virtualMachineScaleSets";
             await resourceGroup.DeleteAsync(WaitUntil.Completed, forceDeletionTypes: forceDeletionTypes);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Force delete all the Virtual Machines in a resource group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ForceDeleteAllTheVirtualMachinesInAResourceGroup()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/ForceDeleteVMsInResourceGroup.json
@@ -66,12 +65,11 @@ namespace Azure.ResourceManager.Resources.Samples
             string forceDeletionTypes = "Microsoft.Compute/virtualMachines";
             await resourceGroup.DeleteAsync(WaitUntil.Completed, forceDeletionTypes: forceDeletionTypes);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // Export a resource group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ExportTemplate_ExportAResourceGroup()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/ExportResourceGroup.json
@@ -90,12 +88,9 @@ namespace Azure.ResourceManager.Resources.Samples
             ResourceGroupResource resourceGroup = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // invoke the operation
-            ExportTemplate exportTemplate = new ExportTemplate()
+            ExportTemplate exportTemplate = new ExportTemplate
             {
-                Resources =
-{
-"*"
-},
+                Resources = { "*" },
                 Options = "IncludeParameterDefaultValue,IncludeComments",
             };
             ArmOperation<ResourceGroupExportResult> lro = await resourceGroup.ExportTemplateAsync(WaitUntil.Completed, exportTemplate);
@@ -104,9 +99,8 @@ namespace Azure.ResourceManager.Resources.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Export a resource group with filtering
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ExportTemplate_ExportAResourceGroupWithFiltering()
         {
             // Generated from example definition: specification/resources/resource-manager/Microsoft.Resources/stable/2022-09-01/examples/ExportResourceGroupWithFiltering.json
@@ -125,12 +119,9 @@ namespace Azure.ResourceManager.Resources.Samples
             ResourceGroupResource resourceGroup = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // invoke the operation
-            ExportTemplate exportTemplate = new ExportTemplate()
+            ExportTemplate exportTemplate = new ExportTemplate
             {
-                Resources =
-{
-"/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group/providers/My.RP/myResourceType/myFirstResource"
-},
+                Resources = { "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/my-resource-group/providers/My.RP/myResourceType/myFirstResource" },
                 Options = "SkipResourceNameParameterization",
             };
             ArmOperation<ResourceGroupExportResult> lro = await resourceGroup.ExportTemplateAsync(WaitUntil.Completed, exportTemplate);

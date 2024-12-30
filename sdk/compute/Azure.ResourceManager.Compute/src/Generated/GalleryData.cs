@@ -64,6 +64,7 @@ namespace Azure.ResourceManager.Compute
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
+        /// <param name="identity"> The identity of the gallery, if configured. </param>
         /// <param name="description"> The description of this Shared Image Gallery resource. This property is updatable. </param>
         /// <param name="identifier"> Describes the gallery unique name. </param>
         /// <param name="provisioningState"> The provisioning state, which only appears in the response. </param>
@@ -71,8 +72,9 @@ namespace Azure.ResourceManager.Compute
         /// <param name="softDeletePolicy"> Contains information about the soft deletion policy of the gallery. </param>
         /// <param name="sharingStatus"> Sharing status of current gallery. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GalleryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, GalleryIdentifier identifier, GalleryProvisioningState? provisioningState, SharingProfile sharingProfile, SoftDeletePolicy softDeletePolicy, SharingStatus sharingStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal GalleryData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, string description, GalleryIdentifier identifier, GalleryProvisioningState? provisioningState, SharingProfile sharingProfile, SoftDeletePolicy softDeletePolicy, SharingStatus sharingStatus, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
+            Identity = identity;
             Description = description;
             Identifier = identifier;
             ProvisioningState = provisioningState;
@@ -87,6 +89,8 @@ namespace Azure.ResourceManager.Compute
         {
         }
 
+        /// <summary> The identity of the gallery, if configured. </summary>
+        public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The description of this Shared Image Gallery resource. This property is updatable. </summary>
         public string Description { get; set; }
         /// <summary> Describes the gallery unique name. </summary>

@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MySql.FlexibleServers.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
 {
     public partial class Sample_AdvancedThreatProtectionResource
     {
-        // Get a server's Advanced Threat Protection settings.
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAServerSAdvancedThreatProtectionSettings()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/AdvancedThreatProtectionSettingsGet.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Disable a server's Advanced Threat Protection settings with all parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_DisableAServerSAdvancedThreatProtectionSettingsWithAllParameters()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/AdvancedThreatProtectionSettingsPatchDisabled.json
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             AdvancedThreatProtectionResource advancedThreatProtection = client.GetAdvancedThreatProtectionResource(advancedThreatProtectionResourceId);
 
             // invoke the operation
-            AdvancedThreatProtectionPatch patch = new AdvancedThreatProtectionPatch()
+            AdvancedThreatProtectionPatch patch = new AdvancedThreatProtectionPatch
             {
                 State = AdvancedThreatProtectionState.Disabled,
             };
@@ -84,9 +83,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Enable a server's Advanced Threat Protection settings
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_EnableAServerSAdvancedThreatProtectionSettings()
         {
             // Generated from example definition: specification/mysql/resource-manager/Microsoft.DBforMySQL/FlexibleServers/stable/2023-12-30/examples/AdvancedThreatProtectionSettingsPatchEnabled.json
@@ -107,7 +105,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             AdvancedThreatProtectionResource advancedThreatProtection = client.GetAdvancedThreatProtectionResource(advancedThreatProtectionResourceId);
 
             // invoke the operation
-            AdvancedThreatProtectionPatch patch = new AdvancedThreatProtectionPatch()
+            AdvancedThreatProtectionPatch patch = new AdvancedThreatProtectionPatch
             {
                 State = AdvancedThreatProtectionState.Enabled,
             };

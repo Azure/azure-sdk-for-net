@@ -10,50 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Elastic.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Elastic.Samples
 {
     public partial class Sample_ElasticMonitorResource
     {
-        // Monitors_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetElasticMonitorResources_MonitorsList()
-        {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/Monitors_List.json
-            // this example is just showing the usage of "Monitors_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ElasticMonitorResource item in subscriptionResource.GetElasticMonitorResourcesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ElasticMonitorResourceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Monitors_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_MonitorsGet()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/Monitors_Get.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/Monitors_Get.json
             // this example is just showing the usage of "Monitors_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -67,57 +34,23 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
-            ElasticMonitorResource result = await elasticMonitorResource.GetAsync();
+            ElasticMonitorResource result = await elasticMonitor.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ElasticMonitorResourceData resourceData = result.Data;
+            ElasticMonitorData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Monitors_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_MonitorsUpdate()
-        {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/Monitors_Update.json
-            // this example is just showing the usage of "Monitors_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ElasticMonitorResource created on azure
-            // for more information of creating ElasticMonitorResource, please refer to the document of ElasticMonitorResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string monitorName = "myMonitor";
-            ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
-
-            // invoke the operation
-            ElasticMonitorResourcePatch patch = new ElasticMonitorResourcePatch();
-            ArmOperation<ElasticMonitorResource> lro = await elasticMonitorResource.UpdateAsync(WaitUntil.Completed, patch);
-            ElasticMonitorResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ElasticMonitorResourceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Monitors_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_MonitorsDelete()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/Monitors_Delete.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/Monitors_Delete.json
             // this example is just showing the usage of "Monitors_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,20 +64,50 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
-            await elasticMonitorResource.DeleteAsync(WaitUntil.Completed);
+            await elasticMonitor.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // MonitoredResources_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_MonitorsUpdate()
+        {
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/Monitors_Update.json
+            // this example is just showing the usage of "Monitors_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ElasticMonitorResource created on azure
+            // for more information of creating ElasticMonitorResource, please refer to the document of ElasticMonitorResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string monitorName = "myMonitor";
+            ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
+
+            // invoke the operation
+            ElasticMonitorPatch patch = new ElasticMonitorPatch();
+            ElasticMonitorResource result = await elasticMonitor.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ElasticMonitorData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMonitoredResources_MonitoredResourcesList()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/MonitoredResources_List.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/MonitoredResources_List.json
             // this example is just showing the usage of "MonitoredResources_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -158,23 +121,22 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (MonitoredResourceContent item in elasticMonitorResource.GetMonitoredResourcesAsync())
+            await foreach (MonitoredResourceInfo item in elasticMonitor.GetMonitoredResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // DeploymentInfo_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetDeploymentInfo_DeploymentInfoList()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/DeploymentInfo_List.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/DeploymentInfo_List.json
             // this example is just showing the usage of "DeploymentInfo_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -188,20 +150,19 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
-            DeploymentInfoResponse result = await elasticMonitorResource.GetDeploymentInfoAsync();
+            ElasticDeploymentInfoResult result = await elasticMonitor.GetDeploymentInfoAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ExternalUser_CreateOrUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdateExternalUser_ExternalUserCreateOrUpdate()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/ExternalUserInfo.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/ExternalUserInfo.json
             // this example is just showing the usage of "ExternalUser_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -215,20 +176,19 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
-            ExternalUserCreationResponse result = await elasticMonitorResource.CreateOrUpdateExternalUserAsync();
+            ElasticExternalUserCreationResult result = await elasticMonitor.CreateOrUpdateExternalUserAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // BillingInfo_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBillingInfo_BillingInfoGet()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/BillingInfo_Get.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/BillingInfo_Get.json
             // this example is just showing the usage of "BillingInfo_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -242,20 +202,19 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
-            BillingInfoResponse result = await elasticMonitorResource.GetBillingInfoAsync();
+            ElasticBillingInfoResult result = await elasticMonitor.GetBillingInfoAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // ConnectedPartnerResources_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetConnectedPartnerResources_ConnectedPartnerResourcesList()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/ConnectedPartnerResources_List.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/ConnectedPartnerResources_List.json
             // this example is just showing the usage of "ConnectedPartnerResources_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -269,23 +228,22 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ConnectedPartnerResourcesListFormat item in elasticMonitorResource.GetConnectedPartnerResourcesAsync())
+            await foreach (ConnectedPartnerResourceInfo item in elasticMonitor.GetConnectedPartnerResourcesAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VMHost_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetVMHosts_VMHostList()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetVmHosts_VMHostList()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/VMHost_List.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/VMHost_List.json
             // this example is just showing the usage of "VMHost_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -299,23 +257,22 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (VmResources item in elasticMonitorResource.GetVMHostsAsync())
+            await foreach (ElasticVmResourceInfo item in elasticMonitor.GetVmHostsAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // VMIngestion_Details
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task DetailsVMIngestion_VMIngestionDetails()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetVmIngestionDetails_VMIngestionDetails()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/VMIngestion_Details.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/VMIngestion_Details.json
             // this example is just showing the usage of "VMIngestion_Details" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -329,20 +286,19 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
-            VmIngestionDetailsResponse result = await elasticMonitorResource.DetailsVMIngestionAsync();
+            VmIngestionDetailsResult result = await elasticMonitor.GetVmIngestionDetailsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // VMCollection_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task UpdateVMCollection_VMCollectionUpdate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task UpdateVmCollection_VMCollectionUpdate()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/VMCollection_Update.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/VMCollection_Update.json
             // this example is just showing the usage of "VMCollection_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -356,20 +312,19 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
-            await elasticMonitorResource.UpdateVMCollectionAsync();
+            await elasticMonitor.UpdateVmCollectionAsync();
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // UpgradableVersions_Details
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task DetailsUpgradableVersion_UpgradableVersionsDetails()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetUpgradableVersionDetails_UpgradableVersionsDetails()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/UpgradableVersions_Details.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/UpgradableVersions_Details.json
             // this example is just showing the usage of "UpgradableVersions_Details" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -383,20 +338,19 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
-            UpgradableVersionsList result = await elasticMonitorResource.DetailsUpgradableVersionAsync();
+            UpgradableVersionListResult result = await elasticMonitor.GetUpgradableVersionDetailsAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Monitor_Upgrade
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UpgradeMonitor_MonitorUpgrade()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/Monitor_Upgrade.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/Monitor_Upgrade.json
             // this example is just showing the usage of "Monitor_Upgrade" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -410,20 +364,19 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
-            await elasticMonitorResource.UpgradeMonitorAsync(WaitUntil.Completed);
+            await elasticMonitor.UpgradeMonitorAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AllTrafficFilters_list
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAllTrafficFilter_AllTrafficFiltersList()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/AllTrafficFilters_list.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/AllTrafficFilters_list.json
             // this example is just showing the usage of "AllTrafficFilters_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -437,20 +390,19 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
-            ElasticTrafficFilterResponse result = await elasticMonitorResource.GetAllTrafficFilterAsync();
+            ElasticTrafficFilterListResult result = await elasticMonitor.GetAllTrafficFilterAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // listAssociatedTrafficFilters_list
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetListAssociatedTrafficFilter_ListAssociatedTrafficFiltersList()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAssociatedTrafficFilters_ListAssociatedTrafficFiltersList()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/AssociatedFiltersForDeployment_list.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/AssociatedFiltersForDeployment_list.json
             // this example is just showing the usage of "listAssociatedTrafficFilters_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -464,20 +416,19 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
-            ElasticTrafficFilterResponse result = await elasticMonitorResource.GetListAssociatedTrafficFilterAsync();
+            ElasticTrafficFilterListResult result = await elasticMonitor.GetAssociatedTrafficFiltersAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // createAndAssociateIPFilter_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateCreateAndAssociateIPFilter_CreateAndAssociateIPFilterCreate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateAndAssociateIPFilter_CreateAndAssociateIPFilterCreate()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/IPTrafficFilter_Create.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/IPTrafficFilter_Create.json
             // this example is just showing the usage of "createAndAssociateIPFilter_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -491,21 +442,20 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
             string ips = "192.168.131.0, 192.168.132.6/22";
-            await elasticMonitorResource.CreateCreateAndAssociateIPFilterAsync(WaitUntil.Completed, ips: ips);
+            await elasticMonitor.CreateAndAssociateIPFilterAsync(WaitUntil.Completed, ips: ips);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // createAndAssociatePLFilter_Create
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateCreateAndAssociatePLFilter_CreateAndAssociatePLFilterCreate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateAndAssociatePrivateLinkFilter_CreateAndAssociatePLFilterCreate()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/PrivateLinkTrafficFilters_Create.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/PrivateLinkTrafficFilters_Create.json
             // this example is just showing the usage of "createAndAssociatePLFilter_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -519,22 +469,21 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
             string privateEndpointGuid = "fdb54d3b-e85e-4d08-8958-0d2f7g523df9";
             string privateEndpointName = "myPrivateEndpoint";
-            await elasticMonitorResource.CreateCreateAndAssociatePLFilterAsync(WaitUntil.Completed, privateEndpointGuid: privateEndpointGuid, privateEndpointName: privateEndpointName);
+            await elasticMonitor.CreateAndAssociatePrivateLinkFilterAsync(WaitUntil.Completed, privateEndpointGuid: privateEndpointGuid, privateEndpointName: privateEndpointName);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AssociateTrafficFilter_Associate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task AssociateAssociateTrafficFilter_AssociateTrafficFilterAssociate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task AssociateTrafficFilter_AssociateTrafficFilterAssociate()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/AssociateTrafficFilter_Update.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/AssociateTrafficFilter_Update.json
             // this example is just showing the usage of "AssociateTrafficFilter_Associate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -548,21 +497,20 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
             string rulesetId = "31d91b5afb6f4c2eaaf104c97b1991dd";
-            await elasticMonitorResource.AssociateAssociateTrafficFilterAsync(WaitUntil.Completed, rulesetId: rulesetId);
+            await elasticMonitor.AssociateTrafficFilterAsync(WaitUntil.Completed, rulesetId: rulesetId);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // DetachAndDeleteTrafficFilter_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task DeleteDetachAndDeleteTrafficFilter_DetachAndDeleteTrafficFilterDelete()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task DetachAndDeleteTrafficFilter_DetachAndDeleteTrafficFilterDelete()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/DetachAndDeleteTrafficFilter_Delete.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/DetachAndDeleteTrafficFilter_Delete.json
             // this example is just showing the usage of "DetachAndDeleteTrafficFilter_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -576,21 +524,20 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
             string rulesetId = "31d91b5afb6f4c2eaaf104c97b1991dd";
-            await elasticMonitorResource.DeleteDetachAndDeleteTrafficFilterAsync(rulesetId: rulesetId);
+            await elasticMonitor.DetachAndDeleteTrafficFilterAsync(rulesetId: rulesetId);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // DetachTrafficFilter_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task UpdateDetachTrafficFilter_DetachTrafficFilterUpdate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task DetachTrafficFilter_DetachTrafficFilterUpdate()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/DetachTrafficFilters_Update.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/DetachTrafficFilters_Update.json
             // this example is just showing the usage of "DetachTrafficFilter_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -604,21 +551,20 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
             string rulesetId = "31d91b5afb6f4c2eaaf104c97b1991dd";
-            await elasticMonitorResource.UpdateDetachTrafficFilterAsync(WaitUntil.Completed, rulesetId: rulesetId);
+            await elasticMonitor.DetachTrafficFilterAsync(WaitUntil.Completed, rulesetId: rulesetId);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // TrafficFilters_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task DeleteTrafficFilter_TrafficFiltersDelete()
         {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/TrafficFilters_Delete.json
+            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/TrafficFilters_Delete.json
             // this example is just showing the usage of "TrafficFilters_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -632,45 +578,13 @@ namespace Azure.ResourceManager.Elastic.Samples
             string resourceGroupName = "myResourceGroup";
             string monitorName = "myMonitor";
             ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
+            ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
             string rulesetId = "31d91b5afb6f4c2eaaf104c97b1991dd";
-            await elasticMonitorResource.DeleteTrafficFilterAsync(rulesetId: rulesetId);
+            await elasticMonitor.DeleteTrafficFilterAsync(rulesetId: rulesetId);
 
-            Console.WriteLine($"Succeeded");
-        }
-
-        // Organizations_Resubscribe
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task ResubscribeOrganization_OrganizationsResubscribe()
-        {
-            // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/preview/2024-06-15-preview/examples/Organizations_Resubscribe.json
-            // this example is just showing the usage of "Organizations_Resubscribe" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ElasticMonitorResource created on azure
-            // for more information of creating ElasticMonitorResource, please refer to the document of ElasticMonitorResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string monitorName = "myMonitor";
-            ResourceIdentifier elasticMonitorResourceId = ElasticMonitorResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName);
-            ElasticMonitorResource elasticMonitorResource = client.GetElasticMonitorResource(elasticMonitorResourceId);
-
-            // invoke the operation
-            ArmOperation<ElasticMonitorResource> lro = await elasticMonitorResource.ResubscribeOrganizationAsync(WaitUntil.Completed);
-            ElasticMonitorResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ElasticMonitorResourceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            Console.WriteLine("Succeeded");
         }
     }
 }

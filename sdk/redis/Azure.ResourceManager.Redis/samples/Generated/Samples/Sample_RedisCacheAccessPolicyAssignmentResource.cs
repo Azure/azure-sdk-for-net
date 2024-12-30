@@ -9,18 +9,18 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Redis.Samples
 {
     public partial class Sample_RedisCacheAccessPolicyAssignmentResource
     {
-        // RedisCacheAccessPolicyAssignmentCreateUpdate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_RedisCacheAccessPolicyAssignmentCreateUpdate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_RedisCacheAccessPolicyAssignmentGet()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-03-01/examples/RedisCacheAccessPolicyAssignmentCreateUpdate.json
-            // this example is just showing the usage of "AccessPolicyAssignment_CreateUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-11-01/examples/RedisCacheAccessPolicyAssignmentGet.json
+            // this example is just showing the usage of "AccessPolicyAssignment_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -37,14 +37,7 @@ namespace Azure.ResourceManager.Redis.Samples
             RedisCacheAccessPolicyAssignmentResource redisCacheAccessPolicyAssignment = client.GetRedisCacheAccessPolicyAssignmentResource(redisCacheAccessPolicyAssignmentResourceId);
 
             // invoke the operation
-            RedisCacheAccessPolicyAssignmentData data = new RedisCacheAccessPolicyAssignmentData()
-            {
-                ObjectId = Guid.Parse("6497c918-11ad-41e7-1b0f-7c518a87d0b0"),
-                ObjectIdAlias = "TestAADAppRedis",
-                AccessPolicyName = "accessPolicy1",
-            };
-            ArmOperation<RedisCacheAccessPolicyAssignmentResource> lro = await redisCacheAccessPolicyAssignment.UpdateAsync(WaitUntil.Completed, data);
-            RedisCacheAccessPolicyAssignmentResource result = lro.Value;
+            RedisCacheAccessPolicyAssignmentResource result = await redisCacheAccessPolicyAssignment.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -53,12 +46,11 @@ namespace Azure.ResourceManager.Redis.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // RedisCacheAccessPolicyAssignmentDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_RedisCacheAccessPolicyAssignmentDelete()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-03-01/examples/RedisCacheAccessPolicyAssignmentDelete.json
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-11-01/examples/RedisCacheAccessPolicyAssignmentDelete.json
             // this example is just showing the usage of "AccessPolicyAssignment_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,16 +70,15 @@ namespace Azure.ResourceManager.Redis.Samples
             // invoke the operation
             await redisCacheAccessPolicyAssignment.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // RedisCacheAccessPolicyAssignmentGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_RedisCacheAccessPolicyAssignmentGet()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_RedisCacheAccessPolicyAssignmentCreateUpdate()
         {
-            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-03-01/examples/RedisCacheAccessPolicyAssignmentGet.json
-            // this example is just showing the usage of "AccessPolicyAssignment_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/redis/resource-manager/Microsoft.Cache/stable/2024-11-01/examples/RedisCacheAccessPolicyAssignmentCreateUpdate.json
+            // this example is just showing the usage of "AccessPolicyAssignment_CreateUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -104,7 +95,14 @@ namespace Azure.ResourceManager.Redis.Samples
             RedisCacheAccessPolicyAssignmentResource redisCacheAccessPolicyAssignment = client.GetRedisCacheAccessPolicyAssignmentResource(redisCacheAccessPolicyAssignmentResourceId);
 
             // invoke the operation
-            RedisCacheAccessPolicyAssignmentResource result = await redisCacheAccessPolicyAssignment.GetAsync();
+            RedisCacheAccessPolicyAssignmentData data = new RedisCacheAccessPolicyAssignmentData
+            {
+                ObjectId = Guid.Parse("6497c918-11ad-41e7-1b0f-7c518a87d0b0"),
+                ObjectIdAlias = "TestAADAppRedis",
+                AccessPolicyName = "accessPolicy1",
+            };
+            ArmOperation<RedisCacheAccessPolicyAssignmentResource> lro = await redisCacheAccessPolicyAssignment.UpdateAsync(WaitUntil.Completed, data);
+            RedisCacheAccessPolicyAssignmentResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

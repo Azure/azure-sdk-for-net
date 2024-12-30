@@ -93,6 +93,11 @@ namespace Azure.ResourceManager.Maps.Models
                 writer.WritePropertyName("cors"u8);
                 writer.WriteObjectValue(Cors, options);
             }
+            if (Optional.IsDefined(Encryption))
+            {
+                writer.WritePropertyName("encryption"u8);
+                writer.WriteObjectValue(Encryption, options);
+            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -140,6 +145,7 @@ namespace Azure.ResourceManager.Maps.Models
             string provisioningState = default;
             IList<MapsLinkedResource> linkedResources = default;
             CorsRules cors = default;
+            MapsEncryption encryption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -240,6 +246,15 @@ namespace Azure.ResourceManager.Maps.Models
                             cors = CorsRules.DeserializeCorsRules(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("encryption"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            encryption = MapsEncryption.DeserializeMapsEncryption(property0.Value, options);
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -259,6 +274,7 @@ namespace Azure.ResourceManager.Maps.Models
                 provisioningState,
                 linkedResources ?? new ChangeTrackingList<MapsLinkedResource>(),
                 cors,
+                encryption,
                 serializedAdditionalRawData);
         }
 

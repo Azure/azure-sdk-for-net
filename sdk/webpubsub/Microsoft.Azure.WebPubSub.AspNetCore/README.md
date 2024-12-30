@@ -61,6 +61,8 @@ public void ConfigureServices(IServiceCollection services)
 
 ### Map `WebPubSubHub` to endpoint routing
 
+The name of the hub has to match the class name e.g. `SampleHub`.
+
 ```C# Snippet:WebPubSubMapHub
 public void Configure(IApplicationBuilder app)
 {
@@ -71,13 +73,25 @@ public void Configure(IApplicationBuilder app)
 }
 ```
 
+Hub name can be overriden by using extension method.
+
+```C# Snippet:WebPubSubMapHubCustom
+public void Configure(IApplicationBuilder app)
+{
+    app.UseEndpoints(endpoint =>
+    {
+        endpoint.MapWebPubSubHub<SampleHub>("/eventhandler", "customHub");
+    });
+}
+```
+
 ## Key concepts
 
-For information about general Web PubSub concepts [Concepts in Azure Web PubSub](https://docs.microsoft.com/azure/azure-web-pubsub/key-concepts)
+For information about general Web PubSub concepts [Concepts in Azure Web PubSub](https://learn.microsoft.com/azure/azure-web-pubsub/key-concepts)
 
 ### `WebPubSubHub`
 
-`WebPubSubHub` is an abstract class to let users implement the subscribed Web PubSub service events. After user register the [event handler](https://docs.microsoft.com/azure/azure-web-pubsub/howto-develop-eventhandler) in service side, these events will be forwarded from service to server. And `WebPubSubHub` provides methods mapping to the service events to enable users deal with these events, for example, client management, validations or working with `Azure.Messaging.WebPubSub` to broadcast the messages. See samples below for details.
+`WebPubSubHub` is an abstract class to let users implement the subscribed Web PubSub service events. After user register the [event handler](https://learn.microsoft.com/azure/azure-web-pubsub/howto-develop-eventhandler) in service side, these events will be forwarded from service to server. And `WebPubSubHub` provides methods mapping to the service events to enable users deal with these events, for example, client management, validations or working with `Azure.Messaging.WebPubSub` to broadcast the messages. See samples below for details.
 
 > NOTE
 >

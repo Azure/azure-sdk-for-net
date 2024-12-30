@@ -10,453 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_FirewallPolicyRuleCollectionGroupCollection
     {
-        // Get FirewallPolicyNatRuleCollectionGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetFirewallPolicyNatRuleCollectionGroup()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyNatRuleCollectionGroupGet.json
-            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this FirewallPolicyResource created on azure
-            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string firewallPolicyName = "firewallPolicy";
-            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
-            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
-
-            // get the collection of this FirewallPolicyRuleCollectionGroupResource
-            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
-
-            // invoke the operation
-            string ruleCollectionGroupName = "ruleCollectionGroup1";
-            FirewallPolicyRuleCollectionGroupResource result = await collection.GetAsync(ruleCollectionGroupName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            FirewallPolicyRuleCollectionGroupData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get FirewallPolicyNatRuleCollectionGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetFirewallPolicyNatRuleCollectionGroup()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyNatRuleCollectionGroupGet.json
-            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this FirewallPolicyResource created on azure
-            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string firewallPolicyName = "firewallPolicy";
-            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
-            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
-
-            // get the collection of this FirewallPolicyRuleCollectionGroupResource
-            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
-
-            // invoke the operation
-            string ruleCollectionGroupName = "ruleCollectionGroup1";
-            bool result = await collection.ExistsAsync(ruleCollectionGroupName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get FirewallPolicyNatRuleCollectionGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetFirewallPolicyNatRuleCollectionGroup()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyNatRuleCollectionGroupGet.json
-            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this FirewallPolicyResource created on azure
-            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string firewallPolicyName = "firewallPolicy";
-            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
-            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
-
-            // get the collection of this FirewallPolicyRuleCollectionGroupResource
-            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
-
-            // invoke the operation
-            string ruleCollectionGroupName = "ruleCollectionGroup1";
-            NullableResponse<FirewallPolicyRuleCollectionGroupResource> response = await collection.GetIfExistsAsync(ruleCollectionGroupName);
-            FirewallPolicyRuleCollectionGroupResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                FirewallPolicyRuleCollectionGroupData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Get FirewallPolicyRuleCollectionGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetFirewallPolicyRuleCollectionGroup()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupGet.json
-            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this FirewallPolicyResource created on azure
-            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string firewallPolicyName = "firewallPolicy";
-            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
-            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
-
-            // get the collection of this FirewallPolicyRuleCollectionGroupResource
-            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
-
-            // invoke the operation
-            string ruleCollectionGroupName = "ruleCollectionGroup1";
-            FirewallPolicyRuleCollectionGroupResource result = await collection.GetAsync(ruleCollectionGroupName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            FirewallPolicyRuleCollectionGroupData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get FirewallPolicyRuleCollectionGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetFirewallPolicyRuleCollectionGroup()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupGet.json
-            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this FirewallPolicyResource created on azure
-            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string firewallPolicyName = "firewallPolicy";
-            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
-            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
-
-            // get the collection of this FirewallPolicyRuleCollectionGroupResource
-            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
-
-            // invoke the operation
-            string ruleCollectionGroupName = "ruleCollectionGroup1";
-            bool result = await collection.ExistsAsync(ruleCollectionGroupName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get FirewallPolicyRuleCollectionGroup
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetFirewallPolicyRuleCollectionGroup()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupGet.json
-            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this FirewallPolicyResource created on azure
-            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string firewallPolicyName = "firewallPolicy";
-            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
-            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
-
-            // get the collection of this FirewallPolicyRuleCollectionGroupResource
-            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
-
-            // invoke the operation
-            string ruleCollectionGroupName = "ruleCollectionGroup1";
-            NullableResponse<FirewallPolicyRuleCollectionGroupResource> response = await collection.GetIfExistsAsync(ruleCollectionGroupName);
-            FirewallPolicyRuleCollectionGroupResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                FirewallPolicyRuleCollectionGroupData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Get FirewallPolicyRuleCollectionGroup With IpGroups
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetFirewallPolicyRuleCollectionGroupWithIpGroups()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupWithIpGroupsGet.json
-            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this FirewallPolicyResource created on azure
-            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string firewallPolicyName = "firewallPolicy";
-            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
-            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
-
-            // get the collection of this FirewallPolicyRuleCollectionGroupResource
-            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
-
-            // invoke the operation
-            string ruleCollectionGroupName = "ruleGroup1";
-            FirewallPolicyRuleCollectionGroupResource result = await collection.GetAsync(ruleCollectionGroupName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            FirewallPolicyRuleCollectionGroupData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get FirewallPolicyRuleCollectionGroup With IpGroups
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetFirewallPolicyRuleCollectionGroupWithIpGroups()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupWithIpGroupsGet.json
-            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this FirewallPolicyResource created on azure
-            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string firewallPolicyName = "firewallPolicy";
-            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
-            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
-
-            // get the collection of this FirewallPolicyRuleCollectionGroupResource
-            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
-
-            // invoke the operation
-            string ruleCollectionGroupName = "ruleGroup1";
-            bool result = await collection.ExistsAsync(ruleCollectionGroupName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get FirewallPolicyRuleCollectionGroup With IpGroups
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetFirewallPolicyRuleCollectionGroupWithIpGroups()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupWithIpGroupsGet.json
-            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this FirewallPolicyResource created on azure
-            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string firewallPolicyName = "firewallPolicy";
-            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
-            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
-
-            // get the collection of this FirewallPolicyRuleCollectionGroupResource
-            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
-
-            // invoke the operation
-            string ruleCollectionGroupName = "ruleGroup1";
-            NullableResponse<FirewallPolicyRuleCollectionGroupResource> response = await collection.GetIfExistsAsync(ruleCollectionGroupName);
-            FirewallPolicyRuleCollectionGroupResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                FirewallPolicyRuleCollectionGroupData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Get FirewallPolicyRuleCollectionGroup With Web Categories
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetFirewallPolicyRuleCollectionGroupWithWebCategories()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupWithWebCategoriesGet.json
-            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this FirewallPolicyResource created on azure
-            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "e747cc13-97d4-4a79-b463-42d7f4e558f2";
-            string resourceGroupName = "rg1";
-            string firewallPolicyName = "firewallPolicy";
-            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
-            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
-
-            // get the collection of this FirewallPolicyRuleCollectionGroupResource
-            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
-
-            // invoke the operation
-            string ruleCollectionGroupName = "ruleCollectionGroup1";
-            FirewallPolicyRuleCollectionGroupResource result = await collection.GetAsync(ruleCollectionGroupName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            FirewallPolicyRuleCollectionGroupData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get FirewallPolicyRuleCollectionGroup With Web Categories
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetFirewallPolicyRuleCollectionGroupWithWebCategories()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupWithWebCategoriesGet.json
-            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this FirewallPolicyResource created on azure
-            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "e747cc13-97d4-4a79-b463-42d7f4e558f2";
-            string resourceGroupName = "rg1";
-            string firewallPolicyName = "firewallPolicy";
-            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
-            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
-
-            // get the collection of this FirewallPolicyRuleCollectionGroupResource
-            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
-
-            // invoke the operation
-            string ruleCollectionGroupName = "ruleCollectionGroup1";
-            bool result = await collection.ExistsAsync(ruleCollectionGroupName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get FirewallPolicyRuleCollectionGroup With Web Categories
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetFirewallPolicyRuleCollectionGroupWithWebCategories()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupWithWebCategoriesGet.json
-            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this FirewallPolicyResource created on azure
-            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
-            string subscriptionId = "e747cc13-97d4-4a79-b463-42d7f4e558f2";
-            string resourceGroupName = "rg1";
-            string firewallPolicyName = "firewallPolicy";
-            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
-            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
-
-            // get the collection of this FirewallPolicyRuleCollectionGroupResource
-            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
-
-            // invoke the operation
-            string ruleCollectionGroupName = "ruleCollectionGroup1";
-            NullableResponse<FirewallPolicyRuleCollectionGroupResource> response = await collection.GetIfExistsAsync(ruleCollectionGroupName);
-            FirewallPolicyRuleCollectionGroupResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                FirewallPolicyRuleCollectionGroupData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Create Firewall Policy Nat Rule Collection Group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateFirewallPolicyNatRuleCollectionGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyNatRuleCollectionGroupPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyNatRuleCollectionGroupPut.json
             // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -477,46 +41,26 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string ruleCollectionGroupName = "ruleCollectionGroup1";
-            FirewallPolicyRuleCollectionGroupData data = new FirewallPolicyRuleCollectionGroupData()
+            FirewallPolicyRuleCollectionGroupData data = new FirewallPolicyRuleCollectionGroupData
             {
                 Priority = 100,
-                RuleCollections =
-{
-new FirewallPolicyNatRuleCollectionInfo()
+                RuleCollections = {new FirewallPolicyNatRuleCollectionInfo
 {
 ActionType = FirewallPolicyNatRuleCollectionActionType.Dnat,
-Rules =
+Rules = {new NatRule
 {
-new NatRule()
-{
-IPProtocols =
-{
-FirewallPolicyRuleNetworkProtocol.Tcp,FirewallPolicyRuleNetworkProtocol.Udp
-},
-SourceAddresses =
-{
-"2.2.2.2"
-},
-DestinationAddresses =
-{
-"152.23.32.23"
-},
-DestinationPorts =
-{
-"8080"
-},
+IPProtocols = {FirewallPolicyRuleNetworkProtocol.Tcp, FirewallPolicyRuleNetworkProtocol.Udp},
+SourceAddresses = {"2.2.2.2"},
+DestinationAddresses = {"152.23.32.23"},
+DestinationPorts = {"8080"},
 TranslatedPort = "8080",
-SourceIPGroups =
-{
-},
+SourceIPGroups = {},
 TranslatedFqdn = "internalhttp.server.net",
 Name = "nat-rule1",
-}
-},
+}},
 Name = "Example-Nat-Rule-Collection",
 Priority = 100,
-}
-},
+}},
             };
             ArmOperation<FirewallPolicyRuleCollectionGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionGroupName, data);
             FirewallPolicyRuleCollectionGroupResource result = lro.Value;
@@ -528,12 +72,11 @@ Priority = 100,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Firewall Policy Rule Collection Group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateFirewallPolicyRuleCollectionGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyRuleCollectionGroupPut.json
             // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -554,41 +97,23 @@ Priority = 100,
 
             // invoke the operation
             string ruleCollectionGroupName = "ruleCollectionGroup1";
-            FirewallPolicyRuleCollectionGroupData data = new FirewallPolicyRuleCollectionGroupData()
+            FirewallPolicyRuleCollectionGroupData data = new FirewallPolicyRuleCollectionGroupData
             {
                 Priority = 100,
-                RuleCollections =
-{
-new FirewallPolicyFilterRuleCollectionInfo()
+                RuleCollections = {new FirewallPolicyFilterRuleCollectionInfo
 {
 ActionType = FirewallPolicyFilterRuleCollectionActionType.Deny,
-Rules =
+Rules = {new NetworkRule
 {
-new NetworkRule()
-{
-IPProtocols =
-{
-FirewallPolicyRuleNetworkProtocol.Tcp
-},
-SourceAddresses =
-{
-"10.1.25.0/24"
-},
-DestinationAddresses =
-{
-"*"
-},
-DestinationPorts =
-{
-"*"
-},
+IPProtocols = {FirewallPolicyRuleNetworkProtocol.Tcp},
+SourceAddresses = {"10.1.25.0/24"},
+DestinationAddresses = {"*"},
+DestinationPorts = {"*"},
 Name = "network-rule1",
-}
-},
+}},
 Name = "Example-Filter-Rule-Collection",
 Priority = 100,
-}
-},
+}},
             };
             ArmOperation<FirewallPolicyRuleCollectionGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionGroupName, data);
             FirewallPolicyRuleCollectionGroupResource result = lro.Value;
@@ -600,12 +125,11 @@ Priority = 100,
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Firewall Policy Rule Collection Group With IP Groups
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateFirewallPolicyRuleCollectionGroupWithIPGroups()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupWithIpGroupsPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyRuleCollectionGroupWithIpGroupsPut.json
             // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -626,40 +150,22 @@ Priority = 100,
 
             // invoke the operation
             string ruleCollectionGroupName = "ruleCollectionGroup1";
-            FirewallPolicyRuleCollectionGroupData data = new FirewallPolicyRuleCollectionGroupData()
+            FirewallPolicyRuleCollectionGroupData data = new FirewallPolicyRuleCollectionGroupData
             {
                 Priority = 110,
-                RuleCollections =
-{
-new FirewallPolicyFilterRuleCollectionInfo()
+                RuleCollections = {new FirewallPolicyFilterRuleCollectionInfo
 {
 ActionType = FirewallPolicyFilterRuleCollectionActionType.Deny,
-Rules =
+Rules = {new NetworkRule
 {
-new NetworkRule()
-{
-IPProtocols =
-{
-FirewallPolicyRuleNetworkProtocol.Tcp
-},
-DestinationPorts =
-{
-"*"
-},
-SourceIPGroups =
-{
-"/subscriptions/subid/providers/Microsoft.Network/resourceGroup/rg1/ipGroups/ipGroups1"
-},
-DestinationIPGroups =
-{
-"/subscriptions/subid/providers/Microsoft.Network/resourceGroup/rg1/ipGroups/ipGroups2"
-},
+IPProtocols = {FirewallPolicyRuleNetworkProtocol.Tcp},
+DestinationPorts = {"*"},
+SourceIPGroups = {"/subscriptions/subid/providers/Microsoft.Network/resourceGroup/rg1/ipGroups/ipGroups1"},
+DestinationIPGroups = {"/subscriptions/subid/providers/Microsoft.Network/resourceGroup/rg1/ipGroups/ipGroups2"},
 Name = "network-1",
-}
-},
+}},
 Name = "Example-Filter-Rule-Collection",
-}
-},
+}},
             };
             ArmOperation<FirewallPolicyRuleCollectionGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionGroupName, data);
             FirewallPolicyRuleCollectionGroupResource result = lro.Value;
@@ -671,12 +177,11 @@ Name = "Example-Filter-Rule-Collection",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Firewall Policy Rule Collection Group With Web Categories
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateFirewallPolicyRuleCollectionGroupWithWebCategories()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupWithWebCategoriesPut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyRuleCollectionGroupWithWebCategoriesPut.json
             // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -697,41 +202,26 @@ Name = "Example-Filter-Rule-Collection",
 
             // invoke the operation
             string ruleCollectionGroupName = "ruleCollectionGroup1";
-            FirewallPolicyRuleCollectionGroupData data = new FirewallPolicyRuleCollectionGroupData()
+            FirewallPolicyRuleCollectionGroupData data = new FirewallPolicyRuleCollectionGroupData
             {
                 Priority = 110,
-                RuleCollections =
-{
-new FirewallPolicyFilterRuleCollectionInfo()
+                RuleCollections = {new FirewallPolicyFilterRuleCollectionInfo
 {
 ActionType = FirewallPolicyFilterRuleCollectionActionType.Deny,
-Rules =
+Rules = {new ApplicationRule
 {
-new ApplicationRule()
-{
-SourceAddresses =
-{
-"216.58.216.164","10.0.0.0/24"
-},
-Protocols =
-{
-new FirewallPolicyRuleApplicationProtocol()
+SourceAddresses = {"216.58.216.164", "10.0.0.0/24"},
+Protocols = {new FirewallPolicyRuleApplicationProtocol
 {
 ProtocolType = FirewallPolicyRuleApplicationProtocolType.Https,
 Port = 443,
-}
-},
-WebCategories =
-{
-"Hacking"
-},
+}},
+WebCategories = {"Hacking"},
 Name = "rule1",
 Description = "Deny inbound rule",
-}
-},
+}},
 Name = "Example-Filter-Rule-Collection",
-}
-},
+}},
             };
             ArmOperation<FirewallPolicyRuleCollectionGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionGroupName, data);
             FirewallPolicyRuleCollectionGroupResource result = lro.Value;
@@ -743,12 +233,11 @@ Name = "Example-Filter-Rule-Collection",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Firewall Policy Rule Collection Group With http header to insert
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateFirewallPolicyRuleCollectionGroupWithHttpHeaderToInsert()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupWithHttpHeadersToInsert.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyRuleCollectionGroupWithHttpHeadersToInsert.json
             // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -769,49 +258,31 @@ Name = "Example-Filter-Rule-Collection",
 
             // invoke the operation
             string ruleCollectionGroupName = "ruleCollectionGroup1";
-            FirewallPolicyRuleCollectionGroupData data = new FirewallPolicyRuleCollectionGroupData()
+            FirewallPolicyRuleCollectionGroupData data = new FirewallPolicyRuleCollectionGroupData
             {
                 Priority = 110,
-                RuleCollections =
-{
-new FirewallPolicyFilterRuleCollectionInfo()
+                RuleCollections = {new FirewallPolicyFilterRuleCollectionInfo
 {
 ActionType = FirewallPolicyFilterRuleCollectionActionType.Allow,
-Rules =
+Rules = {new ApplicationRule
 {
-new ApplicationRule()
-{
-SourceAddresses =
-{
-"216.58.216.164","10.0.0.0/24"
-},
-Protocols =
-{
-new FirewallPolicyRuleApplicationProtocol()
+SourceAddresses = {"216.58.216.164", "10.0.0.0/24"},
+Protocols = {new FirewallPolicyRuleApplicationProtocol
 {
 ProtocolType = FirewallPolicyRuleApplicationProtocolType.Http,
 Port = 80,
-}
-},
-FqdnTags =
-{
-"WindowsVirtualDesktop"
-},
-HttpHeadersToInsert =
-{
-new FirewallPolicyHttpHeaderToInsert()
+}},
+FqdnTags = {"WindowsVirtualDesktop"},
+HttpHeadersToInsert = {new FirewallPolicyHttpHeaderToInsert
 {
 HeaderName = "Restrict-Access-To-Tenants",
 HeaderValue = "contoso.com,fabrikam.onmicrosoft.com",
-}
-},
+}},
 Name = "rule1",
 Description = "Insert trusted tenants header",
-}
-},
+}},
 Name = "Example-Filter-Rule-Collection",
-}
-},
+}},
             };
             ArmOperation<FirewallPolicyRuleCollectionGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionGroupName, data);
             FirewallPolicyRuleCollectionGroupResource result = lro.Value;
@@ -823,12 +294,147 @@ Name = "Example-Filter-Rule-Collection",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List all FirewallPolicyRuleCollectionGroup With Web Categories
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetFirewallPolicyNatRuleCollectionGroup()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyNatRuleCollectionGroupGet.json
+            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FirewallPolicyResource created on azure
+            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string firewallPolicyName = "firewallPolicy";
+            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
+            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
+
+            // get the collection of this FirewallPolicyRuleCollectionGroupResource
+            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
+
+            // invoke the operation
+            string ruleCollectionGroupName = "ruleCollectionGroup1";
+            FirewallPolicyRuleCollectionGroupResource result = await collection.GetAsync(ruleCollectionGroupName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            FirewallPolicyRuleCollectionGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetFirewallPolicyRuleCollectionGroup()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyRuleCollectionGroupGet.json
+            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FirewallPolicyResource created on azure
+            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string firewallPolicyName = "firewallPolicy";
+            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
+            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
+
+            // get the collection of this FirewallPolicyRuleCollectionGroupResource
+            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
+
+            // invoke the operation
+            string ruleCollectionGroupName = "ruleCollectionGroup1";
+            FirewallPolicyRuleCollectionGroupResource result = await collection.GetAsync(ruleCollectionGroupName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            FirewallPolicyRuleCollectionGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetFirewallPolicyRuleCollectionGroupWithIpGroups()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyRuleCollectionGroupWithIpGroupsGet.json
+            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FirewallPolicyResource created on azure
+            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string firewallPolicyName = "firewallPolicy";
+            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
+            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
+
+            // get the collection of this FirewallPolicyRuleCollectionGroupResource
+            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
+
+            // invoke the operation
+            string ruleCollectionGroupName = "ruleGroup1";
+            FirewallPolicyRuleCollectionGroupResource result = await collection.GetAsync(ruleCollectionGroupName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            FirewallPolicyRuleCollectionGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetFirewallPolicyRuleCollectionGroupWithWebCategories()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyRuleCollectionGroupWithWebCategoriesGet.json
+            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FirewallPolicyResource created on azure
+            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
+            string subscriptionId = "e747cc13-97d4-4a79-b463-42d7f4e558f2";
+            string resourceGroupName = "rg1";
+            string firewallPolicyName = "firewallPolicy";
+            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
+            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
+
+            // get the collection of this FirewallPolicyRuleCollectionGroupResource
+            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
+
+            // invoke the operation
+            string ruleCollectionGroupName = "ruleCollectionGroup1";
+            FirewallPolicyRuleCollectionGroupResource result = await collection.GetAsync(ruleCollectionGroupName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            FirewallPolicyRuleCollectionGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllFirewallPolicyRuleCollectionGroupWithWebCategories()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupWithWebCategoriesList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyRuleCollectionGroupWithWebCategoriesList.json
             // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -857,15 +463,14 @@ Name = "Example-Filter-Rule-Collection",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List all FirewallPolicyRuleCollectionGroups for a given FirewallPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllFirewallPolicyRuleCollectionGroupsForAGivenFirewallPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyRuleCollectionGroupList.json
             // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -894,15 +499,14 @@ Name = "Example-Filter-Rule-Collection",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // List all FirewallPolicyRuleCollectionGroups with IpGroups for a given FirewallPolicy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllFirewallPolicyRuleCollectionGroupsWithIpGroupsForAGivenFirewallPolicy()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/FirewallPolicyRuleCollectionGroupWithIpGroupsList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyRuleCollectionGroupWithIpGroupsList.json
             // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -931,7 +535,295 @@ Name = "Example-Filter-Rule-Collection",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetFirewallPolicyNatRuleCollectionGroup()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyNatRuleCollectionGroupGet.json
+            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FirewallPolicyResource created on azure
+            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string firewallPolicyName = "firewallPolicy";
+            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
+            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
+
+            // get the collection of this FirewallPolicyRuleCollectionGroupResource
+            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
+
+            // invoke the operation
+            string ruleCollectionGroupName = "ruleCollectionGroup1";
+            bool result = await collection.ExistsAsync(ruleCollectionGroupName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetFirewallPolicyRuleCollectionGroup()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyRuleCollectionGroupGet.json
+            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FirewallPolicyResource created on azure
+            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string firewallPolicyName = "firewallPolicy";
+            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
+            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
+
+            // get the collection of this FirewallPolicyRuleCollectionGroupResource
+            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
+
+            // invoke the operation
+            string ruleCollectionGroupName = "ruleCollectionGroup1";
+            bool result = await collection.ExistsAsync(ruleCollectionGroupName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetFirewallPolicyRuleCollectionGroupWithIpGroups()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyRuleCollectionGroupWithIpGroupsGet.json
+            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FirewallPolicyResource created on azure
+            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string firewallPolicyName = "firewallPolicy";
+            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
+            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
+
+            // get the collection of this FirewallPolicyRuleCollectionGroupResource
+            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
+
+            // invoke the operation
+            string ruleCollectionGroupName = "ruleGroup1";
+            bool result = await collection.ExistsAsync(ruleCollectionGroupName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetFirewallPolicyRuleCollectionGroupWithWebCategories()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyRuleCollectionGroupWithWebCategoriesGet.json
+            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FirewallPolicyResource created on azure
+            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
+            string subscriptionId = "e747cc13-97d4-4a79-b463-42d7f4e558f2";
+            string resourceGroupName = "rg1";
+            string firewallPolicyName = "firewallPolicy";
+            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
+            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
+
+            // get the collection of this FirewallPolicyRuleCollectionGroupResource
+            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
+
+            // invoke the operation
+            string ruleCollectionGroupName = "ruleCollectionGroup1";
+            bool result = await collection.ExistsAsync(ruleCollectionGroupName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetFirewallPolicyNatRuleCollectionGroup()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyNatRuleCollectionGroupGet.json
+            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FirewallPolicyResource created on azure
+            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string firewallPolicyName = "firewallPolicy";
+            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
+            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
+
+            // get the collection of this FirewallPolicyRuleCollectionGroupResource
+            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
+
+            // invoke the operation
+            string ruleCollectionGroupName = "ruleCollectionGroup1";
+            NullableResponse<FirewallPolicyRuleCollectionGroupResource> response = await collection.GetIfExistsAsync(ruleCollectionGroupName);
+            FirewallPolicyRuleCollectionGroupResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                FirewallPolicyRuleCollectionGroupData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetFirewallPolicyRuleCollectionGroup()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyRuleCollectionGroupGet.json
+            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FirewallPolicyResource created on azure
+            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string firewallPolicyName = "firewallPolicy";
+            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
+            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
+
+            // get the collection of this FirewallPolicyRuleCollectionGroupResource
+            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
+
+            // invoke the operation
+            string ruleCollectionGroupName = "ruleCollectionGroup1";
+            NullableResponse<FirewallPolicyRuleCollectionGroupResource> response = await collection.GetIfExistsAsync(ruleCollectionGroupName);
+            FirewallPolicyRuleCollectionGroupResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                FirewallPolicyRuleCollectionGroupData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetFirewallPolicyRuleCollectionGroupWithIpGroups()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyRuleCollectionGroupWithIpGroupsGet.json
+            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FirewallPolicyResource created on azure
+            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string firewallPolicyName = "firewallPolicy";
+            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
+            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
+
+            // get the collection of this FirewallPolicyRuleCollectionGroupResource
+            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
+
+            // invoke the operation
+            string ruleCollectionGroupName = "ruleGroup1";
+            NullableResponse<FirewallPolicyRuleCollectionGroupResource> response = await collection.GetIfExistsAsync(ruleCollectionGroupName);
+            FirewallPolicyRuleCollectionGroupResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                FirewallPolicyRuleCollectionGroupData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetFirewallPolicyRuleCollectionGroupWithWebCategories()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/FirewallPolicyRuleCollectionGroupWithWebCategoriesGet.json
+            // this example is just showing the usage of "FirewallPolicyRuleCollectionGroups_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this FirewallPolicyResource created on azure
+            // for more information of creating FirewallPolicyResource, please refer to the document of FirewallPolicyResource
+            string subscriptionId = "e747cc13-97d4-4a79-b463-42d7f4e558f2";
+            string resourceGroupName = "rg1";
+            string firewallPolicyName = "firewallPolicy";
+            ResourceIdentifier firewallPolicyResourceId = FirewallPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, firewallPolicyName);
+            FirewallPolicyResource firewallPolicy = client.GetFirewallPolicyResource(firewallPolicyResourceId);
+
+            // get the collection of this FirewallPolicyRuleCollectionGroupResource
+            FirewallPolicyRuleCollectionGroupCollection collection = firewallPolicy.GetFirewallPolicyRuleCollectionGroups();
+
+            // invoke the operation
+            string ruleCollectionGroupName = "ruleCollectionGroup1";
+            NullableResponse<FirewallPolicyRuleCollectionGroupResource> response = await collection.GetIfExistsAsync(ruleCollectionGroupName);
+            FirewallPolicyRuleCollectionGroupResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                FirewallPolicyRuleCollectionGroupData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

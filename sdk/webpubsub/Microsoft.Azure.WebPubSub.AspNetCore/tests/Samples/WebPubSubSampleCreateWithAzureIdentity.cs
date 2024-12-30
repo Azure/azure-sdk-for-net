@@ -26,13 +26,15 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
         }
 #endregion
 
+        #region Snippet:WebPubSubMapHubCustom
         public void Configure(IApplicationBuilder app)
         {
             app.UseEndpoints(endpoint =>
             {
-                endpoint.MapWebPubSubHub<SampleHub>("/eventhandler");
+                endpoint.MapWebPubSubHub<SampleHub>("/eventhandler", "customHub");
             });
         }
+        #endregion
 
         private sealed class SampleHub : WebPubSubHub
         {

@@ -10,18 +10,18 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_NetworkManagerSecurityUserRulesCollection
     {
-        // List rule collections in a security configuration
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_ListRuleCollectionsInASecurityConfiguration()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateOrUpdateASecurityUserRuleCollection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerSecurityUserRuleCollectionList.json
-            // this example is just showing the usage of "SecurityUserRuleCollections_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerSecurityUserRuleCollectionPut.json
+            // this example is just showing the usage of "SecurityUserRuleCollections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -40,25 +40,28 @@ namespace Azure.ResourceManager.Network.Samples
             // get the collection of this NetworkManagerSecurityUserRulesResource
             NetworkManagerSecurityUserRulesCollection collection = networkManagerSecurityUserConfiguration.GetAllNetworkManagerSecurityUserRules();
 
-            // invoke the operation and iterate over the result
-            await foreach (NetworkManagerSecurityUserRulesResource item in collection.GetAllAsync())
+            // invoke the operation
+            string ruleCollectionName = "testRuleCollection";
+            NetworkManagerSecurityUserRulesData data = new NetworkManagerSecurityUserRulesData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                NetworkManagerSecurityUserRulesData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Description = "A sample policy",
+                AppliesToGroups = { new SecurityUserGroupItem("/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.Network/networkManagers/testNetworkManager/networkGroups/testGroup") },
+            };
+            ArmOperation<NetworkManagerSecurityUserRulesResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionName, data);
+            NetworkManagerSecurityUserRulesResource result = lro.Value;
 
-            Console.WriteLine($"Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            NetworkManagerSecurityUserRulesData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets security user rule collection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsSecurityUserRuleCollection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerSecurityUserRuleCollectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerSecurityUserRuleCollectionGet.json
             // this example is just showing the usage of "SecurityUserRuleCollections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,12 +92,48 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Gets security user rule collection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListRuleCollectionsInASecurityConfiguration()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerSecurityUserRuleCollectionList.json
+            // this example is just showing the usage of "SecurityUserRuleCollections_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetworkManagerSecurityUserConfigurationResource created on azure
+            // for more information of creating NetworkManagerSecurityUserConfigurationResource, please refer to the document of NetworkManagerSecurityUserConfigurationResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string networkManagerName = "testNetworkManager";
+            string configurationName = "myTestSecurityConfig";
+            ResourceIdentifier networkManagerSecurityUserConfigurationResourceId = NetworkManagerSecurityUserConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName);
+            NetworkManagerSecurityUserConfigurationResource networkManagerSecurityUserConfiguration = client.GetNetworkManagerSecurityUserConfigurationResource(networkManagerSecurityUserConfigurationResourceId);
+
+            // get the collection of this NetworkManagerSecurityUserRulesResource
+            NetworkManagerSecurityUserRulesCollection collection = networkManagerSecurityUserConfiguration.GetAllNetworkManagerSecurityUserRules();
+
+            // invoke the operation and iterate over the result
+            await foreach (NetworkManagerSecurityUserRulesResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                NetworkManagerSecurityUserRulesData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetsSecurityUserRuleCollection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerSecurityUserRuleCollectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerSecurityUserRuleCollectionGet.json
             // this example is just showing the usage of "SecurityUserRuleCollections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -121,12 +160,11 @@ namespace Azure.ResourceManager.Network.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Gets security user rule collection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetsSecurityUserRuleCollection()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerSecurityUserRuleCollectionGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/NetworkManagerSecurityUserRuleCollectionGet.json
             // this example is just showing the usage of "SecurityUserRuleCollections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -153,7 +191,7 @@ namespace Azure.ResourceManager.Network.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {
@@ -163,51 +201,6 @@ namespace Azure.ResourceManager.Network.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        // Create or Update a Security User Rule Collection
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task CreateOrUpdate_CreateOrUpdateASecurityUserRuleCollection()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/NetworkManagerSecurityUserRuleCollectionPut.json
-            // this example is just showing the usage of "SecurityUserRuleCollections_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this NetworkManagerSecurityUserConfigurationResource created on azure
-            // for more information of creating NetworkManagerSecurityUserConfigurationResource, please refer to the document of NetworkManagerSecurityUserConfigurationResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string networkManagerName = "testNetworkManager";
-            string configurationName = "myTestSecurityConfig";
-            ResourceIdentifier networkManagerSecurityUserConfigurationResourceId = NetworkManagerSecurityUserConfigurationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, networkManagerName, configurationName);
-            NetworkManagerSecurityUserConfigurationResource networkManagerSecurityUserConfiguration = client.GetNetworkManagerSecurityUserConfigurationResource(networkManagerSecurityUserConfigurationResourceId);
-
-            // get the collection of this NetworkManagerSecurityUserRulesResource
-            NetworkManagerSecurityUserRulesCollection collection = networkManagerSecurityUserConfiguration.GetAllNetworkManagerSecurityUserRules();
-
-            // invoke the operation
-            string ruleCollectionName = "testRuleCollection";
-            NetworkManagerSecurityUserRulesData data = new NetworkManagerSecurityUserRulesData()
-            {
-                Description = "A sample policy",
-                AppliesToGroups =
-{
-new SecurityUserGroupItem("/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.Network/networkManagers/testNetworkManager/networkGroups/testGroup")
-},
-            };
-            ArmOperation<NetworkManagerSecurityUserRulesResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionName, data);
-            NetworkManagerSecurityUserRulesResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            NetworkManagerSecurityUserRulesData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

@@ -10,51 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.EventHubs.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventHubs.Samples
 {
     public partial class Sample_EventHubCollection
     {
-        // EventHubsListAll
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetAll_EventHubsListAll()
-        {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/EventHubs/EHEventHubListByNameSpace.json
-            // this example is just showing the usage of "EventHubs_ListByNamespace" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this EventHubsNamespaceResource created on azure
-            // for more information of creating EventHubsNamespaceResource, please refer to the document of EventHubsNamespaceResource
-            string subscriptionId = "e2f361f0-3b27-4503-a9cc-21cfba380093";
-            string resourceGroupName = "Default-NotificationHubs-AustraliaEast";
-            string namespaceName = "sdk-Namespace-5357";
-            ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
-            EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
-
-            // get the collection of this EventHubResource
-            EventHubCollection collection = eventHubsNamespace.GetEventHubs();
-
-            // invoke the operation and iterate over the result
-            await foreach (EventHubResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                EventHubData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // EventHubCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_EventHubCreate()
         {
             // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/EventHubs/EHEventHubCreate.json
@@ -78,21 +41,21 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             // invoke the operation
             string eventHubName = "sdk-EventHub-6547";
-            EventHubData data = new EventHubData()
+            EventHubData data = new EventHubData
             {
                 PartitionCount = 4L,
                 Status = EventHubEntityStatus.Active,
                 UserMetadata = "key",
-                CaptureDescription = new CaptureDescription()
+                CaptureDescription = new CaptureDescription
                 {
                     Enabled = true,
                     Encoding = EncodingCaptureDescription.Avro,
                     IntervalInSeconds = 120,
                     SizeLimitInBytes = 10485763,
-                    Destination = new EventHubDestination()
+                    Destination = new EventHubDestination
                     {
                         Name = "EventHubArchive.AzureBlockBlob",
-                        Identity = new EventHubsCaptureIdentity()
+                        Identity = new EventHubsCaptureIdentity
                         {
                             IdentityType = EventHubsCaptureIdentityType.UserAssigned,
                             UserAssignedIdentity = "/subscriptions/SampleSubscription/resourceGroups/ResurceGroupSample/providers/Microsoft.ManagedIdentity/userAssignedIdentities/ud2",
@@ -102,7 +65,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
                         ArchiveNameFormat = "{Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}",
                     },
                 },
-                RetentionDescription = new RetentionDescription()
+                RetentionDescription = new RetentionDescription
                 {
                     CleanupPolicy = CleanupPolicyRetentionDescription.Compaction,
                     RetentionTimeInHours = 96L,
@@ -119,9 +82,8 @@ namespace Azure.ResourceManager.EventHubs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // EventHubGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_EventHubGet()
         {
             // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/EventHubs/EHEventHubGet.json
@@ -154,9 +116,44 @@ namespace Azure.ResourceManager.EventHubs.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // EventHubGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_EventHubsListAll()
+        {
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/EventHubs/EHEventHubListByNameSpace.json
+            // this example is just showing the usage of "EventHubs_ListByNamespace" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this EventHubsNamespaceResource created on azure
+            // for more information of creating EventHubsNamespaceResource, please refer to the document of EventHubsNamespaceResource
+            string subscriptionId = "e2f361f0-3b27-4503-a9cc-21cfba380093";
+            string resourceGroupName = "Default-NotificationHubs-AustraliaEast";
+            string namespaceName = "sdk-Namespace-5357";
+            ResourceIdentifier eventHubsNamespaceResourceId = EventHubsNamespaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, namespaceName);
+            EventHubsNamespaceResource eventHubsNamespace = client.GetEventHubsNamespaceResource(eventHubsNamespaceResourceId);
+
+            // get the collection of this EventHubResource
+            EventHubCollection collection = eventHubsNamespace.GetEventHubs();
+
+            // invoke the operation and iterate over the result
+            await foreach (EventHubResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                EventHubData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_EventHubGet()
         {
             // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/EventHubs/EHEventHubGet.json
@@ -185,9 +182,8 @@ namespace Azure.ResourceManager.EventHubs.Samples
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // EventHubGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_EventHubGet()
         {
             // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/EventHubs/EHEventHubGet.json
@@ -216,7 +212,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

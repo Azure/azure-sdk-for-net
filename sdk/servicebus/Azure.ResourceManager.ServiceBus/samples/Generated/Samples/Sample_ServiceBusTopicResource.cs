@@ -9,18 +9,18 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceBus.Samples
 {
     public partial class Sample_ServiceBusTopicResource
     {
-        // TopicCreate
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_TopicCreate()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_TopicGet()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Topics/SBTopicCreate.json
-            // this example is just showing the usage of "Topics_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Topics/SBTopicGet.json
+            // this example is just showing the usage of "Topics_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -37,12 +37,7 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             ServiceBusTopicResource serviceBusTopic = client.GetServiceBusTopicResource(serviceBusTopicResourceId);
 
             // invoke the operation
-            ServiceBusTopicData data = new ServiceBusTopicData()
-            {
-                EnableExpress = true,
-            };
-            ArmOperation<ServiceBusTopicResource> lro = await serviceBusTopic.UpdateAsync(WaitUntil.Completed, data);
-            ServiceBusTopicResource result = lro.Value;
+            ServiceBusTopicResource result = await serviceBusTopic.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -51,12 +46,11 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // TopicDelete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Delete_TopicDelete()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Topics/SBTopicDelete.json
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Topics/SBTopicDelete.json
             // this example is just showing the usage of "Topics_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,16 +70,15 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             // invoke the operation
             await serviceBusTopic.DeleteAsync(WaitUntil.Completed);
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // TopicGet
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_TopicGet()
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_TopicCreate()
         {
-            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/preview/2022-10-01-preview/examples/Topics/SBTopicGet.json
-            // this example is just showing the usage of "Topics_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/servicebus/resource-manager/Microsoft.ServiceBus/stable/2024-01-01/examples/Topics/SBTopicCreate.json
+            // this example is just showing the usage of "Topics_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -102,7 +95,12 @@ namespace Azure.ResourceManager.ServiceBus.Samples
             ServiceBusTopicResource serviceBusTopic = client.GetServiceBusTopicResource(serviceBusTopicResourceId);
 
             // invoke the operation
-            ServiceBusTopicResource result = await serviceBusTopic.GetAsync();
+            ServiceBusTopicData data = new ServiceBusTopicData
+            {
+                EnableExpress = true,
+            };
+            ArmOperation<ServiceBusTopicResource> lro = await serviceBusTopic.UpdateAsync(WaitUntil.Completed, data);
+            ServiceBusTopicResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

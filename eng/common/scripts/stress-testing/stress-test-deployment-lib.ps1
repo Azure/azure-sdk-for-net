@@ -155,8 +155,9 @@ function DeployStressTests(
                 -filters $filters `
                 -CI:$CI `
                 -namespaceOverride $Namespace `
-                -MatrixSelection $MatrixSelection `
                 -MatrixFileName $MatrixFileName `
+                -MatrixSelection $MatrixSelection `
+                -MatrixDisplayNameFilter $MatrixDisplayNameFilter `
                 -MatrixFilters $MatrixFilters `
                 -MatrixReplace $MatrixReplace `
                 -MatrixNonSparseParameters $MatrixNonSparseParameters)
@@ -413,7 +414,7 @@ function CheckDependencies()
         }
     )
 
-    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.1" | Import-Module
+    Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
 
     $shouldError = $false
     foreach ($dep in $deps) {

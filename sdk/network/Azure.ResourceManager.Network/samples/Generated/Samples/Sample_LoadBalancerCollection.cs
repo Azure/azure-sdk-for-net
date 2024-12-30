@@ -12,229 +12,17 @@ using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_LoadBalancerCollection
     {
-        // Get load balancer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetLoadBalancer()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerGet.json
-            // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this LoadBalancerResource
-            LoadBalancerCollection collection = resourceGroupResource.GetLoadBalancers();
-
-            // invoke the operation
-            string loadBalancerName = "lb";
-            LoadBalancerResource result = await collection.GetAsync(loadBalancerName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            LoadBalancerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get load balancer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetLoadBalancer()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerGet.json
-            // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this LoadBalancerResource
-            LoadBalancerCollection collection = resourceGroupResource.GetLoadBalancers();
-
-            // invoke the operation
-            string loadBalancerName = "lb";
-            bool result = await collection.ExistsAsync(loadBalancerName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get load balancer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetLoadBalancer()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerGet.json
-            // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this LoadBalancerResource
-            LoadBalancerCollection collection = resourceGroupResource.GetLoadBalancers();
-
-            // invoke the operation
-            string loadBalancerName = "lb";
-            NullableResponse<LoadBalancerResource> response = await collection.GetIfExistsAsync(loadBalancerName);
-            LoadBalancerResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                LoadBalancerData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Get load balancer with inbound NAT rule port mapping
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_GetLoadBalancerWithInboundNATRulePortMapping()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerGetInboundNatRulePortMapping.json
-            // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this LoadBalancerResource
-            LoadBalancerCollection collection = resourceGroupResource.GetLoadBalancers();
-
-            // invoke the operation
-            string loadBalancerName = "lb";
-            LoadBalancerResource result = await collection.GetAsync(loadBalancerName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            LoadBalancerData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // Get load balancer with inbound NAT rule port mapping
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Exists_GetLoadBalancerWithInboundNATRulePortMapping()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerGetInboundNatRulePortMapping.json
-            // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this LoadBalancerResource
-            LoadBalancerCollection collection = resourceGroupResource.GetLoadBalancers();
-
-            // invoke the operation
-            string loadBalancerName = "lb";
-            bool result = await collection.ExistsAsync(loadBalancerName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        // Get load balancer with inbound NAT rule port mapping
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetIfExists_GetLoadBalancerWithInboundNATRulePortMapping()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerGetInboundNatRulePortMapping.json
-            // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this LoadBalancerResource
-            LoadBalancerCollection collection = resourceGroupResource.GetLoadBalancers();
-
-            // invoke the operation
-            string loadBalancerName = "lb";
-            NullableResponse<LoadBalancerResource> response = await collection.GetIfExistsAsync(loadBalancerName);
-            LoadBalancerResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine($"Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                LoadBalancerData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        // Create load balancer
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancer()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreate.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerCreate.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -254,46 +42,36 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string loadBalancerName = "lb";
-            LoadBalancerData data = new LoadBalancerData()
+            LoadBalancerData data = new LoadBalancerData
             {
-                FrontendIPConfigurations =
+                FrontendIPConfigurations = {new FrontendIPConfigurationData
 {
-new FrontendIPConfigurationData()
-{
-Subnet = new SubnetData()
+Subnet = new SubnetData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb/subnets/subnetlb"),
 },
 Name = "fe-lb",
-}
-},
-                BackendAddressPools =
-{
-new BackendAddressPoolData()
+}},
+                BackendAddressPools = {new BackendAddressPoolData
 {
 Name = "be-lb",
-}
-},
-                LoadBalancingRules =
+}},
+                LoadBalancingRules = {new LoadBalancingRuleData
 {
-new LoadBalancingRuleData()
+Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.Tcp, 80)
 {
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb"),
 ProbeId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/probes/probe-lb"),
-Protocol = LoadBalancingTransportProtocol.Tcp,
 LoadDistribution = LoadDistribution.Default,
-FrontendPort = 80,
 BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 EnableTcpReset = false,
-Name = "rulelb",
-}
 },
-                Probes =
-{
-new ProbeData()
+Name = "rulelb",
+}},
+                Probes = {new ProbeData
 {
 Protocol = ProbeProtocol.Http,
 Port = 80,
@@ -302,11 +80,8 @@ NumberOfProbes = 2,
 ProbeThreshold = 1,
 RequestPath = "healthcheck.aspx",
 Name = "probe-lb",
-}
-},
-                InboundNatRules =
-{
-new InboundNatRuleData()
+}},
+                InboundNatRules = {new InboundNatRuleData
 {
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 Protocol = LoadBalancingTransportProtocol.Tcp,
@@ -316,11 +91,8 @@ IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 EnableTcpReset = false,
 Name = "in-nat-rule",
-}
-},
-                InboundNatPools =
-{
-},
+}},
+                InboundNatPools = { },
                 Location = new AzureLocation("eastus"),
             };
             ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
@@ -333,12 +105,11 @@ Name = "in-nat-rule",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create load balancer with Frontend IP in Zone 1
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancerWithFrontendIPInZone1()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreateWithZones.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerCreateWithZones.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -358,53 +129,40 @@ Name = "in-nat-rule",
 
             // invoke the operation
             string loadBalancerName = "lb";
-            LoadBalancerData data = new LoadBalancerData()
+            LoadBalancerData data = new LoadBalancerData
             {
-                Sku = new LoadBalancerSku()
+                Sku = new LoadBalancerSku
                 {
                     Name = LoadBalancerSkuName.Standard,
                 },
-                FrontendIPConfigurations =
+                FrontendIPConfigurations = {new FrontendIPConfigurationData
 {
-new FrontendIPConfigurationData()
-{
-Zones =
-{
-"1"
-},
-Subnet = new SubnetData()
+Zones = {"1"},
+Subnet = new SubnetData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb/subnets/subnetlb"),
 },
 Name = "fe-lb",
-}
-},
-                BackendAddressPools =
-{
-new BackendAddressPoolData()
+}},
+                BackendAddressPools = {new BackendAddressPoolData
 {
 Name = "be-lb",
-}
-},
-                LoadBalancingRules =
+}},
+                LoadBalancingRules = {new LoadBalancingRuleData
 {
-new LoadBalancingRuleData()
+Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.Tcp, 80)
 {
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb"),
 ProbeId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/probes/probe-lb"),
-Protocol = LoadBalancingTransportProtocol.Tcp,
 LoadDistribution = LoadDistribution.Default,
-FrontendPort = 80,
 BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
-Name = "rulelb",
-}
 },
-                Probes =
-{
-new ProbeData()
+Name = "rulelb",
+}},
+                Probes = {new ProbeData
 {
 Protocol = ProbeProtocol.Http,
 Port = 80,
@@ -413,11 +171,8 @@ NumberOfProbes = 2,
 ProbeThreshold = 1,
 RequestPath = "healthcheck.aspx",
 Name = "probe-lb",
-}
-},
-                InboundNatRules =
-{
-new InboundNatRuleData()
+}},
+                InboundNatRules = {new InboundNatRuleData
 {
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 Protocol = LoadBalancingTransportProtocol.Tcp,
@@ -426,14 +181,9 @@ BackendPort = 3389,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 Name = "in-nat-rule",
-}
-},
-                InboundNatPools =
-{
-},
-                OutboundRules =
-{
-},
+}},
+                InboundNatPools = { },
+                OutboundRules = { },
                 Location = new AzureLocation("eastus"),
             };
             ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
@@ -446,12 +196,11 @@ Name = "in-nat-rule",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create load balancer with Gateway Load Balancer Consumer configured
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancerWithGatewayLoadBalancerConsumerConfigured()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreateGatewayLoadBalancerConsumer.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerCreateGatewayLoadBalancerConsumer.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -471,50 +220,40 @@ Name = "in-nat-rule",
 
             // invoke the operation
             string loadBalancerName = "lb";
-            LoadBalancerData data = new LoadBalancerData()
+            LoadBalancerData data = new LoadBalancerData
             {
-                Sku = new LoadBalancerSku()
+                Sku = new LoadBalancerSku
                 {
                     Name = LoadBalancerSkuName.Standard,
                 },
-                FrontendIPConfigurations =
+                FrontendIPConfigurations = {new FrontendIPConfigurationData
 {
-new FrontendIPConfigurationData()
-{
-Subnet = new SubnetData()
+Subnet = new SubnetData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb/subnets/subnetlb"),
 },
 GatewayLoadBalancerId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb-provider"),
 Name = "fe-lb",
-}
-},
-                BackendAddressPools =
-{
-new BackendAddressPoolData()
+}},
+                BackendAddressPools = {new BackendAddressPoolData
 {
 Name = "be-lb",
-}
-},
-                LoadBalancingRules =
+}},
+                LoadBalancingRules = {new LoadBalancingRuleData
 {
-new LoadBalancingRuleData()
+Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.Tcp, 80)
 {
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb"),
 ProbeId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/probes/probe-lb"),
-Protocol = LoadBalancingTransportProtocol.Tcp,
 LoadDistribution = LoadDistribution.Default,
-FrontendPort = 80,
 BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
-Name = "rulelb",
-}
 },
-                Probes =
-{
-new ProbeData()
+Name = "rulelb",
+}},
+                Probes = {new ProbeData
 {
 Protocol = ProbeProtocol.Http,
 Port = 80,
@@ -523,11 +262,8 @@ NumberOfProbes = 2,
 ProbeThreshold = 1,
 RequestPath = "healthcheck.aspx",
 Name = "probe-lb",
-}
-},
-                InboundNatRules =
-{
-new InboundNatRuleData()
+}},
+                InboundNatRules = {new InboundNatRuleData
 {
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 Protocol = LoadBalancingTransportProtocol.Tcp,
@@ -536,14 +272,9 @@ BackendPort = 3389,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 Name = "in-nat-rule",
-}
-},
-                InboundNatPools =
-{
-},
-                OutboundRules =
-{
-},
+}},
+                InboundNatPools = { },
+                OutboundRules = { },
                 Location = new AzureLocation("eastus"),
             };
             ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
@@ -556,12 +287,11 @@ Name = "in-nat-rule",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create load balancer with Gateway Load Balancer Provider configured with one Backend Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancerWithGatewayLoadBalancerProviderConfiguredWithOneBackendPool()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreateGatewayLoadBalancerProviderWithOneBackendPool.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerCreateGatewayLoadBalancerProviderWithOneBackendPool.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -581,71 +311,55 @@ Name = "in-nat-rule",
 
             // invoke the operation
             string loadBalancerName = "lb";
-            LoadBalancerData data = new LoadBalancerData()
+            LoadBalancerData data = new LoadBalancerData
             {
-                Sku = new LoadBalancerSku()
+                Sku = new LoadBalancerSku
                 {
                     Name = LoadBalancerSkuName.Gateway,
                 },
-                FrontendIPConfigurations =
+                FrontendIPConfigurations = {new FrontendIPConfigurationData
 {
-new FrontendIPConfigurationData()
-{
-Subnet = new SubnetData()
+Subnet = new SubnetData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb/subnets/subnetlb"),
 },
 Name = "fe-lb",
-}
-},
-                BackendAddressPools =
+}},
+                BackendAddressPools = {new BackendAddressPoolData
 {
-new BackendAddressPoolData()
-{
-TunnelInterfaces =
-{
-new GatewayLoadBalancerTunnelInterface()
+TunnelInterfaces = {new GatewayLoadBalancerTunnelInterface
 {
 Port = 15000,
 Identifier = 900,
 Protocol = GatewayLoadBalancerTunnelProtocol.Vxlan,
 InterfaceType = GatewayLoadBalancerTunnelInterfaceType.Internal,
-},new GatewayLoadBalancerTunnelInterface()
+}, new GatewayLoadBalancerTunnelInterface
 {
 Port = 15001,
 Identifier = 901,
 Protocol = GatewayLoadBalancerTunnelProtocol.Vxlan,
 InterfaceType = GatewayLoadBalancerTunnelInterfaceType.Internal,
-}
-},
+}},
 Name = "be-lb",
-}
-},
-                LoadBalancingRules =
+}},
+                LoadBalancingRules = {new LoadBalancingRuleData
 {
-new LoadBalancingRuleData()
+Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.All, 0)
 {
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
-BackendAddressPools =
-{
-new WritableSubResource()
+BackendAddressPools = {new WritableSubResource
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb"),
-}
-},
+}},
 ProbeId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/probes/probe-lb"),
-Protocol = LoadBalancingTransportProtocol.All,
 LoadDistribution = LoadDistribution.Default,
-FrontendPort = 0,
 BackendPort = 0,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
-Name = "rulelb",
-}
 },
-                Probes =
-{
-new ProbeData()
+Name = "rulelb",
+}},
+                Probes = {new ProbeData
 {
 Protocol = ProbeProtocol.Http,
 Port = 80,
@@ -654,14 +368,9 @@ NumberOfProbes = 2,
 ProbeThreshold = 1,
 RequestPath = "healthcheck.aspx",
 Name = "probe-lb",
-}
-},
-                InboundNatPools =
-{
-},
-                OutboundRules =
-{
-},
+}},
+                InboundNatPools = { },
+                OutboundRules = { },
                 Location = new AzureLocation("eastus"),
             };
             ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
@@ -674,12 +383,11 @@ Name = "probe-lb",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create load balancer with Gateway Load Balancer Provider configured with two Backend Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancerWithGatewayLoadBalancerProviderConfiguredWithTwoBackendPool()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreateGatewayLoadBalancerProviderWithTwoBackendPool.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerCreateGatewayLoadBalancerProviderWithTwoBackendPool.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -699,61 +407,48 @@ Name = "probe-lb",
 
             // invoke the operation
             string loadBalancerName = "lb";
-            LoadBalancerData data = new LoadBalancerData()
+            LoadBalancerData data = new LoadBalancerData
             {
-                Sku = new LoadBalancerSku()
+                Sku = new LoadBalancerSku
                 {
                     Name = LoadBalancerSkuName.Gateway,
                 },
-                FrontendIPConfigurations =
+                FrontendIPConfigurations = {new FrontendIPConfigurationData
 {
-new FrontendIPConfigurationData()
-{
-Subnet = new SubnetData()
+Subnet = new SubnetData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb/subnets/subnetlb"),
 },
 Name = "fe-lb",
-}
-},
-                BackendAddressPools =
-{
-new BackendAddressPoolData()
+}},
+                BackendAddressPools = {new BackendAddressPoolData
 {
 Name = "be-lb1",
-},new BackendAddressPoolData()
+}, new BackendAddressPoolData
 {
 Name = "be-lb2",
-}
-},
-                LoadBalancingRules =
+}},
+                LoadBalancingRules = {new LoadBalancingRuleData
 {
-new LoadBalancingRuleData()
+Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.All, 0)
 {
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
-BackendAddressPools =
-{
-new WritableSubResource()
+BackendAddressPools = {new WritableSubResource
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb1"),
-},new WritableSubResource()
+}, new WritableSubResource
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb2"),
-}
-},
+}},
 ProbeId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/probes/probe-lb"),
-Protocol = LoadBalancingTransportProtocol.All,
 LoadDistribution = LoadDistribution.Default,
-FrontendPort = 0,
 BackendPort = 0,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
-Name = "rulelb",
-}
 },
-                Probes =
-{
-new ProbeData()
+Name = "rulelb",
+}},
+                Probes = {new ProbeData
 {
 Protocol = ProbeProtocol.Http,
 Port = 80,
@@ -762,14 +457,9 @@ NumberOfProbes = 2,
 ProbeThreshold = 1,
 RequestPath = "healthcheck.aspx",
 Name = "probe-lb",
-}
-},
-                InboundNatPools =
-{
-},
-                OutboundRules =
-{
-},
+}},
+                InboundNatPools = { },
+                OutboundRules = { },
                 Location = new AzureLocation("eastus"),
             };
             ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
@@ -782,12 +472,11 @@ Name = "probe-lb",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create load balancer with Global Tier and one regional load balancer in its backend pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancerWithGlobalTierAndOneRegionalLoadBalancerInItsBackendPool()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreateGlobalTier.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerCreateGlobalTier.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -807,58 +496,45 @@ Name = "probe-lb",
 
             // invoke the operation
             string loadBalancerName = "lb";
-            LoadBalancerData data = new LoadBalancerData()
+            LoadBalancerData data = new LoadBalancerData
             {
-                Sku = new LoadBalancerSku()
+                Sku = new LoadBalancerSku
                 {
                     Name = LoadBalancerSkuName.Standard,
                     Tier = LoadBalancerSkuTier.Global,
                 },
-                FrontendIPConfigurations =
+                FrontendIPConfigurations = {new FrontendIPConfigurationData
 {
-new FrontendIPConfigurationData()
-{
-Subnet = new SubnetData()
+Subnet = new SubnetData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb/subnets/subnetlb"),
 },
 Name = "fe-lb",
-}
-},
-                BackendAddressPools =
+}},
+                BackendAddressPools = {new BackendAddressPoolData
 {
-new BackendAddressPoolData()
-{
-LoadBalancerBackendAddresses =
-{
-new LoadBalancerBackendAddress()
+LoadBalancerBackendAddresses = {new LoadBalancerBackendAddress
 {
 Name = "regional-lb1-address",
 LoadBalancerFrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/regional-lb-rg1/providers/Microsoft.Network/loadBalancers/regional-lb/frontendIPConfigurations/fe-rlb"),
-}
-},
+}},
 Name = "be-lb",
-}
-},
-                LoadBalancingRules =
+}},
+                LoadBalancingRules = {new LoadBalancingRuleData
 {
-new LoadBalancingRuleData()
+Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.Tcp, 80)
 {
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb"),
 ProbeId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/probes/probe-lb"),
-Protocol = LoadBalancingTransportProtocol.Tcp,
 LoadDistribution = LoadDistribution.Default,
-FrontendPort = 80,
 BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = false,
-Name = "rulelb",
-}
 },
-                Probes =
-{
-new ProbeData()
+Name = "rulelb",
+}},
+                Probes = {new ProbeData
 {
 Protocol = ProbeProtocol.Http,
 Port = 80,
@@ -867,8 +543,7 @@ NumberOfProbes = 2,
 ProbeThreshold = 1,
 RequestPath = "healthcheck.aspx",
 Name = "probe-lb",
-}
-},
+}},
                 Location = new AzureLocation("eastus"),
             };
             ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
@@ -881,12 +556,11 @@ Name = "probe-lb",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create load balancer with Standard SKU
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancerWithStandardSKU()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreateStandardSku.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerCreateStandardSku.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -906,49 +580,39 @@ Name = "probe-lb",
 
             // invoke the operation
             string loadBalancerName = "lb";
-            LoadBalancerData data = new LoadBalancerData()
+            LoadBalancerData data = new LoadBalancerData
             {
-                Sku = new LoadBalancerSku()
+                Sku = new LoadBalancerSku
                 {
                     Name = LoadBalancerSkuName.Standard,
                 },
-                FrontendIPConfigurations =
+                FrontendIPConfigurations = {new FrontendIPConfigurationData
 {
-new FrontendIPConfigurationData()
-{
-Subnet = new SubnetData()
+Subnet = new SubnetData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb/subnets/subnetlb"),
 },
 Name = "fe-lb",
-}
-},
-                BackendAddressPools =
-{
-new BackendAddressPoolData()
+}},
+                BackendAddressPools = {new BackendAddressPoolData
 {
 Name = "be-lb",
-}
-},
-                LoadBalancingRules =
+}},
+                LoadBalancingRules = {new LoadBalancingRuleData
 {
-new LoadBalancingRuleData()
+Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.Tcp, 80)
 {
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb"),
 ProbeId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/probes/probe-lb"),
-Protocol = LoadBalancingTransportProtocol.Tcp,
 LoadDistribution = LoadDistribution.Default,
-FrontendPort = 80,
 BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
-Name = "rulelb",
-}
 },
-                Probes =
-{
-new ProbeData()
+Name = "rulelb",
+}},
+                Probes = {new ProbeData
 {
 Protocol = ProbeProtocol.Http,
 Port = 80,
@@ -957,11 +621,8 @@ NumberOfProbes = 2,
 ProbeThreshold = 1,
 RequestPath = "healthcheck.aspx",
 Name = "probe-lb",
-}
-},
-                InboundNatRules =
-{
-new InboundNatRuleData()
+}},
+                InboundNatRules = {new InboundNatRuleData
 {
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 Protocol = LoadBalancingTransportProtocol.Tcp,
@@ -970,14 +631,9 @@ BackendPort = 3389,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 Name = "in-nat-rule",
-}
-},
-                InboundNatPools =
-{
-},
-                OutboundRules =
-{
-},
+}},
+                InboundNatPools = { },
+                OutboundRules = { },
                 Location = new AzureLocation("eastus"),
             };
             ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
@@ -990,12 +646,11 @@ Name = "in-nat-rule",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create load balancer with Sync Mode Property on Pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancerWithSyncModePropertyOnPool()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreateWithSyncModePropertyOnPool.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerCreateWithSyncModePropertyOnPool.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1015,51 +670,41 @@ Name = "in-nat-rule",
 
             // invoke the operation
             string loadBalancerName = "lb";
-            LoadBalancerData data = new LoadBalancerData()
+            LoadBalancerData data = new LoadBalancerData
             {
-                Sku = new LoadBalancerSku()
+                Sku = new LoadBalancerSku
                 {
                     Name = LoadBalancerSkuName.Standard,
                 },
-                FrontendIPConfigurations =
+                FrontendIPConfigurations = {new FrontendIPConfigurationData
 {
-new FrontendIPConfigurationData()
-{
-Subnet = new SubnetData()
+Subnet = new SubnetData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb/subnets/subnetlb"),
 },
 Name = "fe-lb",
-}
-},
-                BackendAddressPools =
-{
-new BackendAddressPoolData()
+}},
+                BackendAddressPools = {new BackendAddressPoolData
 {
 VirtualNetworkId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/vnetlb"),
 SyncMode = BackendAddressSyncMode.Automatic,
 Name = "be-lb",
-}
-},
-                LoadBalancingRules =
+}},
+                LoadBalancingRules = {new LoadBalancingRuleData
 {
-new LoadBalancingRuleData()
+Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.Tcp, 80)
 {
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb"),
 ProbeId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/probes/probe-lb"),
-Protocol = LoadBalancingTransportProtocol.Tcp,
 LoadDistribution = LoadDistribution.Default,
-FrontendPort = 80,
 BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
-Name = "rulelb",
-}
 },
-                Probes =
-{
-new ProbeData()
+Name = "rulelb",
+}},
+                Probes = {new ProbeData
 {
 Protocol = ProbeProtocol.Http,
 Port = 80,
@@ -1068,11 +713,8 @@ NumberOfProbes = 2,
 ProbeThreshold = 1,
 RequestPath = "healthcheck.aspx",
 Name = "probe-lb",
-}
-},
-                InboundNatRules =
-{
-new InboundNatRuleData()
+}},
+                InboundNatRules = {new InboundNatRuleData
 {
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 Protocol = LoadBalancingTransportProtocol.Tcp,
@@ -1081,14 +723,9 @@ BackendPort = 3389,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 Name = "in-nat-rule",
-}
-},
-                InboundNatPools =
-{
-},
-                OutboundRules =
-{
-},
+}},
+                InboundNatPools = { },
+                OutboundRules = { },
                 Location = new AzureLocation("eastus"),
             };
             ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
@@ -1101,12 +738,11 @@ Name = "in-nat-rule",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create load balancer with inbound nat pool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancerWithInboundNatPool()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreateWithInboundNatPool.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerCreateWithInboundNatPool.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1126,59 +762,40 @@ Name = "in-nat-rule",
 
             // invoke the operation
             string loadBalancerName = "lb";
-            LoadBalancerData data = new LoadBalancerData()
+            LoadBalancerData data = new LoadBalancerData
             {
-                Sku = new LoadBalancerSku()
+                Sku = new LoadBalancerSku
                 {
                     Name = LoadBalancerSkuName.Standard,
                 },
-                FrontendIPConfigurations =
+                FrontendIPConfigurations = {new FrontendIPConfigurationData
 {
-new FrontendIPConfigurationData()
-{
-Zones =
-{
-},
+Zones = {},
 PrivateIPAllocationMethod = NetworkIPAllocationMethod.Dynamic,
-Subnet = new SubnetData()
+Subnet = new SubnetData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/lbvnet/subnets/lbsubnet"),
 },
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/test"),
 Name = "test",
-}
-},
-                BackendAddressPools =
+}},
+                BackendAddressPools = { },
+                LoadBalancingRules = { },
+                Probes = { },
+                InboundNatRules = { },
+                InboundNatPools = {new LoadBalancerInboundNatPool
 {
-},
-                LoadBalancingRules =
-{
-},
-                Probes =
-{
-},
-                InboundNatRules =
-{
-},
-                InboundNatPools =
-{
-new LoadBalancerInboundNatPool()
+Properties = new LoadBalancerInboundNatPoolProperties(LoadBalancingTransportProtocol.Tcp, 8080, 8085, 8888)
 {
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/test"),
-Protocol = LoadBalancingTransportProtocol.Tcp,
-FrontendPortRangeStart = 8080,
-FrontendPortRangeEnd = 8085,
-BackendPort = 8888,
 IdleTimeoutInMinutes = 10,
 EnableFloatingIP = true,
 EnableTcpReset = true,
+},
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/inboundNatPools/test"),
 Name = "test",
-}
-},
-                OutboundRules =
-{
-},
+}},
+                OutboundRules = { },
                 Location = new AzureLocation("eastus"),
             };
             ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
@@ -1191,12 +808,11 @@ Name = "test",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create load balancer with outbound rules
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateLoadBalancerWithOutboundRules()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerCreateWithOutboundRules.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerCreateWithOutboundRules.json
             // this example is just showing the usage of "LoadBalancers_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1216,50 +832,40 @@ Name = "test",
 
             // invoke the operation
             string loadBalancerName = "lb";
-            LoadBalancerData data = new LoadBalancerData()
+            LoadBalancerData data = new LoadBalancerData
             {
-                Sku = new LoadBalancerSku()
+                Sku = new LoadBalancerSku
                 {
                     Name = LoadBalancerSkuName.Standard,
                 },
-                FrontendIPConfigurations =
+                FrontendIPConfigurations = {new FrontendIPConfigurationData
 {
-new FrontendIPConfigurationData()
-{
-PublicIPAddress = new PublicIPAddressData()
+PublicIPAddress = new PublicIPAddressData
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pip"),
 },
 Name = "fe-lb",
-}
-},
-                BackendAddressPools =
-{
-new BackendAddressPoolData()
+}},
+                BackendAddressPools = {new BackendAddressPoolData
 {
 Name = "be-lb",
-}
-},
-                LoadBalancingRules =
+}},
+                LoadBalancingRules = {new LoadBalancingRuleData
 {
-new LoadBalancingRuleData()
+Properties = new LoadBalancingRuleProperties(LoadBalancingTransportProtocol.Tcp, 80)
 {
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb"),
 ProbeId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/probes/probe-lb"),
-Protocol = LoadBalancingTransportProtocol.Tcp,
 LoadDistribution = LoadDistribution.Default,
-FrontendPort = 80,
 BackendPort = 80,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 DisableOutboundSnat = true,
-Name = "rulelb",
-}
 },
-                Probes =
-{
-new ProbeData()
+Name = "rulelb",
+}},
+                Probes = {new ProbeData
 {
 Protocol = ProbeProtocol.Http,
 Port = 80,
@@ -1268,11 +874,8 @@ NumberOfProbes = 2,
 ProbeThreshold = 1,
 RequestPath = "healthcheck.aspx",
 Name = "probe-lb",
-}
-},
-                InboundNatRules =
-{
-new InboundNatRuleData()
+}},
+                InboundNatRules = {new InboundNatRuleData
 {
 FrontendIPConfigurationId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
 Protocol = LoadBalancingTransportProtocol.Tcp,
@@ -1281,27 +884,18 @@ BackendPort = 3389,
 IdleTimeoutInMinutes = 15,
 EnableFloatingIP = true,
 Name = "in-nat-rule",
-}
-},
-                InboundNatPools =
+}},
+                InboundNatPools = { },
+                OutboundRules = {new OutboundRuleData
 {
-},
-                OutboundRules =
-{
-new OutboundRuleData()
-{
-FrontendIPConfigurations =
-{
-new WritableSubResource()
+FrontendIPConfigurations = {new WritableSubResource
 {
 Id = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/frontendIPConfigurations/fe-lb"),
-}
-},
+}},
 BackendAddressPoolId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb/backendAddressPools/be-lb"),
 Protocol = LoadBalancerOutboundRuleProtocol.All,
 Name = "rule1",
-}
-},
+}},
                 Location = new AzureLocation("eastus"),
             };
             ArmOperation<LoadBalancerResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, loadBalancerName, data);
@@ -1314,12 +908,77 @@ Name = "rule1",
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // List load balancers in resource group
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetLoadBalancer()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerGet.json
+            // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this LoadBalancerResource
+            LoadBalancerCollection collection = resourceGroupResource.GetLoadBalancers();
+
+            // invoke the operation
+            string loadBalancerName = "lb";
+            LoadBalancerResource result = await collection.GetAsync(loadBalancerName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            LoadBalancerData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetLoadBalancerWithInboundNATRulePortMapping()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerGetInboundNatRulePortMapping.json
+            // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this LoadBalancerResource
+            LoadBalancerCollection collection = resourceGroupResource.GetLoadBalancers();
+
+            // invoke the operation
+            string loadBalancerName = "lb";
+            LoadBalancerResource result = await collection.GetAsync(loadBalancerName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            LoadBalancerData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListLoadBalancersInResourceGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerList.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerList.json
             // this example is just showing the usage of "LoadBalancers_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -1347,7 +1006,147 @@ Name = "rule1",
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetLoadBalancer()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerGet.json
+            // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this LoadBalancerResource
+            LoadBalancerCollection collection = resourceGroupResource.GetLoadBalancers();
+
+            // invoke the operation
+            string loadBalancerName = "lb";
+            bool result = await collection.ExistsAsync(loadBalancerName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetLoadBalancerWithInboundNATRulePortMapping()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerGetInboundNatRulePortMapping.json
+            // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this LoadBalancerResource
+            LoadBalancerCollection collection = resourceGroupResource.GetLoadBalancers();
+
+            // invoke the operation
+            string loadBalancerName = "lb";
+            bool result = await collection.ExistsAsync(loadBalancerName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetLoadBalancer()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerGet.json
+            // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this LoadBalancerResource
+            LoadBalancerCollection collection = resourceGroupResource.GetLoadBalancers();
+
+            // invoke the operation
+            string loadBalancerName = "lb";
+            NullableResponse<LoadBalancerResource> response = await collection.GetIfExistsAsync(loadBalancerName);
+            LoadBalancerResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                LoadBalancerData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetLoadBalancerWithInboundNATRulePortMapping()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerGetInboundNatRulePortMapping.json
+            // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this LoadBalancerResource
+            LoadBalancerCollection collection = resourceGroupResource.GetLoadBalancers();
+
+            // invoke the operation
+            string loadBalancerName = "lb";
+            NullableResponse<LoadBalancerResource> response = await collection.GetIfExistsAsync(loadBalancerName);
+            LoadBalancerResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                LoadBalancerData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

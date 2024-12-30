@@ -36,7 +36,7 @@ var tableClient3 = new TableClient(
 
 ## Create a table
 
-A table requires a [unique table name](https://docs.microsoft.com/rest/api/storageservices/understanding-the-table-service-data-model#table-names)
+A table requires a [unique table name](https://learn.microsoft.com/rest/api/storageservices/understanding-the-table-service-data-model#table-names)
 
 ### Using `TableServiceClient`
 

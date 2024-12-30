@@ -5,6 +5,7 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using Azure.Core;
+using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs.Consumer
 {
@@ -27,7 +28,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   which has not expired due to the retention policy.
         /// </summary>
         ///
-        public static EventPosition Earliest { get; } = new EventPosition { Offset = StartOfStream, IsInclusive = false };
+        public static EventPosition Earliest { get; } = new EventPosition { OffsetString = StartOfStream, IsInclusive = false };
 
         /// <summary>
         ///   Corresponds to the end of the partition, where no more events are currently enqueued.  Use this
@@ -35,7 +36,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///   consumer begins reading with this position.
         /// </summary>
         ///
-        public static EventPosition Latest { get; } = new EventPosition { Offset = EndOfStream, IsInclusive = false };
+        public static EventPosition Latest { get; } = new EventPosition { OffsetString = EndOfStream, IsInclusive = false };
 
         /// <summary>
         ///   The offset of the event identified by this position.
@@ -43,7 +44,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <value>Expected to be <c>null</c> if the event position represents a sequence number or enqueue time.</value>
         ///
-        internal string Offset { get; set; }
+        internal string OffsetString { get; set; }
 
         /// <summary>
         ///   Indicates if the specified offset is inclusive of the event which it identifies.  This
@@ -71,6 +72,8 @@ namespace Azure.Messaging.EventHubs.Consumer
         internal string SequenceNumber { get; set; }
 
         /// <summary>
+        ///   Obsolete.
+        ///
         ///   Corresponds to a specific offset in the partition event stream.  By default, if an event is located
         ///   at that offset, it will be read.  Setting <paramref name="isInclusive"/> to <c>false</c> will skip the
         ///   event at that offset and begin reading at the next available event.
@@ -81,12 +84,41 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         /// <returns>The specified position of an event in the partition.</returns>
         ///
+        /// <remarks>
+        ///   This method is obsolete and should no longer be used.  Please use <see cref="FromOffset(string, bool)"/> instead.
+        /// </remarks>
+        ///
+        [Obsolete(AttributeMessageText.LongOffsetEventPositionObsolete, false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static EventPosition FromOffset(long offset,
                                                bool isInclusive = true)
         {
             return new EventPosition
             {
-                Offset = offset.ToString(CultureInfo.InvariantCulture),
+                OffsetString = (offset != long.MinValue) ? offset.ToString(CultureInfo.InvariantCulture) : StartOfStream,
+                IsInclusive = isInclusive
+            };
+        }
+
+        /// <summary>
+        ///   Corresponds to a specific offset in the partition event stream.  By default, if an event is located
+        ///   at that offset, it will be read.  Setting <paramref name="isInclusive"/> to <c>false</c> will skip the
+        ///   event at that offset and begin reading at the next available event.
+        /// </summary>
+        ///
+        /// <param name="offsetString">The offset of an event with respect to its relative position in the partition.</param>
+        /// <param name="isInclusive">When <c>true</c>, the event with the <paramref name="offsetString"/> is included; otherwise the next event in sequence will be read.</param>
+        ///
+        /// <returns>The specified position of an event in the partition.</returns>
+        ///
+        public static EventPosition FromOffset(string offsetString,
+                                               bool isInclusive = true)
+        {
+            Argument.AssertNotNullOrEmpty(offsetString, nameof(offsetString));
+
+            return new EventPosition
+            {
+                OffsetString = offsetString,
                 IsInclusive = isInclusive
             };
         }
@@ -139,7 +171,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         ///
         public bool Equals(EventPosition other)
         {
-            return (Offset == other.Offset)
+            return (OffsetString == other.OffsetString)
                 && (SequenceNumber == other.SequenceNumber)
                 && (EnqueuedTime == other.EnqueuedTime)
                 && (IsInclusive == other.IsInclusive);
@@ -171,7 +203,7 @@ namespace Azure.Messaging.EventHubs.Consumer
         public override int GetHashCode()
         {
             var hashCode = new HashCodeBuilder();
-            hashCode.Add(Offset);
+            hashCode.Add(OffsetString);
             hashCode.Add(SequenceNumber);
             hashCode.Add(EnqueuedTime);
             hashCode.Add(IsInclusive);
@@ -188,9 +220,9 @@ namespace Azure.Messaging.EventHubs.Consumer
         public override string ToString() =>
             this switch
             {
-                _ when (Offset == StartOfStream) => nameof(Earliest),
-                _ when (Offset == EndOfStream) => nameof(Latest),
-                _ when (!string.IsNullOrEmpty(Offset)) => $"Offset: [{ Offset }] | Inclusive: [{ IsInclusive }]",
+                _ when (OffsetString == StartOfStream) => nameof(Earliest),
+                _ when (OffsetString == EndOfStream) => nameof(Latest),
+                _ when (!string.IsNullOrEmpty(OffsetString)) => $"Offset: [{ OffsetString }] | Inclusive: [{ IsInclusive }]",
                 _ when (!string.IsNullOrEmpty(SequenceNumber)) => $"Sequence Number: [{ SequenceNumber }] | Inclusive: [{ IsInclusive }]",
                 _ when (EnqueuedTime.HasValue) => $"Enqueued: [{ EnqueuedTime }]",
                 _ => base.ToString()

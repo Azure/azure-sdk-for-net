@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Synapse.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Synapse.Samples
 {
     public partial class Sample_SynapseServerSecurityAlertPolicyResource
     {
-        // Get workspace managed sql Server's security alert policy
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetWorkspaceManagedSqlServerSSecurityAlertPolicy()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/GetWorkspaceManagedSqlServerSecurityAlertPolicy.json
@@ -47,9 +47,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a workspace managed sql server's threat detection policy with all parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAWorkspaceManagedSqlServerSThreatDetectionPolicyWithAllParameters()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/WorkspaceManagedSqlServerSecurityAlertWithAllParameters.json
@@ -70,17 +69,11 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseServerSecurityAlertPolicyResource synapseServerSecurityAlertPolicy = client.GetSynapseServerSecurityAlertPolicyResource(synapseServerSecurityAlertPolicyResourceId);
 
             // invoke the operation
-            SynapseServerSecurityAlertPolicyData data = new SynapseServerSecurityAlertPolicyData()
+            SynapseServerSecurityAlertPolicyData data = new SynapseServerSecurityAlertPolicyData
             {
                 State = SynapseSecurityAlertPolicyState.Enabled,
-                DisabledAlerts =
-{
-"Access_Anomaly","Usage_Anomaly"
-},
-                EmailAddresses =
-{
-"testSecurityAlert@microsoft.com"
-},
+                DisabledAlerts = { "Access_Anomaly", "Usage_Anomaly" },
+                EmailAddresses = { "testSecurityAlert@microsoft.com" },
                 EnableEmailToAccountAdmins = true,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
@@ -96,9 +89,8 @@ namespace Azure.ResourceManager.Synapse.Samples
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Update a workspace managed sql server's threat detection policy with minimal parameters
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAWorkspaceManagedSqlServerSThreatDetectionPolicyWithMinimalParameters()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/WorkspaceManagedSqlServerSecurityAlertCreateWithMinParameters.json
@@ -119,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseServerSecurityAlertPolicyResource synapseServerSecurityAlertPolicy = client.GetSynapseServerSecurityAlertPolicyResource(synapseServerSecurityAlertPolicyResourceId);
 
             // invoke the operation
-            SynapseServerSecurityAlertPolicyData data = new SynapseServerSecurityAlertPolicyData()
+            SynapseServerSecurityAlertPolicyData data = new SynapseServerSecurityAlertPolicyData
             {
                 State = SynapseSecurityAlertPolicyState.Disabled,
                 EnableEmailToAccountAdmins = true,

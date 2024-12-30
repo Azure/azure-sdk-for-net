@@ -11,6 +11,8 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Messaging.ServiceBus;
+using ContentType = Azure.Core.ContentType;
+using System.ComponentModel;
 
 namespace Azure.CloudMachine;
 
@@ -23,26 +25,22 @@ public readonly struct StorageServices
 
     internal StorageServices(CloudMachineClient cm) => _cm = cm;
 
-    private BlobContainerClient GetDefaultContainer()
+    // TODO: do we want Azure.Storage.Blobs in the public API? This would prevent us from using a custom implementation.
+    /// <summary>
+    /// Gets the container client.
+    /// </summary>
+    /// <param name="containerName"></param>
+    /// <returns></returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public BlobContainerClient GetContainer(string containerName = default)
     {
-        CloudMachineClient cm = _cm;
-        BlobContainerClient container = _cm.Subclients.Get(() =>
-        {
-            ClientConnectionOptions connection = cm.GetConnectionOptions(typeof(BlobContainerClient), default);
-            BlobContainerClient container = new(connection.Endpoint, connection.TokenCredential);
-            return container;
-        });
-        return container;
-    }
-
-    private BlobContainerClient GetContainer(string containerName)
-    {
-        string blobContainerClientId = typeof(BlobContainerClient).FullName;
+        if (containerName == default) containerName = "default";
+        string blobContainerClientId = $"{typeof(BlobContainerClient).FullName}@{containerName}";
         CloudMachineClient cm = _cm;
         BlobContainerClient container = cm.Subclients.Get(() =>
         {
-            ClientConnectionOptions connection = cm.GetConnectionOptions(typeof(BlobContainerClient), containerName);
-            BlobContainerClient container = new(connection.Endpoint, connection.TokenCredential);
+            ClientConnection connection = cm.GetConnectionOptions(blobContainerClientId);
+            BlobContainerClient container = new(connection.ToUri(), cm.Credential);
             return container;
         });
         return container;
@@ -51,25 +49,43 @@ public readonly struct StorageServices
     /// <summary>
     /// Uploads a JSON object to the storage account.
     /// </summary>
-    /// <param name="json"></param>
+    /// <param name="serializable"></param>
     /// <param name="name"></param>
     /// <param name="overwrite"></param>
     /// <returns></returns>
-    public string UploadJson(object json, string name = default, bool overwrite = false)
+    public string UploadJson(object serializable, string name = default, bool overwrite = false)
     {
-        BlobContainerClient container = GetDefaultContainer();
+        BinaryData data = BinaryData.FromObjectAsJson(serializable);
+        return Upload(data, name, overwrite);
+    }
 
-        if (name == default)
-            name = $"b{Guid.NewGuid()}";
+    /// <summary>
+    /// Uploads a JSON object to the storage account.
+    /// </summary>
+    /// <param name="serializable"></param>
+    /// <param name="name"></param>
+    /// <param name="overwrite"></param>
+    /// <returns></returns>
+    public async Task<string> UploadJsonAsync(object serializable, string name = default, bool overwrite = false)
+    {
+        BinaryData data = BinaryData.FromObjectAsJson(serializable);
+        return await UploadAsync(data, name, overwrite).ConfigureAwait(false);
+    }
 
-        var client = container.GetBlockBlobClient(name);
-        var options = new BlobUploadOptions
-        {
-            Conditions = overwrite ? null : new BlobRequestConditions { IfNoneMatch = new ETag("*") },
-            HttpHeaders = new BlobHttpHeaders { ContentType = ContentType.ApplicationJson.ToString() }
-        };
+    /// <summary>
+    /// Uploads a file to the storage account.
+    /// </summary>
+    /// <param name="fileStream"></param>
+    /// <param name="name"></param>
+    /// <param name="contentType"></param>
+    /// <param name="overwrite"></param>
+    /// <returns></returns>
+    public string Upload(Stream fileStream, string name = default, string contentType = default, bool overwrite = false)
+    {
+        BlockBlobClient client = GetBlobClient(ref name);
+        BlobUploadOptions options = StorageServices.CreateUploadOptions(overwrite, contentType);
 
-        client.Upload(BinaryData.FromObjectAsJson(json).ToStream(), options);
+        client.Upload(fileStream, options);
         return name;
     }
 
@@ -78,24 +94,35 @@ public readonly struct StorageServices
     /// </summary>
     /// <param name="fileStream"></param>
     /// <param name="name"></param>
+    /// <param name="contentType"></param>
     /// <param name="overwrite"></param>
     /// <returns></returns>
-    public string UploadStream(Stream fileStream, string name = default, bool overwrite = false)
+    public async Task<string> UploadAsync(Stream fileStream, string name = default, string contentType = default, bool overwrite = false)
     {
-        BlobContainerClient container = GetDefaultContainer();
+        BlockBlobClient client = GetBlobClient(ref name);
+        BlobUploadOptions options = StorageServices.CreateUploadOptions(overwrite, contentType);
 
-        if (name == default)
-            name = $"b{Guid.NewGuid()}";
+        await client.UploadAsync(fileStream, options).ConfigureAwait(false);
+        return name;
+    }
 
-        var client = container.GetBlockBlobClient(name);
-        var options = new BlobUploadOptions
+    private BlockBlobClient GetBlobClient(ref string name)
+    {
+        BlobContainerClient container = GetContainer(default);
+        if (name == default) name = $"b{Guid.NewGuid()}";
+        BlockBlobClient client = container.GetBlockBlobClient(name);
+        return client;
+    }
+
+    private static BlobUploadOptions CreateUploadOptions(bool overwrite, string contentType)
+    {
+        contentType ??= ContentType.ApplicationOctetStream.ToString();
+        BlobUploadOptions options = new()
         {
             Conditions = overwrite ? null : new BlobRequestConditions { IfNoneMatch = new ETag("*") },
-            HttpHeaders = new BlobHttpHeaders { ContentType = ContentType.ApplicationOctetStream.ToString() }
+            HttpHeaders = new BlobHttpHeaders { ContentType = contentType },
         };
-
-        client.Upload(fileStream, options);
-        return name;
+        return options;
     }
 
     /// <summary>
@@ -105,76 +132,86 @@ public readonly struct StorageServices
     /// <param name="name"></param>
     /// <param name="overwrite"></param>
     /// <returns></returns>
-    public string UploadBinaryData(BinaryData data, string name = default, bool overwrite = false)
-    {
-        BlobContainerClient container = GetDefaultContainer();
-        if (name == default)
-            name = $"b{Guid.NewGuid()}";
-
-        var client = container.GetBlockBlobClient(name);
-        var options = new BlobUploadOptions
-        {
-            Conditions = overwrite ? null : new BlobRequestConditions { IfNoneMatch = new ETag("*") },
-            HttpHeaders = new BlobHttpHeaders { ContentType = ContentType.ApplicationOctetStream.ToString() }
-        };
-
-        client.Upload(data.ToStream(), options);
-        return name;
-    }
+    public string Upload(BinaryData data, string name = default, bool overwrite = false)
+        => Upload(data.ToStream(), name, data.MediaType, overwrite);
 
     /// <summary>
-    /// Uploads a byte array to the storage account.
+    /// Uploads a binary data object to the storage account.
     /// </summary>
-    /// <param name="bytes"></param>
+    /// <param name="data"></param>
     /// <param name="name"></param>
     /// <param name="overwrite"></param>
     /// <returns></returns>
-    public string UploadBytes(byte[] bytes, string name = default, bool overwrite = false)
-        => UploadBinaryData(BinaryData.FromBytes(bytes), name, overwrite);
-
-    /// <summary>
-    /// Uploads a byte array to the storage account.
-    /// </summary>
-    /// <param name="bytes"></param>
-    /// <param name="name"></param>
-    /// <param name="overwrite"></param>
-    /// <returns></returns>
-    public string UploadBytes(ReadOnlyMemory<byte> bytes, string name = default, bool overwrite = false)
-        => UploadBinaryData(BinaryData.FromBytes(bytes), name, overwrite);
+    public async Task<string> UploadAsync(BinaryData data, string name = default, bool overwrite = false)
+        => await UploadAsync(data.ToStream(), name, data.MediaType, overwrite).ConfigureAwait(false);
 
     /// <summary>
     /// Uploads a file to the storage account.
     /// </summary>
     /// <param name="path"></param>
     /// <returns></returns>
-    public BinaryData DownloadBlob(string path)
+    public BinaryData Download(string path)
     {
-        BlobClient blob = GetBlobClientFromPath(path, null);
+        BlobClient blob = GetBlobClientFromPath(path, containerName: default);
         BlobDownloadResult result = blob.DownloadContent();
-        return result.Content;
+        BinaryData content = result.Content;
+
+        string contentType = result.Details.ContentType;
+        if (contentType != default)
+            content = content.WithMediaType(contentType);
+
+        return content;
+    }
+
+    /// <summary>
+    /// Uploads a file to the storage account.
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    public async Task<BinaryData> DownloadAsync(string path)
+    {
+        BlobClient blob = GetBlobClientFromPath(path, containerName: default);
+        BlobDownloadResult result = await blob.DownloadContentAsync().ConfigureAwait(false);
+        BinaryData content = result.Content;
+
+        string contentType = result.Details.ContentType;
+        if (contentType!=default) content = content.WithMediaType(contentType);
+
+        return content;
     }
 
     /// <summary>
     /// Deletes a blob from the storage account.
     /// </summary>
     /// <param name="path"></param>
-    public void DeleteBlob(string path)
+    public void Delete(string path)
     {
         BlobClient blob = GetBlobClientFromPath(path, null);
         blob.DeleteIfExists();
     }
 
+    /// <summary>
+    /// Deletes a blob from the storage account.
+    /// </summary>
+    /// <param name="path"></param>
+    /// <returns></returns>
+    public async Task DeleteAsync(string path)
+    {
+        BlobClient blob = GetBlobClientFromPath(path, null);
+        await blob.DeleteIfExistsAsync().ConfigureAwait(false);
+    }
+
     private BlobClient GetBlobClientFromPath(string path, string containerName)
     {
-        var _blobContainer = GetDefaultContainer();
-        var blobPath = ConvertPathToBlobPath(path, _blobContainer);
+        BlobContainerClient _blobContainer = GetContainer(default);
+        string blobPath = ConvertPathToBlobPath(path, _blobContainer);
         if (containerName is null)
         {
             return _blobContainer.GetBlobClient(blobPath);
         }
         else
         {
-            var container = GetContainer(containerName);
+            BlobContainerClient container = GetContainer(containerName);
             container.CreateIfNotExists();
             return container.GetBlobClient(blobPath);
         }
@@ -198,11 +235,11 @@ public readonly struct StorageServices
     /// Adds a function to be called when a blob is uploaded.
     /// </summary>
     /// <param name="function"></param>
-    public void WhenBlobUploaded(Action<StorageFile> function)
+    public void WhenUploaded(Action<StorageFile> function)
     {
         CloudMachineClient cm = _cm;
         // TODO (Pri 0): once the cache gets GCed, we will stop receiving events
-        ServiceBusProcessor processor = cm.Messaging.GetServiceBusProcessor("$private");
+        ServiceBusProcessor processor = cm.Messaging.GetServiceBusProcessor("cm_servicebus_subscription_private");
         // TODO: How to unsubscribe?
         processor.ProcessMessageAsync += async (args) =>
         {
@@ -230,5 +267,18 @@ public readonly struct StorageServices
         processor.StartProcessingAsync().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult().
 
+    }
+
+    /// <summary>
+    /// Adds a function to be called when a blob is uploaded.
+    /// </summary>
+    /// <param name="function"></param>
+    public void WhenUploaded(Action<BinaryData> function)
+    {
+        WhenUploaded((StorageFile file) =>
+        {
+            BinaryData data = file.Download();
+            function(data);
+        });
     }
 }

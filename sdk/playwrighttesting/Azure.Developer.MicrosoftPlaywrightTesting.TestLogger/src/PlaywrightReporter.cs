@@ -6,12 +6,12 @@ using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Utilities;
 using System;
 using System.Collections.Generic;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
@@ -19,15 +19,23 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 [ExtensionUri("logger://MicrosoftPlaywrightTesting/Logger/v1")]
 internal class PlaywrightReporter : ITestLoggerWithParameters
 {
-    private Dictionary<string, string?>? _parametersDictionary;
-    private PlaywrightService? _playwrightService;
-    private readonly ILogger _logger;
-    private TestProcessor? _testProcessor;
+    internal Dictionary<string, string?>? _parametersDictionary;
+    internal PlaywrightService? _playwrightService;
+    internal TestProcessor? _testProcessor;
+    internal readonly ILogger _logger;
+    internal IEnvironment _environment;
+    internal IXmlRunSettings _xmlRunSettings;
+    internal IConsoleWriter _consoleWriter;
+    internal JsonWebTokenHandler _jsonWebTokenHandler;
 
-    public PlaywrightReporter() : this(null) { } // no-op
-    public PlaywrightReporter(ILogger? logger)
+    public PlaywrightReporter() : this(null, null, null, null, null) { } // no-op
+    public PlaywrightReporter(ILogger? logger, IEnvironment? environment, IXmlRunSettings? xmlRunSettings, IConsoleWriter? consoleWriter, JsonWebTokenHandler? jsonWebTokenHandler)
     {
         _logger = logger ?? new Logger();
+        _environment = environment ?? new EnvironmentHandler();
+        _xmlRunSettings = xmlRunSettings ?? new XmlRunSettings();
+        _consoleWriter = consoleWriter ?? new ConsoleWriter();
+        _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
     }
 
     public void Initialize(TestLoggerEvents events, Dictionary<string, string?> parameters)
@@ -66,18 +74,19 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
     }
     #endregion
 
-    private void InitializePlaywrightReporter(string xmlSettings)
+    internal void InitializePlaywrightReporter(string xmlSettings)
     {
-        Dictionary<string, object> runParameters = XmlRunSettingsUtilities.GetTestRunParameters(xmlSettings);
+        Dictionary<string, object> runParameters = _xmlRunSettings.GetTestRunParameters(xmlSettings);
+        Dictionary<string, object> nunitParameters = _xmlRunSettings.GetNUnitParameters(xmlSettings);
         runParameters.TryGetValue(RunSettingKey.RunId, out var runId);
         // If run id is not provided and not set via env, try fetching it from CI info.
-        CIInfo cIInfo = CiInfoProvider.GetCIInfo();
-        if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId)))
+        CIInfo cIInfo = CiInfoProvider.GetCIInfo(_environment);
+        if (string.IsNullOrEmpty(_environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId)))
         {
             if (string.IsNullOrEmpty(runId?.ToString()))
-                Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, ReporterUtils.GetRunId(cIInfo));
+                _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, ReporterUtils.GetRunId(cIInfo));
             else
-                Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, runId!.ToString());
+                _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, runId!.ToString()!); // runId is checked above
         }
         else
         {
@@ -89,57 +98,85 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         runParameters.TryGetValue(RunSettingKey.ManagedIdentityClientId, out var managedIdentityClientId);
         runParameters.TryGetValue(RunSettingKey.EnableGitHubSummary, out var enableGithubSummary);
         runParameters.TryGetValue(RunSettingKey.EnableResultPublish, out var enableResultPublish);
+        runParameters.TryGetValue(RunSettingKey.Os, out var osType);
+        runParameters.TryGetValue(RunSettingKey.ExposeNetwork, out var exposeNetwork);
+        nunitParameters.TryGetValue(RunSettingKey.NumberOfTestWorkers, out var numberOfTestWorkers);
+        runParameters.TryGetValue(RunSettingKey.RunName, out var runName);
+
         string? enableGithubSummaryString = enableGithubSummary?.ToString();
         string? enableResultPublishString = enableResultPublish?.ToString();
 
         bool _enableGitHubSummary = string.IsNullOrEmpty(enableGithubSummaryString) || bool.Parse(enableGithubSummaryString!);
         bool _enableResultPublish = string.IsNullOrEmpty(enableResultPublishString) || bool.Parse(enableResultPublishString!);
 
-        PlaywrightServiceOptions? playwrightServiceSettings = null;
+        PlaywrightServiceOptions? playwrightServiceSettings;
         try
         {
-            playwrightServiceSettings = new(runId: runId?.ToString(), serviceAuth: serviceAuth?.ToString(), azureTokenCredentialType: azureTokenCredential?.ToString(), managedIdentityClientId: managedIdentityClientId?.ToString());
+            playwrightServiceSettings = new(runId: runId?.ToString(), serviceAuth: serviceAuth?.ToString(), azureTokenCredentialType: azureTokenCredential?.ToString(), managedIdentityClientId: managedIdentityClientId?.ToString(), os: PlaywrightService.GetOSPlatform(osType?.ToString()), exposeNetwork: exposeNetwork?.ToString());
         }
         catch (Exception ex)
         {
-            Console.Error.WriteLine("Failed to initialize PlaywrightServiceSettings: " + ex);
-            Environment.Exit(1);
+            _consoleWriter.WriteError("Failed to initialize PlaywrightServiceSettings: " + ex);
+            _environment.Exit(1);
+            return;
+        }
+        // setup entra rotation handlers
+        IFrameworkLogger frameworkLogger = new VSTestFrameworkLogger(_logger);
+        try
+        {
+            _playwrightService = new PlaywrightService(null, playwrightServiceSettings!.RunId, null, playwrightServiceSettings.ServiceAuth, null, entraLifecycle: null, jsonWebTokenHandler: _jsonWebTokenHandler, credential: playwrightServiceSettings.AzureTokenCredential, frameworkLogger: frameworkLogger);
+#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+            _playwrightService.InitializeAsync().GetAwaiter().GetResult();
+#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+        }
+        catch (Exception ex)
+        {
+            // We have checks for access token and base url in the next block, so we can ignore the exception here.
+            _logger.Error("Failed to initialize PlaywrightService: " + ex);
         }
 
-        // setup entra rotation handlers
-        _playwrightService = new PlaywrightService(null, playwrightServiceSettings!.RunId, null, playwrightServiceSettings.ServiceAuth, null, playwrightServiceSettings.AzureTokenCredential);
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-        _playwrightService.InitializeAsync().GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-
-        var cloudRunId = Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId);
-        string baseUrl = Environment.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_REPORTING_URL);
-        string accessToken = Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken);
+        var cloudRunId = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId);
+        string? baseUrl = _environment.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_REPORTING_URL);
+        string? accessToken = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken);
         if (string.IsNullOrEmpty(baseUrl))
         {
-            Console.Error.WriteLine(Constants.s_no_service_endpoint_error_message);
-            Environment.Exit(1);
+            _consoleWriter.WriteError(Constants.s_no_service_endpoint_error_message);
+            _environment.Exit(1);
+            return;
         }
         if (string.IsNullOrEmpty(accessToken))
         {
-            Console.Error.WriteLine(Constants.s_no_auth_error);
-            Environment.Exit(1);
+            _consoleWriter.WriteError(Constants.s_no_auth_error);
+            _environment.Exit(1);
+            return;
         }
-
+        if (cloudRunId?.Length > 200)
+        {
+            _consoleWriter.WriteError(Constants.s_playwright_service_runId_length_exceeded_error_message);
+            _environment.Exit(1);
+            return;
+        }
         var baseUri = new Uri(baseUrl);
         var reporterUtils = new ReporterUtils();
-        TokenDetails tokenDetails = reporterUtils.ParseWorkspaceIdFromAccessToken(jsonWebTokenHandler: null, accessToken: accessToken);
+        TokenDetails tokenDetails = reporterUtils.ParseWorkspaceIdFromAccessToken(jsonWebTokenHandler: _jsonWebTokenHandler, accessToken: accessToken);
         var workspaceId = tokenDetails.aid;
-
+        var runNameString = runName?.ToString();
+        if (runNameString?.Length > 200)
+        {
+            runNameString = runNameString.Substring(0, 200);
+            _consoleWriter.WriteLine(Constants.s_playwright_service_runName_truncated_warning);
+        }
         var cloudRunMetadata = new CloudRunMetadata
         {
             RunId = cloudRunId,
+            RunName = runNameString,
             WorkspaceId = workspaceId,
             BaseUri = baseUri,
             EnableResultPublish = _enableResultPublish,
             EnableGithubSummary = _enableGitHubSummary,
             TestRunStartTime = DateTime.UtcNow,
             AccessTokenDetails = tokenDetails,
+            NumberOfTestWorkers = numberOfTestWorkers != null ? Convert.ToInt32(numberOfTestWorkers) : 1
         };
 
         _testProcessor = new TestProcessor(cloudRunMetadata, cIInfo);

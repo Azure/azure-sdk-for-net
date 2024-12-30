@@ -10,17 +10,17 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
 {
     public partial class Sample_InboundSecurityRuleCollection
     {
-        // Create Network Virtual Appliance Inbound Security Rules
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateNetworkVirtualApplianceInboundSecurityRules()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/InboundSecurityRulePut.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/InboundSecurityRulePut.json
             // this example is just showing the usage of "InboundSecurityRule_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -41,27 +41,18 @@ namespace Azure.ResourceManager.Network.Samples
 
             // invoke the operation
             string ruleCollectionName = "rule1";
-            InboundSecurityRuleData data = new InboundSecurityRuleData()
+            InboundSecurityRuleData data = new InboundSecurityRuleData
             {
                 RuleType = InboundSecurityRuleType.Permanent,
-                Rules =
-{
-new InboundSecurityRules()
+                Rules = {new InboundSecurityRules
 {
 Name = "inboundRule1",
 Protocol = InboundSecurityRulesProtocol.Tcp,
 SourceAddressPrefix = "50.20.121.5/32",
 DestinationPortRange = 22,
-DestinationPortRanges =
-{
-"80-100"
-},
-AppliesOn =
-{
-"slbip1"
-},
-}
-},
+DestinationPortRanges = {"80-100"},
+AppliesOn = {"slbip1"},
+}},
             };
             ArmOperation<InboundSecurityRuleResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, ruleCollectionName, data);
             InboundSecurityRuleResource result = lro.Value;
@@ -73,12 +64,11 @@ AppliesOn =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Network Virtual Appliance Inbound Security Rules
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_CreateNetworkVirtualApplianceInboundSecurityRules()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/InboundSecurityRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/InboundSecurityRuleGet.json
             // this example is just showing the usage of "InboundSecurityRule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -108,12 +98,11 @@ AppliesOn =
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
-        // Create Network Virtual Appliance Inbound Security Rules
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_CreateNetworkVirtualApplianceInboundSecurityRules()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/InboundSecurityRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/InboundSecurityRuleGet.json
             // this example is just showing the usage of "InboundSecurityRule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -139,12 +128,11 @@ AppliesOn =
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // Create Network Virtual Appliance Inbound Security Rules
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_CreateNetworkVirtualApplianceInboundSecurityRules()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/InboundSecurityRuleGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/InboundSecurityRuleGet.json
             // this example is just showing the usage of "InboundSecurityRule_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,7 +158,7 @@ AppliesOn =
 
             if (result == null)
             {
-                Console.WriteLine($"Succeeded with null as result");
+                Console.WriteLine("Succeeded with null as result");
             }
             else
             {

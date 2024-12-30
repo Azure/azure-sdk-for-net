@@ -117,6 +117,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src
 [package]: https://www.nuget.org/packages/Azure.Core/
-[docs]: https://docs.microsoft.com/dotnet/api/azure.core
+[docs]: https://learn.microsoft.com/dotnet/api/azure.core
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/

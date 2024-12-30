@@ -26,6 +26,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         private const string DeployingValue = "Deploying";
         private const string RunningValue = "Running";
         private const string UpdatingValue = "Updating";
+        private const string UpdatePausedValue = "UpdatePaused";
         private const string DegradedValue = "Degraded";
         private const string DeletingValue = "Deleting";
         private const string DisconnectedValue = "Disconnected";
@@ -39,6 +40,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static ClusterDetailedStatus Running { get; } = new ClusterDetailedStatus(RunningValue);
         /// <summary> Updating. </summary>
         public static ClusterDetailedStatus Updating { get; } = new ClusterDetailedStatus(UpdatingValue);
+        /// <summary> UpdatePaused. </summary>
+        public static ClusterDetailedStatus UpdatePaused { get; } = new ClusterDetailedStatus(UpdatePausedValue);
         /// <summary> Degraded. </summary>
         public static ClusterDetailedStatus Degraded { get; } = new ClusterDetailedStatus(DegradedValue);
         /// <summary> Deleting. </summary>

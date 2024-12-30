@@ -10,15 +10,141 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.DesktopVirtualization.Models;
-using Azure.ResourceManager.Resources;
+using NUnit.Framework;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Samples
 {
     public partial class Sample_HostPoolResource
     {
-        // PrivateLinkResources_ListByHostPool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_HostPoolGet()
+        {
+            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/HostPool_Get.json
+            // this example is just showing the usage of "HostPools_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HostPoolResource created on azure
+            // for more information of creating HostPoolResource, please refer to the document of HostPoolResource
+            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string resourceGroupName = "resourceGroup1";
+            string hostPoolName = "hostPool1";
+            ResourceIdentifier hostPoolResourceId = HostPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hostPoolName);
+            HostPoolResource hostPool = client.GetHostPoolResource(hostPoolResourceId);
+
+            // invoke the operation
+            HostPoolResource result = await hostPool.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            HostPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_HostPoolDelete()
+        {
+            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/HostPool_Delete.json
+            // this example is just showing the usage of "HostPools_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HostPoolResource created on azure
+            // for more information of creating HostPoolResource, please refer to the document of HostPoolResource
+            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string resourceGroupName = "resourceGroup1";
+            string hostPoolName = "hostPool1";
+            ResourceIdentifier hostPoolResourceId = HostPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hostPoolName);
+            HostPoolResource hostPool = client.GetHostPoolResource(hostPoolResourceId);
+
+            // invoke the operation
+            bool? force = true;
+            await hostPool.DeleteAsync(WaitUntil.Completed, force: force);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_HostPoolUpdate()
+        {
+            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/HostPool_Update.json
+            // this example is just showing the usage of "HostPools_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HostPoolResource created on azure
+            // for more information of creating HostPoolResource, please refer to the document of HostPoolResource
+            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
+            string resourceGroupName = "resourceGroup1";
+            string hostPoolName = "hostPool1";
+            ResourceIdentifier hostPoolResourceId = HostPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hostPoolName);
+            HostPoolResource hostPool = client.GetHostPoolResource(hostPoolResourceId);
+
+            // invoke the operation
+            HostPoolPatch patch = new HostPoolPatch
+            {
+                Tags =
+{
+["tag1"] = "value1",
+["tag2"] = "value2"
+},
+                FriendlyName = "friendly",
+                Description = "des1",
+                CustomRdpProperty = null,
+                MaxSessionLimit = 999999,
+                PersonalDesktopAssignmentType = PersonalDesktopAssignmentType.Automatic,
+                LoadBalancerType = HostPoolLoadBalancerType.BreadthFirst,
+                RegistrationInfo = new HostPoolRegistrationInfoPatch
+                {
+                    ExpireOn = DateTimeOffset.Parse("2020-10-01T15:01:54.9571247Z"),
+                    RegistrationTokenOperation = HostPoolRegistrationTokenOperation.Update,
+                },
+                VmTemplate = "{json:json}",
+                SsoAdfsAuthority = "https://adfs",
+                SsoClientId = "client",
+                SsoClientSecretKeyVaultPath = "https://keyvault/secret",
+                SsoSecretType = HostPoolSsoSecretType.SharedKey,
+                StartVmOnConnect = false,
+                AgentUpdate = new SessionHostAgentUpdatePatchProperties
+                {
+                    UpdateType = SessionHostComponentUpdateType.Scheduled,
+                    DoesUseSessionHostLocalTime = false,
+                    MaintenanceWindowTimeZone = "Alaskan Standard Time",
+                    MaintenanceWindows = {new MaintenanceWindowPatchProperties
+{
+Hour = 7,
+DayOfWeek = DesktopVirtualizationDayOfWeek.Friday,
+}, new MaintenanceWindowPatchProperties
+{
+Hour = 8,
+DayOfWeek = DesktopVirtualizationDayOfWeek.Saturday,
+}},
+                },
+            };
+            HostPoolResource result = await hostPool.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            HostPoolData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetPrivateLinkResources_PrivateLinkResourcesListByHostPool()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/PrivateLinkResources_ListByHostPool.json
@@ -43,12 +169,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // ScalingPlan_ListByHostPool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetScalingPlans_ScalingPlanListByHostPool()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/ScalingPlan_ListByHostPool.json
@@ -80,180 +205,11 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // HostPool_Get
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Get_HostPoolGet()
-        {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/HostPool_Get.json
-            // this example is just showing the usage of "HostPools_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HostPoolResource created on azure
-            // for more information of creating HostPoolResource, please refer to the document of HostPoolResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
-            string resourceGroupName = "resourceGroup1";
-            string hostPoolName = "hostPool1";
-            ResourceIdentifier hostPoolResourceId = HostPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hostPoolName);
-            HostPoolResource hostPool = client.GetHostPoolResource(hostPoolResourceId);
-
-            // invoke the operation
-            HostPoolResource result = await hostPool.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            HostPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // HostPool_Delete
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Delete_HostPoolDelete()
-        {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/HostPool_Delete.json
-            // this example is just showing the usage of "HostPools_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HostPoolResource created on azure
-            // for more information of creating HostPoolResource, please refer to the document of HostPoolResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
-            string resourceGroupName = "resourceGroup1";
-            string hostPoolName = "hostPool1";
-            ResourceIdentifier hostPoolResourceId = HostPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hostPoolName);
-            HostPoolResource hostPool = client.GetHostPoolResource(hostPoolResourceId);
-
-            // invoke the operation
-            bool? force = true;
-            await hostPool.DeleteAsync(WaitUntil.Completed, force: force);
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // HostPool_Update
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task Update_HostPoolUpdate()
-        {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/HostPool_Update.json
-            // this example is just showing the usage of "HostPools_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HostPoolResource created on azure
-            // for more information of creating HostPoolResource, please refer to the document of HostPoolResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
-            string resourceGroupName = "resourceGroup1";
-            string hostPoolName = "hostPool1";
-            ResourceIdentifier hostPoolResourceId = HostPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hostPoolName);
-            HostPoolResource hostPool = client.GetHostPoolResource(hostPoolResourceId);
-
-            // invoke the operation
-            HostPoolPatch patch = new HostPoolPatch()
-            {
-                Tags =
-{
-["tag1"] = "value1",
-["tag2"] = "value2",
-},
-                FriendlyName = "friendly",
-                Description = "des1",
-                CustomRdpProperty = null,
-                MaxSessionLimit = 999999,
-                PersonalDesktopAssignmentType = PersonalDesktopAssignmentType.Automatic,
-                LoadBalancerType = HostPoolLoadBalancerType.BreadthFirst,
-                RegistrationInfo = new HostPoolRegistrationInfoPatch()
-                {
-                    ExpireOn = DateTimeOffset.Parse("2020-10-01T15:01:54.9571247Z"),
-                    RegistrationTokenOperation = HostPoolRegistrationTokenOperation.Update,
-                },
-                VmTemplate = "{json:json}",
-                SsoAdfsAuthority = "https://adfs",
-                SsoClientId = "client",
-                SsoClientSecretKeyVaultPath = "https://keyvault/secret",
-                SsoSecretType = HostPoolSsoSecretType.SharedKey,
-                StartVmOnConnect = false,
-                AgentUpdate = new SessionHostAgentUpdatePatchProperties()
-                {
-                    UpdateType = SessionHostComponentUpdateType.Scheduled,
-                    DoesUseSessionHostLocalTime = false,
-                    MaintenanceWindowTimeZone = "Alaskan Standard Time",
-                    MaintenanceWindows =
-{
-new MaintenanceWindowPatchProperties()
-{
-Hour = 7,
-DayOfWeek = DesktopVirtualizationDayOfWeek.Friday,
-},new MaintenanceWindowPatchProperties()
-{
-Hour = 8,
-DayOfWeek = DesktopVirtualizationDayOfWeek.Saturday,
-}
-},
-                },
-            };
-            HostPoolResource result = await hostPool.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            HostPoolData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        // HostPool_List
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetHostPools_HostPoolList()
-        {
-            // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/HostPool_List.json
-            // this example is just showing the usage of "HostPools_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "daefabc0-95b4-48b3-b645-8a753a63c4fa";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            int? pageSize = 10;
-            bool? isDescending = true;
-            int? initialSkip = 0;
-            await foreach (HostPoolResource item in subscriptionResource.GetHostPoolsAsync(pageSize: pageSize, isDescending: isDescending, initialSkip: initialSkip))
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                HostPoolData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine($"Succeeded");
-        }
-
-        // HostPools_RetrieveRegistrationToken_Post
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task RetrieveRegistrationToken_HostPoolsRetrieveRegistrationTokenPost()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/HostPools_RetrieveRegistrationToken_Post.json
@@ -278,9 +234,8 @@ DayOfWeek = DesktopVirtualizationDayOfWeek.Saturday,
             Console.WriteLine($"Succeeded: {result}");
         }
 
-        // UserSession_ListByHostPool
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetUserSessions_UserSessionListByHostPool()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/UserSession_ListByHostPool.json
@@ -313,12 +268,11 @@ DayOfWeek = DesktopVirtualizationDayOfWeek.Saturday,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // AppAttachPackageInfo_Import
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ImportAppAttachPackageInfos_AppAttachPackageInfoImport()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/AppAttachPackageInfo_Import_Post.json
@@ -338,7 +292,7 @@ DayOfWeek = DesktopVirtualizationDayOfWeek.Saturday,
             HostPoolResource hostPool = client.GetHostPoolResource(hostPoolResourceId);
 
             // invoke the operation and iterate over the result
-            ImportPackageInfoContent content = new ImportPackageInfoContent()
+            ImportPackageInfoContent content = new ImportPackageInfoContent
             {
                 Path = "imagepath",
                 PackageArchitecture = AppAttachPackageArchitecture.X64,
@@ -352,12 +306,11 @@ DayOfWeek = DesktopVirtualizationDayOfWeek.Saturday,
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
 
-        // MsixImage_Expand
-        [NUnit.Framework.Test]
-        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task ExpandMsixImages_MsixImageExpand()
         {
             // Generated from example definition: specification/desktopvirtualization/resource-manager/Microsoft.DesktopVirtualization/stable/2024-04-03/examples/MsixImage_Expand_Post.json
@@ -377,7 +330,7 @@ DayOfWeek = DesktopVirtualizationDayOfWeek.Saturday,
             HostPoolResource hostPool = client.GetHostPoolResource(hostPoolResourceId);
 
             // invoke the operation and iterate over the result
-            MsixImageUri msixImageUri = new MsixImageUri()
+            MsixImageUri msixImageUri = new MsixImageUri
             {
                 Uri = new Uri("imagepath"),
             };
@@ -386,7 +339,7 @@ DayOfWeek = DesktopVirtualizationDayOfWeek.Saturday,
                 Console.WriteLine($"Succeeded: {item}");
             }
 
-            Console.WriteLine($"Succeeded");
+            Console.WriteLine("Succeeded");
         }
     }
 }
