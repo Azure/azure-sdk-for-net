@@ -18,7 +18,7 @@ namespace Azure.Communication
     {
         private const string TeamsExtensionScopePrefix = "https://auth.msft.communication.azure.com/";
         private const string ComunicationClientsScopePrefix = "https://communication.azure.com/clients/";
-        private const string TeamsExtensionEndpoint = "/access/teamsPhone/:exchangeTeamsAccessToken";
+        private const string TeamsExtensionEndpoint = "/access/teamsPhone/:exchangeAccessToken";
         private const string TeamsExtensionApiVersion = "2025-03-02-preview";
         private const string ComunicationClientsEndpoint = "/access/entra/:exchangeAccessToken";
         private const string ComunicationClientsApiVersion = "2024-04-01-preview";
