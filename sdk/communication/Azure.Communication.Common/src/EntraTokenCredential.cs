@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -15,8 +16,16 @@ namespace Azure.Communication
     /// </summary>
     internal sealed class EntraTokenCredential : ICommunicationTokenCredential
     {
+        private const string TeamsExtensionScopePrefix = "https://auth.msft.communication.azure.com/";
+        private const string ComunicationClientsScopePrefix = "https://communication.azure.com/clients/";
+        private const string TeamsExtensionEndpoint = "/access/teamsPhone/:exchangeAccessToken";
+        private const string TeamsExtensionApiVersion = "2025-03-02-preview";
+        private const string ComunicationClientsEndpoint = "/access/entra/:exchangeAccessToken";
+        private const string ComunicationClientsApiVersion = "2024-04-01-preview";
+
         private HttpPipeline _pipeline;
         private string _resourceEndpoint;
+        private string[] _scopes { get; set; }
         private readonly ThreadSafeRefreshableAccessTokenCache _accessTokenCache;
 
         /// <summary>
@@ -27,6 +36,7 @@ namespace Azure.Communication
         public EntraTokenCredential(EntraCommunicationTokenCredentialOptions options, HttpPipelineTransport pipelineTransport = null)
         {
             this._resourceEndpoint = options.ResourceEndpoint;
+            this._scopes = options.Scopes;
             _pipeline = CreatePipelineFromOptions(options, pipelineTransport);
             _accessTokenCache = new ThreadSafeRefreshableAccessTokenCache(
                     ExchangeEntraToken,
@@ -99,20 +109,46 @@ namespace Azure.Communication
 
         private HttpMessage CreateRequestMessage()
         {
-            var uri = new RequestUriBuilder();
-            uri.Reset(new Uri(_resourceEndpoint));
-            uri.AppendPath("/access/entra/:exchangeAccessToken", false);
-            uri.AppendQuery("api-version", "2024-04-01-preview", true);
-
             var message = _pipeline.CreateMessage();
             var request = message.Request;
-            request.Uri = uri;
+            request.Uri = CreateRequestUri();
             request.Method = RequestMethod.Post;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             request.Content = "{}";
 
             return message;
+        }
+
+        private RequestUriBuilder CreateRequestUri()
+        {
+            var uri = new RequestUriBuilder();
+            uri.Reset(new Uri(_resourceEndpoint));
+
+            var (endpoint, apiVersion) = DetermineEndpointAndApiVersion();
+            uri.AppendPath(endpoint, false);
+            uri.AppendQuery("api-version", apiVersion, true);
+            return uri;
+        }
+
+        private (string Endpoint, string ApiVersion) DetermineEndpointAndApiVersion()
+        {
+            if (_scopes == null || !_scopes.Any())
+            {
+                throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {TeamsExtensionScopePrefix} or {ComunicationClientsScopePrefix}.", nameof(_scopes));
+            }
+            else if (_scopes.All(item => item.StartsWith(TeamsExtensionScopePrefix)))
+            {
+                return (TeamsExtensionEndpoint, TeamsExtensionApiVersion);
+            }
+            else if (_scopes.All(item => item.StartsWith(ComunicationClientsScopePrefix)))
+            {
+                return (ComunicationClientsEndpoint, ComunicationClientsApiVersion);
+            }
+            else
+            {
+                throw new ArgumentException($"Scopes validation failed. Ensure all scopes start with either {TeamsExtensionScopePrefix} or {ComunicationClientsScopePrefix}.", nameof(_scopes));
+            }
         }
 
         private AccessToken ParseAccessTokenFromResponse(Response response)
