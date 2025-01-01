@@ -5,21 +5,14 @@
 
 #nullable disable
 
-using System;
-
 namespace Azure.Communication.PhoneNumbers
 {
     /// <summary> Represents metadata describing the operator of a phone number. </summary>
     public partial class OperatorDetails
     {
         /// <summary> Initializes a new instance of <see cref="OperatorDetails"/>. </summary>
-        /// <param name="name"> Name of the phone operator. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
-        internal OperatorDetails(string name)
+        internal OperatorDetails()
         {
-            Argument.AssertNotNull(name, nameof(name));
-
-            Name = name;
         }
 
         /// <summary> Initializes a new instance of <see cref="OperatorDetails"/>. </summary>

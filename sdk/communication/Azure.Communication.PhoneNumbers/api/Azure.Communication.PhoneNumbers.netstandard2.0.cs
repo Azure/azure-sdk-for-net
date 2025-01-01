@@ -182,7 +182,7 @@ namespace Azure.Communication.PhoneNumbers
     }
     public partial class PhoneNumbersClientOptions : Azure.Core.ClientOptions
     {
-        public PhoneNumbersClientOptions(Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion version = Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion.V2024_03_01_Preview) { }
+        public PhoneNumbersClientOptions(Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion version = Azure.Communication.PhoneNumbers.PhoneNumbersClientOptions.ServiceVersion.V2025_02_11) { }
         public string? AcceptedLanguage { get { throw null; } set { } }
         public enum ServiceVersion
         {
@@ -190,6 +190,7 @@ namespace Azure.Communication.PhoneNumbers
             V2022_01_11_Preview_2 = 2,
             V2022_12_01 = 3,
             V2024_03_01_Preview = 4,
+            V2025_02_11 = 5,
         }
     }
     public partial class PhoneNumberSearchOptions
