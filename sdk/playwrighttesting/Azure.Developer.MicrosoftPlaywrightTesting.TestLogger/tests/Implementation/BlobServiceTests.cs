@@ -37,7 +37,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Implementa
                     It.IsAny<EventId>(),
                     It.Is<It.IsAnyType>((state, type) => true),
                     It.IsAny<Exception>(),
-                    It.IsAny<Func<It.IsAnyType, Exception, string>>()),
+                    It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
                 Times.Once);
         }
 
@@ -56,7 +56,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests.Implementa
                     It.IsAny<EventId>(),
                     It.Is<It.IsAnyType>((state, type) => true),
                     It.IsAny<Exception>(),
-                    It.IsAny<Func<It.IsAnyType, Exception, string>>()),
+                    It.IsAny<Func<It.IsAnyType, Exception?, string>>()),
                 Times.Once);
         }
 

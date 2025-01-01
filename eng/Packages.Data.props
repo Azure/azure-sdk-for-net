@@ -192,7 +192,7 @@
   <ItemGroup Condition="$(MSBuildProjectName.StartsWith('Azure.Developer.MicrosoftPlaywrightTesting'))">
     <PackageReference Update="Microsoft.TestPlatform.ObjectModel" Version="17.10.0" />
     <PackageReference Update="NUnit" Version="3.13.2" />
-    <PackageReference Update="Microsoft.Extensions.Logging" Version="2.0.0" />
+    <PackageReference Update="Microsoft.Extensions.Logging" Version="8.0.0" />
   </ItemGroup>
 
   <ItemGroup Condition="$(MSBuildProjectName.Contains('CloudMachine'))">
