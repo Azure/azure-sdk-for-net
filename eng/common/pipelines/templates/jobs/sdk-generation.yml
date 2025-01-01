@@ -1,0 +1,160 @@
+parameters:
+  - name: SpecRepoBranch
+    type: string
+    default: 'main'
+  - name: SpecRepoCommit
+    type: string
+    default: 'HEAD'
+  - name: SdkRepoOwner
+    type: string
+  - name: SdkRepoName
+    type: string
+
+  - name: SdkRepoNameForSpecGen
+    type: string
+  - name: SdkRepoBranch
+    type: string
+    default: 'main'
+  - name: ConfigType
+    type: string
+    values:
+      - 'TypeSpec'
+      - 'AutoRest'
+  - name: TspConfigPath
+    type: string
+  - name: ReadmePath
+    type: string
+  - name: ApiVersion
+    type: string
+    default: 'not-specified'
+  - name: CodePushRequired
+    type: boolean
+  - name: SdkPrRequired
+    type: boolean
+  - name: ApiViewRequired
+    type: boolean
+
+jobs:
+- job:
+  displayName: 'SDK Generation'
+  variables:
+    - template: /eng/pipelines/templates/variables/image.yml
+    - name: SpecRepoUrl
+      value: 'https://github.com/Azure/azure-rest-api-specs'
+    - name: SpecRepoFullName
+      value: 'Azure/azure-rest-api-specs'
+    - name: SpecRepoName
+      value: 'azure-rest-api-specs'
+    - name: SpecRepoDirectory
+      value: $(System.DefaultWorkingDirectory)/$(SpecRepoName)
+    - name: SdkRepoDirectory
+      value: $(System.DefaultWorkingDirectory)/${{ parameters.SdkRepoName }}
+  pool:
+    name: $(LINUXPOOL)
+    vmImage: $(LINUXVMIMAGE)
+
+  steps:
+    - checkout: none
+
+    - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
+      parameters:
+        Paths:
+        - '/*'
+        - '!sdk/**/test-recordings/*'
+        - '!sdk/**/recordings/*'
+        - '!sdk/**/SessionRecords/*'
+        - '!sdk/**/session-records/*'
+        Repositories:
+        - Name: $(SpecRepoFullName)
+          Commitish: ${{ parameters.SpecRepoBranch }}
+          WorkingDirectory: $(SpecRepoDirectory)
+        - Name: ${{ parameters.SdkRepoOwner }}/${{ parameters.SdkRepoName }}
+          Commitish: ${{ parameters.SdkRepoBranch }}
+          WorkingDirectory: $(SdkRepoDirectory)
+
+    - script: |
+        if [ "${{ parameters.SpecRepoCommit }}" = "HEAD" ]; then
+          cd $(SpecRepoDirectory)
+          default_commit=$(git rev-parse HEAD)
+          echo "##vso[task.setvariable variable=SpecRepoCommit]$default_commit"
+          echo "SpecRepoCommit variable set to default commit: $default_commit"
+        else
+          echo "##vso[task.setvariable variable=SpecRepoCommit]${{ parameters.SpecRepoCommit }}"
+          echo "SpecRepoCommit variable set to: ${{ parameters.SpecRepoCommit }}"
+        fi
+      displayName: 'Set SpecRepoCommit variable'
+
+    - task: NodeTool@0
+      inputs:
+        versionSpec: '22.x'
+      displayName: 'Install Node.js'
+
+    - script: |
+        npm install -g @azure-tools/spec-gen-sdk
+      displayName: 'Install spec-gen-sdk'
+
+    - script: |
+        optional_params=""
+        sdk_gen_info="sdk generation from Config : "
+
+        if [ "${{ parameters.ConfigType }}" = "TypeSpec" ]; then
+          optional_params="$optional_params --tsp-config-relative-path ${{ parameters.TspConfigPath }}"
+          sdk_gen_info="$sdk_gen_info '${{ parameters.TspConfigPath }}',"
+        else
+          optional_params="$optional_params --readme-relative-path ${{ parameters.ReadmePath }}"
+          sdk_gen_info="$sdk_gen_info '${{ parameters.ReadmePath }}',"
+        fi
+        if [ "${{ parameters.ApiVersion }}" != "not-specified" ]; then
+          optional_params="$optional_params --api-version ${{ parameters.ApiVersion }}"
+          sdk_gen_info="$sdk_gen_info API Version: '${{ parameters.ApiVersion }}',"
+        fi
+
+        sdk_gen_info="$sdk_gen_info and CommitSHA: '$(SpecRepoCommit)'"
+        echo "##vso[task.setvariable variable=GeneratedSDKInformation]$sdk_gen_info"
+        echo "Generated SDK Information : $sdk_gen_info"
+
+        spec-gen-sdk \
+          --scp "$(SpecRepoDirectory)" \
+          --sdp "$(SdkRepoDirectory)" \
+          --wf "$(System.DefaultWorkingDirectory)" \
+          -l "${{ parameters.SdkRepoNameForSpecGen }}" \
+          -c "$(SpecRepoCommit)" \
+          $optional_params
+      displayName: 'Generate SDK'
+
+    - ${{ if eq(parameters.CodePushRequired, true) }}:
+      - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
+        parameters:
+          BaseRepoBranch: sdk-generation-from-$(Build.DefinitionName)_$(Build.BuildId)
+          BaseRepoOwner: azure-sdk
+          CommitMsg: $(GeneratedSDKInformation)
+          TargetRepoOwner: ${{ parameters.SdkRepoOwner }}
+          TargetRepoName: ${{ parameters.SdkRepoName }}
+          PushArgs: "--force"
+          WorkingDirectory: $(SdkRepoDirectory)
+          ScriptDirectory: $(SdkRepoDirectory)/eng/common/scripts
+
+    - task: PowerShell@2
+      displayName: Create pull request
+      condition: and(succeeded(), eq('${{ parameters.SdkPrRequired }}', true), eq(variables['HasChanges'], 'true'))
+      inputs:
+        pwsh: true
+        workingDirectory: $(SdkRepoDirectory)
+        filePath: $(SdkRepoDirectory)/eng/common/scripts/Submit-PullRequest.ps1
+        arguments: >
+          -RepoOwner "${{ parameters.SdkRepoOwner }}"
+          -RepoName "${{ parameters.SdkRepoName }}"
+          -BaseBranch "main"
+          -PROwner "azure-sdk"
+          -PRBranch "sdk-generation-from-$(Build.DefinitionName)_$(Build.BuildId)"
+          -AuthToken "$(azuresdk-github-pat)"
+          -PRTitle "sdk-generation-from-$(Build.DefinitionName)_$(Build.BuildId)"
+          -PRBody "$(GeneratedSDKInformation)"
+          -OpenAsDraft $true
+
+    - script: |
+        echo "This step runs only if ApiViewRequired is true"
+      displayName: 'Conditional Step'
+      condition: and(succeeded(), eq('${{ parameters.ApiViewRequired }}', true))
+
+  
