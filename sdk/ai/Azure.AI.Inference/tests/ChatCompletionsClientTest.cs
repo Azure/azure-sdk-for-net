@@ -23,7 +23,7 @@ namespace Azure.AI.Inference.Tests
         {
             MistralSmall,
             GitHubGpt4o,
-            AoaiGpt4Turbo,
+            AoaiGpt4o,
         }
 
         public enum ToolChoiceTestType
@@ -542,7 +542,7 @@ namespace Azure.AI.Inference.Tests
         [TestCase(ToolChoiceTestType.UseNonePresetToolChoice, TargetModel.MistralSmall)]
         [TestCase(ToolChoiceTestType.UseRequiredPresetToolChoice, TargetModel.MistralSmall, IgnoreReason = "Endpoint needs to be updated to support")]
         [TestCase(ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice, TargetModel.GitHubGpt4o)]
-        [TestCase(ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice, TargetModel.AoaiGpt4Turbo)]
+        [TestCase(ToolChoiceTestType.UseFunctionByExplicitToolDefinitionForToolChoice, TargetModel.AoaiGpt4o)]
         [TestCase(ToolChoiceTestType.UseFunctionByImplicitToolDefinitionForToolChoice, TargetModel.GitHubGpt4o)]
         public async Task TestChatCompletionsFunctionToolHandlingWithStreaming(ToolChoiceTestType toolChoiceType, TargetModel targetModel)
         {
@@ -576,7 +576,7 @@ namespace Azure.AI.Inference.Tests
             {
                 TargetModel.MistralSmall => new Uri(TestEnvironment.MistralSmallEndpoint),
                 TargetModel.GitHubGpt4o => new Uri(TestEnvironment.GithubEndpoint),
-                TargetModel.AoaiGpt4Turbo => new Uri(TestEnvironment.AoaiEndpoint),
+                TargetModel.AoaiGpt4o => new Uri(TestEnvironment.AoaiEndpoint),
                 _ => throw new ArgumentException(nameof(targetModel)),
             };
 
@@ -584,7 +584,7 @@ namespace Azure.AI.Inference.Tests
             {
                 TargetModel.MistralSmall => new AzureKeyCredential(TestEnvironment.MistralSmallApiKey),
                 TargetModel.GitHubGpt4o => new AzureKeyCredential(TestEnvironment.GithubToken),
-                TargetModel.AoaiGpt4Turbo => new AzureKeyCredential(TestEnvironment.AoaiKey),
+                TargetModel.AoaiGpt4o => new AzureKeyCredential(TestEnvironment.AoaiKey),
                 _ => throw new ArgumentException(nameof(targetModel)),
             };
 
@@ -722,6 +722,133 @@ namespace Azure.AI.Inference.Tests
             #endregion
         }
 
+        [RecordedTest]
+        [TestCase(TargetModel.GitHubGpt4o)]
+        [TestCase(TargetModel.AoaiGpt4o)]
+        public async Task TestChatCompletionsResponseFormat(TargetModel targetModel)
+        {
+            var endpoint = targetModel switch
+            {
+                TargetModel.MistralSmall => new Uri(TestEnvironment.MistralSmallEndpoint),
+                TargetModel.GitHubGpt4o => new Uri(TestEnvironment.GithubEndpoint),
+                TargetModel.AoaiGpt4o => new Uri(TestEnvironment.AoaiEndpoint),
+                _ => throw new ArgumentException(nameof(targetModel)),
+            };
+
+            var credential = targetModel switch
+            {
+                TargetModel.MistralSmall => new AzureKeyCredential(TestEnvironment.MistralSmallApiKey),
+                TargetModel.GitHubGpt4o => new AzureKeyCredential(TestEnvironment.GithubToken),
+                TargetModel.AoaiGpt4o => new AzureKeyCredential(TestEnvironment.AoaiKey),
+                _ => throw new ArgumentException(nameof(targetModel)),
+            };
+
+            var githubModelName = "gpt-4o";
+
+            CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+            clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
+
+            // Uncomment the following lines to enable enhanced log output
+            // AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
+            // clientOptions.Diagnostics.IsLoggingContentEnabled = true;
+
+            if (targetModel == TargetModel.AoaiGpt4o)
+            {
+                OverrideApiVersionPolicy overrideApiVersionPolicy = new OverrideApiVersionPolicy("2024-08-01-preview");
+                clientOptions.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerCall);
+            }
+            else if (targetModel == TargetModel.GitHubGpt4o)
+            {
+                OverrideApiVersionPolicy overrideApiVersionPolicy = new OverrideApiVersionPolicy("2024-08-01-preview");
+                clientOptions.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerCall);
+            }
+
+            var client = CreateClient(endpoint, credential, clientOptions);
+
+            var messages = new List<ChatRequestMessage>()
+            {
+                // new ChatRequestSystemMessage("You are a helpful assistant."),
+                new ChatRequestUserMessage("Please give me directions and ingredients to bake a chocolate cake."),
+            };
+
+            var requestOptions = new ChatCompletionsOptions(messages);
+
+            if (targetModel == TargetModel.GitHubGpt4o)
+            {
+                requestOptions.Model = githubModelName;
+            }
+
+            Dictionary<string, BinaryData> jsonSchema = new Dictionary<string, BinaryData>
+            {
+                { "type", BinaryData.FromString("\"object\"") },
+                { "properties", BinaryData.FromString("""
+                    {
+                        "ingredients": {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        },
+                        "steps": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "properties": {
+                                    "ingredients": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "directions": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        },
+                        "prep_time": {
+                            "type": "string"
+                        },
+                        "bake_time": {
+                            "type": "string"
+                        }
+                    }
+                    """) },
+                { "required", BinaryData.FromString("[\"ingredients\", \"steps\", \"bake_time\"]") },
+                { "additionalProperties", BinaryData.FromString("false") }
+            };
+
+            requestOptions.ResponseFormat = ChatCompletionsResponseFormat.CreateJsonSchemaFormat("cakeBakingDirections", jsonSchema);
+
+            Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
+
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
+            ChatCompletions result = response.Value;
+            Assert.That(result.Id, Is.Not.Null.Or.Empty);
+            Assert.That(result.Created, Is.Not.Null.Or.Empty);
+            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+
+            using JsonDocument structuredJson = JsonDocument.Parse(result.Content);
+            structuredJson.RootElement.TryGetProperty("ingredients", out var ingredients);
+            structuredJson.RootElement.TryGetProperty("steps", out var steps);
+            structuredJson.RootElement.TryGetProperty("bake_time", out var bakeTime);
+
+            Assert.AreEqual(ingredients.ValueKind, JsonValueKind.Array);
+            Assert.AreEqual(steps.ValueKind, JsonValueKind.Array);
+            foreach (JsonElement stepElement in steps.EnumerateArray())
+            {
+                stepElement.TryGetProperty("ingredients", out var stepIngredients);
+                stepElement.TryGetProperty("directions", out var stepDirections);
+                Assert.AreEqual(stepIngredients.ValueKind, JsonValueKind.Array);
+                Assert.AreEqual(stepDirections.ValueKind, JsonValueKind.String);
+            }
+            Assert.AreEqual(bakeTime.ValueKind, JsonValueKind.String);
+        }
+
         #region Helpers
         private class CaptureRequestPayloadPolicy : HttpPipelinePolicy
         {
@@ -748,6 +875,30 @@ namespace Azure.AI.Inference.Tests
                 _requestContent = Encoding.UTF8.GetString(memStream.ToArray());
 
                 _requestHeaders = message.Request.Headers.ToDictionary(a => a.Name, a => a.Value);
+
+                return task;
+            }
+        }
+
+        private class OverrideApiVersionPolicy : HttpPipelinePolicy
+        {
+            private string ApiVersion { get; }
+
+            public OverrideApiVersionPolicy(string apiVersion)
+            {
+                ApiVersion = apiVersion;
+            }
+
+            public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                message.Request.Uri.Query = $"?api-version={ApiVersion}";
+                ProcessNext(message, pipeline);
+            }
+
+            public override ValueTask ProcessAsync(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)
+            {
+                message.Request.Uri.Query = $"?api-version={ApiVersion}";
+                var task = ProcessNextAsync(message, pipeline);
 
                 return task;
             }
