@@ -9,6 +9,7 @@ using System;
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
+using Azure.ResourceManager.Models;
 
 namespace Azure.Generator;
 
@@ -51,6 +52,7 @@ public class AzureClientPlugin : ClientModelPlugin
         AddSharedSourceDirectory(sharedSourceDirectory);
         if (IsAzureArm.Value)
         {
+            AddMetadataReference(MetadataReference.CreateFromFile(typeof(TrackedResourceData).Assembly.Location));
             AddVisitor(new AzureArmVisitor());
         }
     }

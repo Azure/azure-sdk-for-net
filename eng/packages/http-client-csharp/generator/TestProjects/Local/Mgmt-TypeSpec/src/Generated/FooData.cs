@@ -12,13 +12,13 @@ using Azure.Core;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class Foo : TrackedResource
+    public partial class FooData : TrackedResource
     {
-        internal Foo(string location) : base(location)
+        internal FooData(string location) : base(location)
         {
         }
 
-        internal Foo(ResourceIdentifier id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, FooProperties properties, ExtendedLocation extendedLocation) : base(id, name, @type, systemData, additionalBinaryDataProperties, tags, location)
+        internal FooData(ResourceIdentifier id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, FooProperties properties, ExtendedLocation extendedLocation) : base(id, name, @type, systemData, additionalBinaryDataProperties, tags, location)
         {
             Properties = properties;
             ExtendedLocation = extendedLocation;

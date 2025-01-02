@@ -9,11 +9,13 @@ using Microsoft.Generator.CSharp.ClientModel.Providers;
 using Microsoft.Generator.CSharp.Expressions;
 using Microsoft.Generator.CSharp.Input;
 using Microsoft.Generator.CSharp.Primitives;
+using Microsoft.Generator.CSharp.Providers;
 using Microsoft.Generator.CSharp.Snippets;
 using Microsoft.Generator.CSharp.Statements;
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.Generator
@@ -21,6 +23,8 @@ namespace Azure.Generator
     /// <inheritdoc/>
     public class AzureTypeFactory : ScmTypeFactory
     {
+        private Dictionary<InputModelType, ResourceDataProvider?> _resourceDataProvdierCache = new();
+
         /// <inheritdoc/>
         public override IClientResponseApi ClientResponseApi => AzureClientResponseProvider.Instance;
 
@@ -141,6 +145,16 @@ namespace Azure.Generator
                 }
             }
             return parameters;
+        }
+
+        internal ResourceDataProvider CreateResourceData(InputModelType model)
+        {
+            if (_resourceDataProvdierCache.TryGetValue(model, out var resourceData))
+            {
+                return resourceData!;
+            }
+
+            return new ResourceDataProvider(model);
         }
     }
 }
