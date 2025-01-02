@@ -42,11 +42,11 @@ public class MessageLoggingPolicy : PipelinePolicy
     }
 
     /// <inheritdoc/>
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex) =>
+    public sealed override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex) =>
         ProcessSyncOrAsync(message, pipeline, currentIndex, async: false).EnsureCompleted();
 
     /// <inheritdoc/>
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex) =>
+    public sealed override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex) =>
         await ProcessSyncOrAsync(message, pipeline, currentIndex, async: true).ConfigureAwait(false);
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex, bool async)
@@ -258,8 +258,6 @@ public class MessageLoggingPolicy : PipelinePolicy
         }
 #endif
 
-        #region Additional stream implementation
-
         public override bool CanRead => _originalStream.CanRead;
         public override bool CanSeek => _originalStream.CanSeek;
         public override long Length => _originalStream.Length;
@@ -304,8 +302,6 @@ public class MessageLoggingPolicy : PipelinePolicy
 
             _originalStream.Dispose();
         }
-
-        #endregion
 
         #region Helpers
 
