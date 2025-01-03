@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <summary> Initializes a new instance of <see cref="SapDiskConfiguration"/>. </summary>
         internal SapDiskConfiguration()
         {
-            SupportedConfigurations = new ChangeTrackingList<DiskDetails>();
+            SupportedConfigurations = new ChangeTrackingList<SapDiskDetails>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SapDiskConfiguration"/>. </summary>
         /// <param name="recommendedConfiguration"> The recommended disk details for a given VM Sku. </param>
         /// <param name="supportedConfigurations"> The list of supported disks for a given VM Sku. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SapDiskConfiguration(DiskVolumeConfiguration recommendedConfiguration, IReadOnlyList<DiskDetails> supportedConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SapDiskConfiguration(DiskVolumeConfiguration recommendedConfiguration, IReadOnlyList<SapDiskDetails> supportedConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RecommendedConfiguration = recommendedConfiguration;
             SupportedConfigurations = supportedConfigurations;
@@ -65,6 +65,6 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <summary> The recommended disk details for a given VM Sku. </summary>
         public DiskVolumeConfiguration RecommendedConfiguration { get; }
         /// <summary> The list of supported disks for a given VM Sku. </summary>
-        public IReadOnlyList<DiskDetails> SupportedConfigurations { get; }
+        public IReadOnlyList<SapDiskDetails> SupportedConfigurations { get; }
     }
 }

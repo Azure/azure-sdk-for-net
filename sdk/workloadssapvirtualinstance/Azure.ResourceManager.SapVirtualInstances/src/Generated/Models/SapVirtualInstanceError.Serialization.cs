@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
             {
                 return null;
             }
-            ErrorInformation properties = default;
+            SapErrorInformation properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
                     {
                         continue;
                     }
-                    properties = ErrorInformation.DeserializeErrorInformation(property.Value, options);
+                    properties = SapErrorInformation.DeserializeSapErrorInformation(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

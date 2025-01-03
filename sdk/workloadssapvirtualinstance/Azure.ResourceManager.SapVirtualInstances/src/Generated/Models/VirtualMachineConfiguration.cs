@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <param name="imageReference"> The image reference. </param>
         /// <param name="osProfile"> The OS profile. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSize"/>, <paramref name="imageReference"/> or <paramref name="osProfile"/> is null. </exception>
-        public VirtualMachineConfiguration(string vmSize, ImageReference imageReference, OSProfile osProfile)
+        public VirtualMachineConfiguration(string vmSize, SapImageReference imageReference, OSProfile osProfile)
         {
             Argument.AssertNotNull(vmSize, nameof(vmSize));
             Argument.AssertNotNull(imageReference, nameof(imageReference));
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <param name="imageReference"> The image reference. </param>
         /// <param name="osProfile"> The OS profile. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachineConfiguration(string vmSize, ImageReference imageReference, OSProfile osProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VirtualMachineConfiguration(string vmSize, SapImageReference imageReference, OSProfile osProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             VmSize = vmSize;
             ImageReference = imageReference;
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <summary> The virtual machine size. </summary>
         public string VmSize { get; set; }
         /// <summary> The image reference. </summary>
-        public ImageReference ImageReference { get; set; }
+        public SapImageReference ImageReference { get; set; }
         /// <summary> The OS profile. </summary>
         public OSProfile OSProfile { get; set; }
     }

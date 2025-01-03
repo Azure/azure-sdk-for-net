@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.SapVirtualInstances
             }
         }
 
-        internal RequestUriBuilder CreateStartRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, StartContent content)
+        internal RequestUriBuilder CreateStartRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SapStartContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.SapVirtualInstances
             return uri;
         }
 
-        internal HttpMessage CreateStartRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, StartContent content)
+        internal HttpMessage CreateStartRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SapStartContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.SapVirtualInstances
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> StartAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, StartContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response> StartAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SapStartContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.SapVirtualInstances
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Start(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, StartContent content = null, CancellationToken cancellationToken = default)
+        public Response Start(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SapStartContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.SapVirtualInstances
             }
         }
 
-        internal RequestUriBuilder CreateStopRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, StopContent content)
+        internal RequestUriBuilder CreateStopRequestUri(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SapStopContent content)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.SapVirtualInstances
             return uri;
         }
 
-        internal HttpMessage CreateStopRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, StopContent content)
+        internal HttpMessage CreateStopRequest(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SapStopContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.SapVirtualInstances
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> StopAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, StopContent content = null, CancellationToken cancellationToken = default)
+        public async Task<Response> StopAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SapStopContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.SapVirtualInstances
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Stop(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, StopContent content = null, CancellationToken cancellationToken = default)
+        public Response Stop(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, SapStopContent content = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

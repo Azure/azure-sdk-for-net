@@ -1,10 +1,12 @@
 # Release History
 
-## 1.0.0-beta.1 (Unreleased)
+## 1.0.0 (2024-09-01)
 
-
+This release is first stable release for the Workloads Management library.
 
 ### Features Added
+
+- Seperating the Dotnet SDK Package from Workloads to SapVirtualInstance
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 

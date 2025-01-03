@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
                 return null;
             }
             NetworkConfiguration networkConfiguration = default;
-            CentralServerConfiguration centralServer = default;
-            ApplicationServerConfiguration applicationServer = default;
-            DatabaseConfiguration databaseServer = default;
+            SapCentralServerConfiguration centralServer = default;
+            SapApplicationServerConfiguration applicationServer = default;
+            SapDatabaseConfiguration databaseServer = default;
             HighAvailabilityConfiguration highAvailabilityConfig = default;
             StorageConfiguration storageConfiguration = default;
             ThreeTierCustomResourceNames customResourceNames = default;
@@ -107,17 +107,17 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
                 }
                 if (property.NameEquals("centralServer"u8))
                 {
-                    centralServer = CentralServerConfiguration.DeserializeCentralServerConfiguration(property.Value, options);
+                    centralServer = SapCentralServerConfiguration.DeserializeSapCentralServerConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("applicationServer"u8))
                 {
-                    applicationServer = ApplicationServerConfiguration.DeserializeApplicationServerConfiguration(property.Value, options);
+                    applicationServer = SapApplicationServerConfiguration.DeserializeSapApplicationServerConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("databaseServer"u8))
                 {
-                    databaseServer = DatabaseConfiguration.DeserializeDatabaseConfiguration(property.Value, options);
+                    databaseServer = SapDatabaseConfiguration.DeserializeSapDatabaseConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("highAvailabilityConfig"u8))

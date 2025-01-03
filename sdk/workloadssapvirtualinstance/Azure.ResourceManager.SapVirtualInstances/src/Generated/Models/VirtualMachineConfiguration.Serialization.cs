@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
                 return null;
             }
             string vmSize = default;
-            ImageReference imageReference = default;
+            SapImageReference imageReference = default;
             OSProfile osProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
                 }
                 if (property.NameEquals("imageReference"u8))
                 {
-                    imageReference = ImageReference.DeserializeImageReference(property.Value, options);
+                    imageReference = SapImageReference.DeserializeSapImageReference(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osProfile"u8))

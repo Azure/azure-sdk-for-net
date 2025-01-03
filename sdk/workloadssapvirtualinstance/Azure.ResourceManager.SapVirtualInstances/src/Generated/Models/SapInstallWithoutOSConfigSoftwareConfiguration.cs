@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SapVirtualInstances.Models
 {
     /// <summary> The SAP Software configuration Input when the software is to be installed by service without OS Configurations. </summary>
-    public partial class SapInstallWithoutOSConfigSoftwareConfiguration : SoftwareConfiguration
+    public partial class SapInstallWithoutOSConfigSoftwareConfiguration : SapSoftwareConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="SapInstallWithoutOSConfigSoftwareConfiguration"/>. </summary>
         /// <param name="bomUri"> The URL to the SAP Build of Materials(BOM) file. </param>

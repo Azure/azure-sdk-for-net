@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <summary> Initializes a new instance of <see cref="SshConfiguration"/>. </summary>
         public SshConfiguration()
         {
-            PublicKeys = new ChangeTrackingList<SshPublicKey>();
+            PublicKeys = new ChangeTrackingList<SapSshPublicKey>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SshConfiguration"/>. </summary>
         /// <param name="publicKeys"> The list of SSH public keys used to authenticate with linux based VMs. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SshConfiguration(IList<SshPublicKey> publicKeys, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SshConfiguration(IList<SapSshPublicKey> publicKeys, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PublicKeys = publicKeys;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The list of SSH public keys used to authenticate with linux based VMs. </summary>
-        public IList<SshPublicKey> PublicKeys { get; }
+        public IList<SapSshPublicKey> PublicKeys { get; }
     }
 }

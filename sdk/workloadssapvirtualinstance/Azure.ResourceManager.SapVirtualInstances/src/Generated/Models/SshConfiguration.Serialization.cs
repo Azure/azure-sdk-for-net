@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
             {
                 return null;
             }
-            IList<SshPublicKey> publicKeys = default;
+            IList<SapSshPublicKey> publicKeys = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
                     {
                         continue;
                     }
-                    List<SshPublicKey> array = new List<SshPublicKey>();
+                    List<SapSshPublicKey> array = new List<SapSshPublicKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SshPublicKey.DeserializeSshPublicKey(item, options));
+                        array.Add(SapSshPublicKey.DeserializeSapSshPublicKey(item, options));
                     }
                     publicKeys = array;
                     continue;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SshConfiguration(publicKeys ?? new ChangeTrackingList<SshPublicKey>(), serializedAdditionalRawData);
+            return new SshConfiguration(publicKeys ?? new ChangeTrackingList<SapSshPublicKey>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SshConfiguration>.Write(ModelReaderWriterOptions options)

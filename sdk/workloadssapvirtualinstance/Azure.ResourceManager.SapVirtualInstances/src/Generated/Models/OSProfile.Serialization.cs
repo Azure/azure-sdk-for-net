@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
             }
             string adminUsername = default;
             string adminPassword = default;
-            OSConfiguration osConfiguration = default;
+            SapOSConfiguration osConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
                     {
                         continue;
                     }
-                    osConfiguration = OSConfiguration.DeserializeOSConfiguration(property.Value, options);
+                    osConfiguration = SapOSConfiguration.DeserializeSapOSConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <param name="applicationServer"> The application server configuration. </param>
         /// <param name="databaseServer"> The database configuration. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="appResourceGroup"/>, <paramref name="centralServer"/>, <paramref name="applicationServer"/> or <paramref name="databaseServer"/> is null. </exception>
-        public ThreeTierConfiguration(string appResourceGroup, CentralServerConfiguration centralServer, ApplicationServerConfiguration applicationServer, DatabaseConfiguration databaseServer) : base(appResourceGroup)
+        public ThreeTierConfiguration(string appResourceGroup, SapCentralServerConfiguration centralServer, SapApplicationServerConfiguration applicationServer, SapDatabaseConfiguration databaseServer) : base(appResourceGroup)
         {
             Argument.AssertNotNull(appResourceGroup, nameof(appResourceGroup));
             Argument.AssertNotNull(centralServer, nameof(centralServer));
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// Please note <see cref="ThreeTierCustomResourceNames"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ThreeTierFullResourceNames"/>.
         /// </param>
-        internal ThreeTierConfiguration(string appResourceGroup, SapDeploymentType deploymentType, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkConfiguration networkConfiguration, CentralServerConfiguration centralServer, ApplicationServerConfiguration applicationServer, DatabaseConfiguration databaseServer, HighAvailabilityConfiguration highAvailabilityConfig, StorageConfiguration storageConfiguration, ThreeTierCustomResourceNames customResourceNames) : base(appResourceGroup, deploymentType, serializedAdditionalRawData)
+        internal ThreeTierConfiguration(string appResourceGroup, SapDeploymentType deploymentType, IDictionary<string, BinaryData> serializedAdditionalRawData, NetworkConfiguration networkConfiguration, SapCentralServerConfiguration centralServer, SapApplicationServerConfiguration applicationServer, SapDatabaseConfiguration databaseServer, HighAvailabilityConfiguration highAvailabilityConfig, StorageConfiguration storageConfiguration, ThreeTierCustomResourceNames customResourceNames) : base(appResourceGroup, deploymentType, serializedAdditionalRawData)
         {
             NetworkConfiguration = networkConfiguration;
             CentralServer = centralServer;
@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         }
 
         /// <summary> The central server configuration. </summary>
-        public CentralServerConfiguration CentralServer { get; set; }
+        public SapCentralServerConfiguration CentralServer { get; set; }
         /// <summary> The application server configuration. </summary>
-        public ApplicationServerConfiguration ApplicationServer { get; set; }
+        public SapApplicationServerConfiguration ApplicationServer { get; set; }
         /// <summary> The database configuration. </summary>
-        public DatabaseConfiguration DatabaseServer { get; set; }
+        public SapDatabaseConfiguration DatabaseServer { get; set; }
         /// <summary> The high availability configuration. </summary>
         internal HighAvailabilityConfiguration HighAvailabilityConfig { get; set; }
         /// <summary> The high availability type. </summary>

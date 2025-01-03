@@ -31,8 +31,8 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
-            string resourceGroupName = "PS_CLI_TF_RG";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
+            string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("{{resourcegrp}}", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app", new VirtualMachineConfiguration("Standard_E4ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("{{resourcegrp}}", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app", new VirtualMachineConfiguration("Standard_E4ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP-HA",
@@ -55,16 +55,16 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
                     }, new OSProfile
                     {
                         AdminUsername = "azureuser",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "{{sshkey}}",
                                 PrivateKey = "{{privateKey}}",
                             },
                         },
-                    }), 1L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app", new VirtualMachineConfiguration("Standard_E4ds_v4", new ImageReference
+                    }), 1L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app", new VirtualMachineConfiguration("Standard_E4ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP-HA",
@@ -73,16 +73,16 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
                     }, new OSProfile
                     {
                         AdminUsername = "azureuser",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "{{sshkey}}",
                                 PrivateKey = "{{privateKey}}",
                             },
                         },
-                    }), 2L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 2L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP-HA",
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
                     }, new OSProfile
                     {
                         AdminUsername = "azureuser",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "{{sshkey}}",
                                 PrivateKey = "{{privateKey}}",
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP-HA",
@@ -166,16 +166,16 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 2L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 2L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP-HA",
@@ -184,16 +184,16 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 6L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 6L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP-HA",
@@ -202,10 +202,10 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP-HA",
@@ -277,16 +277,16 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 2L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 2L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP-HA",
@@ -295,16 +295,16 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 6L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 6L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP-HA",
@@ -313,10 +313,10 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.NonProd, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new SingleServerConfiguration("X00-RG", "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    InfrastructureConfiguration = new SingleServerConfiguration("X00-RG", "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP-HA",
@@ -388,10 +388,10 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -461,16 +461,16 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 1L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 1L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -479,16 +479,16 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 6L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 6L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -497,10 +497,10 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -515,37 +515,37 @@ namespace Azure.ResourceManager.SapVirtualInstances.Samples
 {
 Count = 2L,
 SizeGB = 256L,
-SkuName = DiskSkuName.StandardSSDLRS,
+SkuName = SapDiskSkuName.StandardSSDLRS,
 },
 ["hana/data"] = new DiskVolumeConfiguration
 {
 Count = 4L,
 SizeGB = 128L,
-SkuName = DiskSkuName.PremiumLRS,
+SkuName = SapDiskSkuName.PremiumLRS,
 },
 ["hana/log"] = new DiskVolumeConfiguration
 {
 Count = 3L,
 SizeGB = 128L,
-SkuName = DiskSkuName.PremiumLRS,
+SkuName = SapDiskSkuName.PremiumLRS,
 },
 ["hana/shared"] = new DiskVolumeConfiguration
 {
 Count = 1L,
 SizeGB = 256L,
-SkuName = DiskSkuName.StandardSSDLRS,
+SkuName = SapDiskSkuName.StandardSSDLRS,
 },
 ["os"] = new DiskVolumeConfiguration
 {
 Count = 1L,
 SizeGB = 64L,
-SkuName = DiskSkuName.StandardSSDLRS,
+SkuName = SapDiskSkuName.StandardSSDLRS,
 },
 ["usr/sap"] = new DiskVolumeConfiguration
 {
 Count = 1L,
 SizeGB = 128L,
-SkuName = DiskSkuName.PremiumLRS,
+SkuName = SapDiskSkuName.PremiumLRS,
 }
 },
                     }),
@@ -580,7 +580,7 @@ SkuName = DiskSkuName.PremiumLRS,
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -595,7 +595,7 @@ SkuName = DiskSkuName.PremiumLRS,
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -604,16 +604,16 @@ SkuName = DiskSkuName.PremiumLRS,
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 2L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 2L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -622,16 +622,16 @@ SkuName = DiskSkuName.PremiumLRS,
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 6L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 6L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -640,10 +640,10 @@ SkuName = DiskSkuName.PremiumLRS,
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -658,37 +658,37 @@ SkuName = DiskSkuName.PremiumLRS,
 {
 Count = 2L,
 SizeGB = 256L,
-SkuName = DiskSkuName.StandardSSDLRS,
+SkuName = SapDiskSkuName.StandardSSDLRS,
 },
 ["hana/data"] = new DiskVolumeConfiguration
 {
 Count = 4L,
 SizeGB = 128L,
-SkuName = DiskSkuName.PremiumLRS,
+SkuName = SapDiskSkuName.PremiumLRS,
 },
 ["hana/log"] = new DiskVolumeConfiguration
 {
 Count = 3L,
 SizeGB = 128L,
-SkuName = DiskSkuName.PremiumLRS,
+SkuName = SapDiskSkuName.PremiumLRS,
 },
 ["hana/shared"] = new DiskVolumeConfiguration
 {
 Count = 1L,
 SizeGB = 256L,
-SkuName = DiskSkuName.StandardSSDLRS,
+SkuName = SapDiskSkuName.StandardSSDLRS,
 },
 ["os"] = new DiskVolumeConfiguration
 {
 Count = 1L,
 SizeGB = 64L,
-SkuName = DiskSkuName.StandardSSDLRS,
+SkuName = SapDiskSkuName.StandardSSDLRS,
 },
 ["usr/sap"] = new DiskVolumeConfiguration
 {
 Count = 1L,
 SizeGB = 128L,
-SkuName = DiskSkuName.PremiumLRS,
+SkuName = SapDiskSkuName.PremiumLRS,
 }
 },
                     })
@@ -726,7 +726,7 @@ SkuName = DiskSkuName.PremiumLRS,
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -741,7 +741,7 @@ SkuName = DiskSkuName.PremiumLRS,
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -750,16 +750,16 @@ SkuName = DiskSkuName.PremiumLRS,
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 2L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 2L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -768,16 +768,16 @@ SkuName = DiskSkuName.PremiumLRS,
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 6L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 6L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -786,10 +786,10 @@ SkuName = DiskSkuName.PremiumLRS,
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -804,37 +804,37 @@ SkuName = DiskSkuName.PremiumLRS,
 {
 Count = 2L,
 SizeGB = 256L,
-SkuName = DiskSkuName.StandardSSDLRS,
+SkuName = SapDiskSkuName.StandardSSDLRS,
 },
 ["hana/data"] = new DiskVolumeConfiguration
 {
 Count = 4L,
 SizeGB = 128L,
-SkuName = DiskSkuName.PremiumLRS,
+SkuName = SapDiskSkuName.PremiumLRS,
 },
 ["hana/log"] = new DiskVolumeConfiguration
 {
 Count = 3L,
 SizeGB = 128L,
-SkuName = DiskSkuName.PremiumLRS,
+SkuName = SapDiskSkuName.PremiumLRS,
 },
 ["hana/shared"] = new DiskVolumeConfiguration
 {
 Count = 1L,
 SizeGB = 256L,
-SkuName = DiskSkuName.StandardSSDLRS,
+SkuName = SapDiskSkuName.StandardSSDLRS,
 },
 ["os"] = new DiskVolumeConfiguration
 {
 Count = 1L,
 SizeGB = 64L,
-SkuName = DiskSkuName.StandardSSDLRS,
+SkuName = SapDiskSkuName.StandardSSDLRS,
 },
 ["usr/sap"] = new DiskVolumeConfiguration
 {
 Count = 1L,
 SizeGB = 128L,
-SkuName = DiskSkuName.PremiumLRS,
+SkuName = SapDiskSkuName.PremiumLRS,
 }
 },
                     })
@@ -872,7 +872,7 @@ SkuName = DiskSkuName.PremiumLRS,
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -887,7 +887,7 @@ SkuName = DiskSkuName.PremiumLRS,
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.NonProd, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new SingleServerConfiguration("X00-RG", "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    InfrastructureConfiguration = new SingleServerConfiguration("X00-RG", "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/dindurkhya-e2etesting/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -896,10 +896,10 @@ SkuName = DiskSkuName.PremiumLRS,
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -915,37 +915,37 @@ SkuName = DiskSkuName.PremiumLRS,
 {
 Count = 2L,
 SizeGB = 256L,
-SkuName = DiskSkuName.StandardSSDLRS,
+SkuName = SapDiskSkuName.StandardSSDLRS,
 },
 ["hana/data"] = new DiskVolumeConfiguration
 {
 Count = 4L,
 SizeGB = 128L,
-SkuName = DiskSkuName.PremiumLRS,
+SkuName = SapDiskSkuName.PremiumLRS,
 },
 ["hana/log"] = new DiskVolumeConfiguration
 {
 Count = 3L,
 SizeGB = 128L,
-SkuName = DiskSkuName.PremiumLRS,
+SkuName = SapDiskSkuName.PremiumLRS,
 },
 ["hana/shared"] = new DiskVolumeConfiguration
 {
 Count = 1L,
 SizeGB = 256L,
-SkuName = DiskSkuName.StandardSSDLRS,
+SkuName = SapDiskSkuName.StandardSSDLRS,
 },
 ["os"] = new DiskVolumeConfiguration
 {
 Count = 1L,
 SizeGB = 64L,
-SkuName = DiskSkuName.StandardSSDLRS,
+SkuName = SapDiskSkuName.StandardSSDLRS,
 },
 ["usr/sap"] = new DiskVolumeConfiguration
 {
 Count = 1L,
 SizeGB = 128L,
-SkuName = DiskSkuName.PremiumLRS,
+SkuName = SapDiskSkuName.PremiumLRS,
 }
 },
                     },
@@ -980,7 +980,7 @@ SkuName = DiskSkuName.PremiumLRS,
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -992,10 +992,10 @@ SkuName = DiskSkuName.PremiumLRS,
             string sapVirtualInstanceName = "X00";
             SapVirtualInstanceData data = new SapVirtualInstanceData(new AzureLocation("westcentralus"))
             {
-                Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentConfiguration
+                Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new SapDeploymentConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -1004,15 +1004,15 @@ SkuName = DiskSkuName.PremiumLRS,
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshPublicKeys = {new SshPublicKey
+                            SshPublicKeys = {new SapSshPublicKey
 {
 KeyData = "ssh-rsa public key",
 }},
                         },
-                    }), 1L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 1L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -1021,15 +1021,15 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshPublicKeys = {new SshPublicKey
+                            SshPublicKeys = {new SapSshPublicKey
 {
 KeyData = "ssh-rsa public key",
 }},
                         },
-                    }), 6L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 6L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -1038,10 +1038,10 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshPublicKeys = {new SshPublicKey
+                            SshPublicKeys = {new SapSshPublicKey
 {
 KeyData = "ssh-rsa public key",
 }},
@@ -1077,7 +1077,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1089,10 +1089,10 @@ KeyData = "ssh-rsa public key",
             string sapVirtualInstanceName = "X00";
             SapVirtualInstanceData data = new SapVirtualInstanceData(new AzureLocation("westcentralus"))
             {
-                Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentConfiguration
+                Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new SapDeploymentConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -1101,15 +1101,15 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshPublicKeys = {new SshPublicKey
+                            SshPublicKeys = {new SapSshPublicKey
 {
 KeyData = "ssh-rsa public key",
 }},
                         },
-                    }), 2L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 2L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -1118,15 +1118,15 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshPublicKeys = {new SshPublicKey
+                            SshPublicKeys = {new SapSshPublicKey
 {
 KeyData = "ssh-rsa public key",
 }},
                         },
-                    }), 5L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 5L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -1135,10 +1135,10 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshPublicKeys = {new SshPublicKey
+                            SshPublicKeys = {new SapSshPublicKey
 {
 KeyData = "ssh-rsa public key",
 }},
@@ -1177,7 +1177,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1189,10 +1189,10 @@ KeyData = "ssh-rsa public key",
             string sapVirtualInstanceName = "X00";
             SapVirtualInstanceData data = new SapVirtualInstanceData(new AzureLocation("westcentralus"))
             {
-                Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentConfiguration
+                Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new SapDeploymentConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -1201,15 +1201,15 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshPublicKeys = {new SshPublicKey
+                            SshPublicKeys = {new SapSshPublicKey
 {
 KeyData = "ssh-rsa public key",
 }},
                         },
-                    }), 2L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 2L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -1218,15 +1218,15 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshPublicKeys = {new SshPublicKey
+                            SshPublicKeys = {new SapSshPublicKey
 {
 KeyData = "ssh-rsa public key",
 }},
                         },
-                    }), 6L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 6L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -1235,10 +1235,10 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshPublicKeys = {new SshPublicKey
+                            SshPublicKeys = {new SapSshPublicKey
 {
 KeyData = "ssh-rsa public key",
 }},
@@ -1277,7 +1277,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1289,47 +1289,47 @@ KeyData = "ssh-rsa public key",
             string sapVirtualInstanceName = "X00";
             SapVirtualInstanceData data = new SapVirtualInstanceData(new AzureLocation("westcentralus"))
             {
-                Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentConfiguration
+                Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new SapDeploymentConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Id = new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Compute/galleries/testgallery/images/rhelimagetest/versions/0.0.1"),
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshPublicKeys = {new SshPublicKey
+                            SshPublicKeys = {new SapSshPublicKey
 {
 KeyData = "ssh-rsa public key",
 }},
                         },
-                    }), 2L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 2L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Id = new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Compute/galleries/testgallery/images/rhelimagetest/versions/0.0.1"),
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshPublicKeys = {new SshPublicKey
+                            SshPublicKeys = {new SapSshPublicKey
 {
 KeyData = "ssh-rsa public key",
 }},
                         },
-                    }), 6L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 6L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Id = new ResourceIdentifier("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Compute/galleries/testgallery/images/rhelimagetest/versions/0.0.1"),
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshPublicKeys = {new SshPublicKey
+                            SshPublicKeys = {new SapSshPublicKey
 {
 KeyData = "ssh-rsa public key",
 }},
@@ -1368,7 +1368,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1383,7 +1383,7 @@ KeyData = "ssh-rsa public key",
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -1392,16 +1392,16 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 1L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 1L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -1410,16 +1410,16 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 6L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 6L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -1428,10 +1428,10 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -1550,7 +1550,7 @@ DataDiskNames =
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1565,7 +1565,7 @@ DataDiskNames =
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -1574,16 +1574,16 @@ DataDiskNames =
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 2L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 2L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -1592,16 +1592,16 @@ DataDiskNames =
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 6L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 6L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -1610,10 +1610,10 @@ DataDiskNames =
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -1770,7 +1770,7 @@ DataDiskNames =
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -1785,7 +1785,7 @@ DataDiskNames =
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -1794,16 +1794,16 @@ DataDiskNames =
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 2L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 2L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -1812,16 +1812,16 @@ DataDiskNames =
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 6L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 6L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -1830,10 +1830,10 @@ DataDiskNames =
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -1987,7 +1987,7 @@ DataDiskNames =
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2002,7 +2002,7 @@ DataDiskNames =
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.NonProd, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new SingleServerConfiguration("X00-RG", "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    InfrastructureConfiguration = new SingleServerConfiguration("X00-RG", "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2011,10 +2011,10 @@ DataDiskNames =
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -2056,7 +2056,7 @@ DataDiskNames =
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2071,7 +2071,7 @@ DataDiskNames =
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2080,16 +2080,16 @@ DataDiskNames =
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 1L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 1L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2098,16 +2098,16 @@ DataDiskNames =
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 6L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 6L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2116,10 +2116,10 @@ DataDiskNames =
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -2160,7 +2160,7 @@ DataDiskNames =
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2175,7 +2175,7 @@ DataDiskNames =
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2184,16 +2184,16 @@ DataDiskNames =
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 2L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 2L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2202,16 +2202,16 @@ DataDiskNames =
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 6L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 6L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2220,10 +2220,10 @@ DataDiskNames =
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -2267,7 +2267,7 @@ DataDiskNames =
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2282,7 +2282,7 @@ DataDiskNames =
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2291,16 +2291,16 @@ DataDiskNames =
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 2L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 2L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2309,16 +2309,16 @@ DataDiskNames =
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 6L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 6L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2327,10 +2327,10 @@ DataDiskNames =
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -2374,7 +2374,7 @@ DataDiskNames =
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2389,7 +2389,7 @@ DataDiskNames =
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.NonProd, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new SingleServerConfiguration("X00-RG", "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    InfrastructureConfiguration = new SingleServerConfiguration("X00-RG", "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2398,10 +2398,10 @@ DataDiskNames =
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -2443,7 +2443,7 @@ DataDiskNames =
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2455,10 +2455,10 @@ DataDiskNames =
             string sapVirtualInstanceName = "X00";
             SapVirtualInstanceData data = new SapVirtualInstanceData(new AzureLocation("westcentralus"))
             {
-                Properties = new SapVirtualInstanceProperties(SapEnvironmentType.NonProd, SapProductType.S4HANA, new DeploymentConfiguration
+                Properties = new SapVirtualInstanceProperties(SapEnvironmentType.NonProd, SapProductType.S4HANA, new SapDeploymentConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new SingleServerConfiguration("X00-RG", "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    InfrastructureConfiguration = new SingleServerConfiguration("X00-RG", "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2467,10 +2467,10 @@ DataDiskNames =
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshPublicKeys = {new SshPublicKey
+                            SshPublicKeys = {new SapSshPublicKey
 {
 KeyData = "ssh-rsa public key",
 }},
@@ -2507,7 +2507,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2522,7 +2522,7 @@ KeyData = "ssh-rsa public key",
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2531,16 +2531,16 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 1L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 1L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2549,16 +2549,16 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 6L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 6L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2567,10 +2567,10 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -2614,7 +2614,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2629,7 +2629,7 @@ KeyData = "ssh-rsa public key",
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2638,16 +2638,16 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 1L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 1L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2656,16 +2656,16 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 6L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 6L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2674,10 +2674,10 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -2725,7 +2725,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2740,7 +2740,7 @@ KeyData = "ssh-rsa public key",
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2749,16 +2749,16 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 1L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 1L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2767,16 +2767,16 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 6L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 6L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2785,10 +2785,10 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -2832,7 +2832,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2847,7 +2847,7 @@ KeyData = "ssh-rsa public key",
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("X00-RG", new SapCentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E16ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2856,16 +2856,16 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 1L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    }), 1L), new SapApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/appsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2874,16 +2874,16 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
                             },
                         },
-                    }), 6L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 6L), new SapDatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/dbsubnet", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP",
@@ -2892,10 +2892,10 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "{your-username}",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "abc",
                                 PrivateKey = "xyz",
@@ -2939,7 +2939,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -2954,7 +2954,7 @@ KeyData = "ssh-rsa public key",
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.Prod, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new ThreeTierConfiguration("{{resourcegrp}}", new CentralServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app", new VirtualMachineConfiguration("Standard_E4ds_v4", new ImageReference
+                    InfrastructureConfiguration = new ThreeTierConfiguration("{{resourcegrp}}", new SapCentralServerConfiguration("/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app", new VirtualMachineConfiguration("Standard_E4ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP-HA",
@@ -2963,16 +2963,16 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "azureuser",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "{{sshkey}}",
                                 PrivateKey = "{{privateKey}}",
                             },
                         },
-                    }), 1L), new ApplicationServerConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app", new VirtualMachineConfiguration("Standard_E4ds_v4", new ImageReference
+                    }), 1L), new SapApplicationServerConfiguration("/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app", new VirtualMachineConfiguration("Standard_E4ds_v4", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP-HA",
@@ -2981,16 +2981,16 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "azureuser",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "{{sshkey}}",
                                 PrivateKey = "{{privateKey}}",
                             },
                         },
-                    }), 2L), new DatabaseConfiguration("/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app", new VirtualMachineConfiguration("Standard_M32ts", new ImageReference
+                    }), 2L), new SapDatabaseConfiguration("/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/app", new VirtualMachineConfiguration("Standard_M32ts", new SapImageReference
                     {
                         Publisher = "RedHat",
                         Offer = "RHEL-SAP-HA",
@@ -2999,10 +2999,10 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "azureuser",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "{{sshkey}}",
                                 PrivateKey = "{{privateKey}}",
@@ -3012,7 +3012,7 @@ KeyData = "ssh-rsa public key",
                     {
                         IsSecondaryIPEnabled = true,
                     },
-                    SoftwareConfiguration = new SapInstallWithoutOSConfigSoftwareConfiguration("https://teststorageaccount.blob.core.windows.net/sapbits/sapfiles/boms/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml", "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Storage/storageAccounts/teststorageaccount", "SAP S/4HANA 1909 SPS 03"),
+                    SoftwareConfiguration = new SapInstallWithoutOSConfigSoftwareConfiguration("https://teststorageaccount.blob.core.windows.net/sapbits/sapfiles/boms/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml", "/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Storage/storageAccounts/teststorageaccount", "SAP S/4HANA 1909 SPS 03"),
                     OSSapConfiguration = new OSSapConfiguration
                     {
                         SapFqdn = "sap.bpaas.com",
@@ -3047,7 +3047,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -3062,7 +3062,7 @@ KeyData = "ssh-rsa public key",
                 Properties = new SapVirtualInstanceProperties(SapEnvironmentType.NonProd, SapProductType.S4HANA, new DeploymentWithOSConfiguration
                 {
                     AppLocation = "eastus",
-                    InfrastructureConfiguration = new SingleServerConfiguration("test-rg", "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/testsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new ImageReference
+                    InfrastructureConfiguration = new SingleServerConfiguration("test-rg", "/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/testsubnet", new VirtualMachineConfiguration("Standard_E32ds_v4", new SapImageReference
                     {
                         Publisher = "SUSE",
                         Offer = "SLES-SAP",
@@ -3071,17 +3071,17 @@ KeyData = "ssh-rsa public key",
                     }, new OSProfile
                     {
                         AdminUsername = "azureappadmin",
-                        OSConfiguration = new LinuxConfiguration
+                        OSConfiguration = new SapLinuxConfiguration
                         {
                             DisablePasswordAuthentication = true,
-                            SshKeyPair = new SshKeyPair
+                            SshKeyPair = new SapSshKeyPair
                             {
                                 PublicKey = "{{sshkey}}",
                                 PrivateKey = "{{privateKey}}",
                             },
                         },
                     })),
-                    SoftwareConfiguration = new SapInstallWithoutOSConfigSoftwareConfiguration("https://teststorageaccount.blob.core.windows.net/sapbits/sapfiles/boms/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml", "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Storage/storageAccounts/teststorageaccount", "SAP S/4HANA 1909 SPS 03"),
+                    SoftwareConfiguration = new SapInstallWithoutOSConfigSoftwareConfiguration("https://teststorageaccount.blob.core.windows.net/sapbits/sapfiles/boms/S41909SPS03_v0011ms/S41909SPS03_v0011ms.yaml", "/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Storage/storageAccounts/teststorageaccount", "SAP S/4HANA 1909 SPS 03"),
                     OSSapConfiguration = new OSSapConfiguration
                     {
                         SapFqdn = "sap.bpaas.com",
@@ -3113,7 +3113,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -3125,9 +3125,9 @@ KeyData = "ssh-rsa public key",
             string sapVirtualInstanceName = "X00";
             SapVirtualInstanceData data = new SapVirtualInstanceData(new AzureLocation("northeurope"))
             {
-                Properties = new SapVirtualInstanceProperties(SapEnvironmentType.NonProd, SapProductType.S4HANA, new DiscoveryConfiguration
+                Properties = new SapVirtualInstanceProperties(SapEnvironmentType.NonProd, SapProductType.S4HANA, new SapDiscoveryConfiguration
                 {
-                    CentralServerVmId = "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Compute/virtualMachines/sapq20scsvm0",
+                    CentralServerVmId = "/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Compute/virtualMachines/sapq20scsvm0",
                 }),
                 Tags =
 {
@@ -3159,7 +3159,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -3171,9 +3171,9 @@ KeyData = "ssh-rsa public key",
             string sapVirtualInstanceName = "X00";
             SapVirtualInstanceData data = new SapVirtualInstanceData(new AzureLocation("northeurope"))
             {
-                Properties = new SapVirtualInstanceProperties(SapEnvironmentType.NonProd, SapProductType.S4HANA, new DiscoveryConfiguration
+                Properties = new SapVirtualInstanceProperties(SapEnvironmentType.NonProd, SapProductType.S4HANA, new SapDiscoveryConfiguration
                 {
-                    CentralServerVmId = "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Compute/virtualMachines/sapq20scsvm0",
+                    CentralServerVmId = "/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Compute/virtualMachines/sapq20scsvm0",
                     ManagedRgStorageAccountName = "q20saacssgrs",
                 }),
                 Tags =
@@ -3206,7 +3206,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -3218,9 +3218,9 @@ KeyData = "ssh-rsa public key",
             string sapVirtualInstanceName = "X00";
             SapVirtualInstanceData data = new SapVirtualInstanceData(new AzureLocation("northeurope"))
             {
-                Properties = new SapVirtualInstanceProperties(SapEnvironmentType.NonProd, SapProductType.S4HANA, new DiscoveryConfiguration
+                Properties = new SapVirtualInstanceProperties(SapEnvironmentType.NonProd, SapProductType.S4HANA, new SapDiscoveryConfiguration
                 {
-                    CentralServerVmId = "/subscriptions/49d64d54-e966-4c46-a868-1999802b762c/resourceGroups/test-rg/providers/Microsoft.Compute/virtualMachines/sapq20scsvm0",
+                    CentralServerVmId = "/subscriptions/8e17e36c-42e9-4cd5-a078-7b44883414e0/resourceGroups/test-rg/providers/Microsoft.Compute/virtualMachines/sapq20scsvm0",
                 })
                 {
                     ManagedResourcesNetworkAccessType = ManagedResourcesNetworkAccessType.Private,
@@ -3255,7 +3255,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -3288,7 +3288,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -3356,7 +3356,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -3385,7 +3385,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -3414,7 +3414,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
@@ -3455,7 +3455,7 @@ KeyData = "ssh-rsa public key",
 
             // this example assumes you already have this ResourceGroupResource created on azure
             // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "49d64d54-e966-4c46-a868-1999802b762c";
+            string subscriptionId = "8e17e36c-42e9-4cd5-a078-7b44883414e0";
             string resourceGroupName = "test-rg";
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);

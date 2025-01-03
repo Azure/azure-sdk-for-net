@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.SapVirtualInstances.Models
 {
     /// <summary> The SAP Software configuration Input when the software is to be installed by service. </summary>
-    public partial class ServiceInitiatedSoftwareConfiguration : SoftwareConfiguration
+    public partial class ServiceInitiatedSoftwareConfiguration : SapSoftwareConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="ServiceInitiatedSoftwareConfiguration"/>. </summary>
         /// <param name="bomUri"> The URL to the SAP Build of Materials(BOM) file. </param>

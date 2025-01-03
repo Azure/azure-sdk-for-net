@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <param name="configuration">
         /// Defines if the SAP system is being created using Azure Center for SAP solutions (ACSS) or if an existing SAP system is being registered with ACSS
         /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="DiscoveryConfiguration"/>.
+        /// The available derived classes include <see cref="SapDeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="SapDiscoveryConfiguration"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="configuration"/> is null. </exception>
         public SapVirtualInstanceProperties(SapEnvironmentType environment, SapProductType sapProduct, SapConfiguration configuration)
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <param name="configuration">
         /// Defines if the SAP system is being created using Azure Center for SAP solutions (ACSS) or if an existing SAP system is being registered with ACSS
         /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="DiscoveryConfiguration"/>.
+        /// The available derived classes include <see cref="SapDeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="SapDiscoveryConfiguration"/>.
         /// </param>
         /// <param name="managedResourceGroupConfiguration"> Managed resource group configuration. </param>
         /// <param name="status"> Defines the SAP Instance status. </param>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <summary>
         /// Defines if the SAP system is being created using Azure Center for SAP solutions (ACSS) or if an existing SAP system is being registered with ACSS
         /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="DiscoveryConfiguration"/>.
+        /// The available derived classes include <see cref="SapDeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="SapDiscoveryConfiguration"/>.
         /// </summary>
         public SapConfiguration Configuration { get; set; }
         /// <summary> Managed resource group configuration. </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <summary> Indicates any errors on the Virtual Instance for SAP solutions resource. </summary>
         internal SapVirtualInstanceError Errors { get; }
         /// <summary> The Virtual Instance for SAP error body. </summary>
-        public ErrorInformation ErrorsProperties
+        public SapErrorInformation ErrorsProperties
         {
             get => Errors?.Properties;
         }

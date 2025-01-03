@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
                 return null;
             }
             DiskVolumeConfiguration recommendedConfiguration = default;
-            IReadOnlyList<DiskDetails> supportedConfigurations = default;
+            IReadOnlyList<SapDiskDetails> supportedConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,10 +107,10 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
                     {
                         continue;
                     }
-                    List<DiskDetails> array = new List<DiskDetails>();
+                    List<SapDiskDetails> array = new List<SapDiskDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DiskDetails.DeserializeDiskDetails(item, options));
+                        array.Add(SapDiskDetails.DeserializeSapDiskDetails(item, options));
                     }
                     supportedConfigurations = array;
                     continue;
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SapDiskConfiguration(recommendedConfiguration, supportedConfigurations ?? new ChangeTrackingList<DiskDetails>(), serializedAdditionalRawData);
+            return new SapDiskConfiguration(recommendedConfiguration, supportedConfigurations ?? new ChangeTrackingList<SapDiskDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SapDiskConfiguration>.Write(ModelReaderWriterOptions options)

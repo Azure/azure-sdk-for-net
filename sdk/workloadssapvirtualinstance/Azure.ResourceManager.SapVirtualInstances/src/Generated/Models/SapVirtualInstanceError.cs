@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <summary> Initializes a new instance of <see cref="SapVirtualInstanceError"/>. </summary>
         /// <param name="properties"> The Virtual Instance for SAP error body. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SapVirtualInstanceError(ErrorInformation properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SapVirtualInstanceError(SapErrorInformation properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Properties = properties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The Virtual Instance for SAP error body. </summary>
-        public ErrorInformation Properties { get; }
+        public SapErrorInformation Properties { get; }
     }
 }

@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errorsProperties"> Defines the Application Instance errors. </param>
         /// <returns> A new <see cref="Models.SapApplicationServerProperties"/> instance for mocking. </returns>
-        public static SapApplicationServerProperties SapApplicationServerProperties(string instanceNo = null, string subnet = null, string hostname = null, string kernelVersion = null, string kernelPatch = null, string ipAddress = null, long? gatewayPort = null, long? icmHttpPort = null, long? icmHttpsPort = null, string dispatcherStatus = null, ResourceIdentifier loadBalancerDetailsId = null, IEnumerable<ApplicationServerVmDetails> vmDetails = null, SapVirtualInstanceStatus? status = null, SapHealthState? health = null, SapVirtualInstanceProvisioningState? provisioningState = null, ErrorInformation errorsProperties = null)
+        public static SapApplicationServerProperties SapApplicationServerProperties(string instanceNo = null, string subnet = null, string hostname = null, string kernelVersion = null, string kernelPatch = null, string ipAddress = null, long? gatewayPort = null, long? icmHttpPort = null, long? icmHttpsPort = null, string dispatcherStatus = null, ResourceIdentifier loadBalancerDetailsId = null, IEnumerable<ApplicationServerVmDetails> vmDetails = null, SapVirtualInstanceStatus? status = null, SapHealthState? health = null, SapVirtualInstanceProvisioningState? provisioningState = null, SapErrorInformation errorsProperties = null)
         {
             vmDetails ??= new List<ApplicationServerVmDetails>();
 
@@ -95,16 +95,16 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
             return new ApplicationServerVmDetails(type, virtualMachineId, storageDetails?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ErrorInformation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SapErrorInformation"/>. </summary>
         /// <param name="code"> Service specific error code which serves as the substatus for the HTTP error code. </param>
         /// <param name="message"> Description of the error. </param>
         /// <param name="details"> Internal error details. </param>
-        /// <returns> A new <see cref="Models.ErrorInformation"/> instance for mocking. </returns>
-        public static ErrorInformation ErrorInformation(string code = null, string message = null, IEnumerable<ErrorInformation> details = null)
+        /// <returns> A new <see cref="Models.SapErrorInformation"/> instance for mocking. </returns>
+        public static SapErrorInformation SapErrorInformation(string code = null, string message = null, IEnumerable<SapErrorInformation> details = null)
         {
-            details ??= new List<ErrorInformation>();
+            details ??= new List<SapErrorInformation>();
 
-            return new ErrorInformation(code, message, details?.ToList(), serializedAdditionalRawData: null);
+            return new SapErrorInformation(code, message, details?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OperationStatusResult"/>. </summary>
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errorsProperties"> Defines the errors related to Database resource. </param>
         /// <returns> A new <see cref="Models.SapDatabaseProperties"/> instance for mocking. </returns>
-        public static SapDatabaseProperties SapDatabaseProperties(string subnet = null, string databaseSid = null, string databaseType = null, string ipAddress = null, ResourceIdentifier loadBalancerDetailsId = null, IEnumerable<DatabaseVmDetails> vmDetails = null, SapVirtualInstanceStatus? status = null, SapVirtualInstanceProvisioningState? provisioningState = null, ErrorInformation errorsProperties = null)
+        public static SapDatabaseProperties SapDatabaseProperties(string subnet = null, string databaseSid = null, string databaseType = null, string ipAddress = null, ResourceIdentifier loadBalancerDetailsId = null, IEnumerable<DatabaseVmDetails> vmDetails = null, SapVirtualInstanceStatus? status = null, SapVirtualInstanceProvisioningState? provisioningState = null, SapErrorInformation errorsProperties = null)
         {
             vmDetails ??= new List<DatabaseVmDetails>();
 
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errorsProperties"> Defines the errors related to SAP Central Services Instance resource. </param>
         /// <returns> A new <see cref="Models.SapCentralServerProperties"/> instance for mocking. </returns>
-        public static SapCentralServerProperties SapCentralServerProperties(string instanceNo = null, string subnet = null, MessageServerProperties messageServerProperties = null, EnqueueServerProperties enqueueServerProperties = null, GatewayServerProperties gatewayServerProperties = null, EnqueueReplicationServerProperties enqueueReplicationServerProperties = null, string kernelVersion = null, string kernelPatch = null, ResourceIdentifier loadBalancerDetailsId = null, IEnumerable<CentralServerVmDetails> vmDetails = null, SapVirtualInstanceStatus? status = null, SapHealthState? health = null, SapVirtualInstanceProvisioningState? provisioningState = null, ErrorInformation errorsProperties = null)
+        public static SapCentralServerProperties SapCentralServerProperties(string instanceNo = null, string subnet = null, MessageServerProperties messageServerProperties = null, EnqueueServerProperties enqueueServerProperties = null, GatewayServerProperties gatewayServerProperties = null, EnqueueReplicationServerProperties enqueueReplicationServerProperties = null, string kernelVersion = null, string kernelPatch = null, ResourceIdentifier loadBalancerDetailsId = null, IEnumerable<CentralServerVmDetails> vmDetails = null, SapVirtualInstanceStatus? status = null, SapHealthState? health = null, SapVirtualInstanceProvisioningState? provisioningState = null, SapErrorInformation errorsProperties = null)
         {
             vmDetails ??= new List<CentralServerVmDetails>();
 
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <param name="configuration">
         /// Defines if the SAP system is being created using Azure Center for SAP solutions (ACSS) or if an existing SAP system is being registered with ACSS
         /// Please note <see cref="SapConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="Models.DiscoveryConfiguration"/>.
+        /// The available derived classes include <see cref="SapDeploymentConfiguration"/>, <see cref="DeploymentWithOSConfiguration"/> and <see cref="Models.SapDiscoveryConfiguration"/>.
         /// </param>
         /// <param name="managedResourceGroupName"> Managed resource group configuration. </param>
         /// <param name="status"> Defines the SAP Instance status. </param>
@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <param name="provisioningState"> Defines the provisioning states. </param>
         /// <param name="errorsProperties"> Indicates any errors on the Virtual Instance for SAP solutions resource. </param>
         /// <returns> A new <see cref="Models.SapVirtualInstanceProperties"/> instance for mocking. </returns>
-        public static SapVirtualInstanceProperties SapVirtualInstanceProperties(SapEnvironmentType environment = default, SapProductType sapProduct = default, ManagedResourcesNetworkAccessType? managedResourcesNetworkAccessType = null, SapConfiguration configuration = null, string managedResourceGroupName = null, SapVirtualInstanceStatus? status = null, SapHealthState? health = null, SapVirtualInstanceState? state = null, SapVirtualInstanceProvisioningState? provisioningState = null, ErrorInformation errorsProperties = null)
+        public static SapVirtualInstanceProperties SapVirtualInstanceProperties(SapEnvironmentType environment = default, SapProductType sapProduct = default, ManagedResourcesNetworkAccessType? managedResourcesNetworkAccessType = null, SapConfiguration configuration = null, string managedResourceGroupName = null, SapVirtualInstanceStatus? status = null, SapHealthState? health = null, SapVirtualInstanceState? state = null, SapVirtualInstanceProvisioningState? provisioningState = null, SapErrorInformation errorsProperties = null)
         {
             return new SapVirtualInstanceProperties(
                 environment,
@@ -393,14 +393,14 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DiscoveryConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SapDiscoveryConfiguration"/>. </summary>
         /// <param name="centralServerVmId"> The virtual machine ID of the Central Server. </param>
         /// <param name="managedRgStorageAccountName"> The custom storage account name for the storage account created by the service in the managed resource group created as part of VIS deployment.&lt;br&gt;&lt;br&gt;Refer to the storage account naming rules [here](https://learn.microsoft.com/azure/azure-resource-manager/management/resource-name-rules#microsoftstorage).&lt;br&gt;&lt;br&gt;If not provided, the service will create the storage account with a random name. </param>
         /// <param name="appLocation"> The geo-location where the SAP system exists. </param>
-        /// <returns> A new <see cref="Models.DiscoveryConfiguration"/> instance for mocking. </returns>
-        public static DiscoveryConfiguration DiscoveryConfiguration(string centralServerVmId = null, string managedRgStorageAccountName = null, string appLocation = null)
+        /// <returns> A new <see cref="Models.SapDiscoveryConfiguration"/> instance for mocking. </returns>
+        public static SapDiscoveryConfiguration SapDiscoveryConfiguration(string centralServerVmId = null, string managedRgStorageAccountName = null, string appLocation = null)
         {
-            return new DiscoveryConfiguration(SapConfigurationType.Discovery, serializedAdditionalRawData: null, centralServerVmId, managedRgStorageAccountName, appLocation);
+            return new SapDiscoveryConfiguration(SapConfigurationType.Discovery, serializedAdditionalRawData: null, centralServerVmId, managedRgStorageAccountName, appLocation);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SapSizingRecommendationContent"/>. </summary>
@@ -512,14 +512,14 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <param name="recommendedConfiguration"> The recommended disk details for a given VM Sku. </param>
         /// <param name="supportedConfigurations"> The list of supported disks for a given VM Sku. </param>
         /// <returns> A new <see cref="Models.SapDiskConfiguration"/> instance for mocking. </returns>
-        public static SapDiskConfiguration SapDiskConfiguration(DiskVolumeConfiguration recommendedConfiguration = null, IEnumerable<DiskDetails> supportedConfigurations = null)
+        public static SapDiskConfiguration SapDiskConfiguration(DiskVolumeConfiguration recommendedConfiguration = null, IEnumerable<SapDiskDetails> supportedConfigurations = null)
         {
-            supportedConfigurations ??= new List<DiskDetails>();
+            supportedConfigurations ??= new List<SapDiskDetails>();
 
             return new SapDiskConfiguration(recommendedConfiguration, supportedConfigurations?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DiskDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SapDiskDetails"/>. </summary>
         /// <param name="skuName"> The type of disk sku. For example, Standard_LRS, Standard_ZRS, Premium_LRS, Premium_ZRS. </param>
         /// <param name="sizeGB"> The disk size in GB. </param>
         /// <param name="minimumSupportedDiskCount"> The minimum supported disk count. </param>
@@ -527,10 +527,10 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <param name="iopsReadWrite"> The disk Iops. </param>
         /// <param name="mbpsReadWrite"> The disk provisioned throughput in MBps. </param>
         /// <param name="diskTier"> The disk tier, e.g. P10, E10. </param>
-        /// <returns> A new <see cref="Models.DiskDetails"/> instance for mocking. </returns>
-        public static DiskDetails DiskDetails(DiskSkuName? skuName = null, long? sizeGB = null, long? minimumSupportedDiskCount = null, long? maximumSupportedDiskCount = null, long? iopsReadWrite = null, long? mbpsReadWrite = null, string diskTier = null)
+        /// <returns> A new <see cref="Models.SapDiskDetails"/> instance for mocking. </returns>
+        public static SapDiskDetails SapDiskDetails(SapDiskSkuName? skuName = null, long? sizeGB = null, long? minimumSupportedDiskCount = null, long? maximumSupportedDiskCount = null, long? iopsReadWrite = null, long? mbpsReadWrite = null, string diskTier = null)
         {
-            return new DiskDetails(
+            return new SapDiskDetails(
                 skuName != null ? new DiskSku(skuName, serializedAdditionalRawData: null) : null,
                 sizeGB,
                 minimumSupportedDiskCount,

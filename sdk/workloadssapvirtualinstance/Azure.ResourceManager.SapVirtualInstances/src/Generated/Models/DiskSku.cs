@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <summary> Initializes a new instance of <see cref="DiskSku"/>. </summary>
         /// <param name="name"> Defines the disk sku name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiskSku(DiskSkuName? name, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiskSku(SapDiskSkuName? name, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Defines the disk sku name. </summary>
-        public DiskSkuName? Name { get; set; }
+        public SapDiskSkuName? Name { get; set; }
     }
 }

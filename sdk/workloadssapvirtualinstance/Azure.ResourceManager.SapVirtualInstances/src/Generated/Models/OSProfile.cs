@@ -55,11 +55,11 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <param name="adminPassword"> Specifies the password of the administrator account. &lt;br&gt;&lt;br&gt; **Minimum-length (Windows):** 8 characters &lt;br&gt;&lt;br&gt; **Minimum-length (Linux):** 6 characters &lt;br&gt;&lt;br&gt; **Max-length (Windows):** 123 characters &lt;br&gt;&lt;br&gt; **Max-length (Linux):** 72 characters &lt;br&gt;&lt;br&gt; **Complexity requirements:** 3 out of 4 conditions below need to be fulfilled &lt;br&gt; Has lower characters &lt;br&gt;Has upper characters &lt;br&gt; Has a digit &lt;br&gt; Has a special character (Regex match [\W_]) &lt;br&gt;&lt;br&gt; **Disallowed values:** "abc@123", "P@$$w0rd", "P@ssw0rd", "P@ssword123", "Pa$$word", "pass@word1", "Password!", "Password1", "Password22", "iloveyou!" &lt;br&gt;&lt;br&gt; For resetting the password, see [How to reset the Remote Desktop service or its login password in a Windows VM](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/reset-rdp) &lt;br&gt;&lt;br&gt; For resetting root password, see [Manage users, SSH, and check or repair disks on Azure Linux VMs using the VMAccess Extension](https://docs.microsoft.com/troubleshoot/azure/virtual-machines/troubleshoot-ssh-connection). </param>
         /// <param name="osConfiguration">
         /// Specifies Windows operating system settings on the virtual machine.
-        /// Please note <see cref="Models.OSConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LinuxConfiguration"/> and <see cref="WindowsConfiguration"/>.
+        /// Please note <see cref="SapOSConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SapLinuxConfiguration"/> and <see cref="SapWindowsConfiguration"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal OSProfile(string adminUsername, string adminPassword, OSConfiguration osConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal OSProfile(string adminUsername, string adminPassword, SapOSConfiguration osConfiguration, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AdminUsername = adminUsername;
             AdminPassword = adminPassword;
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         public string AdminPassword { get; set; }
         /// <summary>
         /// Specifies Windows operating system settings on the virtual machine.
-        /// Please note <see cref="Models.OSConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="LinuxConfiguration"/> and <see cref="WindowsConfiguration"/>.
+        /// Please note <see cref="SapOSConfiguration"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="SapLinuxConfiguration"/> and <see cref="SapWindowsConfiguration"/>.
         /// </summary>
-        public OSConfiguration OSConfiguration { get; set; }
+        public SapOSConfiguration OSConfiguration { get; set; }
     }
 }

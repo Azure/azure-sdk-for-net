@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
             {
                 return null;
             }
-            DiskSkuName? name = default;
+            SapDiskSkuName? name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
                     {
                         continue;
                     }
-                    name = new DiskSkuName(property.Value.GetString());
+                    name = new SapDiskSkuName(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

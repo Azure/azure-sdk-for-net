@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
             }
             string appLocation = default;
             InfrastructureConfiguration infrastructureConfiguration = default;
-            SoftwareConfiguration softwareConfiguration = default;
+            SapSoftwareConfiguration softwareConfiguration = default;
             OSSapConfiguration osSapConfiguration = default;
             SapConfigurationType configurationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
                     {
                         continue;
                     }
-                    softwareConfiguration = SoftwareConfiguration.DeserializeSoftwareConfiguration(property.Value, options);
+                    softwareConfiguration = SapSoftwareConfiguration.DeserializeSapSoftwareConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("osSapConfiguration"u8))

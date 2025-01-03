@@ -77,9 +77,9 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "Deployment": return DeploymentConfiguration.DeserializeDeploymentConfiguration(element, options);
+                    case "Deployment": return SapDeploymentConfiguration.DeserializeSapDeploymentConfiguration(element, options);
                     case "DeploymentWithOSConfig": return DeploymentWithOSConfiguration.DeserializeDeploymentWithOSConfiguration(element, options);
-                    case "Discovery": return DiscoveryConfiguration.DeserializeDiscoveryConfiguration(element, options);
+                    case "Discovery": return SapDiscoveryConfiguration.DeserializeSapDiscoveryConfiguration(element, options);
                 }
             }
             return UnknownSapConfiguration.DeserializeUnknownSapConfiguration(element, options);

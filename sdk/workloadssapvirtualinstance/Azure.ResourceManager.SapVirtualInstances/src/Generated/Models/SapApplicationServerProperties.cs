@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SapVirtualInstances.Models
         /// <summary> Defines the Application Instance errors. </summary>
         internal SapVirtualInstanceError Errors { get; }
         /// <summary> The Virtual Instance for SAP error body. </summary>
-        public ErrorInformation ErrorsProperties
+        public SapErrorInformation ErrorsProperties
         {
             get => Errors?.Properties;
         }
