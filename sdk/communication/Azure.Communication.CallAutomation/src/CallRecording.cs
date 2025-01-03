@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -56,15 +55,31 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                StartCallRecordingRequestInternal request = new()
+                var request = new StartCallRecordingRequestInternal();
+                if (options.CallLocator != null)
                 {
-                    CallLocator = CallLocatorSerializer.Serialize(options.CallLocator),
-                    RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
-                    RecordingChannelType = options.RecordingChannel,
-                    RecordingContentType = options.RecordingContent,
-                    RecordingFormatType = options.RecordingFormat,
-                    PauseOnStart = options.PauseOnStart,
-                };
+                    request = new StartCallRecordingRequestInternal()
+                    {
+                        CallLocator = CallLocatorSerializer.Serialize(options.CallLocator),
+                        RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
+                        RecordingChannelType = options.RecordingChannel,
+                        RecordingContentType = options.RecordingContent,
+                        RecordingFormatType = options.RecordingFormat,
+                        PauseOnStart = options.PauseOnStart
+                    };
+                }
+                else
+                {
+                    request = new StartCallRecordingRequestInternal()
+                    {
+                        RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
+                        RecordingChannelType = options.RecordingChannel,
+                        RecordingContentType = options.RecordingContent,
+                        RecordingFormatType = options.RecordingFormat,
+                        PauseOnStart = options.PauseOnStart,
+                        CallConnectionId = options.CallConnectionId
+                    };
+                }
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
                 {
@@ -119,15 +134,31 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                StartCallRecordingRequestInternal request = new()
+                var request = new StartCallRecordingRequestInternal();
+                if (options.CallLocator != null)
                 {
-                    CallLocator = CallLocatorSerializer.Serialize(options.CallLocator),
-                    RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
-                    RecordingChannelType = options.RecordingChannel,
-                    RecordingContentType = options.RecordingContent,
-                    RecordingFormatType = options.RecordingFormat,
-                    PauseOnStart = options.PauseOnStart,
-                };
+                    request = new StartCallRecordingRequestInternal()
+                    {
+                        CallLocator = CallLocatorSerializer.Serialize(options.CallLocator),
+                        RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
+                        RecordingChannelType = options.RecordingChannel,
+                        RecordingContentType = options.RecordingContent,
+                        RecordingFormatType = options.RecordingFormat,
+                        PauseOnStart = options.PauseOnStart
+                    };
+                }
+                else
+                {
+                     request = new StartCallRecordingRequestInternal()
+                    {
+                        RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
+                        RecordingChannelType = options.RecordingChannel,
+                        RecordingContentType = options.RecordingContent,
+                        RecordingFormatType = options.RecordingFormat,
+                        PauseOnStart = options.PauseOnStart,
+                        CallConnectionId = options.CallConnectionId
+                    };
+                }
 
                 if (options.AudioChannelParticipantOrdering != null && options.AudioChannelParticipantOrdering.Any())
                 {
