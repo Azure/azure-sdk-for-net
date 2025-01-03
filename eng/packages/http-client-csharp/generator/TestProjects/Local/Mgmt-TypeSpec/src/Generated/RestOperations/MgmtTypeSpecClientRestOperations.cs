@@ -12,8 +12,7 @@ using Azure.Core.Pipeline;
 
 namespace MgmtTypeSpec
 {
-    /// <summary></summary>
-    public partial class MgmtTypeSpecClient
+    internal partial class MgmtTypeSpecClient
     {
         private readonly Uri _endpoint;
         /// <summary> A credential used to authenticate to the service. </summary>
@@ -51,19 +50,18 @@ namespace MgmtTypeSpec
             Pipeline = HttpPipelineBuilder.Build(options, new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) });
         }
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public HttpPipeline Pipeline { get; }
 
         /// <summary> Initializes a new instance of PrivateLinks. </summary>
         public virtual PrivateLinks GetPrivateLinksClient()
         {
-            return Volatile.Read(ref _cachedPrivateLinks) ?? Interlocked.CompareExchange(ref _cachedPrivateLinks, new PrivateLinks(Pipeline, _tokenCredential, _endpoint), null) ?? _cachedPrivateLinks;
+            return Volatile.Read(ref _cachedPrivateLinks) ?? Interlocked.CompareExchange(ref _cachedPrivateLinks, new PrivateLinks(Pipeline, _endpoint), null) ?? _cachedPrivateLinks;
         }
 
         /// <summary> Initializes a new instance of Foos. </summary>
         public virtual Foos GetFoosClient()
         {
-            return Volatile.Read(ref _cachedFoos) ?? Interlocked.CompareExchange(ref _cachedFoos, new Foos(Pipeline, _tokenCredential, _endpoint), null) ?? _cachedFoos;
+            return Volatile.Read(ref _cachedFoos) ?? Interlocked.CompareExchange(ref _cachedFoos, new Foos(Pipeline, _endpoint), null) ?? _cachedFoos;
         }
     }
 }

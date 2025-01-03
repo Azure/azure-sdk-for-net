@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.InputTransformation;
 using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Azure.Generator.Providers.Abstraction;
@@ -13,7 +14,6 @@ using Microsoft.Generator.CSharp.Snippets;
 using Microsoft.Generator.CSharp.Statements;
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.Generator
@@ -107,20 +107,7 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
-        protected override ClientProvider CreateClientCore(InputClient inputClient) => base.CreateClientCore(TransformInputClient(inputClient));
-
-        private InputClient TransformInputClient(InputClient client)
-        {
-            var operationsToKeep = new List<InputOperation>();
-            foreach (var operation in client.Operations)
-            {
-                // operations_list has been covered in Azure.ResourceManager already, we don't need to generate it in the client
-                if (operation.CrossLanguageDefinitionId != "Azure.ResourceManager.Operations.list")
-                {
-                    operationsToKeep.Add(operation);
-                }
-            }
-            return new InputClient(client.Name, client.Summary, client.Doc, operationsToKeep, client.Parameters, client.Parent);
-        }
+        protected override ClientProvider CreateClientCore(InputClient inputClient)
+            => AzureClientPlugin.Instance.IsAzureArm.Value ? base.CreateClientCore(InputClientTransformer.TransformInputClient(inputClient)) : base.CreateClientCore(inputClient);
     }
 }
