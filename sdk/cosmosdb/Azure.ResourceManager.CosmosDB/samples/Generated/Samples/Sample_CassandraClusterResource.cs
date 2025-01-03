@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_CosmosDBManagedCassandraClusterGet()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraClusterGet.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBManagedCassandraClusterGet.json
             // this example is just showing the usage of "CassandraClusters_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_CosmosDBManagedCassandraClusterDelete()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraClusterDelete.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBManagedCassandraClusterDelete.json
             // this example is just showing the usage of "CassandraClusters_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_CosmosDBManagedCassandraClusterPatch()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraClusterPatch.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBManagedCassandraClusterPatch.json
             // this example is just showing the usage of "CassandraClusters_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,7 +133,7 @@ IPAddress = "10.52.221.4",
         [Ignore("Only validating compilation of examples")]
         public async Task InvokeCommand_CosmosDBManagedCassandraCommand()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraCommand.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBManagedCassandraCommand.json
             // this example is just showing the usage of "CassandraClusters_InvokeCommand" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -167,7 +167,7 @@ IPAddress = "10.52.221.4",
         [Ignore("Only validating compilation of examples")]
         public async Task GetCommand_CosmosDBManagedCassandraListCommand()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraListCommand.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBManagedCassandraListCommand.json
             // this example is just showing the usage of "CassandraClusters_ListCommand" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -196,7 +196,7 @@ IPAddress = "10.52.221.4",
         [Ignore("Only validating compilation of examples")]
         public async Task GetCommandAsync_CosmosDBManagedCassandraCommandResult()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraCommandResult.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBManagedCassandraCommandResult.json
             // this example is just showing the usage of "CassandraClusters_GetCommandAsync" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -212,21 +212,18 @@ IPAddress = "10.52.221.4",
             ResourceIdentifier cassandraClusterResourceId = CassandraClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
             CassandraClusterResource cassandraCluster = client.GetCassandraClusterResource(cassandraClusterResourceId);
 
-            // invoke the operation and iterate over the result
+            // invoke the operation
             string commandId = "318653d0-3da5-4814-b8f6-429f2af0b2a4";
-            await foreach (CassandraClusterCommand item in cassandraCluster.GetCommandAsyncAsync(commandId))
-            {
-                Console.WriteLine($"Succeeded: {item}");
-            }
+            CassandraClusterCommand result = await cassandraCluster.GetCommandAsyncAsync(commandId);
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task GetBackups_CosmosDBManagedCassandraBackupsList()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraBackupsList.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBManagedCassandraBackupsList.json
             // this example is just showing the usage of "CassandraClusters_ListBackups" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -255,7 +252,7 @@ IPAddress = "10.52.221.4",
         [Ignore("Only validating compilation of examples")]
         public async Task GetBackup_CosmosDBManagedCassandraBackup()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraBackup.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBManagedCassandraBackup.json
             // this example is just showing the usage of "CassandraClusters_GetBackup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -282,7 +279,7 @@ IPAddress = "10.52.221.4",
         [Ignore("Only validating compilation of examples")]
         public async Task Deallocate_CosmosDBManagedCassandraClusterDeallocate()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraClusterDeallocate.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBManagedCassandraClusterDeallocate.json
             // this example is just showing the usage of "CassandraClusters_Deallocate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -308,7 +305,7 @@ IPAddress = "10.52.221.4",
         [Ignore("Only validating compilation of examples")]
         public async Task Start_CosmosDBManagedCassandraClusterStart()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraClusterStart.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBManagedCassandraClusterStart.json
             // this example is just showing the usage of "CassandraClusters_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -334,7 +331,7 @@ IPAddress = "10.52.221.4",
         [Ignore("Only validating compilation of examples")]
         public async Task Status_CosmosDBManagedCassandraStatus()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-09-01-preview/examples/CosmosDBManagedCassandraStatus.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-12-01-preview/examples/CosmosDBManagedCassandraStatus.json
             // this example is just showing the usage of "CassandraClusters_Status" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
