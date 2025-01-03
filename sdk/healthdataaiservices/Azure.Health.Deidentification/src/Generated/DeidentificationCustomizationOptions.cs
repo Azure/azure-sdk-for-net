@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary> Result of the "Tag" operation. </summary>
-    public partial class PhiTaggerResult
+    /// <summary> Customizations options to override default service behaviors for synchronous usage. </summary>
+    public partial class DeidentificationCustomizationOptions
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +45,31 @@ namespace Azure.Health.Deidentification
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PhiTaggerResult"/>. </summary>
-        /// <param name="entities"> List of entities detected in the input. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="entities"/> is null. </exception>
-        internal PhiTaggerResult(IEnumerable<PhiEntity> entities)
+        /// <summary> Initializes a new instance of <see cref="DeidentificationCustomizationOptions"/>. </summary>
+        public DeidentificationCustomizationOptions()
         {
-            Argument.AssertNotNull(entities, nameof(entities));
-
-            Entities = entities.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PhiTaggerResult"/>. </summary>
-        /// <param name="entities"> List of entities detected in the input. </param>
+        /// <summary> Initializes a new instance of <see cref="DeidentificationCustomizationOptions"/>. </summary>
+        /// <param name="redactionFormat">
+        /// Format of the redacted output. Only valid when Operation is Redact.
+        /// Please refer to https://learn.microsoft.com/en-us/azure/healthcare-apis/deidentification/redaction-format for more details.
+        /// </param>
+        /// <param name="surrogateLocale"> Locale in which the output surrogates are written. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PhiTaggerResult(IReadOnlyList<PhiEntity> entities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidentificationCustomizationOptions(string redactionFormat, string surrogateLocale, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Entities = entities;
+            RedactionFormat = redactionFormat;
+            SurrogateLocale = surrogateLocale;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PhiTaggerResult"/> for deserialization. </summary>
-        internal PhiTaggerResult()
-        {
-        }
-
-        /// <summary> List of entities detected in the input. </summary>
-        public IReadOnlyList<PhiEntity> Entities { get; }
+        /// <summary>
+        /// Format of the redacted output. Only valid when Operation is Redact.
+        /// Please refer to https://learn.microsoft.com/en-us/azure/healthcare-apis/deidentification/redaction-format for more details.
+        /// </summary>
+        public string RedactionFormat { get; set; }
+        /// <summary> Locale in which the output surrogates are written. </summary>
+        public string SurrogateLocale { get; set; }
     }
 }
