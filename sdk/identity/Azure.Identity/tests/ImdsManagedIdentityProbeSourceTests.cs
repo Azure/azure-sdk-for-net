@@ -14,9 +14,9 @@ using NUnit.Framework;
 
 namespace Azure.Identity.Tests
 {
-    public class ImdsManagedIdentitySourceTests : ClientTestBase
+    public class ImdsManagedIdentityProbeSourceTests : ClientTestBase
     {
-        public ImdsManagedIdentitySourceTests(bool isAsync) : base(isAsync)
+        public ImdsManagedIdentityProbeSourceTests(bool isAsync) : base(isAsync)
         {
         }
 
@@ -159,7 +159,7 @@ namespace Azure.Identity.Tests
             {
                 callCount++;
                 networkTimeouts.Add(msg.NetworkTimeout);
-                Assert.IsTrue(msg.Request.Headers.TryGetValue(ImdsManagedIdentitySource.metadataHeaderName, out _));
+                Assert.IsTrue(msg.Request.Headers.TryGetValue(ImdsManagedIdentityProbeSource.metadataHeaderName, out _));
                 return CreateMockResponse(500, "Error").WithHeader("Content-Type", "application/json");
             });
 
@@ -185,7 +185,7 @@ namespace Azure.Identity.Tests
             {
                 callCount++;
                 networkTimeouts.Add(msg.NetworkTimeout);
-                Assert.IsTrue(msg.Request.Headers.TryGetValue(ImdsManagedIdentitySource.metadataHeaderName, out _));
+                Assert.IsTrue(msg.Request.Headers.TryGetValue(ImdsManagedIdentityProbeSource.metadataHeaderName, out _));
                 return CreateMockResponse(500, "Error").WithHeader("Content-Type", "application/json");
             });
 
