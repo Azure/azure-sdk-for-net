@@ -28,18 +28,16 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantDataBoundaryResource
             TenantDataBoundaryCollection collection = tenantResource.GetTenantDataBoundaries();
 
             // invoke the operation
             DataBoundaryName name = DataBoundaryName.Default;
-            DataBoundaryData data = new DataBoundaryData()
+            DataBoundaryData data = new DataBoundaryData
             {
-                Properties = new DataBoundaryProperties()
+                Properties = new DataBoundaryProperties
                 {
                     DataBoundary = DataBoundaryRegion.EU,
                 },
@@ -66,9 +64,7 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantDataBoundaryResource
             TenantDataBoundaryCollection collection = tenantResource.GetTenantDataBoundaries();
@@ -96,9 +92,7 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantDataBoundaryResource
             TenantDataBoundaryCollection collection = tenantResource.GetTenantDataBoundaries();
@@ -122,9 +116,7 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TenantDataBoundaryResource
             TenantDataBoundaryCollection collection = tenantResource.GetTenantDataBoundaries();

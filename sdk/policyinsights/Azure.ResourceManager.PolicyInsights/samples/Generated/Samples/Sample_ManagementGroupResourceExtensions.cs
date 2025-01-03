@@ -232,12 +232,9 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
             ManagementGroupResource managementGroupResource = client.GetManagementGroupResource(managementGroupResourceId);
 
             // invoke the operation
-            CheckManagementGroupPolicyRestrictionsContent content = new CheckManagementGroupPolicyRestrictionsContent()
+            CheckManagementGroupPolicyRestrictionsContent content = new CheckManagementGroupPolicyRestrictionsContent
             {
-                PendingFields =
-{
-new PendingField("type")
-},
+                PendingFields = { new PendingField("type") },
             };
             CheckPolicyRestrictionsResult result = await managementGroupResource.CheckPolicyRestrictionsAsync(content);
 

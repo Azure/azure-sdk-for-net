@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("useSystemAssignedIdentity"u8);
                 writer.WriteBooleanValue(UseSystemAssignedIdentity.Value);
             }
-            if (Optional.IsDefined(UserAssignedIdentityArmUri))
+            if (Optional.IsDefined(UserAssignedIdentityArmUriString))
             {
                 writer.WritePropertyName("userAssignedIdentityArmUrl"u8);
-                writer.WriteStringValue(UserAssignedIdentityArmUri.AbsoluteUri);
+                writer.WriteStringValue(UserAssignedIdentityArmUriString);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             bool? useSystemAssignedIdentity = default;
-            Uri userAssignedIdentityArmUrl = default;
+            string userAssignedIdentityArmUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,11 +98,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (property.NameEquals("userAssignedIdentityArmUrl"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    userAssignedIdentityArmUrl = new Uri(property.Value.GetString());
+                    userAssignedIdentityArmUrl = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")

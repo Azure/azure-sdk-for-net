@@ -78,6 +78,6 @@ namespace Azure.AI.Projects
         /// <summary> The object type. </summary>
         internal string Type { get; set; }
         /// <summary> The textual content associated with this text annotation item. </summary>
-        public string Text { get; set; }
+        public string Text { get; }
     }
 }

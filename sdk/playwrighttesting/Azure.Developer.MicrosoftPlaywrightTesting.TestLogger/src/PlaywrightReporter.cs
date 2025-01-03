@@ -150,16 +150,26 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             _environment.Exit(1);
             return;
         }
-
+        if (cloudRunId?.Length > 200)
+        {
+            _consoleWriter.WriteError(Constants.s_playwright_service_runId_length_exceeded_error_message);
+            _environment.Exit(1);
+            return;
+        }
         var baseUri = new Uri(baseUrl);
         var reporterUtils = new ReporterUtils();
         TokenDetails tokenDetails = reporterUtils.ParseWorkspaceIdFromAccessToken(jsonWebTokenHandler: _jsonWebTokenHandler, accessToken: accessToken);
         var workspaceId = tokenDetails.aid;
-
+        var runNameString = runName?.ToString();
+        if (runNameString?.Length > 200)
+        {
+            runNameString = runNameString.Substring(0, 200);
+            _consoleWriter.WriteLine(Constants.s_playwright_service_runName_truncated_warning);
+        }
         var cloudRunMetadata = new CloudRunMetadata
         {
             RunId = cloudRunId,
-            RunName = runName?.ToString(),
+            RunName = runNameString,
             WorkspaceId = workspaceId,
             BaseUri = baseUri,
             EnableResultPublish = _enableResultPublish,

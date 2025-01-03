@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             NamespaceTopicResource namespaceTopic = client.GetNamespaceTopicResource(namespaceTopicResourceId);
 
             // invoke the operation
-            NamespaceTopicPatch patch = new NamespaceTopicPatch()
+            NamespaceTopicPatch patch = new NamespaceTopicPatch
             {
                 EventRetentionInDays = 1,
             };

@@ -18,6 +18,57 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_ManagementNetworkGroupsPut()
+        {
+            // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ManagedNetworkGroup/ManagedNetworkGroupsPut.json
+            // this example is just showing the usage of "ManagedNetworkGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedNetworkResource created on azure
+            // for more information of creating ManagedNetworkResource, please refer to the document of ManagedNetworkResource
+            string subscriptionId = "subscriptionA";
+            string resourceGroupName = "myResourceGroup";
+            string managedNetworkName = "myManagedNetwork";
+            ResourceIdentifier managedNetworkResourceId = ManagedNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedNetworkName);
+            ManagedNetworkResource managedNetwork = client.GetManagedNetworkResource(managedNetworkResourceId);
+
+            // get the collection of this ManagedNetworkGroupResource
+            ManagedNetworkGroupCollection collection = managedNetwork.GetManagedNetworkGroups();
+
+            // invoke the operation
+            string managedNetworkGroupName = "myManagedNetworkGroup1";
+            ManagedNetworkGroupData data = new ManagedNetworkGroupData
+            {
+                ManagementGroups = { },
+                Subscriptions = { },
+                VirtualNetworks = {new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA"),
+}, new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB"),
+}},
+                Subnets = {new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA"),
+}},
+            };
+            ArmOperation<ManagedNetworkGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, managedNetworkGroupName, data);
+            ManagedNetworkGroupResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ManagedNetworkGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_ManagementNetworkGroupsGet()
         {
             // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ManagedNetworkGroup/ManagedNetworkGroupsGet.json
@@ -48,6 +99,42 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
             ManagedNetworkGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ManagedNetworksGroupsListByManagedNetwork()
+        {
+            // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ManagedNetworkGroup/ManagedNetworkGroupsListByManagedNetwork.json
+            // this example is just showing the usage of "ManagedNetworkGroups_ListByManagedNetwork" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedNetworkResource created on azure
+            // for more information of creating ManagedNetworkResource, please refer to the document of ManagedNetworkResource
+            string subscriptionId = "subscriptionA";
+            string resourceGroupName = "myResourceGroup";
+            string managedNetworkName = "myManagedNetwork";
+            ResourceIdentifier managedNetworkResourceId = ManagedNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedNetworkName);
+            ManagedNetworkResource managedNetwork = client.GetManagedNetworkResource(managedNetworkResourceId);
+
+            // get the collection of this ManagedNetworkGroupResource
+            ManagedNetworkGroupCollection collection = managedNetwork.GetManagedNetworkGroups();
+
+            // invoke the operation and iterate over the result
+            await foreach (ManagedNetworkGroupResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ManagedNetworkGroupData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -120,103 +207,6 @@ namespace Azure.ResourceManager.ManagedNetwork.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_ManagementNetworkGroupsPut()
-        {
-            // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ManagedNetworkGroup/ManagedNetworkGroupsPut.json
-            // this example is just showing the usage of "ManagedNetworkGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagedNetworkResource created on azure
-            // for more information of creating ManagedNetworkResource, please refer to the document of ManagedNetworkResource
-            string subscriptionId = "subscriptionA";
-            string resourceGroupName = "myResourceGroup";
-            string managedNetworkName = "myManagedNetwork";
-            ResourceIdentifier managedNetworkResourceId = ManagedNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedNetworkName);
-            ManagedNetworkResource managedNetwork = client.GetManagedNetworkResource(managedNetworkResourceId);
-
-            // get the collection of this ManagedNetworkGroupResource
-            ManagedNetworkGroupCollection collection = managedNetwork.GetManagedNetworkGroups();
-
-            // invoke the operation
-            string managedNetworkGroupName = "myManagedNetworkGroup1";
-            ManagedNetworkGroupData data = new ManagedNetworkGroupData()
-            {
-                ManagementGroups =
-{
-},
-                Subscriptions =
-{
-},
-                VirtualNetworks =
-{
-new WritableSubResource()
-{
-Id = new ResourceIdentifier("/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA"),
-},new WritableSubResource()
-{
-Id = new ResourceIdentifier("/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetB"),
-}
-},
-                Subnets =
-{
-new WritableSubResource()
-{
-Id = new ResourceIdentifier("/subscriptionB/resourceGroups/myResourceGroup/providers/Microsoft.Network/virtualNetworks/VnetA/subnets/subnetA"),
-}
-},
-            };
-            ArmOperation<ManagedNetworkGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, managedNetworkGroupName, data);
-            ManagedNetworkGroupResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ManagedNetworkGroupData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ManagedNetworksGroupsListByManagedNetwork()
-        {
-            // Generated from example definition: specification/managednetwork/resource-manager/Microsoft.ManagedNetwork/preview/2019-06-01-preview/examples/ManagedNetworkGroup/ManagedNetworkGroupsListByManagedNetwork.json
-            // this example is just showing the usage of "ManagedNetworkGroups_ListByManagedNetwork" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagedNetworkResource created on azure
-            // for more information of creating ManagedNetworkResource, please refer to the document of ManagedNetworkResource
-            string subscriptionId = "subscriptionA";
-            string resourceGroupName = "myResourceGroup";
-            string managedNetworkName = "myManagedNetwork";
-            ResourceIdentifier managedNetworkResourceId = ManagedNetworkResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedNetworkName);
-            ManagedNetworkResource managedNetwork = client.GetManagedNetworkResource(managedNetworkResourceId);
-
-            // get the collection of this ManagedNetworkGroupResource
-            ManagedNetworkGroupCollection collection = managedNetwork.GetManagedNetworkGroups();
-
-            // invoke the operation and iterate over the result
-            await foreach (ManagedNetworkGroupResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ManagedNetworkGroupData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

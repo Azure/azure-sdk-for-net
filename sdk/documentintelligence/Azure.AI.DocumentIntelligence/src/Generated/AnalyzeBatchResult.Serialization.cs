@@ -40,13 +40,16 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteNumberValue(FailedCount);
             writer.WritePropertyName("skippedCount"u8);
             writer.WriteNumberValue(SkippedCount);
-            writer.WritePropertyName("details"u8);
-            writer.WriteStartArray();
-            foreach (var item in Details)
+            if (Optional.IsCollectionDefined(Details))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("details"u8);
+                writer.WriteStartArray();
+                foreach (var item in Details)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -87,7 +90,7 @@ namespace Azure.AI.DocumentIntelligence
             int succeededCount = default;
             int failedCount = default;
             int skippedCount = default;
-            IReadOnlyList<AnalyzeBatchOperationDetail> details = default;
+            IReadOnlyList<AnalyzeBatchResultDetails> details = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,10 +112,14 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (property.NameEquals("details"u8))
                 {
-                    List<AnalyzeBatchOperationDetail> array = new List<AnalyzeBatchOperationDetail>();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AnalyzeBatchResultDetails> array = new List<AnalyzeBatchResultDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AnalyzeBatchOperationDetail.DeserializeAnalyzeBatchOperationDetail(item, options));
+                        array.Add(AnalyzeBatchResultDetails.DeserializeAnalyzeBatchResultDetails(item, options));
                     }
                     details = array;
                     continue;
@@ -123,7 +130,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AnalyzeBatchResult(succeededCount, failedCount, skippedCount, details, serializedAdditionalRawData);
+            return new AnalyzeBatchResult(succeededCount, failedCount, skippedCount, details ?? new ChangeTrackingList<AnalyzeBatchResultDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalyzeBatchResult>.Write(ModelReaderWriterOptions options)

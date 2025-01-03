@@ -29,6 +29,7 @@ namespace Azure.Developer.LoadTesting
             {
                 "VALIDATION_SUCCESS",
                 "VALIDATION_FAILURE",
+                "NOT_VALIDATED",
                 "VALIDATION_NOT_REQUIRED"
             };
 

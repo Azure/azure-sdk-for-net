@@ -69,16 +69,13 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseSqlPoolBlobAuditingPolicyResource synapseSqlPoolBlobAuditingPolicy = client.GetSynapseSqlPoolBlobAuditingPolicyResource(synapseSqlPoolBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            SynapseSqlPoolBlobAuditingPolicyData data = new SynapseSqlPoolBlobAuditingPolicyData()
+            SynapseSqlPoolBlobAuditingPolicyData data = new SynapseSqlPoolBlobAuditingPolicyData
             {
                 State = SynapseBlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
                 RetentionDays = 6,
-                AuditActionsAndGroups =
-{
-"DATABASE_LOGOUT_GROUP","DATABASE_ROLE_MEMBER_CHANGE_GROUP","UPDATE on database::TestDatabaseName by public"
-},
+                AuditActionsAndGroups = { "DATABASE_LOGOUT_GROUP", "DATABASE_ROLE_MEMBER_CHANGE_GROUP", "UPDATE on database::TestDatabaseName by public" },
                 StorageAccountSubscriptionId = Guid.Parse("00000000-1234-0000-5678-000000000000"),
                 IsStorageSecondaryKeyInUse = false,
                 IsAzureMonitorTargetEnabled = true,
@@ -115,7 +112,7 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseSqlPoolBlobAuditingPolicyResource synapseSqlPoolBlobAuditingPolicy = client.GetSynapseSqlPoolBlobAuditingPolicyResource(synapseSqlPoolBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            SynapseSqlPoolBlobAuditingPolicyData data = new SynapseSqlPoolBlobAuditingPolicyData()
+            SynapseSqlPoolBlobAuditingPolicyData data = new SynapseSqlPoolBlobAuditingPolicyData
             {
                 State = SynapseBlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",

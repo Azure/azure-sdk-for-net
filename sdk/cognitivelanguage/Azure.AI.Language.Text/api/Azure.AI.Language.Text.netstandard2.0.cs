@@ -3,9 +3,9 @@ namespace Azure.AI.Language.Text
     public partial class AbstractiveSummarizationActionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.AbstractiveSummarizationActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.AbstractiveSummarizationActionContent>
     {
         public AbstractiveSummarizationActionContent() { }
+        public string Instruction { get { throw null; } set { } }
         public bool? LoggingOptOut { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
-        public string Query { get { throw null; } set { } }
         public int? SentenceCount { get { throw null; } set { } }
         public Azure.AI.Language.Text.StringIndexType? StringIndexType { get { throw null; } set { } }
         public Azure.AI.Language.Text.SummaryLengthBucket? SummaryLength { get { throw null; } set { } }
@@ -122,21 +122,10 @@ namespace Azure.AI.Language.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.AllowOverlapEntityPolicyType>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.AllowOverlapEntityPolicyType>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AnalyzeTextDynamicClassificationResult : Azure.AI.Language.Text.AnalyzeTextResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.AnalyzeTextDynamicClassificationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.AnalyzeTextDynamicClassificationResult>
-    {
-        internal AnalyzeTextDynamicClassificationResult() { }
-        public Azure.AI.Language.Text.DynamicClassificationResult Results { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.AnalyzeTextDynamicClassificationResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.AnalyzeTextDynamicClassificationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.AnalyzeTextDynamicClassificationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.AnalyzeTextDynamicClassificationResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.AnalyzeTextDynamicClassificationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.AnalyzeTextDynamicClassificationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.AnalyzeTextDynamicClassificationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class AnalyzeTextEntitiesResult : Azure.AI.Language.Text.AnalyzeTextResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.AnalyzeTextEntitiesResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.AnalyzeTextEntitiesResult>
     {
         internal AnalyzeTextEntitiesResult() { }
-        public Azure.AI.Language.Text.EntitiesResult Results { get { throw null; } }
+        public Azure.AI.Language.Text.EntitiesWithMetadataAutoResult Results { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.AnalyzeTextEntitiesResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.AnalyzeTextEntitiesResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.AnalyzeTextEntitiesResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -363,6 +352,27 @@ namespace Azure.AI.Language.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.BaseMetadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.BaseMetadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public abstract partial class BaseRedactionPolicy : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.BaseRedactionPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.BaseRedactionPolicy>
+    {
+        protected BaseRedactionPolicy() { }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.BaseRedactionPolicy System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.BaseRedactionPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.BaseRedactionPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.BaseRedactionPolicy System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.BaseRedactionPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.BaseRedactionPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.BaseRedactionPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CharacterMaskPolicyType : Azure.AI.Language.Text.BaseRedactionPolicy, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CharacterMaskPolicyType>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CharacterMaskPolicyType>
+    {
+        public CharacterMaskPolicyType() { }
+        public Azure.AI.Language.Text.RedactionCharacter? RedactionCharacter { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.CharacterMaskPolicyType System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CharacterMaskPolicyType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CharacterMaskPolicyType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.CharacterMaskPolicyType System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CharacterMaskPolicyType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CharacterMaskPolicyType>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CharacterMaskPolicyType>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ClassificationActionResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.ClassificationActionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.ClassificationActionResult>
     {
         internal ClassificationActionResult() { }
@@ -390,24 +400,6 @@ namespace Azure.AI.Language.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.ClassificationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.ClassificationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct ClassificationType : System.IEquatable<Azure.AI.Language.Text.ClassificationType>
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public ClassificationType(string value) { throw null; }
-        public static Azure.AI.Language.Text.ClassificationType Multi { get { throw null; } }
-        public static Azure.AI.Language.Text.ClassificationType Single { get { throw null; } }
-        public bool Equals(Azure.AI.Language.Text.ClassificationType other) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        public static bool operator ==(Azure.AI.Language.Text.ClassificationType left, Azure.AI.Language.Text.ClassificationType right) { throw null; }
-        public static implicit operator Azure.AI.Language.Text.ClassificationType (string value) { throw null; }
-        public static bool operator !=(Azure.AI.Language.Text.ClassificationType left, Azure.AI.Language.Text.ClassificationType right) { throw null; }
-        public override string ToString() { throw null; }
-    }
     public partial class CurrencyMetadata : Azure.AI.Language.Text.BaseMetadata, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CurrencyMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CurrencyMetadata>
     {
         internal CurrencyMetadata() { }
@@ -420,59 +412,6 @@ namespace Azure.AI.Language.Text
         Azure.AI.Language.Text.CurrencyMetadata System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CurrencyMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CurrencyMetadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CurrencyMetadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomAbstractiveSummarizationActionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationActionContent>
-    {
-        public CustomAbstractiveSummarizationActionContent(string projectName, string deploymentName) { }
-        public string DeploymentName { get { throw null; } }
-        public bool? LoggingOptOut { get { throw null; } set { } }
-        public string ProjectName { get { throw null; } }
-        public int? SentenceCount { get { throw null; } set { } }
-        public Azure.AI.Language.Text.StringIndexType? StringIndexType { get { throw null; } set { } }
-        public Azure.AI.Language.Text.SummaryLengthBucket? SummaryLength { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomAbstractiveSummarizationActionContent System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationActionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationActionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomAbstractiveSummarizationActionContent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationActionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationActionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationActionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomAbstractiveSummarizationOperationAction : Azure.AI.Language.Text.AnalyzeTextOperationAction, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationAction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationAction>
-    {
-        public CustomAbstractiveSummarizationOperationAction(Azure.AI.Language.Text.CustomAbstractiveSummarizationActionContent actionContent) { }
-        public Azure.AI.Language.Text.CustomAbstractiveSummarizationActionContent ActionContent { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationAction System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationAction System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomAbstractiveSummarizationOperationResult : Azure.AI.Language.Text.AnalyzeTextOperationResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationResult>
-    {
-        internal CustomAbstractiveSummarizationOperationResult() : base (default(System.DateTimeOffset), default(Azure.AI.Language.Text.TextActionState)) { }
-        public Azure.AI.Language.Text.CustomAbstractiveSummarizationResult Results { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomAbstractiveSummarizationResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationResult>
-    {
-        internal CustomAbstractiveSummarizationResult() { }
-        public string DeploymentName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.AbstractiveSummaryActionResult> Documents { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.DocumentError> Errors { get { throw null; } }
-        public string ProjectName { get { throw null; } }
-        public Azure.AI.Language.Text.RequestStatistics Statistics { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomAbstractiveSummarizationResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomAbstractiveSummarizationResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomAbstractiveSummarizationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CustomEntitiesActionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomEntitiesActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntitiesActionContent>
     {
@@ -488,21 +427,6 @@ namespace Azure.AI.Language.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntitiesActionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntitiesActionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CustomEntitiesActionResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomEntitiesActionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntitiesActionResult>
-    {
-        internal CustomEntitiesActionResult() { }
-        public string DeploymentName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.EntityActionResult> Documents { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.DocumentError> Errors { get { throw null; } }
-        public string ProjectName { get { throw null; } }
-        public Azure.AI.Language.Text.RequestStatistics Statistics { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomEntitiesActionResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomEntitiesActionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomEntitiesActionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomEntitiesActionResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntitiesActionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntitiesActionResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntitiesActionResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class CustomEntitiesOperationAction : Azure.AI.Language.Text.AnalyzeTextOperationAction, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomEntitiesOperationAction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntitiesOperationAction>
     {
         public CustomEntitiesOperationAction() { }
@@ -514,10 +438,40 @@ namespace Azure.AI.Language.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntitiesOperationAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntitiesOperationAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class CustomEntitiesResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomEntitiesResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntitiesResult>
+    {
+        internal CustomEntitiesResult() { }
+        public string DeploymentName { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.CustomEntityActionResult> Documents { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.DocumentError> Errors { get { throw null; } }
+        public string ProjectName { get { throw null; } }
+        public Azure.AI.Language.Text.RequestStatistics Statistics { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.CustomEntitiesResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomEntitiesResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomEntitiesResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.CustomEntitiesResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntitiesResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntitiesResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntitiesResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CustomEntityActionResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomEntityActionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntityActionResult>
+    {
+        internal CustomEntityActionResult() { }
+        public Azure.AI.Language.Text.DetectedLanguage DetectedLanguage { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.NamedEntity> Entities { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.AI.Language.Text.DocumentStatistics Statistics { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.DocumentWarning> Warnings { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.CustomEntityActionResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomEntityActionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomEntityActionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.CustomEntityActionResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntityActionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntityActionResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntityActionResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class CustomEntityRecognitionOperationResult : Azure.AI.Language.Text.AnalyzeTextOperationResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomEntityRecognitionOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntityRecognitionOperationResult>
     {
         internal CustomEntityRecognitionOperationResult() : base (default(System.DateTimeOffset), default(Azure.AI.Language.Text.TextActionState)) { }
-        public Azure.AI.Language.Text.CustomEntitiesActionResult Results { get { throw null; } }
+        public Azure.AI.Language.Text.CustomEntitiesResult Results { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.CustomEntityRecognitionOperationResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomEntityRecognitionOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomEntityRecognitionOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -525,107 +479,20 @@ namespace Azure.AI.Language.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntityRecognitionOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomEntityRecognitionOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class CustomHealthcareActionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomHealthcareActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareActionContent>
+    public partial class CustomLabelClassificationResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomLabelClassificationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomLabelClassificationResult>
     {
-        public CustomHealthcareActionContent(string projectName, string deploymentName) { }
-        public string DeploymentName { get { throw null; } }
-        public bool? LoggingOptOut { get { throw null; } set { } }
-        public string ProjectName { get { throw null; } }
-        public Azure.AI.Language.Text.StringIndexType? StringIndexType { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomHealthcareActionContent System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomHealthcareActionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomHealthcareActionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomHealthcareActionContent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareActionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareActionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareActionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomHealthcareActionResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomHealthcareActionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareActionResult>
-    {
-        internal CustomHealthcareActionResult() { }
-        public Azure.AI.Language.Text.DetectedLanguage DetectedLanguage { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.CustomHealthcareEntity> Entities { get { throw null; } }
-        public string Id { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.HealthcareRelation> Relations { get { throw null; } }
-        public Azure.AI.Language.Text.DocumentStatistics Statistics { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.DocumentWarning> Warnings { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomHealthcareActionResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomHealthcareActionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomHealthcareActionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomHealthcareActionResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareActionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareActionResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareActionResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomHealthcareEntity : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomHealthcareEntity>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareEntity>
-    {
-        internal CustomHealthcareEntity() { }
-        public Azure.AI.Language.Text.HealthcareAssertion Assertion { get { throw null; } }
-        public Azure.AI.Language.Text.HealthcareEntityCategory Category { get { throw null; } }
-        public double ConfidenceScore { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.EntityComponentInformation> EntityComponentInformation { get { throw null; } }
-        public int Length { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.HealthcareEntityLink> Links { get { throw null; } }
-        public string Name { get { throw null; } }
-        public int Offset { get { throw null; } }
-        public string Subcategory { get { throw null; } }
-        public string Text { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomHealthcareEntity System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomHealthcareEntity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomHealthcareEntity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomHealthcareEntity System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareEntity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareEntity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareEntity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomHealthcareOperationAction : Azure.AI.Language.Text.AnalyzeTextOperationAction, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomHealthcareOperationAction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareOperationAction>
-    {
-        public CustomHealthcareOperationAction() { }
-        public Azure.AI.Language.Text.CustomHealthcareActionContent ActionContent { get { throw null; } set { } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomHealthcareOperationAction System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomHealthcareOperationAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomHealthcareOperationAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomHealthcareOperationAction System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareOperationAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareOperationAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareOperationAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomHealthcareOperationResult : Azure.AI.Language.Text.AnalyzeTextOperationResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomHealthcareOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareOperationResult>
-    {
-        internal CustomHealthcareOperationResult() : base (default(System.DateTimeOffset), default(Azure.AI.Language.Text.TextActionState)) { }
-        public Azure.AI.Language.Text.CustomHealthcareResult Results { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomHealthcareOperationResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomHealthcareOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomHealthcareOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomHealthcareOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomHealthcareResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomHealthcareResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareResult>
-    {
-        internal CustomHealthcareResult() { }
-        public string DeploymentName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.CustomHealthcareActionResult> Documents { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.DocumentError> Errors { get { throw null; } }
-        public string ProjectName { get { throw null; } }
-        public Azure.AI.Language.Text.RequestStatistics Statistics { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomHealthcareResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomHealthcareResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomHealthcareResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomHealthcareResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomHealthcareResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomLabelClassificationActionResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomLabelClassificationActionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomLabelClassificationActionResult>
-    {
-        internal CustomLabelClassificationActionResult() { }
+        internal CustomLabelClassificationResult() { }
         public string DeploymentName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.ClassificationActionResult> Documents { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.DocumentError> Errors { get { throw null; } }
         public string ProjectName { get { throw null; } }
         public Azure.AI.Language.Text.RequestStatistics Statistics { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomLabelClassificationActionResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomLabelClassificationActionResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomLabelClassificationActionResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomLabelClassificationActionResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomLabelClassificationActionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomLabelClassificationActionResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomLabelClassificationActionResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Language.Text.CustomLabelClassificationResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomLabelClassificationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomLabelClassificationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.CustomLabelClassificationResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomLabelClassificationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomLabelClassificationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomLabelClassificationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CustomMultiLabelClassificationActionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomMultiLabelClassificationActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomMultiLabelClassificationActionContent>
     {
@@ -654,96 +521,13 @@ namespace Azure.AI.Language.Text
     public partial class CustomMultiLabelClassificationOperationResult : Azure.AI.Language.Text.AnalyzeTextOperationResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomMultiLabelClassificationOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomMultiLabelClassificationOperationResult>
     {
         internal CustomMultiLabelClassificationOperationResult() : base (default(System.DateTimeOffset), default(Azure.AI.Language.Text.TextActionState)) { }
-        public Azure.AI.Language.Text.CustomLabelClassificationActionResult Results { get { throw null; } }
+        public Azure.AI.Language.Text.CustomLabelClassificationResult Results { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.CustomMultiLabelClassificationOperationResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomMultiLabelClassificationOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomMultiLabelClassificationOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.CustomMultiLabelClassificationOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomMultiLabelClassificationOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomMultiLabelClassificationOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomMultiLabelClassificationOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomSentenceSentiment : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSentenceSentiment>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentenceSentiment>
-    {
-        internal CustomSentenceSentiment() { }
-        public Azure.AI.Language.Text.SentimentConfidenceScores ConfidenceScores { get { throw null; } }
-        public int Length { get { throw null; } }
-        public int Offset { get { throw null; } }
-        public Azure.AI.Language.Text.SentenceSentimentValue Sentiment { get { throw null; } }
-        public string Text { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomSentenceSentiment System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSentenceSentiment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSentenceSentiment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomSentenceSentiment System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentenceSentiment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentenceSentiment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentenceSentiment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomSentimentAnalysisActionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSentimentAnalysisActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisActionContent>
-    {
-        public CustomSentimentAnalysisActionContent(string projectName, string deploymentName) { }
-        public string DeploymentName { get { throw null; } }
-        public bool? LoggingOptOut { get { throw null; } set { } }
-        public string ProjectName { get { throw null; } }
-        public Azure.AI.Language.Text.StringIndexType? StringIndexType { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomSentimentAnalysisActionContent System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSentimentAnalysisActionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSentimentAnalysisActionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomSentimentAnalysisActionContent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisActionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisActionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisActionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomSentimentAnalysisOperationAction : Azure.AI.Language.Text.AnalyzeTextOperationAction, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSentimentAnalysisOperationAction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisOperationAction>
-    {
-        public CustomSentimentAnalysisOperationAction() { }
-        public Azure.AI.Language.Text.CustomSentimentAnalysisActionContent ActionContent { get { throw null; } set { } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomSentimentAnalysisOperationAction System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSentimentAnalysisOperationAction>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSentimentAnalysisOperationAction>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomSentimentAnalysisOperationAction System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisOperationAction>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisOperationAction>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisOperationAction>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomSentimentAnalysisOperationResult : Azure.AI.Language.Text.AnalyzeTextOperationResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSentimentAnalysisOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisOperationResult>
-    {
-        internal CustomSentimentAnalysisOperationResult() : base (default(System.DateTimeOffset), default(Azure.AI.Language.Text.TextActionState)) { }
-        public Azure.AI.Language.Text.CustomSentimentAnalysisResult Results { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomSentimentAnalysisOperationResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSentimentAnalysisOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSentimentAnalysisOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomSentimentAnalysisOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomSentimentAnalysisResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSentimentAnalysisResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisResult>
-    {
-        internal CustomSentimentAnalysisResult() { }
-        public string DeploymentName { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.CustomSentimentAnalysisResultDocument> Documents { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.DocumentError> Errors { get { throw null; } }
-        public string ProjectName { get { throw null; } }
-        public Azure.AI.Language.Text.RequestStatistics Statistics { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomSentimentAnalysisResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSentimentAnalysisResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSentimentAnalysisResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomSentimentAnalysisResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class CustomSentimentAnalysisResultDocument : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSentimentAnalysisResultDocument>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisResultDocument>
-    {
-        internal CustomSentimentAnalysisResultDocument() { }
-        public Azure.AI.Language.Text.SentimentConfidenceScores ConfidenceScores { get { throw null; } }
-        public Azure.AI.Language.Text.DetectedLanguage DetectedLanguage { get { throw null; } }
-        public string Id { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.CustomSentenceSentiment> Sentences { get { throw null; } }
-        public Azure.AI.Language.Text.DocumentSentiment Sentiment { get { throw null; } }
-        public Azure.AI.Language.Text.DocumentStatistics Statistics { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.DocumentWarning> Warnings { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomSentimentAnalysisResultDocument System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSentimentAnalysisResultDocument>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSentimentAnalysisResultDocument>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.CustomSentimentAnalysisResultDocument System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisResultDocument>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisResultDocument>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSentimentAnalysisResultDocument>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class CustomSingleLabelClassificationActionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSingleLabelClassificationActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSingleLabelClassificationActionContent>
     {
@@ -772,7 +556,7 @@ namespace Azure.AI.Language.Text
     public partial class CustomSingleLabelClassificationOperationResult : Azure.AI.Language.Text.AnalyzeTextOperationResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSingleLabelClassificationOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.CustomSingleLabelClassificationOperationResult>
     {
         internal CustomSingleLabelClassificationOperationResult() : base (default(System.DateTimeOffset), default(Azure.AI.Language.Text.TextActionState)) { }
-        public Azure.AI.Language.Text.CustomLabelClassificationActionResult Results { get { throw null; } }
+        public Azure.AI.Language.Text.CustomLabelClassificationResult Results { get { throw null; } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.CustomSingleLabelClassificationOperationResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSingleLabelClassificationOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.CustomSingleLabelClassificationOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -821,8 +605,8 @@ namespace Azure.AI.Language.Text
         public double ConfidenceScore { get { throw null; } }
         public string Iso6391Name { get { throw null; } }
         public string Name { get { throw null; } }
-        public Azure.AI.Language.Text.ScriptKind? Script { get { throw null; } }
-        public Azure.AI.Language.Text.ScriptCode? ScriptCode { get { throw null; } }
+        public Azure.AI.Language.Text.ScriptCode? ScriptIso15924Code { get { throw null; } }
+        public Azure.AI.Language.Text.ScriptKind? ScriptName { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.DetectedLanguage System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.DetectedLanguage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.DetectedLanguage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -874,48 +658,6 @@ namespace Azure.AI.Language.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.DocumentWarning>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.DocumentWarning>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DynamicClassificationActionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.DynamicClassificationActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.DynamicClassificationActionContent>
-    {
-        public DynamicClassificationActionContent(System.Collections.Generic.IEnumerable<string> categories) { }
-        public System.Collections.Generic.IList<string> Categories { get { throw null; } }
-        public Azure.AI.Language.Text.ClassificationType? ClassificationType { get { throw null; } set { } }
-        public bool? LoggingOptOut { get { throw null; } set { } }
-        public string ModelVersion { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.DynamicClassificationActionContent System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.DynamicClassificationActionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.DynamicClassificationActionContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.DynamicClassificationActionContent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.DynamicClassificationActionContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.DynamicClassificationActionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.DynamicClassificationActionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DynamicClassificationDocumentResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.DynamicClassificationDocumentResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.DynamicClassificationDocumentResult>
-    {
-        internal DynamicClassificationDocumentResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.ClassificationResult> Classifications { get { throw null; } }
-        public string Id { get { throw null; } }
-        public Azure.AI.Language.Text.DocumentStatistics Statistics { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.DocumentWarning> Warnings { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.DynamicClassificationDocumentResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.DynamicClassificationDocumentResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.DynamicClassificationDocumentResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.DynamicClassificationDocumentResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.DynamicClassificationDocumentResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.DynamicClassificationDocumentResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.DynamicClassificationDocumentResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DynamicClassificationResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.DynamicClassificationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.DynamicClassificationResult>
-    {
-        internal DynamicClassificationResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.DynamicClassificationDocumentResult> Documents { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.DocumentError> Errors { get { throw null; } }
-        public string ModelVersion { get { throw null; } }
-        public Azure.AI.Language.Text.RequestStatistics Statistics { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.DynamicClassificationResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.DynamicClassificationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.DynamicClassificationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.DynamicClassificationResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.DynamicClassificationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.DynamicClassificationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.DynamicClassificationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class EntitiesActionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntitiesActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitiesActionContent>
     {
         public EntitiesActionContent() { }
@@ -933,21 +675,6 @@ namespace Azure.AI.Language.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitiesActionContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitiesActionContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class EntitiesDocumentResultWithMetadataDetectedLanguage : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntitiesDocumentResultWithMetadataDetectedLanguage>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitiesDocumentResultWithMetadataDetectedLanguage>
-    {
-        internal EntitiesDocumentResultWithMetadataDetectedLanguage() { }
-        public Azure.AI.Language.Text.DetectedLanguage DetectedLanguage { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.NamedEntityWithMetadata> Entities { get { throw null; } }
-        public string Id { get { throw null; } }
-        public Azure.AI.Language.Text.DocumentStatistics Statistics { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.DocumentWarning> Warnings { get { throw null; } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.EntitiesDocumentResultWithMetadataDetectedLanguage System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntitiesDocumentResultWithMetadataDetectedLanguage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntitiesDocumentResultWithMetadataDetectedLanguage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.EntitiesDocumentResultWithMetadataDetectedLanguage System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitiesDocumentResultWithMetadataDetectedLanguage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitiesDocumentResultWithMetadataDetectedLanguage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitiesDocumentResultWithMetadataDetectedLanguage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class EntitiesOperationAction : Azure.AI.Language.Text.AnalyzeTextOperationAction, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntitiesOperationAction>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitiesOperationAction>
     {
         public EntitiesOperationAction() { }
@@ -962,7 +689,7 @@ namespace Azure.AI.Language.Text
     public partial class EntitiesResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntitiesResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitiesResult>
     {
         internal EntitiesResult() { }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.EntitiesDocumentResultWithMetadataDetectedLanguage> Documents { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.EntityActionResultWithMetadata> Documents { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.DocumentError> Errors { get { throw null; } }
         public string ModelVersion { get { throw null; } }
         public Azure.AI.Language.Text.RequestStatistics Statistics { get { throw null; } }
@@ -973,11 +700,25 @@ namespace Azure.AI.Language.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitiesResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitiesResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class EntitiesWithMetadataAutoResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntitiesWithMetadataAutoResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitiesWithMetadataAutoResult>
+    {
+        internal EntitiesWithMetadataAutoResult() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.EntityActionResult> Documents { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.DocumentError> Errors { get { throw null; } }
+        public string ModelVersion { get { throw null; } }
+        public Azure.AI.Language.Text.RequestStatistics Statistics { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.EntitiesWithMetadataAutoResult System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntitiesWithMetadataAutoResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntitiesWithMetadataAutoResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.EntitiesWithMetadataAutoResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitiesWithMetadataAutoResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitiesWithMetadataAutoResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntitiesWithMetadataAutoResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class EntityActionResult : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntityActionResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityActionResult>
     {
         internal EntityActionResult() { }
         public Azure.AI.Language.Text.DetectedLanguage DetectedLanguage { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.NamedEntity> Entities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.NamedEntityWithMetadata> Entities { get { throw null; } }
         public string Id { get { throw null; } }
         public Azure.AI.Language.Text.DocumentStatistics Statistics { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.DocumentWarning> Warnings { get { throw null; } }
@@ -987,6 +728,20 @@ namespace Azure.AI.Language.Text
         Azure.AI.Language.Text.EntityActionResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityActionResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityActionResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityActionResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EntityActionResultWithMetadata : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntityActionResultWithMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityActionResultWithMetadata>
+    {
+        internal EntityActionResultWithMetadata() { }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.NamedEntityWithMetadata> Entities { get { throw null; } }
+        public string Id { get { throw null; } }
+        public Azure.AI.Language.Text.DocumentStatistics Statistics { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.DocumentWarning> Warnings { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.EntityActionResultWithMetadata System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntityActionResultWithMetadata>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntityActionResultWithMetadata>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.EntityActionResultWithMetadata System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityActionResultWithMetadata>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityActionResultWithMetadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityActionResultWithMetadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct EntityCategory : System.IEquatable<Azure.AI.Language.Text.EntityCategory>
@@ -1055,16 +810,6 @@ namespace Azure.AI.Language.Text
         public static implicit operator Azure.AI.Language.Text.EntityCategory (string value) { throw null; }
         public static bool operator !=(Azure.AI.Language.Text.EntityCategory left, Azure.AI.Language.Text.EntityCategory right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public abstract partial class EntityComponentInformation : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntityComponentInformation>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityComponentInformation>
-    {
-        protected EntityComponentInformation() { }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.EntityComponentInformation System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntityComponentInformation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntityComponentInformation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.EntityComponentInformation System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityComponentInformation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityComponentInformation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityComponentInformation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EntityInferenceConfig : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntityInferenceConfig>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityInferenceConfig>
     {
@@ -1154,6 +899,16 @@ namespace Azure.AI.Language.Text
         Azure.AI.Language.Text.EntityLinkingResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityLinkingResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityLinkingResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityLinkingResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class EntityMaskPolicyType : Azure.AI.Language.Text.BaseRedactionPolicy, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntityMaskPolicyType>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityMaskPolicyType>
+    {
+        public EntityMaskPolicyType() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.EntityMaskPolicyType System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntityMaskPolicyType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntityMaskPolicyType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.EntityMaskPolicyType System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityMaskPolicyType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityMaskPolicyType>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityMaskPolicyType>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public abstract partial class EntityOverlapPolicy : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.EntityOverlapPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.EntityOverlapPolicy>
     {
@@ -1767,17 +1522,6 @@ namespace Azure.AI.Language.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.LanguageInput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.LanguageInput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class LearnedComponent : Azure.AI.Language.Text.EntityComponentInformation, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.LearnedComponent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.LearnedComponent>
-    {
-        internal LearnedComponent() { }
-        public string Value { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.LearnedComponent System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.LearnedComponent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.LearnedComponent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.LearnedComponent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.LearnedComponent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.LearnedComponent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.LearnedComponent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class LengthMetadata : Azure.AI.Language.Text.BaseMetadata, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.LengthMetadata>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.LengthMetadata>
     {
         internal LengthMetadata() { }
@@ -1839,17 +1583,6 @@ namespace Azure.AI.Language.Text
         Azure.AI.Language.Text.LinkedEntity System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.LinkedEntity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.LinkedEntity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.LinkedEntity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class ListComponent : Azure.AI.Language.Text.EntityComponentInformation, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.ListComponent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.ListComponent>
-    {
-        internal ListComponent() { }
-        public string Value { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.ListComponent System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.ListComponent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.ListComponent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.ListComponent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.ListComponent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.ListComponent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.ListComponent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MatchLongestEntityPolicyType : Azure.AI.Language.Text.EntityOverlapPolicy, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.MatchLongestEntityPolicyType>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.MatchLongestEntityPolicyType>
     {
@@ -1920,6 +1653,16 @@ namespace Azure.AI.Language.Text
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.NamedEntityWithMetadata>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.NamedEntityWithMetadata>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class NoMaskPolicyType : Azure.AI.Language.Text.BaseRedactionPolicy, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.NoMaskPolicyType>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.NoMaskPolicyType>
+    {
+        public NoMaskPolicyType() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.NoMaskPolicyType System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.NoMaskPolicyType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.NoMaskPolicyType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.NoMaskPolicyType System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.NoMaskPolicyType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.NoMaskPolicyType>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.NoMaskPolicyType>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct NumberKind : System.IEquatable<Azure.AI.Language.Text.NumberKind>
     {
@@ -1989,7 +1732,7 @@ namespace Azure.AI.Language.Text
         public bool? LoggingOptOut { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.AI.Language.Text.PiiCategory> PiiCategories { get { throw null; } }
-        public Azure.AI.Language.Text.RedactionCharacter? RedactionCharacter { get { throw null; } set { } }
+        public Azure.AI.Language.Text.BaseRedactionPolicy RedactionPolicy { get { throw null; } set { } }
         public Azure.AI.Language.Text.StringIndexType? StringIndexType { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.AI.Language.Text.PiiActionContent System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.PiiActionContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2002,7 +1745,7 @@ namespace Azure.AI.Language.Text
     {
         internal PiiActionResult() { }
         public Azure.AI.Language.Text.DetectedLanguage DetectedLanguage { get { throw null; } }
-        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.NamedEntity> Entities { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.PiiEntity> Entities { get { throw null; } }
         public string Id { get { throw null; } }
         public string RedactedText { get { throw null; } }
         public Azure.AI.Language.Text.DocumentStatistics Statistics { get { throw null; } }
@@ -2408,6 +2151,27 @@ namespace Azure.AI.Language.Text
         public static bool operator !=(Azure.AI.Language.Text.PiiDomain left, Azure.AI.Language.Text.PiiDomain right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class PiiEntity : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.PiiEntity>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.PiiEntity>
+    {
+        internal PiiEntity() { }
+        public string Category { get { throw null; } }
+        public double ConfidenceScore { get { throw null; } }
+        public int Length { get { throw null; } }
+        public string Mask { get { throw null; } }
+        public int? MaskLength { get { throw null; } }
+        public int? MaskOffset { get { throw null; } }
+        public int Offset { get { throw null; } }
+        public string Subcategory { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.AI.Language.Text.EntityTag> Tags { get { throw null; } }
+        public string Text { get { throw null; } }
+        public string Type { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.PiiEntity System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.PiiEntity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.PiiEntity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Text.PiiEntity System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.PiiEntity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.PiiEntity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.PiiEntity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class PiiEntityRecognitionOperationResult : Azure.AI.Language.Text.AnalyzeTextOperationResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.PiiEntityRecognitionOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.PiiEntityRecognitionOperationResult>
     {
         internal PiiEntityRecognitionOperationResult() : base (default(System.DateTimeOffset), default(Azure.AI.Language.Text.TextActionState)) { }
@@ -2443,17 +2207,6 @@ namespace Azure.AI.Language.Text
         Azure.AI.Language.Text.PiiResult System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.PiiResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.PiiResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.PiiResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class PrebuiltComponent : Azure.AI.Language.Text.EntityComponentInformation, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.PrebuiltComponent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.PrebuiltComponent>
-    {
-        internal PrebuiltComponent() { }
-        public string Value { get { throw null; } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.PrebuiltComponent System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.PrebuiltComponent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.PrebuiltComponent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.PrebuiltComponent System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.PrebuiltComponent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.PrebuiltComponent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.PrebuiltComponent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct RangeInclusivity : System.IEquatable<Azure.AI.Language.Text.RangeInclusivity>
@@ -2633,6 +2386,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.ScriptCode Gujr { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptCode Guru { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptCode Hang { get { throw null; } }
+        public static Azure.AI.Language.Text.ScriptCode Hani { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptCode Hans { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptCode Hant { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptCode Hebr { get { throw null; } }
@@ -2642,8 +2396,12 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.ScriptCode Laoo { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptCode Latn { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptCode Mlym { get { throw null; } }
+        public static Azure.AI.Language.Text.ScriptCode Mong { get { throw null; } }
+        public static Azure.AI.Language.Text.ScriptCode Mtei { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptCode Mymr { get { throw null; } }
+        public static Azure.AI.Language.Text.ScriptCode Olck { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptCode Orya { get { throw null; } }
+        public static Azure.AI.Language.Text.ScriptCode Shrd { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptCode Sinh { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptCode Taml { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptCode Telu { get { throw null; } }
@@ -2677,6 +2435,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.ScriptKind Gujarati { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptKind Gurmukhi { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptKind Hangul { get { throw null; } }
+        public static Azure.AI.Language.Text.ScriptKind HanLiteral { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptKind HanSimplified { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptKind HanTraditional { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptKind Hebrew { get { throw null; } }
@@ -2686,8 +2445,12 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.ScriptKind Lao { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptKind Latin { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptKind Malayalam { get { throw null; } }
+        public static Azure.AI.Language.Text.ScriptKind Meitei { get { throw null; } }
+        public static Azure.AI.Language.Text.ScriptKind Mongolian { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptKind Myanmar { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptKind Odia { get { throw null; } }
+        public static Azure.AI.Language.Text.ScriptKind Santali { get { throw null; } }
+        public static Azure.AI.Language.Text.ScriptKind Sharada { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptKind Sinhala { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptKind Tamil { get { throw null; } }
         public static Azure.AI.Language.Text.ScriptKind Telugu { get { throw null; } }
@@ -3136,12 +2899,13 @@ namespace Azure.AI.Language.Text
     }
     public partial class TextAnalysisClientOptions : Azure.Core.ClientOptions
     {
-        public TextAnalysisClientOptions(Azure.AI.Language.Text.TextAnalysisClientOptions.ServiceVersion version = Azure.AI.Language.Text.TextAnalysisClientOptions.ServiceVersion.V2023_11_15_Preview) { }
+        public TextAnalysisClientOptions(Azure.AI.Language.Text.TextAnalysisClientOptions.ServiceVersion version = Azure.AI.Language.Text.TextAnalysisClientOptions.ServiceVersion.V2024_11_15_Preview) { }
         public enum ServiceVersion
         {
             V2022_05_01 = 1,
             V2023_04_01 = 2,
-            V2023_11_15_Preview = 3,
+            V2024_11_01 = 3,
+            V2024_11_15_Preview = 4,
         }
     }
     public static partial class TextAnalysisModelFactory
@@ -3151,8 +2915,7 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.AbstractiveSummary AbstractiveSummary(string text = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.SummaryContext> contexts = null) { throw null; }
         public static Azure.AI.Language.Text.AbstractiveSummaryActionResult AbstractiveSummaryActionResult(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentWarning> warnings = null, Azure.AI.Language.Text.DocumentStatistics statistics = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.AbstractiveSummary> summaries = null, Azure.AI.Language.Text.DetectedLanguage detectedLanguage = null) { throw null; }
         public static Azure.AI.Language.Text.AgeMetadata AgeMetadata(double value = 0, Azure.AI.Language.Text.AgeUnit unit = default(Azure.AI.Language.Text.AgeUnit)) { throw null; }
-        public static Azure.AI.Language.Text.AnalyzeTextDynamicClassificationResult AnalyzeTextDynamicClassificationResult(Azure.AI.Language.Text.DynamicClassificationResult results = null) { throw null; }
-        public static Azure.AI.Language.Text.AnalyzeTextEntitiesResult AnalyzeTextEntitiesResult(Azure.AI.Language.Text.EntitiesResult results = null) { throw null; }
+        public static Azure.AI.Language.Text.AnalyzeTextEntitiesResult AnalyzeTextEntitiesResult(Azure.AI.Language.Text.EntitiesWithMetadataAutoResult results = null) { throw null; }
         public static Azure.AI.Language.Text.AnalyzeTextEntityLinkingResult AnalyzeTextEntityLinkingResult(Azure.AI.Language.Text.EntityLinkingResult results = null) { throw null; }
         public static Azure.AI.Language.Text.AnalyzeTextError AnalyzeTextError(Azure.AI.Language.Text.AnalyzeTextErrorCode code = default(Azure.AI.Language.Text.AnalyzeTextErrorCode), string message = null, string target = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.AnalyzeTextError> details = null, Azure.AI.Language.Text.InnerErrorModel innererror = null) { throw null; }
         public static Azure.AI.Language.Text.AnalyzeTextKeyPhraseResult AnalyzeTextKeyPhraseResult(Azure.AI.Language.Text.KeyPhraseResult results = null) { throw null; }
@@ -3165,40 +2928,26 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.ClassificationActionResult ClassificationActionResult(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentWarning> warnings = null, Azure.AI.Language.Text.DocumentStatistics statistics = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.ClassificationResult> @class = null, Azure.AI.Language.Text.DetectedLanguage detectedLanguage = null) { throw null; }
         public static Azure.AI.Language.Text.ClassificationResult ClassificationResult(string category = null, double confidenceScore = 0) { throw null; }
         public static Azure.AI.Language.Text.CurrencyMetadata CurrencyMetadata(double value = 0, string unit = null, string iso4217 = null) { throw null; }
-        public static Azure.AI.Language.Text.CustomAbstractiveSummarizationActionContent CustomAbstractiveSummarizationActionContent(int? sentenceCount = default(int?), Azure.AI.Language.Text.StringIndexType? stringIndexType = default(Azure.AI.Language.Text.StringIndexType?), Azure.AI.Language.Text.SummaryLengthBucket? summaryLength = default(Azure.AI.Language.Text.SummaryLengthBucket?), bool? loggingOptOut = default(bool?), string projectName = null, string deploymentName = null) { throw null; }
-        public static Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationAction CustomAbstractiveSummarizationOperationAction(string name = null, Azure.AI.Language.Text.CustomAbstractiveSummarizationActionContent actionContent = null) { throw null; }
-        public static Azure.AI.Language.Text.CustomAbstractiveSummarizationOperationResult CustomAbstractiveSummarizationOperationResult(System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.AI.Language.Text.TextActionState status = default(Azure.AI.Language.Text.TextActionState), string name = null, Azure.AI.Language.Text.CustomAbstractiveSummarizationResult results = null) { throw null; }
-        public static Azure.AI.Language.Text.CustomAbstractiveSummarizationResult CustomAbstractiveSummarizationResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.AbstractiveSummaryActionResult> documents = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentError> errors = null, Azure.AI.Language.Text.RequestStatistics statistics = null, string projectName = null, string deploymentName = null) { throw null; }
         public static Azure.AI.Language.Text.CustomEntitiesActionContent CustomEntitiesActionContent(bool? loggingOptOut = default(bool?), string projectName = null, string deploymentName = null, Azure.AI.Language.Text.StringIndexType? stringIndexType = default(Azure.AI.Language.Text.StringIndexType?)) { throw null; }
-        public static Azure.AI.Language.Text.CustomEntitiesActionResult CustomEntitiesActionResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentError> errors = null, Azure.AI.Language.Text.RequestStatistics statistics = null, string projectName = null, string deploymentName = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.EntityActionResult> documents = null) { throw null; }
-        public static Azure.AI.Language.Text.CustomEntityRecognitionOperationResult CustomEntityRecognitionOperationResult(System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.AI.Language.Text.TextActionState status = default(Azure.AI.Language.Text.TextActionState), string name = null, Azure.AI.Language.Text.CustomEntitiesActionResult results = null) { throw null; }
-        public static Azure.AI.Language.Text.CustomHealthcareActionContent CustomHealthcareActionContent(bool? loggingOptOut = default(bool?), string projectName = null, string deploymentName = null, Azure.AI.Language.Text.StringIndexType? stringIndexType = default(Azure.AI.Language.Text.StringIndexType?)) { throw null; }
-        public static Azure.AI.Language.Text.CustomHealthcareActionResult CustomHealthcareActionResult(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentWarning> warnings = null, Azure.AI.Language.Text.DocumentStatistics statistics = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.CustomHealthcareEntity> entities = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.HealthcareRelation> relations = null, Azure.AI.Language.Text.DetectedLanguage detectedLanguage = null) { throw null; }
-        public static Azure.AI.Language.Text.CustomHealthcareEntity CustomHealthcareEntity(string text = null, Azure.AI.Language.Text.HealthcareEntityCategory category = default(Azure.AI.Language.Text.HealthcareEntityCategory), string subcategory = null, int offset = 0, int length = 0, double confidenceScore = 0, Azure.AI.Language.Text.HealthcareAssertion assertion = null, string name = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.HealthcareEntityLink> links = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.EntityComponentInformation> entityComponentInformation = null) { throw null; }
-        public static Azure.AI.Language.Text.CustomHealthcareOperationResult CustomHealthcareOperationResult(System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.AI.Language.Text.TextActionState status = default(Azure.AI.Language.Text.TextActionState), string name = null, Azure.AI.Language.Text.CustomHealthcareResult results = null) { throw null; }
-        public static Azure.AI.Language.Text.CustomHealthcareResult CustomHealthcareResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentError> errors = null, Azure.AI.Language.Text.RequestStatistics statistics = null, string projectName = null, string deploymentName = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.CustomHealthcareActionResult> documents = null) { throw null; }
-        public static Azure.AI.Language.Text.CustomLabelClassificationActionResult CustomLabelClassificationActionResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentError> errors = null, Azure.AI.Language.Text.RequestStatistics statistics = null, string projectName = null, string deploymentName = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.ClassificationActionResult> documents = null) { throw null; }
+        public static Azure.AI.Language.Text.CustomEntitiesResult CustomEntitiesResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentError> errors = null, Azure.AI.Language.Text.RequestStatistics statistics = null, string projectName = null, string deploymentName = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.CustomEntityActionResult> documents = null) { throw null; }
+        public static Azure.AI.Language.Text.CustomEntityActionResult CustomEntityActionResult(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentWarning> warnings = null, Azure.AI.Language.Text.DocumentStatistics statistics = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.NamedEntity> entities = null, Azure.AI.Language.Text.DetectedLanguage detectedLanguage = null) { throw null; }
+        public static Azure.AI.Language.Text.CustomEntityRecognitionOperationResult CustomEntityRecognitionOperationResult(System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.AI.Language.Text.TextActionState status = default(Azure.AI.Language.Text.TextActionState), string name = null, Azure.AI.Language.Text.CustomEntitiesResult results = null) { throw null; }
+        public static Azure.AI.Language.Text.CustomLabelClassificationResult CustomLabelClassificationResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentError> errors = null, Azure.AI.Language.Text.RequestStatistics statistics = null, string projectName = null, string deploymentName = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.ClassificationActionResult> documents = null) { throw null; }
         public static Azure.AI.Language.Text.CustomMultiLabelClassificationActionContent CustomMultiLabelClassificationActionContent(bool? loggingOptOut = default(bool?), string projectName = null, string deploymentName = null) { throw null; }
-        public static Azure.AI.Language.Text.CustomMultiLabelClassificationOperationResult CustomMultiLabelClassificationOperationResult(System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.AI.Language.Text.TextActionState status = default(Azure.AI.Language.Text.TextActionState), string name = null, Azure.AI.Language.Text.CustomLabelClassificationActionResult results = null) { throw null; }
-        public static Azure.AI.Language.Text.CustomSentenceSentiment CustomSentenceSentiment(string text = null, Azure.AI.Language.Text.SentenceSentimentValue sentiment = Azure.AI.Language.Text.SentenceSentimentValue.Positive, Azure.AI.Language.Text.SentimentConfidenceScores confidenceScores = null, int offset = 0, int length = 0) { throw null; }
-        public static Azure.AI.Language.Text.CustomSentimentAnalysisActionContent CustomSentimentAnalysisActionContent(bool? loggingOptOut = default(bool?), string projectName = null, string deploymentName = null, Azure.AI.Language.Text.StringIndexType? stringIndexType = default(Azure.AI.Language.Text.StringIndexType?)) { throw null; }
-        public static Azure.AI.Language.Text.CustomSentimentAnalysisOperationResult CustomSentimentAnalysisOperationResult(System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.AI.Language.Text.TextActionState status = default(Azure.AI.Language.Text.TextActionState), string name = null, Azure.AI.Language.Text.CustomSentimentAnalysisResult results = null) { throw null; }
-        public static Azure.AI.Language.Text.CustomSentimentAnalysisResult CustomSentimentAnalysisResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentError> errors = null, Azure.AI.Language.Text.RequestStatistics statistics = null, string projectName = null, string deploymentName = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.CustomSentimentAnalysisResultDocument> documents = null) { throw null; }
-        public static Azure.AI.Language.Text.CustomSentimentAnalysisResultDocument CustomSentimentAnalysisResultDocument(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentWarning> warnings = null, Azure.AI.Language.Text.DocumentStatistics statistics = null, Azure.AI.Language.Text.DocumentSentiment sentiment = Azure.AI.Language.Text.DocumentSentiment.Positive, Azure.AI.Language.Text.SentimentConfidenceScores confidenceScores = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.CustomSentenceSentiment> sentences = null, Azure.AI.Language.Text.DetectedLanguage detectedLanguage = null) { throw null; }
+        public static Azure.AI.Language.Text.CustomMultiLabelClassificationOperationResult CustomMultiLabelClassificationOperationResult(System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.AI.Language.Text.TextActionState status = default(Azure.AI.Language.Text.TextActionState), string name = null, Azure.AI.Language.Text.CustomLabelClassificationResult results = null) { throw null; }
         public static Azure.AI.Language.Text.CustomSingleLabelClassificationActionContent CustomSingleLabelClassificationActionContent(bool? loggingOptOut = default(bool?), string projectName = null, string deploymentName = null) { throw null; }
-        public static Azure.AI.Language.Text.CustomSingleLabelClassificationOperationResult CustomSingleLabelClassificationOperationResult(System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.AI.Language.Text.TextActionState status = default(Azure.AI.Language.Text.TextActionState), string name = null, Azure.AI.Language.Text.CustomLabelClassificationActionResult results = null) { throw null; }
+        public static Azure.AI.Language.Text.CustomSingleLabelClassificationOperationResult CustomSingleLabelClassificationOperationResult(System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.AI.Language.Text.TextActionState status = default(Azure.AI.Language.Text.TextActionState), string name = null, Azure.AI.Language.Text.CustomLabelClassificationResult results = null) { throw null; }
         public static Azure.AI.Language.Text.DateMetadata DateMetadata(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DateValue> dates = null) { throw null; }
         public static Azure.AI.Language.Text.DateTimeMetadata DateTimeMetadata(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DateValue> dates = null) { throw null; }
         public static Azure.AI.Language.Text.DateValue DateValue(string timex = null, string value = null, Azure.AI.Language.Text.TemporalModifier? modifier = default(Azure.AI.Language.Text.TemporalModifier?)) { throw null; }
-        public static Azure.AI.Language.Text.DetectedLanguage DetectedLanguage(string name = null, string iso6391Name = null, double confidenceScore = 0, Azure.AI.Language.Text.ScriptKind? script = default(Azure.AI.Language.Text.ScriptKind?), Azure.AI.Language.Text.ScriptCode? scriptCode = default(Azure.AI.Language.Text.ScriptCode?)) { throw null; }
+        public static Azure.AI.Language.Text.DetectedLanguage DetectedLanguage(string name = null, string iso6391Name = null, double confidenceScore = 0, Azure.AI.Language.Text.ScriptKind? scriptName = default(Azure.AI.Language.Text.ScriptKind?), Azure.AI.Language.Text.ScriptCode? scriptIso15924Code = default(Azure.AI.Language.Text.ScriptCode?)) { throw null; }
         public static Azure.AI.Language.Text.DocumentError DocumentError(string id = null, Azure.AI.Language.Text.AnalyzeTextError error = null) { throw null; }
         public static Azure.AI.Language.Text.DocumentStatistics DocumentStatistics(int charactersCount = 0, int transactionsCount = 0) { throw null; }
         public static Azure.AI.Language.Text.DocumentWarning DocumentWarning(Azure.AI.Language.Text.WarningCode code = default(Azure.AI.Language.Text.WarningCode), string message = null, string targetRef = null) { throw null; }
-        public static Azure.AI.Language.Text.DynamicClassificationDocumentResult DynamicClassificationDocumentResult(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentWarning> warnings = null, Azure.AI.Language.Text.DocumentStatistics statistics = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.ClassificationResult> classifications = null) { throw null; }
-        public static Azure.AI.Language.Text.DynamicClassificationResult DynamicClassificationResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentError> errors = null, Azure.AI.Language.Text.RequestStatistics statistics = null, string modelVersion = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DynamicClassificationDocumentResult> documents = null) { throw null; }
-        public static Azure.AI.Language.Text.EntitiesDocumentResultWithMetadataDetectedLanguage EntitiesDocumentResultWithMetadataDetectedLanguage(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentWarning> warnings = null, Azure.AI.Language.Text.DocumentStatistics statistics = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.NamedEntityWithMetadata> entities = null, Azure.AI.Language.Text.DetectedLanguage detectedLanguage = null) { throw null; }
-        public static Azure.AI.Language.Text.EntitiesResult EntitiesResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentError> errors = null, Azure.AI.Language.Text.RequestStatistics statistics = null, string modelVersion = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.EntitiesDocumentResultWithMetadataDetectedLanguage> documents = null) { throw null; }
-        public static Azure.AI.Language.Text.EntityActionResult EntityActionResult(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentWarning> warnings = null, Azure.AI.Language.Text.DocumentStatistics statistics = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.NamedEntity> entities = null, Azure.AI.Language.Text.DetectedLanguage detectedLanguage = null) { throw null; }
+        public static Azure.AI.Language.Text.EntitiesResult EntitiesResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentError> errors = null, Azure.AI.Language.Text.RequestStatistics statistics = null, string modelVersion = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.EntityActionResultWithMetadata> documents = null) { throw null; }
+        public static Azure.AI.Language.Text.EntitiesWithMetadataAutoResult EntitiesWithMetadataAutoResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentError> errors = null, Azure.AI.Language.Text.RequestStatistics statistics = null, string modelVersion = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.EntityActionResult> documents = null) { throw null; }
+        public static Azure.AI.Language.Text.EntityActionResult EntityActionResult(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentWarning> warnings = null, Azure.AI.Language.Text.DocumentStatistics statistics = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.NamedEntityWithMetadata> entities = null, Azure.AI.Language.Text.DetectedLanguage detectedLanguage = null) { throw null; }
+        public static Azure.AI.Language.Text.EntityActionResultWithMetadata EntityActionResultWithMetadata(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentWarning> warnings = null, Azure.AI.Language.Text.DocumentStatistics statistics = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.NamedEntityWithMetadata> entities = null) { throw null; }
         public static Azure.AI.Language.Text.EntityLinkingActionResult EntityLinkingActionResult(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentWarning> warnings = null, Azure.AI.Language.Text.DocumentStatistics statistics = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.LinkedEntity> entities = null, Azure.AI.Language.Text.DetectedLanguage detectedLanguage = null) { throw null; }
         public static Azure.AI.Language.Text.EntityLinkingMatch EntityLinkingMatch(double confidenceScore = 0, string text = null, int offset = 0, int length = 0) { throw null; }
         public static Azure.AI.Language.Text.EntityLinkingOperationResult EntityLinkingOperationResult(System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.AI.Language.Text.TextActionState status = default(Azure.AI.Language.Text.TextActionState), string name = null, Azure.AI.Language.Text.EntityLinkingResult results = null) { throw null; }
@@ -3226,20 +2975,18 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.LanguageDetectionDocumentResult LanguageDetectionDocumentResult(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentWarning> warnings = null, Azure.AI.Language.Text.DocumentStatistics statistics = null, Azure.AI.Language.Text.DetectedLanguage detectedLanguage = null) { throw null; }
         public static Azure.AI.Language.Text.LanguageDetectionResult LanguageDetectionResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentError> errors = null, Azure.AI.Language.Text.RequestStatistics statistics = null, string modelVersion = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.LanguageDetectionDocumentResult> documents = null) { throw null; }
         public static Azure.AI.Language.Text.LanguageInput LanguageInput(string id = null, string text = null, string countryHint = null) { throw null; }
-        public static Azure.AI.Language.Text.LearnedComponent LearnedComponent(string value = null) { throw null; }
         public static Azure.AI.Language.Text.LengthMetadata LengthMetadata(double value = 0, Azure.AI.Language.Text.LengthUnit unit = default(Azure.AI.Language.Text.LengthUnit)) { throw null; }
         public static Azure.AI.Language.Text.LinkedEntity LinkedEntity(string name = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.EntityLinkingMatch> matches = null, string language = null, string id = null, string url = null, string dataSource = null, string bingId = null) { throw null; }
-        public static Azure.AI.Language.Text.ListComponent ListComponent(string value = null) { throw null; }
         public static Azure.AI.Language.Text.MultiLanguageInput MultiLanguageInput(string id = null, string text = null, string language = null) { throw null; }
         public static Azure.AI.Language.Text.NamedEntity NamedEntity(string text = null, string category = null, string subcategory = null, int offset = 0, int length = 0, double confidenceScore = 0) { throw null; }
         public static Azure.AI.Language.Text.NamedEntityWithMetadata NamedEntityWithMetadata(string text = null, string category = null, string subcategory = null, int offset = 0, int length = 0, double confidenceScore = 0, string type = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.EntityTag> tags = null, Azure.AI.Language.Text.BaseMetadata metadata = null) { throw null; }
         public static Azure.AI.Language.Text.NumberMetadata NumberMetadata(Azure.AI.Language.Text.NumberKind numberKind = default(Azure.AI.Language.Text.NumberKind), double value = 0) { throw null; }
         public static Azure.AI.Language.Text.NumericRangeMetadata NumericRangeMetadata(Azure.AI.Language.Text.RangeKind rangeKind = default(Azure.AI.Language.Text.RangeKind), double minimum = 0, double maximum = 0, Azure.AI.Language.Text.RangeInclusivity? rangeInclusivity = default(Azure.AI.Language.Text.RangeInclusivity?)) { throw null; }
         public static Azure.AI.Language.Text.OrdinalMetadata OrdinalMetadata(string offset = null, Azure.AI.Language.Text.RelativeTo relativeTo = default(Azure.AI.Language.Text.RelativeTo), string value = null) { throw null; }
-        public static Azure.AI.Language.Text.PiiActionResult PiiActionResult(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentWarning> warnings = null, Azure.AI.Language.Text.DocumentStatistics statistics = null, string redactedText = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.NamedEntity> entities = null, Azure.AI.Language.Text.DetectedLanguage detectedLanguage = null) { throw null; }
+        public static Azure.AI.Language.Text.PiiActionResult PiiActionResult(string id = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentWarning> warnings = null, Azure.AI.Language.Text.DocumentStatistics statistics = null, string redactedText = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.PiiEntity> entities = null, Azure.AI.Language.Text.DetectedLanguage detectedLanguage = null) { throw null; }
+        public static Azure.AI.Language.Text.PiiEntity PiiEntity(string text = null, string category = null, string subcategory = null, int offset = 0, int length = 0, double confidenceScore = 0, string type = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.EntityTag> tags = null, string mask = null, int? maskOffset = default(int?), int? maskLength = default(int?)) { throw null; }
         public static Azure.AI.Language.Text.PiiEntityRecognitionOperationResult PiiEntityRecognitionOperationResult(System.DateTimeOffset lastUpdateDateTime = default(System.DateTimeOffset), Azure.AI.Language.Text.TextActionState status = default(Azure.AI.Language.Text.TextActionState), string name = null, Azure.AI.Language.Text.PiiResult results = null) { throw null; }
         public static Azure.AI.Language.Text.PiiResult PiiResult(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DocumentError> errors = null, Azure.AI.Language.Text.RequestStatistics statistics = null, string modelVersion = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.PiiActionResult> documents = null) { throw null; }
-        public static Azure.AI.Language.Text.PrebuiltComponent PrebuiltComponent(string value = null) { throw null; }
         public static Azure.AI.Language.Text.RequestStatistics RequestStatistics(int documentsCount = 0, int validDocumentsCount = 0, int erroneousDocumentsCount = 0, long transactionsCount = (long)0) { throw null; }
         public static Azure.AI.Language.Text.SentenceAssessment SentenceAssessment(Azure.AI.Language.Text.TokenSentiment sentiment = Azure.AI.Language.Text.TokenSentiment.Positive, Azure.AI.Language.Text.TargetConfidenceScoreLabel confidenceScores = null, int offset = 0, int length = 0, string text = null, bool isNegated = false) { throw null; }
         public static Azure.AI.Language.Text.SentenceSentiment SentenceSentiment(string text = null, Azure.AI.Language.Text.SentenceSentimentValue sentiment = Azure.AI.Language.Text.SentenceSentimentValue.Positive, Azure.AI.Language.Text.SentimentConfidenceScores confidenceScores = null, int offset = 0, int length = 0, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.SentenceTarget> targets = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.SentenceAssessment> assessments = null) { throw null; }
@@ -3260,18 +3007,6 @@ namespace Azure.AI.Language.Text
         public static Azure.AI.Language.Text.TimeMetadata TimeMetadata(System.Collections.Generic.IEnumerable<Azure.AI.Language.Text.DateValue> dates = null) { throw null; }
         public static Azure.AI.Language.Text.VolumeMetadata VolumeMetadata(double value = 0, Azure.AI.Language.Text.VolumeUnit unit = default(Azure.AI.Language.Text.VolumeUnit)) { throw null; }
         public static Azure.AI.Language.Text.WeightMetadata WeightMetadata(double value = 0, Azure.AI.Language.Text.WeightUnit unit = default(Azure.AI.Language.Text.WeightUnit)) { throw null; }
-    }
-    public partial class TextDynamicClassificationInput : Azure.AI.Language.Text.AnalyzeTextInput, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.TextDynamicClassificationInput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.TextDynamicClassificationInput>
-    {
-        public TextDynamicClassificationInput() { }
-        public Azure.AI.Language.Text.DynamicClassificationActionContent ActionContent { get { throw null; } set { } }
-        public Azure.AI.Language.Text.MultiLanguageTextInput TextInput { get { throw null; } set { } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.TextDynamicClassificationInput System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.TextDynamicClassificationInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.TextDynamicClassificationInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Text.TextDynamicClassificationInput System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.TextDynamicClassificationInput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.TextDynamicClassificationInput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.TextDynamicClassificationInput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TextEntityLinkingInput : Azure.AI.Language.Text.AnalyzeTextInput, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Text.TextEntityLinkingInput>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Text.TextEntityLinkingInput>
     {

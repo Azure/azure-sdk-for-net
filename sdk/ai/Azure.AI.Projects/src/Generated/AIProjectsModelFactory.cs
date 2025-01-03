@@ -21,7 +21,7 @@ namespace Azure.AI.Projects
         /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ApplicationInsightsConfiguration"/> and <see cref="Dataset"/>.
         /// </param>
-        /// <param name="displayName"> Display Name for evaluation. It helps to find evaluation easily in AI Studio. It does not need to be unique. </param>
+        /// <param name="displayName"> Display Name for evaluation. It helps to find the evaluation easily in AI Foundry. It does not need to be unique. </param>
         /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
         /// <param name="systemData"> Metadata containing createdBy and modifiedBy information. </param>
         /// <param name="status"> Status of the evaluation. It is set by service and is read-only. </param>
@@ -64,9 +64,10 @@ namespace Azure.AI.Projects
         /// <param name="data"> Data for evaluation. </param>
         /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
         /// <param name="systemData"> Metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="provisioningStatus"> Status of the evaluation. It is set by service and is read-only. </param>
+        /// <param name="provisioningState"> Provisioning State of the evaluation. It is set by service and is read-only. </param>
         /// <param name="tags"> Evaluation's tags. Unlike properties, tags are fully mutable. </param>
         /// <param name="properties"> Evaluation's properties. Unlike tags, properties are add-only. Once added, a property cannot be removed. </param>
+        /// <param name="isEnabled"> Enabled status of the evaluation. It is set by service and is read-only. </param>
         /// <param name="evaluators"> Evaluators to be used for the evaluation. </param>
         /// <param name="trigger">
         /// Trigger for the evaluation.
@@ -74,7 +75,7 @@ namespace Azure.AI.Projects
         /// The available derived classes include <see cref="CronTrigger"/> and <see cref="RecurrenceTrigger"/>.
         /// </param>
         /// <returns> A new <see cref="Projects.EvaluationSchedule"/> instance for mocking. </returns>
-        public static EvaluationSchedule EvaluationSchedule(string name = null, ApplicationInsightsConfiguration data = null, string description = null, SystemData systemData = null, string provisioningStatus = null, IDictionary<string, string> tags = null, IDictionary<string, string> properties = null, IDictionary<string, EvaluatorConfiguration> evaluators = null, Trigger trigger = null)
+        public static EvaluationSchedule EvaluationSchedule(string name = null, ApplicationInsightsConfiguration data = null, string description = null, SystemData systemData = null, string provisioningState = null, IDictionary<string, string> tags = null, IDictionary<string, string> properties = null, string isEnabled = null, IDictionary<string, EvaluatorConfiguration> evaluators = null, Trigger trigger = null)
         {
             tags ??= new Dictionary<string, string>();
             properties ??= new Dictionary<string, string>();
@@ -85,9 +86,10 @@ namespace Azure.AI.Projects
                 data,
                 description,
                 systemData,
-                provisioningStatus,
+                provisioningState,
                 tags,
                 properties,
+                isEnabled,
                 evaluators,
                 trigger,
                 serializedAdditionalRawData: null);
@@ -162,6 +164,15 @@ namespace Azure.AI.Projects
             return new CredentialsApiKeyAuth(key, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Projects.AzureFunctionBinding"/>. </summary>
+        /// <param name="type"> The type of binding, which is always 'storage_queue'. </param>
+        /// <param name="storageQueue"> Storage queue. </param>
+        /// <returns> A new <see cref="Projects.AzureFunctionBinding"/> instance for mocking. </returns>
+        public static AzureFunctionBinding AzureFunctionBinding(AzureFunctionBindingType type = default, AzureFunctionStorageQueue storageQueue = null)
+        {
+            return new AzureFunctionBinding(type, storageQueue, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Projects.ThreadMessageOptions"/>. </summary>
         /// <param name="role">
         /// The role of the entity that is creating the message. Allowed values include:
@@ -186,6 +197,23 @@ namespace Azure.AI.Projects
             return new ThreadMessageOptions(role, content, attachments?.ToList(), metadata, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Projects.MessageIncompleteDetails"/>. </summary>
+        /// <param name="reason"> The provided reason describing why the message was marked as incomplete. </param>
+        /// <returns> A new <see cref="Projects.MessageIncompleteDetails"/> instance for mocking. </returns>
+        public static MessageIncompleteDetails MessageIncompleteDetails(MessageIncompleteDetailsReason reason = default)
+        {
+            return new MessageIncompleteDetails(reason, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.MessageTextAnnotation"/>. </summary>
+        /// <param name="type"> The object type. </param>
+        /// <param name="text"> The textual content associated with this text annotation item. </param>
+        /// <returns> A new <see cref="Projects.MessageTextAnnotation"/> instance for mocking. </returns>
+        public static MessageTextAnnotation MessageTextAnnotation(string type = null, string text = null)
+        {
+            return new UnknownMessageTextAnnotation(type, text, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Projects.RequiredToolCall"/>. </summary>
         /// <param name="type"> The object type. </param>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when submitting tool outputs. </param>
@@ -202,6 +230,14 @@ namespace Azure.AI.Projects
         public static RunError RunError(string code = null, string message = null)
         {
             return new RunError(code, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.IncompleteRunDetails"/>. </summary>
+        /// <param name="reason"> The reason why the run is incomplete. This indicates which specific token limit was reached during the run. </param>
+        /// <returns> A new <see cref="Projects.IncompleteRunDetails"/> instance for mocking. </returns>
+        public static IncompleteRunDetails IncompleteRunDetails(IncompleteDetailsReason reason = default)
+        {
+            return new IncompleteRunDetails(reason, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.RunCompletionUsage"/>. </summary>
@@ -234,7 +270,7 @@ namespace Azure.AI.Projects
         /// <param name="toolCalls">
         /// A list of tool call details for this run step.
         /// Please note <see cref="Projects.RunStepToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Projects.RunStepAzureAISearchToolCall"/>, <see cref="Projects.RunStepBingGroundingToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="Projects.RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/>, <see cref="Projects.RunStepMicrosoftFabricToolCall"/> and <see cref="Projects.RunStepSharepointToolCall"/>.
+        /// The available derived classes include <see cref="Projects.RunStepAzureAISearchToolCall"/>, <see cref="Projects.RunStepBingGroundingToolCall"/>, <see cref="RunStepCodeInterpreterToolCall"/>, <see cref="Projects.RunStepMicrosoftFabricToolCall"/>, <see cref="Projects.RunStepFileSearchToolCall"/>, <see cref="RunStepFunctionToolCall"/> and <see cref="Projects.RunStepSharepointToolCall"/>.
         /// </param>
         /// <returns> A new <see cref="Projects.RunStepToolCallDetails"/> instance for mocking. </returns>
         public static RunStepToolCallDetails RunStepToolCallDetails(IEnumerable<RunStepToolCall> toolCalls = null)
@@ -329,7 +365,7 @@ namespace Azure.AI.Projects
         {
             microsoftFabric ??= new Dictionary<string, string>();
 
-            return new RunStepMicrosoftFabricToolCall("microsoft_fabric", id, serializedAdditionalRawData: null, microsoftFabric);
+            return new RunStepMicrosoftFabricToolCall("fabric_aiskill", id, serializedAdditionalRawData: null, microsoftFabric);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.RunStepError"/>. </summary>

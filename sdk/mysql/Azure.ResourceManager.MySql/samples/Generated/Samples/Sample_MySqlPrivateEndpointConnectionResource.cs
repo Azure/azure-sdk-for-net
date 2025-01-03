@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.MySql.Samples
             MySqlPrivateEndpointConnectionResource mySqlPrivateEndpointConnection = client.GetMySqlPrivateEndpointConnectionResource(mySqlPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            MySqlPrivateEndpointConnectionPatch patch = new MySqlPrivateEndpointConnectionPatch()
+            MySqlPrivateEndpointConnectionPatch patch = new MySqlPrivateEndpointConnectionPatch
             {
                 Tags =
 {
 ["key1"] = "val1",
-["key2"] = "val2",
+["key2"] = "val2"
 },
             };
             ArmOperation<MySqlPrivateEndpointConnectionResource> lro = await mySqlPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, patch);

@@ -37,7 +37,7 @@ namespace Azure.AI.Projects
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(AssetIdentifier);
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(AssetType.ToSerialString());
+            writer.WriteStringValue(AssetType.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +88,7 @@ namespace Azure.AI.Projects
                 }
                 if (property.NameEquals("type"u8))
                 {
-                    type = property.Value.GetString().ToVectorStoreDataSourceAssetType();
+                    type = new VectorStoreDataSourceAssetType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
