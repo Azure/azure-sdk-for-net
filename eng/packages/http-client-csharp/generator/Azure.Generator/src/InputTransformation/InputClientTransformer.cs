@@ -31,6 +31,7 @@ namespace Azure.Generator.InputTransformation
             {
                 if (parameter.NameInRequest.Equals("subscriptionId", StringComparison.OrdinalIgnoreCase))
                 {
+                    // Always set subscriptionId to method parameter and type as string
                     parameters.Add(new InputParameter(parameter.Name, parameter.NameInRequest, parameter.Summary, parameter.Doc, InputPrimitiveType.String, parameter.Location, parameter.DefaultValue, InputOperationParameterKind.Method, parameter.IsRequired, parameter.IsApiVersion, parameter.IsResourceParameter, parameter.IsContentType, parameter.IsEndpoint, parameter.SkipUrlEncoding, parameter.Explode, parameter.ArraySerializationDelimiter, parameter.HeaderCollectionPrefix));
                 }
                 else
