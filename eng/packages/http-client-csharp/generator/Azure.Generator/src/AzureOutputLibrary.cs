@@ -5,6 +5,7 @@ using Azure.Generator.Mgmt.Models;
 using Azure.Generator.Providers;
 using Azure.Generator.Utilities;
 using Microsoft.Generator.CSharp.ClientModel;
+using Microsoft.Generator.CSharp.Primitives;
 using Microsoft.Generator.CSharp.Providers;
 using System;
 using System.Collections.Generic;
@@ -101,7 +102,25 @@ namespace Azure.Generator
         {
             var providers = base.BuildTypeProviders();
             var models = providers.Where(p => !_resourceDataMap.ContainsKey(p.Name));
+
+            // TODO: replace models with existing
+            // TODO: replace model property types with existing
+
             return [.. models, new RequestContextExtensionsDefinition(), .. BuildResourceDatas(), .. BuildResources()];
+        }
+
+        private IReadOnlyDictionary<ModelProvider, CSharpType> ReplaceModels(IEnumerable<ModelProvider> models)
+        {
+            var result = new Dictionary<ModelProvider, CSharpType>();
+            foreach(var model in models)
+            {
+                var replacedType = TypeReferenceTypeChooser.GetExactMatch(model);
+                if (replacedType is not null)
+                {
+                    result.Add(model, replacedType);
+                }
+            }
+            return result;
         }
 
         private IReadOnlyList<TypeProvider> BuildResources()

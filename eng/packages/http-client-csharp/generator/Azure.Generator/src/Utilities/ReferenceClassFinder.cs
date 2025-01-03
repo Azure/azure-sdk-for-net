@@ -72,8 +72,10 @@ namespace Azure.Generator.Utilities
         {
             _externalTypes = new Lazy<IReadOnlyList<Type>>(GetExternalTypes);
             TypeReferenceTypes = new Lazy<IReadOnlyList<Type>>(() => _externalTypes.Value.Where(IsTypeReferenceType).ToList());
+            PropertyReferenceTypes = new(() => _externalTypes.Value.Where(IsPropertyReferenceType).ToList());
         }
 
+        // TODO: replace types based on CrossLanguageDefinitionId of predefined existing types
         private IReadOnlyList<Type> GetExternalTypes()
         {
             List<Type> types = new List<Type>();
@@ -135,8 +137,11 @@ namespace Azure.Generator.Utilities
 
 
         public Lazy<IReadOnlyList<Type>> TypeReferenceTypes { get; }
+        public Lazy<IReadOnlyList<Type>> PropertyReferenceTypes { get; }
 
         private static bool IsTypeReferenceType(Type type) => HasAttribute(type, TypeReferenceTypeAttributeName);
+        private static bool IsPropertyReferenceType(Type type) => HasAttribute(type, PropertyReferenceTypeAttributeName);
+
         private static bool HasAttribute(Type type, string attributeName)
             => type.GetCustomAttributes(false).Where(a => a.GetType().Name == attributeName).Any();
 

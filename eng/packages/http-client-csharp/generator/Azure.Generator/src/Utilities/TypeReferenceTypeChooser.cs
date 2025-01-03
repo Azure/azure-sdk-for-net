@@ -15,7 +15,7 @@ namespace Azure.Generator.Utilities
 {
     internal static class TypeReferenceTypeChooser
     {
-        private static ConcurrentDictionary<InputType, CSharpType?> _valueCache = new ConcurrentDictionary<InputType, CSharpType?>();
+        private static ConcurrentDictionary<ModelProvider, CSharpType?> _valueCache = new ConcurrentDictionary<ModelProvider, CSharpType?>();
 
         /// <summary>
         /// Check whether a <c>MgmtObjectType</c> class can be replaced by an external type, and return the external type if available.
@@ -24,23 +24,23 @@ namespace Azure.Generator.Utilities
         /// <returns>Matched external type or null if not found</returns>
         public static CSharpType? GetExactMatch(ModelProvider typeToReplace)
         {
-            if (_valueCache.TryGetValue(typeToReplace.InputModel, out var result))
+            if (_valueCache.TryGetValue(typeToReplace, out var result))
                 return result;
 
             var replacedType = BuildExactMatchType(typeToReplace);
 
-            _valueCache.TryAdd(typeToReplace.InputModel, replacedType);
+            _valueCache.TryAdd(typeToReplace, replacedType);
             return replacedType;
         }
 
         private static CSharpType? BuildExactMatchType(ModelProvider typeToReplace)
         {
-            foreach (Type replacementType in ReferenceClassFinder.TypeReferenceTypes.Value)
+            foreach (Type replacementType in AzureClientPlugin.Instance.ReferenceClassFinder.TypeReferenceTypes.Value)
             {
                 if (PropertyMatchDetection.IsEqual(replacementType, typeToReplace))
                 {
                     var csharpType = CSharpType.FromSystemType(MgmtContext.Context, replacementType, typeToReplace.MyProperties);
-                    _valueCache.TryAdd(typeToReplace.InputModel, csharpType);
+                    _valueCache.TryAdd(typeToReplace, csharpType);
                     return csharpType;
                 }
             }

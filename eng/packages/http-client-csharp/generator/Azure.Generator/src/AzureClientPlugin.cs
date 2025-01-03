@@ -10,6 +10,8 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager;
+using Azure.Generator.Utilities;
 
 namespace Azure.Generator;
 
@@ -39,6 +41,7 @@ public class AzureClientPlugin : ClientModelPlugin
     {
         TypeFactory = new AzureTypeFactory();
         _instance = this;
+        ReferenceClassFinder = new ReferenceClassFinder();
     }
 
     /// <summary>
@@ -47,15 +50,19 @@ public class AzureClientPlugin : ClientModelPlugin
     public override void Configure()
     {
         base.Configure();
+        // Include Azure.Core
         AddMetadataReference(MetadataReference.CreateFromFile(typeof(Response).Assembly.Location));
         var sharedSourceDirectory = Path.Combine(Path.GetDirectoryName(typeof(AzureClientPlugin).Assembly.Location)!, "Shared", "Core");
         AddSharedSourceDirectory(sharedSourceDirectory);
         if (IsAzureArm.Value)
         {
-            AddMetadataReference(MetadataReference.CreateFromFile(typeof(TrackedResourceData).Assembly.Location));
+            // Include Azure.ResourceManager
+            AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));
             AddVisitor(new AzureArmVisitor());
         }
     }
+
+    internal ReferenceClassFinder ReferenceClassFinder { get; }
 
     /// <summary>
     /// Customize the license string for Azure client SDK.
