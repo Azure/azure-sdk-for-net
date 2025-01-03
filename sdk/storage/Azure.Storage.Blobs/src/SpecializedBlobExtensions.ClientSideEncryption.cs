@@ -72,17 +72,17 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="cancellationToken">
         /// Cancellation token for the operation.
         /// </param>
-        public static async Task UpdateClientSideKeyEncryptionKeyAsync(
+        public static Task UpdateClientSideKeyEncryptionKeyAsync(
             this BlobClient client,
             ClientSideEncryptionOptions encryptionOptionsOverride = default,
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default)
-            => await UpdateClientsideKeyEncryptionKeyInternal(
+            => UpdateClientsideKeyEncryptionKeyInternal(
                 client,
                 encryptionOptionsOverride,
                 conditions,
                 async: true,
-                cancellationToken).ConfigureAwait(false);
+                cancellationToken);
 
         private static async Task UpdateClientsideKeyEncryptionKeyInternal(
             BlobClient client,
@@ -181,17 +181,17 @@ namespace Azure.Storage.Blobs.Specialized
                     cancellationToken);
         }
 
-        private static async Task<byte[]> WrapKeyInternal(ReadOnlyMemory<byte> contentEncryptionKey, string keyWrapAlgorithm, IKeyEncryptionKey key, bool async, CancellationToken cancellationToken)
+        private static Task<byte[]> WrapKeyInternal(ReadOnlyMemory<byte> contentEncryptionKey, string keyWrapAlgorithm, IKeyEncryptionKey key, bool async, CancellationToken cancellationToken)
         {
             return async
-                ? await key.WrapKeyAsync(
+                ? key.WrapKeyAsync(
                     keyWrapAlgorithm,
                     contentEncryptionKey,
-                    cancellationToken).ConfigureAwait(false)
-                : key.WrapKey(
+                    cancellationToken)
+                : Task.FromResult(key.WrapKey(
                     keyWrapAlgorithm,
                     contentEncryptionKey,
-                    cancellationToken);
+                    cancellationToken));
         }
     }
 }

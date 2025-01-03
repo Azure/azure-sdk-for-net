@@ -477,7 +477,7 @@ namespace Azure.Storage.Blobs
         /// <returns>
         /// Task for completion status of the operation.
         /// </returns>
-        private async Task FlushFinalIfNecessaryInternal(Stream destination, bool async, CancellationToken cancellationToken)
+        private Task FlushFinalIfNecessaryInternal(Stream destination, bool async, CancellationToken cancellationToken)
         {
             if (_client.UsingClientSideEncryption)
             {
@@ -487,9 +487,10 @@ namespace Azure.Storage.Blobs
                 }
                 else if (destination is Azure.Storage.Cryptography.AuthenticatedRegionCryptoStream authRegionCryptoStream)
                 {
-                    await authRegionCryptoStream.FlushFinalInternal(async: async, cancellationToken).ConfigureAwait(false);
+                    return authRegionCryptoStream.FlushFinalInternal(async: async, cancellationToken);
                 }
             }
+            return Task.CompletedTask;
         }
 
         private void ValidateFinalCrc(ReadOnlySpan<byte> composedCrc)

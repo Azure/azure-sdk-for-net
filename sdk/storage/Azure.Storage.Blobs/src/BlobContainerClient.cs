@@ -759,18 +759,17 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContainerInfo>> CreateAsync(
+        public virtual Task<Response<BlobContainerInfo>> CreateAsync(
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
             BlobContainerEncryptionScopeOptions encryptionScopeOptions = default,
             CancellationToken cancellationToken = default) =>
-            await CreateInternal(
+            CreateInternal(
                 publicAccessType,
                 metadata,
                 encryptionScopeOptions,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="CreateAsync(PublicAccessType, Metadata, CancellationToken)"/> operation creates a new container
@@ -811,18 +810,17 @@ namespace Azure.Storage.Blobs
         /// </remarks>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<BlobContainerInfo>> CreateAsync(
+        public virtual Task<Response<BlobContainerInfo>> CreateAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             PublicAccessType publicAccessType,
             Metadata metadata,
             CancellationToken cancellationToken) =>
-            await CreateInternal(
+            CreateInternal(
                 publicAccessType,
                 metadata,
                 encryptionScopeOptions: default,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="CreateIfNotExists(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
@@ -969,18 +967,17 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContainerInfo>> CreateIfNotExistsAsync(
+        public virtual Task<Response<BlobContainerInfo>> CreateIfNotExistsAsync(
             PublicAccessType publicAccessType = PublicAccessType.None,
             Metadata metadata = default,
             BlobContainerEncryptionScopeOptions encryptionScopeOptions = default,
             CancellationToken cancellationToken = default) =>
-            await CreateIfNotExistsInternal(
+            CreateIfNotExistsInternal(
                 publicAccessType,
                 metadata,
                 encryptionScopeOptions,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="CreateIfNotExists(PublicAccessType, Metadata, CancellationToken)"/> operation creates a new container
@@ -1021,18 +1018,17 @@ namespace Azure.Storage.Blobs
         /// </remarks>
 #pragma warning disable AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual async Task<Response<BlobContainerInfo>> CreateIfNotExistsAsync(
+        public virtual Task<Response<BlobContainerInfo>> CreateIfNotExistsAsync(
 #pragma warning restore AZC0002 // DO ensure all service methods, both asynchronous and synchronous, take an optional CancellationToken parameter called cancellationToken.
             PublicAccessType publicAccessType,
             Metadata metadata,
             CancellationToken cancellationToken) =>
-            await CreateIfNotExistsInternal(
+            CreateIfNotExistsInternal(
                 publicAccessType,
                 metadata,
                 encryptionScopeOptions: default,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="CreateIfNotExistsInternal(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, bool, CancellationToken)"/>
@@ -1299,14 +1295,13 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response> DeleteAsync(
+        public virtual Task<Response> DeleteAsync(
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await DeleteInternal(
+            DeleteInternal(
                 conditions,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="DeleteIfExists"/> operation marks the specified
@@ -1369,14 +1364,13 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<bool>> DeleteIfExistsAsync(
+        public virtual Task<Response<bool>> DeleteIfExistsAsync(
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await DeleteIfExistsInternal(
+            DeleteIfExistsInternal(
                 conditions,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="DeleteIfExistsInternal"/> operation marks the specified
@@ -1603,11 +1597,11 @@ namespace Azure.Storage.Blobs
         /// <see cref="CreateIfNotExists(PublicAccessType, Metadata, BlobContainerEncryptionScopeOptions, CancellationToken)"/>
         /// instead.
         /// </remarks>
-        public virtual async Task<Response<bool>> ExistsAsync(
+        public virtual Task<Response<bool>> ExistsAsync(
             CancellationToken cancellationToken = default) =>
-            await ExistsInternal(
+            ExistsInternal(
                 async: true,
-                cancellationToken).ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="ExistsInternal"/> operation can be called on a
@@ -1734,14 +1728,13 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContainerProperties>> GetPropertiesAsync(
+        public virtual Task<Response<BlobContainerProperties>> GetPropertiesAsync(
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await GetPropertiesInternal(
+            GetPropertiesInternal(
                 conditions,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="GetPropertiesAsync"/> operation returns all
@@ -1899,16 +1892,15 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContainerInfo>> SetMetadataAsync(
+        public virtual Task<Response<BlobContainerInfo>> SetMetadataAsync(
             Metadata metadata,
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await SetMetadataInternal(
+            SetMetadataInternal(
                 metadata,
                 conditions,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="SetMetadataInternal"/> operation sets one or more
@@ -2067,14 +2059,13 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<BlobContainerAccessPolicy>> GetAccessPolicyAsync(
+        public virtual Task<Response<BlobContainerAccessPolicy>> GetAccessPolicyAsync(
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await GetAccessPolicyInternal(
+            GetAccessPolicyInternal(
                 conditions,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="GetAccessPolicyAsync"/> operation gets the
@@ -2267,18 +2258,17 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         [CallerShouldAudit("https://aka.ms/azsdk/callershouldaudit/storage-blobs")]
-        public virtual async Task<Response<BlobContainerInfo>> SetAccessPolicyAsync(
+        public virtual Task<Response<BlobContainerInfo>> SetAccessPolicyAsync(
             PublicAccessType accessType = PublicAccessType.None,
             IEnumerable<BlobSignedIdentifier> permissions = default,
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await SetAccessPolicyInternal(
+            SetAccessPolicyInternal(
                 accessType,
                 permissions,
                 conditions,
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="SetAccessPolicyAsync"/> operation sets the
@@ -2985,15 +2975,14 @@ namespace Azure.Storage.Blobs
         /// with the override parameter set to true.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BlobContentInfo>> UploadBlobAsync(
+        public virtual Task<Response<BlobContentInfo>> UploadBlobAsync(
             string blobName,
             Stream content,
             CancellationToken cancellationToken = default) =>
-            await GetBlobClient(blobName)
+            GetBlobClient(blobName)
                 .UploadAsync(
                     content,
-                    cancellationToken)
-                    .ConfigureAwait(false);
+                    cancellationToken);
 
         /// <summary>
         /// The <see cref="UploadBlob(string, BinaryData, CancellationToken)"/> operation creates a new block
@@ -3070,15 +3059,14 @@ namespace Azure.Storage.Blobs
         /// with the override parameter set to true.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual async Task<Response<BlobContentInfo>> UploadBlobAsync(
+        public virtual Task<Response<BlobContentInfo>> UploadBlobAsync(
             string blobName,
             BinaryData content,
             CancellationToken cancellationToken = default) =>
-            await GetBlobClient(blobName)
+            GetBlobClient(blobName)
                 .UploadAsync(
                     content,
-                    cancellationToken)
-                    .ConfigureAwait(false);
+                    cancellationToken);
         #endregion UploadBlob
 
         #region DeleteBlob
@@ -3159,17 +3147,16 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual async Task<Response> DeleteBlobAsync(
+        public virtual Task<Response> DeleteBlobAsync(
             string blobName,
             DeleteSnapshotsOption snapshotsOption = default,
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await GetBlobClient(blobName)
+            GetBlobClient(blobName)
                 .DeleteAsync(
                     snapshotsOption,
                     conditions,
-                    cancellationToken)
-                    .ConfigureAwait(false);
+                    cancellationToken);
 
         /// <summary>
         /// The <see cref="DeleteBlobIfExists"/> operation marks the specified
@@ -3248,16 +3235,15 @@ namespace Azure.Storage.Blobs
         /// a failure occurs.
         /// </remarks>
         [ForwardsClientCalls]
-        public virtual async Task<Response<bool>> DeleteBlobIfExistsAsync(
+        public virtual Task<Response<bool>> DeleteBlobIfExistsAsync(
             string blobName,
             DeleteSnapshotsOption snapshotsOption = default,
             BlobRequestConditions conditions = default,
             CancellationToken cancellationToken = default) =>
-            await GetBlobClient(blobName).DeleteIfExistsAsync(
+            GetBlobClient(blobName).DeleteIfExistsAsync(
                     snapshotsOption,
                     conditions ?? default,
-                    cancellationToken)
-                    .ConfigureAwait(false);
+                    cancellationToken);
 
         #endregion DeleteBlob
 
@@ -3319,16 +3305,15 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        internal virtual async Task<Response<BlobContainerClient>> RenameAsync(
+        internal virtual Task<Response<BlobContainerClient>> RenameAsync(
             string destinationContainerName,
             BlobRequestConditions sourceConditions = default,
             CancellationToken cancellationToken = default)
-            => await RenameInternal(
+            => RenameInternal(
                 destinationContainerName,
                 sourceConditions,
                 async: true,
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// Renames an existing Blob Container.
@@ -3597,12 +3582,11 @@ namespace Azure.Storage.Blobs
         /// A <see cref="RequestFailedException"/> will be thrown if
         /// a failure occurs.
         /// </remarks>
-        public virtual async Task<Response<AccountInfo>> GetAccountInfoAsync(
+        public virtual Task<Response<AccountInfo>> GetAccountInfoAsync(
             CancellationToken cancellationToken = default) =>
-            await GetAccountInfoInternal(
+            GetAccountInfoInternal(
                 true, // async
-                cancellationToken)
-                .ConfigureAwait(false);
+                cancellationToken);
 
         /// <summary>
         /// The <see cref="GetAccountInfoInternal"/> operation returns the sku
