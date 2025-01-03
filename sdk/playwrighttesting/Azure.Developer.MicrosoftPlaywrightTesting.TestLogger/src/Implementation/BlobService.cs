@@ -3,10 +3,11 @@
 
 using System;
 using System.Text;
-using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
+using Microsoft.Extensions.Logging;
 using Azure.Storage.Blobs;
 using System.Threading.Tasks;
 using System.IO;
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
 {
@@ -27,11 +28,11 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
                 BlobClient blobClient = new(new Uri(cloudFilePath));
                 byte[] bufferBytes = Encoding.UTF8.GetBytes(buffer);
                 await blobClient.UploadAsync(new BinaryData(bufferBytes), overwrite: true).ConfigureAwait(false);
-                _logger.Info($"Uploaded buffer to {fileRelativePath}");
+                _logger.LogInformation("Uploaded buffer to {fileRelativePath}", fileRelativePath);
             }
             catch (Exception ex)
             {
-                _logger.Error($"Failed to upload buffer: {ex}");
+                _logger.LogError("Failed to upload buffer: {ex}", ex);
             }
         }
 
@@ -43,11 +44,11 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
                 BlobClient blobClient = new(new Uri(cloudFilePath));
                 byte[] bufferBytes = Encoding.UTF8.GetBytes(buffer);
                 blobClient.Upload(new BinaryData(bufferBytes), overwrite: true);
-                _logger.Info($"Uploaded buffer to {fileRelativePath}");
+                _logger.LogInformation("Uploaded buffer to {fileRelativePath}", fileRelativePath);
             }
             catch (Exception ex)
             {
-                _logger.Error($"Failed to upload buffer: {ex}");
+                _logger.LogError("Failed to upload buffer: {ex}", ex);
             }
         }
 
@@ -56,7 +57,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
             string cloudFilePath = GetCloudFilePath(uri, fileRelativePath);
             BlobClient blobClient = new(new Uri(cloudFilePath));
             blobClient.Upload(filePath, overwrite: true);
-            _logger.Info($"Uploaded file {filePath} to {fileRelativePath}");
+            _logger.LogInformation("Uploaded file {filePath} to {fileRelativePath}", filePath, fileRelativePath);
         }
         public string GetCloudFilePath(string uri, string fileRelativePath)
         {

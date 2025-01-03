@@ -17,9 +17,9 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests
         [TearDown]
         public void TearDown()
         {
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, null);
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, null);
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, null);
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), null);
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), null);
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId.ToString(), null);
             Environment.SetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_REPORTING_URL, null);
         }
 
@@ -110,16 +110,16 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests
             Assert.Null(reporter._testProcessor);
         }
 
-        [Test]
+                [Test]
         public void InitializePlaywrightReporter_Default_SetsUpTestProcessor()
         {
             var consoleWriterMock = new Mock<IConsoleWriter>();
             var environmentMock = new Mock<IEnvironment>();
             var accessToken = GetToken(new Dictionary<string, object> { { "aid", "account-id-guid" }, { "oid", "org-id" }, { "id", "uuid" }, { "name", "username" } });
 
-            environmentMock.Setup(e => e.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId)).Returns("run-id");
+            environmentMock.Setup(e => e.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId.ToString())).Returns("run-id");
             environmentMock.Setup(e => e.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_REPORTING_URL)).Returns("https://eastus.reporting.api.playwright.microsoft.com");
-            environmentMock.Setup(e => e.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken)).Returns(accessToken);
+            environmentMock.Setup(e => e.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString())).Returns(accessToken);
 
             var reporter = new PlaywrightReporter(logger: null, environment: environmentMock.Object, xmlRunSettings: null, consoleWriter: consoleWriterMock.Object, jsonWebTokenHandler: null);
 
@@ -160,7 +160,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests
             environmentMock.Setup(e => e.GetEnvironmentVariable("GITHUB_JOB")).Returns("job-id");
             environmentMock.Setup(e => e.GetEnvironmentVariable("GITHUB_REF_NAME")).Returns("branch-name");
             environmentMock.Setup(e => e.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_REPORTING_URL)).Returns("https://eastus.reporting.api.playwright.microsoft.com");
-            environmentMock.Setup(e => e.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken)).Returns(accessToken);
+            environmentMock.Setup(e => e.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString())).Returns(accessToken);
 
             var reporter = new PlaywrightReporter(logger: null, environment: environmentMock.Object, xmlRunSettings: null, consoleWriter: consoleWriterMock.Object, jsonWebTokenHandler: null);
 
@@ -180,7 +180,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests
                 Assert.AreEqual(1, reporter._testProcessor!._cIInfo.RunAttempt);
                 Assert.AreEqual(reporter._testProcessor!._cIInfo.RevisionUrl, "https://github.com/repo/commit/commit-id");
             });
-            environmentMock.Verify(e => e.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, runId), Times.Once);
+            environmentMock.Verify(e => e.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId.ToString(), runId), Times.Once);
         }
 
         [Test]
@@ -203,7 +203,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests
             environmentMock.Setup(e => e.GetEnvironmentVariable("RELEASE_DEFINITIONID")).Returns("definition-id");
             environmentMock.Setup(e => e.GetEnvironmentVariable("RELEASE_DEPLOYMENTID")).Returns("release-id");
             environmentMock.Setup(e => e.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_REPORTING_URL)).Returns("https://eastus.reporting.api.playwright.microsoft.com");
-            environmentMock.Setup(e => e.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken)).Returns(accessToken);
+            environmentMock.Setup(e => e.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString())).Returns(accessToken);
 
             var reporter = new PlaywrightReporter(logger: null, environment: environmentMock.Object, xmlRunSettings: null, consoleWriter: consoleWriterMock.Object, jsonWebTokenHandler: null);
 
@@ -223,7 +223,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests
                 Assert.AreEqual(1, reporter._testProcessor!._cIInfo.RunAttempt);
                 Assert.AreEqual(reporter._testProcessor!._cIInfo.RevisionUrl, "https://ado.com/project/_git/repo/commit/commit-id");
             });
-            environmentMock.Verify(e => e.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, runId), Times.Once);
+            environmentMock.Verify(e => e.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId.ToString(), runId), Times.Once);
         }
 
         [Test]
@@ -232,23 +232,23 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Tests
             var consoleWriterMock = new Mock<IConsoleWriter>();
             var accessToken = GetToken(new Dictionary<string, object> { { "aid", "eastus_e3d6f8f5-8c4e-4f74-a6f6-6b6d423d6d42" }, { "oid", "org-id" }, { "id", "uuid" }, { "name", "username" } });
 
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, "wss://eastus.api.playwright.microsoft.com/accounts/eastus_e3d6f8f5-8c4e-4f74-a6f6-6b6d423d6d42/browsers");
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken, accessToken);
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), "wss://eastus.api.playwright.microsoft.com/accounts/eastus_e3d6f8f5-8c4e-4f74-a6f6-6b6d423d6d42/browsers");
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString(), accessToken);
 
             var reporter = new PlaywrightReporter(logger: null, environment: null, xmlRunSettings: null, consoleWriter: consoleWriterMock.Object, jsonWebTokenHandler: null);
             var xmlSettings = @"
-<RunSettings>
-    <TestRunParameters>
-        <Parameter name=""ServiceAuthType"" value=""AccessToken"" />
-        <Parameter name=""EnableGitHubSummary"" value=""false"" />
-        <Parameter name=""EnableResultPublish"" value=""false"" />
-        <Parameter name=""RunId"" value=""Sample-Run-Id"" />
-    </TestRunParameters>
-    <NUnit>
-        <NumberOfTestWorkers>3</NumberOfTestWorkers>
-    </NUnit>
-</RunSettings>
-";
+        <RunSettings>
+            <TestRunParameters>
+                <Parameter name=""ServiceAuthType"" value=""AccessToken"" />
+                <Parameter name=""EnableGitHubSummary"" value=""false"" />
+                <Parameter name=""EnableResultPublish"" value=""false"" />
+                <Parameter name=""RunId"" value=""Sample-Run-Id"" />
+            </TestRunParameters>
+            <NUnit>
+                <NumberOfTestWorkers>3</NumberOfTestWorkers>
+            </NUnit>
+        </RunSettings>
+        ";
             reporter.InitializePlaywrightReporter(xmlSettings);
 
             Assert.NotNull(reporter._testProcessor);

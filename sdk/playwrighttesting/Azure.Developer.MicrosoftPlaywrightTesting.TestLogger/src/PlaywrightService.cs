@@ -5,6 +5,7 @@ using Azure.Core;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.JsonWebTokens;
 using System;
 using System.Collections.Generic;
@@ -21,17 +22,17 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 /// </summary>
 public class PlaywrightService
 {
-    private string? _serviceAuth;
+    private ServiceAuthType? _serviceAuth;
     /// <summary>
     /// Gets or sets the default authentication mechanism.
     /// </summary>
-    public string ServiceAuth
+    public ServiceAuthType ServiceAuth
     {
         // fetch class level variable if set -> fetch environment variable -> default to EntraId
         get
         {
-            if (!string.IsNullOrEmpty(_serviceAuth))
-                return _serviceAuth!;
+            if (_serviceAuth != null)
+                return (ServiceAuthType)_serviceAuth!;
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(Constants.s_playwright_service_auth_type_environment_variable)))
                 return Environment.GetEnvironmentVariable(Constants.s_playwright_service_auth_type_environment_variable)!;
             return ServiceAuthType.EntraId;
@@ -45,11 +46,11 @@ public class PlaywrightService
     /// <summary>
     /// Gets or sets the rotation timer for Playwright service.
     /// </summary>
-    public Timer? RotationTimer { get; set; }
+    internal Timer? RotationTimer { get; set; }
     /// <summary>
     /// Gets the service endpoint for Playwright service.
     /// </summary>
-    public static string? ServiceEndpoint => Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri);
+    public static string? ServiceEndpoint => Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString());
 
     private bool? _useCloudHostedBrowsers;
     /// <summary>
@@ -76,15 +77,15 @@ public class PlaywrightService
     /// <summary>
     /// Gets or sets the operating system for Playwright service.
     /// </summary>
-    public OSPlatform? Os
+    public OSPlatform? OS
     {
         // fetch class level variable if set -> fetch environment variable -> default to null
         get
         {
             if (_os != null)
                 return _os;
-            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs)))
-                return GetOSPlatform(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs));
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs.ToString())))
+                return GetOSPlatform(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs.ToString()));
             return null;
         }
         set
@@ -104,8 +105,8 @@ public class PlaywrightService
         {
             if (!string.IsNullOrEmpty(_runId))
                 return _runId;
-            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId)))
-                return Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId);
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId.ToString())))
+                return Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId.ToString());
             return null;
         }
         set
@@ -125,8 +126,8 @@ public class PlaywrightService
         {
             if (!string.IsNullOrEmpty(_exposeNetwork))
                 return _exposeNetwork;
-            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork)))
-                return Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork);
+            if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork.ToString())))
+                return Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork.ToString());
             return null;
         }
         set
@@ -137,55 +138,33 @@ public class PlaywrightService
 
     private readonly EntraLifecycle? _entraLifecycle;
     private readonly JsonWebTokenHandler? _jsonWebTokenHandler;
-    private IFrameworkLogger? _frameworkLogger;
+    private readonly ILogger? _logger;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PlaywrightService"/> class.
     /// </summary>
-    /// <param name="playwrightServiceOptions"></param>
     /// <param name="credential"></param>
-    /// <param name="frameworkLogger"></param>
-    public PlaywrightService(PlaywrightServiceOptions playwrightServiceOptions, TokenCredential? credential = null, IFrameworkLogger? frameworkLogger = null) : this(
-        os: playwrightServiceOptions.Os,
-        runId: playwrightServiceOptions.RunId,
-        exposeNetwork: playwrightServiceOptions.ExposeNetwork,
-        serviceAuth: playwrightServiceOptions.ServiceAuth,
-        useCloudHostedBrowsers: playwrightServiceOptions.UseCloudHostedBrowsers,
-        credential: credential ?? playwrightServiceOptions.AzureTokenCredential,
-        frameworkLogger: frameworkLogger
+    /// <param name="options"></param>
+    public PlaywrightService(TokenCredential? credential, PlaywrightServiceOptions options) : this(
+        os: options.OS,
+        runId: options.RunId,
+        exposeNetwork: options.ExposeNetwork,
+        serviceAuth: options.ServiceAuth,
+        useCloudHostedBrowsers: options.UseCloudHostedBrowsers,
+        credential: credential ?? options.AzureTokenCredential,
+        logger: options.Logger
     )
     {
         // No-op
     }
 
-    /// <summary>
-    /// Initializes a new instance of the <see cref="PlaywrightService"/> class.
-    /// </summary>
-    /// <param name="os">The operating system.</param>
-    /// <param name="runId">The run ID.</param>
-    /// <param name="exposeNetwork">The network exposure.</param>
-    /// <param name="serviceAuth">The service authentication mechanism.</param>
-    /// <param name="useCloudHostedBrowsers">Whether to use cloud-hosted browsers.</param>
-    /// <param name="credential">The token credential.</param>
-    /// <param name="frameworkLogger">Logger</param>
-    public PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = null, TokenCredential? credential = null, IFrameworkLogger? frameworkLogger = null)
+    internal PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, ServiceAuthType? serviceAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? credential = null, ILogger? logger = null)
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
             return;
-        _frameworkLogger = frameworkLogger;
-        _entraLifecycle = new EntraLifecycle(tokenCredential: credential, frameworkLogger: _frameworkLogger);
-        _jsonWebTokenHandler = new JsonWebTokenHandler();
-        InitializePlaywrightServiceEnvironmentVariables(GetServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
-    }
-
-    internal PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? credential = null, IFrameworkLogger? frameworkLogger = null)
-    {
-        if (string.IsNullOrEmpty(ServiceEndpoint))
-            return;
-        _frameworkLogger = frameworkLogger;
+        _logger = logger;
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
-        _entraLifecycle = entraLifecycle ?? new EntraLifecycle(credential, _jsonWebTokenHandler, _frameworkLogger);
-        _frameworkLogger = frameworkLogger;
+        _entraLifecycle = entraLifecycle ?? new EntraLifecycle(credential, _jsonWebTokenHandler, _logger);
         InitializePlaywrightServiceEnvironmentVariables(GetServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
     }
 
@@ -204,7 +183,7 @@ public class PlaywrightService
             throw new Exception(Constants.s_service_endpoint_removed_since_scalable_execution_disabled_error_message);
         if (string.IsNullOrEmpty(ServiceEndpoint))
             throw new Exception(Constants.s_no_service_endpoint_error_message);
-        string _serviceOs = Uri.EscapeDataString(GetServiceCompatibleOs(os) ?? GetServiceCompatibleOs(Os)!);
+        string _serviceOs = Uri.EscapeDataString(GetServiceCompatibleOs(os) ?? GetServiceCompatibleOs(OS)!);
         string _runId = Uri.EscapeDataString(runId ?? RunId!);
         string _exposeNetwork = exposeNetwork ?? ExposeNetwork!;
 
@@ -219,7 +198,7 @@ public class PlaywrightService
         }
         if (string.IsNullOrEmpty(GetAuthToken()))
         {
-            _frameworkLogger?.Error("Access token not found when trying to call GetConnectOptionsAsync.");
+            _logger?.LogError("Access token not found when trying to call GetConnectOptionsAsync.");
             throw new Exception(Constants.s_no_auth_error);
         }
 
@@ -232,11 +211,7 @@ public class PlaywrightService
                 ["Authorization"] = $"Bearer {GetAuthToken()}"
             }
         };
-        return new ConnectOptions<T>
-        {
-            WsEndpoint = wsEndpoint,
-            Options = BrowserConnectOptionsConverter.Convert<T>(browserConnectOptions)
-        };
+        return new ConnectOptions<T>(wsEndpoint, BrowserConnectOptionsConverter.Convert<T>(browserConnectOptions));
     }
 
     /// <summary>
@@ -246,26 +221,56 @@ public class PlaywrightService
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
         {
-            _frameworkLogger?.Info("Exiting initialization as service endpoint is not set.");
+            _logger?.LogInformation("Exiting initialization as service endpoint is not set.");
             return;
         }
         if (!UseCloudHostedBrowsers)
         {
             // Since playwright-dotnet checks PLAYWRIGHT_SERVICE_ACCESS_TOKEN and PLAYWRIGHT_SERVICE_URL to be set, remove PLAYWRIGHT_SERVICE_URL so that tests are run locally.
             // If customers use GetConnectOptionsAsync, after setting disableScalableExecution, an error will be thrown.
-            _frameworkLogger?.Info("Disabling scalable execution since UseCloudHostedBrowsers is set to false.");
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, null);
+            _logger?.LogInformation("Disabling scalable execution since UseCloudHostedBrowsers is set to false.");
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), null);
             return;
         }
         // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler
         if (ServiceAuth == ServiceAuthType.AccessToken)
         {
-            _frameworkLogger?.Info("Auth mechanism is Access Token.");
+            _logger?.LogInformation("Auth mechanism is Access Token.");
             ValidateMptPAT();
             return;
         }
-        _frameworkLogger?.Info("Auth mechanism is Entra Id.");
+        _logger?.LogInformation("Auth mechanism is Entra Id.");
         await _entraLifecycle!.FetchEntraIdAccessTokenAsync(cancellationToken).ConfigureAwait(false);
+        RotationTimer = new Timer(RotationHandlerAsync, null, TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes), TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes));
+    }
+
+    /// <summary>
+    /// Initialises the resources used to setup entra id authentication.
+    /// </summary>
+    public void Initialize(CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrEmpty(ServiceEndpoint))
+        {
+            _logger?.LogInformation("Exiting initialization as service endpoint is not set.");
+            return;
+        }
+        if (!UseCloudHostedBrowsers)
+        {
+            // Since playwright-dotnet checks PLAYWRIGHT_SERVICE_ACCESS_TOKEN and PLAYWRIGHT_SERVICE_URL to be set, remove PLAYWRIGHT_SERVICE_URL so that tests are run locally.
+            // If customers use GetConnectOptionsAsync, after setting disableScalableExecution, an error will be thrown.
+            _logger?.LogInformation("Disabling scalable execution since UseCloudHostedBrowsers is set to false.");
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), null);
+            return;
+        }
+        // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler
+        if (ServiceAuth == ServiceAuthType.AccessToken)
+        {
+            _logger?.LogInformation("Auth mechanism is Access Token.");
+            ValidateMptPAT();
+            return;
+        }
+        _logger?.LogInformation("Auth mechanism is Entra Id.");
+        _entraLifecycle!.FetchEntraIdAccessToken(cancellationToken);
         RotationTimer = new Timer(RotationHandlerAsync, null, TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes), TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes));
     }
 
@@ -274,7 +279,7 @@ public class PlaywrightService
     /// </summary>
     public void Cleanup()
     {
-        _frameworkLogger?.Info("Cleaning up Playwright service resources.");
+        _logger?.LogInformation("Cleaning up Playwright service resources.");
         RotationTimer?.Dispose();
     }
 
@@ -282,22 +287,22 @@ public class PlaywrightService
     {
         if (_entraLifecycle!.DoesEntraIdAccessTokenRequireRotation())
         {
-            _frameworkLogger?.Info("Rotating Entra Id access token.");
+            _logger?.LogInformation("Rotating Entra Id access token.");
             await _entraLifecycle.FetchEntraIdAccessTokenAsync().ConfigureAwait(false);
         }
     }
 
-    private void InitializePlaywrightServiceEnvironmentVariables(string? os = null, string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = null)
+    private void InitializePlaywrightServiceEnvironmentVariables(string? os = null, string? runId = null, string? exposeNetwork = null, ServiceAuthType? serviceAuth = null, bool? useCloudHostedBrowsers = null)
     {
         // environment variables are set only if they are not already set
         // If method parameters are set, environment variables are set to those values only if they are not already set
-        if (!string.IsNullOrEmpty(serviceAuth))
+        if (serviceAuth != null)
         {
-            ServiceAuth = serviceAuth!;
+            ServiceAuth = (ServiceAuthType)serviceAuth!;
         }
         if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(Constants.s_playwright_service_auth_type_environment_variable)))
         {
-            Environment.SetEnvironmentVariable(Constants.s_playwright_service_auth_type_environment_variable, ServiceAuth);
+            Environment.SetEnvironmentVariable(Constants.s_playwright_service_auth_type_environment_variable, ServiceAuth.ToString());
         }
         if (useCloudHostedBrowsers != null)
         {
@@ -307,23 +312,23 @@ public class PlaywrightService
         }
         if (!string.IsNullOrEmpty(os))
         {
-            Os = GetOSPlatform(os);
-            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs)))
+            OS = GetOSPlatform(os);
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs.ToString())))
             {
-                Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, os);
+                Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs.ToString(), os);
             }
         }
         // If OS is not provided, set it to default
-        else if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs)))
+        else if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs.ToString())))
         {
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs, Constants.s_default_os);
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceOs.ToString(), Constants.s_default_os);
         }
         if (!string.IsNullOrEmpty(runId))
         {
             RunId = runId;
-            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId)))
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId.ToString())))
             {
-                Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, runId);
+                Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId.ToString(), runId);
             }
         }
         else
@@ -333,26 +338,26 @@ public class PlaywrightService
         if (!string.IsNullOrEmpty(exposeNetwork))
         {
             ExposeNetwork = exposeNetwork;
-            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork)))
+            if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork.ToString())))
             {
-                Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork, exposeNetwork);
+                Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork.ToString(), exposeNetwork);
             }
         }
-        else if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork)))
+        else if (string.IsNullOrEmpty(Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork.ToString())))
         {
-            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork, Constants.s_default_expose_network);
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork.ToString(), Constants.s_default_expose_network);
         }
         SetReportingUrlAndWorkspaceId();
     }
 
     internal static string GetDefaultRunId()
     {
-        var runIdFromEnvironmentVariable = Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId);
+        var runIdFromEnvironmentVariable = Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId.ToString());
         if (!string.IsNullOrEmpty(runIdFromEnvironmentVariable))
             return runIdFromEnvironmentVariable!;
         CIInfo ciInfo = CiInfoProvider.GetCIInfo();
         var runId = ReporterUtils.GetRunId(ciInfo);
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, runId);
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId.ToString(), runId);
         return runId;
     }
 
@@ -376,7 +381,7 @@ public class PlaywrightService
 
     private static string? GetAuthToken()
     {
-        return Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken);
+        return Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString());
     }
 
     private void ValidateMptPAT()
@@ -404,7 +409,7 @@ public class PlaywrightService
         }
         catch (Exception ex)
         {
-            _frameworkLogger?.Error(ex.ToString());
+            _logger?.LogError("{Error}", ex.ToString());
             throw;
         }
     }

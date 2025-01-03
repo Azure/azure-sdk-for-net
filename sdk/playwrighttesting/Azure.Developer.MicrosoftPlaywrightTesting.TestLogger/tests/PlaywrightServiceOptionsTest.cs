@@ -22,12 +22,20 @@ public class PlaywrightServiceOptionsTest
         var azureTokenCredentialType = AzureTokenCredentialType.ManagedIdentityCredential;
         var managedIdentityClientId = "test-client-id";
 
-        var settings = new PlaywrightServiceOptions(
-            os, runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers, azureTokenCredentialType, managedIdentityClientId);
+        var settings = new PlaywrightServiceOptions()
+        {
+            OS = os,
+            RunId = runId,
+            ExposeNetwork = exposeNetwork,
+            ServiceAuth = serviceAuth,
+            UseCloudHostedBrowsers = Boolean.Parse(useCloudHostedBrowsers),
+            TokenCredentialType = azureTokenCredentialType,
+            ManagedIdentityClientId = managedIdentityClientId
+        };
 
         Assert.Multiple(() =>
         {
-            Assert.That(settings.Os, Is.EqualTo(os));
+            Assert.That(settings.OS, Is.EqualTo(os));
             Assert.That(settings.RunId, Is.EqualTo(runId));
             Assert.That(settings.ExposeNetwork, Is.EqualTo(exposeNetwork));
             Assert.That(settings.ServiceAuth, Is.EqualTo(serviceAuth));
@@ -42,7 +50,7 @@ public class PlaywrightServiceOptionsTest
         var settings = new PlaywrightServiceOptions();
         Assert.Multiple(() =>
         {
-            Assert.That(settings.Os, Is.Null);
+            Assert.That(settings.OS, Is.Null);
             Assert.That(settings.RunId, Is.Null);
             Assert.That(settings.ExposeNetwork, Is.Null);
             Assert.That(settings.ServiceAuth, Is.EqualTo(ServiceAuthType.EntraId));
@@ -54,15 +62,21 @@ public class PlaywrightServiceOptionsTest
     [Test]
     public void Validate_ShouldThrowExceptionForInvalidOs()
     {
-        Exception? ex = Assert.Throws<Exception>(() => new PlaywrightServiceOptions(os: OSPlatform.Create("invalid")));
-        Assert.That(ex!.Message, Does.Contain("Invalid value for Os"));
+        Exception? ex = Assert.Throws<ArgumentException>(() => new PlaywrightServiceOptions()
+        {
+            OS = OSPlatform.Create("invalid")
+        });
+        Assert.That(ex!.Message, Does.Contain("Invalid value for OS"));
     }
 
     [Test]
     public void Validate_ShouldThrowExceptionForInvalidDefaultAuth()
     {
         var invalidAuth = "InvalidAuth";
-        Exception? ex = Assert.Throws<Exception>(() => new PlaywrightServiceOptions(serviceAuth: invalidAuth));
+        Exception? ex = Assert.Throws<ArgumentException>(() => new PlaywrightServiceOptions()
+        {
+            ServiceAuth = invalidAuth
+        });
         Assert.That(ex!.Message, Does.Contain("Invalid value for ServiceAuth"));
     }
 
@@ -81,7 +95,10 @@ public class PlaywrightServiceOptionsTest
     [TestCase(null, typeof(DefaultAzureCredential))]
     public void GetTokenCredential_ShouldReturnCorrectCredential(string? credentialType, Type expectedType)
     {
-        var settings = new PlaywrightServiceOptions(azureTokenCredentialType: credentialType);
+        var settings = new PlaywrightServiceOptions()
+        {
+            TokenCredentialType = credentialType
+        };
         Assert.That(settings.AzureTokenCredential, Is.InstanceOf(expectedType));
     }
 }

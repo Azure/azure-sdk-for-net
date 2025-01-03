@@ -13,5 +13,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Azure.Developer.MicrosoftPlaywrightTesting.TestLogger\src\Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.csproj" />
     <PackageReference Include="NUnit" />
+    <PackageReference Include ="Microsoft.Extensions.Logging" />
   </ItemGroup>
 </Project>

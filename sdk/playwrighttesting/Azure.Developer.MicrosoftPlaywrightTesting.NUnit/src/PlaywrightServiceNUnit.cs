@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Runtime.InteropServices;
 using System;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
-using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
+using Microsoft.Extensions.Logging;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
 
@@ -17,28 +17,32 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.NUnit;
 [SetUpFixture]
 public class PlaywrightServiceNUnit : PlaywrightService
 {
-    private static NUnitFrameworkLogger nunitFrameworkLogger { get; } = new();
+    private static NUnitLogger nunitLogger { get; } = new();
+    private static readonly string? s_useCloudHostedBrowsers = TestContext.Parameters.Get(RunSettingKey.UseCloudHostedBrowsers.ToString());
+    private static readonly string? s_serviceAuthType = TestContext.Parameters.Get(RunSettingKey.ServiceAuthType.ToString());
     /// <summary>
     /// Initializes a new instance of the <see cref="PlaywrightServiceNUnit"/> class.
     /// </summary>
     /// <param name="credential">The azure token credential to use for authentication.</param>
     public PlaywrightServiceNUnit(TokenCredential? credential = null)
-        : base(playwrightServiceOptions, credential: credential, frameworkLogger: nunitFrameworkLogger)
+        : base(credential, options)
     {
     }
 
     /// <summary>
     /// Creates a new instance of <see cref="PlaywrightServiceOptions"/> based on the runsettings file.
     /// </summary>
-    public static PlaywrightServiceOptions playwrightServiceOptions { get; } = new(
-        os: GetOsPlatform(TestContext.Parameters.Get(RunSettingKey.Os)),
-        runId: TestContext.Parameters.Get(RunSettingKey.RunId),
-        exposeNetwork: TestContext.Parameters.Get(RunSettingKey.ExposeNetwork),
-        serviceAuth: TestContext.Parameters.Get(RunSettingKey.ServiceAuthType),
-        useCloudHostedBrowsers: TestContext.Parameters.Get(RunSettingKey.UseCloudHostedBrowsers),
-        azureTokenCredentialType: TestContext.Parameters.Get(RunSettingKey.AzureTokenCredentialType),
-        managedIdentityClientId: TestContext.Parameters.Get(RunSettingKey.ManagedIdentityClientId)
-    );
+    public static PlaywrightServiceOptions options { get; } = new()
+    {
+        OS = GetOsPlatform(TestContext.Parameters.Get(RunSettingKey.OS.ToString())),
+        RunId = TestContext.Parameters.Get(RunSettingKey.RunId.ToString()),
+        ExposeNetwork = TestContext.Parameters.Get(RunSettingKey.ExposeNetwork.ToString()),
+        ServiceAuth = string.IsNullOrEmpty(s_serviceAuthType) ? default : new ServiceAuthType(s_serviceAuthType!),
+        UseCloudHostedBrowsers = !string.IsNullOrEmpty(s_useCloudHostedBrowsers) && bool.Parse(s_useCloudHostedBrowsers),
+        TokenCredentialType = TestContext.Parameters.Get(RunSettingKey.AzureTokenCredentialType.ToString()),
+        ManagedIdentityClientId = TestContext.Parameters.Get(RunSettingKey.ManagedIdentityClientId.ToString()),
+        Logger = nunitLogger
+    };
 
     /// <summary>
     /// Setup the resources utilized by Playwright service.
@@ -49,7 +53,7 @@ public class PlaywrightServiceNUnit : PlaywrightService
     {
         if (!UseCloudHostedBrowsers)
             return;
-        nunitFrameworkLogger.Info("\nRunning tests using Microsoft Playwright Testing service.\n");
+        nunitLogger.LogInformation("\nRunning tests using Microsoft Playwright Testing service.\n");
 
         await InitializeAsync().ConfigureAwait(false);
     }
