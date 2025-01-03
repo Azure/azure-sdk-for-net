@@ -5,23 +5,20 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
+using Azure.Developer.LoadTesting.Models;
 
 namespace Azure.Developer.LoadTesting
 {
     /// <summary>
     /// FileUploadResultOperation.
     /// </summary>
-    public class FileUploadResultOperation : Operation<BinaryData>
+    public class FileUploadResultOperation : Operation<TestFileInfo>
     {
         private bool _completed;
-        private Response _response;
-        private BinaryData _value;
+        private Response<TestFileInfo> _response;
+        private TestFileInfo _value;
         private readonly string _testId;
         private readonly string _fileName;
         private readonly LoadTestAdministrationClient _client;
@@ -36,7 +33,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary>
         /// Value.
         /// </summary>
-        public override BinaryData Value
+        public override TestFileInfo Value
         {
             get
             {
@@ -74,7 +71,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary>
         /// FileUploadOperation.
         /// </summary>
-        public FileUploadResultOperation(string testId, string fileName, LoadTestAdministrationClient client, Response initialResponse = null)
+        public FileUploadResultOperation(string testId, string fileName, LoadTestAdministrationClient client, Response<TestFileInfo> initialResponse = null)
         {
             _testId = testId;
             _fileName = fileName;
@@ -84,7 +81,7 @@ namespace Azure.Developer.LoadTesting
             if (initialResponse != null)
             {
                 _response = initialResponse;
-                _value = _response.Content;
+                _value = _response.Value;
                 GetCompletionResponse();
             }
         }
@@ -94,7 +91,7 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         public override Response GetRawResponse()
         {
-            return _response;
+            return _response.GetRawResponse();
         }
 
         /// <summary>
@@ -108,7 +105,7 @@ namespace Azure.Developer.LoadTesting
             }
 
             _response = _client.GetTestFile(_testId, _fileName);
-            _value = _response.Content;
+            _value = _response.Value;
 
             return GetCompletionResponse();
         }
@@ -126,11 +123,11 @@ namespace Azure.Developer.LoadTesting
             try
             {
                 _response = await _client.GetTestFileAsync(_testId, _fileName).ConfigureAwait(false);
-                _value = _response.Content;
+                _value = _response.Value;
             }
             catch
             {
-                throw new RequestFailedException(_response);
+                throw new RequestFailedException(_response.GetRawResponse());
             }
 
             return GetCompletionResponse();
@@ -138,26 +135,7 @@ namespace Azure.Developer.LoadTesting
 
         private Response GetCompletionResponse()
         {
-            string fileValidationStatus;
-            JsonDocument jsonDocument;
-
-            try
-            {
-                jsonDocument = JsonDocument.Parse(_value.ToMemory());
-            }
-            catch (Exception e)
-            {
-                throw new RequestFailedException("Unable to parse JOSN " + e.Message);
-            }
-
-            try
-            {
-                fileValidationStatus = jsonDocument.RootElement.GetProperty("validationStatus").GetString();
-            }
-            catch
-            {
-                throw new RequestFailedException("No property validationStatus in reposne JSON: " + _value.ToString());
-            }
+            string fileValidationStatus = _value.ValidationStatus.ToString();
 
             if (_terminalStatus.Contains(fileValidationStatus))
             {

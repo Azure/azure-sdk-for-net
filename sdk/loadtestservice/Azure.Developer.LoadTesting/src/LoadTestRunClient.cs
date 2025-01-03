@@ -4,6 +4,7 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Developer.LoadTesting.Models;
 
 namespace Azure.Developer.LoadTesting
 {
@@ -36,7 +37,7 @@ namespace Azure.Developer.LoadTesting
             try
             {
                 Response initialResponse = CreateOrUpdateTestRun(testRunId, content, oldTestRunId, context);
-                TestRunResultOperation operation = new(testRunId, this, initialResponse);
+                TestRunResultOperation operation = new(testRunId, this, Response.FromValue(TestRun.FromResponse(initialResponse), initialResponse));
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion((TimeSpan)timeSpan, cancellationToken: default);
@@ -77,10 +78,90 @@ namespace Azure.Developer.LoadTesting
             try
             {
                 Response initialResponse = await CreateOrUpdateTestRunAsync(testRunId, content, oldTestRunId, context).ConfigureAwait(false);
-                TestRunResultOperation operation = new(testRunId, this, initialResponse);
+                TestRunResultOperation operation = new(testRunId, this, Response.FromValue(TestRun.FromResponse(initialResponse), initialResponse));
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync((TimeSpan)timeSpan, cancellationToken: default).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create and start a new test profile run with the given name. </summary>
+        /// <param name="waitUntil"> Defines how to use the LRO, if passed WaitUntil.Completed then waits for test profile run to get completed</param>
+        /// <param name="testProfileRunId"> Unique name for the test profile run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="timeSpan"> pollingInterval for poller class, default value or null value is treated as 5 secs</param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testProfileRunId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        public virtual TestProfileRunResultOperation BeginTestProfileRun(WaitUntil waitUntil, string testProfileRunId, RequestContent content, TimeSpan? timeSpan = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.BeginTestProfileRun");
+            scope.Start();
+
+            if (timeSpan == null)
+            {
+                timeSpan = TimeSpan.FromSeconds(5);
+            }
+
+            try
+            {
+                Response initialResponse = CreateOrUpdateTestProfileRun(testProfileRunId, content, context);;
+                TestProfileRunResultOperation operation = new(testProfileRunId, this, Response.FromValue(TestProfileRun.FromResponse(initialResponse), initialResponse));
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion((TimeSpan)timeSpan, cancellationToken: default);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Create and start a new test profile run with the given name. </summary>
+        /// <param name="waitUntil"> Defines how to use the LRO, if passed WaitUntil.Completed then waits for test profile run to get completed</param>
+        /// <param name="testProfileRunId"> Unique name for the test profile run, must contain only lower-case alphabetic, numeric, underscore or hyphen characters. </param>
+        /// <param name="content"> The content to send as the body of the request. Details of the request body schema are in the Remarks section below. </param>
+        /// <param name="timeSpan"> pollingInterval for poller class, default value or null value is treated as 5 secs</param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="testProfileRunId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="testProfileRunId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. Details of the response body schema are in the Remarks section below. </returns>
+        public virtual async Task<TestProfileRunResultOperation> BeginTestProfileRunAsync(WaitUntil waitUntil, string testProfileRunId, RequestContent content, TimeSpan? timeSpan = null, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(testProfileRunId, nameof(testProfileRunId));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("LoadTestRunClient.BeginTestProfileRunAsync");
+            scope.Start();
+
+            if (timeSpan == null)
+            {
+                timeSpan = TimeSpan.FromSeconds(5);
+            }
+
+            try
+            {
+                Response initialResponse = await CreateOrUpdateTestProfileRunAsync(testProfileRunId, content, context).ConfigureAwait(false);
+                TestProfileRunResultOperation operation = new(testProfileRunId, this, Response.FromValue(TestProfileRun.FromResponse(initialResponse), initialResponse));
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion((TimeSpan)timeSpan, cancellationToken: default);
                 }
                 return operation;
             }
