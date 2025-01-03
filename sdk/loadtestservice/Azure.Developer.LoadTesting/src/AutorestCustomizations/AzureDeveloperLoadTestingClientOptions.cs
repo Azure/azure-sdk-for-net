@@ -7,6 +7,6 @@ using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
-    [CodeGenClient("AzureLoadTestingClientOptions")]
-    public partial class AzureDeveloperLoadTestingClientOptions{ }
+    [CodeGenClient("AzureDeveloperLoadTestingClientOptions")]
+    public partial class LoadTestingClientOptions{ }
 }

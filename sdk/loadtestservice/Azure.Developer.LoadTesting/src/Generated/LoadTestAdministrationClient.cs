@@ -40,7 +40,7 @@ namespace Azure.Developer.LoadTesting
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public LoadTestAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureDeveloperLoadTestingClientOptions())
+        public LoadTestAdministrationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new LoadTestingClientOptions())
         {
         }
 
@@ -49,11 +49,11 @@ namespace Azure.Developer.LoadTesting
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public LoadTestAdministrationClient(Uri endpoint, TokenCredential credential, AzureDeveloperLoadTestingClientOptions options)
+        public LoadTestAdministrationClient(Uri endpoint, TokenCredential credential, LoadTestingClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzureDeveloperLoadTestingClientOptions();
+            options ??= new LoadTestingClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;

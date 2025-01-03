@@ -11,7 +11,7 @@ using Azure.Core;
 namespace Azure.Developer.LoadTesting
 {
     /// <summary> Client options for Azure.Developer.LoadTesting library clients. </summary>
-    public partial class AzureDeveloperLoadTestingClientOptions : ClientOptions
+    public partial class LoadTestingClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_12_01_Preview;
 
@@ -34,8 +34,8 @@ namespace Azure.Developer.LoadTesting
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of AzureDeveloperLoadTestingClientOptions. </summary>
-        public AzureDeveloperLoadTestingClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of LoadTestingClientOptions. </summary>
+        public LoadTestingClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
