@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+Convert properties of type Guid to type String in BillingRoleAssignmentProperties. Issue at https://github.com/Azure/azure-sdk-for-net/issues/47341.
+
 ### Other Changes
 
 ## 1.2.0 (2024-09-13)
