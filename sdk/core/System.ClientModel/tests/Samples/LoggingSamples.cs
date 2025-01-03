@@ -1,16 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-// Copyright (c) Microsoft Corporation. All rights reserved.
-// Licensed under the MIT License.
-
 using System.ClientModel.Primitives;
 using System.Diagnostics.Tracing;
-using System.IO;
-using System.Text.Json;
 using Maps;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
 using NUnit.Framework;
 
 namespace System.ClientModel.Tests.Samples;
@@ -142,46 +136,6 @@ public class LoggingSamples
     }
 
     [Test]
-    public void NotLoggingHeadersILogger()
-    {
-        #region Snippet:NotLoggingHeadersILogger
-        using ILoggerFactory factory = LoggerFactory.Create(builder =>
-        {
-            builder.AddConsole();
-        });
-
-        ClientLoggingOptions loggingOptions = new()
-        {
-            LoggerFactory = factory
-        };
-        loggingOptions.AllowedHeaderNames.Clear();
-        loggingOptions.AllowedQueryParameters.Clear();
-
-        MapsClientOptions options = new()
-        {
-            ClientLoggingOptions = loggingOptions
-        };
-        #endregion
-    }
-
-    [Test]
-    public void NotLoggingHeadersEventSource()
-    {
-        #region Snippet:NotLoggingHeadersEventSource
-        using ConsoleWriterEventListener listener = new();
-
-        ClientLoggingOptions loggingOptions = new();
-        loggingOptions.AllowedHeaderNames.Clear();
-        loggingOptions.AllowedQueryParameters.Clear();
-
-        MapsClientOptions options = new()
-        {
-            ClientLoggingOptions = loggingOptions
-        };
-        #endregion
-    }
-
-    [Test]
     public void EnableContentLoggingILogger()
     {
         #region Snippet:EnableContentLoggingILogger
@@ -209,9 +163,10 @@ public class LoggingSamples
         #region Snippet:EnableContentLoggingEventSource
         using ConsoleWriterEventListener listener = new();
 
-        ClientLoggingOptions loggingOptions = new();
-        loggingOptions.AllowedHeaderNames.Clear();
-        loggingOptions.AllowedQueryParameters.Clear();
+        ClientLoggingOptions loggingOptions = new()
+        {
+            EnableMessageContentLogging = true
+        };
 
         MapsClientOptions options = new()
         {
