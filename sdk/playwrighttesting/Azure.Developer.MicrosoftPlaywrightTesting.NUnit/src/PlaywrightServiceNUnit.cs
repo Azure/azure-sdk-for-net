@@ -37,7 +37,7 @@ public class PlaywrightServiceNUnit : PlaywrightService
         OS = GetOsPlatform(TestContext.Parameters.Get(RunSettingKey.OS.ToString())),
         RunId = TestContext.Parameters.Get(RunSettingKey.RunId.ToString()),
         ExposeNetwork = TestContext.Parameters.Get(RunSettingKey.ExposeNetwork.ToString()),
-        ServiceAuth = string.IsNullOrEmpty(s_serviceAuthType) ? default : new ServiceAuthType(s_serviceAuthType!),
+        ServiceAuth = string.IsNullOrEmpty(s_serviceAuthType) ? ServiceAuthType.EntraId : new ServiceAuthType(s_serviceAuthType!),
         UseCloudHostedBrowsers = !string.IsNullOrEmpty(s_useCloudHostedBrowsers) && bool.Parse(s_useCloudHostedBrowsers),
         TokenCredentialType = TestContext.Parameters.Get(RunSettingKey.AzureTokenCredentialType.ToString()),
         ManagedIdentityClientId = TestContext.Parameters.Get(RunSettingKey.ManagedIdentityClientId.ToString()),

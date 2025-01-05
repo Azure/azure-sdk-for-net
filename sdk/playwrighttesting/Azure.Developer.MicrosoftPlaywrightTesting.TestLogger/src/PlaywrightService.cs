@@ -143,15 +143,15 @@ public class PlaywrightService
     /// </summary>
     /// <param name="credential"></param>
     /// <param name="options"></param>
-    public PlaywrightService(TokenCredential? credential, PlaywrightServiceOptions options) : this(
-        os: options.OS,
-        runId: options.RunId,
-        exposeNetwork: options.ExposeNetwork,
-        serviceAuth: options.ServiceAuth,
-        useCloudHostedBrowsers: options.UseCloudHostedBrowsers,
-        credential: credential ?? options.AzureTokenCredential,
-        logger: options.Logger,
-        serviceEndpoint: options.ServiceEndpoint
+    public PlaywrightService(TokenCredential? credential = null, PlaywrightServiceOptions? options = null) : this(
+        os: options?.OS,
+        runId: options?.RunId,
+        exposeNetwork: options?.ExposeNetwork,
+        serviceAuth: options?.ServiceAuth,
+        useCloudHostedBrowsers: options?.UseCloudHostedBrowsers,
+        credential: credential ?? options?.AzureTokenCredential,
+        logger: options?.Logger,
+        serviceEndpoint: options?.ServiceEndpoint
     )
     {
         // No-op
