@@ -114,6 +114,17 @@ public class PlaywrightServiceOptions
         set => _logger = value;
     }
 
+    /// <summary>
+    /// Gets the service endpoint for Playwright service.
+    /// </summary>
+#pragma warning disable CA1822 // Mark members as static
+    public string? ServiceEndpoint
+#pragma warning restore CA1822 // Mark members as static
+    {
+        get => Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString());
+        set => Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), value);
+    }
+
     private static TokenCredential GetTokenCredential(string? azureTokenCredentialType, string? managedIdentityClientId)
     {
         if (string.IsNullOrEmpty(azureTokenCredentialType) && string.IsNullOrEmpty(managedIdentityClientId))

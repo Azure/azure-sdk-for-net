@@ -13,7 +13,6 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger
         public System.Runtime.InteropServices.OSPlatform? OS { get { throw null; } set { } }
         public string? RunId { get { throw null; } set { } }
         public Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.ServiceAuthType ServiceAuth { get { throw null; } set { } }
-        public static string? ServiceEndpoint { get { throw null; } }
         public bool UseCloudHostedBrowsers { get { throw null; } set { } }
         public void Cleanup() { }
         public System.Threading.Tasks.Task<Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.ConnectOptions<T>> GetConnectOptionsAsync<T>(System.Runtime.InteropServices.OSPlatform? os = default(System.Runtime.InteropServices.OSPlatform?), string? runId = null, string? exposeNetwork = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) where T : class, new() { throw null; }
@@ -29,6 +28,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger
         public System.Runtime.InteropServices.OSPlatform? OS { get { throw null; } set { } }
         public string? RunId { get { throw null; } set { } }
         public Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.ServiceAuthType ServiceAuth { get { throw null; } set { } }
+        public string? ServiceEndpoint { get { throw null; } set { } }
         public string? TokenCredentialType { get { throw null; } set { } }
         public bool UseCloudHostedBrowsers { get { throw null; } set { } }
     }

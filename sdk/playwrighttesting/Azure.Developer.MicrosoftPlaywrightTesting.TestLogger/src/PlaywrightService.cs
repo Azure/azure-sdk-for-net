@@ -47,10 +47,8 @@ public class PlaywrightService
     /// Gets or sets the rotation timer for Playwright service.
     /// </summary>
     internal Timer? RotationTimer { get; set; }
-    /// <summary>
-    /// Gets the service endpoint for Playwright service.
-    /// </summary>
-    public static string? ServiceEndpoint => Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString());
+
+    internal string? ServiceEndpoint => Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString());
 
     private bool? _useCloudHostedBrowsers;
     /// <summary>
@@ -152,14 +150,17 @@ public class PlaywrightService
         serviceAuth: options.ServiceAuth,
         useCloudHostedBrowsers: options.UseCloudHostedBrowsers,
         credential: credential ?? options.AzureTokenCredential,
-        logger: options.Logger
+        logger: options.Logger,
+        serviceEndpoint: options.ServiceEndpoint
     )
     {
         // No-op
     }
 
-    internal PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, ServiceAuthType? serviceAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? credential = null, ILogger? logger = null)
+    internal PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, ServiceAuthType? serviceAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? credential = null, ILogger? logger = null, string? serviceEndpoint = null)
     {
+        if (!string.IsNullOrEmpty(serviceEndpoint))
+            Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri.ToString(), serviceEndpoint);
         if (string.IsNullOrEmpty(ServiceEndpoint))
             return;
         _logger = logger;
@@ -361,7 +362,7 @@ public class PlaywrightService
         return runId;
     }
 
-    internal static void SetReportingUrlAndWorkspaceId()
+    internal void SetReportingUrlAndWorkspaceId()
     {
         if (ServiceEndpoint == null)
         {
