@@ -355,10 +355,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             var serverCallId = properties.Value.ServerCallId;
 
             CallRecording callRecording = client.GetCallRecording();
-            StartRecordingOptions recordingOptions = new StartRecordingOptions()
+            StartRecordingOptions recordingOptions = new StartRecordingOptions(callConnectionId)
             {
-                RecordingStateCallbackUri = new Uri(TestEnvironment.DispatcherCallback),
-                CallConnectionId = callConnectionId,
+                RecordingStateCallbackUri = new Uri(TestEnvironment.DispatcherCallback)
             };
             var recordingResponse = await callRecording.StartAsync(recordingOptions).ConfigureAwait(false);
             Assert.NotNull(recordingResponse.Value);
@@ -406,7 +405,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId);
+                await CleanUpCall(client, callConnectionId, uniqueId);
             }
         }
     }

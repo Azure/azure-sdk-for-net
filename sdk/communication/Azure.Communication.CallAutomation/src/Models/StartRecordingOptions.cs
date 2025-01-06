@@ -15,15 +15,29 @@ namespace Azure.Communication.CallAutomation
         /// Parameters for the Start Recording operation.
         /// </summary>
         /// <param name="callLocator"> . </param>
-        public StartRecordingOptions(CallLocator callLocator = null)
+        public StartRecordingOptions(CallLocator callLocator)
         {
             CallLocator = callLocator;
+        }
+
+        /// <summary>
+        /// Parameters for the Start Recording operation.
+        /// </summary>
+        /// <param name="callConnectionId"> . </param>
+        public StartRecordingOptions(string callConnectionId)
+        {
+            CallConnectionId = callConnectionId;
         }
 
         /// <summary>
         /// The callLocator.
         /// </summary>
         internal CallLocator CallLocator { get; }
+
+        /// <summary>
+        /// The call connection id.
+        /// </summary>
+        internal string CallConnectionId { get; }
 
         /// <summary>
         /// The callLocator.
@@ -71,10 +85,5 @@ namespace Azure.Communication.CallAutomation
         /// ///
         /// </summary>
         public IList<ChannelAffinity> ChannelAffinity { get; set; }
-
-        /// <summary>
-        /// The call connection id.
-        /// </summary>
-        public string CallConnectionId { get; set; }
     }
 }

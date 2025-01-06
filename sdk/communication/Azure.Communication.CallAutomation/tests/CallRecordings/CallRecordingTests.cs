@@ -198,10 +198,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             {
                 new Func<CallRecording, RecordingStateResult>?[]
                 {
-                   callRecording => callRecording.Start(new StartRecordingOptions() {
+                   callRecording => callRecording.Start(new StartRecordingOptions(CallConnectionId) {
                        RecordingStateCallbackUri = _callBackUri,
-                       ChannelAffinity = testChannelAffinities,
-                       CallConnectionId=CallConnectionId
+                       ChannelAffinity = testChannelAffinities
                    })
                 },
                 new Func<CallRecording, RecordingStateResult>?[]
@@ -217,10 +216,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             {
                 new Func<CallRecording, Task<Response<RecordingStateResult>>>?[]
                 {
-                   callRecording => callRecording.StartAsync(new StartRecordingOptions() {
+                   callRecording => callRecording.StartAsync(new StartRecordingOptions(CallConnectionId) {
                        RecordingStateCallbackUri = _callBackUri,
-                       ChannelAffinity = testChannelAffinities,
-                       CallConnectionId=CallConnectionId
+                       ChannelAffinity = testChannelAffinities
                    })
                 },
                 new Func<CallRecording, Task<Response<RecordingStateResult>>>?[]
@@ -234,14 +232,24 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         {
             return new[]
             {
-                new Func<CallRecording, TestDelegate>?[]
+               new Func<CallRecording, TestDelegate>?[]
                 {
                     callRecording => () =>
                         callRecording.Start(
-                            new StartRecordingOptions()
+                            new StartRecordingOptions(_callLocator)
                             {
                                 RecordingStateCallbackUri = _callBackUri,
-                                ChannelAffinity = testChannelAffinities,
+                                ChannelAffinity = testChannelAffinities
+                            })
+                },
+               new Func<CallRecording, TestDelegate>?[]
+                {
+                    callRecording => () =>
+                        callRecording.Start(
+                            new StartRecordingOptions("callconnectionid")
+                            {
+                                RecordingStateCallbackUri = _callBackUri,
+                                ChannelAffinity = testChannelAffinities
                             })
                 },
                 new Func<CallRecording, TestDelegate>?[]
