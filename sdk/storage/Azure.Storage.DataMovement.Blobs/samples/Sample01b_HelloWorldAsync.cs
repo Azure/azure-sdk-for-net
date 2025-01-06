@@ -9,11 +9,9 @@ using Azure.Storage.Sas;
 using NUnit.Framework;
 using Azure.Core;
 using Azure.Identity;
-using System.Threading;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Storage.DataMovement.Blobs.Samples
 {
@@ -968,7 +966,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
         }
 
         /// <summary>
-        /// Use the <see cref="BlobContainerClient.UploadDirectory"/> extention method to upload an entire directory.
+        /// Use the <see cref="BlobContainerClient.UploadDirectory"/> extension method to upload an entire directory.
         /// </summary>
         [Test]
         public async Task UploadDirectory()
@@ -1037,7 +1035,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
         }
 
         /// <summary>
-        /// Use the <see cref="BlobContainerClient.UploadDirectory"/> extention method to upload an entire directory.
+        /// Use the <see cref="BlobContainerClient.UploadDirectory"/> extension method to upload an entire directory.
         /// </summary>
         [Test]
         public async Task DownloadDirectory()

@@ -1,7 +1,5 @@
 # Azure Storage Data Movement Common client library for .NET
 
-> Server Version: 2021-02-12, 2020-12-06, 2020-10-02, 2020-08-04, 2020-06-12, 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2020-02-02
-
 ## Project Status: Beta
 
 This product is in beta. Some features will be missing or have significant bugs. Please see [Known Issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md) for detailed information.
@@ -14,7 +12,7 @@ highly available, secure, durable, scalable, and redundant.
 The Azure Storage Data Movement library is optimized for uploading, downloading and
 copying customer data.
 
-Currently this version of the Data Movement library only supports Blobs.
+Currently this version of the Data Movement library only supports Blobs and File Shares.
 
 [Source code][source] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
 
@@ -48,8 +46,8 @@ Authentication is specific to the targeted storage service. Please see documenta
 
 ## Key concepts
 
-The Azure Storage Common client library contains shared infrastructure like
-[authentication credentials][auth_credentials] and [RequestFailedException][RequestFailedException].
+The Azure Storage DataMovement client library contains shared infrastructure like
+[TokenCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet), [TransferManager](#setup-the-transfermanager) and [RequestFailedException][RequestFailedException].
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -99,6 +97,8 @@ await dataTransfer.WaitForCompletionAsync(cancellationToken);
 
 By persisting transfer progress to disk, DataMovement allows resuming of transfers that failed partway through, or were otherwise paused. To resume a transfer, the transfer manager needs to be setup in the first place with `StorageResourceProvider` instances (the same ones used above in [Starting New Transfers](#starting-new-transfers)) which are capable of reassembling the transfer components from persisted data.
 
+To pause see [Pausing Transfers](#pausing-transfers).
+
 The below sample initializes the `TransferManager` such that it's capable of resuming transfers between the local filesystem and Azure Blob Storage, using the Azure.Storage.DataMovement.Blobs package.
 
 **Important:** Credentials to storage providers are not persisted. Storage access which requires credentials will need its appropriate `StorageResourceProvider` to be configured with those credentials. Below uses an `Azure.Core` token credential with permission to the appropriate resources.
@@ -118,7 +118,25 @@ To resume a transfer, provide the transfer's ID, as shown below. In the case whe
 DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(transferId);
 ```
 
-Note: the location of persisted transfer data will be different than the default location if `TransferCheckpointStoreOptions` were set in `TransferManagerOptions`. To resume transfers recorded in a non-default location, the transfer manager resuming the transfer will also need the appropriate checkpoint store options.
+#### Pause and Resume Checkpointing
+
+The location of persisted transfer data will be different than the default location if `TransferCheckpointStoreOptions` were set in `TransferManagerOptions`. To resume transfers recorded in a non-default location, the transfer manager resuming the transfer will also need the appropriate checkpoint store options.
+
+To specify the checkpoint folder directory:
+```csharp
+TransferManagerOptions options = new TransferManagerOptions()
+{
+    CheckpointerOptions = TransferCheckpointStoreOptions.Local(<directory path location>)
+};
+```
+
+To disable checkpointing:
+```csharp
+TransferManagerOptions options = new TransferManagerOptions()
+{
+    CheckpointerOptions = TransferCheckpointStoreOptions.Disabled()
+};
+```
 
 ### Monitoring Transfers
 
@@ -242,7 +260,7 @@ transferOptions.TransferFailed += (TransferFailedEventArgs args) =>
 };
 ```
 
-### Initializing Local File `StorageResource`
+### Initializing Local File or Directory `StorageResource`
 
 Local filesystem resources are provided by `LocalFilesStorageResourceProvider`. This provider requires no setup to produce storage resources.
 
@@ -254,11 +272,13 @@ StorageResource directoryResource = files.FromDirectory("C:/path/to/dir");
 
 ## Troubleshooting
 
-***TODO***
+See [Handling Failed Transfers](#handling-failed-transfers) and [Enabling Logging](https://learn.microsoft.com/en-us/dotnet/azure/sdk/logging) to assist with any troubleshooting.
 
 ## Next steps
 
-Get started with our [Blob DataMovement samples][samples].
+Get started with our [Blob DataMovement samples][blob_samples].
+
+Get started with our [Share File DataMovement samples][share_samples].
 
 ## Contributing
 
@@ -293,7 +313,8 @@ additional questions or comments.
 [blobs_examples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Blobs#examples
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://learn.microsoft.com/rest/api/storageservices/common-rest-api-error-codes
-[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Blobs/samples
+[blob_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Blobs/samples
+[share_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Files.Shares/samples
 [storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
