@@ -9,7 +9,6 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Communication.Pipeline;
 using System.Collections.Generic;
-using System.Net;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -35,14 +34,6 @@ namespace Azure.Communication.CallAutomation
         /// If left blank, service will create one each request.
         /// </summary>
         public CommunicationUserIdentifier Source { get; }
-
-        /// <summary>
-        /// MicrosoftTeamsAppIdentifier that makes the outbound call.
-        /// This can be provided by providing CallAutomationClientOption during construction of CallAutomationClient.
-        /// If left blank, Source is the default outbound call identity.
-        /// This should be mutual exclusive with Source.
-        /// </summary>
-        public MicrosoftTeamsAppIdentifier OPSSource { get; }
 
         #region public constructors
         /// <summary> Initializes a new instance of <see cref="CallAutomationClient"/>.</summary>
@@ -127,7 +118,6 @@ namespace Azure.Communication.CallAutomation
             CallDialogRestClient = new CallDialogRestClient(_clientDiagnostics, httpPipeline, endpoint, options.ApiVersion);
             EventProcessor = new CallAutomationEventProcessor();
             Source = options.Source;
-            OPSSource = options.OPSSource;
         }
 
         private CallAutomationClient(
@@ -733,7 +723,7 @@ namespace Azure.Communication.CallAutomation
                     : new PhoneNumberIdentifierModel(options?.CallInvite?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.CallInvite?.SourceDisplayName,
                 Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
-                OpsSource = OPSSource == null ? null : new MicrosoftTeamsAppIdentifierModel(OPSSource.AppId),
+                TeamsAppSource = options.TeamsAppSource == null ? null : new MicrosoftTeamsAppIdentifierModel(options.TeamsAppSource.AppId),
             };
 
             request.CustomCallingContext = new CustomCallingContextInternal(
@@ -768,7 +758,7 @@ namespace Azure.Communication.CallAutomation
                     : new PhoneNumberIdentifierModel(options?.SourceCallerIdNumber?.PhoneNumber),
                 SourceDisplayName = options?.SourceDisplayName,
                 Source = Source == null ? null : new CommunicationUserIdentifierModel(Source.Id),
-                OpsSource = OPSSource == null ? null : new MicrosoftTeamsAppIdentifierModel(OPSSource.AppId)
+                TeamsAppSource = options.TeamsAppSource == null ? null : new MicrosoftTeamsAppIdentifierModel(options.TeamsAppSource.AppId)
             };
 
             request.CustomCallingContext = new CustomCallingContextInternal(

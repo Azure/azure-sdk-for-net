@@ -18,160 +18,6 @@ namespace Azure.AI.Language.Text.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeText_SuccessfulDynamicClassificationRequest()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                kind = "DynamicClassification",
-                parameters = new
-                {
-                    categories = new object[]
-            {
-"Health",
-"Politics",
-"Music",
-"Sports"
-            },
-                    classificationType = "Multi",
-                    modelVersion = "latest",
-                },
-                analysisInput = new
-                {
-                    documents = new object[]
-            {
-new
-{
-id = "1",
-language = "en",
-text = "The WHO is issuing a warning about Monkey Pox.",
-},
-new
-{
-id = "2",
-language = "en",
-text = "Mo Salah plays in Liverpool FC in England.",
-}
-            },
-                },
-            });
-            Response response = client.AnalyzeText(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeText_SuccessfulDynamicClassificationRequest_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                kind = "DynamicClassification",
-                parameters = new
-                {
-                    categories = new object[]
-            {
-"Health",
-"Politics",
-"Music",
-"Sports"
-            },
-                    classificationType = "Multi",
-                    modelVersion = "latest",
-                },
-                analysisInput = new
-                {
-                    documents = new object[]
-            {
-new
-{
-id = "1",
-language = "en",
-text = "The WHO is issuing a warning about Monkey Pox.",
-},
-new
-{
-id = "2",
-language = "en",
-text = "Mo Salah plays in Liverpool FC in England.",
-}
-            },
-                },
-            });
-            Response response = await client.AnalyzeTextAsync(content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("kind").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeText_SuccessfulDynamicClassificationRequest_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            AnalyzeTextInput analyzeTextInput = new TextDynamicClassificationInput
-            {
-                TextInput = new MultiLanguageTextInput
-                {
-                    MultiLanguageInputs = {new MultiLanguageInput("1", "The WHO is issuing a warning about Monkey Pox.")
-{
-Language = "en",
-}, new MultiLanguageInput("2", "Mo Salah plays in Liverpool FC in England.")
-{
-Language = "en",
-}},
-                },
-                ActionContent = new DynamicClassificationActionContent(new string[] { "Health", "Politics", "Music", "Sports" })
-                {
-                    ModelVersion = "latest",
-                    ClassificationType = ClassificationType.Multi,
-                },
-            };
-            Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeText_SuccessfulDynamicClassificationRequest_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            AnalyzeTextInput analyzeTextInput = new TextDynamicClassificationInput
-            {
-                TextInput = new MultiLanguageTextInput
-                {
-                    MultiLanguageInputs = {new MultiLanguageInput("1", "The WHO is issuing a warning about Monkey Pox.")
-{
-Language = "en",
-}, new MultiLanguageInput("2", "Mo Salah plays in Liverpool FC in England.")
-{
-Language = "en",
-}},
-                },
-                ActionContent = new DynamicClassificationActionContent(new string[] { "Health", "Politics", "Music", "Sports" })
-                {
-                    ModelVersion = "latest",
-                    ClassificationType = ClassificationType.Multi,
-                },
-            };
-            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_Text_AnalyzeText_SuccessfulEntityLinkingRequest()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1512,7 +1358,7 @@ Language = "en",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRedactionRequest()
+        public void Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionMaskedEntitiesRequest()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1524,7 +1370,139 @@ Language = "en",
                 parameters = new
                 {
                     modelVersion = "latest",
-                    redactionCharacter = "-",
+                    redactionPolicy = new
+                    {
+                        policyKind = "entityMask",
+                    },
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+language = "en",
+text = "My name is John Doe My phone number is 424 878 9192",
+}
+            },
+                },
+            });
+            Response response = client.AnalyzeText(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionMaskedEntitiesRequest_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "PiiEntityRecognition",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                    redactionPolicy = new
+                    {
+                        policyKind = "entityMask",
+                    },
+                },
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+language = "en",
+text = "My name is John Doe My phone number is 424 878 9192",
+}
+            },
+                },
+            });
+            Response response = await client.AnalyzeTextAsync(content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("kind").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionMaskedEntitiesRequest_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextPiiEntitiesRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("1", "My name is John Doe My phone number is 424 878 9192")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new PiiActionContent
+                {
+                    ModelVersion = "latest",
+                    RedactionPolicy = new EntityMaskPolicyType(),
+                },
+            };
+            Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionMaskedEntitiesRequest_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            AnalyzeTextInput analyzeTextInput = new TextPiiEntitiesRecognitionInput
+            {
+                TextInput = new MultiLanguageTextInput
+                {
+                    MultiLanguageInputs = {new MultiLanguageInput("1", "My name is John Doe My phone number is 424 878 9192")
+{
+Language = "en",
+}},
+                },
+                ActionContent = new PiiActionContent
+                {
+                    ModelVersion = "latest",
+                    RedactionPolicy = new EntityMaskPolicyType(),
+                },
+            };
+            Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRedactionPolicyRequest()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                kind = "PiiEntityRecognition",
+                parameters = new
+                {
+                    modelVersion = "latest",
+                    redactionPolicy = new
+                    {
+                        policyKind = "characterMask",
+                        redactionCharacter = "-",
+                    },
                 },
                 analysisInput = new
                 {
@@ -1559,7 +1537,7 @@ text = "Is 998.214.865-68 your Brazilian CPF number?",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRedactionRequest_Async()
+        public async Task Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRedactionPolicyRequest_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1571,7 +1549,11 @@ text = "Is 998.214.865-68 your Brazilian CPF number?",
                 parameters = new
                 {
                     modelVersion = "latest",
-                    redactionCharacter = "-",
+                    redactionPolicy = new
+                    {
+                        policyKind = "characterMask",
+                        redactionCharacter = "-",
+                    },
                 },
                 analysisInput = new
                 {
@@ -1606,7 +1588,7 @@ text = "Is 998.214.865-68 your Brazilian CPF number?",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRedactionRequest_Convenience()
+        public void Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRedactionPolicyRequest_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1630,7 +1612,10 @@ Language = "en",
                 ActionContent = new PiiActionContent
                 {
                     ModelVersion = "latest",
-                    RedactionCharacter = RedactionCharacter.Minus,
+                    RedactionPolicy = new CharacterMaskPolicyType
+                    {
+                        RedactionCharacter = RedactionCharacter.Minus,
+                    },
                 },
             };
             Response<AnalyzeTextResult> response = client.AnalyzeText(analyzeTextInput);
@@ -1638,7 +1623,7 @@ Language = "en",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRedactionRequest_Convenience_Async()
+        public async Task Example_Text_AnalyzeText_SuccessfulPiiEntityRecognitionRedactionPolicyRequest_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -1662,7 +1647,10 @@ Language = "en",
                 ActionContent = new PiiActionContent
                 {
                     ModelVersion = "latest",
-                    RedactionCharacter = RedactionCharacter.Minus,
+                    RedactionPolicy = new CharacterMaskPolicyType
+                    {
+                        RedactionCharacter = RedactionCharacter.Minus,
+                    },
                 },
             };
             Response<AnalyzeTextResult> response = await client.AnalyzeTextAsync(analyzeTextInput);
@@ -1942,6 +1930,70 @@ Language = "en",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskResult()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            Response response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskResult_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
+            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskResult_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskResult_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulAbstractiveSummarizationTaskResult()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2070,198 +2122,6 @@ Language = "en",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomAbstractiveSummarizationTaskResult()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            Response response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomAbstractiveSummarizationTaskResult_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"), null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomAbstractiveSummarizationTaskResult_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomAbstractiveSummarizationTaskResult_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("c0f2a446-05d9-48fc-ba8f-3ef4af8d0b18"));
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomHealthcareTaskStatusRequest()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            Response response = client.AnalyzeTextOperationStatus(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"), null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomHealthcareTaskStatusRequest_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"), null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomHealthcareTaskStatusRequest_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"));
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomHealthcareTaskStatusRequest_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"));
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomSentimentAnalysisTaskStatusRequest()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            Response response = client.AnalyzeTextOperationStatus(Guid.Parse("29fe5bb0-83ae-4f86-85d6-775534dcd2d4"), null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomSentimentAnalysisTaskStatusRequest_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            Response response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("29fe5bb0-83ae-4f86-85d6-775534dcd2d4"), null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("createdDateTime").ToString());
-            Console.WriteLine(result.GetProperty("jobId").ToString());
-            Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
-            Console.WriteLine(result.GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("completed").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("failed").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("inProgress").ToString());
-            Console.WriteLine(result.GetProperty("tasks").GetProperty("total").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomSentimentAnalysisTaskStatusRequest_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            Response<AnalyzeTextOperationState> response = client.AnalyzeTextOperationStatus(Guid.Parse("29fe5bb0-83ae-4f86-85d6-775534dcd2d4"));
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulCustomSentimentAnalysisTaskStatusRequest_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("29fe5bb0-83ae-4f86-85d6-775534dcd2d4"));
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeTextJobState_AnalyzeTextOperationStatus_SuccessfulHealthcareDocumentTypeTaskStatusRequest()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -2386,6 +2246,144 @@ Language = "en",
             TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
 
             Response<AnalyzeTextOperationState> response = await client.AnalyzeTextOperationStatusAsync(Guid.Parse("1780194a-e9c1-4298-b0d4-fdc59ba818a0"));
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskSubmit()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                displayName = "Document Abstractive Summarization Task Example",
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+language = "en",
+text = "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there is magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks.",
+}
+            },
+                },
+                tasks = new object[]
+            {
+new
+{
+kind = "AbstractiveSummarization",
+taskName = "Document Abstractive Summarization Task 1",
+parameters = new
+{
+summaryLength = "medium",
+instruction = "XYZ-code",
+},
+}
+            },
+            });
+            Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskSubmit_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                displayName = "Document Abstractive Summarization Task Example",
+                analysisInput = new
+                {
+                    documents = new object[]
+            {
+new
+{
+id = "1",
+language = "en",
+text = "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there is magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks.",
+}
+            },
+                },
+                tasks = new object[]
+            {
+new
+{
+kind = "AbstractiveSummarization",
+taskName = "Document Abstractive Summarization Task 1",
+parameters = new
+{
+summaryLength = "medium",
+instruction = "XYZ-code",
+},
+}
+            },
+            });
+            Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskSubmit_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            MultiLanguageTextInput textInput = new MultiLanguageTextInput
+            {
+                MultiLanguageInputs = {new MultiLanguageInput("1", "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there is magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks.")
+{
+Language = "en",
+}},
+            };
+            Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+            {
+new AbstractiveSummarizationOperationAction
+{
+ActionContent = new AbstractiveSummarizationActionContent
+{
+SummaryLength = SummaryLengthBucket.Medium,
+Instruction = "XYZ-code",
+},
+Name = "Document Abstractive Summarization Task 1",
+}
+            });
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulAbstractiveSummarizationSummaryLengthPromptTaskSubmit_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
+
+            MultiLanguageTextInput textInput = new MultiLanguageTextInput
+            {
+                MultiLanguageInputs = {new MultiLanguageInput("1", "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there is magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks.")
+{
+Language = "en",
+}},
+            };
+            Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
+            {
+new AbstractiveSummarizationOperationAction
+{
+ActionContent = new AbstractiveSummarizationActionContent
+{
+SummaryLength = SummaryLengthBucket.Medium,
+Instruction = "XYZ-code",
+},
+Name = "Document Abstractive Summarization Task 1",
+}
+            });
         }
 
         [Test]
@@ -2700,382 +2698,6 @@ new CustomEntitiesOperationAction
 {
 ActionContent = new CustomEntitiesActionContent("MyProject", "MyDeployment"),
 Name = "Recognize US Regions",
-}
-            });
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomAbstractiveSummarizationTaskSubmit()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                displayName = "Document Custom Abstractive Summarization Task Example",
-                analysisInput = new
-                {
-                    documents = new object[]
-            {
-new
-{
-id = "1",
-language = "en",
-text = "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there is magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks.",
-}
-            },
-                },
-                tasks = new object[]
-            {
-new
-{
-kind = "CustomAbstractiveSummarization",
-taskName = "Custom Document Abstractive Summarization Task 1",
-parameters = new
-{
-projectName = "my_project",
-deploymentName = "my_deployment",
-},
-}
-            },
-            });
-            Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomAbstractiveSummarizationTaskSubmit_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                displayName = "Document Custom Abstractive Summarization Task Example",
-                analysisInput = new
-                {
-                    documents = new object[]
-            {
-new
-{
-id = "1",
-language = "en",
-text = "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there is magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks.",
-}
-            },
-                },
-                tasks = new object[]
-            {
-new
-{
-kind = "CustomAbstractiveSummarization",
-taskName = "Custom Document Abstractive Summarization Task 1",
-parameters = new
-{
-projectName = "my_project",
-deploymentName = "my_deployment",
-},
-}
-            },
-            });
-            Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomAbstractiveSummarizationTaskSubmit_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            MultiLanguageTextInput textInput = new MultiLanguageTextInput
-            {
-                MultiLanguageInputs = {new MultiLanguageInput("1", "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there is magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks.")
-{
-Language = "en",
-}},
-            };
-            Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
-            {
-new CustomAbstractiveSummarizationOperationAction(new CustomAbstractiveSummarizationActionContent("my_project", "my_deployment"))
-{
-Name = "Custom Document Abstractive Summarization Task 1",
-}
-            });
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomAbstractiveSummarizationTaskSubmit_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            MultiLanguageTextInput textInput = new MultiLanguageTextInput
-            {
-                MultiLanguageInputs = {new MultiLanguageInput("1", "At Microsoft, we have been on a quest to advance AI beyond existing techniques, by taking a more holistic, human-centric approach to learning and understanding. As Chief Technology Officer of Azure AI Cognitive Services, I have been working with a team of amazing scientists and engineers to turn this quest into a reality. In my role, I enjoy a unique perspective in viewing the relationship among three attributes of human cognition: monolingual text (X), audio or visual sensory signals, (Y) and multilingual (Z). At the intersection of all three, there is magic—what we call XYZ-code as illustrated in Figure 1—a joint representation to create more powerful AI that can speak, hear, see, and understand humans better. We believe XYZ-code will enable us to fulfill our long-term vision: cross-domain transfer learning, spanning modalities and languages. The goal is to have pre-trained models that can jointly learn representations to support a broad range of downstream AI tasks, much in the way humans do today. Over the past five years, we have achieved human performance on benchmarks in conversational speech recognition, machine translation, conversational question answering, machine reading comprehension, and image captioning. These five breakthroughs provided us with strong signals toward our more ambitious aspiration to produce a leap in AI capabilities, achieving multi-sensory and multilingual learning that is closer in line with how humans learn and understand. I believe the joint XYZ-code is a foundational component of this aspiration, if grounded with external knowledge sources in the downstream AI tasks.")
-{
-Language = "en",
-}},
-            };
-            Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
-            {
-new CustomAbstractiveSummarizationOperationAction(new CustomAbstractiveSummarizationActionContent("my_project", "my_deployment"))
-{
-Name = "Custom Document Abstractive Summarization Task 1",
-}
-            });
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomHealthcarePostRequest()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                analysisInput = new
-                {
-                    documents = new object[]
-            {
-new
-{
-text = "Prescribed 100mg ibuprofen, taken twice daily.",
-id = "1",
-language = "en",
-}
-            },
-                },
-                tasks = new object[]
-            {
-new
-{
-kind = "CustomHealthcare",
-parameters = new
-{
-projectName = "{PROJECT-NAME}",
-deploymentName = "{DEPLOYMENT-NAME}",
-},
-}
-            },
-            });
-            Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomHealthcarePostRequest_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                analysisInput = new
-                {
-                    documents = new object[]
-            {
-new
-{
-text = "Prescribed 100mg ibuprofen, taken twice daily.",
-id = "1",
-language = "en",
-}
-            },
-                },
-                tasks = new object[]
-            {
-new
-{
-kind = "CustomHealthcare",
-parameters = new
-{
-projectName = "{PROJECT-NAME}",
-deploymentName = "{DEPLOYMENT-NAME}",
-},
-}
-            },
-            });
-            Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomHealthcarePostRequest_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            MultiLanguageTextInput textInput = new MultiLanguageTextInput
-            {
-                MultiLanguageInputs = {new MultiLanguageInput("1", "Prescribed 100mg ibuprofen, taken twice daily.")
-{
-Language = "en",
-}},
-            };
-            Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
-            {
-new CustomHealthcareOperationAction
-{
-ActionContent = new CustomHealthcareActionContent("{PROJECT-NAME}", "{DEPLOYMENT-NAME}"),
-}
-            });
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomHealthcarePostRequest_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            MultiLanguageTextInput textInput = new MultiLanguageTextInput
-            {
-                MultiLanguageInputs = {new MultiLanguageInput("1", "Prescribed 100mg ibuprofen, taken twice daily.")
-{
-Language = "en",
-}},
-            };
-            Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
-            {
-new CustomHealthcareOperationAction
-{
-ActionContent = new CustomHealthcareActionContent("{PROJECT-NAME}", "{DEPLOYMENT-NAME}"),
-}
-            });
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomSentimentAnalysisTaskSubmit()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                analysisInput = new
-                {
-                    documents = new object[]
-            {
-new
-{
-text = "The food is great. But the service is bad.",
-id = "1",
-language = "en",
-}
-            },
-                },
-                tasks = new object[]
-            {
-new
-{
-kind = "CustomSentimentAnalysis",
-parameters = new
-{
-projectName = "{PROJECT-NAME}",
-deploymentName = "{DEPLOYMENT-NAME}",
-},
-}
-            },
-            });
-            Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, content);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomSentimentAnalysisTaskSubmit_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                analysisInput = new
-                {
-                    documents = new object[]
-            {
-new
-{
-text = "The food is great. But the service is bad.",
-id = "1",
-language = "en",
-}
-            },
-                },
-                tasks = new object[]
-            {
-new
-{
-kind = "CustomSentimentAnalysis",
-parameters = new
-{
-projectName = "{PROJECT-NAME}",
-deploymentName = "{DEPLOYMENT-NAME}",
-},
-}
-            },
-            });
-            Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, content);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomSentimentAnalysisTaskSubmit_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            MultiLanguageTextInput textInput = new MultiLanguageTextInput
-            {
-                MultiLanguageInputs = {new MultiLanguageInput("1", "The food is great. But the service is bad.")
-{
-Language = "en",
-}},
-            };
-            Operation operation = client.AnalyzeTextSubmitOperation(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
-            {
-new CustomSentimentAnalysisOperationAction
-{
-ActionContent = new CustomSentimentAnalysisActionContent("{PROJECT-NAME}", "{DEPLOYMENT-NAME}"),
-}
-            });
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Text_AnalyzeTextSubmitOperation_SuccessfulCustomSentimentAnalysisTaskSubmit_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            TextAnalysisClient client = new TextAnalysisClient(endpoint, credential);
-
-            MultiLanguageTextInput textInput = new MultiLanguageTextInput
-            {
-                MultiLanguageInputs = {new MultiLanguageInput("1", "The food is great. But the service is bad.")
-{
-Language = "en",
-}},
-            };
-            Operation operation = await client.AnalyzeTextSubmitOperationAsync(WaitUntil.Completed, textInput, new AnalyzeTextOperationAction[]
-            {
-new CustomSentimentAnalysisOperationAction
-{
-ActionContent = new CustomSentimentAnalysisActionContent("{PROJECT-NAME}", "{DEPLOYMENT-NAME}"),
 }
             });
         }

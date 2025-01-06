@@ -19,6 +19,9 @@ namespace MgmtTypeSpec
     public partial class PrivateLinks
     {
         private readonly Uri _endpoint;
+        /// <summary> A credential used to authenticate to the service. </summary>
+        private readonly TokenCredential _tokenCredential;
+        private static readonly string[] AuthorizationScopes = new string[] { "user_impersonation" };
         private readonly string _apiVersion;
         private readonly Guid _subscriptionId;
 
@@ -27,10 +30,11 @@ namespace MgmtTypeSpec
         {
         }
 
-        internal PrivateLinks(HttpPipeline pipeline, Uri endpoint, string apiVersion, Guid subscriptionId)
+        internal PrivateLinks(HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion, Guid subscriptionId)
         {
             _endpoint = endpoint;
             Pipeline = pipeline;
+            _tokenCredential = tokenCredential;
             _apiVersion = apiVersion;
             _subscriptionId = subscriptionId;
         }
@@ -82,13 +86,14 @@ namespace MgmtTypeSpec
 
         /// <summary> list private links on the given resource. </summary>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PrivateLinkResourceListResult> GetAllPrivateLinkResources(string resourceGroupName)
+        public virtual Response<PrivateLinkResourceListResult> GetAllPrivateLinkResources(string resourceGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
 
-            Response result = GetAllPrivateLinkResources(resourceGroupName, context: null);
+            Response result = GetAllPrivateLinkResources(resourceGroupName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
             return Response.FromValue((PrivateLinkResourceListResult)result, result);
         }
 
@@ -157,14 +162,15 @@ namespace MgmtTypeSpec
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="privateLinkResourcenName"> The name of the private link associated with the Azure resource. </param>
         /// <param name="body"> SAP Application server instance start request body. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="privateLinkResourcenName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Start(string resourceGroupName, string privateLinkResourcenName, StartRequest body = null)
+        public virtual Response Start(string resourceGroupName, string privateLinkResourcenName, StartRequest body = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(privateLinkResourcenName, nameof(privateLinkResourcenName));
 
-            return Start(resourceGroupName, privateLinkResourcenName, body, context: null);
+            return Start(resourceGroupName, privateLinkResourcenName, body, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
         }
 
         /// <summary> Starts the SAP Application Server Instance. </summary>
