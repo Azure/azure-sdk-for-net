@@ -38,7 +38,7 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
     private const int RequestContentTextEvent = 17;
 
     private const string LoggingPolicyCategoryName = "System.ClientModel.Primitives.MessageLoggingPolicy";
-    private const string SystemClientModelEventSourceName = "System-ClientModel";
+    private const string SystemClientModelEventSourceName = "System.ClientModel";
     private readonly MockResponseHeaders _defaultHeaders = new(new Dictionary<string, string>()
     {
         { "Custom-Response-Header", "custom-response-header-value" },

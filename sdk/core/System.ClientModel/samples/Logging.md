@@ -17,7 +17,7 @@ This method of creating an `ILoggerFactory` is a trivial example and is only sui
 ```C# Snippet:UseILoggerFactoryToCaptureLogs
 using ILoggerFactory factory = LoggerFactory.Create(builder =>
 {
-    builder.AddConsole();
+    builder.AddConsole().SetMinimumLevel(LogLevel.Information);
 });
 
 ClientLoggingOptions loggingOptions = new()
@@ -31,10 +31,6 @@ MapsClientOptions options = new()
 };
 
 // Create and use client as usual
-
-string? key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
-ApiKeyCredential credential = new(key!);
-MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential, options);
 ```
 
 Some sensitive headers and query parameters are not logged by default and are displayed as "REDACTED". To include them in logs add them to `ClientLoggingOptions.AllowedHeaderNames` or `ClientLoggingOptions.AllowedQueryParameters`.
@@ -85,7 +81,7 @@ By default, only URI and headers are logged. To enable content logging, set the 
 ```C# Snippet:EnableContentLoggingILogger
 using ILoggerFactory factory = LoggerFactory.Create(builder =>
 {
-    builder.AddConsole();
+    builder.AddConsole().SetMinimumLevel(LogLevel.Debug);
 });
 
 ClientLoggingOptions loggingOptions = new()
@@ -113,10 +109,6 @@ This sample uses an Event Listener to collect logs. It uses the `ConsoleWriterEv
 using ConsoleWriterEventListener listener = new();
 
 // Create and use client as usual
-
-string? key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
-ApiKeyCredential credential = new(key!);
-MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential);
 ```
 
 Some sensitive headers and query parameters are not logged by default and are displayed as "REDACTED". To include them in logs add them to `ClientLoggingOptions.AllowedHeaderNames` or `ClientLoggingOptions.AllowedQueryParameters`.

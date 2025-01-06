@@ -17,7 +17,7 @@ public class LoggingSamples
         #region Snippet:UseILoggerFactoryToCaptureLogs
         using ILoggerFactory factory = LoggerFactory.Create(builder =>
         {
-            builder.AddConsole();
+            builder.AddConsole().SetMinimumLevel(LogLevel.Information);
         });
 
         ClientLoggingOptions loggingOptions = new()
@@ -31,10 +31,6 @@ public class LoggingSamples
         };
 
         // Create and use client as usual
-
-        string? key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
-        ApiKeyCredential credential = new(key!);
-        MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential, options);
         #endregion
     }
 
@@ -48,10 +44,6 @@ public class LoggingSamples
         using ConsoleWriterEventListener listener = new();
 
         // Create and use client as usual
-
-        string? key = Environment.GetEnvironmentVariable("MAPS_API_KEY");
-        ApiKeyCredential credential = new(key!);
-        MapsClient client = new(new Uri("https://atlas.microsoft.com"), credential);
         #endregion
     }
 
@@ -141,7 +133,7 @@ public class LoggingSamples
         #region Snippet:EnableContentLoggingILogger
         using ILoggerFactory factory = LoggerFactory.Create(builder =>
         {
-            builder.AddConsole();
+            builder.AddConsole().SetMinimumLevel(LogLevel.Debug);
         });
 
         ClientLoggingOptions loggingOptions = new()

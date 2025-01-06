@@ -17,6 +17,8 @@ using SyncAsyncTestBase = ClientModel.Tests.SyncAsyncTestBase;
 
 namespace System.ClientModel.Tests.Pipeline;
 
+// Avoid running these tests in parallel with anything else that's sharing the event source
+[NonParallelizable]
 public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync)
 {
     private const int RequestEvent = 1;
@@ -35,7 +37,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     private const string LoggingPolicyCategoryName = "System.ClientModel.Primitives.MessageLoggingPolicy";
     private const string PipelineTransportCategoryName = "System.ClientModel.Primitives.PipelineTransport";
     private const string RetryPolicyCategoryName = "System.ClientModel.Primitives.ClientRetryPolicy";
-    private const string SystemClientModelEventSourceName = "System-ClientModel";
+    private const string SystemClientModelEventSourceName = "System.ClientModel";
     private readonly MockResponseHeaders _defaultHeaders = new(new Dictionary<string, string>()
     {
         { "Custom-Response-Header", "custom-response-header-value" },
@@ -507,8 +509,8 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
 
         await SendRequestWithStreamingResponseSyncOrAsync(response, false, loggingOptions);
 
-        EventWrittenEventArgs responseEvent = listener.GetAndValidateSingleEvent(15, "ResponseContentTextBlock", EventLevel.Verbose, SystemClientModelEventSourceName);
-        Assert.AreEqual("Hello", responseEvent.GetProperty<string>("content"));
+        EventWrittenEventArgs responseEvent = listener.GetAndValidateSingleEvent(11, "ResponseContentBlock", EventLevel.Verbose, SystemClientModelEventSourceName);
+        Assert.AreEqual(Encoding.UTF8.GetBytes("Hello"), responseEvent.GetProperty<byte[]>("content"));
     }
 
     [Test]
@@ -521,13 +523,13 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
             EnableMessageContentLogging = true,
             LoggerFactory = factory
         };
-        MockPipelineResponse response = new(200, mockHeaders: _defaultTextHeaders);
+        MockPipelineResponse response = new(200, mockHeaders: _defaultHeaders);
 
         await SendRequestWithStreamingResponseSyncOrAsync(response, false, loggingOptions);
 
         TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
-        LoggerEvent responseEvent = logger.GetAndValidateSingleEvent(15, "ResponseContentTextBlock", LogLevel.Debug);
-        Assert.AreEqual("Hello", responseEvent.GetValueFromArguments<string>("content"));
+        LoggerEvent responseEvent = logger.GetAndValidateSingleEvent(11, "ResponseContentBlock", LogLevel.Debug);
+        Assert.AreEqual(Encoding.UTF8.GetBytes("Hello"), responseEvent.GetValueFromArguments<byte[]>("content"));
     }
 
     #region Helpers
@@ -536,7 +538,7 @@ public class MessageLoggingPolicyTests(bool isAsync) : SyncAsyncTestBase(isAsync
     {
         protected override void OnEventSourceCreated(EventSource eventSource)
         {
-            if (eventSource.Name == "System-ClientModel")
+            if (eventSource.Name == "System.ClientModel")
             {
                 Console.WriteLine("Warning");
                 EnableEvents(eventSource, EventLevel.Warning);

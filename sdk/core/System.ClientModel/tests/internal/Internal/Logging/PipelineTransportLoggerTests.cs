@@ -23,7 +23,7 @@ namespace System.ClientModel.Tests.Internal;
 public class PipelineTransportLoggerTests : SyncAsyncPolicyTestBase
 {
     private const string PipelineTransportCategoryName = "System.ClientModel.Primitives.PipelineTransport";
-    private const string SystemClientModelEventSourceName = "System-ClientModel";
+    private const string SystemClientModelEventSourceName = "System.ClientModel";
     private readonly MockResponseHeaders _defaultHeaders = new(new Dictionary<string, string>()
     {
         { "Custom-Response-Header", "custom-response-header-value" },

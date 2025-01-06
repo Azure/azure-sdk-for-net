@@ -10,12 +10,12 @@ using System.Text;
 namespace System.ClientModel.Internal;
 
 // The methods in this class should only ever be called from LoggingHandler
-[EventSource(Name = "System-ClientModel")]
+[EventSource(Name = "System.ClientModel")]
 internal sealed class ClientModelEventSource : EventSource
 {
     private ClientModelEventSource(string eventSourceName, string[]? traits = default) : base(eventSourceName, EventSourceSettings.Default, traits) { }
 
-    public static ClientModelEventSource Log = new("System-ClientModel");
+    public static ClientModelEventSource Log = new("System.ClientModel");
 
     #region Request
 

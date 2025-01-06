@@ -33,9 +33,8 @@ namespace ClientModel.Tests
             // is because when an EventListener is instantiated, the OnEventWritten and OnEventSourceCreated callback methods can
             // be called before the constructor has completed
             // see: https://learn.microsoft.com/dotnet/api/system.diagnostics.tracing.eventlistener#remarks
-            if (eventSource.Name == "System-ClientModel")
+            if (eventSource.Name == "System.ClientModel")
             {
-                Console.WriteLine("Verbose");
                 EnableEvents(eventSource, EventLevel.Verbose);
             }
         }
