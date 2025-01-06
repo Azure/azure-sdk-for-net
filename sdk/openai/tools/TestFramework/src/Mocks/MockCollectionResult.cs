@@ -66,13 +66,19 @@ namespace OpenAI.TestFramework.Mocks
         /// <inheritdoc />
         public override ContinuationToken? GetContinuationToken(ClientResult page)
         {
-            var parsed = MockPage<TValue>.FromClientResult(page);
+            MockPage<TValue>? parsed = MockPage<TValue>.FromClientResult(page);
+
+            if (parsed == null)
+            {
+                return null;
+            }
+
             string token = parsed.Next.ToString(CultureInfo.InvariantCulture);
             return ContinuationToken.FromBytes(BinaryData.FromString(token));
         }
 
         /// <inheritdoc />
         protected override IEnumerable<TValue> GetValuesFromPage(ClientResult page)
-            => MockPage<TValue>.FromClientResult(page).Values;
+            => MockPage<TValue>.FromClientResult(page)?.Values ?? [];
     }
 }

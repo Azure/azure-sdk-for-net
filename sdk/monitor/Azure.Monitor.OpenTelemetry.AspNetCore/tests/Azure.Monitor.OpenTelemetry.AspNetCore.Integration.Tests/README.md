@@ -8,7 +8,7 @@ This project is the Integration tests using the [Azure SDK TestFramework](https:
 
 To run these tests locally you must first create your test resources.
 
-1. Connect to an Azure Subscription. This command requires the [Azure PowerShell module](https://docs.microsoft.com/powershell/azure/install-az-ps).
+1. Connect to an Azure Subscription. This command requires the [Azure PowerShell module](https://learn.microsoft.com/powershell/azure/install-az-ps).
 
     ```powershell
     Connect-AzAccount -Subscription 'YOUR SUBSCRIPTION ID'

@@ -30,20 +30,20 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callbackUri"> The callback uri. </param>
         /// <param name="customCallingContext"> Used by customer to send custom calling context to targets when answering On-Behalf-Of call. </param>
         /// <param name="operationContext"> A customer set value used to track the answering of a call. </param>
-        /// <param name="mediaStreamingConfiguration"> Media Streaming Configuration. </param>
-        /// <param name="transcriptionConfiguration"> Live Transcription Configuration. </param>
         /// <param name="callIntelligenceOptions"> AI options for the call. </param>
         /// <param name="answeredBy"> The identifier of the call automation entity which answers the call. </param>
-        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, CustomCallingContextInternal customCallingContext, string operationContext, MediaStreamingOptionsInternal mediaStreamingConfiguration, TranscriptionOptionsInternal transcriptionConfiguration, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy)
+        /// <param name="mediaStreamingOptions"> Media Streaming Options. </param>
+        /// <param name="transcriptionOptions"> Transcription Options. </param>
+        internal AnswerCallRequestInternal(string incomingCallContext, string callbackUri, CustomCallingContextInternal customCallingContext, string operationContext, CallIntelligenceOptionsInternal callIntelligenceOptions, CommunicationUserIdentifierModel answeredBy, MediaStreamingOptionsInternal mediaStreamingOptions, TranscriptionOptionsInternal transcriptionOptions)
         {
             IncomingCallContext = incomingCallContext;
             CallbackUri = callbackUri;
             CustomCallingContext = customCallingContext;
             OperationContext = operationContext;
-            MediaStreamingConfiguration = mediaStreamingConfiguration;
-            TranscriptionConfiguration = transcriptionConfiguration;
             CallIntelligenceOptions = callIntelligenceOptions;
             AnsweredBy = answeredBy;
+            MediaStreamingOptions = mediaStreamingOptions;
+            TranscriptionOptions = transcriptionOptions;
         }
 
         /// <summary> The context associated with the call. </summary>
@@ -54,13 +54,13 @@ namespace Azure.Communication.CallAutomation
         public CustomCallingContextInternal CustomCallingContext { get; set; }
         /// <summary> A customer set value used to track the answering of a call. </summary>
         public string OperationContext { get; set; }
-        /// <summary> Media Streaming Configuration. </summary>
-        public MediaStreamingOptionsInternal MediaStreamingConfiguration { get; set; }
-        /// <summary> Live Transcription Configuration. </summary>
-        public TranscriptionOptionsInternal TranscriptionConfiguration { get; set; }
         /// <summary> AI options for the call. </summary>
         public CallIntelligenceOptionsInternal CallIntelligenceOptions { get; set; }
         /// <summary> The identifier of the call automation entity which answers the call. </summary>
         public CommunicationUserIdentifierModel AnsweredBy { get; set; }
+        /// <summary> Media Streaming Options. </summary>
+        public MediaStreamingOptionsInternal MediaStreamingOptions { get; set; }
+        /// <summary> Transcription Options. </summary>
+        public TranscriptionOptionsInternal TranscriptionOptions { get; set; }
     }
 }

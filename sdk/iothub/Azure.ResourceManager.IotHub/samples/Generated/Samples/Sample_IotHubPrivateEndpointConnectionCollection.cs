@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.IotHub.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_PrivateEndpointConnectionsList()
+        public async Task CreateOrUpdate_PrivateEndpointConnectionUpdate()
         {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_listprivateendpointconnections.json
-            // this example is just showing the usage of "PrivateEndpointConnections_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_updateprivateendpointconnection.json
+            // this example is just showing the usage of "PrivateEndpointConnections_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.IotHub.Samples
             // get the collection of this IotHubPrivateEndpointConnectionResource
             IotHubPrivateEndpointConnectionCollection collection = iotHubDescription.GetIotHubPrivateEndpointConnections();
 
-            // invoke the operation and iterate over the result
-            await foreach (IotHubPrivateEndpointConnectionResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                IotHubPrivateEndpointConnectionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+            // invoke the operation
+            string privateEndpointConnectionName = "myPrivateEndpointConnection";
+            IotHubPrivateEndpointConnectionData data = new IotHubPrivateEndpointConnectionData(new IotHubPrivateEndpointConnectionProperties(new IotHubPrivateLinkServiceConnectionState(IotHubPrivateLinkServiceConnectionStatus.Approved, "Approved by johndoe@contoso.com")));
+            ArmOperation<IotHubPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
+            IotHubPrivateEndpointConnectionResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            IotHubPrivateEndpointConnectionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -84,6 +84,42 @@ namespace Azure.ResourceManager.IotHub.Samples
             IotHubPrivateEndpointConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_PrivateEndpointConnectionsList()
+        {
+            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_listprivateendpointconnections.json
+            // this example is just showing the usage of "PrivateEndpointConnections_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this IotHubDescriptionResource created on azure
+            // for more information of creating IotHubDescriptionResource, please refer to the document of IotHubDescriptionResource
+            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
+            string resourceGroupName = "myResourceGroup";
+            string resourceName = "testHub";
+            ResourceIdentifier iotHubDescriptionResourceId = IotHubDescriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            IotHubDescriptionResource iotHubDescription = client.GetIotHubDescriptionResource(iotHubDescriptionResourceId);
+
+            // get the collection of this IotHubPrivateEndpointConnectionResource
+            IotHubPrivateEndpointConnectionCollection collection = iotHubDescription.GetIotHubPrivateEndpointConnections();
+
+            // invoke the operation and iterate over the result
+            await foreach (IotHubPrivateEndpointConnectionResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                IotHubPrivateEndpointConnectionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -156,42 +192,6 @@ namespace Azure.ResourceManager.IotHub.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_PrivateEndpointConnectionUpdate()
-        {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_updateprivateendpointconnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this IotHubDescriptionResource created on azure
-            // for more information of creating IotHubDescriptionResource, please refer to the document of IotHubDescriptionResource
-            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
-            string resourceGroupName = "myResourceGroup";
-            string resourceName = "testHub";
-            ResourceIdentifier iotHubDescriptionResourceId = IotHubDescriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            IotHubDescriptionResource iotHubDescription = client.GetIotHubDescriptionResource(iotHubDescriptionResourceId);
-
-            // get the collection of this IotHubPrivateEndpointConnectionResource
-            IotHubPrivateEndpointConnectionCollection collection = iotHubDescription.GetIotHubPrivateEndpointConnections();
-
-            // invoke the operation
-            string privateEndpointConnectionName = "myPrivateEndpointConnection";
-            IotHubPrivateEndpointConnectionData data = new IotHubPrivateEndpointConnectionData(new IotHubPrivateEndpointConnectionProperties(new IotHubPrivateLinkServiceConnectionState(IotHubPrivateLinkServiceConnectionStatus.Approved, "Approved by johndoe@contoso.com")));
-            ArmOperation<IotHubPrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
-            IotHubPrivateEndpointConnectionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            IotHubPrivateEndpointConnectionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

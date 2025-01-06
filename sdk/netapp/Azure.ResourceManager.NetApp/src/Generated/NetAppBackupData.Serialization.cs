@@ -91,6 +91,11 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("backupPolicyResourceId"u8);
                 writer.WriteStringValue(BackupPolicyArmResourceId);
             }
+            if (options.Format != "W" && Optional.IsDefined(IsLargeVolume))
+            {
+                writer.WritePropertyName("isLargeVolume"u8);
+                writer.WriteBooleanValue(IsLargeVolume.Value);
+            }
             writer.WriteEndObject();
         }
 
@@ -129,6 +134,7 @@ namespace Azure.ResourceManager.NetApp
             bool? useExistingSnapshot = default;
             string snapshotName = default;
             ResourceIdentifier backupPolicyResourceId = default;
+            bool? isLargeVolume = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,6 +247,15 @@ namespace Azure.ResourceManager.NetApp
                             backupPolicyResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
+                        if (property0.NameEquals("isLargeVolume"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            isLargeVolume = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -266,6 +281,7 @@ namespace Azure.ResourceManager.NetApp
                 useExistingSnapshot,
                 snapshotName,
                 backupPolicyResourceId,
+                isLargeVolume,
                 serializedAdditionalRawData);
         }
 

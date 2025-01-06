@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabDiskResource devTestLabDisk = client.GetDevTestLabDiskResource(devTestLabDiskResourceId);
 
             // invoke the operation
-            DevTestLabDiskPatch patch = new DevTestLabDiskPatch()
+            DevTestLabDiskPatch patch = new DevTestLabDiskPatch
             {
                 Tags =
 {
-["tagName1"] = "tagValue1",
+["tagName1"] = "tagValue1"
 },
             };
             DevTestLabDiskResource result = await devTestLabDisk.UpdateAsync(patch);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabDiskResource devTestLabDisk = client.GetDevTestLabDiskResource(devTestLabDiskResourceId);
 
             // invoke the operation
-            DevTestLabDiskAttachContent content = new DevTestLabDiskAttachContent()
+            DevTestLabDiskAttachContent content = new DevTestLabDiskAttachContent
             {
                 LeasedByLabVmId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourcegroups/resourceGroupName/providers/microsoft.devtestlab/labs/{labName}/virtualmachines/{vmName}"),
             };
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabDiskResource devTestLabDisk = client.GetDevTestLabDiskResource(devTestLabDiskResourceId);
 
             // invoke the operation
-            DevTestLabDiskDetachContent content = new DevTestLabDiskDetachContent()
+            DevTestLabDiskDetachContent content = new DevTestLabDiskDetachContent
             {
                 LeasedByLabVmId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourcegroups/myResourceGroup/providers/microsoft.devtestlab/labs/{labName}/virtualmachines/{vmName}"),
             };

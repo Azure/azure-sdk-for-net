@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Samples
             BackupShortTermRetentionPolicyResource backupShortTermRetentionPolicy = client.GetBackupShortTermRetentionPolicyResource(backupShortTermRetentionPolicyResourceId);
 
             // invoke the operation
-            BackupShortTermRetentionPolicyData data = new BackupShortTermRetentionPolicyData()
+            BackupShortTermRetentionPolicyData data = new BackupShortTermRetentionPolicyData
             {
                 RetentionDays = 7,
                 DiffBackupIntervalInHours = DiffBackupIntervalInHours.TwentyFour,

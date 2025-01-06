@@ -35,7 +35,7 @@ namespace Azure.AI.DocumentIntelligence
             }
 
             writer.WritePropertyName("type"u8);
-            writer.WriteStringValue(Type.ToString());
+            writer.WriteStringValue(FieldType.ToString());
             if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);

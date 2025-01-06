@@ -65,7 +65,7 @@ namespace Azure.Messaging.EventHubs.Tests
             // Verify that the stand-alone system properties are equivalent.
 
             if ((considerSystemProperties)
-                && ((instance.Offset != other.Offset)
+                && ((instance.OffsetString != other.OffsetString)
                     || (instance.EnqueuedTime != other.EnqueuedTime)
                     || (instance.PartitionKey != other.PartitionKey)
                     || (instance.SequenceNumber != other.SequenceNumber)))

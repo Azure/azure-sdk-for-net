@@ -4,9 +4,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure.Messaging.EventHubs.Core;
 using Azure.Messaging.EventHubs.Processor;
 
 namespace Azure.Messaging.EventHubs.Primitives
@@ -70,6 +70,8 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                                           CancellationToken cancellationToken);
 
         /// <summary>
+        ///   Obsolete.
+        ///
         ///   Creates or updates a checkpoint for a specific partition, identifying a position in the partition's event stream
         ///   that an event processor should begin reading from.
         /// </summary>
@@ -82,6 +84,12 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// <param name="sequenceNumber">The sequence number to associate with the checkpoint, indicating that a processor should begin reading from the next event in the stream.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
+        /// <remarks>
+        ///   This method is obsolete and should no longer be used.  Please use <see cref="UpdateCheckpointAsync(string, string, string, string, string, CheckpointPosition, CancellationToken)"/> instead.
+        /// </remarks>
+        ///
+        [Obsolete(AttributeMessageText.LongOffsetUpdateCheckpointObsolete, false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Task UpdateCheckpointAsync(string fullyQualifiedNamespace,
                                                   string eventHubName,
                                                   string consumerGroup,
