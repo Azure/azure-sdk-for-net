@@ -16,8 +16,6 @@ namespace Azure.Identity.Tests
 {
     public class ManagedIdentitySourceTests : ClientTestBase
     {
-        private string _expectedResourceId = $"/subscriptions/{Guid.NewGuid().ToString()}/locations/MyLocation";
-
         public ManagedIdentitySourceTests(bool isAsync) : base(isAsync)
         {
         }
@@ -35,12 +33,7 @@ namespace Azure.Identity.Tests
             var miCredOptions = new ManagedIdentityClientOptions { Pipeline = pipeline };
             var endpoint = new Uri("https://localhost");
 
-            yield return new object[] { new ImdsManagedIdentitySource(new ManagedIdentityClientOptions { Pipeline = pipeline, ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId("mock-client-id") }) };
-            yield return new object[] { new AppServiceV2017ManagedIdentitySource(pipeline, endpoint, "mysecret", miCredOptions) };
-            yield return new object[] { new AppServiceV2019ManagedIdentitySource(pipeline, endpoint, "mysecret", miCredOptions) };
-            yield return new object[] { new AzureArcManagedIdentitySource(endpoint, miCredOptions) };
-            yield return new object[] { new CloudShellManagedIdentitySource(endpoint, miCredOptions) };
-            yield return new object[] { new ServiceFabricManagedIdentitySource(pipeline, endpoint, "myHeader", miCredOptions) };
+            yield return new object[] { new ImdsManagedIdentityProbeSource(new ManagedIdentityClientOptions { Pipeline = pipeline, ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId("mock-client-id") }, new MockMsalManagedIdentityClient()) };
         }
 
         [Test]
