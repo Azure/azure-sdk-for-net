@@ -55,9 +55,10 @@ namespace Azure.AI.OpenAI.Chat
         /// <param name="citations"> The citations produced by the data retrieval. </param>
         /// <param name="retrievedDocuments"> Summary information about documents retrieved by the data retrieval operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatMessageContext(string intent, IReadOnlyList<ChatCitation> citations, ChatRetrievedDocument retrievedDocuments, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatMessageContext(string intent, IReadOnlyList<ChatCitation> citations, ChatRetrievedDocument retrievedDocuments, IDictionary<string, BinaryData> serializedAdditionalRawData, Uri Uri)
         {
             Intent = intent;
+            Uri = Uri;
             Citations = citations;
             RetrievedDocuments = retrievedDocuments;
             SerializedAdditionalRawData = serializedAdditionalRawData;
@@ -65,6 +66,7 @@ namespace Azure.AI.OpenAI.Chat
 
         /// <summary> The detected intent from the chat history, which is used to carry conversation context between interactions. </summary>
         public string Intent { get; }
+        public Uri Uri {get;}
         /// <summary> The citations produced by the data retrieval. </summary>
         public IReadOnlyList<ChatCitation> Citations { get; }
     }
