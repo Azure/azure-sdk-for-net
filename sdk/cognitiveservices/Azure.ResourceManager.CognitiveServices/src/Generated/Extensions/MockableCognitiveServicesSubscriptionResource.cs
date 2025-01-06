@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CalculateModelCapacity</description>
+        /// <description>calculateModelCapacity</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -634,7 +634,7 @@ namespace Azure.ResourceManager.CognitiveServices.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>CalculateModelCapacity</description>
+        /// <description>calculateModelCapacity</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
