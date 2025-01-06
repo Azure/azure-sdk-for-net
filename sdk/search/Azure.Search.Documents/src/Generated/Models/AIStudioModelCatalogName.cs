@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
-    /// <summary> The name of the embedding model from the Azure AI Studio Catalog that will be called. </summary>
+    /// <summary> The name of the embedding model from the Azure AI Foundry Catalog that will be called. </summary>
     public readonly partial struct AIStudioModelCatalogName : IEquatable<AIStudioModelCatalogName>
     {
         private readonly string _value;
