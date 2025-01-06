@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoCluster_Get</description>
+        /// <description>MongoClusters_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoCluster_Get</description>
+        /// <description>MongoClusters_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoCluster_List</description>
+        /// <description>MongoClusters_list</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoCluster_List</description>
+        /// <description>MongoClusters_list</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoClusters_CheckMongoClusterNameAvailability</description>
+        /// <description>MongoClusters_checkNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoClusters_CheckMongoClusterNameAvailability</description>
+        /// <description>MongoClusters_checkNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FirewallRule_Get</description>
+        /// <description>FirewallRules_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FirewallRule_Get</description>
+        /// <description>FirewallRules_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnectionResource_Get</description>
+        /// <description>PrivateEndpointConnections_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnectionResource_Get</description>
+        /// <description>PrivateEndpointConnections_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoCluster_Get</description>
+        /// <description>MongoClusters_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoCluster_Get</description>
+        /// <description>MongoClusters_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoCluster_Delete</description>
+        /// <description>MongoClusters_delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoCluster_Delete</description>
+        /// <description>MongoClusters_delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoCluster_Update</description>
+        /// <description>MongoClusters_update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoCluster_Update</description>
+        /// <description>MongoClusters_update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoClusters_ListConnectionStrings</description>
+        /// <description>MongoClusters_listConnectionStrings</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoClusters_ListConnectionStrings</description>
+        /// <description>MongoClusters_listConnectionStrings</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoClusters_Promote</description>
+        /// <description>MongoClusters_promote</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoClusters_Promote</description>
+        /// <description>MongoClusters_promote</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResource_ListByMongoCluster</description>
+        /// <description>PrivateLinks_listByMongoCluster</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResource_ListByMongoCluster</description>
+        /// <description>PrivateLinks_listByMongoCluster</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Replica_ListByParent</description>
+        /// <description>Replicas_listByParent</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Replica_ListByParent</description>
+        /// <description>Replicas_listByParent</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -774,7 +774,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoCluster_Get</description>
+        /// <description>MongoClusters_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoCluster_Get</description>
+        /// <description>MongoClusters_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -898,7 +898,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoCluster_Get</description>
+        /// <description>MongoClusters_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -955,7 +955,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoCluster_Get</description>
+        /// <description>MongoClusters_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1012,7 +1012,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoCluster_Get</description>
+        /// <description>MongoClusters_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1072,7 +1072,7 @@ namespace Azure.ResourceManager.MongoCluster
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>MongoCluster_Get</description>
+        /// <description>MongoClusters_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

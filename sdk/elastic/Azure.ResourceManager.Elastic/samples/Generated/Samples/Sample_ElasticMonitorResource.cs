@@ -377,7 +377,7 @@ namespace Azure.ResourceManager.Elastic.Samples
         public async Task GetAllTrafficFilter_AllTrafficFiltersList()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/AllTrafficFilters_list.json
-            // this example is just showing the usage of "AllTrafficFilters_List" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "AllTrafficFilters_list" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -400,10 +400,10 @@ namespace Azure.ResourceManager.Elastic.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAssociatedTrafficFilters_ListAssociatedTrafficFiltersList()
+        public async Task GetListAssociatedTrafficFilter_ListAssociatedTrafficFiltersList()
         {
             // Generated from example definition: specification/elastic/resource-manager/Microsoft.Elastic/stable/2024-03-01/examples/AssociatedFiltersForDeployment_list.json
-            // this example is just showing the usage of "listAssociatedTrafficFilters_List" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "listAssociatedTrafficFilters_list" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Elastic.Samples
             ElasticMonitorResource elasticMonitor = client.GetElasticMonitorResource(elasticMonitorResourceId);
 
             // invoke the operation
-            ElasticTrafficFilterListResult result = await elasticMonitor.GetAssociatedTrafficFiltersAsync();
+            ElasticTrafficFilterListResult result = await elasticMonitor.GetListAssociatedTrafficFilterAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

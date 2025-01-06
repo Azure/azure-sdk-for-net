@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <description>Organizations_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.NeonPostgres.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <description>Organizations_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

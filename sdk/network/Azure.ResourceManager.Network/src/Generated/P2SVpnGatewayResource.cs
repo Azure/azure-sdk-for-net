@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>P2sVpnGateways_GetP2SVpnConnectionHealth</description>
+        /// <description>P2sVpnGateways_GetP2sVpnConnectionHealth</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>P2sVpnGateways_GetP2SVpnConnectionHealth</description>
+        /// <description>P2sVpnGateways_GetP2sVpnConnectionHealth</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -615,7 +615,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>P2sVpnGateways_GetP2SVpnConnectionHealthDetailed</description>
+        /// <description>P2sVpnGateways_GetP2sVpnConnectionHealthDetailed</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -661,7 +661,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>P2sVpnGateways_GetP2SVpnConnectionHealthDetailed</description>
+        /// <description>P2sVpnGateways_GetP2sVpnConnectionHealthDetailed</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>P2sVpnGateways_DisconnectP2SVpnConnections</description>
+        /// <description>P2sVpnGateways_DisconnectP2sVpnConnections</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -753,7 +753,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>P2sVpnGateways_DisconnectP2SVpnConnections</description>
+        /// <description>P2sVpnGateways_DisconnectP2sVpnConnections</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_Provision</description>
+        /// <description>NetworkFabrics_provision</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_Provision</description>
+        /// <description>NetworkFabrics_provision</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_Deprovision</description>
+        /// <description>NetworkFabrics_deprovision</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_Deprovision</description>
+        /// <description>NetworkFabrics_deprovision</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_Upgrade</description>
+        /// <description>NetworkFabrics_upgrade</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -638,7 +638,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_Upgrade</description>
+        /// <description>NetworkFabrics_upgrade</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -684,7 +684,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_RefreshConfiguration</description>
+        /// <description>NetworkFabrics_refreshConfiguration</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -726,7 +726,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkFabrics_RefreshConfiguration</description>
+        /// <description>NetworkFabrics_refreshConfiguration</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

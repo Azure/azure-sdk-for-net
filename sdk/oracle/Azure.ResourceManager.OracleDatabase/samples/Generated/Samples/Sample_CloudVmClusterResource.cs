@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.OracleDatabase.Samples
         public async Task GetPrivateIPAddresses_ListPrivateIPAddressesForVMCluster()
         {
             // Generated from example definition: specification/oracle/resource-manager/Oracle.Database/stable/2023-09-01/examples/vmClusters_listPrivateIpAddresses.json
-            // this example is just showing the usage of "CloudVmClusters_ListPrivateIPAddresses" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "CloudVmClusters_ListPrivateIpAddresses" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

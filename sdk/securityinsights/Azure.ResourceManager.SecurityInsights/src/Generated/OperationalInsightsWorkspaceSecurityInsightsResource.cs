@@ -2231,7 +2231,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ListGeodataByIP</description>
+        /// <description>ListGeodataByIp</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -2270,7 +2270,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ListGeodataByIP</description>
+        /// <description>ListGeodataByIp</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -2387,7 +2387,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SourceControl_ListRepositories</description>
+        /// <description>SourceControl_listRepositories</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -2417,7 +2417,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SourceControl_ListRepositories</description>
+        /// <description>SourceControl_listRepositories</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pool_Get</description>
+        /// <description>Pools_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pool_Get</description>
+        /// <description>Pools_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ImageVersion_ListByImage</description>
+        /// <description>ImageVersions_listByImage</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ImageVersion_ListByImage</description>
+        /// <description>ImageVersions_listByImage</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pool_ListBySubscription</description>
+        /// <description>Pools_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pool_ListBySubscription</description>
+        /// <description>Pools_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ResourceSku_ListByLocation</description>
+        /// <description>Sku_listByLocation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ResourceSku_ListByLocation</description>
+        /// <description>Sku_listByLocation</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SubscriptionUsages_GetUsages</description>
+        /// <description>SubscriptionUsages_usages</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SubscriptionUsages_GetUsages</description>
+        /// <description>SubscriptionUsages_usages</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

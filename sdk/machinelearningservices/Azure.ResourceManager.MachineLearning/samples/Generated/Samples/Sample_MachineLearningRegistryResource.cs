@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
         public async Task GetBlobReferenceSasRegistryDataReference_GetBlobReferenceSASDataReference()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/DataReference/getBlobReferenceSAS.json
-            // this example is just showing the usage of "RegistryDataReferences_GetBlobReferenceSas" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "RegistryDataReferences_GetBlobReferenceSAS" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

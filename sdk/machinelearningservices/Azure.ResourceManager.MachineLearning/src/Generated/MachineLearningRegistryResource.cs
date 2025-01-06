@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RegistryDataReferences_GetBlobReferenceSas</description>
+        /// <description>RegistryDataReferences_GetBlobReferenceSAS</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -739,7 +739,7 @@ namespace Azure.ResourceManager.MachineLearning
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>RegistryDataReferences_GetBlobReferenceSas</description>
+        /// <description>RegistryDataReferences_GetBlobReferenceSAS</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PostRules_GetCounters</description>
+        /// <description>PostRules_getCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PostRules_GetCounters</description>
+        /// <description>PostRules_getCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PostRules_RefreshCounters</description>
+        /// <description>PostRules_refreshCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PostRules_RefreshCounters</description>
+        /// <description>PostRules_refreshCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PostRules_ResetCounters</description>
+        /// <description>PostRules_resetCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PostRules_ResetCounters</description>
+        /// <description>PostRules_resetCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

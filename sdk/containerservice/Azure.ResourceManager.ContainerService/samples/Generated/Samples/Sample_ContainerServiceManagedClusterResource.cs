@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
         public async Task ResetAadProfile_ResetAADProfile()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ManagedClustersResetAADProfile.json
-            // this example is just showing the usage of "ManagedClusters_ResetAadProfile" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ManagedClusters_ResetAADProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -581,10 +581,10 @@ namespace Azure.ResourceManager.ContainerService.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task ResolvePrivateLinkServiceId_ResolveThePrivateLinkServiceIDForManagedCluster()
+        public async Task PostResolvePrivateLinkServiceId_ResolveThePrivateLinkServiceIDForManagedCluster()
         {
             // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/ResolvePrivateLinkServiceId.json
-            // this example is just showing the usage of "ResolvePrivateLinkServiceId_Post" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ResolvePrivateLinkServiceId_POST" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.ContainerService.Samples
             {
                 Name = "management",
             };
-            ContainerServicePrivateLinkResourceData result = await containerServiceManagedCluster.ResolvePrivateLinkServiceIdAsync(data);
+            ContainerServicePrivateLinkResourceData result = await containerServiceManagedCluster.PostResolvePrivateLinkServiceIdAsync(data);
 
             Console.WriteLine($"Succeeded: {result}");
         }

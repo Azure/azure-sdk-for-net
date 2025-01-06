@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LoadBalancer_CreateOrUpdate</description>
+        /// <description>LoadBalancers_createOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LoadBalancer_CreateOrUpdate</description>
+        /// <description>LoadBalancers_createOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LoadBalancer_Get</description>
+        /// <description>LoadBalancers_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LoadBalancer_Get</description>
+        /// <description>LoadBalancers_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LoadBalancer_List</description>
+        /// <description>LoadBalancers_list</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LoadBalancer_List</description>
+        /// <description>LoadBalancers_list</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LoadBalancer_Get</description>
+        /// <description>LoadBalancers_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LoadBalancer_Get</description>
+        /// <description>LoadBalancers_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LoadBalancer_Get</description>
+        /// <description>LoadBalancers_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LoadBalancer_Get</description>
+        /// <description>LoadBalancers_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

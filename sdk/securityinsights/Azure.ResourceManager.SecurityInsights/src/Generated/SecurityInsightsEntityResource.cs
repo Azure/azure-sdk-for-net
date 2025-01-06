@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>EntitiesGetTimeline_List</description>
+        /// <description>EntitiesGetTimeline_list</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>EntitiesGetTimeline_List</description>
+        /// <description>EntitiesGetTimeline_list</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

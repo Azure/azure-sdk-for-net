@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleet_Get</description>
+        /// <description>Fleets_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ComputeFleet.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleet_Get</description>
+        /// <description>Fleets_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

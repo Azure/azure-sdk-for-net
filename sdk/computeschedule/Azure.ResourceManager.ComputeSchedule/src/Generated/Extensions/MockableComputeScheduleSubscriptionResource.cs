@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_SubmitVirtualMachineDeallocate</description>
+        /// <description>ScheduledActions_virtualMachinesSubmitDeallocate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_SubmitVirtualMachineDeallocate</description>
+        /// <description>ScheduledActions_virtualMachinesSubmitDeallocate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_SubmitVirtualMachineHibernate</description>
+        /// <description>ScheduledActions_virtualMachinesSubmitHibernate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_SubmitVirtualMachineHibernate</description>
+        /// <description>ScheduledActions_virtualMachinesSubmitHibernate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_SubmitVirtualMachineStart</description>
+        /// <description>ScheduledActions_virtualMachinesSubmitStart</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_SubmitVirtualMachineStart</description>
+        /// <description>ScheduledActions_virtualMachinesSubmitStart</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_ExecuteVirtualMachineDeallocate</description>
+        /// <description>ScheduledActions_virtualMachinesExecuteDeallocate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_ExecuteVirtualMachineDeallocate</description>
+        /// <description>ScheduledActions_virtualMachinesExecuteDeallocate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_ExecuteVirtualMachineHibernate</description>
+        /// <description>ScheduledActions_virtualMachinesExecuteHibernate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_ExecuteVirtualMachineHibernate</description>
+        /// <description>ScheduledActions_virtualMachinesExecuteHibernate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_ExecuteVirtualMachineStart</description>
+        /// <description>ScheduledActions_virtualMachinesExecuteStart</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_ExecuteVirtualMachineStart</description>
+        /// <description>ScheduledActions_virtualMachinesExecuteStart</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_GetVirtualMachineOperationStatus</description>
+        /// <description>ScheduledActions_virtualMachinesGetOperationStatus</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_GetVirtualMachineOperationStatus</description>
+        /// <description>ScheduledActions_virtualMachinesGetOperationStatus</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_CancelVirtualMachineOperations</description>
+        /// <description>ScheduledActions_virtualMachinesCancelOperations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -665,7 +665,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_CancelVirtualMachineOperations</description>
+        /// <description>ScheduledActions_virtualMachinesCancelOperations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_GetVirtualMachineOperationErrors</description>
+        /// <description>ScheduledActions_virtualMachinesGetOperationErrors</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ScheduledActions_GetVirtualMachineOperationErrors</description>
+        /// <description>ScheduledActions_virtualMachinesGetOperationErrors</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

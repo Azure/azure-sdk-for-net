@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         public async Task UpdateNpbStaticRouteBfdAdministrativeState_NetworkToNetworkInterconnectsUpdateNpbStaticRouteBfdAdministrativeStateMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkToNetworkInterconnects_updateNpbStaticRouteBfdAdministrativeState_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkToNetworkInterconnects_UpdateNpbStaticRouteBfdAdministrativeState" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NetworkToNetworkInterconnects_updateNpbStaticRouteBfdAdministrativeState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Samples
         public async Task UpdateAdministrativeState_NetworkToNetworkInterconnectsUpdateAdministrativeStateMaximumSetGen()
         {
             // Generated from example definition: specification/managednetworkfabric/resource-manager/Microsoft.ManagedNetworkFabric/stable/2023-06-15/examples/NetworkToNetworkInterconnects_updateAdministrativeState_MaximumSet_Gen.json
-            // this example is just showing the usage of "NetworkToNetworkInterconnects_UpdateAdministrativeState" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "NetworkToNetworkInterconnects_updateAdministrativeState" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

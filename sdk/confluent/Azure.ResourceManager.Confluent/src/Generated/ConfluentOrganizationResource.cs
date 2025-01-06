@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_CreateApiKey</description>
+        /// <description>Organization_CreateAPIKey</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -781,7 +781,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_CreateApiKey</description>
+        /// <description>Organization_CreateAPIKey</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -828,7 +828,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_DeleteClusterApiKey</description>
+        /// <description>Organization_DeleteClusterAPIKey</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -871,7 +871,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_DeleteClusterApiKey</description>
+        /// <description>Organization_DeleteClusterAPIKey</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -914,7 +914,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_GetClusterApiKey</description>
+        /// <description>Organization_GetClusterAPIKey</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -957,7 +957,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Organization_GetClusterApiKey</description>
+        /// <description>Organization_GetClusterAPIKey</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

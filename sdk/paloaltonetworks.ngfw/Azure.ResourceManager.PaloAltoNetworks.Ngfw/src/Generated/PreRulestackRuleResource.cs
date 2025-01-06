@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PreRules_GetCounters</description>
+        /// <description>PreRules_getCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PreRules_GetCounters</description>
+        /// <description>PreRules_getCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PreRules_RefreshCounters</description>
+        /// <description>PreRules_refreshCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PreRules_RefreshCounters</description>
+        /// <description>PreRules_refreshCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PreRules_ResetCounters</description>
+        /// <description>PreRules_resetCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PreRules_ResetCounters</description>
+        /// <description>PreRules_resetCounters</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

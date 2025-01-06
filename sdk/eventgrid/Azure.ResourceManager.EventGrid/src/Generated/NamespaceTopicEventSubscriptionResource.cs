@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NamespaceTopicEventSubscriptions_GetFullUri</description>
+        /// <description>NamespaceTopicEventSubscriptions_GetFullUrl</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.EventGrid
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NamespaceTopicEventSubscriptions_GetFullUri</description>
+        /// <description>NamespaceTopicEventSubscriptions_GetFullUrl</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

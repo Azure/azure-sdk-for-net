@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <description>Quotas_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <description>Quotas_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_ListBySubscription</description>
+        /// <description>Accounts_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_ListBySubscription</description>
+        /// <description>Accounts_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Accounts_CheckPlaywrightTestingNameAvailability</description>
+        /// <description>Accounts_checkNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Accounts_CheckPlaywrightTestingNameAvailability</description>
+        /// <description>Accounts_checkNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

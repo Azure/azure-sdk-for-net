@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
         public async Task CheckPlaywrightTestingNameAvailability_AccountsCheckNameAvailability()
         {
             // Generated from example definition: 2024-12-01/Accounts_CheckNameAvailability.json
-            // this example is just showing the usage of "Accounts_CheckPlaywrightTestingNameAvailability" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Accounts_checkNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

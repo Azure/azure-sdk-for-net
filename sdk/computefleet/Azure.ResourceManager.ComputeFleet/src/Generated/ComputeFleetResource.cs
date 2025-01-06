@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleet_Get</description>
+        /// <description>Fleets_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleet_Get</description>
+        /// <description>Fleets_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleet_Delete</description>
+        /// <description>Fleets_delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleet_Delete</description>
+        /// <description>Fleets_delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleet_Update</description>
+        /// <description>Fleets_update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleet_Update</description>
+        /// <description>Fleets_update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineScaleSet_ListVirtualMachineScaleSets</description>
+        /// <description>Fleets_listVirtualMachineScaleSets</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>VirtualMachineScaleSet_ListVirtualMachineScaleSets</description>
+        /// <description>Fleets_listVirtualMachineScaleSets</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleet_Get</description>
+        /// <description>Fleets_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleet_Get</description>
+        /// <description>Fleets_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -540,7 +540,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleet_Get</description>
+        /// <description>Fleets_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleet_Get</description>
+        /// <description>Fleets_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleet_Get</description>
+        /// <description>Fleets_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.ComputeFleet
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Fleet_Get</description>
+        /// <description>Fleets_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -369,10 +369,10 @@ AppId = "some_guid_app_id",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task ValidateDataConnection_KustoDataConnectionEventGridValidation()
+        public async Task DataConnectionValidationDataConnection_KustoDataConnectionEventGridValidation()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDataConnectionEventGridValidationAsync.json
-            // this example is just showing the usage of "DataConnections_DataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "DataConnections_dataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -407,7 +407,7 @@ AppId = "some_guid_app_id",
                     DatabaseRouting = KustoDatabaseRouting.Single,
                 },
             };
-            ArmOperation<DataConnectionValidationResults> lro = await kustoDatabase.ValidateDataConnectionAsync(WaitUntil.Completed, content);
+            ArmOperation<DataConnectionValidationResults> lro = await kustoDatabase.DataConnectionValidationDataConnectionAsync(WaitUntil.Completed, content);
             DataConnectionValidationResults result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -415,10 +415,10 @@ AppId = "some_guid_app_id",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task ValidateDataConnection_KustoDataConnectionValidation()
+        public async Task DataConnectionValidationDataConnection_KustoDataConnectionValidation()
         {
             // Generated from example definition: specification/azure-kusto/resource-manager/Microsoft.Kusto/stable/2023-08-15/examples/KustoDataConnectionValidationAsync.json
-            // this example is just showing the usage of "DataConnections_DataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "DataConnections_dataConnectionValidation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -449,7 +449,7 @@ AppId = "some_guid_app_id",
                     ManagedIdentityResourceId = new ResourceIdentifier("/subscriptions/12345678-1234-1234-1234-123456789098/resourceGroups/kustorptest/providers/Microsoft.ManagedIdentity/userAssignedIdentities/managedidentityTest1"),
                 },
             };
-            ArmOperation<DataConnectionValidationResults> lro = await kustoDatabase.ValidateDataConnectionAsync(WaitUntil.Completed, content);
+            ArmOperation<DataConnectionValidationResults> lro = await kustoDatabase.DataConnectionValidationDataConnectionAsync(WaitUntil.Completed, content);
             DataConnectionValidationResults result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

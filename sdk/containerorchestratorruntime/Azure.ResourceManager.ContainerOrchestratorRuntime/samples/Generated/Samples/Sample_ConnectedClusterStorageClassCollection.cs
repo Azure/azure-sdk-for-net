@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task CreateOrUpdate_StorageClassCreateOrUpdate0()
         {
             // Generated from example definition: 2024-03-01/StorageClass_CreateOrUpdate.json
-            // this example is just showing the usage of "StorageClassResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StorageClass_createOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task Get_StorageClassGet0()
         {
             // Generated from example definition: 2024-03-01/StorageClass_Get.json
-            // this example is just showing the usage of "StorageClassResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StorageClass_get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task GetAll_StorageClassList0()
         {
             // Generated from example definition: 2024-03-01/StorageClass_List.json
-            // this example is just showing the usage of "StorageClassResource_List" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StorageClass_list" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task Exists_StorageClassGet0()
         {
             // Generated from example definition: 2024-03-01/StorageClass_Get.json
-            // this example is just showing the usage of "StorageClassResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StorageClass_get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task GetIfExists_StorageClassGet0()
         {
             // Generated from example definition: 2024-03-01/StorageClass_Get.json
-            // this example is just showing the usage of "StorageClassResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "StorageClass_get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

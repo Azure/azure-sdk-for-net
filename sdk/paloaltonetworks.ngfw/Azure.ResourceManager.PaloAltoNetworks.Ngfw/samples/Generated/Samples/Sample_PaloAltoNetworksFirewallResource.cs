@@ -307,7 +307,7 @@ Address = "20.22.32.136",
         public async Task GetGlobalRulestack_FirewallsGetGlobalRulestackMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_getGlobalRulestack_MaximumSet_Gen.json
-            // this example is just showing the usage of "Firewalls_GetGlobalRulestack" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Firewalls_getGlobalRulestack" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -333,7 +333,7 @@ Address = "20.22.32.136",
         public async Task GetGlobalRulestack_FirewallsGetGlobalRulestackMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_getGlobalRulestack_MinimumSet_Gen.json
-            // this example is just showing the usage of "Firewalls_GetGlobalRulestack" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Firewalls_getGlobalRulestack" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -359,7 +359,7 @@ Address = "20.22.32.136",
         public async Task GetLogProfile_FirewallsGetLogProfileMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_getLogProfile_MaximumSet_Gen.json
-            // this example is just showing the usage of "Firewalls_GetLogProfile" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Firewalls_getLogProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -385,7 +385,7 @@ Address = "20.22.32.136",
         public async Task GetLogProfile_FirewallsGetLogProfileMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_getLogProfile_MinimumSet_Gen.json
-            // this example is just showing the usage of "Firewalls_GetLogProfile" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Firewalls_getLogProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -411,7 +411,7 @@ Address = "20.22.32.136",
         public async Task GetSupportInfo_FirewallsGetSupportInfoMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_getSupportInfo_MaximumSet_Gen.json
-            // this example is just showing the usage of "Firewalls_GetSupportInfo" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Firewalls_getSupportInfo" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -438,7 +438,7 @@ Address = "20.22.32.136",
         public async Task GetSupportInfo_FirewallsGetSupportInfoMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_getSupportInfo_MinimumSet_Gen.json
-            // this example is just showing the usage of "Firewalls_GetSupportInfo" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Firewalls_getSupportInfo" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -464,7 +464,7 @@ Address = "20.22.32.136",
         public async Task SaveLogProfile_FirewallsSaveLogProfileMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_saveLogProfile_MaximumSet_Gen.json
-            // this example is just showing the usage of "Firewalls_SaveLogProfile" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Firewalls_saveLogProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -600,7 +600,7 @@ Address = "20.22.32.136",
         public async Task SaveLogProfile_FirewallsSaveLogProfileMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/Firewalls_saveLogProfile_MinimumSet_Gen.json
-            // this example is just showing the usage of "Firewalls_SaveLogProfile" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Firewalls_saveLogProfile" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

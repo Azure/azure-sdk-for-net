@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccountQuota_Get</description>
+        /// <description>AccountQuotas_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AccountQuota_Get</description>
+        /// <description>AccountQuotas_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Delete</description>
+        /// <description>Accounts_delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Delete</description>
+        /// <description>Accounts_delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Update</description>
+        /// <description>Accounts_update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Update</description>
+        /// <description>Accounts_update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -412,7 +412,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -710,7 +710,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Account_Get</description>
+        /// <description>Accounts_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

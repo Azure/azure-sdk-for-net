@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
         public async Task Delete_AccountsDelete()
         {
             // Generated from example definition: 2024-12-01/Accounts_Delete.json
-            // this example is just showing the usage of "Account_Delete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Accounts_delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
         public async Task Update_AccountsUpdate()
         {
             // Generated from example definition: 2024-12-01/Accounts_Update.json
-            // this example is just showing the usage of "Account_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Accounts_update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

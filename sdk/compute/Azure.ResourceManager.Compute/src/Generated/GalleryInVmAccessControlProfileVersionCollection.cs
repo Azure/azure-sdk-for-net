@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GalleryInVMAccessControlProfileVersions_ListByGalleryInVmAccessControlProfile</description>
+        /// <description>GalleryInVMAccessControlProfileVersions_ListByGalleryInVMAccessControlProfile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Compute
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>GalleryInVMAccessControlProfileVersions_ListByGalleryInVmAccessControlProfile</description>
+        /// <description>GalleryInVMAccessControlProfileVersions_ListByGalleryInVMAccessControlProfile</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

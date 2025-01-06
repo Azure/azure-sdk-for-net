@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkWatchers_GetVmSecurityRules</description>
+        /// <description>NetworkWatchers_GetVMSecurityRules</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkWatchers_GetVmSecurityRules</description>
+        /// <description>NetworkWatchers_GetVMSecurityRules</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
