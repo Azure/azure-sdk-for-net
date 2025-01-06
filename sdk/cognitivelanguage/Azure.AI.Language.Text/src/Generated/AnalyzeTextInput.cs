@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Text
     /// <summary>
     /// Collection of documents to analyze and a single task to execute.
     /// Please note <see cref="AnalyzeTextInput"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="TextDynamicClassificationInput"/>, <see cref="TextEntityLinkingInput"/>, <see cref="TextEntityRecognitionInput"/>, <see cref="TextKeyPhraseExtractionInput"/>, <see cref="TextLanguageDetectionInput"/>, <see cref="TextPiiEntitiesRecognitionInput"/> and <see cref="TextSentimentAnalysisInput"/>.
+    /// The available derived classes include <see cref="TextEntityLinkingInput"/>, <see cref="TextEntityRecognitionInput"/>, <see cref="TextKeyPhraseExtractionInput"/>, <see cref="TextLanguageDetectionInput"/>, <see cref="TextPiiEntitiesRecognitionInput"/> and <see cref="TextSentimentAnalysisInput"/>.
     /// </summary>
     public abstract partial class AnalyzeTextInput
     {

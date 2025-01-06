@@ -161,17 +161,17 @@ To create a blob `StorageResource`, use the methods `FromBlob` or `FromContainer
 
 ```C# Snippet:ResourceConstruction_Blobs
 StorageResource container = blobs.FromContainer(
-    new Uri("http://myaccount.blob.core.windows.net/container"));
+    new Uri("https://myaccount.blob.core.windows.net/container"));
 
 // Block blobs are the default if no options are specified
 StorageResource blockBlob = blobs.FromBlob(
-    new Uri("http://myaccount.blob.core.windows.net/container/sample-blob-block"),
+    new Uri("https://myaccount.blob.core.windows.net/container/sample-blob-block"),
     new BlockBlobStorageResourceOptions());
 StorageResource pageBlob = blobs.FromBlob(
-    new Uri("http://myaccount.blob.core.windows.net/container/sample-blob-page"),
+    new Uri("https://myaccount.blob.core.windows.net/container/sample-blob-page"),
     new PageBlobStorageResourceOptions());
 StorageResource appendBlob = blobs.FromBlob(
-    new Uri("http://myaccount.blob.core.windows.net/container/sample-blob-append"),
+    new Uri("https://myaccount.blob.core.windows.net/container/sample-blob-append"),
     new AppendBlobStorageResourceOptions());
 ```
 
@@ -330,18 +330,18 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Common/src
 [package]: https://www.nuget.org/packages/Azure.Storage.Common/
-[docs]: https://docs.microsoft.com/dotnet/api/azure.storage
-[rest_docs]: https://docs.microsoft.com/rest/api/storageservices/
-[product_docs]: https://docs.microsoft.com/azure/storage/
+[docs]: https://learn.microsoft.com/dotnet/api/azure.storage
+[rest_docs]: https://learn.microsoft.com/rest/api/storageservices/
+[product_docs]: https://learn.microsoft.com/azure/storage/
 [nuget]: https://www.nuget.org/
-[storage_account_docs]: https://docs.microsoft.com/azure/storage/common/storage-account-overview
-[storage_account_create_ps]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
-[storage_account_create_cli]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
-[storage_account_create_portal]: https://docs.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[storage_account_docs]: https://learn.microsoft.com/azure/storage/common/storage-account-overview
+[storage_account_create_ps]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-powershell
+[storage_account_create_cli]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-cli
+[storage_account_create_portal]: https://learn.microsoft.com/azure/storage/common/storage-quickstart-create-account?tabs=azure-portal
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
-[error_codes]: https://docs.microsoft.com/rest/api/storageservices/common-rest-api-error-codes
+[error_codes]: https://learn.microsoft.com/rest/api/storageservices/common-rest-api-error-codes
 [samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Blobs/samples
 [storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com

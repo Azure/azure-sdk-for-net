@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Samples
             DatabaseAdvancedThreatProtectionResource databaseAdvancedThreatProtection = client.GetDatabaseAdvancedThreatProtectionResource(databaseAdvancedThreatProtectionResourceId);
 
             // invoke the operation
-            DatabaseAdvancedThreatProtectionData data = new DatabaseAdvancedThreatProtectionData()
+            DatabaseAdvancedThreatProtectionData data = new DatabaseAdvancedThreatProtectionData
             {
                 State = AdvancedThreatProtectionState.Enabled,
             };
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Sql.Samples
             DatabaseAdvancedThreatProtectionResource databaseAdvancedThreatProtection = client.GetDatabaseAdvancedThreatProtectionResource(databaseAdvancedThreatProtectionResourceId);
 
             // invoke the operation
-            DatabaseAdvancedThreatProtectionData data = new DatabaseAdvancedThreatProtectionData()
+            DatabaseAdvancedThreatProtectionData data = new DatabaseAdvancedThreatProtectionData
             {
                 State = AdvancedThreatProtectionState.Disabled,
             };

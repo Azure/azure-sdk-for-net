@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if !AZURE_OPENAI_GA
+
 using Azure.Core;
 using OpenAI.RealtimeConversation;
 using System.ClientModel;
@@ -76,3 +78,5 @@ internal partial class AzureRealtimeConversationClient : RealtimeConversationCli
         return uriBuilder.Uri;
     }
 }
+
+#endif

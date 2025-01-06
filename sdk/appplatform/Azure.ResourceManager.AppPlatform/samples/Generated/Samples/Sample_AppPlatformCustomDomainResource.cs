@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformCustomDomainResource appPlatformCustomDomain = client.GetAppPlatformCustomDomainResource(appPlatformCustomDomainResourceId);
 
             // invoke the operation
-            AppPlatformCustomDomainData data = new AppPlatformCustomDomainData()
+            AppPlatformCustomDomainData data = new AppPlatformCustomDomainData
             {
-                Properties = new AppPlatformCustomDomainProperties()
+                Properties = new AppPlatformCustomDomainProperties
                 {
                     Thumbprint = "934367bf1c97033f877db0f15cb1b586957d3133",
                     CertName = "mycert",

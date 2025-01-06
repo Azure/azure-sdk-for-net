@@ -41,10 +41,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationData data = new ConfluentOrganizationData(new AzureLocation("West US"), new ConfluentOfferDetail("string", "string", "string", "string", "string")
             {
                 PrivateOfferId = "string",
-                PrivateOfferIds =
-{
-"string"
-},
+                PrivateOfferIds = { "string" },
             }, new ConfluentUserDetail("abc@microsoft.com")
             {
                 FirstName = "string",
@@ -55,7 +52,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             {
                 Tags =
 {
-["Environment"] = "Dev",
+["Environment"] = "Dev"
 },
             };
             ConfluentOrganizationResource result = await resourceGroupResource.ValidateOrganizationAsync(organizationName, data);
@@ -91,10 +88,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationData data = new ConfluentOrganizationData(new AzureLocation("West US"), new ConfluentOfferDetail("string", "string", "string", "string", "string")
             {
                 PrivateOfferId = "string",
-                PrivateOfferIds =
-{
-"string"
-},
+                PrivateOfferIds = { "string" },
             }, new ConfluentUserDetail("abc@microsoft.com")
             {
                 FirstName = "string",
@@ -105,7 +99,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             {
                 Tags =
 {
-["Environment"] = "Dev",
+["Environment"] = "Dev"
 },
             };
             ConfluentOrganizationValidationResult result = await resourceGroupResource.ValidateOrganizationV2Async(organizationName, data);

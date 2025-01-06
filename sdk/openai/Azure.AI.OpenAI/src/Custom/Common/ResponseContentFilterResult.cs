@@ -10,4 +10,10 @@ namespace Azure.AI.OpenAI;
 public partial class ResponseContentFilterResult
 {
     internal InternalAzureContentFilterResultForPromptContentFilterResultsError Error { get; }
+
+#if !AZURE_OPENAI_GA
+    public ContentFilterTextSpanResult UngroundedMaterial { get; }
+#else
+    internal ContentFilterTextSpanResult UngroundedMaterial { get; }
+#endif
 }

@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Elastic.Models
             }
             string partnerDeploymentName = default;
             Uri partnerDeploymentUri = default;
-            string azureResourceId = default;
+            ResourceIdentifier azureResourceId = default;
             AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,11 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
                 if (property.NameEquals("azureResourceId"u8))
                 {
-                    azureResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    azureResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("location"u8))

@@ -29,11 +29,11 @@ dotnet add package Azure.ResourceManager
 - Set up a way to authenticate to Azure with Azure Identity.
 
   Some options are:
-    - Through the [Azure CLI sign in](https://docs.microsoft.com/cli/azure/authenticate-azure-cli).
-    - Via [Visual Studio](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet#authenticating-via-visual-studio).
+    - Through the [Azure CLI sign in](https://learn.microsoft.com/cli/azure/authenticate-azure-cli).
+    - Via [Visual Studio](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet#authenticating-via-visual-studio).
     - Setting [Environment Variables](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/AuthUsingEnvironmentVariables.md).
 
-    More information and different authentication approaches using Azure Identity can be found in [this document](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+    More information and different authentication approaches using Azure Identity can be found in [this document](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
 
 ### Authenticate the Client
 
@@ -70,7 +70,7 @@ TokenCredential credential = new ClientSecretCredential(tenantId, clientId, clie
 ArmClient client = new ArmClient(credential, subscriptionId, armOptions);
 ```
 
-More documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
+More documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
 
 ## Key concepts
 
@@ -493,7 +493,7 @@ To run test with code coverage and auto generate an html report with just a sing
 
 - [Managing Resource Groups](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/Sample2_ManagingResourceGroups.md)
 - [Creating a Virtual Network](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/resourcemanager/Azure.ResourceManager/docs/Sample3_CreatingAVirtualNetwork.md)
-- [.NET Management Library Code Samples](https://docs.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
+- [.NET Management Library Code Samples](https://learn.microsoft.com/samples/browse/?branch=master&languages=csharp&term=managing%20using%20Azure%20.NET%20SDK)
 
 ### Other Documentation
 

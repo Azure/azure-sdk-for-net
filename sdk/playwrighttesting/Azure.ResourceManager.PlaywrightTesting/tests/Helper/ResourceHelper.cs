@@ -13,6 +13,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Helper
     {
         public const string RESOURCE_LOCATION = "eastus";
         public const string RESOURCE_GROUP_NAME = "sdkRG";
+        public const string RESOURCE_GROUP_NAME_TEST = "sdkRG1386";
         public const string WORKSPACE_NAME = "testingWS";
     }
 }

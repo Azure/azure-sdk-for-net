@@ -17,42 +17,6 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_FederatedIdentityCredentialList()
-        {
-            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/FederatedIdentityCredentialList.json
-            // this example is just showing the usage of "FederatedIdentityCredentials_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this UserAssignedIdentityResource created on azure
-            // for more information of creating UserAssignedIdentityResource, please refer to the document of UserAssignedIdentityResource
-            string subscriptionId = "c267c0e7-0a73-4789-9e17-d26aeb0904e5";
-            string resourceGroupName = "rgName";
-            string resourceName = "resourceName";
-            ResourceIdentifier userAssignedIdentityResourceId = UserAssignedIdentityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            UserAssignedIdentityResource userAssignedIdentity = client.GetUserAssignedIdentityResource(userAssignedIdentityResourceId);
-
-            // get the collection of this FederatedIdentityCredentialResource
-            FederatedIdentityCredentialCollection collection = userAssignedIdentity.GetFederatedIdentityCredentials();
-
-            // invoke the operation and iterate over the result
-            await foreach (FederatedIdentityCredentialResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                FederatedIdentityCredentialData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_FederatedIdentityCredentialCreate()
         {
             // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/FederatedIdentityCredentialCreate.json
@@ -76,14 +40,11 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
 
             // invoke the operation
             string federatedIdentityCredentialResourceName = "ficResourceName";
-            FederatedIdentityCredentialData data = new FederatedIdentityCredentialData()
+            FederatedIdentityCredentialData data = new FederatedIdentityCredentialData
             {
                 IssuerUri = new Uri("https://oidc.prod-aks.azure.com/TenantGUID/IssuerGUID"),
                 Subject = "system:serviceaccount:ns:svcaccount",
-                Audiences =
-{
-"api://AzureADTokenExchange"
-},
+                Audiences = { "api://AzureADTokenExchange" },
             };
             ArmOperation<FederatedIdentityCredentialResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, federatedIdentityCredentialResourceName, data);
             FederatedIdentityCredentialResource result = lro.Value;
@@ -127,6 +88,42 @@ namespace Azure.ResourceManager.ManagedServiceIdentities.Samples
             FederatedIdentityCredentialData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_FederatedIdentityCredentialList()
+        {
+            // Generated from example definition: specification/msi/resource-manager/Microsoft.ManagedIdentity/stable/2023-01-31/examples/FederatedIdentityCredentialList.json
+            // this example is just showing the usage of "FederatedIdentityCredentials_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this UserAssignedIdentityResource created on azure
+            // for more information of creating UserAssignedIdentityResource, please refer to the document of UserAssignedIdentityResource
+            string subscriptionId = "c267c0e7-0a73-4789-9e17-d26aeb0904e5";
+            string resourceGroupName = "rgName";
+            string resourceName = "resourceName";
+            ResourceIdentifier userAssignedIdentityResourceId = UserAssignedIdentityResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            UserAssignedIdentityResource userAssignedIdentity = client.GetUserAssignedIdentityResource(userAssignedIdentityResourceId);
+
+            // get the collection of this FederatedIdentityCredentialResource
+            FederatedIdentityCredentialCollection collection = userAssignedIdentity.GetFederatedIdentityCredentials();
+
+            // invoke the operation and iterate over the result
+            await foreach (FederatedIdentityCredentialResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                FederatedIdentityCredentialData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]

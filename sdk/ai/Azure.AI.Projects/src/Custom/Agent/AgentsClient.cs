@@ -108,7 +108,7 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A new <see cref="ThreadRun"/> instance. </returns>
         public virtual Response<ThreadRun> CreateRun(AgentThread thread, Agent agent, CancellationToken cancellationToken = default)
-            => CreateRun(thread.Id, agent.Id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, cancellationToken);
+            => CreateRun(thread.Id, agent.Id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, cancellationToken);
 
         /// <summary>
         /// Creates a new run of the specified thread using a specified agent.
@@ -121,7 +121,7 @@ namespace Azure.AI.Projects
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A new <see cref="ThreadRun"/> instance. </returns>
         public virtual Task<Response<ThreadRun>> CreateRunAsync(AgentThread thread, Agent agent, CancellationToken cancellationToken = default)
-             => CreateRunAsync(thread.Id, agent.Id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, cancellationToken);
+             => CreateRunAsync(thread.Id, agent.Id, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, cancellationToken);
 
         /// <summary> Returns a list of run steps associated an agent thread run. </summary>
         /// <param name="run"> The <see cref="ThreadRun"/> instance from which run steps should be listed. </param>

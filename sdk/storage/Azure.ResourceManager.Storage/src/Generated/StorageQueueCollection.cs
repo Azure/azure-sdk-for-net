@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageQueueQueueRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageQueueQueueRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageQueueResource(Client, StorageQueueData.DeserializeStorageQueueData(e)), _storageQueueQueueClientDiagnostics, Pipeline, "StorageQueueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new StorageQueueResource(Client, StorageQueueData.DeserializeStorageQueueData(e)), _storageQueueQueueClientDiagnostics, Pipeline, "StorageQueueCollection.GetAll", "value", "nextLink", maxpagesize, cancellationToken);
         }
 
         /// <summary>
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _storageQueueQueueRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _storageQueueQueueRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageQueueResource(Client, StorageQueueData.DeserializeStorageQueueData(e)), _storageQueueQueueClientDiagnostics, Pipeline, "StorageQueueCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new StorageQueueResource(Client, StorageQueueData.DeserializeStorageQueueData(e)), _storageQueueQueueClientDiagnostics, Pipeline, "StorageQueueCollection.GetAll", "value", "nextLink", maxpagesize, cancellationToken);
         }
 
         /// <summary>
