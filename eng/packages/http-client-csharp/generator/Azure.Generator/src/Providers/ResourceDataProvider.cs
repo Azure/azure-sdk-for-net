@@ -3,7 +3,6 @@
 
 using Microsoft.Generator.CSharp.Input;
 using Microsoft.Generator.CSharp.Providers;
-using System;
 using System.IO;
 
 namespace Azure.Generator.Providers
@@ -20,7 +19,5 @@ namespace Azure.Generator.Providers
         protected override string BuildName() => $"{_inputModel.Name.ToCleanName()}Data";
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
-
-
     }
 }

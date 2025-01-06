@@ -3,7 +3,6 @@
 
 using Azure.Core;
 using Azure.Generator.Mgmt.Models;
-using Azure.Generator.Utilities;
 using Microsoft.Generator.CSharp.Input;
 using System;
 using System.Collections.Concurrent;

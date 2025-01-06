@@ -4,6 +4,7 @@
 using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Azure.Generator.Providers.Abstraction;
+using Azure.Generator.Utilities;
 using Microsoft.Generator.CSharp.ClientModel;
 using Microsoft.Generator.CSharp.ClientModel.Providers;
 using Microsoft.Generator.CSharp.Expressions;
@@ -61,6 +62,28 @@ namespace Azure.Generator
                 }
             }
             return base.CreateCSharpTypeCore(inputType);
+        }
+
+        /// <inheritdoc/>
+        public override bool TryGetPropertyTypeReplacement(InputModelType inputModelType, [NotNullWhen(true)] out SystemObjectProvider? replacement)
+        {
+            replacement = PropertyReferenceTypeChooser.GetExactMatch(inputModelType);
+            if (replacement is null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public override bool TryGetTypeReplacement(InputModelType inputModelType, [NotNullWhen(true)] out SystemObjectProvider? replacement)
+        {
+            replacement = TypeReferenceTypeChooser.GetExactMatch(inputModelType);
+            if (replacement is null)
+            {
+                return false;
+            }
+            return true;
         }
 
         private CSharpType? CreateKnownPrimitiveType(InputPrimitiveType inputType)

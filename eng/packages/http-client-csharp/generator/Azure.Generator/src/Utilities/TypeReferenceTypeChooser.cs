@@ -1,28 +1,31 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.ResourceManager.Models;
 using Microsoft.Generator.CSharp.Input;
-using Microsoft.Generator.CSharp.Primitives;
 using Microsoft.Generator.CSharp.Providers;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Azure.Generator.Utilities
 {
     internal static class TypeReferenceTypeChooser
     {
-        private static ConcurrentDictionary<ModelProvider, CSharpType?> _valueCache = new ConcurrentDictionary<ModelProvider, CSharpType?>();
+        private static ConcurrentDictionary<InputModelType, SystemObjectProvider?> _valueCache = new ConcurrentDictionary<InputModelType, SystemObjectProvider?>();
+        private static readonly IReadOnlyDictionary<string, Type> _typeToReplace = new Dictionary<string, Type>
+        {
+            ["Azure.ResourceManager.CommonTypes.OperationStatusResult"] = typeof(OperationStatusResult),
+            ["Azure.ResourceManager.CommonTypes.Resource"] = typeof(ResourceData),
+            ["Azure.ResourceManager.CommonTypes.TrackedResource"] = typeof(TrackedResourceData),
+        };
 
         /// <summary>
         /// Check whether a <c>MgmtObjectType</c> class can be replaced by an external type, and return the external type if available.
         /// </summary>
         /// <param name="typeToReplace">Type to check</param>
         /// <returns>Matched external type or null if not found</returns>
-        public static CSharpType? GetExactMatch(ModelProvider typeToReplace)
+        public static SystemObjectProvider? GetExactMatch(InputModelType typeToReplace)
         {
             if (_valueCache.TryGetValue(typeToReplace, out var result))
                 return result;
@@ -33,30 +36,14 @@ namespace Azure.Generator.Utilities
             return replacedType;
         }
 
-        private static CSharpType? BuildExactMatchType(ModelProvider typeToReplace)
+        private static SystemObjectProvider? BuildExactMatchType(InputModelType typeToReplace)
         {
-            foreach (Type replacementType in AzureClientPlugin.Instance.ReferenceClassFinder.TypeReferenceTypes.Value)
+            if (_typeToReplace.TryGetValue(typeToReplace.CrossLanguageDefinitionId, out var replaced))
             {
-                if (PropertyMatchDetection.IsEqual(replacementType, typeToReplace))
-                {
-                    var csharpType = CSharpType.FromSystemType(MgmtContext.Context, replacementType, typeToReplace.MyProperties);
-                    _valueCache.TryAdd(typeToReplace, csharpType);
-                    return csharpType;
-                }
+                return new SystemObjectProvider(replaced);
             }
 
-            // nothing matches, return null
             return null;
-        }
-
-        /// <summary>
-        /// Check whether there is a match for the given schema.
-        /// </summary>
-        /// <param name="schema"><c>ObjectSchema</c> of the target type</param>
-        /// <returns></returns>
-        public static bool HasMatch(InputModelType schema)
-        {
-            return _valueCache.TryGetValue(schema, out var match) && match != null;
         }
     }
 }

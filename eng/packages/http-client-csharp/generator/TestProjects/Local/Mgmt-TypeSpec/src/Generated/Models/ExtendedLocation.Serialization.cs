@@ -16,7 +16,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary></summary>
-    public partial class ExtendedLocation : IJsonModel<ExtendedLocation>
+    internal partial class ExtendedLocation : IJsonModel<ExtendedLocation>
     {
         internal ExtendedLocation()
         {

@@ -12,7 +12,7 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The supported ExtendedLocation types. </summary>
-    public readonly partial struct ExtendedLocationType : IEquatable<ExtendedLocationType>
+    internal readonly partial struct ExtendedLocationType : IEquatable<ExtendedLocationType>
     {
         private readonly string _value;
         /// <summary> Azure Edge Zones location type. </summary>
