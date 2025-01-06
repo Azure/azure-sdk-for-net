@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_Get</description>
+        /// <description>DeidServices_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_Get</description>
+        /// <description>DeidServices_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_ListBySubscription</description>
+        /// <description>DeidServices_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_ListBySubscription</description>
+        /// <description>DeidServices_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

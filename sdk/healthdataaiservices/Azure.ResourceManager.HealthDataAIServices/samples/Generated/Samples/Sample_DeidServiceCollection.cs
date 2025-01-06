@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Samples
         public async Task CreateOrUpdate_DeidServicesCreateGeneratedByMaximumSetRuleStable()
         {
             // Generated from example definition: 2024-09-20/DeidServices_Create_MaximumSet_Gen.json
-            // this example is just showing the usage of "DeidService_Create" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "DeidServices_create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Samples
         public async Task Get_DeidServicesGetGeneratedByMaximumSetRuleStable()
         {
             // Generated from example definition: 2024-09-20/DeidServices_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "DeidService_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "DeidServices_get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Samples
         public async Task GetAll_DeidServicesListByResourceGroupGeneratedByMaximumSetRuleStable()
         {
             // Generated from example definition: 2024-09-20/DeidServices_ListByResourceGroup_MaximumSet_Gen.json
-            // this example is just showing the usage of "DeidService_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "DeidServices_listByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Samples
         public async Task Exists_DeidServicesGetGeneratedByMaximumSetRuleStable()
         {
             // Generated from example definition: 2024-09-20/DeidServices_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "DeidService_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "DeidServices_get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Samples
         public async Task GetIfExists_DeidServicesGetGeneratedByMaximumSetRuleStable()
         {
             // Generated from example definition: 2024-09-20/DeidServices_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "DeidService_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "DeidServices_get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

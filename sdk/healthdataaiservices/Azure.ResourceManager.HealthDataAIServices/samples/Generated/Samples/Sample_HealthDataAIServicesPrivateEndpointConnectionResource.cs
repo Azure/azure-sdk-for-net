@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Samples
         public async Task Get_PrivateEndpointConnectionsGetGeneratedByMaximumSetRuleStable()
         {
             // Generated from example definition: 2024-09-20/PrivateEndpointConnections_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "PrivateEndpointConnectionResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PrivateEndpointConnections_get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Samples
         public async Task Delete_PrivateEndpointConnectionsDeleteGeneratedByMaximumSetRuleStable()
         {
             // Generated from example definition: 2024-09-20/PrivateEndpointConnections_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "PrivateEndpointConnectionResource_Delete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PrivateEndpointConnections_delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Samples
         public async Task Update_PrivateEndpointConnectionsCreateGeneratedByMaximumSetRuleStable()
         {
             // Generated from example definition: 2024-09-20/PrivateEndpointConnections_Create_MaximumSet_Gen.json
-            // this example is just showing the usage of "PrivateEndpointConnectionResource_Create" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PrivateEndpointConnections_create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

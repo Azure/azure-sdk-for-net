@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_Get</description>
+        /// <description>DeidServices_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_Get</description>
+        /// <description>DeidServices_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

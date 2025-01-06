@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnectionResource_Get</description>
+        /// <description>PrivateEndpointConnections_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateEndpointConnectionResource_Get</description>
+        /// <description>PrivateEndpointConnections_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_Get</description>
+        /// <description>DeidServices_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_Get</description>
+        /// <description>DeidServices_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_Delete</description>
+        /// <description>DeidServices_delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_Delete</description>
+        /// <description>DeidServices_delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_Update</description>
+        /// <description>DeidServices_update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_Update</description>
+        /// <description>DeidServices_update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResource_ListByDeidService</description>
+        /// <description>PrivateLinks_listByDeidService</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>PrivateLinkResource_ListByDeidService</description>
+        /// <description>PrivateLinks_listByDeidService</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_Get</description>
+        /// <description>DeidServices_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -543,7 +543,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_Get</description>
+        /// <description>DeidServices_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_Get</description>
+        /// <description>DeidServices_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -662,7 +662,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_Get</description>
+        /// <description>DeidServices_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -719,7 +719,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_Get</description>
+        /// <description>DeidServices_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.HealthDataAIServices
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>DeidService_Get</description>
+        /// <description>DeidServices_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
