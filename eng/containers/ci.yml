@@ -30,8 +30,8 @@ extends:
       - job:
         displayName: Docker Build and Publish
         pool:
-          name: $(LINUXNEXTPOOL)
-          image: $(LINUXNEXTVMIMAGE)
+          name: $(LINUXPOOL)
+          image: $(LINUXVMIMAGE)
           os: linux
 
         templateContext:
