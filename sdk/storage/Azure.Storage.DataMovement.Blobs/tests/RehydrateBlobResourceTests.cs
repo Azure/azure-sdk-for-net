@@ -77,7 +77,7 @@ namespace Azure.Storage.DataMovement.Tests
             default,
             default);
 
-        private static byte[] GetBytes(BlobCheckpointData checkpointData)
+        private static byte[] GetBytes(StorageResourceCheckpointData checkpointData)
         {
             using (MemoryStream stream = new MemoryStream())
             {

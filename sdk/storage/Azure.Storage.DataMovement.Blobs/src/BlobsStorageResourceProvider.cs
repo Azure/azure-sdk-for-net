@@ -236,7 +236,7 @@ namespace Azure.Storage.DataMovement.Blobs
             bool getSource,
             CancellationToken cancellationToken)
         {
-            BlobCheckpointData checkpointData = properties.GetCheckpointData(getSource);
+            StorageResourceCheckpointData checkpointData = properties.GetCheckpointData(getSource);
 
             ResourceType type = GetType(checkpointData, properties.IsContainer);
             Uri uri = getSource ? properties.SourceUri : properties.DestinationUri;
@@ -725,7 +725,7 @@ namespace Azure.Storage.DataMovement.Blobs
         }
         #endregion
 
-        private static ResourceType GetType(BlobCheckpointData checkpointData, bool isContainer)
+        private static ResourceType GetType(StorageResourceCheckpointData checkpointData, bool isContainer)
         {
             if (isContainer)
             {
