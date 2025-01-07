@@ -564,7 +564,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     {
                         // Specifying specific resources that failed, since its a directory transfer
                         // maybe only one file failed out of many
-                        logStream.WriteLine($"Exception occured with TransferId: {args.TransferId}," +
+                        logStream.WriteLine($"Exception occurred with TransferId: {args.TransferId}," +
                             $"Source Resource: {args.SourceResource.Uri.AbsoluteUri}, +" +
                             $"Destination Resource: {args.DestinationResource.Uri.AbsoluteUri}," +
                             $"Exception Message: {args.Exception.Message}");
@@ -1084,9 +1084,9 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     // download a virtual directory, with a specific prefix, within the container
                     #region Snippet:ExtensionMethodSimpleDownloadContainerDirectory
-                    DataTransfer tranfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
+                    DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
 
-                    await tranfer.WaitForCompletionAsync();
+                    await transfer.WaitForCompletionAsync();
                     #endregion
                 }
                 {
@@ -1103,9 +1103,9 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         }
                     };
 
-                    DataTransfer tranfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
+                    DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
 
-                    await tranfer.WaitForCompletionAsync();
+                    await transfer.WaitForCompletionAsync();
                     #endregion
                 }
             }

@@ -249,7 +249,7 @@ transferOptions.ItemTransferFailed += (TransferItemFailedEventArgs args) =>
     {
         // Specifying specific resources that failed, since its a directory transfer
         // maybe only one file failed out of many
-        logStream.WriteLine($"Exception occured with TransferId: {args.TransferId}," +
+        logStream.WriteLine($"Exception occurred with TransferId: {args.TransferId}," +
             $"Source Resource: {args.SourceResource.Uri.AbsoluteUri}, +" +
             $"Destination Resource: {args.DestinationResource.Uri.AbsoluteUri}," +
             $"Exception Message: {args.Exception.Message}");

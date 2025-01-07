@@ -234,9 +234,9 @@ await transfer.WaitForCompletionAsync();
 
 Download a virtual blob directory in the `BlobContainerClient` by specifying a directory prefix
 ```C# Snippet:ExtensionMethodSimpleDownloadContainerDirectory
-DataTransfer tranfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
+DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
 
-await tranfer.WaitForCompletionAsync();
+await transfer.WaitForCompletionAsync();
 ```
 
 Download from the `BlobContainerClient` specifying more advanced options
@@ -253,9 +253,9 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     }
 };
 
-DataTransfer tranfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
+DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
 
-await tranfer.WaitForCompletionAsync();
+await transfer.WaitForCompletionAsync();
 ```
 
 ## Contributing
