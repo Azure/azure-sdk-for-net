@@ -47,12 +47,11 @@ namespace MgmtTypeSpec
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fooName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="fooName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string fooName, RequestContent content, RequestContext context = null)
+        public virtual Response CreateOrUpdate(Guid subscriptionId, string resourceGroupName, string fooName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
             Argument.AssertNotNull(content, nameof(content));
@@ -74,12 +73,11 @@ namespace MgmtTypeSpec
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fooName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="fooName"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string fooName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> CreateOrUpdateAsync(Guid subscriptionId, string resourceGroupName, string fooName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
             Argument.AssertNotNull(content, nameof(content));
@@ -94,11 +92,10 @@ namespace MgmtTypeSpec
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="resource"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fooName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="fooName"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Foo> CreateOrUpdate(string subscriptionId, string resourceGroupName, string fooName, Foo resource, CancellationToken cancellationToken = default)
+        public virtual Response<Foo> CreateOrUpdate(Guid subscriptionId, string resourceGroupName, string fooName, Foo resource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
             Argument.AssertNotNull(resource, nameof(resource));
@@ -113,11 +110,10 @@ namespace MgmtTypeSpec
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="resource"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="fooName"/> or <paramref name="resource"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="fooName"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Foo>> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string fooName, Foo resource, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Foo>> CreateOrUpdateAsync(Guid subscriptionId, string resourceGroupName, string fooName, Foo resource, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
             Argument.AssertNotNull(resource, nameof(resource));
@@ -138,12 +134,11 @@ namespace MgmtTypeSpec
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Get(string subscriptionId, string resourceGroupName, string fooName, RequestContext context)
+        public virtual Response Get(Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
 
@@ -163,12 +158,11 @@ namespace MgmtTypeSpec
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAsync(string subscriptionId, string resourceGroupName, string fooName, RequestContext context)
+        public virtual async Task<Response> GetAsync(Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
 
@@ -181,11 +175,10 @@ namespace MgmtTypeSpec
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Foo> Get(string subscriptionId, string resourceGroupName, string fooName, CancellationToken cancellationToken = default)
+        public virtual Response<Foo> Get(Guid subscriptionId, string resourceGroupName, string fooName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
 
@@ -198,11 +191,10 @@ namespace MgmtTypeSpec
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Foo>> GetAsync(string subscriptionId, string resourceGroupName, string fooName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<Foo>> GetAsync(Guid subscriptionId, string resourceGroupName, string fooName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
 
@@ -222,12 +214,11 @@ namespace MgmtTypeSpec
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Delete(string subscriptionId, string resourceGroupName, string fooName, RequestContext context)
+        public virtual Response Delete(Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
 
@@ -247,12 +238,11 @@ namespace MgmtTypeSpec
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string fooName, RequestContext context)
+        public virtual async Task<Response> DeleteAsync(Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
 
@@ -265,11 +255,10 @@ namespace MgmtTypeSpec
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Delete(string subscriptionId, string resourceGroupName, string fooName, CancellationToken cancellationToken = default)
+        public virtual Response Delete(Guid subscriptionId, string resourceGroupName, string fooName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
 
@@ -281,11 +270,10 @@ namespace MgmtTypeSpec
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="fooName"> The name of the Foo. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string fooName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> DeleteAsync(Guid subscriptionId, string resourceGroupName, string fooName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
 
@@ -303,12 +291,11 @@ namespace MgmtTypeSpec
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response List(string subscriptionId, string resourceGroupName, RequestContext context)
+        public virtual Response List(Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
 
             using HttpMessage message = CreateListRequest(subscriptionId, resourceGroupName, context);
@@ -326,12 +313,11 @@ namespace MgmtTypeSpec
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> ListAsync(string subscriptionId, string resourceGroupName, RequestContext context)
+        public virtual async Task<Response> ListAsync(Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
 
             using HttpMessage message = CreateListRequest(subscriptionId, resourceGroupName, context);
@@ -342,11 +328,10 @@ namespace MgmtTypeSpec
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<FooListResult> List(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<FooListResult> List(Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
 
             Response result = List(subscriptionId, resourceGroupName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
@@ -357,11 +342,10 @@ namespace MgmtTypeSpec
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<FooListResult>> ListAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FooListResult>> ListAsync(Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
 
             Response result = await ListAsync(subscriptionId, resourceGroupName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
