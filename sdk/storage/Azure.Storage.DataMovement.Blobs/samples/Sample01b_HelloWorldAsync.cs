@@ -184,20 +184,24 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             // And you can provide the connection string to your application
             // using an environment variable.
 
-            string connectionString = ConnectionString;
+            TokenCredential tokenCredential = new DefaultAzureCredential();
             string containerName = Randomize("sample-container");
 
-            // Create a client that can authenticate with a connection string
-            BlobContainerClient container = new BlobContainerClient(connectionString, containerName);
+            BlobServiceClient serviceClient = new BlobServiceClient(ActiveDirectoryBlobUri, tokenCredential);
+            BlobContainerClient container = serviceClient.GetBlobContainerClient(containerName);
             await container.CreateIfNotExistsAsync();
             try
             {
-                BlobsStorageResourceProvider blobs = new(new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey));
-                LocalFilesStorageResourceProvider files = new();
+                #region Snippet:CreateTransferManagerSimple_BasePackage
+                TransferManager transferManager = new TransferManager(new TransferManagerOptions());
+                #endregion
 
                 // Get a reference to a destination blobs
                 Uri destinationBlobUri = container.GetBlockBlobClient("sample-blob").Uri;
-                TransferManager transferManager = new TransferManager(new TransferManagerOptions());
+
+                #region Snippet:SimpleBlobUpload_BasePackage
+                LocalFilesStorageResourceProvider files = new();
+                BlobsStorageResourceProvider blobs = new(tokenCredential);
 
                 // Create simple transfer single blob upload job
                 #region Snippet:SimpleBlobUpload
@@ -205,6 +209,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     sourceResource: files.FromFile(sourceLocalPath),
                     destinationResource: blobs.FromBlob(destinationBlobUri));
                 await dataTransfer.WaitForCompletionAsync();
+                #endregion
                 #endregion
             }
             finally
@@ -552,6 +557,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     }
                     return Task.CompletedTask;
                 };
+                #region Snippet:LogIndividualTransferFailures
                 transferOptions.ItemTransferFailed += (TransferItemFailedEventArgs args) =>
                 {
                     using (StreamWriter logStream = File.AppendText(logFile))
@@ -565,6 +571,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     }
                     return Task.CompletedTask;
                 };
+                #endregion
                 TransferManager transferManager = new TransferManager(options);
                 BlobsStorageResourceProvider blobs = new();
                 LocalFilesStorageResourceProvider files = new();
@@ -893,7 +900,9 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 string transferId = dataTransfer.Id;
 
                 // Pause from the Transfer Manager using the Transfer Id
+                #region Snippet:PauseFromManager
                 await transferManager.PauseTransferIfRunningAsync(transferId);
+                #endregion
 
                 // Resume all transfers
                 List<DataTransfer> transfers = await transferManager.ResumeAllTransfersAsync();
@@ -951,7 +960,9 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     destinationResource: destinationResource);
 
                 // Pause from the DataTransfer object
+                #region Snippet:PauseFromTransfer
                 await dataTransfer.PauseAsync();
+                #endregion
 
                 DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(
                     transferId: dataTransfer.Id);
@@ -1097,6 +1108,95 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     await tranfer.WaitForCompletionAsync();
                     #endregion
                 }
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        [Test]
+        public async Task MonitorUploadAsync()
+        {
+            string sourceLocalPath = CreateTempFile(SampleFileContent);
+            BlobContainerClient container = new BlobContainerClient(ConnectionString, Randomize("sample-container"));
+            await container.CreateIfNotExistsAsync();
+
+            try
+            {
+                // Get a reference to a source local file
+                LocalFilesStorageResourceProvider files = new();
+                StorageResource sourceResource = files.FromFile(sourceLocalPath);
+
+                // Get a reference to a destination blob
+                TransferManager transferManager = new TransferManager();
+
+                string logFile = CreateTempPath();
+
+                #region Snippet:EnumerateTransfers
+                async Task CheckTransfersAsync(TransferManager transferManager)
+                {
+                    await foreach (DataTransfer transfer in transferManager.GetTransfersAsync())
+                    {
+                        using StreamWriter logStream = File.AppendText(logFile);
+                        logStream.WriteLine(Enum.GetName(typeof(DataTransferStatus), transfer.TransferStatus));
+                    }
+                }
+                #endregion
+
+                #region Snippet:ListenToTransferEvents
+                async Task<DataTransfer> ListenToTransfersAsync(TransferManager transferManager,
+                    StorageResource source, StorageResource destination)
+                {
+                    DataTransferOptions transferOptions = new();
+                    transferOptions.ItemTransferCompleted += (TransferItemCompletedEventArgs args) =>
+                    {
+                        using StreamWriter logStream = File.AppendText(logFile);
+                        logStream.WriteLine($"File Completed Transfer: {args.SourceResource.Uri.LocalPath}");
+                        return Task.CompletedTask;
+                    };
+                    return await transferManager.StartTransferAsync(
+                        source,
+                        destination,
+                        transferOptions);
+                }
+                #endregion
+
+                #region Snippet:ListenToProgress
+                async Task<DataTransfer> ListenToProgressAsync(TransferManager transferManager, IProgress<DataTransferProgress> progress,
+                    StorageResource source, StorageResource destination)
+                {
+                    DataTransferOptions transferOptions = new()
+                    {
+                        // optionally include the below if progress updates on bytes transferred are desired
+                        ProgressHandlerOptions = new(progress, trackBytesTransferred: true)
+                    };
+                    return await transferManager.StartTransferAsync(
+                        source,
+                        destination,
+                        transferOptions);
+                }
+                #endregion
+
+                BlobsStorageResourceProvider blobs = new();
+                StorageResource destinationResource1 = blobs.FromClient(container.GetBlockBlobClient("sample-blob-1"));
+                StorageResource destinationResource2 = blobs.FromClient(container.GetBlockBlobClient("sample-blob-2"));
+                DataTransfer dataTransfer1 = await ListenToTransfersAsync(transferManager, sourceResource, destinationResource1);
+                DataTransfer dataTransfer2 = await ListenToProgressAsync(transferManager, new Progress<DataTransferProgress>(p => { }), sourceResource, destinationResource2);
+                await CheckTransfersAsync(transferManager);
+                await dataTransfer1.WaitForCompletionAsync();
+
+                #region Snippet:LogTotalTransferFailure
+                await dataTransfer2.WaitForCompletionAsync();
+                if (dataTransfer2.TransferStatus.State == DataTransferState.Completed
+                    && dataTransfer2.TransferStatus.HasFailedItems)
+                {
+                    using (StreamWriter logStream = File.AppendText(logFile))
+                    {
+                        logStream.WriteLine($"Failure for TransferId: {dataTransfer2.Id}");
+                    }
+                }
+                #endregion
             }
             finally
             {

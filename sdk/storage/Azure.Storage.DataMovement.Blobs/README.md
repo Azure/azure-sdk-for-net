@@ -345,6 +345,7 @@ additional questions or comments.
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://learn.microsoft.com/rest/api/storageservices/common-rest-api-error-codes
+[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement/samples
 [share_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Files.Shares/samples
 [storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com

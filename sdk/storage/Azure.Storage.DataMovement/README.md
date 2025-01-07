@@ -86,11 +86,12 @@ The below sample demonstrates `StorageResourceProvider` use to start transfers b
 ```C# Snippet:SimpleBlobUpload_BasePackage
 LocalFilesStorageResourceProvider files = new();
 BlobsStorageResourceProvider blobs = new(tokenCredential);
+
+// Create simple transfer single blob upload job
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    files.FromFile("C:/path/to/file.txt"),
-    blobs.FromBlob("https://myaccount.blob.core.windows.net/mycontainer/myblob"),
-    cancellationToken: cancellationToken);
-await dataTransfer.WaitForCompletionAsync(cancellationToken);
+    sourceResource: files.FromFile(sourceLocalPath),
+    destinationResource: blobs.FromBlob(destinationBlobUri));
+await dataTransfer.WaitForCompletionAsync();
 ```
 
 ### Resuming Existing Transfers
@@ -154,7 +155,7 @@ async Task CheckTransfersAsync(TransferManager transferManager)
     await foreach (DataTransfer transfer in transferManager.GetTransfersAsync())
     {
         using StreamWriter logStream = File.AppendText(logFile);
-        logStream.WriteLine(Enum.GetName(typeof(StorageTransferStatus), transfer.TransferStatus));
+        logStream.WriteLine(Enum.GetName(typeof(DataTransferStatus), transfer.TransferStatus));
     }
 }
 ```
@@ -173,11 +174,11 @@ A function that listens to status events for a given transfer:
 async Task<DataTransfer> ListenToTransfersAsync(TransferManager transferManager,
     StorageResource source, StorageResource destination)
 {
-    TransferOptions transferOptions = new();
-    transferOptions.SingleTransferCompleted += (SingleTransferCompletedEventArgs args) =>
+    DataTransferOptions transferOptions = new();
+    transferOptions.ItemTransferCompleted += (TransferItemCompletedEventArgs args) =>
     {
         using StreamWriter logStream = File.AppendText(logFile);
-        logStream.WriteLine($"File Completed Transfer: {args.SourceResource.Path}");
+        logStream.WriteLine($"File Completed Transfer: {args.SourceResource.Uri.LocalPath}");
         return Task.CompletedTask;
     };
     return await transferManager.StartTransferAsync(
@@ -194,17 +195,13 @@ When starting a transfer, `TransferOptions` allows setting a progress handler th
 A function that listens to progress updates for a given transfer with a supplied `IProgress<TStorageTransferProgress>`:
 
 ```C# Snippet:ListenToProgress
-async Task<DataTransfer> ListenToProgressAsync(TransferManager transferManager, IProgress<StorageTransferProgress> progress,
+async Task<DataTransfer> ListenToProgressAsync(TransferManager transferManager, IProgress<DataTransferProgress> progress,
     StorageResource source, StorageResource destination)
 {
-    TransferOptions transferOptions = new()
+    DataTransferOptions transferOptions = new()
     {
-        ProgressHandler = progress,
         // optionally include the below if progress updates on bytes transferred are desired
-        ProgressHandlerOptions = new()
-        {
-            TrackBytesTransferred = true
-        }
+        ProgressHandlerOptions = new(progress, trackBytesTransferred: true)
     };
     return await transferManager.StartTransferAsync(
         source,
@@ -218,11 +215,11 @@ async Task<DataTransfer> ListenToProgressAsync(TransferManager transferManager, 
 Transfers can be paused either by a given `DataTransfer` or through the `TransferManager` handling the transfer by referencing the transfer ID. The ID can be found on the `DataTransfer` object you received upon transfer start.
 
 ```C# Snippet:PauseFromTransfer
-await dataTransfer.PauseIfRunningAsync(cancellationToken);
+await dataTransfer.PauseAsync();
 ```
 
 ```C# Snippet:PauseFromManager
-await transferManager.PauseTransferIfRunningAsync(transferId, cancellationToken);
+await transferManager.PauseTransferIfRunningAsync(transferId);
 ```
 
 ### Handling Failed Transfers
@@ -232,12 +229,13 @@ Transfer failure can be observed by checking the `DataTransfer` status upon comp
 Below logs failure for a single transfer by checking its status after completion.
 
 ```C# Snippet:LogTotalTransferFailure
-await dataTransfer.WaitForCompletionAsync();
-if (dataTransfer.TransferStatus == StorageTransferStatus.CompletedWithFailedTransfers)
+await dataTransfer2.WaitForCompletionAsync();
+if (dataTransfer2.TransferStatus.State == DataTransferState.Completed
+    && dataTransfer2.TransferStatus.HasFailedItems)
 {
     using (StreamWriter logStream = File.AppendText(logFile))
     {
-        logStream.WriteLine($"Failure for TransferId: {dataTransfer.Id}");
+        logStream.WriteLine($"Failure for TransferId: {dataTransfer2.Id}");
     }
 }
 ```
@@ -245,15 +243,15 @@ if (dataTransfer.TransferStatus == StorageTransferStatus.CompletedWithFailedTran
 Below logs individual failures in a container transfer via `TransferOptions` events.
 
 ```C# Snippet:LogIndividualTransferFailures
-transferOptions.TransferFailed += (TransferFailedEventArgs args) =>
+transferOptions.ItemTransferFailed += (TransferItemFailedEventArgs args) =>
 {
     using (StreamWriter logStream = File.AppendText(logFile))
     {
         // Specifying specific resources that failed, since its a directory transfer
         // maybe only one file failed out of many
         logStream.WriteLine($"Exception occured with TransferId: {args.TransferId}," +
-            $"Source Resource: {args.SourceResource.Path}, +" +
-            $"Destination Resource: {args.DestinationResource.Path}," +
+            $"Source Resource: {args.SourceResource.Uri.AbsoluteUri}, +" +
+            $"Destination Resource: {args.DestinationResource.Uri.AbsoluteUri}," +
             $"Exception Message: {args.Exception.Message}");
     }
     return Task.CompletedTask;
