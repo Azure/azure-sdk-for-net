@@ -25,7 +25,7 @@ namespace Azure.Core.TestFramework
     /// </summary>
     public abstract class TestEnvironment
     {
-        [EditorBrowsableAttribute(EditorBrowsableState.Never)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static string RepositoryRoot { get; }
 
         public static string DevCertPath { get; }
@@ -94,6 +94,11 @@ namespace Azure.Core.TestFramework
             {
                 if (File.Exists(testEnvironmentFile))
                 {
+                    if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+                    {
+                        throw new PlatformNotSupportedException();
+                    }
+
                     var json = JsonDocument.Parse(
                         ProtectedData.Unprotect(File.ReadAllBytes(testEnvironmentFile), null, DataProtectionScope.CurrentUser)
                     );
