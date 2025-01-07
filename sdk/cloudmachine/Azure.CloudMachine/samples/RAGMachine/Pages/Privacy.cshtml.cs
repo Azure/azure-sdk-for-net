@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace AzureSimpleRAG.Pages;
+namespace RAGMachine.Pages;
 
 public class PrivacyModel : PageModel
 {
