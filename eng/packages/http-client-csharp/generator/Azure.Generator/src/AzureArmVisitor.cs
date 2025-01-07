@@ -17,8 +17,9 @@ namespace Azure.Generator
         {
             if (type is ClientProvider)
             {
-                type.Update(modifiers: TransfromModifiers(type), relativeFilePath: TransformRelativeFilePathForClient(type));
+                type.Update(modifiers: TransfromPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForClient(type));
             }
+            // TODO: uncomment this once resources are generated
             //if (type is RestClientProvider)
             //{
             //    type.Update(modifiers: TransfromModifiers(type), relativeFilePath: TransformRelativeFilePathForRestClient(type));
@@ -32,7 +33,7 @@ namespace Azure.Generator
         private static string TransformRelativeFilePathForRestClient(TypeProvider type)
             => Path.Combine("src", "Generated", "RestOperations", $"{type.Name}.RestClient.cs");
 
-        private static TypeSignatureModifiers TransfromModifiers(TypeProvider type)
+        private static TypeSignatureModifiers TransfromPublicModifiersToInternal(TypeProvider type)
         {
             var modifiers = type.DeclarationModifiers;
             if (modifiers.HasFlag(TypeSignatureModifiers.Public))

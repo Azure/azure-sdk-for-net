@@ -45,12 +45,11 @@ namespace MgmtTypeSpec
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response GetAllPrivateLinkResources(string subscriptionId, string resourceGroupName, RequestContext context)
+        public virtual Response GetAllPrivateLinkResources(Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
 
             using HttpMessage message = CreateGetAllPrivateLinkResourcesRequest(subscriptionId, resourceGroupName, context);
@@ -68,12 +67,11 @@ namespace MgmtTypeSpec
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> GetAllPrivateLinkResourcesAsync(string subscriptionId, string resourceGroupName, RequestContext context)
+        public virtual async Task<Response> GetAllPrivateLinkResourcesAsync(Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
 
             using HttpMessage message = CreateGetAllPrivateLinkResourcesRequest(subscriptionId, resourceGroupName, context);
@@ -84,11 +82,10 @@ namespace MgmtTypeSpec
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<PrivateLinkResourceListResult> GetAllPrivateLinkResources(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<PrivateLinkResourceListResult> GetAllPrivateLinkResources(Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
 
             Response result = GetAllPrivateLinkResources(subscriptionId, resourceGroupName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
@@ -99,11 +96,10 @@ namespace MgmtTypeSpec
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<PrivateLinkResourceListResult>> GetAllPrivateLinkResourcesAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<PrivateLinkResourceListResult>> GetAllPrivateLinkResourcesAsync(Guid subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
 
             Response result = await GetAllPrivateLinkResourcesAsync(subscriptionId, resourceGroupName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
@@ -123,12 +119,11 @@ namespace MgmtTypeSpec
         /// <param name="privateLinkResourcenName"> The name of the private link associated with the Azure resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateLinkResourcenName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="privateLinkResourcenName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual Response Start(string subscriptionId, string resourceGroupName, string privateLinkResourcenName, RequestContent content, RequestContext context = null)
+        public virtual Response Start(Guid subscriptionId, string resourceGroupName, string privateLinkResourcenName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(privateLinkResourcenName, nameof(privateLinkResourcenName));
 
@@ -149,12 +144,11 @@ namespace MgmtTypeSpec
         /// <param name="privateLinkResourcenName"> The name of the private link associated with the Azure resource. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateLinkResourcenName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="privateLinkResourcenName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        public virtual async Task<Response> StartAsync(string subscriptionId, string resourceGroupName, string privateLinkResourcenName, RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> StartAsync(Guid subscriptionId, string resourceGroupName, string privateLinkResourcenName, RequestContent content, RequestContext context = null)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(privateLinkResourcenName, nameof(privateLinkResourcenName));
 
@@ -168,11 +162,10 @@ namespace MgmtTypeSpec
         /// <param name="privateLinkResourcenName"> The name of the private link associated with the Azure resource. </param>
         /// <param name="body"> SAP Application server instance start request body. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateLinkResourcenName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="privateLinkResourcenName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response Start(string subscriptionId, string resourceGroupName, string privateLinkResourcenName, StartRequest body = null, CancellationToken cancellationToken = default)
+        public virtual Response Start(Guid subscriptionId, string resourceGroupName, string privateLinkResourcenName, StartRequest body = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(privateLinkResourcenName, nameof(privateLinkResourcenName));
 
@@ -185,11 +178,10 @@ namespace MgmtTypeSpec
         /// <param name="privateLinkResourcenName"> The name of the private link associated with the Azure resource. </param>
         /// <param name="body"> SAP Application server instance start request body. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="privateLinkResourcenName"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="privateLinkResourcenName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response> StartAsync(string subscriptionId, string resourceGroupName, string privateLinkResourcenName, StartRequest body = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response> StartAsync(Guid subscriptionId, string resourceGroupName, string privateLinkResourcenName, StartRequest body = null, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(privateLinkResourcenName, nameof(privateLinkResourcenName));
 

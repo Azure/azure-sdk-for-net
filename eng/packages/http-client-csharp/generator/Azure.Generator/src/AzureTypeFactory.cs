@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.InputTransformation;
 using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Azure.Generator.Providers.Abstraction;
@@ -15,8 +16,6 @@ using Microsoft.Generator.CSharp.Snippets;
 using Microsoft.Generator.CSharp.Statements;
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 
 namespace Azure.Generator
@@ -135,49 +134,6 @@ namespace Azure.Generator
 
         /// <inheritdoc/>
         protected override ClientProvider CreateClientCore(InputClient inputClient)
-            => AzureClientPlugin.Instance.IsAzureArm.Value ? base.CreateClientCore(TransformInputClient(inputClient)) : base.CreateClientCore(inputClient);
-
-        private InputClient TransformInputClient(InputClient client)
-        {
-            var operationsToKeep = new List<InputOperation>();
-            foreach (var operation in client.Operations)
-            {
-                // operations_list has been covered in Azure.ResourceManager already, we don't need to generate it in the client
-                if (operation.CrossLanguageDefinitionId != "Azure.ResourceManager.Operations.list")
-                {
-                    // TODO: have a helper method in InputOperation to update the parameters
-                    var transformedOperation = new InputOperation(operation.Name, operation.ResourceName, operation.Summary, operation.Doc, operation.Deprecated, operation.Accessibility, TransformInputOperationParameters(operation), operation.Responses, operation.HttpMethod, operation.RequestBodyMediaType, operation.Uri, operation.Path, operation.ExternalDocsUrl, operation.RequestMediaTypes, operation.BufferResponse, operation.LongRunning, operation.Paging, operation.GenerateProtocolMethod, operation.GenerateConvenienceMethod, operation.CrossLanguageDefinitionId);
-                    operationsToKeep.Add(transformedOperation);
-                }
-            }
-            return new InputClient(client.Name, client.Summary, client.Doc, operationsToKeep, client.Parameters, client.Parent);
-        }
-
-        private IReadOnlyList<InputParameter> TransformInputOperationParameters(InputOperation operation)
-        {
-            var parameters = new List<InputParameter>();
-            foreach (var parameter in operation.Parameters)
-            {
-                if (parameter.NameInRequest.Equals("subscriptionId", StringComparison.OrdinalIgnoreCase))
-                {
-                    parameters.Add(new InputParameter(parameter.Name, parameter.NameInRequest, parameter.Summary, parameter.Doc, InputPrimitiveType.String, parameter.Location, parameter.DefaultValue, InputOperationParameterKind.Method, parameter.IsRequired, parameter.IsApiVersion, parameter.IsResourceParameter, parameter.IsContentType, parameter.IsEndpoint, parameter.SkipUrlEncoding, parameter.Explode, parameter.ArraySerializationDelimiter, parameter.HeaderCollectionPrefix));
-                }
-                else
-                {
-                    parameters.Add(parameter);
-                }
-            }
-            return parameters;
-        }
-
-        internal ResourceDataProvider CreateResourceData(InputModelType model)
-        {
-            if (_resourceDataProvdierCache.TryGetValue(model, out var resourceData))
-            {
-                return resourceData!;
-            }
-
-            return new ResourceDataProvider(model);
-        }
+            => AzureClientPlugin.Instance.IsAzureArm.Value ? base.CreateClientCore(InputClientTransformer.TransformInputClient(inputClient)) : base.CreateClientCore(inputClient);
     }
 }
