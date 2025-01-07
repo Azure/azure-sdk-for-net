@@ -311,7 +311,7 @@ See [Handling Failed Transfers](#handling-failed-transfers) and [Enabling Loggin
 
 Get started with our [Share Files Samples][share_samples].
 
-For more base Transfer Manager scenarios see [DataMovement samples][samples].
+For more base Transfer Manager scenarios see [DataMovement samples][datamovement_base].
 
 ## Contributing
 
@@ -345,7 +345,7 @@ additional questions or comments.
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://learn.microsoft.com/rest/api/storageservices/common-rest-api-error-codes
-[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement/samples
+[datamovement_base]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement
 [share_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Files.Shares/samples
 [storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
