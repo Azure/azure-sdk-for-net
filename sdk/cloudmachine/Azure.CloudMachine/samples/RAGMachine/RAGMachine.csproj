@@ -4,7 +4,12 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>017b91ec-85fc-4da9-8279-348386920e8c</UserSecretsId>
+    <!-- Signal that samples are building in the repo as opposed to a standalone download from Samples Browser -->
+    <IsClientLibrary>true</IsClientLibrary>
+    <IsPackable>true</IsPackable>
+    <IsSample>true</IsSample>
+    <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
+    <IsShippingLibrary>false</IsShippingLibrary>
   </PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Azure.CloudMachine.All" Version="1.0.0-alpha.20241213.1" />
