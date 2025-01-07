@@ -10,6 +10,9 @@
     <IsSample>true</IsSample>
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
     <IsShippingLibrary>false</IsShippingLibrary>
+    <NoWarn>
+      NU5104;
+    </NoWarn>
   </PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Azure.CloudMachine.All" Version="1.0.0-alpha.20241213.1" />
