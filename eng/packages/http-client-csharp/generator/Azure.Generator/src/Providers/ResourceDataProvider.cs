@@ -16,7 +16,7 @@ namespace Azure.Generator.Providers
             _inputModel = inputModel;
         }
 
-        protected override string BuildName() => $"{_inputModel.Name.ToCleanName()}Data";
+        protected override string BuildName() => $"{base.BuildName()}Data";
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
     }
