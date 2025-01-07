@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Bcl.AsyncInterfaces" />
     <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.Numerics.Vectors" />
     <PackageReference Include="System.Diagnostics.DiagnosticSource" />
