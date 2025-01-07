@@ -10,3 +10,6 @@ description: Samples for the Azure.CloudMachine client library.
 ---
 
 # Azure.CloudMachine Samples
+
+## AzureSimpleRAG
+An OpenAI based Retrieval Augmented Generation (RAG) web application sample built with opinionated Azure SDK APIs.
