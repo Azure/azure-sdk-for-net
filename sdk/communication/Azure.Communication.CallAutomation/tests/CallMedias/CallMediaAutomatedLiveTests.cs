@@ -2735,7 +2735,10 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                         new FileSource(new Uri(TestEnvironment.FileSourceUrl) )
                     };
 
-                    PlayOptions options = new PlayOptions(playFileSources, new List<CommunicationUserIdentifier>() { target }) { OperationContext = "context" };
+                    PlayOptions options = new PlayOptions(playFileSources, new List<CommunicationUserIdentifier>() { target })
+                    { OperationContext = "context",
+                     InterruptHoldAudio = true
+                    };
 
                     // Assert the Play with multiple File Sources
                     await callConnection.GetCallMedia().PlayAsync(options).ConfigureAwait(false);
