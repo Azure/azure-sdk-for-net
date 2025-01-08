@@ -177,7 +177,7 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"PartitionKey eq '{Partition}'", s_tableEntExpEquals },
         };
 
-        public static object[] UnSupportedTableItemExpressionTestCases =
+        public static object[] UnsupportedTableItemExpressionTestCases =
         {
             new object[] { s_TEequalsUnsupported },
             new object[] { s_TEequalsStaticUnsupported },
@@ -212,7 +212,7 @@ namespace Azure.Data.Tables.Tests
             Assert.That(filter, Is.EqualTo(expectedFilter));
         }
 
-        [TestCaseSource(nameof(UnSupportedTableItemExpressionTestCases))]
+        [TestCaseSource(nameof(UnsupportedTableItemExpressionTestCases))]
         [Test]
         [NonParallelizable]
         public void TestTableItemFilterExpressionsUnsupported(Expression<Func<TableEntity, bool>> expression)
@@ -220,7 +220,7 @@ namespace Azure.Data.Tables.Tests
             Assert.Throws<NotSupportedException>(() => TableClient.CreateQueryFilter(expression));
         }
 
-        [TestCaseSource(nameof(UnSupportedTableItemExpressionTestCases))]
+        [TestCaseSource(nameof(UnsupportedTableItemExpressionTestCases))]
         [Test]
         [NonParallelizable]
         public void TestTableItemFilterExpressionsUnsupportedDoesNotThrowWithCompatSwitch(Expression<Func<TableEntity, bool>> expression)
@@ -233,7 +233,7 @@ namespace Azure.Data.Tables.Tests
             TableClient.CreateQueryFilter(expression);
         }
 
-        [TestCaseSource(nameof(UnSupportedTableItemExpressionTestCases))]
+        [TestCaseSource(nameof(UnsupportedTableItemExpressionTestCases))]
         [Test]
         [NonParallelizable]
         public void TestTableItemFilterExpressionsUnsupportedDoesNotThrowWithCompatSwitchEnv(Expression<Func<TableEntity, bool>> expression)
