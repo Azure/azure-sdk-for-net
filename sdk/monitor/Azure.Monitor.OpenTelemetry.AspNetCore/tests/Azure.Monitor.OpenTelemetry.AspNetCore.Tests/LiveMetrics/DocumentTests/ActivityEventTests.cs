@@ -47,7 +47,7 @@ namespace Azure.Monitor.OpenTelemetry.AspNetCore.Tests.LiveMetrics.DocumentTests
             catch (System.Exception ex)
             {
                 activity.SetStatus(ActivityStatusCode.Error);
-                activity.RecordException(ex, new TagList
+                activity.AddException(ex, new TagList
                 {
                     {"customKey1", "customValue1"},
                     {"customKey2", "customValue2"},

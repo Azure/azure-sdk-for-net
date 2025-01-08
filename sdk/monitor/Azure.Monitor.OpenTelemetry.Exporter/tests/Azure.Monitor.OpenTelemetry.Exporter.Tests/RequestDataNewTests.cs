@@ -32,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             activity.Stop();
 
             var httpUrl = "https://www.foo.bar/search";
-            activity.SetStatus(Status.Ok);
+            activity.SetStatus(ActivityStatusCode.Ok);
             activity.SetTag(SemanticConventions.AttributeHttpRequestMethod, "GET");
             activity.SetTag(SemanticConventions.AttributeHttpRoute, "/search");
             activity.SetTag(SemanticConventions.AttributeUrlScheme, "https");
@@ -236,7 +236,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotNull(activity);
             activity.Stop();
 
-            activity.SetStatus(Status.Ok);
+            activity.SetStatus(ActivityStatusCode.Ok);
             activity.SetTag(SemanticConventions.AttributeMessagingSystem, "servicebus");
             activity.SetTag(SemanticConventions.AttributeServerAddress, "my.servicebus.windows.net");
             activity.SetTag(SemanticConventions.AttributeMessagingDestinationName, "queueName");

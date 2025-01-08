@@ -157,10 +157,10 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 };
 
                 Func<Task> sendEventAct = async () => await deviceClient.SendEventAsync(message).ConfigureAwait(false);
-                sendEventAct.Should().NotThrow();
+                await sendEventAct.Should().NotThrowAsync();
 
                 // Send it again
-                sendEventAct.Should().NotThrow();
+                await sendEventAct.Should().NotThrowAsync();
 
                 // Query for the two events with a filter
                 querySeriesRequestOptions.Filter = new TimeSeriesExpression("$event.Temperature.Double = 1.2");

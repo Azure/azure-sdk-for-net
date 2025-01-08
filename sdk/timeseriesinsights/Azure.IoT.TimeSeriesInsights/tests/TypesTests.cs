@@ -150,7 +150,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                         typesResult.TimeSeriesType.Should().NotBeNull();
                         typesResult.TimeSeriesType.Id.Should().NotBeNullOrEmpty();
                         typesResult.TimeSeriesType.Variables.Count.Should().Be(1);
-                        typesResult.TimeSeriesType.Variables.IsSameOrEqualTo(variables);
+                        typesResult.TimeSeriesType.Variables.Should().BeEquivalentTo(variables);
                     }
                     return null;
                 }, MaxNumberOfRetries, s_retryDelay);

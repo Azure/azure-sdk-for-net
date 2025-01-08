@@ -101,7 +101,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
                 await sendEventAct.Should().NotThrowAsync();
 
                 // Send it again
-                sendEventAct.Should().NotThrow();
+                await sendEventAct.Should().NotThrowAsync();
 
                 // Query for the two events with a filter
 
