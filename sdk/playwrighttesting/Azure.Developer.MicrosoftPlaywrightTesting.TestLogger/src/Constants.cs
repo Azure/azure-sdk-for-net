@@ -248,7 +248,12 @@ internal class ReporterConstants
     internal static readonly string s_cONFLICT_409_ERROR_MESSAGE = "Test run with id {runId} already exists. Provide a unique run id.";
     internal static readonly string s_cONFLICT_409_ERROR_MESSAGE_KEY = "DuplicateRunId";
 
-    internal static readonly string s_fORBIDDEN_403_ERROR_MESSAGE = "Reporting is not enabled for your workspace {workspaceId}. Enable the Reporting feature under Feature management settings using the Playwright portal: https://playwright.microsoft.com/workspaces/{workspaceId}/settings/general";
+    internal static readonly string s_fORBIDDEN_403_ERROR_MESSAGE = @"You do not have the required permissions to upload test results. This could be because
+
+    a. Reporting is not enabled for your workspace {workspaceId}. Enable the Reporting feature under Feature management settings using the Playwright portal: https://playwright.microsoft.com/workspaces/{workspaceId}/settings/general
+    b. You do not have the required roles on the workspace. Only Owner and Contributor roles can upload test results. Contact the service administrator.
+    c. The workspace you are trying to run the tests on is in a different Azure tenant than what you are signed into. Check the tenant id from Azure portal (https://aka.ms/mpt/find-tenant-id) and login using the command 'az login --tenant <TENANT_ID>.
+    ";
     internal static readonly string s_fORBIDDEN_403_ERROR_MESSAGE_KEY = "ReportingNotEnabled";
     internal static readonly string s_uNKNOWN_ERROR_MESSAGE = "Unknown error occured.";
 }
