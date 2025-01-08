@@ -26,8 +26,9 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="endOn"> The end time of the operation. </param>
         /// <param name="operations"> The operations list. </param>
         /// <param name="error"> If present, details of the operation error. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
         /// <returns> A new <see cref="Models.OperationStatusResult"/> instance for mocking. </returns>
-        public static OperationStatusResult OperationStatusResult(string id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null)
+        public static OperationStatusResult OperationStatusResult(ResourceIdentifier id = null, string name = null, string status = null, double? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResult> operations = null, ResponseError error = null, string resourceId = null)
         {
             operations ??= new List<OperationStatusResult>();
 
@@ -40,6 +41,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 endOn,
                 operations?.ToList(),
                 error,
+                resourceId,
                 serializedAdditionalRawData: null);
         }
 
