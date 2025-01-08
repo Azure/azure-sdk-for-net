@@ -35,6 +35,12 @@ public class ServiceEnvironmentVariable
     /// The environment variable for the Playwright service run ID.
     /// </summary>
     public static readonly string PlaywrightServiceRunId = "PLAYWRIGHT_SERVICE_RUN_ID";
+
+    /// <summary>
+    /// The environment variable for the Playwright service one time operation.
+    /// </summary>
+
+    public static readonly string OneTimeOperationFalg= "ONE_TIME_OPERATION_FLAG";
 };
 
 /// <summary>
@@ -223,6 +229,8 @@ internal class Constants
     internal static readonly string s_playwright_service_auth_type_environment_variable = "_MPT_AUTH_TYPE";
 
     internal static readonly string s_playwright_service_runName_truncated_warning = "WARNING: Run name exceeds the maximum limit of 200 characters and will be truncated.";
+    internal static readonly int s_sevenDaysInMs = 7 * 24 * 60 * 60 * 1000;
+    internal static readonly int s_oneDayInMs = 24 * 60 * 60 * 1000;
 }
 
 internal class OSConstants

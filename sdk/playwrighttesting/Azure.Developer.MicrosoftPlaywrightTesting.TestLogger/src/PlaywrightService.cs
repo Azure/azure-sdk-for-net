@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
@@ -41,7 +42,23 @@ public class PlaywrightService
             _serviceAuth = value;
         }
     }
+    /// <summary>
+    /// handles one time perform operation
+    /// </summary>
+    public  void PerformOneTimeOperation()
+    {
+        var oneTimeOperationFlag = Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.OneTimeOperationFalg) == "true";
 
+        if (oneTimeOperationFlag)
+            return;
+
+        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.OneTimeOperationFalg, "true");
+
+        if (ServiceAuth == ServiceAuthType.AccessToken)
+        {
+            WarnIfAccessTokenCloseToExpiry();
+        }
+    }
     /// <summary>
     /// Gets or sets the rotation timer for Playwright service.
     /// </summary>
@@ -138,6 +155,7 @@ public class PlaywrightService
     private readonly EntraLifecycle? _entraLifecycle;
     private readonly JsonWebTokenHandler? _jsonWebTokenHandler;
     private IFrameworkLogger? _frameworkLogger;
+    private ConsoleWriter? _consoleWriter;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PlaywrightService"/> class.
@@ -175,6 +193,7 @@ public class PlaywrightService
         _frameworkLogger = frameworkLogger;
         _entraLifecycle = new EntraLifecycle(tokenCredential: credential, frameworkLogger: _frameworkLogger);
         _jsonWebTokenHandler = new JsonWebTokenHandler();
+        _consoleWriter = new ConsoleWriter();
         InitializePlaywrightServiceEnvironmentVariables(GetServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
     }
 
@@ -186,6 +205,7 @@ public class PlaywrightService
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
         _entraLifecycle = entraLifecycle ?? new EntraLifecycle(credential, _jsonWebTokenHandler, _frameworkLogger);
         _frameworkLogger = frameworkLogger;
+        _consoleWriter = new ConsoleWriter();
         InitializePlaywrightServiceEnvironmentVariables(GetServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
     }
 
@@ -257,6 +277,7 @@ public class PlaywrightService
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, null);
             return;
         }
+        PerformOneTimeOperation();
         // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler
         if (ServiceAuth == ServiceAuthType.AccessToken)
         {
@@ -343,6 +364,34 @@ public class PlaywrightService
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork, Constants.s_default_expose_network);
         }
         SetReportingUrlAndWorkspaceId();
+    }
+    private void WarnIfAccessTokenCloseToExpiry()
+    {
+        string accessToken =  GetAuthToken()!;
+        if (string.IsNullOrEmpty(accessToken))
+            throw new Exception(Constants.s_no_auth_error);
+        JsonWebToken jsonWebToken = _jsonWebTokenHandler!.ReadJsonWebToken(accessToken) ?? throw new Exception(Constants.s_invalid_mpt_pat_error);
+        long currentTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        long exp = new DateTimeOffset(jsonWebToken.ValidTo).ToUnixTimeMilliseconds();
+        if (IsTokenExpiringSoon(exp, currentTime))
+        {
+            WarnAboutTokenExpiry(exp, currentTime);
+        }
+    }
+    internal static bool IsTokenExpiringSoon(long expirationTime, long currentTime)
+    {
+        return expirationTime - currentTime <= Constants.s_sevenDaysInMs;
+    }
+
+    internal void WarnAboutTokenExpiry(long expirationTime, long currentTime)
+    {
+        int daysToExpiration = (int)Math.Ceiling((expirationTime - currentTime) / (double)Constants.s_oneDayInMs);
+        string expirationDate = DateTimeOffset.FromUnixTimeMilliseconds(expirationTime).UtcDateTime.ToString("d");
+        string expirationWarning = $"Warning: The access token used for this test run will expire in {daysToExpiration} days on {expirationDate}. " +
+                                   "Generate a new token from the portal to avoid failures. " +
+                                   "For a simpler, more secure solution, switch to Microsoft Entra ID and eliminate token management. " +
+                                   "https://learn.microsoft.com/en-us/entra/identity/";
+        _consoleWriter?.WriteLine(expirationWarning);
     }
 
     internal static string GetDefaultRunId()
