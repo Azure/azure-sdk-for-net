@@ -101,7 +101,7 @@ internal class MemoryTransferCheckpointer : ITransferCheckpointer
         return Task.FromResult(Jobs.TryGetValue(transferId, out Job job) ? job.Parts.Count : 0);
     }
 
-    public virtual Task<TransferProperties> GetDataTransferPropertiesAsync(string transferId, CancellationToken cancellationToken = default)
+    public virtual Task<TransferProperties> GetTransferPropertiesAsync(string transferId, CancellationToken cancellationToken = default)
     {
         CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
         if (!Jobs.TryGetValue(transferId, out Job job))

@@ -20,17 +20,17 @@ namespace Azure.Storage.DataMovement.Tests
     /// an Assert.Failure in the middle of an event.
     ///
     /// Also if there's multiple failures then we will catch all of them.
-    /// Which would mainly occur during <see cref="DataTransferErrorMode.ContinueOnFailure"/>
+    /// Which would mainly occur during <see cref="TransferErrorMode.ContinueOnFailure"/>
     /// </summary>
     public class TestEventsRaised : IDisposable
     {
-        private static readonly TransferStatus InProgressStatus = new DataTransferStatusInternal(TransferState.InProgress, false, false);
-        private static readonly TransferStatus InProgressFailedStatus = new DataTransferStatusInternal(TransferState.InProgress, true, false);
-        private static readonly TransferStatus InProgressSkippedStatus = new DataTransferStatusInternal(TransferState.InProgress, false, true);
-        private static readonly TransferStatus StoppingFailedStatus = new DataTransferStatusInternal(TransferState.Stopping, true, false);
-        private static readonly TransferStatus SuccessfulCompletedStatus = new DataTransferStatusInternal(TransferState.Completed, false, false);
-        private static readonly TransferStatus SkippedCompletedStatus = new DataTransferStatusInternal(TransferState.Completed, false, true);
-        private static readonly TransferStatus FailedCompletedStatus = new DataTransferStatusInternal(TransferState.Completed, true, false);
+        private static readonly TransferStatus InProgressStatus = new TransferStatusInternal(TransferState.InProgress, false, false);
+        private static readonly TransferStatus InProgressFailedStatus = new TransferStatusInternal(TransferState.InProgress, true, false);
+        private static readonly TransferStatus InProgressSkippedStatus = new TransferStatusInternal(TransferState.InProgress, false, true);
+        private static readonly TransferStatus StoppingFailedStatus = new TransferStatusInternal(TransferState.Stopping, true, false);
+        private static readonly TransferStatus SuccessfulCompletedStatus = new TransferStatusInternal(TransferState.Completed, false, false);
+        private static readonly TransferStatus SkippedCompletedStatus = new TransferStatusInternal(TransferState.Completed, false, true);
+        private static readonly TransferStatus FailedCompletedStatus = new TransferStatusInternal(TransferState.Completed, true, false);
 
         public List<TransferStatusEventArgs> StatusEvents { get; internal set; }
         public ConcurrentBag<TransferItemFailedEventArgs> FailedEvents { get; internal set; }
@@ -237,7 +237,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <summary>
         /// This asserts that the expected events occurred during a container transfer that is expected
         /// to have a <see cref="TransferState.CompletedWithFailure"/> at the end without any skips.
-        /// Assuming <see cref="DataTransferErrorMode.StopOnAnyFailure"/> was set.
+        /// Assuming <see cref="TransferErrorMode.StopOnAnyFailure"/> was set.
         /// </summary>
         /// <param name="expectedFailureCount">
         /// Expected amount of failure single transfers to occur within the container transfers.
@@ -270,7 +270,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// <summary>
         /// This asserts that the expected events occurred during a container transfer that is expected
         /// to have a <see cref="TransferState.CompletedWithFailure"/> at the end without any skips.
-        /// Assuming <see cref="DataTransferErrorMode.ContinueOnFailure"/> was set.
+        /// Assuming <see cref="TransferErrorMode.ContinueOnFailure"/> was set.
         /// </summary>
         /// <param name="expectedFailureCount">
         /// Expected amount of failure single transfers to occur within the container transfers.
@@ -331,7 +331,7 @@ namespace Azure.Storage.DataMovement.Tests
             AssertTransferStatusCollection(
                 new TransferStatus[] {
                     InProgressStatus,
-                    new DataTransferStatusInternal(TransferState.Paused, false, false) },
+                    new TransferStatusInternal(TransferState.Paused, false, false) },
                 StatusEvents.Select(e => e.TransferStatus).ToArray());
         }
 

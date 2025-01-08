@@ -249,7 +249,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ErrorHandling = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -290,7 +290,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
-        public async Task TryPauseTransferAsync_DataTransfer(TransferDirection transferType)
+        public async Task TryPauseTransferAsync_TransferOperation(TransferDirection transferType)
         {
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
@@ -303,7 +303,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ErrorHandling = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferOptions transferOptions = new TransferOptions();
@@ -347,7 +347,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure
+                ErrorHandling = TransferErrorMode.ContinueOnFailure
             };
             TransferManager transferManager = new TransferManager(options);
 
@@ -373,7 +373,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ErrorHandling = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferOptions transferOptions = new TransferOptions();
@@ -433,7 +433,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ErrorHandling = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferOptions transferOptions = new TransferOptions();
@@ -513,7 +513,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ErrorHandling = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferOptions transferOptions = new TransferOptions();
@@ -588,7 +588,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ErrorHandling = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -834,7 +834,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ErrorHandling = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -871,7 +871,7 @@ namespace Azure.Storage.DataMovement.Tests
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
-        public async Task TryPauseTransferAsync_DataTransfer_Directory(TransferDirection transferType)
+        public async Task TryPauseTransferAsync_TransferOperation_Directory(TransferDirection transferType)
         {
             // Arrange
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
@@ -886,7 +886,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ErrorHandling = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -938,7 +938,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ErrorHandling = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -996,7 +996,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ErrorHandling = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -1084,7 +1084,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ErrorHandling = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -1179,7 +1179,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ErrorHandling = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -1255,7 +1255,7 @@ namespace Azure.Storage.DataMovement.Tests
                 {
                     unpausable.Add(transfer);
                 }
-                manager._dataTransfers.TryAdd(Guid.NewGuid().ToString(), transfer.Object);
+                manager._transfers.TryAdd(Guid.NewGuid().ToString(), transfer.Object);
             }
 
             await manager.PauseAllRunningTransfersAsync(_mockingToken);

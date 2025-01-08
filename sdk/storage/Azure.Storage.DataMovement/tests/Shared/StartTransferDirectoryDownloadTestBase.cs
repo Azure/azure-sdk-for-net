@@ -152,7 +152,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure
+                ErrorHandling = TransferErrorMode.ContinueOnFailure
             };
 
             StorageResourceContainer sourceResource = GetStorageResourceContainer(sourceContainer, sourcePrefix);
@@ -354,7 +354,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions transferManagerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = DataTransferErrorMode.StopOnAnyFailure,
+                ErrorHandling = TransferErrorMode.StopOnAnyFailure,
                 MaximumConcurrency = 3
             };
             TransferOptions options = new TransferOptions()

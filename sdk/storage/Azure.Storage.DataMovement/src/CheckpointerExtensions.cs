@@ -38,7 +38,7 @@ namespace Azure.Storage.DataMovement
             {
                 BinaryReader reader = new BinaryReader(stream);
                 JobPlanStatus jobPlanStatus = (JobPlanStatus)reader.ReadInt32();
-                return jobPlanStatus.ToDataTransferStatus();
+                return jobPlanStatus.ToTransferStatus();
             }
         }
 
@@ -53,7 +53,7 @@ namespace Azure.Storage.DataMovement
             return jobStatus.State != TransferState.Completed || jobStatus.HasFailedItems || jobStatus.HasSkippedItems;
         }
 
-        internal static async Task<TransferProperties> GetDataTransferPropertiesAsync(
+        internal static async Task<TransferProperties> GetTransferPropertiesAsync(
             this SerializerTransferCheckpointer checkpointer,
             string transferId,
             CancellationToken cancellationToken)

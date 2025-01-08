@@ -144,7 +144,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure
+                ErrorHandling = TransferErrorMode.ContinueOnFailure
             };
 
             StorageResourceContainer sourceResource = LocalResourceProvider.FromDirectory(sourceLocalDirectoryPath);
@@ -197,9 +197,9 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [RecordedTest]
-        [TestCase(DataTransferErrorMode.ContinueOnFailure)]
-        [TestCase(DataTransferErrorMode.StopOnAnyFailure)]
-        public async Task UploadFailIfExists(DataTransferErrorMode errorMode)
+        [TestCase(TransferErrorMode.ContinueOnFailure)]
+        [TestCase(TransferErrorMode.StopOnAnyFailure)]
+        public async Task UploadFailIfExists(TransferErrorMode errorMode)
         {
             const int waitTimeInSec = 15;
             const int preexistingFileCount = 2;
@@ -232,7 +232,7 @@ namespace Azure.Storage.DataMovement.Tests
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             TransferManagerOptions transferManagerOptions = new()
             {
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure
+                ErrorHandling = TransferErrorMode.ContinueOnFailure
             };
 
             StorageResourceContainer sourceResource = LocalResourceProvider.FromDirectory(disposingLocalDirectory.DirectoryPath);
@@ -245,7 +245,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken);
 
             // check if expected files exist, but not necessarily for contents
-            if (errorMode == DataTransferErrorMode.ContinueOnFailure)
+            if (errorMode == TransferErrorMode.ContinueOnFailure)
             {
                 await testEventsRaised.AssertContainerCompletedWithFailedCheckContinue(preexistingFileCount);
 
@@ -260,7 +260,7 @@ namespace Azure.Storage.DataMovement.Tests
                     .ToList();
                 Assert.That(localFiles, Is.EquivalentTo(destinationObjects));
             }
-            else if (errorMode == DataTransferErrorMode.StopOnAnyFailure)
+            else if (errorMode == TransferErrorMode.StopOnAnyFailure)
             {
                 Assert.That(transfer.Status.HasFailedItems, Is.True);
             }
@@ -301,7 +301,7 @@ namespace Azure.Storage.DataMovement.Tests
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             TransferManagerOptions transferManagerOptions = new()
             {
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure
+                ErrorHandling = TransferErrorMode.ContinueOnFailure
             };
 
             StorageResourceContainer sourceResource = LocalResourceProvider.FromDirectory(disposingLocalDirectory.DirectoryPath);

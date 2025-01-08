@@ -210,7 +210,7 @@ namespace Azure.Storage.DataMovement.Tests
             public readonly StorageResourceItem DestinationResource;
             public readonly TDestinationObjectClient DestinationClient;
             public TestEventsRaised testEventsRaised;
-            public TransferOperation DataTransfer;
+            public TransferOperation TransferOperation;
             public bool CompletedStatus;
 
             public VerifyObjectCopyFromUriInfo(
@@ -229,7 +229,7 @@ namespace Azure.Storage.DataMovement.Tests
                 DestinationClient = destinationClient;
                 testEventsRaised = eventsRaised;
                 CompletedStatus = completed;
-                DataTransfer = default;
+                TransferOperation = default;
             }
         };
         #region Copy RemoteObject
@@ -291,7 +291,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure
+                ErrorHandling = TransferErrorMode.ContinueOnFailure
             };
 
             List<VerifyObjectCopyFromUriInfo> copyObjectInfo = new List<VerifyObjectCopyFromUriInfo>(objectCount);
@@ -337,20 +337,20 @@ namespace Azure.Storage.DataMovement.Tests
                     copyObjectInfo[i].SourceResource,
                     copyObjectInfo[i].DestinationResource,
                     options[i]).ConfigureAwait(false);
-                copyObjectInfo[i].DataTransfer = transfer;
+                copyObjectInfo[i].TransferOperation = transfer;
             }
 
             for (int i = 0; i < copyObjectInfo.Count; i++)
             {
                 // Assert
-                Assert.NotNull(copyObjectInfo[i].DataTransfer);
+                Assert.NotNull(copyObjectInfo[i].TransferOperation);
                 CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
                 await TestTransferWithTimeout.WaitForCompletionAsync(
-                    copyObjectInfo[i].DataTransfer,
+                    copyObjectInfo[i].TransferOperation,
                     copyObjectInfo[i].testEventsRaised,
                     tokenSource.Token);
-                Assert.IsTrue(copyObjectInfo[i].DataTransfer.HasCompleted);
-                Assert.AreEqual(TransferState.Completed, copyObjectInfo[i].DataTransfer.Status.State);
+                Assert.IsTrue(copyObjectInfo[i].TransferOperation.HasCompleted);
+                Assert.AreEqual(TransferState.Completed, copyObjectInfo[i].TransferOperation.Status.State);
 
                 // Verify Copy - using original source File and Copying the destination
                 await copyObjectInfo[i].testEventsRaised.AssertSingleCompletedCheck();

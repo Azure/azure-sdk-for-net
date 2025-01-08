@@ -118,7 +118,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 ServiceToServiceJobPart.CreateJobPartAsync,
                 new TransferOptions(),
                 checkpointer,
-                DataTransferErrorMode.StopOnAnyFailure,
+                TransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
                 new ClientDiagnostics(ClientOptions.Default));
 
@@ -174,7 +174,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 ServiceToServiceJobPart.CreateJobPartAsync,
                 new TransferOptions(),
                 checkpointer,
-                DataTransferErrorMode.StopOnAnyFailure,
+                TransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
                 new ClientDiagnostics(ClientOptions.Default));
 

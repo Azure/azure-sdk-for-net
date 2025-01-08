@@ -248,7 +248,7 @@ namespace Azure.Storage.DataMovement.JobPlan
 
             // JobPartStatus
             JobPlanStatus jobPlanStatus = (JobPlanStatus)reader.ReadInt32();
-            TransferStatus jobPartStatus = jobPlanStatus.ToDataTransferStatus();
+            TransferStatus jobPartStatus = jobPlanStatus.ToTransferStatus();
 
             // SourcePath
             string sourcePath = null;

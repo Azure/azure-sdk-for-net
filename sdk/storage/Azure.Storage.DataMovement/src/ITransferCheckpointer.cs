@@ -55,7 +55,7 @@ namespace Azure.Storage.DataMovement
             TransferStatus status,
             CancellationToken cancellationToken = default);
 
-        Task<TransferProperties> GetDataTransferPropertiesAsync(
+        Task<TransferProperties> GetTransferPropertiesAsync(
             string transferId,
             CancellationToken cancellationToken = default);
 

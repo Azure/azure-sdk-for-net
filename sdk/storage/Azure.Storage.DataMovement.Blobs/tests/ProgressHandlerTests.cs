@@ -123,7 +123,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure
+                ErrorHandling = TransferErrorMode.ContinueOnFailure
             };
 
             TransferManager transferManager = new TransferManager(transferManagerOptions);
@@ -279,7 +279,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             TransferManagerOptions transferManagerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = DataTransferErrorMode.StopOnAnyFailure,
+                ErrorHandling = TransferErrorMode.StopOnAnyFailure,
                 MaximumConcurrency = 3
             };
             TransferOptions transferOptions = new TransferOptions()

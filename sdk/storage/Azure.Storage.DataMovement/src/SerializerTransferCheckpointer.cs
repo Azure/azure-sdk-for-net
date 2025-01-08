@@ -193,8 +193,8 @@ namespace Azure.Storage.DataMovement
         Task<TransferStatus> ITransferCheckpointer.GetJobStatusAsync(string transferId, CancellationToken cancellationToken)
             => CheckpointerExtensions.GetJobStatusAsync(this, transferId, cancellationToken);
 
-        Task<TransferProperties> ITransferCheckpointer.GetDataTransferPropertiesAsync(string transferId, CancellationToken cancellationToken)
-            => CheckpointerExtensions.GetDataTransferPropertiesAsync(this, transferId, cancellationToken);
+        Task<TransferProperties> ITransferCheckpointer.GetTransferPropertiesAsync(string transferId, CancellationToken cancellationToken)
+            => CheckpointerExtensions.GetTransferPropertiesAsync(this, transferId, cancellationToken);
 
         async Task<JobPartPlanHeader> ITransferCheckpointer.GetJobPartAsync(string transferId, int partNumber, CancellationToken cancellationToken)
         {

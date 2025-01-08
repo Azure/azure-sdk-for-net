@@ -36,7 +36,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// The transfer is in progress and is in the process of being stopped.
         ///
-        /// Transfer can be stopped if <see cref="DataTransferErrorMode.StopOnAnyFailure"/> is
+        /// Transfer can be stopped if <see cref="TransferErrorMode.StopOnAnyFailure"/> is
         /// enabled in the <see cref="TransferManagerOptions.ErrorHandling"/>.
         /// </summary>
         Stopping = 4,

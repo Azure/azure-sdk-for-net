@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement
             return jobPlanStatus;
         }
 
-        internal static TransferStatus ToDataTransferStatus(this JobPlanStatus jobPlanStatus)
+        internal static TransferStatus ToTransferStatus(this JobPlanStatus jobPlanStatus)
         {
             TransferState state;
             if (jobPlanStatus.HasFlag(JobPlanStatus.Queued))

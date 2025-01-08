@@ -323,7 +323,7 @@ namespace Azure.Storage.DataMovement.JobPlan
                 destProviderId,
                 isContainer,
                 enumerationComplete,
-                jobPlanStatus.ToDataTransferStatus(),
+                jobPlanStatus.ToTransferStatus(),
                 parentSourcePath,
                 parentDestinationPath,
                 sourceCheckpointData,

@@ -24,10 +24,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         public int PartNumber;
 
-        /// <summary>
-        /// DataTransfer object that communicates when the transfer completes and it's current progress.
-        /// </summary>
-        internal TransferOperation _dataTransfer { get; set; }
+        internal TransferOperation _transferOperation { get; set; }
 
         /// <summary>
         /// Cancellation Token Source
@@ -58,7 +55,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Specifies the options for error handling.
         /// </summary>
-        internal DataTransferErrorMode _errorHandling;
+        internal TransferErrorMode _errorHandling;
 
         /// <summary>
         /// Determines how files are created and overwrite behavior for files that already exists.
@@ -142,13 +139,13 @@ namespace Azure.Storage.DataMovement
         protected JobPartInternal() { }
 
         internal JobPartInternal(
-            TransferOperation dataTransfer,
+            TransferOperation transferOperation,
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
             long? transferChunkSize,
             long? initialTransferSize,
-            DataTransferErrorMode errorHandling,
+            TransferErrorMode errorHandling,
             StorageResourceCreationPreference createMode,
             ITransferCheckpointer checkpointer,
             TransferProgressTracker progressTracker,
@@ -168,7 +165,7 @@ namespace Azure.Storage.DataMovement
             // if default is passed, the job part status will be queued
             JobPartStatus = jobPartStatus ?? new TransferStatus();
             PartNumber = partNumber;
-            _dataTransfer = dataTransfer;
+            _transferOperation = transferOperation;
             _sourceResource = sourceResource;
             _destinationResource = destinationResource;
             _errorHandling = errorHandling;
@@ -259,7 +256,7 @@ namespace Azure.Storage.DataMovement
         internal async Task TriggerCancellationAsync()
         {
             // Set the status to Pause/CancellationInProgress
-            if (TransferState.Pausing == _dataTransfer.Status.State)
+            if (TransferState.Pausing == _transferOperation.Status.State)
             {
                 // It's possible that the status hasn't propagated down to the job part
                 // status yet here since we pause from the data transfer object.
@@ -297,7 +294,7 @@ namespace Azure.Storage.DataMovement
 
                 await PartTransferStatusEventHandler.RaiseAsync(
                     new JobPartStatusEventArgs(
-                        _dataTransfer.Id,
+                        _transferOperation.Id,
                         PartNumber,
                         JobPartStatus.DeepCopy(),
                         false,
@@ -320,7 +317,7 @@ namespace Azure.Storage.DataMovement
             {
                 await SingleTransferCompletedEventHandler.RaiseAsync(
                     new TransferItemCompletedEventArgs(
-                        _dataTransfer.Id,
+                        _transferOperation.Id,
                         _sourceResource,
                         _destinationResource,
                         false,
@@ -342,7 +339,7 @@ namespace Azure.Storage.DataMovement
                 // TODO: change to RaiseAsync
                 await TransferSkippedEventHandler.RaiseAsync(
                     new TransferItemSkippedEventArgs(
-                        _dataTransfer.Id,
+                        _transferOperation.Id,
                         _sourceResource,
                         _destinationResource,
                         false,
@@ -360,7 +357,7 @@ namespace Azure.Storage.DataMovement
             {
                 await PartTransferStatusEventHandler.RaiseAsync(
                     new JobPartStatusEventArgs(
-                        _dataTransfer.Id,
+                        _transferOperation.Id,
                         PartNumber,
                         JobPartStatus.DeepCopy(),
                         false,
@@ -398,7 +395,7 @@ namespace Azure.Storage.DataMovement
                 {
                     await TransferFailedEventHandler.RaiseAsync(
                         new TransferItemFailedEventArgs(
-                            _dataTransfer.Id,
+                            _transferOperation.Id,
                             _sourceResource,
                             _destinationResource,
                             ex,
@@ -417,7 +414,7 @@ namespace Azure.Storage.DataMovement
                 {
                     await PartTransferStatusEventHandler.RaiseAsync(
                         new JobPartStatusEventArgs(
-                            _dataTransfer.Id,
+                            _transferOperation.Id,
                             PartNumber,
                             JobPartStatus.DeepCopy(),
                             false,
@@ -444,7 +441,7 @@ namespace Azure.Storage.DataMovement
                 // raise the failed event and prevent the transfer from hanging
                 await TransferFailedEventHandler.RaiseAsync(
                     new TransferItemFailedEventArgs(
-                        _dataTransfer.Id,
+                        _transferOperation.Id,
                         _sourceResource,
                         _destinationResource,
                         cancellationException,
@@ -469,7 +466,7 @@ namespace Azure.Storage.DataMovement
                 // raise the failed event and prevent the transfer from hanging
                 await TransferFailedEventHandler.RaiseAsync(
                     new TransferItemFailedEventArgs(
-                        _dataTransfer.Id,
+                        _transferOperation.Id,
                         _sourceResource,
                         _destinationResource,
                         checkUpdateException,
@@ -520,7 +517,7 @@ namespace Azure.Storage.DataMovement
         public async virtual Task AddJobPartToCheckpointerAsync()
         {
             await _checkpointer.AddNewJobPartAsync(
-                transferId: _dataTransfer.Id,
+                transferId: _transferOperation.Id,
                 partNumber: PartNumber,
                 header: this.ToJobPartPlanHeader(),
                 cancellationToken: _cancellationToken).ConfigureAwait(false);
@@ -529,7 +526,7 @@ namespace Azure.Storage.DataMovement
         internal async virtual Task SetCheckpointerStatusAsync()
         {
             await _checkpointer.SetJobPartStatusAsync(
-                transferId: _dataTransfer.Id,
+                transferId: _transferOperation.Id,
                 partNumber: PartNumber,
                 status: JobPartStatus).ConfigureAwait(false);
         }
@@ -633,12 +630,12 @@ namespace Azure.Storage.DataMovement
         internal async Task<bool> CheckTransferStateBeforeRunning()
         {
             // If the main transfer has been stopped, do not process this part.
-            if (_dataTransfer.Status.State == TransferState.Pausing)
+            if (_transferOperation.Status.State == TransferState.Pausing)
             {
                 await OnTransferStateChangedAsync(TransferState.Paused).ConfigureAwait(false);
                 return false;
             }
-            else if (_dataTransfer.Status.State == TransferState.Stopping)
+            else if (_transferOperation.Status.State == TransferState.Stopping)
             {
                 await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
                 return false;

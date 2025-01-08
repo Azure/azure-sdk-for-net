@@ -785,7 +785,7 @@ namespace Azure.Storage.DataMovement.Tests
                 BinaryReader reader = new BinaryReader(stream);
                 JobPlanStatus jobPlanStatus = (JobPlanStatus)reader.ReadInt32();
 
-                Assert.That(jobPlanStatus.ToDataTransferStatus(), Is.EqualTo(newStatus));
+                Assert.That(jobPlanStatus.ToTransferStatus(), Is.EqualTo(newStatus));
             }
         }
 

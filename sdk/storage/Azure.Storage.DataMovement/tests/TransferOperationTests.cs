@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    public class DataTransferTests
+    public class TransferOperationTests
     {
         private static string GetNewTransferId() => Guid.NewGuid().ToString();
         private static TransferStatus QueuedStatus => new TransferStatus(TransferState.Queued, false, false);

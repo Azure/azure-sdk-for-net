@@ -167,7 +167,7 @@ namespace Azure.Storage.DataMovement.Tests
                 StreamToUriJobPart.CreateJobPartAsync,
                 new TransferOptions(),
                 checkpointer,
-                DataTransferErrorMode.StopOnAnyFailure,
+                TransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
                 new ClientDiagnostics(ClientOptions.Default));
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
@@ -274,7 +274,7 @@ namespace Azure.Storage.DataMovement.Tests
                 StreamToUriJobPart.CreateJobPartAsync,
                 new TransferOptions(),
                 checkpointer,
-                DataTransferErrorMode.StopOnAnyFailure,
+                TransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
                 new ClientDiagnostics(ClientOptions.Default));
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(

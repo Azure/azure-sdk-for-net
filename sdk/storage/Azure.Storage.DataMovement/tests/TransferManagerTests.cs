@@ -572,7 +572,7 @@ public class TransferManagerTests
     }
 
     /// <summary>
-    /// DataTransferStatus is stateful across transfer. This makes it difficult to verify mocks, as verifications
+    /// <see cref="TransferStatus"/> is stateful across transfer. This makes it difficult to verify mocks, as verifications
     /// are lazily performed. This captures deep copies of statuses for custom assertion.
     /// </summary>
     private static TransferStatus CaptureTransferStatus(ICollection<TransferStatus> statuses)

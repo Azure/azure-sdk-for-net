@@ -38,9 +38,9 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Optional. Sets the way errors during a transfer will be handled.
-        /// Default is <see cref="DataTransferErrorMode.StopOnAnyFailure"/>.
+        /// Default is <see cref="TransferErrorMode.StopOnAnyFailure"/>.
         /// </summary>
-        public DataTransferErrorMode ErrorHandling { get; set; }
+        public TransferErrorMode ErrorHandling { get; set; }
 
         /// <summary>
         /// The maximum number of workers that may be used in a parallel transfer.

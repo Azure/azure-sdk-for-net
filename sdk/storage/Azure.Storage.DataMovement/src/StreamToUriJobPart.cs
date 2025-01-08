@@ -26,7 +26,7 @@ namespace Azure.Storage.DataMovement
         /// Creating job part based on a single transfer job
         /// </summary>
         private StreamToUriJobPart(TransferJobInternal job, int partNumber)
-            : base(dataTransfer: job._dataTransfer,
+            : base(transferOperation: job._transferOperation,
                   partNumber: partNumber,
                   sourceResource: job._sourceResource,
                   destinationResource: job._destinationResource,
@@ -56,7 +56,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
             long? length = default)
-            : base(dataTransfer: job._dataTransfer,
+            : base(transferOperation: job._transferOperation,
                   partNumber: partNumber,
                   sourceResource: sourceResource,
                   destinationResource: destinationResource,
@@ -91,7 +91,7 @@ namespace Azure.Storage.DataMovement
             long initialTransferSize,
             long transferChunkSize,
             StorageResourceCreationPreference createPreference)
-            : base(dataTransfer: job._dataTransfer,
+            : base(transferOperation: job._transferOperation,
                   partNumber: partNumber,
                   sourceResource: sourceResource,
                   destinationResource: destinationResource,

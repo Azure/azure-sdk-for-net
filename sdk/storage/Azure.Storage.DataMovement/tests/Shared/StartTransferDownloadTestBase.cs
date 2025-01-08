@@ -372,7 +372,7 @@ namespace Azure.Storage.DataMovement.Tests
             public readonly TObjectClient SourceObjectClient;
             public readonly string DestinationLocalPath;
             public TestEventsRaised EventsRaised;
-            public TransferOperation DataTransfer;
+            public TransferOperation TransferOperation;
             public bool CompletedStatus;
 
             public VerifyDownloadObjectContentInfo(
@@ -385,7 +385,7 @@ namespace Azure.Storage.DataMovement.Tests
                 DestinationLocalPath = destinationFile;
                 EventsRaised = eventsRaised;
                 CompletedStatus = completed;
-                DataTransfer = default;
+                TransferOperation = default;
             }
         };
 
@@ -430,7 +430,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure
+                ErrorHandling = TransferErrorMode.ContinueOnFailure
             };
 
             List<VerifyDownloadObjectContentInfo> downloadedObjectInfo = new List<VerifyDownloadObjectContentInfo>(objectCount);
@@ -476,23 +476,23 @@ namespace Azure.Storage.DataMovement.Tests
                     destinationResource,
                     options[i]).ConfigureAwait(false);
 
-                downloadedObjectInfo[i].DataTransfer = transfer;
+                downloadedObjectInfo[i].TransferOperation = transfer;
             }
 
             for (int i = 0; i < downloadedObjectInfo.Count; i++)
             {
                 // Assert
-                Assert.NotNull(downloadedObjectInfo[i].DataTransfer);
+                Assert.NotNull(downloadedObjectInfo[i].TransferOperation);
                 CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
                 await TestTransferWithTimeout.WaitForCompletionAsync(
-                    downloadedObjectInfo[i].DataTransfer,
+                    downloadedObjectInfo[i].TransferOperation,
                     downloadedObjectInfo[i].EventsRaised,
                     tokenSource.Token);
-                Assert.IsTrue(downloadedObjectInfo[i].DataTransfer.HasCompleted);
+                Assert.IsTrue(downloadedObjectInfo[i].TransferOperation.HasCompleted);
 
                 // Verify Download
                 await downloadedObjectInfo[i].EventsRaised.AssertSingleCompletedCheck();
-                Assert.AreEqual(TransferState.Completed, downloadedObjectInfo[i].DataTransfer.Status.State);
+                Assert.AreEqual(TransferState.Completed, downloadedObjectInfo[i].TransferOperation.Status.State);
                 using Stream stream = await OpenReadAsync(downloadedObjectInfo[i].SourceObjectClient);
                 using FileStream fileStream = File.OpenRead(downloadedObjectInfo[i].DestinationLocalPath);
                 Assert.AreEqual(stream, fileStream);
@@ -786,7 +786,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ErrorHandling = TransferErrorMode.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 
@@ -819,7 +819,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ErrorHandling = TransferErrorMode.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 

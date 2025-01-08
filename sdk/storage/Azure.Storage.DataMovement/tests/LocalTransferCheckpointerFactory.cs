@@ -42,14 +42,14 @@ namespace Azure.Storage.DataMovement.Tests
             return new LocalTransferCheckpointer(_checkpointerPath);
         }
 
-        public LocalTransferCheckpointer BuildCheckpointer(List<TransferOperation> dataTransfers)
+        public LocalTransferCheckpointer BuildCheckpointer(List<TransferOperation> transfers)
         {
-            foreach (TransferOperation dataTransfer in dataTransfers)
+            foreach (TransferOperation transfer in transfers)
             {
-                CreateStubJobPlanFile(_checkpointerPath, dataTransfer.Id, status: dataTransfer.Status);
+                CreateStubJobPlanFile(_checkpointerPath, transfer.Id, status: transfer.Status);
                 CreateStubJobPartPlanFilesAsync(
                     checkpointerPath: _checkpointerPath,
-                    transferId: dataTransfer.Id,
+                    transferId: transfer.Id,
                     jobPartCount: _partCountDefault,
                     status: new TransferStatus(TransferState.Paused, false, false));
             }

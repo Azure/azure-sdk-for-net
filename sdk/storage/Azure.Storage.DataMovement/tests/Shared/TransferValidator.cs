@@ -23,7 +23,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         public TransferManager TransferManager { get; init; } = new(new TransferManagerOptions()
         {
-            ErrorHandling = DataTransferErrorMode.ContinueOnFailure
+            ErrorHandling = TransferErrorMode.ContinueOnFailure
         });
 
         public async Task TransferAndVerifyAsync(

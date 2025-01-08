@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement
     public class TransferOperation
     {
         /// <summary>
-        /// Defines whether the DataTransfer has completed.
+        /// Defines whether the transfer has completed.
         /// </summary>
         public bool HasCompleted => _state.HasCompleted;
 
@@ -25,7 +25,7 @@ namespace Azure.Storage.DataMovement
         public TransferStatus Status => _state.Status;
 
         /// <summary>
-        /// DataTransfer Identification.
+        /// Transfer id.
         /// </summary>
         public string Id => _state.Id;
 
@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Constructing a DataTransfer object.
+        /// Constructing a TransferOperation object.
         /// </summary>
         /// <param name="id">The transfer ID of the transfer object.</param>
         /// <param name="status">The Transfer Status of the Transfer. See <see cref="TransferStatus"/>.</param>
@@ -61,7 +61,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Ensures completion of the DataTransfer and attempts to get result
+        /// Ensures completion of the TransferOperation and attempts to get result
         /// </summary>
         public void WaitForCompletion(CancellationToken cancellationToken = default)
         {

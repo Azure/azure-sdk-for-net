@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System.Collections.Generic;
-using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement.JobPlan;
@@ -26,9 +25,9 @@ namespace Azure.Storage.DataMovement
             return Task.FromResult(0);
         }
 
-        public Task<TransferProperties> GetDataTransferPropertiesAsync(string transferId, CancellationToken cancellationToken = default)
+        public Task<TransferProperties> GetTransferPropertiesAsync(string transferId, CancellationToken cancellationToken = default)
         {
-            throw Errors.CheckpointerDisabled(nameof(GetDataTransferPropertiesAsync));
+            throw Errors.CheckpointerDisabled(nameof(GetTransferPropertiesAsync));
         }
 
         public Task<JobPartPlanHeader> GetJobPartAsync(string transferId, int partNumber, CancellationToken cancellationToken = default)
