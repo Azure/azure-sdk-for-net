@@ -40,7 +40,7 @@ namespace Azure.Developer.LoadTesting
             try
             {
                 Response initialResponse = UploadTestFile(testId, fileName, content, fileType, context);
-                FileUploadResultOperation operation = new(testId, fileName, this, Response.FromValue(TestFileInfo.FromResponse(initialResponse), initialResponse));
+                FileUploadResultOperation operation = new(testId, fileName, this, initialResponse);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion((TimeSpan)timeSpan, cancellationToken: default);
@@ -83,7 +83,7 @@ namespace Azure.Developer.LoadTesting
             try
             {
                 Response initialResponse = await UploadTestFileAsync(testId, fileName, content, fileType, context).ConfigureAwait(false);
-                FileUploadResultOperation operation = new(testId, fileName, this, Response.FromValue(TestFileInfo.FromResponse(initialResponse), initialResponse));
+                FileUploadResultOperation operation = new(testId, fileName, this, initialResponse);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync((TimeSpan)timeSpan, cancellationToken: default).ConfigureAwait(false);

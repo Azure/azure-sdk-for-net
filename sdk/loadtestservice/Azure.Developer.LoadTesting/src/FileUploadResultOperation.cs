@@ -5,20 +5,23 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Developer.LoadTesting.Models;
+using Azure.Core;
 
 namespace Azure.Developer.LoadTesting
 {
     /// <summary>
     /// FileUploadResultOperation.
     /// </summary>
-    public class FileUploadResultOperation : Operation<TestFileInfo>
+    public class FileUploadResultOperation : Operation<BinaryData>
     {
         private bool _completed;
-        private Response<TestFileInfo> _response;
-        private TestFileInfo _value;
+        private Response _response;
+        private BinaryData _value;
         private readonly string _testId;
         private readonly string _fileName;
         private readonly LoadTestAdministrationClient _client;
@@ -33,7 +36,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary>
         /// Value.
         /// </summary>
-        public override TestFileInfo Value
+        public override BinaryData Value
         {
             get
             {
@@ -71,7 +74,7 @@ namespace Azure.Developer.LoadTesting
         /// <summary>
         /// FileUploadOperation.
         /// </summary>
-        public FileUploadResultOperation(string testId, string fileName, LoadTestAdministrationClient client, Response<TestFileInfo> initialResponse = null)
+        public FileUploadResultOperation(string testId, string fileName, LoadTestAdministrationClient client, Response initialResponse = null)
         {
             _testId = testId;
             _fileName = fileName;
@@ -81,7 +84,7 @@ namespace Azure.Developer.LoadTesting
             if (initialResponse != null)
             {
                 _response = initialResponse;
-                _value = _response.Value;
+                _value = _response.Content;
                 GetCompletionResponse();
             }
         }
@@ -91,7 +94,7 @@ namespace Azure.Developer.LoadTesting
         /// </summary>
         public override Response GetRawResponse()
         {
-            return _response.GetRawResponse();
+            return _response;
         }
 
         /// <summary>
@@ -104,8 +107,8 @@ namespace Azure.Developer.LoadTesting
                 return GetRawResponse();
             }
 
-            _response = _client.GetTestFile(_testId, _fileName);
-            _value = _response.Value;
+            _response = _client.GetTestFile(_testId, _fileName).GetRawResponse();
+            _value = _response.Content;
 
             return GetCompletionResponse();
         }
@@ -122,12 +125,13 @@ namespace Azure.Developer.LoadTesting
 
             try
             {
-                _response = await _client.GetTestFileAsync(_testId, _fileName).ConfigureAwait(false);
-                _value = _response.Value;
+                var initialResponse = await _client.GetTestFileAsync(_testId, _fileName).ConfigureAwait(false);
+                _response = initialResponse.GetRawResponse();
+                _value = _response.Content;
             }
             catch
             {
-                throw new RequestFailedException(_response.GetRawResponse());
+                throw new RequestFailedException(_response);
             }
 
             return GetCompletionResponse();
@@ -135,7 +139,26 @@ namespace Azure.Developer.LoadTesting
 
         private Response GetCompletionResponse()
         {
-            string fileValidationStatus = _value.ValidationStatus.ToString();
+            string fileValidationStatus;
+            JsonDocument jsonDocument;
+
+            try
+            {
+                jsonDocument = JsonDocument.Parse(_value.ToMemory());
+            }
+            catch (Exception e)
+            {
+                throw new RequestFailedException("Unable to parse JOSN " + e.Message);
+            }
+
+            try
+            {
+                fileValidationStatus = jsonDocument.RootElement.GetProperty("validationStatus").GetString();
+            }
+            catch
+            {
+                throw new RequestFailedException("No property validationStatus in response JSON: " + _value.ToString());
+            }
 
             if (_terminalStatus.Contains(fileValidationStatus))
             {
