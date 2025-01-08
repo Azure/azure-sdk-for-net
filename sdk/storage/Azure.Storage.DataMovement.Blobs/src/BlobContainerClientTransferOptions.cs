@@ -20,6 +20,6 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Options pertaining to the data tranfer.
         /// </summary>
-        public DataTransferOptions TransferOptions { get; set; }
+        public TransferOptions TransferOptions { get; set; }
     }
 }

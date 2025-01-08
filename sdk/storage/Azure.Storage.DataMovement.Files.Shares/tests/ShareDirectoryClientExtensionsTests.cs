@@ -29,7 +29,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ExtensionMockTransferManager.Setup(tm => tm.StartTransferAsync(
                 It.IsAny<StorageResource>(),
                 It.IsAny<StorageResource>(),
-                It.IsAny<DataTransferOptions>(),
+                It.IsAny<TransferOptions>(),
                 It.IsAny<CancellationToken>()));
 
             _backupTransferManagerValue = (Lazy<TransferManager>)typeof(Storage.Files.Shares.ShareDirectoryClientExtensions)
@@ -51,7 +51,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         public async Task StartUploadDirectory([Values(true, false)] bool useOptions)
         {
             ShareFileStorageResourceOptions storageResourceOptions = new();
-            DataTransferOptions dataTransferOptions = new();
+            TransferOptions dataTransferOptions = new();
             ShareDirectoryClientTransferOptions transferOptions = new()
             {
                 ShareDirectoryOptions = storageResourceOptions,
@@ -76,7 +76,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         public async Task StartDownloadDirectory([Values(true, false)] bool useOptions)
         {
             ShareFileStorageResourceOptions storageResourceOptions = new();
-            DataTransferOptions dataTransferOptions = new();
+            TransferOptions dataTransferOptions = new();
             ShareDirectoryClientTransferOptions transferOptions = new()
             {
                 ShareDirectoryOptions = storageResourceOptions,

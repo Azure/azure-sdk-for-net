@@ -1,16 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
     /// Defines the recommended Transfer Type of the <see cref="StorageResourceItem"/>.
     /// </summary>
-    public enum DataTransferOrder
+    public enum TransferOrder
     {
         /// <summary>
         /// Recommended Transfer type is unordered transfer for each chunk.

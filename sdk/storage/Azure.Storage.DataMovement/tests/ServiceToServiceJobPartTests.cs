@@ -147,12 +147,12 @@ namespace Azure.Storage.DataMovement.Tests
             Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = GetPartQueueChunkTask();
 
             TransferJobInternal job = new(
-                new DataTransfer(id: transferId),
+                new TransferOperation(id: transferId),
                 mockSource.Object,
                 mockDestination.Object,
                 ServiceToServiceJobPart.CreateJobPartAsync,
                 ServiceToServiceJobPart.CreateJobPartAsync,
-                new DataTransferOptions(),
+                new TransferOptions(),
                 checkpointer,
                 DataTransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
@@ -217,12 +217,12 @@ namespace Azure.Storage.DataMovement.Tests
             Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = GetPartQueueChunkTask();
 
             TransferJobInternal job = new(
-                new DataTransfer(id: transferId),
+                new TransferOperation(id: transferId),
                 mockSource.Object,
                 mockDestination.Object,
                 ServiceToServiceJobPart.CreateJobPartAsync,
                 ServiceToServiceJobPart.CreateJobPartAsync,
-                new DataTransferOptions(),
+                new TransferOptions(),
                 checkpointer,
                 DataTransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,

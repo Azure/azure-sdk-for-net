@@ -19,7 +19,7 @@ namespace Azure.Storage.DataMovement.Tests
             _options = options;
         }
 
-        public TransferManager BuildTransferManager(List<DataTransfer> dataTransfers = default)
+        public TransferManager BuildTransferManager(List<TransferOperation> dataTransfers = default)
         {
             if (dataTransfers != default)
             {

@@ -10,7 +10,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Event Argument for a change in the Transfer Status
     /// </summary>
-    public class TransferItemSkippedEventArgs : DataTransferEventArgs
+    public class TransferItemSkippedEventArgs : TransferEventArgs
     {
         /// <summary>
         /// Gets the <see cref="StorageResourceItem"/> that was the source resource for the transfer.

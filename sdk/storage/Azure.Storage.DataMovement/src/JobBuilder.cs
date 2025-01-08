@@ -41,16 +41,16 @@ internal class JobBuilder
         ClientDiagnostics = clientDiagnostics;
     }
 
-    public virtual async Task<(DataTransfer Transfer, TransferJobInternal TransferInternal)> BuildJobAsync(
+    public virtual async Task<(TransferOperation Transfer, TransferJobInternal TransferInternal)> BuildJobAsync(
         StorageResource sourceResource,
         StorageResource destinationResource,
-        DataTransferOptions transferOptions,
+        TransferOptions transferOptions,
         ITransferCheckpointer checkpointer,
         string transferId,
         bool resumeJob,
         CancellationToken cancellationToken)
     {
-        DataTransfer dataTransfer = new(id: transferId);
+        TransferOperation dataTransfer = new(id: transferId);
         TransferJobInternal transferJobInternal;
 
         // Single transfer
@@ -91,9 +91,9 @@ internal class JobBuilder
     private async Task<TransferJobInternal> BuildSingleTransferJob(
         StorageResourceItem sourceResource,
         StorageResourceItem destinationResource,
-        DataTransferOptions transferOptions,
+        TransferOptions transferOptions,
         ITransferCheckpointer checkpointer,
-        DataTransfer dataTransfer,
+        TransferOperation dataTransfer,
         bool resumeJob,
         CancellationToken cancellationToken)
     {
@@ -154,9 +154,9 @@ internal class JobBuilder
     private async Task<TransferJobInternal> BuildContainerTransferJob(
         StorageResourceContainer sourceResource,
         StorageResourceContainer destinationResource,
-        DataTransferOptions transferOptions,
+        TransferOptions transferOptions,
         ITransferCheckpointer checkpointer,
-        DataTransfer dataTransfer,
+        TransferOperation dataTransfer,
         bool resumeJob,
         CancellationToken cancellationToken)
     {

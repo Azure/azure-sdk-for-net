@@ -135,11 +135,11 @@ namespace Azure.Storage.DataMovement.Tests
             TContainerClient destinationContainer,
             int expectedTransfers,
             TransferManagerOptions transferManagerOptions = default,
-            DataTransferOptions options = default,
+            TransferOptions options = default,
             CancellationToken cancellationToken = default)
         {
             // Set transfer options
-            options ??= new DataTransferOptions();
+            options ??= new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
             transferManagerOptions ??= new TransferManagerOptions()
@@ -225,7 +225,7 @@ namespace Azure.Storage.DataMovement.Tests
                 files.Select(path => (path, DefaultObjectSize)).ToList(),
             cancellationToken);
 
-            DataTransferOptions options = new()
+            TransferOptions options = new()
             {
                 CreationPreference = StorageResourceCreationPreference.FailIfExists
             };
@@ -237,7 +237,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             StorageResourceContainer sourceResource = LocalResourceProvider.FromDirectory(disposingLocalDirectory.DirectoryPath);
             StorageResourceContainer destinationResource = GetStorageResourceContainer(test.Container);
-            DataTransfer transfer = await new TransferManager(transferManagerOptions)
+            TransferOperation transfer = await new TransferManager(transferManagerOptions)
                 .StartTransferAsync(sourceResource, destinationResource, options, cancellationToken);
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
@@ -262,7 +262,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
             else if (errorMode == DataTransferErrorMode.StopOnAnyFailure)
             {
-                Assert.That(transfer.TransferStatus.HasFailedItems, Is.True);
+                Assert.That(transfer.Status.HasFailedItems, Is.True);
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.Storage.DataMovement.Tests
                 files.Select(path => (path, DefaultObjectSize)).ToList(),
             cancellationToken);
 
-            DataTransferOptions options = new()
+            TransferOptions options = new()
             {
                 CreationPreference = StorageResourceCreationPreference.SkipIfExists
             };
@@ -306,7 +306,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             StorageResourceContainer sourceResource = LocalResourceProvider.FromDirectory(disposingLocalDirectory.DirectoryPath);
             StorageResourceContainer destinationResource = GetStorageResourceContainer(test.Container);
-            DataTransfer transfer = await new TransferManager(transferManagerOptions)
+            TransferOperation transfer = await new TransferManager(transferManagerOptions)
                 .StartTransferAsync(sourceResource, destinationResource, options, cancellationToken);
             await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
@@ -343,7 +343,7 @@ namespace Azure.Storage.DataMovement.Tests
                 GetNewObjectName(),
             };
 
-            DataTransferOptions options = new()
+            TransferOptions options = new()
             {
                 CreationPreference = StorageResourceCreationPreference.OverwriteIfExists
             };
@@ -380,7 +380,7 @@ namespace Azure.Storage.DataMovement.Tests
                 GetNewObjectName(),
             };
 
-            DataTransferOptions options = new()
+            TransferOptions options = new()
             {
                 InitialTransferSize = chunkSize,
                 MaximumTransferChunkSize = chunkSize,

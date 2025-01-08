@@ -11,7 +11,7 @@ namespace Azure.Storage.DataMovement.Tests
     public static class TestTransferWithTimeout
     {
         public static void WaitForCompletion(
-            DataTransfer dataTransfer,
+            TransferOperation dataTransfer,
             TestEventsRaised testEventsRaised,
             CancellationToken cancellationToken = default)
         {
@@ -27,7 +27,7 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         public static async Task WaitForCompletionAsync(
-            DataTransfer dataTransfer,
+            TransferOperation dataTransfer,
             TestEventsRaised testEventsRaised,
             CancellationToken cancellationToken = default)
         {
@@ -83,7 +83,7 @@ namespace Azure.Storage.DataMovement.Tests
                         {
                             Assert.Fail(
                                 $"Status Event at Transfer id: {statusEvent.TransferId}.\n" +
-                                $"Transfer State: {Enum.GetName(typeof(DataTransferState), statusEvent.TransferStatus.State)}\n" +
+                                $"Transfer State: {Enum.GetName(typeof(TransferState), statusEvent.TransferStatus.State)}\n" +
                                 $"HasCompletedSuccessfully: {statusEvent.TransferStatus.HasCompletedSuccessfully}\n" +
                                 $"HasFailedItems: {statusEvent.TransferStatus.HasFailedItems}\n +" +
                                 $"HasSkippedItems: {statusEvent.TransferStatus.HasSkippedItems}\n");

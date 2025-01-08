@@ -26,7 +26,7 @@ namespace Azure.Storage.DataMovement
             return Task.FromResult(0);
         }
 
-        public Task<DataTransferProperties> GetDataTransferPropertiesAsync(string transferId, CancellationToken cancellationToken = default)
+        public Task<TransferProperties> GetDataTransferPropertiesAsync(string transferId, CancellationToken cancellationToken = default)
         {
             throw Errors.CheckpointerDisabled(nameof(GetDataTransferPropertiesAsync));
         }
@@ -36,7 +36,7 @@ namespace Azure.Storage.DataMovement
             throw Errors.CheckpointerDisabled(nameof(GetJobPartAsync));
         }
 
-        public Task<DataTransferStatus> GetJobStatusAsync(string transferId, CancellationToken cancellationToken = default)
+        public Task<TransferStatus> GetJobStatusAsync(string transferId, CancellationToken cancellationToken = default)
         {
             throw Errors.CheckpointerDisabled(nameof(GetJobStatusAsync));
         }
@@ -56,12 +56,12 @@ namespace Azure.Storage.DataMovement
             return Task.CompletedTask;
         }
 
-        public Task SetJobPartStatusAsync(string transferId, int partNumber, DataTransferStatus status, CancellationToken cancellationToken = default)
+        public Task SetJobPartStatusAsync(string transferId, int partNumber, TransferStatus status, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }
 
-        public Task SetJobStatusAsync(string transferId, DataTransferStatus status, CancellationToken cancellationToken = default)
+        public Task SetJobStatusAsync(string transferId, TransferStatus status, CancellationToken cancellationToken = default)
         {
             return Task.CompletedTask;
         }

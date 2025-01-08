@@ -24,20 +24,20 @@ namespace Azure.Storage.DataMovement.Tests
     /// </summary>
     public class TestEventsRaised : IDisposable
     {
-        private static readonly DataTransferStatus InProgressStatus = new DataTransferStatusInternal(DataTransferState.InProgress, false, false);
-        private static readonly DataTransferStatus InProgressFailedStatus = new DataTransferStatusInternal(DataTransferState.InProgress, true, false);
-        private static readonly DataTransferStatus InProgressSkippedStatus = new DataTransferStatusInternal(DataTransferState.InProgress, false, true);
-        private static readonly DataTransferStatus StoppingFailedStatus = new DataTransferStatusInternal(DataTransferState.Stopping, true, false);
-        private static readonly DataTransferStatus SuccessfulCompletedStatus = new DataTransferStatusInternal(DataTransferState.Completed, false, false);
-        private static readonly DataTransferStatus SkippedCompletedStatus = new DataTransferStatusInternal(DataTransferState.Completed, false, true);
-        private static readonly DataTransferStatus FailedCompletedStatus = new DataTransferStatusInternal(DataTransferState.Completed, true, false);
+        private static readonly TransferStatus InProgressStatus = new DataTransferStatusInternal(TransferState.InProgress, false, false);
+        private static readonly TransferStatus InProgressFailedStatus = new DataTransferStatusInternal(TransferState.InProgress, true, false);
+        private static readonly TransferStatus InProgressSkippedStatus = new DataTransferStatusInternal(TransferState.InProgress, false, true);
+        private static readonly TransferStatus StoppingFailedStatus = new DataTransferStatusInternal(TransferState.Stopping, true, false);
+        private static readonly TransferStatus SuccessfulCompletedStatus = new DataTransferStatusInternal(TransferState.Completed, false, false);
+        private static readonly TransferStatus SkippedCompletedStatus = new DataTransferStatusInternal(TransferState.Completed, false, true);
+        private static readonly TransferStatus FailedCompletedStatus = new DataTransferStatusInternal(TransferState.Completed, true, false);
 
         public List<TransferStatusEventArgs> StatusEvents { get; internal set; }
         public ConcurrentBag<TransferItemFailedEventArgs> FailedEvents { get; internal set; }
         public ConcurrentBag<TransferItemSkippedEventArgs> SkippedEvents { get; internal set; }
         public ConcurrentBag<TransferItemCompletedEventArgs> SingleCompletedEvents { get; internal set; }
 
-        private List<DataTransferOptions> _options;
+        private List<TransferOptions> _options;
 
         private TestEventsRaised()
         {
@@ -47,21 +47,21 @@ namespace Azure.Storage.DataMovement.Tests
             SingleCompletedEvents = new ConcurrentBag<TransferItemCompletedEventArgs>();
         }
 
-        public TestEventsRaised(DataTransferOptions options)
+        public TestEventsRaised(TransferOptions options)
             : this()
         {
             options.ItemTransferFailed += AppendFailedArg;
             options.TransferStatusChanged += AppendStatusArg;
             options.ItemTransferSkipped += AppendSkippedArg;
             options.ItemTransferCompleted += AppendSingleTransferCompleted;
-            _options = new List<DataTransferOptions> { options };
+            _options = new List<TransferOptions> { options };
         }
 
-        public TestEventsRaised(List<DataTransferOptions> optionsList)
+        public TestEventsRaised(List<TransferOptions> optionsList)
             : this()
         {
-            _options = new List<DataTransferOptions>();
-            foreach (DataTransferOptions options in optionsList)
+            _options = new List<TransferOptions>();
+            foreach (TransferOptions options in optionsList)
             {
                 options.ItemTransferFailed += AppendFailedArg;
                 options.TransferStatusChanged += AppendStatusArg;
@@ -73,7 +73,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         public void Dispose()
         {
-            foreach (DataTransferOptions options in _options)
+            foreach (TransferOptions options in _options)
             {
                 options.ItemTransferFailed -= AppendFailedArg;
                 options.TransferStatusChanged -= AppendStatusArg;
@@ -106,7 +106,7 @@ namespace Azure.Storage.DataMovement.Tests
             return Task.CompletedTask;
         }
 
-        private void AssertTransferStatusCollection(DataTransferStatus[] expected, DataTransferStatus[] actual)
+        private void AssertTransferStatusCollection(TransferStatus[] expected, TransferStatus[] actual)
         {
             Assert.AreEqual(expected.Length, actual.Length);
             Assert.Multiple(() =>
@@ -117,9 +117,9 @@ namespace Azure.Storage.DataMovement.Tests
                     {
                         // Compared to individual Assert statements, this makes it clear when running the test, what's failing.
                         Assert.Fail($"Transfer State Mismatch:" +
-                            $"Expected {nameof(DataTransferStatus.State)}: {expected[i].State}; Actual {nameof(DataTransferStatus.State)}: {actual[i].State}\n" +
-                            $"Expected {nameof(DataTransferStatus.HasFailedItems)}: {expected[i].HasFailedItems}; Actual {nameof(DataTransferStatus.HasFailedItems)}: {actual[i].HasFailedItems}\n" +
-                            $"Expected {nameof(DataTransferStatus.HasSkippedItems)}: {expected[i].HasSkippedItems}; Actual {nameof(DataTransferStatus.HasSkippedItems)}: {actual[i].HasSkippedItems}\n");
+                            $"Expected {nameof(TransferStatus.State)}: {expected[i].State}; Actual {nameof(TransferStatus.State)}: {actual[i].State}\n" +
+                            $"Expected {nameof(TransferStatus.HasFailedItems)}: {expected[i].HasFailedItems}; Actual {nameof(TransferStatus.HasFailedItems)}: {actual[i].HasFailedItems}\n" +
+                            $"Expected {nameof(TransferStatus.HasSkippedItems)}: {expected[i].HasSkippedItems}; Actual {nameof(TransferStatus.HasSkippedItems)}: {actual[i].HasSkippedItems}\n");
                     }
                 }
             });
@@ -143,7 +143,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         /// <summary>
         /// This asserts that the expected events occurred during a single transfer that is expected
-        /// to have a <see cref="DataTransferState.Completed"/> at the end without any skips
+        /// to have a <see cref="TransferState.Completed"/> at the end without any skips
         /// or failures.
         /// </summary>
         public async Task AssertSingleCompletedCheck()
@@ -155,7 +155,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsEmpty(SingleCompletedEvents);
 
             AssertTransferStatusCollection(
-                new DataTransferStatus[] {
+                new TransferStatus[] {
                     InProgressStatus,
                     SuccessfulCompletedStatus },
                 StatusEvents.Select(e => e.TransferStatus).ToArray());
@@ -163,7 +163,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         /// <summary>
         /// This asserts that the expected events occurred during a single transfer that is expected
-        /// to have a <see cref="DataTransferState.CompletedWithSkippedTransfers"/> at the end without any
+        /// to have a <see cref="TransferState.CompletedWithSkippedTransfers"/> at the end without any
         /// or failures.
         /// </summary>
         public async Task AssertSingleSkippedCheck()
@@ -177,7 +177,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.NotNull(SkippedEvents.First().DestinationResource.Uri);
 
             AssertTransferStatusCollection(
-                new DataTransferStatus[] {
+                new TransferStatus[] {
                     InProgressStatus,
                     InProgressSkippedStatus,
                     SkippedCompletedStatus },
@@ -186,7 +186,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         /// <summary>
         /// This asserts that the expected events occurred during a single transfer that is expected
-        /// to have a <see cref="DataTransferState.CompletedWithFailedTransfers"/> at the end without any skips.
+        /// to have a <see cref="TransferState.CompletedWithFailedTransfers"/> at the end without any skips.
         /// </summary>
         public async Task AssertSingleFailedCheck(int failureCount)
         {
@@ -203,7 +203,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
 
             AssertTransferStatusCollection(
-                new DataTransferStatus[] {
+                new TransferStatus[] {
                     InProgressStatus,
                     InProgressFailedStatus,
                     StoppingFailedStatus,
@@ -213,7 +213,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         /// <summary>
         /// This asserts that the expected events occurred during a container transfer that is expected
-        /// to have a <see cref="DataTransferState.Completed"/> at the end without any skips
+        /// to have a <see cref="TransferState.Completed"/> at the end without any skips
         /// or failures.
         /// </summary>
         /// <param name="blobCount">
@@ -228,7 +228,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(transferCount, SingleCompletedEvents.Count);
 
             AssertTransferStatusCollection(
-                new DataTransferStatus[] {
+                new TransferStatus[] {
                     InProgressStatus,
                     SuccessfulCompletedStatus },
                 StatusEvents.Select(e => e.TransferStatus).ToArray());
@@ -236,7 +236,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         /// <summary>
         /// This asserts that the expected events occurred during a container transfer that is expected
-        /// to have a <see cref="DataTransferState.CompletedWithFailure"/> at the end without any skips.
+        /// to have a <see cref="TransferState.CompletedWithFailure"/> at the end without any skips.
         /// Assuming <see cref="DataTransferErrorMode.StopOnAnyFailure"/> was set.
         /// </summary>
         /// <param name="expectedFailureCount">
@@ -259,7 +259,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsEmpty(SkippedEvents);
 
             AssertTransferStatusCollection(
-                new DataTransferStatus[] {
+                new TransferStatus[] {
                     InProgressStatus,
                     InProgressFailedStatus,
                     StoppingFailedStatus,
@@ -269,7 +269,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         /// <summary>
         /// This asserts that the expected events occurred during a container transfer that is expected
-        /// to have a <see cref="DataTransferState.CompletedWithFailure"/> at the end without any skips.
+        /// to have a <see cref="TransferState.CompletedWithFailure"/> at the end without any skips.
         /// Assuming <see cref="DataTransferErrorMode.ContinueOnFailure"/> was set.
         /// </summary>
         /// <param name="expectedFailureCount">
@@ -292,7 +292,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsEmpty(SkippedEvents);
 
             AssertTransferStatusCollection(
-                new DataTransferStatus[] {
+                new TransferStatus[] {
                     InProgressStatus,
                     InProgressFailedStatus,
                     FailedCompletedStatus },
@@ -301,7 +301,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         /// <summary>
         /// This asserts that the expected events occurred during a container transfer that is expected
-        /// to have a <see cref="DataTransferState.CompletedWithSkippedTransfers"/> at the end without any failures.
+        /// to have a <see cref="TransferState.CompletedWithSkippedTransfers"/> at the end without any failures.
         /// </summary>
         /// <param name="expectedSkipCount">
         /// Expected amount of skipped single transfers to occur within the container transfers.
@@ -314,7 +314,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(expectedSkipCount, SkippedEvents.Count);
 
             AssertTransferStatusCollection(
-                new DataTransferStatus[] {
+                new TransferStatus[] {
                     InProgressStatus,
                     InProgressSkippedStatus,
                     SkippedCompletedStatus },
@@ -329,9 +329,9 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsEmpty(SkippedEvents);
 
             AssertTransferStatusCollection(
-                new DataTransferStatus[] {
+                new TransferStatus[] {
                     InProgressStatus,
-                    new DataTransferStatusInternal(DataTransferState.Paused, false, false) },
+                    new DataTransferStatusInternal(TransferState.Paused, false, false) },
                 StatusEvents.Select(e => e.TransferStatus).ToArray());
         }
 
@@ -343,15 +343,15 @@ namespace Azure.Storage.DataMovement.Tests
         /// <param name="listOptions">The options bag reference. If there are existing options, use the existing options,
         /// if not default options will be created so event args can be added to the event handlers</param>
         /// <returns>A respective list of Events Raised coordinating with the options given.</returns>
-        internal static List<TestEventsRaised> PopulateTestOptions(int transferCount, ref List<DataTransferOptions> listOptions)
+        internal static List<TestEventsRaised> PopulateTestOptions(int transferCount, ref List<TransferOptions> listOptions)
         {
             List<TestEventsRaised> eventRaisedList = new List<TestEventsRaised>(transferCount);
             if (listOptions == default || listOptions?.Count == 0)
             {
-                listOptions ??= new List<DataTransferOptions>(transferCount);
+                listOptions ??= new List<TransferOptions>(transferCount);
                 for (int i = 0; i < transferCount; i++)
                 {
-                    DataTransferOptions currentOptions = new DataTransferOptions();
+                    TransferOptions currentOptions = new TransferOptions();
                     TestEventsRaised testEventRaisedCurrent = new TestEventsRaised(currentOptions);
                     listOptions.Add(currentOptions);
                     eventRaisedList.Add(testEventRaisedCurrent);
@@ -362,7 +362,7 @@ namespace Azure.Storage.DataMovement.Tests
                 // If blobNames is populated make sure these number of blobs match
                 Assert.AreEqual(transferCount, listOptions.Count);
                 // Add TestEventRaised to each option
-                foreach (DataTransferOptions currentOptions in listOptions)
+                foreach (TransferOptions currentOptions in listOptions)
                 {
                     TestEventsRaised testEventRaisedCurrent = new TestEventsRaised(currentOptions);
                     eventRaisedList.Add(testEventRaisedCurrent);

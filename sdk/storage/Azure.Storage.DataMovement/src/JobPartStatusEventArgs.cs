@@ -5,16 +5,16 @@ using System.Threading;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class JobPartStatusEventArgs : DataTransferEventArgs
+    internal class JobPartStatusEventArgs : TransferEventArgs
     {
         public int PartNumber { get; }
 
-        public DataTransferStatus TransferStatus { get; }
+        public TransferStatus TransferStatus { get; }
 
         public JobPartStatusEventArgs(
             string transferId,
             int partNumber,
-            DataTransferStatus transferStatus,
+            TransferStatus transferStatus,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
             : base(transferId, isRunningSynchronously, cancellationToken)

@@ -3,13 +3,13 @@
 
 namespace Azure.Storage.DataMovement
 {
-    internal class DataTransferStatusInternal : DataTransferStatus
+    internal class DataTransferStatusInternal : TransferStatus
     {
         public DataTransferStatusInternal() : base()
         { }
 
         public DataTransferStatusInternal(
-            DataTransferState state,
+            TransferState state,
             bool hasFailedItems,
             bool hasSkippedItems)
             : base(state, hasFailedItems, hasSkippedItems)

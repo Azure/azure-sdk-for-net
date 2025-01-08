@@ -3,16 +3,16 @@
 
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Holds transfer information.
+    /// Containers information about the transfer and its status as well as provides
+    /// hooks to perform operations on the transfer.
     /// </summary>
-    public class DataTransfer
+    public class TransferOperation
     {
         /// <summary>
         /// Defines whether the DataTransfer has completed.
@@ -22,7 +22,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Defines the current Transfer Status of the Data Transfer.
         /// </summary>
-        public DataTransferStatus TransferStatus => _state.Status;
+        public TransferStatus Status => _state.Status;
 
         /// <summary>
         /// DataTransfer Identification.
@@ -37,12 +37,12 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Defines the current state of the transfer.
         /// </summary>
-        internal DataTransferInternalState _state;
+        internal TransferInternalState _state;
 
         /// <summary>
         /// For mocking.
         /// </summary>
-        internal DataTransfer()
+        internal TransferOperation()
         {
         }
 
@@ -50,14 +50,14 @@ namespace Azure.Storage.DataMovement
         /// Constructing a DataTransfer object.
         /// </summary>
         /// <param name="id">The transfer ID of the transfer object.</param>
-        /// <param name="status">The Transfer Status of the Transfer. See <see cref="DataTransferStatus"/>.</param>
-        internal DataTransfer(
+        /// <param name="status">The Transfer Status of the Transfer. See <see cref="TransferStatus"/>.</param>
+        internal TransferOperation(
             string id,
-            DataTransferStatus status = default)
+            TransferStatus status = default)
         {
             Argument.AssertNotNullOrEmpty(id, nameof(id));
-            status ??= new DataTransferStatus();
-            _state = new DataTransferInternalState(id, status);
+            status ??= new TransferStatus();
+            _state = new TransferInternalState(id, status);
         }
 
         /// <summary>

@@ -10,7 +10,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Event Argument for Failed Single Blob Upload Transfers
     /// </summary>
-    public class TransferItemFailedEventArgs : DataTransferEventArgs
+    public class TransferItemFailedEventArgs : TransferEventArgs
     {
         /// <summary>
         /// Gets the <see cref="StorageResource"/> that was the source resource for the transfer.
