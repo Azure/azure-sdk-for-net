@@ -1,7 +1,5 @@
 # Azure Storage Data Movement Common client library for .NET
 
-> Server Version: 2021-02-12, 2020-12-06, 2020-10-02, 2020-08-04, 2020-06-12, 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2020-02-02
-
 ## Project Status: Beta
 
 This product is in beta. Some features will be missing or have significant bugs. Please see [Known Issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md) for detailed information.
@@ -14,7 +12,7 @@ highly available, secure, durable, scalable, and redundant.
 The Azure Storage Data Movement library is optimized for uploading, downloading and
 copying customer data.
 
-Currently this version of the Data Movement library only supports Blobs.
+Currently this version of the Data Movement library only supports Blobs and File Shares.
 
 [Source code][source] | [API reference documentation][docs] | [REST API documentation][rest_docs] | [Product documentation][product_docs]
 
@@ -48,8 +46,8 @@ Authentication is specific to the targeted storage service. Please see documenta
 
 ## Key concepts
 
-The Azure Storage Common client library contains shared infrastructure like
-[authentication credentials][auth_credentials] and [RequestFailedException][RequestFailedException].
+The Azure Storage DataMovement client library contains shared infrastructure like
+[TokenCredential](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet), [TransferManager](#setup-the-transfermanager) and [RequestFailedException][RequestFailedException].
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -88,16 +86,19 @@ The below sample demonstrates `StorageResourceProvider` use to start transfers b
 ```C# Snippet:SimpleBlobUpload_BasePackage
 LocalFilesStorageResourceProvider files = new();
 BlobsStorageResourceProvider blobs = new(tokenCredential);
+
+// Create simple transfer single blob upload job
 DataTransfer dataTransfer = await transferManager.StartTransferAsync(
-    files.FromFile("C:/path/to/file.txt"),
-    blobs.FromBlob("https://myaccount.blob.core.windows.net/mycontainer/myblob"),
-    cancellationToken: cancellationToken);
-await dataTransfer.WaitForCompletionAsync(cancellationToken);
+    sourceResource: files.FromFile(sourceLocalPath),
+    destinationResource: blobs.FromBlob(destinationBlobUri));
+await dataTransfer.WaitForCompletionAsync();
 ```
 
 ### Resuming Existing Transfers
 
 By persisting transfer progress to disk, DataMovement allows resuming of transfers that failed partway through, or were otherwise paused. To resume a transfer, the transfer manager needs to be setup in the first place with `StorageResourceProvider` instances (the same ones used above in [Starting New Transfers](#starting-new-transfers)) which are capable of reassembling the transfer components from persisted data.
+
+To pause see [Pausing Transfers](#pausing-transfers).
 
 The below sample initializes the `TransferManager` such that it's capable of resuming transfers between the local filesystem and Azure Blob Storage, using the Azure.Storage.DataMovement.Blobs package.
 
@@ -118,7 +119,25 @@ To resume a transfer, provide the transfer's ID, as shown below. In the case whe
 DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(transferId);
 ```
 
-Note: the location of persisted transfer data will be different than the default location if `TransferCheckpointStoreOptions` were set in `TransferManagerOptions`. To resume transfers recorded in a non-default location, the transfer manager resuming the transfer will also need the appropriate checkpoint store options.
+#### Pause and Resume Checkpointing
+
+The location of persisted transfer data will be different than the default location if `TransferCheckpointStoreOptions` were set in `TransferManagerOptions`. To resume transfers recorded in a non-default location, the transfer manager resuming the transfer will also need the appropriate checkpoint store options.
+
+To specify the checkpoint folder directory:
+```csharp
+TransferManagerOptions options = new TransferManagerOptions()
+{
+    CheckpointerOptions = TransferCheckpointStoreOptions.Local(<directory path location>)
+};
+```
+
+To disable checkpointing:
+```csharp
+TransferManagerOptions options = new TransferManagerOptions()
+{
+    CheckpointerOptions = TransferCheckpointStoreOptions.Disabled()
+};
+```
 
 ### Monitoring Transfers
 
@@ -136,7 +155,7 @@ async Task CheckTransfersAsync(TransferManager transferManager)
     await foreach (DataTransfer transfer in transferManager.GetTransfersAsync())
     {
         using StreamWriter logStream = File.AppendText(logFile);
-        logStream.WriteLine(Enum.GetName(typeof(StorageTransferStatus), transfer.TransferStatus));
+        logStream.WriteLine(Enum.GetName(typeof(DataTransferStatus), transfer.TransferStatus));
     }
 }
 ```
@@ -155,11 +174,11 @@ A function that listens to status events for a given transfer:
 async Task<DataTransfer> ListenToTransfersAsync(TransferManager transferManager,
     StorageResource source, StorageResource destination)
 {
-    TransferOptions transferOptions = new();
-    transferOptions.SingleTransferCompleted += (SingleTransferCompletedEventArgs args) =>
+    DataTransferOptions transferOptions = new();
+    transferOptions.ItemTransferCompleted += (TransferItemCompletedEventArgs args) =>
     {
         using StreamWriter logStream = File.AppendText(logFile);
-        logStream.WriteLine($"File Completed Transfer: {args.SourceResource.Path}");
+        logStream.WriteLine($"File Completed Transfer: {args.SourceResource.Uri.LocalPath}");
         return Task.CompletedTask;
     };
     return await transferManager.StartTransferAsync(
@@ -176,17 +195,13 @@ When starting a transfer, `TransferOptions` allows setting a progress handler th
 A function that listens to progress updates for a given transfer with a supplied `IProgress<TStorageTransferProgress>`:
 
 ```C# Snippet:ListenToProgress
-async Task<DataTransfer> ListenToProgressAsync(TransferManager transferManager, IProgress<StorageTransferProgress> progress,
+async Task<DataTransfer> ListenToProgressAsync(TransferManager transferManager, IProgress<DataTransferProgress> progress,
     StorageResource source, StorageResource destination)
 {
-    TransferOptions transferOptions = new()
+    DataTransferOptions transferOptions = new()
     {
-        ProgressHandler = progress,
         // optionally include the below if progress updates on bytes transferred are desired
-        ProgressHandlerOptions = new()
-        {
-            TrackBytesTransferred = true
-        }
+        ProgressHandlerOptions = new(progress, trackBytesTransferred: true)
     };
     return await transferManager.StartTransferAsync(
         source,
@@ -200,11 +215,11 @@ async Task<DataTransfer> ListenToProgressAsync(TransferManager transferManager, 
 Transfers can be paused either by a given `DataTransfer` or through the `TransferManager` handling the transfer by referencing the transfer ID. The ID can be found on the `DataTransfer` object you received upon transfer start.
 
 ```C# Snippet:PauseFromTransfer
-await dataTransfer.PauseIfRunningAsync(cancellationToken);
+await dataTransfer.PauseAsync();
 ```
 
 ```C# Snippet:PauseFromManager
-await transferManager.PauseTransferIfRunningAsync(transferId, cancellationToken);
+await transferManager.PauseTransferIfRunningAsync(transferId);
 ```
 
 ### Handling Failed Transfers
@@ -214,12 +229,13 @@ Transfer failure can be observed by checking the `DataTransfer` status upon comp
 Below logs failure for a single transfer by checking its status after completion.
 
 ```C# Snippet:LogTotalTransferFailure
-await dataTransfer.WaitForCompletionAsync();
-if (dataTransfer.TransferStatus == StorageTransferStatus.CompletedWithFailedTransfers)
+await dataTransfer2.WaitForCompletionAsync();
+if (dataTransfer2.TransferStatus.State == DataTransferState.Completed
+    && dataTransfer2.TransferStatus.HasFailedItems)
 {
     using (StreamWriter logStream = File.AppendText(logFile))
     {
-        logStream.WriteLine($"Failure for TransferId: {dataTransfer.Id}");
+        logStream.WriteLine($"Failure for TransferId: {dataTransfer2.Id}");
     }
 }
 ```
@@ -227,22 +243,22 @@ if (dataTransfer.TransferStatus == StorageTransferStatus.CompletedWithFailedTran
 Below logs individual failures in a container transfer via `TransferOptions` events.
 
 ```C# Snippet:LogIndividualTransferFailures
-transferOptions.TransferFailed += (TransferFailedEventArgs args) =>
+transferOptions.ItemTransferFailed += (TransferItemFailedEventArgs args) =>
 {
     using (StreamWriter logStream = File.AppendText(logFile))
     {
         // Specifying specific resources that failed, since its a directory transfer
         // maybe only one file failed out of many
-        logStream.WriteLine($"Exception occured with TransferId: {args.TransferId}," +
-            $"Source Resource: {args.SourceResource.Path}, +" +
-            $"Destination Resource: {args.DestinationResource.Path}," +
+        logStream.WriteLine($"Exception occurred with TransferId: {args.TransferId}," +
+            $"Source Resource: {args.SourceResource.Uri.AbsoluteUri}, +" +
+            $"Destination Resource: {args.DestinationResource.Uri.AbsoluteUri}," +
             $"Exception Message: {args.Exception.Message}");
     }
     return Task.CompletedTask;
 };
 ```
 
-### Initializing Local File `StorageResource`
+### Initializing Local File or Directory `StorageResource`
 
 Local filesystem resources are provided by `LocalFilesStorageResourceProvider`. This provider requires no setup to produce storage resources.
 
@@ -254,11 +270,13 @@ StorageResource directoryResource = files.FromDirectory("C:/path/to/dir");
 
 ## Troubleshooting
 
-***TODO***
+See [Handling Failed Transfers](#handling-failed-transfers) and [Enabling Logging](https://learn.microsoft.com/dotnet/azure/sdk/logging) to assist with any troubleshooting.
 
 ## Next steps
 
-Get started with our [Blob DataMovement samples][samples].
+Get started with our [Blob DataMovement samples][blob_samples].
+
+Get started with our [Share File DataMovement samples][share_samples].
 
 ## Contributing
 
@@ -293,7 +311,8 @@ additional questions or comments.
 [blobs_examples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Blobs#examples
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://learn.microsoft.com/rest/api/storageservices/common-rest-api-error-codes
-[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Blobs/samples
+[blob_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Blobs/samples
+[share_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Files.Shares/samples
 [storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/
