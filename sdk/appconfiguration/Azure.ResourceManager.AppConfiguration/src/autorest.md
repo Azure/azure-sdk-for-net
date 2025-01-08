@@ -44,6 +44,9 @@ rename-mapping:
   PrivateEndpointConnectionReference: AppConfigurationPrivateEndpointConnectionReference
   Replica: AppConfigurationReplica
   ReplicaProvisioningState: AppConfigurationReplicaProvisioningState
+  Snapshot: AppConfigurationSnapshot
+  Created: CreatedOn
+  Expires: ExpireOn
 
 prepend-rp-prefix:
   - ActionsRequired
