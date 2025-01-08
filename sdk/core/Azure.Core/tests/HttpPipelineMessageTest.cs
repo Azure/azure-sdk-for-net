@@ -79,7 +79,10 @@ namespace Azure.Core.Tests
             Stream stream = message.ExtractResponseContent();
 
             Assert.AreSame(mockStream.Object, stream);
+#pragma warning disable CA2022 // Avoid inexact read with Stream.Read (A call to Stream.Read or Stream.ReadAsync is made and the return value isn't checked)
+            // The return value of ReadAsync is not needed for this test
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => response.ContentStream.Read(Array.Empty<byte>(), 0, 0));
+#pragma warning restore CA2022
             Assert.AreEqual("The operation has called ExtractResponseContent and will provide the stream as part of its response type.", exception.Message);
         }
 
