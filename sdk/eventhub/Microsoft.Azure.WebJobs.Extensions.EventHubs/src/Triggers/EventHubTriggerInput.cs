@@ -67,7 +67,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
             string offset, enqueueTimeUtc, sequenceNumber;
             if (IsSingleDispatch)
             {
-                offset = Events[0].Offset.ToString(CultureInfo.InvariantCulture);
+                offset = Events[0].OffsetString;
                 enqueueTimeUtc = Events[0].EnqueuedTime.ToString("o", CultureInfo.InvariantCulture);
                 sequenceNumber = Events[0].SequenceNumber.ToString(CultureInfo.InvariantCulture);
             }
@@ -76,7 +76,7 @@ namespace Microsoft.Azure.WebJobs.EventHubs
                 EventData first = Events[0];
                 EventData last = Events[Events.Length - 1];
 
-                offset = $"{first.Offset}-{last.Offset}";
+                offset = $"{first.OffsetString}-{last.OffsetString}";
                 enqueueTimeUtc = $"{first.EnqueuedTime.ToString("o", CultureInfo.InvariantCulture)}-{last.EnqueuedTime.ToString("o", CultureInfo.InvariantCulture)}";
                 sequenceNumber = $"{first.SequenceNumber}-{last.SequenceNumber}";
             }

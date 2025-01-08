@@ -28,7 +28,7 @@ In order to let the extension work with Web PubSub for Socket.IO, you will need 
 
 #### Access key based configuration
 
-The `AzureWebJobsStorage` connection string is used to preserve the processing checkpoint information as required refer to [Storage considerations](https://docs.microsoft.com/azure/azure-functions/storage-considerations#storage-account-requirements)
+The `AzureWebJobsStorage` connection string is used to preserve the processing checkpoint information as required refer to [Storage considerations](https://learn.microsoft.com/azure/azure-functions/storage-considerations#storage-account-requirements)
 
 You can find the **Keys** for you Azure Web PubSub service in the [Azure Portal](https://portal.azure.com/).
 
@@ -43,7 +43,7 @@ For the local development, use the `local.settings.json` file to store the conne
 }
 ```
 
-When deployed use the [application settings](https://docs.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings) to set the connection string.
+When deployed use the [application settings](https://learn.microsoft.com/azure/azure-functions/functions-how-to-use-azure-function-app-settings) to set the connection string.
 
 #### Identity based configuration
 
@@ -177,11 +177,11 @@ public static class SocketIOTriggerReturnValueFunction
 
 ## Troubleshooting
 
-Please refer to [Monitor Azure Functions](https://docs.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.
+Please refer to [Monitor Azure Functions](https://learn.microsoft.com/azure/azure-functions/functions-monitoring) for troubleshooting guidance.
 
 ## Next steps
 
-Read the [introduction to Azure Function](https://docs.microsoft.com/azure/azure-functions/functions-overview) or [creating an Azure Function guide](https://docs.microsoft.com/azure/azure-functions/functions-create-first-azure-function).
+Read the [introduction to Azure Function](https://learn.microsoft.com/azure/azure-functions/functions-overview) or [creating an Azure Function guide](https://learn.microsoft.com/azure/azure-functions/functions-create-first-azure-function).
 
 ## Contributing
 
@@ -203,7 +203,7 @@ additional questions or comments.
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/search/Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO/src
 [package]: https://www.nuget.org/packages/Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO/
-[docs]: https://docs.microsoft.com/dotnet/api/Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
+[docs]: https://learn.microsoft.com/dotnet/api/Microsoft.Azure.WebJobs.Extensions.WebPubSubForSocketIO
 [nuget]: https://www.nuget.org/
 
 [contrib]: https://github.com/Azure/azure-sdk-for-net/tree/main/CONTRIBUTING.md

@@ -45,24 +45,11 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 }
                 writer.WriteEndObject();
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (Optional.IsDefined(RegionalAffinity))
+            if (Optional.IsDefined(Properties))
             {
-                writer.WritePropertyName("regionalAffinity"u8);
-                writer.WriteStringValue(RegionalAffinity.Value.ToString());
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue(Properties, options);
             }
-            if (Optional.IsDefined(ScalableExecution))
-            {
-                writer.WritePropertyName("scalableExecution"u8);
-                writer.WriteStringValue(ScalableExecution.Value.ToString());
-            }
-            if (Optional.IsDefined(Reporting))
-            {
-                writer.WritePropertyName("reporting"u8);
-                writer.WriteStringValue(Reporting.Value.ToString());
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -101,9 +88,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            EnablementStatus? regionalAffinity = default;
-            EnablementStatus? scalableExecution = default;
-            EnablementStatus? reporting = default;
+            AccountUpdateProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,39 +111,9 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("regionalAffinity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            regionalAffinity = new EnablementStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("scalableExecution"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            scalableExecution = new EnablementStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("reporting"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            reporting = new EnablementStatus(property0.Value.GetString());
-                            continue;
-                        }
-                    }
+                    properties = AccountUpdateProperties.DeserializeAccountUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -167,7 +122,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PlaywrightTestingAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), regionalAffinity, scalableExecution, reporting, serializedAdditionalRawData);
+            return new PlaywrightTestingAccountPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PlaywrightTestingAccountPatch>.Write(ModelReaderWriterOptions options)

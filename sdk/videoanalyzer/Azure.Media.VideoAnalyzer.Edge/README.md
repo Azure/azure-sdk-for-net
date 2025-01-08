@@ -213,7 +213,7 @@ additional questions or comments.
 
 <!-- LINKS -->
 
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [cla]: https://cla.microsoft.com
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
@@ -222,7 +222,7 @@ additional questions or comments.
 [package]: https://aka.ms/ava/sdk/client/net
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/videoanalyzer/Azure.Media.VideoAnalyzer.Edge/src
 [samples]: https://go.microsoft.com/fwlink/?linkid=2162276
-[doc_product]: https://docs.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/
+[doc_product]: https://learn.microsoft.com/azure/azure-video-analyzer/video-analyzer-docs/
 [iot-device-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices.Client/
 [iot-hub-sdk]: https://www.nuget.org/packages/Microsoft.Azure.Devices/
 [github-page-issues]: https://github.com/Azure/azure-sdk-for-net/issues
