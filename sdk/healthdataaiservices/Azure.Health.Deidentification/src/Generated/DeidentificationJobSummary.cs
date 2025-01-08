@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.Health.Deidentification
 {
     /// <summary> Summary metrics of a job. </summary>
-    public partial class JobSummary
+    public partial class DeidentificationJobSummary
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,13 +45,13 @@ namespace Azure.Health.Deidentification
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="JobSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeidentificationJobSummary"/>. </summary>
         /// <param name="successful"> Number of documents that have completed. </param>
         /// <param name="failed"> Number of documents that have failed. </param>
         /// <param name="canceled"> Number of documents that have been canceled. </param>
         /// <param name="total"> Number of documents total. </param>
         /// <param name="bytesProcessed"> Number of bytes processed. </param>
-        internal JobSummary(int successful, int failed, int canceled, int total, long bytesProcessed)
+        internal DeidentificationJobSummary(int successful, int failed, int canceled, int total, long bytesProcessed)
         {
             Successful = successful;
             Failed = failed;
@@ -60,14 +60,14 @@ namespace Azure.Health.Deidentification
             BytesProcessed = bytesProcessed;
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobSummary"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeidentificationJobSummary"/>. </summary>
         /// <param name="successful"> Number of documents that have completed. </param>
         /// <param name="failed"> Number of documents that have failed. </param>
         /// <param name="canceled"> Number of documents that have been canceled. </param>
         /// <param name="total"> Number of documents total. </param>
         /// <param name="bytesProcessed"> Number of bytes processed. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal JobSummary(int successful, int failed, int canceled, int total, long bytesProcessed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidentificationJobSummary(int successful, int failed, int canceled, int total, long bytesProcessed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Successful = successful;
             Failed = failed;
@@ -77,8 +77,8 @@ namespace Azure.Health.Deidentification
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="JobSummary"/> for deserialization. </summary>
-        internal JobSummary()
+        /// <summary> Initializes a new instance of <see cref="DeidentificationJobSummary"/> for deserialization. </summary>
+        internal DeidentificationJobSummary()
         {
         }
 

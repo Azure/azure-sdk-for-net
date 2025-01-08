@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Health.Deidentification
 {
-    /// <summary> Result of the "Tag" operation. </summary>
-    public partial class PhiTaggerResult
+    /// <summary> Location of a document. </summary>
+    public partial class DeidentificationDocumentLocation
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,31 +45,35 @@ namespace Azure.Health.Deidentification
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PhiTaggerResult"/>. </summary>
-        /// <param name="entities"> List of entities detected in the input. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="entities"/> is null. </exception>
-        internal PhiTaggerResult(IEnumerable<PhiEntity> entities)
+        /// <summary> Initializes a new instance of <see cref="DeidentificationDocumentLocation"/>. </summary>
+        /// <param name="location"> Location of document in storage. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="location"/> is null. </exception>
+        internal DeidentificationDocumentLocation(Uri location)
         {
-            Argument.AssertNotNull(entities, nameof(entities));
+            Argument.AssertNotNull(location, nameof(location));
 
-            Entities = entities.ToList();
+            Location = location;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PhiTaggerResult"/>. </summary>
-        /// <param name="entities"> List of entities detected in the input. </param>
+        /// <summary> Initializes a new instance of <see cref="DeidentificationDocumentLocation"/>. </summary>
+        /// <param name="location"> Location of document in storage. </param>
+        /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PhiTaggerResult(IReadOnlyList<PhiEntity> entities, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeidentificationDocumentLocation(Uri location, ETag etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Entities = entities;
+            Location = location;
+            Etag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="PhiTaggerResult"/> for deserialization. </summary>
-        internal PhiTaggerResult()
+        /// <summary> Initializes a new instance of <see cref="DeidentificationDocumentLocation"/> for deserialization. </summary>
+        internal DeidentificationDocumentLocation()
         {
         }
 
-        /// <summary> List of entities detected in the input. </summary>
-        public IReadOnlyList<PhiEntity> Entities { get; }
+        /// <summary> Location of document in storage. </summary>
+        public Uri Location { get; }
+        /// <summary> The entity tag for this resource. </summary>
+        public ETag Etag { get; }
     }
 }
