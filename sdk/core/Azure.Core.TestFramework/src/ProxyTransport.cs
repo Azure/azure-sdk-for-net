@@ -6,6 +6,8 @@ using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Net.Security;
+using System.Net.Sockets;
+using System.Security.Authentication;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.Pipeline;
@@ -100,7 +102,9 @@ namespace Azure.Core.TestFramework
 
                 if (_isWebRequestTransport)
                 {
+#pragma warning disable SYSLIB0014 // ServicePointManager is obsolete and does not affect HttpClient
                     ServicePointManager.ServerCertificateValidationCallback -= _serverCertificateCustomValidationCallback;
+#pragma warning restore SYSLIB0014 // ServicePointManager is obsolete and does not affect HttpClient
                 }
             }
         }
@@ -192,7 +196,9 @@ namespace Azure.Core.TestFramework
 
             if (_isWebRequestTransport)
             {
+#pragma warning disable SYSLIB0014 // ServicePointManager is obsolete and does not affect HttpClient
                 ServicePointManager.ServerCertificateValidationCallback += _serverCertificateCustomValidationCallback;
+#pragma warning disable SYSLIB0014 // ServicePointManager is obsolete and does not affect HttpClient
             }
         }
     }
