@@ -268,7 +268,7 @@ namespace Azure.Storage.DataMovement.Blobs
             int version = reader.ReadInt32();
             if (version != DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion)
             {
-                throw Errors.UnsupportedJobSchemaVersionHeader(version.ToString());
+                throw Errors.UnsupportedJobSchemaVersionHeader(version);
             }
 
             // Index Values

@@ -34,7 +34,7 @@ namespace Azure.Storage.DataMovement.Tests
         internal static readonly DataTransferStatus DefaultPartStatus = new DataTransferStatus(DataTransferState.Queued, false, false);
 
         internal static JobPartPlanHeader CreateDefaultJobPartHeader(
-            string version = DataMovementConstants.JobPartPlanFile.SchemaVersion,
+            int version = DataMovementConstants.JobPartPlanFile.SchemaVersion,
             string transferId = DefaultTransferId,
             long partNumber = DefaultPartNumber,
             DateTimeOffset createTime = default,
