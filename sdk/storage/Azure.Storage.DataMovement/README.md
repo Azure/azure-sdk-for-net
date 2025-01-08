@@ -47,7 +47,7 @@ Authentication is specific to the targeted storage service. Please see documenta
 ## Key concepts
 
 The Azure Storage DataMovement client library contains shared infrastructure like
-[TokenCredential](https://learn.microsoft.com/en-us/dotnet/api/azure.core.tokencredential?view=azure-dotnet), [TransferManager](#setup-the-transfermanager) and [RequestFailedException][RequestFailedException].
+[TokenCredential](https://learn.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet), [TransferManager](#setup-the-transfermanager) and [RequestFailedException][RequestFailedException].
 
 ### Thread safety
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
@@ -270,7 +270,7 @@ StorageResource directoryResource = files.FromDirectory("C:/path/to/dir");
 
 ## Troubleshooting
 
-See [Handling Failed Transfers](#handling-failed-transfers) and [Enabling Logging](https://learn.microsoft.com/en-us/dotnet/azure/sdk/logging) to assist with any troubleshooting.
+See [Handling Failed Transfers](#handling-failed-transfers) and [Enabling Logging](https://learn.microsoft.com/dotnet/azure/sdk/logging) to assist with any troubleshooting.
 
 ## Next steps
 

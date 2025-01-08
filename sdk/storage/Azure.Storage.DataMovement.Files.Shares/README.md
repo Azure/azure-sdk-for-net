@@ -165,7 +165,7 @@ await directoryTransfer.WaitForCompletionAsync();
 
 ## Troubleshooting
 
-See [Handling Failed Transfers](#handling-failed-transfers) and [Enabling Logging](https://learn.microsoft.com/en-us/dotnet/azure/sdk/logging) to assist with any troubleshooting.
+See [Handling Failed Transfers](#handling-failed-transfers) and [Enabling Logging](https://learn.microsoft.com/dotnet/azure/sdk/logging) to assist with any troubleshooting.
 
 ## Next steps
 
