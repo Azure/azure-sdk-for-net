@@ -1,7 +1,5 @@
 # Azure Storage Data Movement File Shares client library for .NET
 
-> Server Version: 2020-04-08, 2020-02-10, 2019-12-12, 2019-07-07, and 2020-02-02
-
 ## Project Status: Beta
 
 This product is in beta. Some features will be missing or have significant bugs. Please see [Known Issues](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/KnownIssues.md) for detailed information.
@@ -167,11 +165,13 @@ await directoryTransfer.WaitForCompletionAsync();
 
 ## Troubleshooting
 
-***TODO***
+See [Handling Failed Transfers](#handling-failed-transfers) and [Enabling Logging](https://learn.microsoft.com/dotnet/azure/sdk/logging) to assist with any troubleshooting.
 
 ## Next steps
 
-***TODO***
+Get started with our [Blob DataMovement samples][blob_samples].
+
+For more base Transfer Manager scenarios see [DataMovement samples][datamovement_base].
 
 ## Contributing
 
@@ -205,7 +205,8 @@ additional questions or comments.
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [RequestFailedException]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/src/RequestFailedException.cs
 [error_codes]: https://learn.microsoft.com/rest/api/storageservices/common-rest-api-error-codes
-[samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Files.Shares/samples
+[datamovement_base]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement
+[blob_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Blobs/samples
 [storage_contrib]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/CONTRIBUTING.md
 [cla]: https://cla.microsoft.com
 [coc]: https://opensource.microsoft.com/codeofconduct/

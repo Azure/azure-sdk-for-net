@@ -18,7 +18,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobStorageResourceContainerOptions BlobContainerOptions { get; set; }
 
         /// <summary>
-        /// Options pertaining to the data tranfer.
+        /// Options pertaining to the data transfer.
         /// </summary>
         public TransferOptions TransferOptions { get; set; }
     }
