@@ -819,7 +819,7 @@ namespace Azure.AI.Inference.Tests
                 { "additionalProperties", BinaryData.FromString("false") }
             };
 
-            requestOptions.ResponseFormat = ChatCompletionsResponseFormat.CreateJsonSchemaFormat("cakeBakingDirections", jsonSchema);
+            requestOptions.ResponseFormat = ChatCompletionsResponseFormat.CreateJsonFormat("cakeBakingDirections", jsonSchema);
 
             Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
 

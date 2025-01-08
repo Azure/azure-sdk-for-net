@@ -21,7 +21,7 @@ namespace Azure.AI.Inference
         public static ChatCompletionsResponseFormat CreateTextFormat() => new ChatCompletionsResponseFormatText();
 
         /// <summary> Creates a new <see cref="ChatCompletionsResponseFormat"/> requesting valid JSON, a.k.a. JSON mode. </summary>
-        public static ChatCompletionsResponseFormat CreateJsonObjectFormat() => new ChatCompletionsResponseFormatJsonObject();
+        public static ChatCompletionsResponseFormat CreateJsonFormat() => new ChatCompletionsResponseFormatJsonObject();
 
         /// <summary>
         ///     Creates a new <see cref="ChatCompletionsResponseFormat"/> requesting adherence to the specified JSON schema,
@@ -82,7 +82,7 @@ namespace Azure.AI.Inference
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jsonSchemaFormatName"/> or <paramref name="jsonSchema"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jsonSchemaFormatName"/> is an empty string, and was expected to be non-empty. </exception>
-        public static ChatCompletionsResponseFormat CreateJsonSchemaFormat(string jsonSchemaFormatName, IDictionary<string, BinaryData> jsonSchema, string jsonSchemaFormatDescription = null, bool? jsonSchemaIsStrict = null)
+        public static ChatCompletionsResponseFormat CreateJsonFormat(string jsonSchemaFormatName, IDictionary<string, BinaryData> jsonSchema, string jsonSchemaFormatDescription = null, bool? jsonSchemaIsStrict = null)
         {
             Argument.AssertNotNullOrEmpty(jsonSchemaFormatName, nameof(jsonSchemaFormatName));
             Argument.AssertNotNull(jsonSchema, nameof(jsonSchema));
