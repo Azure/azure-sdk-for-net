@@ -1,6 +1,6 @@
 # Release History
 
-## 12.10.0 (2025-01-07)
+## 12.10.0 (2025-01-14)
 
 ### Breaking Changes
 
