@@ -91,25 +91,6 @@ namespace Azure.ResourceManager.Chaos
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ChaosTargetMetadataResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ChaosTargetMetadataResource.CreateResourceIdentifier" /> to create a <see cref="ChaosTargetMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
-        /// <item>
-        /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosTargetMetadataResource(ResourceIdentifier)"/> instead.</description>
-        /// </item>
-        /// </summary>
-        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ChaosTargetMetadataResource"/> object. </returns>
-        public static ChaosTargetMetadataResource GetChaosTargetMetadataResource(this ArmClient client, ResourceIdentifier id)
-        {
-            Argument.AssertNotNull(client, nameof(client));
-
-            return GetMockableChaosArmClient(client).GetChaosTargetMetadataResource(id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ChaosExperimentResource" /> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ChaosExperimentResource.CreateResourceIdentifier" /> to create a <see cref="ChaosExperimentResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
@@ -183,6 +164,25 @@ namespace Azure.ResourceManager.Chaos
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableChaosArmClient(client).GetChaosPrivateEndpointConnectionResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ChaosTargetMetadataResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ChaosTargetMetadataResource.CreateResourceIdentifier" /> to create a <see cref="ChaosTargetMetadataResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableChaosArmClient.GetChaosTargetMetadataResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ChaosTargetMetadataResource"/> object. </returns>
+        public static ChaosTargetMetadataResource GetChaosTargetMetadataResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableChaosArmClient(client).GetChaosTargetMetadataResource(id);
         }
 
         /// <summary>

@@ -71,18 +71,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ChaosTargetMetadataResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ChaosTargetMetadataResource.CreateResourceIdentifier" /> to create a <see cref="ChaosTargetMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ChaosTargetMetadataResource"/> object. </returns>
-        public virtual ChaosTargetMetadataResource GetChaosTargetMetadataResource(ResourceIdentifier id)
-        {
-            ChaosTargetMetadataResource.ValidateResourceId(id);
-            return new ChaosTargetMetadataResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ChaosExperimentResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ChaosExperimentResource.CreateResourceIdentifier" /> to create a <see cref="ChaosExperimentResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
@@ -128,6 +116,18 @@ namespace Azure.ResourceManager.Chaos.Mocking
         {
             ChaosPrivateEndpointConnectionResource.ValidateResourceId(id);
             return new ChaosPrivateEndpointConnectionResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="ChaosTargetMetadataResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ChaosTargetMetadataResource.CreateResourceIdentifier" /> to create a <see cref="ChaosTargetMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosTargetMetadataResource"/> object. </returns>
+        public virtual ChaosTargetMetadataResource GetChaosTargetMetadataResource(ResourceIdentifier id)
+        {
+            ChaosTargetMetadataResource.ValidateResourceId(id);
+            return new ChaosTargetMetadataResource(Client, id);
         }
     }
 }

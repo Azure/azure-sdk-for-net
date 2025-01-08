@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.Chaos
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
+                identity,
                 provisioningState,
                 steps,
                 selectors,
                 customerDataStorage,
-                identity,
                 serializedAdditionalRawData);
         }
 
