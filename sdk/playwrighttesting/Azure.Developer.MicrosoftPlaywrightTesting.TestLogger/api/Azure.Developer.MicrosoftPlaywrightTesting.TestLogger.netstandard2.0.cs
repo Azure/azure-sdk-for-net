@@ -8,7 +8,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger
     }
     public partial class PlaywrightService
     {
-        public PlaywrightService(Azure.Core.TokenCredential? credential, Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.PlaywrightServiceOptions options) { }
+        public PlaywrightService(Azure.Core.TokenCredential? credential = null, Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.PlaywrightServiceOptions? options = null) { }
         public string? ExposeNetwork { get { throw null; } set { } }
         public System.Runtime.InteropServices.OSPlatform? OS { get { throw null; } set { } }
         public string? RunId { get { throw null; } set { } }

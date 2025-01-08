@@ -32,7 +32,7 @@ public class PlaywrightServiceNUnit : PlaywrightService
     /// <summary>
     /// Creates a new instance of <see cref="PlaywrightServiceOptions"/> based on the runsettings file.
     /// </summary>
-    public static PlaywrightServiceOptions options { get; } = new()
+    internal static PlaywrightServiceOptions options { get; } = new()
     {
         OS = GetOsPlatform(TestContext.Parameters.Get(RunSettingKey.OS.ToString())),
         RunId = TestContext.Parameters.Get(RunSettingKey.RunId.ToString()),
