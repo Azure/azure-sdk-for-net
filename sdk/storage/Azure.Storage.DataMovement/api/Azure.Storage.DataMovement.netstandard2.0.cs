@@ -194,7 +194,6 @@ namespace Azure.Storage.DataMovement
         public Azure.Storage.DataMovement.TransferStatus Status { get { throw null; } }
         public Azure.Storage.DataMovement.TransferManager TransferManager { get { throw null; } }
         public virtual System.Threading.Tasks.Task PauseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public void WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public System.Threading.Tasks.Task WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TransferOptions : System.IEquatable<Azure.Storage.DataMovement.TransferOptions>
