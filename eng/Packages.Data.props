@@ -374,6 +374,7 @@
     <PackageReference Update="System.ClientModel" Version="1.2.1" />
     <PackageReference Update="System.Collections.Immutable" Version="8.0.0" />
     <PackageReference Update="System.Diagnostics.TraceSource" Version="4.3.0" />
+    <PackageReference Update="System.Format.Asn1" Version="8.0.1" />
     <PackageReference Update="System.IO.Compression" Version="4.3.0" />
     <PackageReference Update="System.IO.Pipelines" Version="8.0.0" />
     <PackageReference Update="System.Linq.Async" Version="6.0.1" />
