@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Azure.Core.Pipeline;
 using System.Linq;
 using System.ComponentModel;
+using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -149,6 +150,13 @@ namespace Azure.Identity
                     AzureIdentityEventSource.Singleton.AuthenticatedAccountDetails(accountDetails.ClientId ?? _clientId, accountDetails.TenantId, accountDetails.Upn, accountDetails.ObjectId);
                 }
                 return scope.Succeeded(result);
+            }
+            // The managed_identity_response_parse_failure error is thrown when the response from the managed identity endpoint cannot be parsed.
+            // Since for non-DAC invocations of the credential, we do not participate in parsing the raw response, we rely on this error to indicate
+            // that the response was not valid JSON.
+            catch (MsalServiceException e) when (e.ErrorCode == "managed_identity_response_parse_failure")
+            {
+                throw scope.FailWrapAndThrow(new CredentialUnavailableException(MsiUnavailableError, e), Troubleshooting);
             }
             catch (Exception e)
             {
