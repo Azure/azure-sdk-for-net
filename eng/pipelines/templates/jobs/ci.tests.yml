@@ -132,7 +132,6 @@ jobs:
           /p:CollectCoverage=$(CollectCoverage)
           /p:EnableSourceLink=false
           /p:ProjectListOverrideFile=$(ProjectListOverrideFile)
-          --verbosity detailed
           $(AdditionalTestArguments)
           $(DiagnosticArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
