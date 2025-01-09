@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         private ResourceGroupResource ResGroup { get; set; }
         private AppConfigurationStoreResource ConfigStore { get; set; }
         private string ConfigurationStoreName { get; set; }
-        private SnapshotResource Snapshot { get; set; }
+        private AppConfigurationSnapshotResource Snapshot { get; set; }
         private string SnapshotName { get; set; }
 
         public SnapshotOperationTests(bool isAsync)
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         [Test]
         public async Task GetTest()
         {
-            SnapshotResource snapshot = await Snapshot.GetAsync();
+            AppConfigurationSnapshotResource snapshot = await Snapshot.GetAsync();
 
             Assert.IsTrue(snapshot.Data.Name.Equals(SnapshotName));
             Assert.IsTrue(snapshot.Data.Filters.FirstOrDefault().Key.Equals("key1/*"));

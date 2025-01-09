@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static bool operator ==(PrivateLinkDelegation left, PrivateLinkDelegation right) => left.Equals(right);
         /// <summary> Determines if two <see cref="PrivateLinkDelegation"/> values are not the same. </summary>
         public static bool operator !=(PrivateLinkDelegation left, PrivateLinkDelegation right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="PrivateLinkDelegation"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="PrivateLinkDelegation"/>. </summary>
         public static implicit operator PrivateLinkDelegation(string value) => new PrivateLinkDelegation(value);
 
         /// <inheritdoc />

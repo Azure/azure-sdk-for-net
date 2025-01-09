@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static bool operator ==(AuthenticationMode left, AuthenticationMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AuthenticationMode"/> values are not the same. </summary>
         public static bool operator !=(AuthenticationMode left, AuthenticationMode right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="AuthenticationMode"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="AuthenticationMode"/>. </summary>
         public static implicit operator AuthenticationMode(string value) => new AuthenticationMode(value);
 
         /// <inheritdoc />

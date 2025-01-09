@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static bool operator ==(CompositionType left, CompositionType right) => left.Equals(right);
         /// <summary> Determines if two <see cref="CompositionType"/> values are not the same. </summary>
         public static bool operator !=(CompositionType left, CompositionType right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="CompositionType"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="CompositionType"/>. </summary>
         public static implicit operator CompositionType(string value) => new CompositionType(value);
 
         /// <inheritdoc />

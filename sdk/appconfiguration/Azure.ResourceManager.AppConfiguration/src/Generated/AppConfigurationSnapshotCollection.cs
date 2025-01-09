@@ -15,28 +15,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.AppConfiguration
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SnapshotResource"/> and their operations.
-    /// Each <see cref="SnapshotResource"/> in the collection will belong to the same instance of <see cref="AppConfigurationStoreResource"/>.
-    /// To get a <see cref="SnapshotCollection"/> instance call the GetSnapshots method from an instance of <see cref="AppConfigurationStoreResource"/>.
+    /// A class representing a collection of <see cref="AppConfigurationSnapshotResource"/> and their operations.
+    /// Each <see cref="AppConfigurationSnapshotResource"/> in the collection will belong to the same instance of <see cref="AppConfigurationStoreResource"/>.
+    /// To get an <see cref="AppConfigurationSnapshotCollection"/> instance call the GetAppConfigurationSnapshots method from an instance of <see cref="AppConfigurationStoreResource"/>.
     /// </summary>
-    public partial class SnapshotCollection : ArmCollection
+    public partial class AppConfigurationSnapshotCollection : ArmCollection
     {
-        private readonly ClientDiagnostics _snapshotClientDiagnostics;
-        private readonly SnapshotsRestOperations _snapshotRestClient;
+        private readonly ClientDiagnostics _appConfigurationSnapshotSnapshotsClientDiagnostics;
+        private readonly SnapshotsRestOperations _appConfigurationSnapshotSnapshotsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SnapshotCollection"/> class for mocking. </summary>
-        protected SnapshotCollection()
+        /// <summary> Initializes a new instance of the <see cref="AppConfigurationSnapshotCollection"/> class for mocking. </summary>
+        protected AppConfigurationSnapshotCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SnapshotCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AppConfigurationSnapshotCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SnapshotCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AppConfigurationSnapshotCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _snapshotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", SnapshotResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SnapshotResource.ResourceType, out string snapshotApiVersion);
-            _snapshotRestClient = new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, snapshotApiVersion);
+            _appConfigurationSnapshotSnapshotsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppConfiguration", AppConfigurationSnapshotResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AppConfigurationSnapshotResource.ResourceType, out string appConfigurationSnapshotSnapshotsApiVersion);
+            _appConfigurationSnapshotSnapshotsRestClient = new SnapshotsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, appConfigurationSnapshotSnapshotsApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SnapshotResource"/></description>
+        /// <description><see cref="AppConfigurationSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -75,17 +75,17 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SnapshotResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string snapshotName, SnapshotData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AppConfigurationSnapshotResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string snapshotName, AppConfigurationSnapshotData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.CreateOrUpdate");
+            using var scope = _appConfigurationSnapshotSnapshotsClientDiagnostics.CreateScope("AppConfigurationSnapshotCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _snapshotRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new AppConfigurationArmOperation<SnapshotResource>(new SnapshotOperationSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _appConfigurationSnapshotSnapshotsRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new AppConfigurationArmOperation<AppConfigurationSnapshotResource>(new AppConfigurationSnapshotOperationSource(Client), _appConfigurationSnapshotSnapshotsClientDiagnostics, Pipeline, _appConfigurationSnapshotSnapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SnapshotResource"/></description>
+        /// <description><see cref="AppConfigurationSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -124,17 +124,17 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SnapshotResource> CreateOrUpdate(WaitUntil waitUntil, string snapshotName, SnapshotData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AppConfigurationSnapshotResource> CreateOrUpdate(WaitUntil waitUntil, string snapshotName, AppConfigurationSnapshotData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.CreateOrUpdate");
+            using var scope = _appConfigurationSnapshotSnapshotsClientDiagnostics.CreateScope("AppConfigurationSnapshotCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _snapshotRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, data, cancellationToken);
-                var operation = new AppConfigurationArmOperation<SnapshotResource>(new SnapshotOperationSource(Client), _snapshotClientDiagnostics, Pipeline, _snapshotRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _appConfigurationSnapshotSnapshotsRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, data, cancellationToken);
+                var operation = new AppConfigurationArmOperation<AppConfigurationSnapshotResource>(new AppConfigurationSnapshotOperationSource(Client), _appConfigurationSnapshotSnapshotsClientDiagnostics, Pipeline, _appConfigurationSnapshotSnapshotsRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SnapshotResource"/></description>
+        /// <description><see cref="AppConfigurationSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,18 +171,18 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
-        public virtual async Task<Response<SnapshotResource>> GetAsync(string snapshotName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppConfigurationSnapshotResource>> GetAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.Get");
+            using var scope = _appConfigurationSnapshotSnapshotsClientDiagnostics.CreateScope("AppConfigurationSnapshotCollection.Get");
             scope.Start();
             try
             {
-                var response = await _snapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, cancellationToken).ConfigureAwait(false);
+                var response = await _appConfigurationSnapshotSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SnapshotResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppConfigurationSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SnapshotResource"/></description>
+        /// <description><see cref="AppConfigurationSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,18 +216,18 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
-        public virtual Response<SnapshotResource> Get(string snapshotName, CancellationToken cancellationToken = default)
+        public virtual Response<AppConfigurationSnapshotResource> Get(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.Get");
+            using var scope = _appConfigurationSnapshotSnapshotsClientDiagnostics.CreateScope("AppConfigurationSnapshotCollection.Get");
             scope.Start();
             try
             {
-                var response = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, cancellationToken);
+                var response = _appConfigurationSnapshotSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SnapshotResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AppConfigurationSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SnapshotResource"/></description>
+        /// <description><see cref="AppConfigurationSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -265,11 +265,11 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.Exists");
+            using var scope = _appConfigurationSnapshotSnapshotsClientDiagnostics.CreateScope("AppConfigurationSnapshotCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _snapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _appConfigurationSnapshotSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SnapshotResource"/></description>
+        /// <description><see cref="AppConfigurationSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -308,11 +308,11 @@ namespace Azure.ResourceManager.AppConfiguration
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.Exists");
+            using var scope = _appConfigurationSnapshotSnapshotsClientDiagnostics.CreateScope("AppConfigurationSnapshotCollection.Exists");
             scope.Start();
             try
             {
-                var response = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, cancellationToken: cancellationToken);
+                var response = _appConfigurationSnapshotSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SnapshotResource"/></description>
+        /// <description><see cref="AppConfigurationSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -347,18 +347,18 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
-        public virtual async Task<NullableResponse<SnapshotResource>> GetIfExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<AppConfigurationSnapshotResource>> GetIfExistsAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.GetIfExists");
+            using var scope = _appConfigurationSnapshotSnapshotsClientDiagnostics.CreateScope("AppConfigurationSnapshotCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _snapshotRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _appConfigurationSnapshotSnapshotsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<SnapshotResource>(response.GetRawResponse());
-                return Response.FromValue(new SnapshotResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<AppConfigurationSnapshotResource>(response.GetRawResponse());
+                return Response.FromValue(new AppConfigurationSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SnapshotResource"/></description>
+        /// <description><see cref="AppConfigurationSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -392,18 +392,18 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
-        public virtual NullableResponse<SnapshotResource> GetIfExists(string snapshotName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<AppConfigurationSnapshotResource> GetIfExists(string snapshotName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(snapshotName, nameof(snapshotName));
 
-            using var scope = _snapshotClientDiagnostics.CreateScope("SnapshotCollection.GetIfExists");
+            using var scope = _appConfigurationSnapshotSnapshotsClientDiagnostics.CreateScope("AppConfigurationSnapshotCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _snapshotRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, cancellationToken: cancellationToken);
+                var response = _appConfigurationSnapshotSnapshotsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, snapshotName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<SnapshotResource>(response.GetRawResponse());
-                return Response.FromValue(new SnapshotResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<AppConfigurationSnapshotResource>(response.GetRawResponse());
+                return Response.FromValue(new AppConfigurationSnapshotResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {

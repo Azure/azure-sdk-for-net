@@ -107,15 +107,15 @@ namespace Azure.ResourceManager.AppConfiguration.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SnapshotResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SnapshotResource.CreateResourceIdentifier" /> to create a <see cref="SnapshotResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="AppConfigurationSnapshotResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AppConfigurationSnapshotResource.CreateResourceIdentifier" /> to create an <see cref="AppConfigurationSnapshotResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SnapshotResource"/> object. </returns>
-        public virtual SnapshotResource GetSnapshotResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AppConfigurationSnapshotResource"/> object. </returns>
+        public virtual AppConfigurationSnapshotResource GetAppConfigurationSnapshotResource(ResourceIdentifier id)
         {
-            SnapshotResource.ValidateResourceId(id);
-            return new SnapshotResource(Client, id);
+            AppConfigurationSnapshotResource.ValidateResourceId(id);
+            return new AppConfigurationSnapshotResource(Client, id);
         }
     }
 }

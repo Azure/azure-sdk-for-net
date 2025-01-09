@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="AppConfiguration.SnapshotData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfiguration.AppConfigurationSnapshotData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -290,13 +290,13 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="itemsCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. NOTE: These are data plane tags, not Azure Resource Manager (ARM) tags. </param>
         /// <param name="eTag"> A value representing the current state of the snapshot. </param>
-        /// <returns> A new <see cref="AppConfiguration.SnapshotData"/> instance for mocking. </returns>
-        public static SnapshotData SnapshotData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string snapshotType = null, AppConfigurationProvisioningState? provisioningState = null, SnapshotStatus? status = null, IEnumerable<KeyValueFilter> filters = null, CompositionType? compositionType = null, DateTimeOffset? created = null, DateTimeOffset? expires = null, long? retentionPeriod = null, long? size = null, long? itemsCount = null, IDictionary<string, string> tags = null, ETag? eTag = null)
+        /// <returns> A new <see cref="AppConfiguration.AppConfigurationSnapshotData"/> instance for mocking. </returns>
+        public static AppConfigurationSnapshotData AppConfigurationSnapshotData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string snapshotType = null, AppConfigurationProvisioningState? provisioningState = null, SnapshotStatus? status = null, IEnumerable<KeyValueFilter> filters = null, CompositionType? compositionType = null, DateTimeOffset? created = null, DateTimeOffset? expires = null, long? retentionPeriod = null, long? size = null, long? itemsCount = null, IDictionary<string, string> tags = null, ETag? eTag = null)
         {
             filters ??= new List<KeyValueFilter>();
             tags ??= new Dictionary<string, string>();
 
-            return new SnapshotData(
+            return new AppConfigurationSnapshotData(
                 id,
                 name,
                 resourceType,

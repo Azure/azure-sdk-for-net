@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         public static bool operator ==(SnapshotStatus left, SnapshotStatus right) => left.Equals(right);
         /// <summary> Determines if two <see cref="SnapshotStatus"/> values are not the same. </summary>
         public static bool operator !=(SnapshotStatus left, SnapshotStatus right) => !left.Equals(right);
-        /// <summary> Converts a string to a <see cref="SnapshotStatus"/>. </summary>
+        /// <summary> Converts a <see cref="string"/> to a <see cref="SnapshotStatus"/>. </summary>
         public static implicit operator SnapshotStatus(string value) => new SnapshotStatus(value);
 
         /// <inheritdoc />

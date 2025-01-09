@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             ResourceIdentifier appConfigurationStoreResourceId = AppConfigurationStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName);
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
-            // get the collection of this SnapshotResource
+            // get the collection of this AppConfigurationSnapshotResource
             SnapshotCollection collection = appConfigurationStore.GetSnapshots();
 
             // invoke the operation
             string snapshotName = "mySnapshot";
-            SnapshotResource result = await collection.GetAsync(snapshotName);
+            AppConfigurationSnapshotResource result = await collection.GetAsync(snapshotName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             ResourceIdentifier appConfigurationStoreResourceId = AppConfigurationStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName);
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
-            // get the collection of this SnapshotResource
+            // get the collection of this AppConfigurationSnapshotResource
             SnapshotCollection collection = appConfigurationStore.GetSnapshots();
 
             // invoke the operation
@@ -102,13 +102,13 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             ResourceIdentifier appConfigurationStoreResourceId = AppConfigurationStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName);
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
-            // get the collection of this SnapshotResource
+            // get the collection of this AppConfigurationSnapshotResource
             SnapshotCollection collection = appConfigurationStore.GetSnapshots();
 
             // invoke the operation
             string snapshotName = "mySnapshot";
-            NullableResponse<SnapshotResource> response = await collection.GetIfExistsAsync(snapshotName);
-            SnapshotResource result = response.HasValue ? response.Value : null;
+            NullableResponse<AppConfigurationSnapshotResource> response = await collection.GetIfExistsAsync(snapshotName);
+            AppConfigurationSnapshotResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             ResourceIdentifier appConfigurationStoreResourceId = AppConfigurationStoreResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName);
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
-            // get the collection of this SnapshotResource
+            // get the collection of this AppConfigurationSnapshotResource
             SnapshotCollection collection = appConfigurationStore.GetSnapshots();
 
             // invoke the operation
@@ -161,8 +161,8 @@ Label = "Production",
 },
                 RetentionPeriod = 3600,
             };
-            ArmOperation<SnapshotResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, data);
-            SnapshotResource result = lro.Value;
+            ArmOperation<AppConfigurationSnapshotResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, data);
+            AppConfigurationSnapshotResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

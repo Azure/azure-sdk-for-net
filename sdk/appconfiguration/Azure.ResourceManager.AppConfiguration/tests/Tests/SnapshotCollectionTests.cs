@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 RetentionPeriod = 3600
             };
 
-            SnapshotResource snapshot = (await ConfigStore.GetSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData)).Value;
+            AppConfigurationSnapshotResource snapshot = (await ConfigStore.GetSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData)).Value;
 
             Assert.IsTrue(snapshot.HasData);
             Assert.IsTrue(snapshot.Data.Name.Equals(snapshotName));
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 
             await ConfigStore.GetSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData);
 
-            SnapshotResource snapshot = (await ConfigStore.GetSnapshots().GetAsync(snapshotName)).Value;
+            AppConfigurationSnapshotResource snapshot = (await ConfigStore.GetSnapshots().GetAsync(snapshotName)).Value;
 
             Assert.IsTrue(snapshotName.Equals(snapshot.Data.Name));
             Assert.IsTrue(snapshot.Data.Filters.FirstOrDefault().Key.Equals("key1/*"));

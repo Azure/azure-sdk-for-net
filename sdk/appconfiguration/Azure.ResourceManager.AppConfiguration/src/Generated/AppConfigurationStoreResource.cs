@@ -367,11 +367,11 @@ namespace Azure.ResourceManager.AppConfiguration
             return GetAppConfigurationReplicas().Get(replicaName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SnapshotResources in the AppConfigurationStore. </summary>
-        /// <returns> An object representing collection of SnapshotResources and their operations over a SnapshotResource. </returns>
-        public virtual SnapshotCollection GetSnapshots()
+        /// <summary> Gets a collection of AppConfigurationSnapshotResources in the AppConfigurationStore. </summary>
+        /// <returns> An object representing collection of AppConfigurationSnapshotResources and their operations over a AppConfigurationSnapshotResource. </returns>
+        public virtual AppConfigurationSnapshotCollection GetAppConfigurationSnapshots()
         {
-            return GetCachedClient(client => new SnapshotCollection(client, Id));
+            return GetCachedClient(client => new AppConfigurationSnapshotCollection(client, Id));
         }
 
         /// <summary>
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SnapshotResource"/></description>
+        /// <description><see cref="AppConfigurationSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -400,9 +400,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SnapshotResource>> GetSnapshotAsync(string snapshotName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AppConfigurationSnapshotResource>> GetAppConfigurationSnapshotAsync(string snapshotName, CancellationToken cancellationToken = default)
         {
-            return await GetSnapshots().GetAsync(snapshotName, cancellationToken).ConfigureAwait(false);
+            return await GetAppConfigurationSnapshots().GetAsync(snapshotName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SnapshotResource"/></description>
+        /// <description><see cref="AppConfigurationSnapshotResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -431,9 +431,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="snapshotName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="snapshotName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SnapshotResource> GetSnapshot(string snapshotName, CancellationToken cancellationToken = default)
+        public virtual Response<AppConfigurationSnapshotResource> GetAppConfigurationSnapshot(string snapshotName, CancellationToken cancellationToken = default)
         {
-            return GetSnapshots().Get(snapshotName, cancellationToken);
+            return GetAppConfigurationSnapshots().Get(snapshotName, cancellationToken);
         }
 
         /// <summary>
