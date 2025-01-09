@@ -45,14 +45,14 @@ public class PlaywrightService
     /// <summary>
     /// handles one time perform operation
     /// </summary>
-    public  void PerformOneTimeOperation()
+    internal void PerformOneTimeOperation()
     {
-        var oneTimeOperationFlag = Environment.GetEnvironmentVariable(ServiceEnvironmentVariable.OneTimeOperationFalg) == "true";
+        var oneTimeOperationFlag = Environment.GetEnvironmentVariable(Constants.s_playwright_service_one_time_operation_flag_environment_variable) == "true";
 
         if (oneTimeOperationFlag)
             return;
 
-        Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.OneTimeOperationFalg, "true");
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_one_time_operation_flag_environment_variable, "true");
 
         if (ServiceAuth == ServiceAuthType.AccessToken)
         {
@@ -155,7 +155,7 @@ public class PlaywrightService
     private readonly EntraLifecycle? _entraLifecycle;
     private readonly JsonWebTokenHandler? _jsonWebTokenHandler;
     private IFrameworkLogger? _frameworkLogger;
-    private ConsoleWriter? _consoleWriter;
+    private IConsoleWriter? _consoleWriter;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PlaywrightService"/> class.
@@ -197,7 +197,7 @@ public class PlaywrightService
         InitializePlaywrightServiceEnvironmentVariables(GetServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
     }
 
-    internal PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? credential = null, IFrameworkLogger? frameworkLogger = null)
+    internal PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? credential = null, IFrameworkLogger? frameworkLogger = null, IConsoleWriter? consoleWriter = null)
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
             return;
@@ -205,7 +205,7 @@ public class PlaywrightService
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
         _entraLifecycle = entraLifecycle ?? new EntraLifecycle(credential, _jsonWebTokenHandler, _frameworkLogger);
         _frameworkLogger = frameworkLogger;
-        _consoleWriter = new ConsoleWriter();
+        _consoleWriter = consoleWriter ?? new ConsoleWriter();
         InitializePlaywrightServiceEnvironmentVariables(GetServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
     }
 
@@ -365,15 +365,13 @@ public class PlaywrightService
         }
         SetReportingUrlAndWorkspaceId();
     }
-    private void WarnIfAccessTokenCloseToExpiry()
+    internal virtual void WarnIfAccessTokenCloseToExpiry()
     {
         string accessToken =  GetAuthToken()!;
-        if (string.IsNullOrEmpty(accessToken))
-            throw new Exception(Constants.s_no_auth_error);
         JsonWebToken jsonWebToken = _jsonWebTokenHandler!.ReadJsonWebToken(accessToken) ?? throw new Exception(Constants.s_invalid_mpt_pat_error);
         long currentTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         long exp = new DateTimeOffset(jsonWebToken.ValidTo).ToUnixTimeMilliseconds();
-        if (IsTokenExpiringSoon(exp, currentTime))
+        if (PlaywrightService.IsTokenExpiringSoon(exp, currentTime))
         {
             WarnAboutTokenExpiry(exp, currentTime);
         }
@@ -383,14 +381,11 @@ public class PlaywrightService
         return expirationTime - currentTime <= Constants.s_sevenDaysInMs;
     }
 
-    internal void WarnAboutTokenExpiry(long expirationTime, long currentTime)
+    internal virtual void WarnAboutTokenExpiry(long expirationTime, long currentTime)
     {
         int daysToExpiration = (int)Math.Ceiling((expirationTime - currentTime) / (double)Constants.s_oneDayInMs);
         string expirationDate = DateTimeOffset.FromUnixTimeMilliseconds(expirationTime).UtcDateTime.ToString("d");
-        string expirationWarning = $"Warning: The access token used for this test run will expire in {daysToExpiration} days on {expirationDate}. " +
-                                   "Generate a new token from the portal to avoid failures. " +
-                                   "For a simpler, more secure solution, switch to Microsoft Entra ID and eliminate token management. " +
-                                   "https://learn.microsoft.com/en-us/entra/identity/";
+        string expirationWarning = string.Format(Constants.s_token_expiry_warning_template, daysToExpiration, expirationDate);
         _consoleWriter?.WriteLine(expirationWarning);
     }
 

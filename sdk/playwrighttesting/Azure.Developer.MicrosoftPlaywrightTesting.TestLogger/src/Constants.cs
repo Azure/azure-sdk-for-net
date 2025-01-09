@@ -35,12 +35,6 @@ public class ServiceEnvironmentVariable
     /// The environment variable for the Playwright service run ID.
     /// </summary>
     public static readonly string PlaywrightServiceRunId = "PLAYWRIGHT_SERVICE_RUN_ID";
-
-    /// <summary>
-    /// The environment variable for the Playwright service one time operation.
-    /// </summary>
-
-    public static readonly string OneTimeOperationFalg= "ONE_TIME_OPERATION_FLAG";
 };
 
 /// <summary>
@@ -222,11 +216,17 @@ internal class Constants
     internal static readonly string s_workspace_mismatch_error = "The provided access token does not match the specified workspace URL. Please verify that both values are correct.";
     internal static readonly string s_invalid_service_endpoint_error_message = "The service endpoint provided is invalid. Please verify the endpoint URL and try again.";
     internal static readonly string s_playwright_service_runId_length_exceeded_error_message = "Error: The Run Id you provided exceeds 200 characters. Please provide a shorter Run ID.";
+    internal static readonly string s_token_expiry_warning_template =
+    "Warning: The access token used for this test run will expire in {0} days on {1}. " +
+    "Generate a new token from the portal to avoid failures. " +
+    "For a simpler, more secure solution, switch to Microsoft Entra ID and eliminate token management. " +
+    "https://learn.microsoft.com/en-us/entra/identity/";
 
     internal static readonly string s_playwright_service_disable_scalable_execution_environment_variable = "_MPT_DISABLE_SCALABLE_EXECUTION";
     internal static readonly string s_playwright_service_reporting_url_environment_variable = "_MPT_REPORTING_URL";
     internal static readonly string s_playwright_service_workspace_id_environment_variable = "_MPT_WORKSPACE_ID";
     internal static readonly string s_playwright_service_auth_type_environment_variable = "_MPT_AUTH_TYPE";
+    internal static readonly string s_playwright_service_one_time_operation_flag_environment_variable = "_MPT_ONE_TIME_OPERATION_FLAG";
 
     internal static readonly string s_playwright_service_runName_truncated_warning = "WARNING: Run name exceeds the maximum limit of 200 characters and will be truncated.";
     internal static readonly int s_sevenDaysInMs = 7 * 24 * 60 * 60 * 1000;
