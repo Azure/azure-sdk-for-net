@@ -77,41 +77,6 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public void EnsureCompleted()
-        {
-            // Arrange
-            string transferId = GetNewTransferId();
-
-            TransferOperation transfer = new TransferOperation(
-                id: transferId,
-                status: SuccessfulCompletedStatus);
-
-            // Act
-            transfer.WaitForCompletion();
-
-            // Assert
-            Assert.AreEqual(transferId, transfer.Id);
-            Assert.IsTrue(transfer.HasCompleted);
-        }
-
-        [Test]
-        public void EnsureCompleted_CancellationToken()
-        {
-            // Arrange
-            string transferId = GetNewTransferId();
-
-            TransferOperation transfer = new TransferOperation(
-                id: transferId,
-                status: QueuedStatus);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(1));
-
-            // Act
-            TestHelper.AssertExpectedException(
-                () => transfer.WaitForCompletion(cancellationTokenSource.Token),
-                new OperationCanceledException("The operation was canceled."));
-        }
-
-        [Test]
         public async Task AwaitCompletion()
         {
             // Arrange
