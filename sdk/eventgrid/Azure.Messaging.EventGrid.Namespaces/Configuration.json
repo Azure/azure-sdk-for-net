@@ -1,0 +1,13 @@
+{
+  "output-folder": ".",
+  "namespace": "Azure.Messaging.EventGrid.Namespaces",
+  "library-name": "Azure.Messaging.EventGrid.Namespaces",
+  "model-namespace": false,
+  "flavor": "azure",
+  "generate-sample-project": false,
+  "use-model-reader-writer": true,
+  "shared-source-folders": [
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Generator.Shared",
+    "../../TempTypeSpecFiles/node_modules/@autorest/csharp/Azure.Core.Shared"
+  ]
+}
