@@ -3568,7 +3568,7 @@ EnableIPForwarding = true,
                                 Sku = "20_04-lts-gen2",
                                 Version = "latest",
                             },
-                            OSDisk = new VirtualMachineScaleSetOSDisk(new DiskCreateOptionType("fromImage"))
+                            OSDisk = new VirtualMachineScaleSetOSDisk(DiskCreateOptionType.FromImage)
                             {
                                 Caching = CachingType.ReadWrite,
                                 ManagedDisk = new VirtualMachineScaleSetManagedDisk
@@ -3598,7 +3598,7 @@ EnableIPForwarding = true,
 }},
                             NetworkApiVersion = NetworkApiVersion.TwoThousandTwenty1101,
                         },
-                        Priority = new VirtualMachinePriorityType("spot"),
+                        Priority = VirtualMachinePriorityType.Spot,
                     },
                     PlatformFaultDomainCount = 1,
                     OrchestrationMode = OrchestrationMode.Flexible,

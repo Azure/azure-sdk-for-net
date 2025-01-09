@@ -73,7 +73,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// <summary>
         /// The current status of the job part.
         /// </summary>
-        public DataTransferStatus JobPartStatus;
+        public TransferStatus JobPartStatus;
 
         public JobPartPlanHeader(
             int version,
@@ -88,7 +88,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             long initialTransferSize,
             long chunkSize,
             byte priority,
-            DataTransferStatus jobPartStatus)
+            TransferStatus jobPartStatus)
         {
             Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
             Argument.AssertNotNull(createTime, nameof(createTime));
@@ -240,7 +240,7 @@ namespace Azure.Storage.DataMovement.JobPlan
 
             // JobPartStatus
             JobPlanStatus jobPlanStatus = (JobPlanStatus)reader.ReadInt32();
-            DataTransferStatus jobPartStatus = jobPlanStatus.ToDataTransferStatus();
+            TransferStatus jobPartStatus = jobPlanStatus.ToTransferStatus();
 
             // SourcePath
             string sourcePath = null;

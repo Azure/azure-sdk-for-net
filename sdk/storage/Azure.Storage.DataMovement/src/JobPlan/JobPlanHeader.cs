@@ -53,7 +53,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// <summary>
         /// The current status of the transfer job.
         /// </summary>
-        public DataTransferStatus JobStatus;
+        public TransferStatus JobStatus;
 
         /// <summary>
         /// The parent path for the source of the transfer.
@@ -89,7 +89,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             string destinationProviderId,
             bool isContainer,
             bool enumerationComplete,
-            DataTransferStatus jobStatus,
+            TransferStatus jobStatus,
             string parentSourcePath,
             string parentDestinationPath,
             StorageResourceCheckpointData sourceCheckpointData,
@@ -139,7 +139,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             string destinationProviderId,
             bool isContainer,
             bool enumerationComplete,
-            DataTransferStatus jobStatus,
+            TransferStatus jobStatus,
             string parentSourcePath,
             string parentDestinationPath,
             byte[] sourceCheckpointData,
@@ -321,7 +321,7 @@ namespace Azure.Storage.DataMovement.JobPlan
                 destProviderId,
                 isContainer,
                 enumerationComplete,
-                jobPlanStatus.ToDataTransferStatus(),
+                jobPlanStatus.ToTransferStatus(),
                 parentSourcePath,
                 parentDestinationPath,
                 sourceCheckpointData,

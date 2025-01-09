@@ -23,7 +23,7 @@ namespace Azure.Storage.DataMovement
 
         public override string ProviderId => "local";
 
-        protected internal override DataTransferOrder TransferType => DataTransferOrder.Sequential;
+        protected internal override TransferOrder TransferType => TransferOrder.Sequential;
 
         protected internal override long MaxSupportedSingleTransferSize => Constants.Blob.Block.MaxStageBytes;
 

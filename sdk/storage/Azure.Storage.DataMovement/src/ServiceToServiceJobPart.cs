@@ -27,7 +27,7 @@ namespace Azure.Storage.DataMovement
         /// Creating job part based on a single transfer job
         /// </summary>
         private ServiceToServiceJobPart(TransferJobInternal job, int partNumber)
-            : base(dataTransfer: job._dataTransfer,
+            : base(transferOperation: job._transferOperation,
                   partNumber: partNumber,
                   sourceResource: job._sourceResource,
                   destinationResource: job._destinationResource,
@@ -57,7 +57,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
             long? length = default)
-            : base(dataTransfer: job._dataTransfer,
+            : base(transferOperation: job._transferOperation,
                   partNumber: partNumber,
                   sourceResource: sourceResource,
                   destinationResource: destinationResource,
@@ -88,11 +88,11 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            DataTransferStatus jobPartStatus,
+            TransferStatus jobPartStatus,
             long initialTransferSize,
             long transferChunkSize,
             StorageResourceCreationPreference createPreference)
-            : base(dataTransfer: job._dataTransfer,
+            : base(transferOperation: job._transferOperation,
                   partNumber: partNumber,
                   sourceResource: sourceResource,
                   destinationResource: destinationResource,
@@ -163,7 +163,7 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            DataTransferStatus jobPartStatus,
+            TransferStatus jobPartStatus,
             long initialTransferSize,
             long transferChunkSize,
             StorageResourceCreationPreference createPreference)
@@ -192,7 +192,7 @@ namespace Azure.Storage.DataMovement
                 {
                     return;
                 }
-                await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(TransferState.InProgress).ConfigureAwait(false);
 
                 long? fileLength = default;
                 StorageResourceItemProperties sourceProperties = default;
@@ -235,7 +235,7 @@ namespace Azure.Storage.DataMovement
                 if (await CreateDestinationResource(length, blockSize).ConfigureAwait(false))
                 {
                     IEnumerable<(long Offset, long Length)> ranges = GetRanges(length, blockSize);
-                    if (_destinationResource.TransferType == DataTransferOrder.Unordered)
+                    if (_destinationResource.TransferType == TransferOrder.Unordered)
                     {
                         await QueueStageBlockRequests(ranges, length, sourceProperties).ConfigureAwait(false);
                     }
@@ -276,7 +276,7 @@ namespace Azure.Storage.DataMovement
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 await ReportBytesWrittenAsync(completeLength).ConfigureAwait(false);
-                await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
             }
             catch (RequestFailedException exception)
                 when (_createMode == StorageResourceCreationPreference.SkipIfExists
@@ -369,7 +369,7 @@ namespace Azure.Storage.DataMovement
                 await DisposeHandlersAsync().ConfigureAwait(false);
 
                 // Set completion status to completed
-                await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
             }
             catch (Exception ex)
             {

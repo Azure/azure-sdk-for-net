@@ -2,7 +2,7 @@
 Use the AI Projects client library to:
 
 * **Develop Agents using the Azure AI Agent Service**, leveraging an extensive ecosystem of models, tools, and capabilities from OpenAI, Microsoft, and other LLM providers. The Azure AI Agent Service enables the building of Agents for a wide range of generative AI use cases. The package is currently in preview.
-* **Enumerate connections** in your Azure AI Studio project and get connection properties. For example, get the inference endpoint URL and credentials associated with your Azure OpenAI connection.
+* **Enumerate connections** in your Azure AI Foundry project and get connection properties. For example, get the inference endpoint URL and credentials associated with your Azure OpenAI connection.
 
 [Product documentation][product_doc]
 | [Samples][samples]
