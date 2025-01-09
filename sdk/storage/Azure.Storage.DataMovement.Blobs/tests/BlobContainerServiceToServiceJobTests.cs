@@ -111,14 +111,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<CancellationToken>()))
                 .Returns(GetStorageResourceItemsAsyncEnumerable(blobItems));
             TransferJobInternal transferJob = new(
-                new DataTransfer(id: transferId),
+                new TransferOperation(id: transferId),
                 sourceMock.Object,
                 destinationMock.Object,
                 ServiceToServiceJobPart.CreateJobPartAsync,
                 ServiceToServiceJobPart.CreateJobPartAsync,
-                new DataTransferOptions(),
+                new TransferOptions(),
                 checkpointer,
-                DataTransferErrorMode.StopOnAnyFailure,
+                TransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
                 new ClientDiagnostics(ClientOptions.Default));
 
@@ -167,14 +167,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 It.IsAny<CancellationToken>()))
                 .Returns(GetStorageResourceItemsAsyncEnumerable(blobItems));
             TransferJobInternal transferJob = new(
-                new DataTransfer(id: transferId),
+                new TransferOperation(id: transferId),
                 sourceMock.Object,
                 destinationMock.Object,
                 ServiceToServiceJobPart.CreateJobPartAsync,
                 ServiceToServiceJobPart.CreateJobPartAsync,
-                new DataTransferOptions(),
+                new TransferOptions(),
                 checkpointer,
-                DataTransferErrorMode.StopOnAnyFailure,
+                TransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
                 new ClientDiagnostics(ClientOptions.Default));
 

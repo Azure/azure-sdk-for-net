@@ -23,7 +23,7 @@ namespace Azure.AI.FormRecognizer.Samples
             // managed identity configured.
             //
             // For instructions on setting up forms for training in an Azure Blob Storage Container, see
-            // https://docs.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
+            // https://learn.microsoft.com/azure/cognitive-services/form-recognizer/build-training-data-set#upload-your-training-data
 
 #if SNIPPET
             Uri trainingFileUri = new Uri("<trainingFileUri>");

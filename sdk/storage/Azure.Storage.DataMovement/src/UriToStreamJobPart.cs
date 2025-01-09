@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement
         private UriToStreamJobPart(
             TransferJobInternal job,
             int partNumber)
-            : base(dataTransfer: job._dataTransfer,
+            : base(transferOperation: job._transferOperation,
                   partNumber: partNumber,
                   sourceResource: job._sourceResource,
                   destinationResource: job._destinationResource,
@@ -57,7 +57,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
             long? length = default)
-            : base(dataTransfer: job._dataTransfer,
+            : base(transferOperation: job._transferOperation,
                   partNumber: partNumber,
                   sourceResource: sourceResource,
                   destinationResource: destinationResource,
@@ -88,11 +88,11 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            DataTransferStatus jobPartStatus,
+            TransferStatus jobPartStatus,
             long initialTransferSize,
             long transferChunkSize,
             StorageResourceCreationPreference createPreference)
-            : base(dataTransfer: job._dataTransfer,
+            : base(transferOperation: job._transferOperation,
                   partNumber: partNumber,
                   sourceResource: sourceResource,
                   destinationResource: destinationResource,
@@ -163,7 +163,7 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            DataTransferStatus jobPartStatus,
+            TransferStatus jobPartStatus,
             long initialTransferSize,
             long transferChunkSize,
             StorageResourceCreationPreference createPreference)
@@ -203,7 +203,7 @@ namespace Azure.Storage.DataMovement
                 {
                     return;
                 }
-                await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(TransferState.InProgress).ConfigureAwait(false);
                 if (!_sourceResource.Length.HasValue)
                 {
                     await UnknownDownloadInternal().ConfigureAwait(false);
@@ -381,7 +381,7 @@ namespace Azure.Storage.DataMovement
                 await DisposeHandlersAsync().ConfigureAwait(false);
 
                 // Update the transfer status
-                await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -394,7 +394,7 @@ namespace Azure.Storage.DataMovement
             try
             {
                 // If the job part is not InProgress, we should just stop processing any queued chunks.
-                if (JobPartStatus.State != DataTransferState.InProgress)
+                if (JobPartStatus.State != TransferState.InProgress)
                 {
                     return;
                 }

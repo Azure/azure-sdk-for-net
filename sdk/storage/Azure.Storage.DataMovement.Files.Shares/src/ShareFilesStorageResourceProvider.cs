@@ -225,7 +225,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         #region Abstract Class Implementation
         /// <inheritdoc/>
-        protected override Task<StorageResource> FromSourceAsync(DataTransferProperties properties, CancellationToken cancellationToken)
+        protected override Task<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
         {
             // Source share file data currently empty, so no specific properties to grab
 
@@ -235,7 +235,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <inheritdoc/>
-        protected override Task<StorageResource> FromDestinationAsync(DataTransferProperties properties, CancellationToken cancellationToken)
+        protected override Task<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
         {
             ShareFileDestinationCheckpointData checkpointData;
             using (MemoryStream stream = new(properties.DestinationCheckpointData))
@@ -265,19 +265,19 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         /// <summary>
         /// For use in testing. Internal wrapper for protected member
-        /// <see cref="StorageResourceProvider.FromSourceAsync(DataTransferProperties, CancellationToken)"/>.
+        /// <see cref="StorageResourceProvider.FromSourceAsync(TransferProperties, CancellationToken)"/>.
         /// </summary>
         internal async Task<StorageResource> FromSourceInternalHookAsync(
-            DataTransferProperties props,
+            TransferProperties props,
             CancellationToken cancellationToken = default)
             => await FromSourceAsync(props, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// For use in testing. Internal wrapper for protected member
-        /// <see cref="StorageResourceProvider.FromDestinationAsync(DataTransferProperties, CancellationToken)"/>.
+        /// <see cref="StorageResourceProvider.FromDestinationAsync(TransferProperties, CancellationToken)"/>.
         /// </summary>
         internal async Task<StorageResource> FromDestinationInternalHookAsync(
-            DataTransferProperties props,
+            TransferProperties props,
             CancellationToken cancellationToken = default)
             => await FromDestinationAsync(props, cancellationToken).ConfigureAwait(false);
         #endregion
