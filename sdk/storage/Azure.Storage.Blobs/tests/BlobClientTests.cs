@@ -1020,7 +1020,7 @@ namespace Azure.Storage.Blobs.Test
 
                 var buffer = new byte[count];
                 stream.Seek(i, SeekOrigin.Begin);
-                await stream.ReadAsync(buffer, 0, count);
+                int numBytesRead = await stream.ReadAsync(buffer, 0, count);
 
                 TestHelper.AssertSequenceEqual(
                     buffer,

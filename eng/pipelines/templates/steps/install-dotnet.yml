@@ -12,21 +12,21 @@ steps:
       msbuildArguments: /p:WorkFolder="$(Agent.WorkFolder)" /p:BuildDirectory="$(Agent.BuildDirectory)"
   # Installation steps need to be uncommented when switching to a newer SDK that's not available on DevOps agents
   - task: UseDotNet@2
-    displayName: 'Use .NET 8.0 SDK'
+    displayName: 'Use .NET 9.0 SDK'
     retryCountOnTaskFailure: 3
     inputs:
       useGlobalJson: true
       performMultiLevelLookup: true
-      version: "8.0.x"
-  - task: UseDotNet@2 # We need .NET for the .NET 9 tests
+      version: "9.0.x"
+  - task: UseDotNet@2 # We need .NET 8 for the .NET 8 tests
     condition: and(succeeded(), ne(variables['Agent.OS'], 'Windows_NT')) # Windows supports MultiLevelLookup and doesn't need explicit framework installation
-    displayName: 'Use .NET 9.0 SDK'
+    displayName: 'Use .NET 8.0 SDK'
     retryCountOnTaskFailure: 3
     inputs:
       # AspNetCore runtime pack can't be installed outside of SDK and we need it for integration tests
       packageType: sdk
       performMultiLevelLookup: true
-      version: "9.0.x"
+      version: "8.0.x"
   - task: Cache@2
     inputs:
       key: 'nuget | "$(Agent.OS)" | $(Build.SourcesDirectory)/eng/Packages.Data.props | ${{parameters.NuGetCacheKey}}'

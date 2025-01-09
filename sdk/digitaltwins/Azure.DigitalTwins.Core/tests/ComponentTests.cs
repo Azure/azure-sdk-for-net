@@ -161,7 +161,7 @@ namespace Azure.DigitalTwins.Core.Tests
                         .ConfigureAwait(false);
                 };
 
-                await act.Should().ThrowAsync<RequestFailedException>()
+                await act.Should().ThrowsAsync<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.PreconditionFailed);
             }
             catch (Exception ex)
