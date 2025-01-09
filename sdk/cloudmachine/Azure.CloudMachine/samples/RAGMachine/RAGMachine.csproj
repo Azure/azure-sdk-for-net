@@ -16,6 +16,6 @@
   </PropertyGroup>
 	<ItemGroup>
 		<PackageReference Include="Azure.CloudMachine.All" Version="1.0.0-alpha.20241213.1" />
-    <PackageReference Include="System.Text.Json" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
 	</ItemGroup>
 </Project>
