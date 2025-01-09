@@ -8,9 +8,9 @@ using Azure.Core;
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// <see cref="DataTransferOptions"/> is used to provide options for a transfer.
+    /// <see cref="TransferOptions"/> is used to provide options for a transfer.
     /// </summary>
-    public class DataTransferOptions : IEquatable<DataTransferOptions>
+    public class TransferOptions : IEquatable<TransferOptions>
     {
         /// <summary>
         /// The maximum size to use for each chunk when transferring data in chunks.
@@ -68,7 +68,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static bool operator ==(DataTransferOptions left, DataTransferOptions right) => left.Equals(right);
+        public static bool operator ==(TransferOptions left, TransferOptions right) => left.Equals(right);
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
@@ -77,7 +77,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="right">The second instance to compare.</param>
         /// <returns>True if they're not equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static bool operator !=(DataTransferOptions left, DataTransferOptions right) => !(left == right);
+        public static bool operator !=(TransferOptions left, TransferOptions right) => !(left == right);
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
@@ -85,7 +85,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="obj">The instance to compare to.</param>
         /// <returns>True if they're equal, false otherwise.</returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool Equals(DataTransferOptions obj)
+        public bool Equals(TransferOptions obj)
             => MaximumTransferChunkSize == obj?.MaximumTransferChunkSize
             && InitialTransferSize == obj?.InitialTransferSize;
 

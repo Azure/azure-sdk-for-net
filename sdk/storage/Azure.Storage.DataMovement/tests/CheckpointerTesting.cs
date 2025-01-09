@@ -30,8 +30,8 @@ namespace Azure.Storage.DataMovement.Tests
         internal const byte DefaultS2sInvalidMetadataHandleOption = 0;
         internal const byte DefaultChecksumVerificationOption = 0;
         internal static readonly DateTimeOffset DefaultCreateTime = new DateTimeOffset(2023, 08, 28, 17, 26, 0, default);
-        internal static readonly DataTransferStatus DefaultJobStatus = new DataTransferStatus(DataTransferState.Queued, false, false);
-        internal static readonly DataTransferStatus DefaultPartStatus = new DataTransferStatus(DataTransferState.Queued, false, false);
+        internal static readonly TransferStatus DefaultJobStatus = new TransferStatus(TransferState.Queued, false, false);
+        internal static readonly TransferStatus DefaultPartStatus = new TransferStatus(TransferState.Queued, false, false);
 
         internal static JobPartPlanHeader CreateDefaultJobPartHeader(
             string version = DataMovementConstants.JobPartPlanFile.SchemaVersion,
@@ -46,7 +46,7 @@ namespace Azure.Storage.DataMovement.Tests
             long initialTransferSize = DefaultInitialTransferSize,
             long chunkSize = DefaultChunkSize,
             byte priority = DefaultPriority,
-            DataTransferStatus jobPartStatus = default)
+            TransferStatus jobPartStatus = default)
         {
             if (createTime == default)
             {

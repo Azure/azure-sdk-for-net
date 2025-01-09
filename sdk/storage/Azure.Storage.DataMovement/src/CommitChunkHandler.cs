@@ -40,7 +40,7 @@ namespace Azure.Storage.DataMovement
         private long _bytesTransferred;
         private readonly long _expectedLength;
         private readonly long _blockSize;
-        private readonly DataTransferOrder _transferOrder;
+        private readonly TransferOrder _transferOrder;
         private readonly StorageResourceItemProperties _sourceProperties;
 
         internal bool _isChunkHandlerRunning;
@@ -49,7 +49,7 @@ namespace Azure.Storage.DataMovement
             long expectedLength,
             long blockSize,
             Behaviors behaviors,
-            DataTransferOrder transferOrder,
+            TransferOrder transferOrder,
             StorageResourceItemProperties sourceProperties,
             CancellationToken cancellationToken)
         {
@@ -109,7 +109,7 @@ namespace Azure.Storage.DataMovement
                 else if (_bytesTransferred < _expectedLength)
                 {
                     // If this is a sequential transfer, we need to queue the next chunk
-                    if (_transferOrder == DataTransferOrder.Sequential)
+                    if (_transferOrder == TransferOrder.Sequential)
                     {
                         long newOffset = args.Offset + _blockSize;
                         long blockLength = (newOffset + _blockSize < _expectedLength) ?

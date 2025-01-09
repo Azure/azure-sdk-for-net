@@ -12,32 +12,32 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Defines the state of the transfer
     /// </summary>
-    internal class DataTransferInternalState
+    internal class TransferInternalState
     {
         private string _id;
-        private DataTransferStatus _status;
+        private TransferStatus _status;
 
-        public TaskCompletionSource<DataTransferStatus> CompletionSource;
+        public TaskCompletionSource<TransferStatus> CompletionSource;
 
         public CancellationTokenSource CancellationTokenSource { get; internal set; }
 
-        public DataTransferStatus Status => _status;
+        public TransferStatus Status => _status;
 
         /// <summary>
         /// Constructor to resume current jobs
         /// </summary>
         /// <param name="id">The transfer ID of the transfer object.</param>
-        /// <param name="status">The Transfer Status of the Transfer. See <see cref="DataTransferStatus"/>.</param>
-        public DataTransferInternalState(
+        /// <param name="status">The Transfer Status of the Transfer. See <see cref="TransferStatus"/>.</param>
+        public TransferInternalState(
             string id = default,
-            DataTransferStatus status = default)
+            TransferStatus status = default)
         {
             _id = string.IsNullOrEmpty(id) ? Guid.NewGuid().ToString() : id;
             _status = status;
-            CompletionSource = new TaskCompletionSource<DataTransferStatus>(
+            CompletionSource = new TaskCompletionSource<TransferStatus>(
                 _status,
                 TaskCreationOptions.RunContinuationsAsynchronously);
-            if (DataTransferState.Completed == status.State)
+            if (TransferState.Completed == status.State)
             {
                 CompletionSource.TrySetResult(status);
             }
@@ -59,7 +59,7 @@ namespace Azure.Storage.DataMovement
         public bool HasCompleted
         {
             get {
-                return DataTransferState.Completed == _status.State;
+                return TransferState.Completed == _status.State;
             }
             internal set { }
         }
@@ -77,7 +77,7 @@ namespace Azure.Storage.DataMovement
         /// Gets the status of the transfer
         /// </summary>
         /// <returns></returns>
-        public DataTransferStatus GetTransferStatus()
+        public TransferStatus GetTransferStatus()
         {
             return _status;
         }
@@ -87,12 +87,12 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="state"></param>
         /// <returns>Returns whether or not the status has been changed from its original state.</returns>
-        public bool SetTransferState(DataTransferState state)
+        public bool SetTransferState(TransferState state)
         {
             if (_status.SetTransferStateChange(state))
             {
-                if (DataTransferState.Completed == _status.State ||
-                    DataTransferState.Paused == _status.State)
+                if (TransferState.Completed == _status.State ||
+                    TransferState.Paused == _status.State)
                 {
                     DataMovementEventSource.Singleton.TransferCompleted(Id, _status);
                     // If the _completionSource has been cancelled or the exception
@@ -110,7 +110,7 @@ namespace Azure.Storage.DataMovement
         public bool SetSkippedItemsState() => _status.SetSkippedItem();
 
         internal bool CanPause()
-            => DataTransferState.InProgress == _status.State || DataTransferState.Queued == _status.State;
+            => TransferState.InProgress == _status.State || TransferState.Queued == _status.State;
 
         public async Task PauseIfRunningAsync(CancellationToken cancellationToken)
         {
@@ -120,7 +120,7 @@ namespace Azure.Storage.DataMovement
             }
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             // Call the inner cancellation token to stop the transfer job
-            SetTransferState(DataTransferState.Pausing);
+            SetTransferState(TransferState.Pausing);
             if (TriggerCancellation())
             {
                 // Wait until full pause has completed.
