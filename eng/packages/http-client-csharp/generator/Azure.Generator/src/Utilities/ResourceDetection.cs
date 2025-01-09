@@ -105,7 +105,7 @@ namespace Azure.Generator.Utilities
         }
 
 
-        public static bool IsResourceModel(InputModelType inputModelType)
+        private static bool IsResourceModel(InputModelType inputModelType)
         {
             var allProperties = inputModelType.GetAllProperties();
             bool idPropertyFound = false;
