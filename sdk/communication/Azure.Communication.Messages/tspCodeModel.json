@@ -2780,7 +2780,6 @@
      "BufferResponse": true,
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.NotificationMessagesClient.send",
      "Decorators": []
     },
     {
@@ -2969,7 +2968,6 @@
      "BufferResponse": true,
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "ClientForAcsMessages.NotificationMessagesClient.downloadMedia",
      "Decorators": [],
      "Examples": [
       {
@@ -3258,7 +3256,6 @@
      },
      "GenerateProtocolMethod": true,
      "GenerateConvenienceMethod": true,
-     "CrossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateClient.listTemplates",
      "Decorators": []
     }
    ],

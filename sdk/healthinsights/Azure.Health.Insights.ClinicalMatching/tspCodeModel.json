@@ -1,0 +1,4306 @@
+{
+ "$id": "1",
+ "Name": "AzureHealthInsights",
+ "ApiVersions": [
+  "2023-03-01-preview"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "kind": "enum",
+   "name": "PatientInfoSex",
+   "crossLanguageDefinitionId": "AzureHealthInsights.PatientInfoSex",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "4",
+     "kind": "enumvalue",
+     "name": "Female",
+     "value": "female",
+     "valueType": {
+      "$id": "5",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "6",
+     "kind": "enumvalue",
+     "name": "Male",
+     "value": "male",
+     "valueType": {
+      "$id": "7",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "8",
+     "kind": "enumvalue",
+     "name": "Unspecified",
+     "value": "unspecified",
+     "valueType": {
+      "$id": "9",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "decorators": []
+    }
+   ],
+   "doc": "The patient's sex.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Json",
+   "decorators": []
+  },
+  {
+   "$id": "10",
+   "kind": "enum",
+   "name": "DocumentType",
+   "crossLanguageDefinitionId": "AzureHealthInsights.DocumentType",
+   "valueType": {
+    "$id": "11",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "12",
+     "kind": "enumvalue",
+     "name": "Note",
+     "value": "note",
+     "valueType": {
+      "$id": "13",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "10"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "14",
+     "kind": "enumvalue",
+     "name": "FhirBundle",
+     "value": "fhirBundle",
+     "valueType": {
+      "$id": "15",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "10"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "16",
+     "kind": "enumvalue",
+     "name": "Dicom",
+     "value": "dicom",
+     "valueType": {
+      "$id": "17",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "10"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "18",
+     "kind": "enumvalue",
+     "name": "GenomicSequencing",
+     "value": "genomicSequencing",
+     "valueType": {
+      "$id": "19",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "10"
+     },
+     "decorators": []
+    }
+   ],
+   "doc": "The type of the patient document, such as 'note' (text document) or 'fhirBundle' (FHIR JSON document).",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Json",
+   "decorators": []
+  },
+  {
+   "$id": "20",
+   "kind": "enum",
+   "name": "ClinicalDocumentType",
+   "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalDocumentType",
+   "valueType": {
+    "$id": "21",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "22",
+     "kind": "enumvalue",
+     "name": "Consultation",
+     "value": "consultation",
+     "valueType": {
+      "$id": "23",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "20"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "24",
+     "kind": "enumvalue",
+     "name": "DischargeSummary",
+     "value": "dischargeSummary",
+     "valueType": {
+      "$id": "25",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "20"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "26",
+     "kind": "enumvalue",
+     "name": "HistoryAndPhysical",
+     "value": "historyAndPhysical",
+     "valueType": {
+      "$id": "27",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "20"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "28",
+     "kind": "enumvalue",
+     "name": "Procedure",
+     "value": "procedure",
+     "valueType": {
+      "$id": "29",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "20"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "30",
+     "kind": "enumvalue",
+     "name": "Progress",
+     "value": "progress",
+     "valueType": {
+      "$id": "31",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "20"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "32",
+     "kind": "enumvalue",
+     "name": "Imaging",
+     "value": "imaging",
+     "valueType": {
+      "$id": "33",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "20"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "34",
+     "kind": "enumvalue",
+     "name": "Laboratory",
+     "value": "laboratory",
+     "valueType": {
+      "$id": "35",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "20"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "36",
+     "kind": "enumvalue",
+     "name": "Pathology",
+     "value": "pathology",
+     "valueType": {
+      "$id": "37",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "20"
+     },
+     "decorators": []
+    }
+   ],
+   "doc": "The type of the clinical document.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Json",
+   "decorators": []
+  },
+  {
+   "$id": "38",
+   "kind": "enum",
+   "name": "DocumentContentSourceType",
+   "crossLanguageDefinitionId": "AzureHealthInsights.DocumentContentSourceType",
+   "valueType": {
+    "$id": "39",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "40",
+     "kind": "enumvalue",
+     "name": "Inline",
+     "value": "inline",
+     "valueType": {
+      "$id": "41",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "38"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "42",
+     "kind": "enumvalue",
+     "name": "Reference",
+     "value": "reference",
+     "valueType": {
+      "$id": "43",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "38"
+     },
+     "decorators": []
+    }
+   ],
+   "doc": "The type of the content's source. \nIn case the source type is 'inline', the content is given as a string (for instance, text). \nIn case the source type is 'reference', the content is given as a URI.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Json",
+   "decorators": []
+  },
+  {
+   "$id": "44",
+   "kind": "enum",
+   "name": "ClinicalTrialAcceptedSex",
+   "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialAcceptedSex",
+   "valueType": {
+    "$id": "45",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "46",
+     "kind": "enumvalue",
+     "name": "All",
+     "value": "all",
+     "valueType": {
+      "$id": "47",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "44"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "48",
+     "kind": "enumvalue",
+     "name": "Female",
+     "value": "female",
+     "valueType": {
+      "$id": "49",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "44"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "50",
+     "kind": "enumvalue",
+     "name": "Male",
+     "value": "male",
+     "valueType": {
+      "$id": "51",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "44"
+     },
+     "decorators": []
+    }
+   ],
+   "doc": "Possible values for the Sex eligibility criterion as accepted by clinical trials, which indicates the sex of people who may participate in a clinical study.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Json",
+   "decorators": []
+  },
+  {
+   "$id": "52",
+   "kind": "enum",
+   "name": "AgeUnit",
+   "crossLanguageDefinitionId": "AzureHealthInsights.AgeUnit",
+   "valueType": {
+    "$id": "53",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "54",
+     "kind": "enumvalue",
+     "name": "Years",
+     "value": "years",
+     "valueType": {
+      "$id": "55",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "52"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "56",
+     "kind": "enumvalue",
+     "name": "Months",
+     "value": "months",
+     "valueType": {
+      "$id": "57",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "52"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "58",
+     "kind": "enumvalue",
+     "name": "Days",
+     "value": "days",
+     "valueType": {
+      "$id": "59",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "52"
+     },
+     "decorators": []
+    }
+   ],
+   "doc": "Possible units for a person's age.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Json",
+   "decorators": []
+  },
+  {
+   "$id": "60",
+   "kind": "enum",
+   "name": "ClinicalTrialPhase",
+   "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialPhase",
+   "valueType": {
+    "$id": "61",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "62",
+     "kind": "enumvalue",
+     "name": "NotApplicable",
+     "value": "notApplicable",
+     "valueType": {
+      "$id": "63",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "60"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "64",
+     "kind": "enumvalue",
+     "name": "EarlyPhase1",
+     "value": "earlyPhase1",
+     "valueType": {
+      "$id": "65",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "60"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "66",
+     "kind": "enumvalue",
+     "name": "Phase1",
+     "value": "phase1",
+     "valueType": {
+      "$id": "67",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "60"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "68",
+     "kind": "enumvalue",
+     "name": "Phase2",
+     "value": "phase2",
+     "valueType": {
+      "$id": "69",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "60"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "70",
+     "kind": "enumvalue",
+     "name": "Phase3",
+     "value": "phase3",
+     "valueType": {
+      "$id": "71",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "60"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "72",
+     "kind": "enumvalue",
+     "name": "Phase4",
+     "value": "phase4",
+     "valueType": {
+      "$id": "73",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "60"
+     },
+     "decorators": []
+    }
+   ],
+   "doc": "Possible phases of a clinical trial.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+   "decorators": []
+  },
+  {
+   "$id": "74",
+   "kind": "enum",
+   "name": "ClinicalTrialStudyType",
+   "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialStudyType",
+   "valueType": {
+    "$id": "75",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "76",
+     "kind": "enumvalue",
+     "name": "Interventional",
+     "value": "interventional",
+     "valueType": {
+      "$id": "77",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "74"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "78",
+     "kind": "enumvalue",
+     "name": "Observational",
+     "value": "observational",
+     "valueType": {
+      "$id": "79",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "74"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "80",
+     "kind": "enumvalue",
+     "name": "ExpandedAccess",
+     "value": "expandedAccess",
+     "valueType": {
+      "$id": "81",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "74"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "82",
+     "kind": "enumvalue",
+     "name": "PatientRegistries",
+     "value": "patientRegistries",
+     "valueType": {
+      "$id": "83",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "74"
+     },
+     "decorators": []
+    }
+   ],
+   "doc": "Possible study types of a clinical trial.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+   "decorators": []
+  },
+  {
+   "$id": "84",
+   "kind": "enum",
+   "name": "ClinicalTrialRecruitmentStatus",
+   "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialRecruitmentStatus",
+   "valueType": {
+    "$id": "85",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "86",
+     "kind": "enumvalue",
+     "name": "UnknownStatus",
+     "value": "unknownStatus",
+     "valueType": {
+      "$id": "87",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "84"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "88",
+     "kind": "enumvalue",
+     "name": "NotYetRecruiting",
+     "value": "notYetRecruiting",
+     "valueType": {
+      "$id": "89",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "84"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "90",
+     "kind": "enumvalue",
+     "name": "Recruiting",
+     "value": "recruiting",
+     "valueType": {
+      "$id": "91",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "84"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "92",
+     "kind": "enumvalue",
+     "name": "EnrollingByInvitation",
+     "value": "enrollingByInvitation",
+     "valueType": {
+      "$id": "93",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "84"
+     },
+     "decorators": []
+    }
+   ],
+   "doc": "Possible recruitment status of a clinical trial.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+   "decorators": []
+  },
+  {
+   "$id": "94",
+   "kind": "enum",
+   "name": "ClinicalTrialPurpose",
+   "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialPurpose",
+   "valueType": {
+    "$id": "95",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "96",
+     "kind": "enumvalue",
+     "name": "NotApplicable",
+     "value": "notApplicable",
+     "valueType": {
+      "$id": "97",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "94"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "98",
+     "kind": "enumvalue",
+     "name": "Screening",
+     "value": "screening",
+     "valueType": {
+      "$id": "99",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "94"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "100",
+     "kind": "enumvalue",
+     "name": "Diagnostic",
+     "value": "diagnostic",
+     "valueType": {
+      "$id": "101",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "94"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "102",
+     "kind": "enumvalue",
+     "name": "Prevention",
+     "value": "prevention",
+     "valueType": {
+      "$id": "103",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "94"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "104",
+     "kind": "enumvalue",
+     "name": "HealthServicesResearch",
+     "value": "healthServicesResearch",
+     "valueType": {
+      "$id": "105",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "94"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "106",
+     "kind": "enumvalue",
+     "name": "Treatment",
+     "value": "treatment",
+     "valueType": {
+      "$id": "107",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "94"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "108",
+     "kind": "enumvalue",
+     "name": "DeviceFeasibility",
+     "value": "deviceFeasibility",
+     "valueType": {
+      "$id": "109",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "94"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "110",
+     "kind": "enumvalue",
+     "name": "SupportiveCare",
+     "value": "supportiveCare",
+     "valueType": {
+      "$id": "111",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "94"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "112",
+     "kind": "enumvalue",
+     "name": "BasicScience",
+     "value": "basicScience",
+     "valueType": {
+      "$id": "113",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "94"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "114",
+     "kind": "enumvalue",
+     "name": "Other",
+     "value": "other",
+     "valueType": {
+      "$id": "115",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "94"
+     },
+     "decorators": []
+    }
+   ],
+   "doc": "Possible purposes of a clinical trial.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Json",
+   "decorators": []
+  },
+  {
+   "$id": "116",
+   "kind": "enum",
+   "name": "ClinicalTrialSource",
+   "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialSource",
+   "valueType": {
+    "$id": "117",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "118",
+     "kind": "enumvalue",
+     "name": "Custom",
+     "value": "custom",
+     "valueType": {
+      "$id": "119",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "116"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "120",
+     "kind": "enumvalue",
+     "name": "ClinicaltrialsGov",
+     "value": "clinicaltrials.gov",
+     "valueType": {
+      "$id": "121",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "116"
+     },
+     "decorators": []
+    }
+   ],
+   "doc": "Possible sources of a clinical trial.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+   "decorators": []
+  },
+  {
+   "$id": "122",
+   "kind": "enum",
+   "name": "GeoJsonType",
+   "crossLanguageDefinitionId": "AzureHealthInsights.GeoJsonType",
+   "valueType": {
+    "$id": "123",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "124",
+     "kind": "enumvalue",
+     "name": "Feature",
+     "value": "Feature",
+     "valueType": {
+      "$id": "125",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "122"
+     },
+     "decorators": []
+    }
+   ],
+   "doc": "`GeoJSON` type.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Json",
+   "decorators": []
+  },
+  {
+   "$id": "126",
+   "kind": "enum",
+   "name": "GeoJsonGeometryType",
+   "crossLanguageDefinitionId": "AzureHealthInsights.GeoJsonGeometryType",
+   "valueType": {
+    "$id": "127",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "128",
+     "kind": "enumvalue",
+     "name": "Point",
+     "value": "Point",
+     "valueType": {
+      "$id": "129",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "126"
+     },
+     "decorators": []
+    }
+   ],
+   "doc": "`GeoJSON` geometry type.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Json",
+   "decorators": []
+  },
+  {
+   "$id": "130",
+   "kind": "enum",
+   "name": "GeoJsonPropertiesSubType",
+   "crossLanguageDefinitionId": "AzureHealthInsights.GeoJsonPropertiesSubType",
+   "valueType": {
+    "$id": "131",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "132",
+     "kind": "enumvalue",
+     "name": "Circle",
+     "value": "Circle",
+     "valueType": {
+      "$id": "133",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "130"
+     },
+     "decorators": []
+    }
+   ],
+   "doc": "`GeoJSON` object sub-type.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Json",
+   "decorators": []
+  },
+  {
+   "$id": "134",
+   "kind": "enum",
+   "name": "JobStatus",
+   "crossLanguageDefinitionId": "AzureHealthInsights.JobStatus",
+   "valueType": {
+    "$id": "135",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "136",
+     "kind": "enumvalue",
+     "name": "NotStarted",
+     "value": "notStarted",
+     "valueType": {
+      "$id": "137",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "134"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "138",
+     "kind": "enumvalue",
+     "name": "Running",
+     "value": "running",
+     "valueType": {
+      "$id": "139",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "134"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "140",
+     "kind": "enumvalue",
+     "name": "Succeeded",
+     "value": "succeeded",
+     "valueType": {
+      "$id": "141",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "134"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "142",
+     "kind": "enumvalue",
+     "name": "Failed",
+     "value": "failed",
+     "valueType": {
+      "$id": "143",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "134"
+     },
+     "decorators": []
+    },
+    {
+     "$id": "144",
+     "kind": "enumvalue",
+     "name": "PartiallyCompleted",
+     "value": "partiallyCompleted",
+     "valueType": {
+      "$id": "145",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "134"
+     },
+     "decorators": []
+    }
+   ],
+   "doc": "The status of the processing job.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Json,LroInitial,LroPolling,LroFinalEnvelope",
+   "decorators": []
+  },
+  {
+   "$id": "146",
+   "kind": "enum",
+   "name": "TrialMatcherInferenceType",
+   "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherInferenceType",
+   "valueType": {
+    "$id": "147",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "148",
+     "kind": "enumvalue",
+     "name": "TrialEligibility",
+     "value": "trialEligibility",
+     "valueType": {
+      "$id": "149",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "146"
+     },
+     "decorators": []
+    }
+   ],
+   "doc": "The type of the Trial Matcher inference.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+   "decorators": []
+  },
+  {
+   "$id": "150",
+   "kind": "enum",
+   "name": "ApiVersion",
+   "crossLanguageDefinitionId": "AzureHealthInsights.ApiVersion",
+   "valueType": {
+    "$id": "151",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "152",
+     "kind": "enumvalue",
+     "name": "v2023_03_01_preview",
+     "value": "2023-03-01-preview",
+     "valueType": {
+      "$id": "153",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "150"
+     },
+     "decorators": []
+    }
+   ],
+   "isFixed": true,
+   "isFlags": false,
+   "usage": "ApiVersionEnum",
+   "decorators": []
+  },
+  {
+   "$id": "154",
+   "kind": "enum",
+   "name": "RepeatabilityResult",
+   "crossLanguageDefinitionId": "Azure.Core.RepeatabilityResult",
+   "valueType": {
+    "$id": "155",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "156",
+     "kind": "enumvalue",
+     "name": "accepted",
+     "value": "accepted",
+     "valueType": {
+      "$id": "157",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "154"
+     },
+     "doc": "If the request was accepted and the server guarantees that the server state reflects a single execution of the operation.",
+     "decorators": []
+    },
+    {
+     "$id": "158",
+     "kind": "enumvalue",
+     "name": "rejected",
+     "value": "rejected",
+     "valueType": {
+      "$id": "159",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "154"
+     },
+     "doc": "If the request was rejected because the combination of Repeatability-First-Sent and Repeatability-Request-ID were invalid\nor because the Repeatability-First-Sent value was outside the range of values held by the server.",
+     "decorators": []
+    }
+   ],
+   "doc": "Repeatability Result header options",
+   "isFixed": true,
+   "isFlags": false,
+   "usage": "Output",
+   "decorators": []
+  }
+ ],
+ "Models": [
+  {
+   "$id": "160",
+   "kind": "model",
+   "name": "TrialMatcherData",
+   "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherData",
+   "usage": "Input,Json",
+   "doc": "The body of the Trial Matcher request.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "161",
+     "kind": "property",
+     "name": "patients",
+     "serializedName": "patients",
+     "doc": "The list of patients, including their clinical information and data.",
+     "type": {
+      "$id": "162",
+      "kind": "array",
+      "name": "ArrayPatientRecord",
+      "valueType": {
+       "$id": "163",
+       "kind": "model",
+       "name": "PatientRecord",
+       "crossLanguageDefinitionId": "AzureHealthInsights.PatientRecord",
+       "usage": "Input,Json",
+       "doc": "A patient record, including their clinical information and data.",
+       "decorators": [],
+       "properties": [
+        {
+         "$id": "164",
+         "kind": "property",
+         "name": "id",
+         "serializedName": "id",
+         "doc": "A given identifier for the patient. Has to be unique across all patients in a single request.",
+         "type": {
+          "$id": "165",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "AzureHealthInsights.PatientRecord.id"
+        },
+        {
+         "$id": "166",
+         "kind": "property",
+         "name": "info",
+         "serializedName": "info",
+         "doc": "Patient structured information, including demographics and known structured clinical information.",
+         "type": {
+          "$id": "167",
+          "kind": "model",
+          "name": "PatientInfo",
+          "crossLanguageDefinitionId": "AzureHealthInsights.PatientInfo",
+          "usage": "Input,Json",
+          "doc": "Patient structured information, including demographics and known structured clinical information.",
+          "decorators": [],
+          "properties": [
+           {
+            "$id": "168",
+            "kind": "property",
+            "name": "sex",
+            "serializedName": "sex",
+            "doc": "The patient's sex.",
+            "type": {
+             "$ref": "2"
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "AzureHealthInsights.PatientInfo.sex"
+           },
+           {
+            "$id": "169",
+            "kind": "property",
+            "name": "birthDate",
+            "serializedName": "birthDate",
+            "doc": "The patient's date of birth.",
+            "type": {
+             "$id": "170",
+             "kind": "plainDate",
+             "name": "plainDate",
+             "crossLanguageDefinitionId": "TypeSpec.plainDate",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "AzureHealthInsights.PatientInfo.birthDate"
+           },
+           {
+            "$id": "171",
+            "kind": "property",
+            "name": "clinicalInfo",
+            "serializedName": "clinicalInfo",
+            "doc": "Known clinical information for the patient, structured.",
+            "type": {
+             "$id": "172",
+             "kind": "array",
+             "name": "ArrayClinicalCodedElement",
+             "valueType": {
+              "$id": "173",
+              "kind": "model",
+              "name": "ClinicalCodedElement",
+              "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalCodedElement",
+              "usage": "Input,Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+              "doc": "A piece of clinical information, expressed as a code in a clinical coding system.",
+              "decorators": [],
+              "properties": [
+               {
+                "$id": "174",
+                "kind": "property",
+                "name": "system",
+                "serializedName": "system",
+                "doc": "The clinical coding system, e.g. ICD-10, SNOMED-CT, UMLS.",
+                "type": {
+                 "$id": "175",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalCodedElement.system"
+               },
+               {
+                "$id": "176",
+                "kind": "property",
+                "name": "code",
+                "serializedName": "code",
+                "doc": "The code within the given clinical coding system.",
+                "type": {
+                 "$id": "177",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalCodedElement.code"
+               },
+               {
+                "$id": "178",
+                "kind": "property",
+                "name": "name",
+                "serializedName": "name",
+                "doc": "The name of this coded concept in the coding system.",
+                "type": {
+                 "$id": "179",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalCodedElement.name"
+               },
+               {
+                "$id": "180",
+                "kind": "property",
+                "name": "value",
+                "serializedName": "value",
+                "doc": "A value associated with the code within the given clinical coding system.",
+                "type": {
+                 "$id": "181",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalCodedElement.value"
+               }
+              ]
+             },
+             "crossLanguageDefinitionId": "TypeSpec.Array",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "AzureHealthInsights.PatientInfo.clinicalInfo"
+           }
+          ]
+         },
+         "optional": true,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "AzureHealthInsights.PatientRecord.info"
+        },
+        {
+         "$id": "182",
+         "kind": "property",
+         "name": "data",
+         "serializedName": "data",
+         "doc": "Patient unstructured clinical data, given as documents.",
+         "type": {
+          "$id": "183",
+          "kind": "array",
+          "name": "ArrayPatientDocument",
+          "valueType": {
+           "$id": "184",
+           "kind": "model",
+           "name": "PatientDocument",
+           "crossLanguageDefinitionId": "AzureHealthInsights.PatientDocument",
+           "usage": "Input,Json",
+           "doc": "A clinical document related to a patient. Document here is in the wide sense - not just a text document (note).",
+           "decorators": [],
+           "properties": [
+            {
+             "$id": "185",
+             "kind": "property",
+             "name": "type",
+             "serializedName": "type",
+             "doc": "The type of the patient document, such as 'note' (text document) or 'fhirBundle' (FHIR JSON document).",
+             "type": {
+              "$ref": "10"
+             },
+             "optional": false,
+             "readOnly": false,
+             "discriminator": false,
+             "flatten": false,
+             "decorators": [],
+             "crossLanguageDefinitionId": "AzureHealthInsights.PatientDocument.type"
+            },
+            {
+             "$id": "186",
+             "kind": "property",
+             "name": "clinicalType",
+             "serializedName": "clinicalType",
+             "doc": "The type of the clinical document.",
+             "type": {
+              "$ref": "20"
+             },
+             "optional": true,
+             "readOnly": false,
+             "discriminator": false,
+             "flatten": false,
+             "decorators": [],
+             "crossLanguageDefinitionId": "AzureHealthInsights.PatientDocument.clinicalType"
+            },
+            {
+             "$id": "187",
+             "kind": "property",
+             "name": "id",
+             "serializedName": "id",
+             "doc": "A given identifier for the document. Has to be unique across all documents for a single patient.",
+             "type": {
+              "$id": "188",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+             },
+             "optional": false,
+             "readOnly": false,
+             "discriminator": false,
+             "flatten": false,
+             "decorators": [],
+             "crossLanguageDefinitionId": "AzureHealthInsights.PatientDocument.id"
+            },
+            {
+             "$id": "189",
+             "kind": "property",
+             "name": "language",
+             "serializedName": "language",
+             "doc": "A 2 letter ISO 639-1 representation of the language of the document.",
+             "type": {
+              "$id": "190",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string",
+              "decorators": []
+             },
+             "optional": true,
+             "readOnly": false,
+             "discriminator": false,
+             "flatten": false,
+             "decorators": [],
+             "crossLanguageDefinitionId": "AzureHealthInsights.PatientDocument.language"
+            },
+            {
+             "$id": "191",
+             "kind": "property",
+             "name": "createdDateTime",
+             "serializedName": "createdDateTime",
+             "doc": "The date and time when the document was created.",
+             "type": {
+              "$id": "192",
+              "kind": "utcDateTime",
+              "name": "utcDateTime",
+              "encode": "rfc3339",
+              "wireType": {
+               "$id": "193",
+               "kind": "string",
+               "name": "string",
+               "crossLanguageDefinitionId": "TypeSpec.string",
+               "decorators": []
+              },
+              "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+              "decorators": []
+             },
+             "optional": true,
+             "readOnly": false,
+             "discriminator": false,
+             "flatten": false,
+             "decorators": [],
+             "crossLanguageDefinitionId": "AzureHealthInsights.PatientDocument.createdDateTime"
+            },
+            {
+             "$id": "194",
+             "kind": "property",
+             "name": "content",
+             "serializedName": "content",
+             "doc": "The content of the patient document.",
+             "type": {
+              "$id": "195",
+              "kind": "model",
+              "name": "DocumentContent",
+              "crossLanguageDefinitionId": "AzureHealthInsights.DocumentContent",
+              "usage": "Input,Json",
+              "doc": "The content of the patient document.",
+              "decorators": [],
+              "properties": [
+               {
+                "$id": "196",
+                "kind": "property",
+                "name": "sourceType",
+                "serializedName": "sourceType",
+                "doc": "The type of the content's source.\nIn case the source type is 'inline', the content is given as a string (for instance, text).\nIn case the source type is 'reference', the content is given as a URI.",
+                "type": {
+                 "$ref": "38"
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.DocumentContent.sourceType"
+               },
+               {
+                "$id": "197",
+                "kind": "property",
+                "name": "value",
+                "serializedName": "value",
+                "doc": "The content of the document, given either inline (as a string) or as a reference (URI).",
+                "type": {
+                 "$id": "198",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.DocumentContent.value"
+               }
+              ]
+             },
+             "optional": false,
+             "readOnly": false,
+             "discriminator": false,
+             "flatten": false,
+             "decorators": [],
+             "crossLanguageDefinitionId": "AzureHealthInsights.PatientDocument.content"
+            }
+           ]
+          },
+          "crossLanguageDefinitionId": "TypeSpec.Array",
+          "decorators": []
+         },
+         "optional": true,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "AzureHealthInsights.PatientRecord.data"
+        }
+       ]
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherData.patients"
+    },
+    {
+     "$id": "199",
+     "kind": "property",
+     "name": "configuration",
+     "serializedName": "configuration",
+     "doc": "Configuration affecting the Trial Matcher model's inference.",
+     "type": {
+      "$id": "200",
+      "kind": "model",
+      "name": "TrialMatcherModelConfiguration",
+      "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherModelConfiguration",
+      "usage": "Input,Json",
+      "doc": "Configuration affecting the Trial Matcher model's inference.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "201",
+        "kind": "property",
+        "name": "verbose",
+        "serializedName": "verbose",
+        "doc": "An indication whether the model should produce verbose output.",
+        "type": {
+         "$id": "202",
+         "kind": "boolean",
+         "name": "boolean",
+         "crossLanguageDefinitionId": "TypeSpec.boolean",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherModelConfiguration.verbose"
+       },
+       {
+        "$id": "203",
+        "kind": "property",
+        "name": "includeEvidence",
+        "serializedName": "includeEvidence",
+        "doc": "An indication whether the model's output should include evidence for the inferences.",
+        "type": {
+         "$id": "204",
+         "kind": "boolean",
+         "name": "boolean",
+         "crossLanguageDefinitionId": "TypeSpec.boolean",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherModelConfiguration.includeEvidence"
+       },
+       {
+        "$id": "205",
+        "kind": "property",
+        "name": "clinicalTrials",
+        "serializedName": "clinicalTrials",
+        "doc": "The clinical trials that the patient(s) should be matched to. <br />The trial\nselection can be given as a list of custom clinical trials and/or a list of\nfilters to known clinical trial registries. In case both are given, the\nresulting trial set is a union of the two sets.",
+        "type": {
+         "$id": "206",
+         "kind": "model",
+         "name": "ClinicalTrials",
+         "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrials",
+         "usage": "Input,Json",
+         "doc": "The clinical trials that the patient(s) should be matched to. \nThe trial selection can be given as a list of custom clinical trials and/or a list of filters to known clinical trial registries.\nIn case both are given, the resulting trial set is a union of the two sets.",
+         "decorators": [],
+         "properties": [
+          {
+           "$id": "207",
+           "kind": "property",
+           "name": "customTrials",
+           "serializedName": "customTrials",
+           "doc": "A list of clinical trials.",
+           "type": {
+            "$id": "208",
+            "kind": "array",
+            "name": "ArrayClinicalTrialDetails",
+            "valueType": {
+             "$id": "209",
+             "kind": "model",
+             "name": "ClinicalTrialDetails",
+             "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialDetails",
+             "usage": "Input,Json",
+             "doc": "A description of a clinical trial.",
+             "decorators": [],
+             "properties": [
+              {
+               "$id": "210",
+               "kind": "property",
+               "name": "id",
+               "serializedName": "id",
+               "doc": "A given identifier for the clinical trial. Has to be unique within a list of clinical trials.",
+               "type": {
+                "$id": "211",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+               },
+               "optional": false,
+               "readOnly": false,
+               "discriminator": false,
+               "flatten": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialDetails.id"
+              },
+              {
+               "$id": "212",
+               "kind": "property",
+               "name": "eligibilityCriteriaText",
+               "serializedName": "eligibilityCriteriaText",
+               "doc": "The eligibility criteria of the clinical trial (inclusion and exclusion), given as text.",
+               "type": {
+                "$id": "213",
+                "kind": "string",
+                "name": "string",
+                "crossLanguageDefinitionId": "TypeSpec.string",
+                "decorators": []
+               },
+               "optional": true,
+               "readOnly": false,
+               "discriminator": false,
+               "flatten": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialDetails.eligibilityCriteriaText"
+              },
+              {
+               "$id": "214",
+               "kind": "property",
+               "name": "demographics",
+               "serializedName": "demographics",
+               "doc": "Demographic criteria for a clinical trial.",
+               "type": {
+                "$id": "215",
+                "kind": "model",
+                "name": "ClinicalTrialDemographics",
+                "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialDemographics",
+                "usage": "Input,Json",
+                "doc": "Demographic criteria for a clinical trial.",
+                "decorators": [],
+                "properties": [
+                 {
+                  "$id": "216",
+                  "kind": "property",
+                  "name": "acceptedSex",
+                  "serializedName": "acceptedSex",
+                  "doc": "Indication of the sex of people who may participate in the clinical trial.",
+                  "type": {
+                   "$ref": "44"
+                  },
+                  "optional": true,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialDemographics.acceptedSex"
+                 },
+                 {
+                  "$id": "217",
+                  "kind": "property",
+                  "name": "acceptedAgeRange",
+                  "serializedName": "acceptedAgeRange",
+                  "doc": "A definition of the range of ages accepted by a clinical trial. Contains a minimum age and/or a maximum age.",
+                  "type": {
+                   "$id": "218",
+                   "kind": "model",
+                   "name": "AcceptedAgeRange",
+                   "crossLanguageDefinitionId": "AzureHealthInsights.AcceptedAgeRange",
+                   "usage": "Input,Json",
+                   "doc": "A definition of the range of ages accepted by a clinical trial. Contains a minimum age and/or a maximum age.",
+                   "decorators": [],
+                   "properties": [
+                    {
+                     "$id": "219",
+                     "kind": "property",
+                     "name": "minimumAge",
+                     "serializedName": "minimumAge",
+                     "doc": "A person's age, given as a number (value) and a unit (e.g. years, months)",
+                     "type": {
+                      "$id": "220",
+                      "kind": "model",
+                      "name": "AcceptedAge",
+                      "crossLanguageDefinitionId": "AzureHealthInsights.AcceptedAge",
+                      "usage": "Input,Json",
+                      "doc": "A person's age, given as a number (value) and a unit (e.g. years, months)",
+                      "decorators": [],
+                      "properties": [
+                       {
+                        "$id": "221",
+                        "kind": "property",
+                        "name": "unit",
+                        "serializedName": "unit",
+                        "doc": "Possible units for a person's age.",
+                        "type": {
+                         "$ref": "52"
+                        },
+                        "optional": false,
+                        "readOnly": false,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "AzureHealthInsights.AcceptedAge.unit"
+                       },
+                       {
+                        "$id": "222",
+                        "kind": "property",
+                        "name": "value",
+                        "serializedName": "value",
+                        "doc": "The number of years/months/days that represents the person's age.",
+                        "type": {
+                         "$id": "223",
+                         "kind": "float32",
+                         "name": "float32",
+                         "crossLanguageDefinitionId": "TypeSpec.float32",
+                         "decorators": []
+                        },
+                        "optional": false,
+                        "readOnly": false,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "AzureHealthInsights.AcceptedAge.value"
+                       }
+                      ]
+                     },
+                     "optional": true,
+                     "readOnly": false,
+                     "discriminator": false,
+                     "flatten": false,
+                     "decorators": [],
+                     "crossLanguageDefinitionId": "AzureHealthInsights.AcceptedAgeRange.minimumAge"
+                    },
+                    {
+                     "$id": "224",
+                     "kind": "property",
+                     "name": "maximumAge",
+                     "serializedName": "maximumAge",
+                     "doc": "A person's age, given as a number (value) and a unit (e.g. years, months)",
+                     "type": {
+                      "$ref": "220"
+                     },
+                     "optional": true,
+                     "readOnly": false,
+                     "discriminator": false,
+                     "flatten": false,
+                     "decorators": [],
+                     "crossLanguageDefinitionId": "AzureHealthInsights.AcceptedAgeRange.maximumAge"
+                    }
+                   ]
+                  },
+                  "optional": true,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialDemographics.acceptedAgeRange"
+                 }
+                ]
+               },
+               "optional": true,
+               "readOnly": false,
+               "discriminator": false,
+               "flatten": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialDetails.demographics"
+              },
+              {
+               "$id": "225",
+               "kind": "property",
+               "name": "metadata",
+               "serializedName": "metadata",
+               "doc": "Trial data which is of interest to the potential participant.",
+               "type": {
+                "$id": "226",
+                "kind": "model",
+                "name": "ClinicalTrialMetadata",
+                "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialMetadata",
+                "usage": "Input,Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+                "doc": "Trial data which is of interest to the potential participant.",
+                "decorators": [],
+                "properties": [
+                 {
+                  "$id": "227",
+                  "kind": "property",
+                  "name": "phases",
+                  "serializedName": "phases",
+                  "doc": "Phases which are relevant for the clinical trial.\nEach clinical trial can be in a certain phase or in multiple phases.",
+                  "type": {
+                   "$id": "228",
+                   "kind": "array",
+                   "name": "ArrayClinicalTrialPhase",
+                   "valueType": {
+                    "$ref": "60"
+                   },
+                   "crossLanguageDefinitionId": "TypeSpec.Array",
+                   "decorators": []
+                  },
+                  "optional": true,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialMetadata.phases"
+                 },
+                 {
+                  "$id": "229",
+                  "kind": "property",
+                  "name": "studyType",
+                  "serializedName": "studyType",
+                  "doc": "Possible study types of a clinical trial.",
+                  "type": {
+                   "$ref": "74"
+                  },
+                  "optional": true,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialMetadata.studyType"
+                 },
+                 {
+                  "$id": "230",
+                  "kind": "property",
+                  "name": "recruitmentStatus",
+                  "serializedName": "recruitmentStatus",
+                  "doc": "Possible recruitment status of a clinical trial.",
+                  "type": {
+                   "$ref": "84"
+                  },
+                  "optional": true,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialMetadata.recruitmentStatus"
+                 },
+                 {
+                  "$id": "231",
+                  "kind": "property",
+                  "name": "conditions",
+                  "serializedName": "conditions",
+                  "doc": "Medical conditions and their synonyms which are relevant for the clinical trial, given as strings.",
+                  "type": {
+                   "$id": "232",
+                   "kind": "array",
+                   "name": "Array",
+                   "valueType": {
+                    "$id": "233",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                   },
+                   "crossLanguageDefinitionId": "TypeSpec.Array",
+                   "decorators": []
+                  },
+                  "optional": false,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialMetadata.conditions"
+                 },
+                 {
+                  "$id": "234",
+                  "kind": "property",
+                  "name": "sponsors",
+                  "serializedName": "sponsors",
+                  "doc": "Sponsors/collaborators involved with the trial.",
+                  "type": {
+                   "$id": "235",
+                   "kind": "array",
+                   "name": "Array",
+                   "valueType": {
+                    "$id": "236",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                   },
+                   "crossLanguageDefinitionId": "TypeSpec.Array",
+                   "decorators": []
+                  },
+                  "optional": true,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialMetadata.sponsors"
+                 },
+                 {
+                  "$id": "237",
+                  "kind": "property",
+                  "name": "contacts",
+                  "serializedName": "contacts",
+                  "doc": "Contact details of the trial administrators, for patients that want to participate in the trial.",
+                  "type": {
+                   "$id": "238",
+                   "kind": "array",
+                   "name": "ArrayContactDetails",
+                   "valueType": {
+                    "$id": "239",
+                    "kind": "model",
+                    "name": "ContactDetails",
+                    "crossLanguageDefinitionId": "AzureHealthInsights.ContactDetails",
+                    "usage": "Input,Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+                    "doc": "A person's contact details.",
+                    "decorators": [],
+                    "properties": [
+                     {
+                      "$id": "240",
+                      "kind": "property",
+                      "name": "name",
+                      "serializedName": "name",
+                      "doc": "The person's name.",
+                      "type": {
+                       "$id": "241",
+                       "kind": "string",
+                       "name": "string",
+                       "crossLanguageDefinitionId": "TypeSpec.string",
+                       "decorators": []
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "AzureHealthInsights.ContactDetails.name"
+                     },
+                     {
+                      "$id": "242",
+                      "kind": "property",
+                      "name": "email",
+                      "serializedName": "email",
+                      "doc": "The person's email.",
+                      "type": {
+                       "$id": "243",
+                       "kind": "string",
+                       "name": "string",
+                       "crossLanguageDefinitionId": "TypeSpec.string",
+                       "decorators": []
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "AzureHealthInsights.ContactDetails.email"
+                     },
+                     {
+                      "$id": "244",
+                      "kind": "property",
+                      "name": "phone",
+                      "serializedName": "phone",
+                      "doc": "A person's phone number.",
+                      "type": {
+                       "$id": "245",
+                       "kind": "string",
+                       "name": "string",
+                       "crossLanguageDefinitionId": "TypeSpec.string",
+                       "decorators": []
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "AzureHealthInsights.ContactDetails.phone"
+                     }
+                    ]
+                   },
+                   "crossLanguageDefinitionId": "TypeSpec.Array",
+                   "decorators": []
+                  },
+                  "optional": true,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialMetadata.contacts"
+                 },
+                 {
+                  "$id": "246",
+                  "kind": "property",
+                  "name": "facilities",
+                  "serializedName": "facilities",
+                  "doc": "Research facilities where the clinical trial is conducted.",
+                  "type": {
+                   "$id": "247",
+                   "kind": "array",
+                   "name": "ArrayClinicalTrialResearchFacility",
+                   "valueType": {
+                    "$id": "248",
+                    "kind": "model",
+                    "name": "ClinicalTrialResearchFacility",
+                    "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialResearchFacility",
+                    "usage": "Input,Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+                    "doc": "Details of a research facility where a clinical trial is conducted.",
+                    "decorators": [],
+                    "properties": [
+                     {
+                      "$id": "249",
+                      "kind": "property",
+                      "name": "name",
+                      "serializedName": "name",
+                      "doc": "The facility's name.",
+                      "type": {
+                       "$id": "250",
+                       "kind": "string",
+                       "name": "string",
+                       "crossLanguageDefinitionId": "TypeSpec.string",
+                       "decorators": []
+                      },
+                      "optional": false,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialResearchFacility.name"
+                     },
+                     {
+                      "$id": "251",
+                      "kind": "property",
+                      "name": "city",
+                      "serializedName": "city",
+                      "doc": "City name.",
+                      "type": {
+                       "$id": "252",
+                       "kind": "string",
+                       "name": "string",
+                       "crossLanguageDefinitionId": "TypeSpec.string",
+                       "decorators": []
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialResearchFacility.city"
+                     },
+                     {
+                      "$id": "253",
+                      "kind": "property",
+                      "name": "state",
+                      "serializedName": "state",
+                      "doc": "State name.",
+                      "type": {
+                       "$id": "254",
+                       "kind": "string",
+                       "name": "string",
+                       "crossLanguageDefinitionId": "TypeSpec.string",
+                       "decorators": []
+                      },
+                      "optional": true,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialResearchFacility.state"
+                     },
+                     {
+                      "$id": "255",
+                      "kind": "property",
+                      "name": "countryOrRegion",
+                      "serializedName": "countryOrRegion",
+                      "doc": "Country/region name.",
+                      "type": {
+                       "$id": "256",
+                       "kind": "string",
+                       "name": "string",
+                       "crossLanguageDefinitionId": "TypeSpec.string",
+                       "decorators": []
+                      },
+                      "optional": false,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialResearchFacility.countryOrRegion"
+                     }
+                    ]
+                   },
+                   "crossLanguageDefinitionId": "TypeSpec.Array",
+                   "decorators": []
+                  },
+                  "optional": true,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialMetadata.facilities"
+                 }
+                ]
+               },
+               "optional": false,
+               "readOnly": false,
+               "discriminator": false,
+               "flatten": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialDetails.metadata"
+              }
+             ]
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+           },
+           "optional": true,
+           "readOnly": false,
+           "discriminator": false,
+           "flatten": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrials.customTrials"
+          },
+          {
+           "$id": "257",
+           "kind": "property",
+           "name": "registryFilters",
+           "serializedName": "registryFilters",
+           "doc": "A list of filters, each one creating a selection of trials from a given\nclinical trial registry.",
+           "type": {
+            "$id": "258",
+            "kind": "array",
+            "name": "ArrayClinicalTrialRegistryFilter",
+            "valueType": {
+             "$id": "259",
+             "kind": "model",
+             "name": "ClinicalTrialRegistryFilter",
+             "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialRegistryFilter",
+             "usage": "Input,Json",
+             "doc": "A filter defining a subset of clinical trials from a given clinical trial registry (e.g. clinicaltrials.gov).",
+             "decorators": [],
+             "properties": [
+              {
+               "$id": "260",
+               "kind": "property",
+               "name": "conditions",
+               "serializedName": "conditions",
+               "doc": "Trials with any of the given medical conditions will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the medical conditions.",
+               "type": {
+                "$id": "261",
+                "kind": "array",
+                "name": "Array",
+                "valueType": {
+                 "$id": "262",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "crossLanguageDefinitionId": "TypeSpec.Array",
+                "decorators": []
+               },
+               "optional": true,
+               "readOnly": false,
+               "discriminator": false,
+               "flatten": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialRegistryFilter.conditions"
+              },
+              {
+               "$id": "263",
+               "kind": "property",
+               "name": "studyTypes",
+               "serializedName": "studyTypes",
+               "doc": "Trials with any of the given study types will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the study types.",
+               "type": {
+                "$id": "264",
+                "kind": "array",
+                "name": "ArrayClinicalTrialStudyType",
+                "valueType": {
+                 "$ref": "74"
+                },
+                "crossLanguageDefinitionId": "TypeSpec.Array",
+                "decorators": []
+               },
+               "optional": true,
+               "readOnly": false,
+               "discriminator": false,
+               "flatten": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialRegistryFilter.studyTypes"
+              },
+              {
+               "$id": "265",
+               "kind": "property",
+               "name": "recruitmentStatuses",
+               "serializedName": "recruitmentStatuses",
+               "doc": "Trials with any of the given recruitment statuses will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the recruitment statuses.",
+               "type": {
+                "$id": "266",
+                "kind": "array",
+                "name": "ArrayClinicalTrialRecruitmentStatus",
+                "valueType": {
+                 "$ref": "84"
+                },
+                "crossLanguageDefinitionId": "TypeSpec.Array",
+                "decorators": []
+               },
+               "optional": true,
+               "readOnly": false,
+               "discriminator": false,
+               "flatten": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialRegistryFilter.recruitmentStatuses"
+              },
+              {
+               "$id": "267",
+               "kind": "property",
+               "name": "sponsors",
+               "serializedName": "sponsors",
+               "doc": "Trials with any of the given sponsors will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the sponsors.",
+               "type": {
+                "$id": "268",
+                "kind": "array",
+                "name": "Array",
+                "valueType": {
+                 "$id": "269",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "crossLanguageDefinitionId": "TypeSpec.Array",
+                "decorators": []
+               },
+               "optional": true,
+               "readOnly": false,
+               "discriminator": false,
+               "flatten": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialRegistryFilter.sponsors"
+              },
+              {
+               "$id": "270",
+               "kind": "property",
+               "name": "phases",
+               "serializedName": "phases",
+               "doc": "Trials with any of the given phases will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the phases.",
+               "type": {
+                "$id": "271",
+                "kind": "array",
+                "name": "ArrayClinicalTrialPhase",
+                "valueType": {
+                 "$ref": "60"
+                },
+                "crossLanguageDefinitionId": "TypeSpec.Array",
+                "decorators": []
+               },
+               "optional": true,
+               "readOnly": false,
+               "discriminator": false,
+               "flatten": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialRegistryFilter.phases"
+              },
+              {
+               "$id": "272",
+               "kind": "property",
+               "name": "purposes",
+               "serializedName": "purposes",
+               "doc": "Trials with any of the given purposes will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the purposes.",
+               "type": {
+                "$id": "273",
+                "kind": "array",
+                "name": "ArrayClinicalTrialPurpose",
+                "valueType": {
+                 "$ref": "94"
+                },
+                "crossLanguageDefinitionId": "TypeSpec.Array",
+                "decorators": []
+               },
+               "optional": true,
+               "readOnly": false,
+               "discriminator": false,
+               "flatten": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialRegistryFilter.purposes"
+              },
+              {
+               "$id": "274",
+               "kind": "property",
+               "name": "ids",
+               "serializedName": "ids",
+               "doc": "Trials with any of the given identifiers will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the trial identifiers.",
+               "type": {
+                "$id": "275",
+                "kind": "array",
+                "name": "Array",
+                "valueType": {
+                 "$id": "276",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "crossLanguageDefinitionId": "TypeSpec.Array",
+                "decorators": []
+               },
+               "optional": true,
+               "readOnly": false,
+               "discriminator": false,
+               "flatten": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialRegistryFilter.ids"
+              },
+              {
+               "$id": "277",
+               "kind": "property",
+               "name": "sources",
+               "serializedName": "sources",
+               "doc": "Trials with any of the given sources will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the sources.",
+               "type": {
+                "$id": "278",
+                "kind": "array",
+                "name": "ArrayClinicalTrialSource",
+                "valueType": {
+                 "$ref": "116"
+                },
+                "crossLanguageDefinitionId": "TypeSpec.Array",
+                "decorators": []
+               },
+               "optional": true,
+               "readOnly": false,
+               "discriminator": false,
+               "flatten": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialRegistryFilter.sources"
+              },
+              {
+               "$id": "279",
+               "kind": "property",
+               "name": "facilityNames",
+               "serializedName": "facilityNames",
+               "doc": "Trials with any of the given facility names will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the trial facility names.",
+               "type": {
+                "$id": "280",
+                "kind": "array",
+                "name": "Array",
+                "valueType": {
+                 "$id": "281",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "crossLanguageDefinitionId": "TypeSpec.Array",
+                "decorators": []
+               },
+               "optional": true,
+               "readOnly": false,
+               "discriminator": false,
+               "flatten": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialRegistryFilter.facilityNames"
+              },
+              {
+               "$id": "282",
+               "kind": "property",
+               "name": "facilityLocations",
+               "serializedName": "facilityLocations",
+               "doc": "Trials with any of the given facility locations will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the trial facility locations.",
+               "type": {
+                "$id": "283",
+                "kind": "array",
+                "name": "ArrayGeographicLocation",
+                "valueType": {
+                 "$id": "284",
+                 "kind": "model",
+                 "name": "GeographicLocation",
+                 "crossLanguageDefinitionId": "AzureHealthInsights.GeographicLocation",
+                 "usage": "Input,Json",
+                 "doc": "A location given as a combination of city, state and country/region. It could specify a city, a state or a country/region.\nIn case a city is specified, either state +country/region or country/region (for countries/regions where there are no states) should be added.\nIn case a state is specified (without a city), country/region should be added.",
+                 "decorators": [],
+                 "properties": [
+                  {
+                   "$id": "285",
+                   "kind": "property",
+                   "name": "city",
+                   "serializedName": "city",
+                   "doc": "City name.",
+                   "type": {
+                    "$id": "286",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                   },
+                   "optional": true,
+                   "readOnly": false,
+                   "discriminator": false,
+                   "flatten": false,
+                   "decorators": [],
+                   "crossLanguageDefinitionId": "AzureHealthInsights.GeographicLocation.city"
+                  },
+                  {
+                   "$id": "287",
+                   "kind": "property",
+                   "name": "state",
+                   "serializedName": "state",
+                   "doc": "State name.",
+                   "type": {
+                    "$id": "288",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                   },
+                   "optional": true,
+                   "readOnly": false,
+                   "discriminator": false,
+                   "flatten": false,
+                   "decorators": [],
+                   "crossLanguageDefinitionId": "AzureHealthInsights.GeographicLocation.state"
+                  },
+                  {
+                   "$id": "289",
+                   "kind": "property",
+                   "name": "countryOrRegion",
+                   "serializedName": "countryOrRegion",
+                   "doc": "Country/region name.",
+                   "type": {
+                    "$id": "290",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                   },
+                   "optional": false,
+                   "readOnly": false,
+                   "discriminator": false,
+                   "flatten": false,
+                   "decorators": [],
+                   "crossLanguageDefinitionId": "AzureHealthInsights.GeographicLocation.countryOrRegion"
+                  }
+                 ]
+                },
+                "crossLanguageDefinitionId": "TypeSpec.Array",
+                "decorators": []
+               },
+               "optional": true,
+               "readOnly": false,
+               "discriminator": false,
+               "flatten": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialRegistryFilter.facilityLocations"
+              },
+              {
+               "$id": "291",
+               "kind": "property",
+               "name": "facilityAreas",
+               "serializedName": "facilityAreas",
+               "doc": "Trials with any of the given facility area boundaries will be included in the selection (provided that other limitations are satisfied).\nLeaving this list empty will not limit the trial facility area boundaries.",
+               "type": {
+                "$id": "292",
+                "kind": "array",
+                "name": "ArrayGeographicArea",
+                "valueType": {
+                 "$id": "293",
+                 "kind": "model",
+                 "name": "GeographicArea",
+                 "crossLanguageDefinitionId": "AzureHealthInsights.GeographicArea",
+                 "usage": "Input,Json",
+                 "doc": "A geographic area, expressed as a `Circle` geometry represented using a `GeoJSON Feature` (see [GeoJSON spec](https://tools.ietf.org/html/rfc7946)).",
+                 "decorators": [],
+                 "properties": [
+                  {
+                   "$id": "294",
+                   "kind": "property",
+                   "name": "type",
+                   "serializedName": "type",
+                   "doc": "`GeoJSON` type.",
+                   "type": {
+                    "$ref": "122"
+                   },
+                   "optional": false,
+                   "readOnly": false,
+                   "discriminator": false,
+                   "flatten": false,
+                   "decorators": [],
+                   "crossLanguageDefinitionId": "AzureHealthInsights.GeographicArea.type"
+                  },
+                  {
+                   "$id": "295",
+                   "kind": "property",
+                   "name": "geometry",
+                   "serializedName": "geometry",
+                   "doc": "`GeoJSON` geometry, representing the area circle's center.",
+                   "type": {
+                    "$id": "296",
+                    "kind": "model",
+                    "name": "AreaGeometry",
+                    "crossLanguageDefinitionId": "AzureHealthInsights.AreaGeometry",
+                    "usage": "Input,Json",
+                    "doc": "`GeoJSON` geometry, representing the area circle's center.",
+                    "decorators": [],
+                    "properties": [
+                     {
+                      "$id": "297",
+                      "kind": "property",
+                      "name": "type",
+                      "serializedName": "type",
+                      "doc": "`GeoJSON` geometry type.",
+                      "type": {
+                       "$ref": "126"
+                      },
+                      "optional": false,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "AzureHealthInsights.AreaGeometry.type"
+                     },
+                     {
+                      "$id": "298",
+                      "kind": "property",
+                      "name": "coordinates",
+                      "serializedName": "coordinates",
+                      "doc": "Coordinates of the area circle's center, represented according to the `GeoJSON` standard.\nThis is an array of 2 decimal numbers, longitude and latitude (precisely in this order).",
+                      "type": {
+                       "$id": "299",
+                       "kind": "array",
+                       "name": "Array",
+                       "valueType": {
+                        "$id": "300",
+                        "kind": "float32",
+                        "name": "float32",
+                        "crossLanguageDefinitionId": "TypeSpec.float32",
+                        "decorators": []
+                       },
+                       "crossLanguageDefinitionId": "TypeSpec.Array",
+                       "decorators": []
+                      },
+                      "optional": false,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "AzureHealthInsights.AreaGeometry.coordinates"
+                     }
+                    ]
+                   },
+                   "optional": false,
+                   "readOnly": false,
+                   "discriminator": false,
+                   "flatten": false,
+                   "decorators": [],
+                   "crossLanguageDefinitionId": "AzureHealthInsights.GeographicArea.geometry"
+                  },
+                  {
+                   "$id": "301",
+                   "kind": "property",
+                   "name": "properties",
+                   "serializedName": "properties",
+                   "doc": "`GeoJSON` object properties.",
+                   "type": {
+                    "$id": "302",
+                    "kind": "model",
+                    "name": "AreaProperties",
+                    "crossLanguageDefinitionId": "AzureHealthInsights.AreaProperties",
+                    "usage": "Input,Json",
+                    "doc": "`GeoJSON` object properties.",
+                    "decorators": [],
+                    "properties": [
+                     {
+                      "$id": "303",
+                      "kind": "property",
+                      "name": "subType",
+                      "serializedName": "subType",
+                      "doc": "`GeoJSON` object sub-type.",
+                      "type": {
+                       "$ref": "130"
+                      },
+                      "optional": false,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "AzureHealthInsights.AreaProperties.subType"
+                     },
+                     {
+                      "$id": "304",
+                      "kind": "property",
+                      "name": "radius",
+                      "serializedName": "radius",
+                      "doc": "The radius of the area's circle, in meters.",
+                      "type": {
+                       "$id": "305",
+                       "kind": "float64",
+                       "name": "float64",
+                       "crossLanguageDefinitionId": "TypeSpec.float64",
+                       "decorators": []
+                      },
+                      "optional": false,
+                      "readOnly": false,
+                      "discriminator": false,
+                      "flatten": false,
+                      "decorators": [],
+                      "crossLanguageDefinitionId": "AzureHealthInsights.AreaProperties.radius"
+                     }
+                    ]
+                   },
+                   "optional": false,
+                   "readOnly": false,
+                   "discriminator": false,
+                   "flatten": false,
+                   "decorators": [],
+                   "crossLanguageDefinitionId": "AzureHealthInsights.GeographicArea.properties"
+                  }
+                 ]
+                },
+                "crossLanguageDefinitionId": "TypeSpec.Array",
+                "decorators": []
+               },
+               "optional": true,
+               "readOnly": false,
+               "discriminator": false,
+               "flatten": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrialRegistryFilter.facilityAreas"
+              }
+             ]
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+           },
+           "optional": true,
+           "readOnly": false,
+           "discriminator": false,
+           "flatten": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalTrials.registryFilters"
+          }
+         ]
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherModelConfiguration.clinicalTrials"
+       }
+      ]
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherData.configuration"
+    }
+   ]
+  },
+  {
+   "$ref": "163"
+  },
+  {
+   "$ref": "167"
+  },
+  {
+   "$ref": "173"
+  },
+  {
+   "$ref": "184"
+  },
+  {
+   "$ref": "195"
+  },
+  {
+   "$ref": "200"
+  },
+  {
+   "$ref": "206"
+  },
+  {
+   "$ref": "209"
+  },
+  {
+   "$ref": "215"
+  },
+  {
+   "$ref": "218"
+  },
+  {
+   "$ref": "220"
+  },
+  {
+   "$ref": "226"
+  },
+  {
+   "$ref": "239"
+  },
+  {
+   "$ref": "248"
+  },
+  {
+   "$ref": "259"
+  },
+  {
+   "$ref": "284"
+  },
+  {
+   "$ref": "293"
+  },
+  {
+   "$ref": "296"
+  },
+  {
+   "$ref": "302"
+  },
+  {
+   "$id": "306",
+   "kind": "model",
+   "name": "TrialMatcherResult",
+   "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherResult",
+   "usage": "Json,LroInitial,LroPolling,LroFinalEnvelope",
+   "doc": "The response for the Trial Matcher request.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "307",
+     "kind": "property",
+     "name": "jobId",
+     "serializedName": "jobId",
+     "doc": "A processing job identifier.",
+     "type": {
+      "$id": "308",
+      "kind": "string",
+      "name": "uuid",
+      "crossLanguageDefinitionId": "Azure.Core.uuid",
+      "baseType": {
+       "$id": "309",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherResult.jobId"
+    },
+    {
+     "$id": "310",
+     "kind": "property",
+     "name": "createdDateTime",
+     "serializedName": "createdDateTime",
+     "doc": "The date and time when the processing job was created.",
+     "type": {
+      "$id": "311",
+      "kind": "utcDateTime",
+      "name": "utcDateTime",
+      "encode": "rfc3339",
+      "wireType": {
+       "$id": "312",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherResult.createdDateTime"
+    },
+    {
+     "$id": "313",
+     "kind": "property",
+     "name": "expirationDateTime",
+     "serializedName": "expirationDateTime",
+     "doc": "The date and time when the processing job is set to expire.",
+     "type": {
+      "$id": "314",
+      "kind": "utcDateTime",
+      "name": "utcDateTime",
+      "encode": "rfc3339",
+      "wireType": {
+       "$id": "315",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherResult.expirationDateTime"
+    },
+    {
+     "$id": "316",
+     "kind": "property",
+     "name": "lastUpdateDateTime",
+     "serializedName": "lastUpdateDateTime",
+     "doc": "The date and time when the processing job was last updated.",
+     "type": {
+      "$id": "317",
+      "kind": "utcDateTime",
+      "name": "utcDateTime",
+      "encode": "rfc3339",
+      "wireType": {
+       "$id": "318",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherResult.lastUpdateDateTime"
+    },
+    {
+     "$id": "319",
+     "kind": "property",
+     "name": "status",
+     "serializedName": "status",
+     "doc": "The status of the processing job.",
+     "type": {
+      "$ref": "134"
+     },
+     "optional": false,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherResult.status"
+    },
+    {
+     "$id": "320",
+     "kind": "property",
+     "name": "errors",
+     "serializedName": "errors",
+     "doc": "An array of errors, if any errors occurred during the processing job.",
+     "type": {
+      "$id": "321",
+      "kind": "array",
+      "name": "ArrayError",
+      "valueType": {
+       "$id": "322",
+       "kind": "model",
+       "name": "Error",
+       "crossLanguageDefinitionId": "Azure.Core.Foundations.Error",
+       "usage": "Json,Exception,LroInitial,LroPolling,LroFinalEnvelope",
+       "doc": "The error object.",
+       "decorators": [],
+       "properties": [
+        {
+         "$id": "323",
+         "kind": "property",
+         "name": "code",
+         "serializedName": "code",
+         "doc": "One of a server-defined set of error codes.",
+         "type": {
+          "$id": "324",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.code"
+        },
+        {
+         "$id": "325",
+         "kind": "property",
+         "name": "message",
+         "serializedName": "message",
+         "doc": "A human-readable representation of the error.",
+         "type": {
+          "$id": "326",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "optional": false,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.message"
+        },
+        {
+         "$id": "327",
+         "kind": "property",
+         "name": "target",
+         "serializedName": "target",
+         "doc": "The target of the error.",
+         "type": {
+          "$id": "328",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "optional": true,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.target"
+        },
+        {
+         "$id": "329",
+         "kind": "property",
+         "name": "details",
+         "serializedName": "details",
+         "doc": "An array of details about specific errors that led to this reported error.",
+         "type": {
+          "$id": "330",
+          "kind": "array",
+          "name": "ArrayError",
+          "valueType": {
+           "$ref": "322"
+          },
+          "crossLanguageDefinitionId": "TypeSpec.Array",
+          "decorators": []
+         },
+         "optional": true,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.details"
+        },
+        {
+         "$id": "331",
+         "kind": "property",
+         "name": "innererror",
+         "serializedName": "innererror",
+         "doc": "An object containing more specific information than the current object about the error.",
+         "type": {
+          "$id": "332",
+          "kind": "model",
+          "name": "InnerError",
+          "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
+          "usage": "Json,Exception,LroInitial,LroPolling,LroFinalEnvelope",
+          "doc": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+          "decorators": [],
+          "properties": [
+           {
+            "$id": "333",
+            "kind": "property",
+            "name": "code",
+            "serializedName": "code",
+            "doc": "One of a server-defined set of error codes.",
+            "type": {
+             "$id": "334",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError.code"
+           },
+           {
+            "$id": "335",
+            "kind": "property",
+            "name": "innererror",
+            "serializedName": "innererror",
+            "doc": "Inner error.",
+            "type": {
+             "$ref": "332"
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError.innererror"
+           }
+          ]
+         },
+         "optional": true,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.innererror"
+        }
+       ]
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherResult.errors"
+    },
+    {
+     "$id": "336",
+     "kind": "property",
+     "name": "results",
+     "serializedName": "results",
+     "doc": "The inference results for the Trial Matcher request.",
+     "type": {
+      "$id": "337",
+      "kind": "model",
+      "name": "TrialMatcherResults",
+      "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherResults",
+      "usage": "Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+      "doc": "The inference results for the Trial Matcher request.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "338",
+        "kind": "property",
+        "name": "patients",
+        "serializedName": "patients",
+        "doc": "Results for the patients given in the request.",
+        "type": {
+         "$id": "339",
+         "kind": "array",
+         "name": "ArrayTrialMatcherPatientResult",
+         "valueType": {
+          "$id": "340",
+          "kind": "model",
+          "name": "TrialMatcherPatientResult",
+          "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherPatientResult",
+          "usage": "Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+          "doc": "The results of the model's work for a single patient.",
+          "decorators": [],
+          "properties": [
+           {
+            "$id": "341",
+            "kind": "property",
+            "name": "id",
+            "serializedName": "id",
+            "doc": "The identifier given for the patient in the request.",
+            "type": {
+             "$id": "342",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": false,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherPatientResult.id"
+           },
+           {
+            "$id": "343",
+            "kind": "property",
+            "name": "inferences",
+            "serializedName": "inferences",
+            "doc": "The model's inferences for the given patient.",
+            "type": {
+             "$id": "344",
+             "kind": "array",
+             "name": "ArrayTrialMatcherInference",
+             "valueType": {
+              "$id": "345",
+              "kind": "model",
+              "name": "TrialMatcherInference",
+              "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherInference",
+              "usage": "Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+              "doc": "An inference made by the Trial Matcher model regarding a patient.",
+              "decorators": [],
+              "properties": [
+               {
+                "$id": "346",
+                "kind": "property",
+                "name": "type",
+                "serializedName": "type",
+                "doc": "The type of the Trial Matcher inference.",
+                "type": {
+                 "$ref": "146"
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherInference.type"
+               },
+               {
+                "$id": "347",
+                "kind": "property",
+                "name": "value",
+                "serializedName": "value",
+                "doc": "The value of the inference, as relevant for the given inference type.",
+                "type": {
+                 "$id": "348",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherInference.value"
+               },
+               {
+                "$id": "349",
+                "kind": "property",
+                "name": "description",
+                "serializedName": "description",
+                "doc": "The description corresponding to the inference value.",
+                "type": {
+                 "$id": "350",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherInference.description"
+               },
+               {
+                "$id": "351",
+                "kind": "property",
+                "name": "confidenceScore",
+                "serializedName": "confidenceScore",
+                "doc": "Confidence score for this inference.",
+                "type": {
+                 "$id": "352",
+                 "kind": "float32",
+                 "name": "float32",
+                 "crossLanguageDefinitionId": "TypeSpec.float32",
+                 "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherInference.confidenceScore"
+               },
+               {
+                "$id": "353",
+                "kind": "property",
+                "name": "evidence",
+                "serializedName": "evidence",
+                "doc": "The evidence corresponding to the inference value.",
+                "type": {
+                 "$id": "354",
+                 "kind": "array",
+                 "name": "ArrayTrialMatcherInferenceEvidence",
+                 "valueType": {
+                  "$id": "355",
+                  "kind": "model",
+                  "name": "TrialMatcherInferenceEvidence",
+                  "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherInferenceEvidence",
+                  "usage": "Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+                  "doc": "A piece of evidence corresponding to a Trial Matcher inference.",
+                  "decorators": [],
+                  "properties": [
+                   {
+                    "$id": "356",
+                    "kind": "property",
+                    "name": "eligibilityCriteriaEvidence",
+                    "serializedName": "eligibilityCriteriaEvidence",
+                    "doc": "A piece of evidence from the eligibility criteria text of a clinical trial.",
+                    "type": {
+                     "$id": "357",
+                     "kind": "string",
+                     "name": "string",
+                     "crossLanguageDefinitionId": "TypeSpec.string",
+                     "decorators": []
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherInferenceEvidence.eligibilityCriteriaEvidence"
+                   },
+                   {
+                    "$id": "358",
+                    "kind": "property",
+                    "name": "patientDataEvidence",
+                    "serializedName": "patientDataEvidence",
+                    "doc": "A piece of evidence from a clinical note (text document).",
+                    "type": {
+                     "$id": "359",
+                     "kind": "model",
+                     "name": "ClinicalNoteEvidence",
+                     "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalNoteEvidence",
+                     "usage": "Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+                     "doc": "A piece of evidence from a clinical note (text document).",
+                     "decorators": [],
+                     "properties": [
+                      {
+                       "$id": "360",
+                       "kind": "property",
+                       "name": "id",
+                       "serializedName": "id",
+                       "doc": "The identifier of the document containing the evidence.",
+                       "type": {
+                        "$id": "361",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                       },
+                       "optional": false,
+                       "readOnly": false,
+                       "discriminator": false,
+                       "flatten": false,
+                       "decorators": [],
+                       "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalNoteEvidence.id"
+                      },
+                      {
+                       "$id": "362",
+                       "kind": "property",
+                       "name": "text",
+                       "serializedName": "text",
+                       "doc": "The actual text span which is evidence for the inference.",
+                       "type": {
+                        "$id": "363",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string",
+                        "decorators": []
+                       },
+                       "optional": true,
+                       "readOnly": false,
+                       "discriminator": false,
+                       "flatten": false,
+                       "decorators": [],
+                       "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalNoteEvidence.text"
+                      },
+                      {
+                       "$id": "364",
+                       "kind": "property",
+                       "name": "offset",
+                       "serializedName": "offset",
+                       "doc": "The start index of the evidence text span in the document (0 based).",
+                       "type": {
+                        "$id": "365",
+                        "kind": "int32",
+                        "name": "int32",
+                        "crossLanguageDefinitionId": "TypeSpec.int32",
+                        "decorators": []
+                       },
+                       "optional": false,
+                       "readOnly": false,
+                       "discriminator": false,
+                       "flatten": false,
+                       "decorators": [],
+                       "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalNoteEvidence.offset"
+                      },
+                      {
+                       "$id": "366",
+                       "kind": "property",
+                       "name": "length",
+                       "serializedName": "length",
+                       "doc": "The length of the evidence text span.",
+                       "type": {
+                        "$id": "367",
+                        "kind": "int32",
+                        "name": "int32",
+                        "crossLanguageDefinitionId": "TypeSpec.int32",
+                        "decorators": []
+                       },
+                       "optional": false,
+                       "readOnly": false,
+                       "discriminator": false,
+                       "flatten": false,
+                       "decorators": [],
+                       "crossLanguageDefinitionId": "AzureHealthInsights.ClinicalNoteEvidence.length"
+                      }
+                     ]
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherInferenceEvidence.patientDataEvidence"
+                   },
+                   {
+                    "$id": "368",
+                    "kind": "property",
+                    "name": "patientInfoEvidence",
+                    "serializedName": "patientInfoEvidence",
+                    "doc": "A piece of clinical information, expressed as a code in a clinical coding\nsystem.",
+                    "type": {
+                     "$ref": "173"
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherInferenceEvidence.patientInfoEvidence"
+                   },
+                   {
+                    "$id": "369",
+                    "kind": "property",
+                    "name": "importance",
+                    "serializedName": "importance",
+                    "doc": "A value indicating how important this piece of evidence is for the inference.",
+                    "type": {
+                     "$id": "370",
+                     "kind": "float32",
+                     "name": "float32",
+                     "crossLanguageDefinitionId": "TypeSpec.float32",
+                     "decorators": []
+                    },
+                    "optional": true,
+                    "readOnly": false,
+                    "discriminator": false,
+                    "flatten": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherInferenceEvidence.importance"
+                   }
+                  ]
+                 },
+                 "crossLanguageDefinitionId": "TypeSpec.Array",
+                 "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherInference.evidence"
+               },
+               {
+                "$id": "371",
+                "kind": "property",
+                "name": "id",
+                "serializedName": "id",
+                "doc": "The identifier of the clinical trial.",
+                "type": {
+                 "$id": "372",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherInference.id"
+               },
+               {
+                "$id": "373",
+                "kind": "property",
+                "name": "source",
+                "serializedName": "source",
+                "doc": "Possible sources of a clinical trial.",
+                "type": {
+                 "$ref": "116"
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherInference.source"
+               },
+               {
+                "$id": "374",
+                "kind": "property",
+                "name": "metadata",
+                "serializedName": "metadata",
+                "doc": "Trial data which is of interest to the potential participant.",
+                "type": {
+                 "$ref": "226"
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherInference.metadata"
+               }
+              ]
+             },
+             "crossLanguageDefinitionId": "TypeSpec.Array",
+             "decorators": []
+            },
+            "optional": false,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherPatientResult.inferences"
+           },
+           {
+            "$id": "375",
+            "kind": "property",
+            "name": "neededClinicalInfo",
+            "serializedName": "neededClinicalInfo",
+            "doc": "Clinical information which is needed to provide better trial matching results for the patient.",
+            "type": {
+             "$id": "376",
+             "kind": "array",
+             "name": "NeededClinicalInfo",
+             "valueType": {
+              "$id": "377",
+              "kind": "model",
+              "name": "ExtendedClinicalCodedElement",
+              "crossLanguageDefinitionId": "AzureHealthInsights.ExtendedClinicalCodedElement",
+              "usage": "Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+              "doc": "A piece of clinical information, expressed as a code in a clinical coding system, extended by semantic information.",
+              "decorators": [],
+              "properties": [
+               {
+                "$id": "378",
+                "kind": "property",
+                "name": "system",
+                "serializedName": "system",
+                "doc": "The clinical coding system, e.g. ICD-10, SNOMED-CT, UMLS.",
+                "type": {
+                 "$id": "379",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.ExtendedClinicalCodedElement.system"
+               },
+               {
+                "$id": "380",
+                "kind": "property",
+                "name": "code",
+                "serializedName": "code",
+                "doc": "The code within the given clinical coding system.",
+                "type": {
+                 "$id": "381",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "optional": false,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.ExtendedClinicalCodedElement.code"
+               },
+               {
+                "$id": "382",
+                "kind": "property",
+                "name": "name",
+                "serializedName": "name",
+                "doc": "The name of this coded concept in the coding system.",
+                "type": {
+                 "$id": "383",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.ExtendedClinicalCodedElement.name"
+               },
+               {
+                "$id": "384",
+                "kind": "property",
+                "name": "value",
+                "serializedName": "value",
+                "doc": "A value associated with the code within the given clinical coding system.",
+                "type": {
+                 "$id": "385",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.ExtendedClinicalCodedElement.value"
+               },
+               {
+                "$id": "386",
+                "kind": "property",
+                "name": "semanticType",
+                "serializedName": "semanticType",
+                "doc": "The [UMLS semantic type](https://www.nlm.nih.gov/research/umls/META3_current_semantic_types.html) associated with the coded concept.",
+                "type": {
+                 "$id": "387",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.ExtendedClinicalCodedElement.semanticType"
+               },
+               {
+                "$id": "388",
+                "kind": "property",
+                "name": "category",
+                "serializedName": "category",
+                "doc": "The bio-medical category related to the coded concept, e.g. Diagnosis, Symptom, Medication, Examination.",
+                "type": {
+                 "$id": "389",
+                 "kind": "string",
+                 "name": "string",
+                 "crossLanguageDefinitionId": "TypeSpec.string",
+                 "decorators": []
+                },
+                "optional": true,
+                "readOnly": false,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "AzureHealthInsights.ExtendedClinicalCodedElement.category"
+               }
+              ]
+             },
+             "crossLanguageDefinitionId": "AzureHealthInsights.NeededClinicalInfo",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherPatientResult.neededClinicalInfo"
+           }
+          ]
+         },
+         "crossLanguageDefinitionId": "TypeSpec.Array",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherResults.patients"
+       },
+       {
+        "$id": "390",
+        "kind": "property",
+        "name": "modelVersion",
+        "serializedName": "modelVersion",
+        "doc": "The version of the model used for inference, expressed as the model date.",
+        "type": {
+         "$id": "391",
+         "kind": "string",
+         "name": "ModelVersion",
+         "crossLanguageDefinitionId": "AzureHealthInsights.ModelVersion",
+         "baseType": {
+          "$id": "392",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherResults.modelVersion"
+       },
+       {
+        "$id": "393",
+        "kind": "property",
+        "name": "knowledgeGraphLastUpdateDate",
+        "serializedName": "knowledgeGraphLastUpdateDate",
+        "doc": "The date when the clinical trials knowledge graph was last updated.",
+        "type": {
+         "$id": "394",
+         "kind": "plainDate",
+         "name": "plainDate",
+         "crossLanguageDefinitionId": "TypeSpec.plainDate",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherResults.knowledgeGraphLastUpdateDate"
+       }
+      ]
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "AzureHealthInsights.TrialMatcherResult.results"
+    }
+   ]
+  },
+  {
+   "$ref": "322"
+  },
+  {
+   "$ref": "332"
+  },
+  {
+   "$ref": "337"
+  },
+  {
+   "$ref": "340"
+  },
+  {
+   "$ref": "345"
+  },
+  {
+   "$ref": "355"
+  },
+  {
+   "$ref": "359"
+  },
+  {
+   "$ref": "377"
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "395",
+   "Name": "ClinicalMatchingClient",
+   "Operations": [
+    {
+     "$id": "396",
+     "Name": "matchTrials",
+     "ResourceName": "ClinicalMatchingClient",
+     "Summary": "Create Trial Matcher job",
+     "Doc": "Creates a Trial Matcher job with the given request body.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "397",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "398",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "399",
+        "Type": {
+         "$id": "400",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2023-03-01-preview"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "401",
+       "Name": "repeatabilityRequestId",
+       "NameInRequest": "Repeatability-Request-ID",
+       "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+       "Type": {
+        "$id": "402",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "403",
+       "Name": "repeatabilityFirstSent",
+       "NameInRequest": "Repeatability-First-Sent",
+       "Doc": "Specifies the date and time at which the request was first created.",
+       "Type": {
+        "$id": "404",
+        "kind": "utcDateTime",
+        "name": "utcDateTime",
+        "encode": "rfc7231",
+        "wireType": {
+         "$id": "405",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "406",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Doc": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "407",
+        "kind": "constant",
+        "valueType": {
+         "$id": "408",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "409",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "410",
+        "kind": "constant",
+        "valueType": {
+         "$id": "411",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "412",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Doc": "Body parameter.",
+       "Type": {
+        "$ref": "160"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "413",
+       "StatusCodes": [
+        202
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "414",
+         "Name": "operationLocation",
+         "NameInResponse": "Operation-Location",
+         "Doc": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "415",
+          "kind": "url",
+          "name": "ResourceLocation",
+          "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+          "baseType": {
+           "$id": "416",
+           "kind": "url",
+           "name": "url",
+           "crossLanguageDefinitionId": "TypeSpec.url",
+           "decorators": []
+          },
+          "decorators": []
+         }
+        },
+        {
+         "$id": "417",
+         "Name": "retryAfter",
+         "NameInResponse": "Retry-After",
+         "Doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+         "Type": {
+          "$id": "418",
+          "kind": "int32",
+          "name": "int32",
+          "crossLanguageDefinitionId": "TypeSpec.int32",
+          "decorators": []
+         }
+        },
+        {
+         "$id": "419",
+         "Name": "repeatabilityResult",
+         "NameInResponse": "Repeatability-Result",
+         "Doc": "Indicates whether the repeatable request was accepted or rejected.",
+         "Type": {
+          "$ref": "154"
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      },
+      {
+       "$id": "420",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "306"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}/healthinsights",
+     "Path": "/trialmatcher/jobs",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "421",
+      "FinalStateVia": 3,
+      "FinalResponse": {
+       "$id": "422",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "306"
+       },
+       "BodyMediaType": "Json"
+      },
+      "ResultPath": "results"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": []
+    }
+   ],
+   "Protocol": {
+    "$id": "423"
+   },
+   "Parameters": [
+    {
+     "$id": "424",
+     "Name": "endpoint",
+     "NameInRequest": "endpoint",
+     "Doc": "Supported Cognitive Services endpoints (protocol and hostname, for example: https://westus2.api.cognitive.microsoft.com).",
+     "Type": {
+      "$id": "425",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "Location": "Uri",
+     "IsApiVersion": false,
+     "IsResourceParameter": false,
+     "IsContentType": false,
+     "IsRequired": true,
+     "IsEndpoint": true,
+     "SkipUrlEncoding": false,
+     "Explode": false,
+     "Kind": "Client"
+    }
+   ],
+   "Decorators": []
+  }
+ ],
+ "Auth": {
+  "$id": "426",
+  "ApiKey": {
+   "$id": "427",
+   "Name": "Ocp-Apim-Subscription-Key"
+  }
+ }
+}

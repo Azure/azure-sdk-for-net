@@ -1,0 +1,7095 @@
+{
+ "$id": "1",
+ "Name": "Microsoft.AzurePlaywrightService",
+ "ApiVersions": [
+  "2024-12-01"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "kind": "enum",
+   "name": "PlaywrightTestingQuotaNames",
+   "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.QuotaNames",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "4",
+     "kind": "enumvalue",
+     "name": "ScalableExecution",
+     "value": "ScalableExecution",
+     "valueType": {
+      "$id": "5",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "doc": "The quota details for scalable execution feature. When enabled, Playwright client workers can connect to cloud-hosted browsers. This can increase the number of parallel workers for a test run, significantly minimizing test completion durations.",
+     "decorators": []
+    },
+    {
+     "$id": "6",
+     "kind": "enumvalue",
+     "name": "Reporting",
+     "value": "Reporting",
+     "valueType": {
+      "$id": "7",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "doc": "The quota details for reporting feature. When enabled, Playwright client will be able to upload and display test results, including artifacts like traces and screenshots, in the Playwright portal. This enables faster and more efficient troubleshooting.",
+     "decorators": []
+    }
+   ],
+   "doc": "The enum for quota name.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "8",
+   "kind": "enum",
+   "name": "PlaywrightTestingProvisioningState",
+   "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.ProvisioningState",
+   "valueType": {
+    "$id": "9",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "10",
+     "kind": "enumvalue",
+     "name": "Succeeded",
+     "value": "Succeeded",
+     "valueType": {
+      "$id": "11",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "8"
+     },
+     "doc": "Resource has been created.",
+     "decorators": []
+    },
+    {
+     "$id": "12",
+     "kind": "enumvalue",
+     "name": "Failed",
+     "value": "Failed",
+     "valueType": {
+      "$id": "13",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "8"
+     },
+     "doc": "Resource creation failed.",
+     "decorators": []
+    },
+    {
+     "$id": "14",
+     "kind": "enumvalue",
+     "name": "Canceled",
+     "value": "Canceled",
+     "valueType": {
+      "$id": "15",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "8"
+     },
+     "doc": "Resource creation was canceled.",
+     "decorators": []
+    },
+    {
+     "$id": "16",
+     "kind": "enumvalue",
+     "name": "Creating",
+     "value": "Creating",
+     "valueType": {
+      "$id": "17",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "8"
+     },
+     "doc": "Creation in progress..",
+     "decorators": []
+    },
+    {
+     "$id": "18",
+     "kind": "enumvalue",
+     "name": "Deleting",
+     "value": "Deleting",
+     "valueType": {
+      "$id": "19",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "8"
+     },
+     "doc": "Deletion in progress..",
+     "decorators": []
+    },
+    {
+     "$id": "20",
+     "kind": "enumvalue",
+     "name": "Accepted",
+     "value": "Accepted",
+     "valueType": {
+      "$id": "21",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "8"
+     },
+     "doc": "Change accepted for processing..",
+     "decorators": []
+    }
+   ],
+   "doc": "The status of the current operation.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+   "decorators": []
+  },
+  {
+   "$id": "22",
+   "kind": "enum",
+   "name": "createdByType",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.createdByType",
+   "valueType": {
+    "$id": "23",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "24",
+     "kind": "enumvalue",
+     "name": "User",
+     "value": "User",
+     "valueType": {
+      "$id": "25",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "The entity was created by a user.",
+     "decorators": []
+    },
+    {
+     "$id": "26",
+     "kind": "enumvalue",
+     "name": "Application",
+     "value": "Application",
+     "valueType": {
+      "$id": "27",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "The entity was created by an application.",
+     "decorators": []
+    },
+    {
+     "$id": "28",
+     "kind": "enumvalue",
+     "name": "ManagedIdentity",
+     "value": "ManagedIdentity",
+     "valueType": {
+      "$id": "29",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "The entity was created by a managed identity.",
+     "decorators": []
+    },
+    {
+     "$id": "30",
+     "kind": "enumvalue",
+     "name": "Key",
+     "value": "Key",
+     "valueType": {
+      "$id": "31",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "The entity was created by a key.",
+     "decorators": []
+    }
+   ],
+   "doc": "The kind of entity that created the resource.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+   "decorators": []
+  },
+  {
+   "$id": "32",
+   "kind": "enum",
+   "name": "PlaywrightTestingFreeTrialState",
+   "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.FreeTrialState",
+   "valueType": {
+    "$id": "33",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "34",
+     "kind": "enumvalue",
+     "name": "Active",
+     "value": "Active",
+     "valueType": {
+      "$id": "35",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "32"
+     },
+     "doc": "The free-trial is Active.",
+     "decorators": []
+    },
+    {
+     "$id": "36",
+     "kind": "enumvalue",
+     "name": "Expired",
+     "value": "Expired",
+     "valueType": {
+      "$id": "37",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "32"
+     },
+     "doc": "The free-trial is Expired.",
+     "decorators": []
+    },
+    {
+     "$id": "38",
+     "kind": "enumvalue",
+     "name": "NotEligible",
+     "value": "NotEligible",
+     "valueType": {
+      "$id": "39",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "32"
+     },
+     "doc": "The free-trial is Not Eligible.",
+     "decorators": []
+    },
+    {
+     "$id": "40",
+     "kind": "enumvalue",
+     "name": "NotRegistered",
+     "value": "NotRegistered",
+     "valueType": {
+      "$id": "41",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "32"
+     },
+     "doc": "The free-trial is Not Registered.",
+     "decorators": []
+    }
+   ],
+   "doc": "The free-trial state.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "42",
+   "kind": "enum",
+   "name": "PlaywrightTestingOfferingType",
+   "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.OfferingType",
+   "valueType": {
+    "$id": "43",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "44",
+     "kind": "enumvalue",
+     "name": "NotApplicable",
+     "value": "NotApplicable",
+     "valueType": {
+      "$id": "45",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "42"
+     },
+     "doc": "The offeringType is NotApplicable.",
+     "decorators": []
+    },
+    {
+     "$id": "46",
+     "kind": "enumvalue",
+     "name": "PrivatePreview",
+     "value": "PrivatePreview",
+     "valueType": {
+      "$id": "47",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "42"
+     },
+     "doc": "The offeringType is PrivatePreview.",
+     "decorators": []
+    },
+    {
+     "$id": "48",
+     "kind": "enumvalue",
+     "name": "PublicPreview",
+     "value": "PublicPreview",
+     "valueType": {
+      "$id": "49",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "42"
+     },
+     "doc": "The offeringType is PublicPreview.",
+     "decorators": []
+    },
+    {
+     "$id": "50",
+     "kind": "enumvalue",
+     "name": "GeneralAvailability",
+     "value": "GeneralAvailability",
+     "valueType": {
+      "$id": "51",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "42"
+     },
+     "doc": "The offeringType is GeneralAvailability.",
+     "decorators": []
+    }
+   ],
+   "doc": "Offering type state.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "52",
+   "kind": "enum",
+   "name": "PlaywrightTestingEnablementStatus",
+   "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.EnablementStatus",
+   "valueType": {
+    "$id": "53",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "54",
+     "kind": "enumvalue",
+     "name": "Enabled",
+     "value": "Enabled",
+     "valueType": {
+      "$id": "55",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "52"
+     },
+     "doc": "The feature is Enabled.",
+     "decorators": []
+    },
+    {
+     "$id": "56",
+     "kind": "enumvalue",
+     "name": "Disabled",
+     "value": "Disabled",
+     "valueType": {
+      "$id": "57",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "52"
+     },
+     "doc": "The feature is Disabled.",
+     "decorators": []
+    }
+   ],
+   "doc": "The enablement status of a feature.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+   "decorators": []
+  },
+  {
+   "$id": "58",
+   "kind": "enum",
+   "name": "ResourceProvisioningState",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceProvisioningState",
+   "valueType": {
+    "$id": "59",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "60",
+     "kind": "enumvalue",
+     "name": "Succeeded",
+     "value": "Succeeded",
+     "valueType": {
+      "$id": "61",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "58"
+     },
+     "doc": "Resource has been created.",
+     "decorators": []
+    },
+    {
+     "$id": "62",
+     "kind": "enumvalue",
+     "name": "Failed",
+     "value": "Failed",
+     "valueType": {
+      "$id": "63",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "58"
+     },
+     "doc": "Resource creation failed.",
+     "decorators": []
+    },
+    {
+     "$id": "64",
+     "kind": "enumvalue",
+     "name": "Canceled",
+     "value": "Canceled",
+     "valueType": {
+      "$id": "65",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "58"
+     },
+     "doc": "Resource creation was canceled.",
+     "decorators": []
+    }
+   ],
+   "doc": "The provisioning state of a resource type.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "LroPolling",
+   "decorators": []
+  },
+  {
+   "$id": "66",
+   "kind": "enum",
+   "name": "PlaywrightTestingNameUnavailableReason",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.CheckNameAvailabilityReason",
+   "valueType": {
+    "$id": "67",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "68",
+     "kind": "enumvalue",
+     "name": "Invalid",
+     "value": "Invalid",
+     "valueType": {
+      "$id": "69",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "66"
+     },
+     "doc": "Name is invalid.",
+     "decorators": []
+    },
+    {
+     "$id": "70",
+     "kind": "enumvalue",
+     "name": "AlreadyExists",
+     "value": "AlreadyExists",
+     "valueType": {
+      "$id": "71",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "66"
+     },
+     "doc": "Name already exists.",
+     "decorators": []
+    }
+   ],
+   "doc": "Possible reasons for a name not being available.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "72",
+   "kind": "enum",
+   "name": "Origin",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Origin",
+   "valueType": {
+    "$id": "73",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "74",
+     "kind": "enumvalue",
+     "name": "user",
+     "value": "user",
+     "valueType": {
+      "$id": "75",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "72"
+     },
+     "doc": "Indicates the operation is initiated by a user.",
+     "decorators": []
+    },
+    {
+     "$id": "76",
+     "kind": "enumvalue",
+     "name": "system",
+     "value": "system",
+     "valueType": {
+      "$id": "77",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "72"
+     },
+     "doc": "Indicates the operation is initiated by a system.",
+     "decorators": []
+    },
+    {
+     "$id": "78",
+     "kind": "enumvalue",
+     "name": "user,system",
+     "value": "user,system",
+     "valueType": {
+      "$id": "79",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "72"
+     },
+     "doc": "Indicates the operation is initiated by a user or system.",
+     "decorators": []
+    }
+   ],
+   "doc": "The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is \"user,system\"",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "80",
+   "kind": "enum",
+   "name": "ActionType",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ActionType",
+   "valueType": {
+    "$id": "81",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "82",
+     "kind": "enumvalue",
+     "name": "Internal",
+     "value": "Internal",
+     "valueType": {
+      "$id": "83",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "80"
+     },
+     "doc": "Actions are for internal-only APIs.",
+     "decorators": []
+    }
+   ],
+   "doc": "Extensible enum. Indicates the action type. \"Internal\" refers to actions that are for internal only APIs.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "84",
+   "kind": "enum",
+   "name": "Versions",
+   "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.Versions",
+   "valueType": {
+    "$id": "85",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "86",
+     "kind": "enumvalue",
+     "name": "2024-12-01",
+     "value": "2024-12-01",
+     "valueType": {
+      "$id": "87",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "84"
+     },
+     "doc": "2024-12-01 version",
+     "decorators": []
+    }
+   ],
+   "doc": "Microsoft.AzurePlaywrightService Management API Versions.",
+   "isFixed": true,
+   "isFlags": false,
+   "usage": "ApiVersionEnum",
+   "decorators": []
+  }
+ ],
+ "Models": [
+  {
+   "$id": "88",
+   "kind": "model",
+   "name": "PlaywrightTestingAccountQuotas",
+   "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.AccountQuota",
+   "usage": "Output,Json",
+   "doc": "A quota resource for a Playwright service account.",
+   "decorators": [],
+   "baseModel": {
+    "$id": "89",
+    "kind": "model",
+    "name": "ProxyResource",
+    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ProxyResource",
+    "usage": "Output,Json",
+    "doc": "The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location",
+    "decorators": [],
+    "baseModel": {
+     "$id": "90",
+     "kind": "model",
+     "name": "Resource",
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource",
+     "usage": "Input,Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+     "doc": "Common fields that are returned in the response for all Azure Resource Manager resources",
+     "decorators": [],
+     "properties": [
+      {
+       "$id": "91",
+       "kind": "property",
+       "name": "id",
+       "serializedName": "id",
+       "doc": "Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}",
+       "type": {
+        "$id": "92",
+        "kind": "string",
+        "name": "armResourceIdentifier",
+        "crossLanguageDefinitionId": "Azure.Core.armResourceIdentifier",
+        "baseType": {
+         "$id": "93",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "optional": true,
+       "readOnly": true,
+       "discriminator": false,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.id"
+      },
+      {
+       "$id": "94",
+       "kind": "property",
+       "name": "name",
+       "serializedName": "name",
+       "doc": "The name of the resource",
+       "type": {
+        "$id": "95",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "optional": true,
+       "readOnly": true,
+       "discriminator": false,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.name"
+      },
+      {
+       "$id": "96",
+       "kind": "property",
+       "name": "type",
+       "serializedName": "type",
+       "doc": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
+       "type": {
+        "$id": "97",
+        "kind": "string",
+        "name": "armResourceType",
+        "crossLanguageDefinitionId": "Azure.Core.armResourceType",
+        "baseType": {
+         "$id": "98",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "optional": true,
+       "readOnly": true,
+       "discriminator": false,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.type"
+      },
+      {
+       "$id": "99",
+       "kind": "property",
+       "name": "systemData",
+       "serializedName": "systemData",
+       "doc": "Azure Resource Manager metadata containing createdBy and modifiedBy information.",
+       "type": {
+        "$id": "100",
+        "kind": "model",
+        "name": "SystemData",
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData",
+        "usage": "Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+        "doc": "Metadata pertaining to creation and last modification of the resource.",
+        "decorators": [],
+        "properties": [
+         {
+          "$id": "101",
+          "kind": "property",
+          "name": "createdBy",
+          "serializedName": "createdBy",
+          "doc": "The identity that created the resource.",
+          "type": {
+           "$id": "102",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdBy"
+         },
+         {
+          "$id": "103",
+          "kind": "property",
+          "name": "createdByType",
+          "serializedName": "createdByType",
+          "doc": "The type of identity that created the resource.",
+          "type": {
+           "$ref": "22"
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdByType"
+         },
+         {
+          "$id": "104",
+          "kind": "property",
+          "name": "createdAt",
+          "serializedName": "createdAt",
+          "doc": "The timestamp of resource creation (UTC).",
+          "type": {
+           "$id": "105",
+           "kind": "utcDateTime",
+           "name": "utcDateTime",
+           "encode": "rfc3339",
+           "wireType": {
+            "$id": "106",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+           },
+           "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+           "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.createdAt"
+         },
+         {
+          "$id": "107",
+          "kind": "property",
+          "name": "lastModifiedBy",
+          "serializedName": "lastModifiedBy",
+          "doc": "The identity that last modified the resource.",
+          "type": {
+           "$id": "108",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedBy"
+         },
+         {
+          "$id": "109",
+          "kind": "property",
+          "name": "lastModifiedByType",
+          "serializedName": "lastModifiedByType",
+          "doc": "The type of identity that last modified the resource.",
+          "type": {
+           "$ref": "22"
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedByType"
+         },
+         {
+          "$id": "110",
+          "kind": "property",
+          "name": "lastModifiedAt",
+          "serializedName": "lastModifiedAt",
+          "doc": "The timestamp of resource last modification (UTC)",
+          "type": {
+           "$id": "111",
+           "kind": "utcDateTime",
+           "name": "utcDateTime",
+           "encode": "rfc3339",
+           "wireType": {
+            "$id": "112",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+           },
+           "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+           "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData.lastModifiedAt"
+         }
+        ]
+       },
+       "optional": true,
+       "readOnly": true,
+       "discriminator": false,
+       "flatten": false,
+       "decorators": [],
+       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource.systemData"
+      }
+     ]
+    },
+    "properties": []
+   },
+   "properties": [
+    {
+     "$id": "113",
+     "kind": "property",
+     "name": "properties",
+     "serializedName": "properties",
+     "doc": "The resource-specific properties for this resource.",
+     "type": {
+      "$id": "114",
+      "kind": "model",
+      "name": "PlaywrightTestingAccountQuotaProperties",
+      "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.AccountQuotaProperties",
+      "usage": "Output,Json",
+      "doc": "The Playwright service account quota resource properties.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "115",
+        "kind": "property",
+        "name": "freeTrial",
+        "serializedName": "freeTrial",
+        "doc": "The Playwright service account quota resource free-trial properties.",
+        "type": {
+         "$id": "116",
+         "kind": "model",
+         "name": "PlaywrightTestingAccountFreeTrialProperties",
+         "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.AccountFreeTrialProperties",
+         "usage": "Output,Json",
+         "doc": "The Playwright service account quota resource free-trial properties.",
+         "decorators": [],
+         "properties": [
+          {
+           "$id": "117",
+           "kind": "property",
+           "name": "createdAt",
+           "serializedName": "createdAt",
+           "doc": "The free-trial createdAt utcDateTime.",
+           "type": {
+            "$id": "118",
+            "kind": "utcDateTime",
+            "name": "utcDateTime",
+            "encode": "rfc3339",
+            "wireType": {
+             "$id": "119",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+            "decorators": []
+           },
+           "optional": false,
+           "readOnly": true,
+           "discriminator": false,
+           "flatten": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.AccountFreeTrialProperties.createdAt"
+          },
+          {
+           "$id": "120",
+           "kind": "property",
+           "name": "expiryAt",
+           "serializedName": "expiryAt",
+           "doc": "The free-trial expiryAt utcDateTime.",
+           "type": {
+            "$id": "121",
+            "kind": "utcDateTime",
+            "name": "utcDateTime",
+            "encode": "rfc3339",
+            "wireType": {
+             "$id": "122",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+            "decorators": []
+           },
+           "optional": false,
+           "readOnly": true,
+           "discriminator": false,
+           "flatten": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.AccountFreeTrialProperties.expiryAt"
+          },
+          {
+           "$id": "123",
+           "kind": "property",
+           "name": "allocatedValue",
+           "serializedName": "allocatedValue",
+           "doc": "The free-trial allocated limit value eg. allocated free minutes.",
+           "type": {
+            "$id": "124",
+            "kind": "int32",
+            "name": "int32",
+            "crossLanguageDefinitionId": "TypeSpec.int32",
+            "decorators": []
+           },
+           "optional": false,
+           "readOnly": true,
+           "discriminator": false,
+           "flatten": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.AccountFreeTrialProperties.allocatedValue"
+          },
+          {
+           "$id": "125",
+           "kind": "property",
+           "name": "usedValue",
+           "serializedName": "usedValue",
+           "doc": "The free-trial used value eg. used free minutes.",
+           "type": {
+            "$id": "126",
+            "kind": "int32",
+            "name": "int32",
+            "crossLanguageDefinitionId": "TypeSpec.int32",
+            "decorators": []
+           },
+           "optional": false,
+           "readOnly": true,
+           "discriminator": false,
+           "flatten": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.AccountFreeTrialProperties.usedValue"
+          },
+          {
+           "$id": "127",
+           "kind": "property",
+           "name": "percentageUsed",
+           "serializedName": "percentageUsed",
+           "doc": "The free-trial percentage used.",
+           "type": {
+            "$id": "128",
+            "kind": "float32",
+            "name": "float32",
+            "crossLanguageDefinitionId": "TypeSpec.float32",
+            "decorators": []
+           },
+           "optional": false,
+           "readOnly": true,
+           "discriminator": false,
+           "flatten": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.AccountFreeTrialProperties.percentageUsed"
+          }
+         ]
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.AccountQuotaProperties.freeTrial"
+       },
+       {
+        "$id": "129",
+        "kind": "property",
+        "name": "provisioningState",
+        "serializedName": "provisioningState",
+        "doc": "The status of the last operation.",
+        "type": {
+         "$ref": "8"
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.AccountQuotaProperties.provisioningState"
+       }
+      ]
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.AccountQuota.properties"
+    }
+   ]
+  },
+  {
+   "$ref": "114"
+  },
+  {
+   "$ref": "116"
+  },
+  {
+   "$ref": "89"
+  },
+  {
+   "$ref": "90"
+  },
+  {
+   "$ref": "100"
+  },
+  {
+   "$id": "130",
+   "kind": "model",
+   "name": "ErrorResponse",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse",
+   "usage": "Error,Json,Exception",
+   "doc": "Common error response for all Azure Resource Manager APIs to return error details for failed operations.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "131",
+     "kind": "property",
+     "name": "error",
+     "serializedName": "error",
+     "doc": "The error object.",
+     "type": {
+      "$id": "132",
+      "kind": "model",
+      "name": "ErrorDetail",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail",
+      "usage": "Json,Exception,LroPolling",
+      "doc": "The error detail.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "133",
+        "kind": "property",
+        "name": "code",
+        "serializedName": "code",
+        "doc": "The error code.",
+        "type": {
+         "$id": "134",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.code"
+       },
+       {
+        "$id": "135",
+        "kind": "property",
+        "name": "message",
+        "serializedName": "message",
+        "doc": "The error message.",
+        "type": {
+         "$id": "136",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.message"
+       },
+       {
+        "$id": "137",
+        "kind": "property",
+        "name": "target",
+        "serializedName": "target",
+        "doc": "The error target.",
+        "type": {
+         "$id": "138",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.target"
+       },
+       {
+        "$id": "139",
+        "kind": "property",
+        "name": "details",
+        "serializedName": "details",
+        "doc": "The error details.",
+        "type": {
+         "$id": "140",
+         "kind": "array",
+         "name": "ArrayErrorDetail",
+         "valueType": {
+          "$ref": "132"
+         },
+         "crossLanguageDefinitionId": "TypeSpec.Array",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.details"
+       },
+       {
+        "$id": "141",
+        "kind": "property",
+        "name": "additionalInfo",
+        "serializedName": "additionalInfo",
+        "doc": "The error additional info.",
+        "type": {
+         "$id": "142",
+         "kind": "array",
+         "name": "ArrayErrorAdditionalInfo",
+         "valueType": {
+          "$id": "143",
+          "kind": "model",
+          "name": "ErrorAdditionalInfo",
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo",
+          "usage": "Json,Exception,LroPolling",
+          "doc": "The resource management error additional info.",
+          "decorators": [],
+          "properties": [
+           {
+            "$id": "144",
+            "kind": "property",
+            "name": "type",
+            "serializedName": "type",
+            "doc": "The additional info type.",
+            "type": {
+             "$id": "145",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.type"
+           },
+           {
+            "$id": "146",
+            "kind": "property",
+            "name": "info",
+            "serializedName": "info",
+            "doc": "The additional info.",
+            "type": {
+             "$id": "147",
+             "kind": "model",
+             "name": "ErrorAdditionalInfoInfo",
+             "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.info.anonymous",
+             "usage": "Json,Exception,LroPolling",
+             "decorators": [],
+             "properties": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.info"
+           }
+          ]
+         },
+         "crossLanguageDefinitionId": "TypeSpec.Array",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.additionalInfo"
+       }
+      ]
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse.error"
+    }
+   ]
+  },
+  {
+   "$ref": "132"
+  },
+  {
+   "$ref": "143"
+  },
+  {
+   "$ref": "147"
+  },
+  {
+   "$id": "148",
+   "kind": "model",
+   "name": "AccountQuotaListResult",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
+   "usage": "Output,Json",
+   "doc": "The response of a AccountQuota list operation.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "149",
+     "kind": "property",
+     "name": "value",
+     "serializedName": "value",
+     "doc": "The AccountQuota items on this page",
+     "type": {
+      "$id": "150",
+      "kind": "array",
+      "name": "ArrayAccountQuota",
+      "valueType": {
+       "$ref": "88"
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult.value"
+    },
+    {
+     "$id": "151",
+     "kind": "property",
+     "name": "nextLink",
+     "serializedName": "nextLink",
+     "doc": "The link to the next page of items",
+     "type": {
+      "$id": "152",
+      "kind": "url",
+      "name": "ResourceLocation",
+      "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+      "baseType": {
+       "$id": "153",
+       "kind": "url",
+       "name": "url",
+       "crossLanguageDefinitionId": "TypeSpec.url",
+       "decorators": []
+      },
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult.nextLink"
+    }
+   ]
+  },
+  {
+   "$id": "154",
+   "kind": "model",
+   "name": "PlaywrightTestingQuotas",
+   "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.Quota",
+   "usage": "Output,Json",
+   "doc": "A subscription quota resource.",
+   "decorators": [],
+   "baseModel": {
+    "$ref": "89"
+   },
+   "properties": [
+    {
+     "$id": "155",
+     "kind": "property",
+     "name": "properties",
+     "serializedName": "properties",
+     "doc": "The resource-specific properties for this resource.",
+     "type": {
+      "$id": "156",
+      "kind": "model",
+      "name": "PlaywrightTestingQuotaProperties",
+      "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.QuotaProperties",
+      "usage": "Output,Json",
+      "doc": "The subscription quota resource properties.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "157",
+        "kind": "property",
+        "name": "freeTrial",
+        "serializedName": "freeTrial",
+        "doc": "The subscription quota resource free-trial properties.",
+        "type": {
+         "$id": "158",
+         "kind": "model",
+         "name": "PlaywrightTestingFreeTrialProperties",
+         "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.FreeTrialProperties",
+         "usage": "Output,Json",
+         "doc": "The subscription quota resource free-trial properties.",
+         "decorators": [],
+         "properties": [
+          {
+           "$id": "159",
+           "kind": "property",
+           "name": "accountId",
+           "serializedName": "accountId",
+           "doc": "The Playwright service account id.",
+           "type": {
+            "$id": "160",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+           },
+           "optional": false,
+           "readOnly": true,
+           "discriminator": false,
+           "flatten": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.FreeTrialProperties.accountId"
+          },
+          {
+           "$id": "161",
+           "kind": "property",
+           "name": "state",
+           "serializedName": "state",
+           "doc": "The free-trial state.",
+           "type": {
+            "$ref": "32"
+           },
+           "optional": false,
+           "readOnly": true,
+           "discriminator": false,
+           "flatten": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.FreeTrialProperties.state"
+          }
+         ]
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.QuotaProperties.freeTrial"
+       },
+       {
+        "$id": "162",
+        "kind": "property",
+        "name": "offeringType",
+        "serializedName": "offeringType",
+        "doc": "Indicates the offering type for the subscription.",
+        "type": {
+         "$ref": "42"
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.QuotaProperties.offeringType"
+       },
+       {
+        "$id": "163",
+        "kind": "property",
+        "name": "provisioningState",
+        "serializedName": "provisioningState",
+        "doc": "The status of the last operation.",
+        "type": {
+         "$ref": "8"
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.QuotaProperties.provisioningState"
+       }
+      ]
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.Quota.properties"
+    }
+   ]
+  },
+  {
+   "$ref": "156"
+  },
+  {
+   "$ref": "158"
+  },
+  {
+   "$id": "164",
+   "kind": "model",
+   "name": "QuotaListResult",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
+   "usage": "Output,Json",
+   "doc": "The response of a Quota list operation.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "165",
+     "kind": "property",
+     "name": "value",
+     "serializedName": "value",
+     "doc": "The Quota items on this page",
+     "type": {
+      "$id": "166",
+      "kind": "array",
+      "name": "ArrayQuota",
+      "valueType": {
+       "$ref": "154"
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult.value"
+    },
+    {
+     "$id": "167",
+     "kind": "property",
+     "name": "nextLink",
+     "serializedName": "nextLink",
+     "doc": "The link to the next page of items",
+     "type": {
+      "$id": "168",
+      "kind": "url",
+      "name": "ResourceLocation",
+      "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+      "baseType": {
+       "$id": "169",
+       "kind": "url",
+       "name": "url",
+       "crossLanguageDefinitionId": "TypeSpec.url",
+       "decorators": []
+      },
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult.nextLink"
+    }
+   ]
+  },
+  {
+   "$id": "170",
+   "kind": "model",
+   "name": "PlaywrightTestingAccount",
+   "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.Account",
+   "usage": "Input,Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+   "doc": "A Playwright service account resource.",
+   "decorators": [],
+   "baseModel": {
+    "$id": "171",
+    "kind": "model",
+    "name": "TrackedResource",
+    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource",
+    "usage": "Input,Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+    "doc": "The resource model definition for an Azure Resource Manager tracked top level resource which has 'tags' and a 'location'",
+    "decorators": [],
+    "baseModel": {
+     "$ref": "90"
+    },
+    "properties": [
+     {
+      "$id": "172",
+      "kind": "property",
+      "name": "tags",
+      "serializedName": "tags",
+      "doc": "Resource tags.",
+      "type": {
+       "$id": "173",
+       "kind": "dict",
+       "keyType": {
+        "$id": "174",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "valueType": {
+        "$id": "175",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "decorators": []
+      },
+      "optional": true,
+      "readOnly": false,
+      "discriminator": false,
+      "flatten": false,
+      "decorators": [],
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource.tags"
+     },
+     {
+      "$id": "176",
+      "kind": "property",
+      "name": "location",
+      "serializedName": "location",
+      "doc": "The geo-location where the resource lives",
+      "type": {
+       "$id": "177",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "optional": false,
+      "readOnly": false,
+      "discriminator": false,
+      "flatten": false,
+      "decorators": [],
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.TrackedResource.location"
+     }
+    ]
+   },
+   "properties": [
+    {
+     "$id": "178",
+     "kind": "property",
+     "name": "properties",
+     "serializedName": "properties",
+     "doc": "The resource-specific properties for this resource.",
+     "type": {
+      "$id": "179",
+      "kind": "model",
+      "name": "PlaywrightTestingAccountProperties",
+      "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.AccountProperties",
+      "usage": "Input,Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+      "doc": "Account resource properties.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "180",
+        "kind": "property",
+        "name": "dashboardUri",
+        "serializedName": "dashboardUri",
+        "doc": "The Playwright testing dashboard URI for the account resource.",
+        "type": {
+         "$id": "181",
+         "kind": "url",
+         "name": "url",
+         "crossLanguageDefinitionId": "TypeSpec.url",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.AccountProperties.dashboardUri"
+       },
+       {
+        "$id": "182",
+        "kind": "property",
+        "name": "regionalAffinity",
+        "serializedName": "regionalAffinity",
+        "doc": "This property sets the connection region for Playwright client workers to cloud-hosted browsers. If enabled, workers connect to browsers in the closest Azure region, ensuring lower latency. If disabled, workers connect to browsers in the Azure region in which the workspace was initially created.",
+        "type": {
+         "$ref": "52"
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.AccountProperties.regionalAffinity"
+       },
+       {
+        "$id": "183",
+        "kind": "property",
+        "name": "scalableExecution",
+        "serializedName": "scalableExecution",
+        "doc": "When enabled, Playwright client workers can connect to cloud-hosted browsers. This can increase the number of parallel workers for a test run, significantly minimizing test completion durations.",
+        "type": {
+         "$ref": "52"
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.AccountProperties.scalableExecution"
+       },
+       {
+        "$id": "184",
+        "kind": "property",
+        "name": "reporting",
+        "serializedName": "reporting",
+        "doc": "When enabled, this feature allows the workspace to upload and display test results, including artifacts like traces and screenshots, in the Playwright portal. This enables faster and more efficient troubleshooting.",
+        "type": {
+         "$ref": "52"
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.AccountProperties.reporting"
+       },
+       {
+        "$id": "185",
+        "kind": "property",
+        "name": "localAuth",
+        "serializedName": "localAuth",
+        "doc": "When enabled, this feature allows the workspace to use local auth(through access key) for authentication of test runs.",
+        "type": {
+         "$ref": "52"
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.AccountProperties.localAuth"
+       },
+       {
+        "$id": "186",
+        "kind": "property",
+        "name": "provisioningState",
+        "serializedName": "provisioningState",
+        "doc": "The status of the last operation.",
+        "type": {
+         "$ref": "8"
+        },
+        "optional": true,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.AccountProperties.provisioningState"
+       }
+      ]
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Microsoft.AzurePlaywrightService.Account.properties"
+    }
+   ]
+  },
+  {
+   "$ref": "179"
+  },
+  {
+   "$ref": "171"
+  },
+  {
+   "$id": "187",
+   "kind": "model",
+   "name": "AccountUpdate",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.Foundations.ResourceUpdateModel",
+   "usage": "Input,Json",
+   "doc": "The type used for update operations of the Account.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "188",
+     "kind": "property",
+     "name": "tags",
+     "serializedName": "tags",
+     "doc": "Resource tags.",
+     "type": {
+      "$id": "189",
+      "kind": "dict",
+      "keyType": {
+       "$id": "190",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "valueType": {
+       "$id": "191",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.Foundations.ResourceUpdateModel.tags"
+    },
+    {
+     "$id": "192",
+     "kind": "property",
+     "name": "properties",
+     "serializedName": "properties",
+     "doc": "The resource-specific properties for this resource.",
+     "type": {
+      "$id": "193",
+      "kind": "model",
+      "name": "AccountUpdateProperties",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.Foundations.ResourceUpdateModelProperties",
+      "usage": "Input,Json",
+      "doc": "The updatable properties of the Account.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "194",
+        "kind": "property",
+        "name": "regionalAffinity",
+        "serializedName": "regionalAffinity",
+        "doc": "This property sets the connection region for Playwright client workers to cloud-hosted browsers. If enabled, workers connect to browsers in the closest Azure region, ensuring lower latency. If disabled, workers connect to browsers in the Azure region in which the workspace was initially created.",
+        "type": {
+         "$ref": "52"
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.Foundations.ResourceUpdateModelProperties.regionalAffinity"
+       },
+       {
+        "$id": "195",
+        "kind": "property",
+        "name": "scalableExecution",
+        "serializedName": "scalableExecution",
+        "doc": "When enabled, Playwright client workers can connect to cloud-hosted browsers. This can increase the number of parallel workers for a test run, significantly minimizing test completion durations.",
+        "type": {
+         "$ref": "52"
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.Foundations.ResourceUpdateModelProperties.scalableExecution"
+       },
+       {
+        "$id": "196",
+        "kind": "property",
+        "name": "reporting",
+        "serializedName": "reporting",
+        "doc": "When enabled, this feature allows the workspace to upload and display test results, including artifacts like traces and screenshots, in the Playwright portal. This enables faster and more efficient troubleshooting.",
+        "type": {
+         "$ref": "52"
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.Foundations.ResourceUpdateModelProperties.reporting"
+       },
+       {
+        "$id": "197",
+        "kind": "property",
+        "name": "localAuth",
+        "serializedName": "localAuth",
+        "doc": "When enabled, this feature allows the workspace to use local auth(through access key) for authentication of test runs.",
+        "type": {
+         "$ref": "52"
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.ResourceManager.Foundations.ResourceUpdateModelProperties.localAuth"
+       }
+      ]
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.Foundations.ResourceUpdateModel.properties"
+    }
+   ]
+  },
+  {
+   "$ref": "193"
+  },
+  {
+   "$id": "198",
+   "kind": "model",
+   "name": "ArmOperationStatusResourceProvisioningState",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus",
+   "usage": "LroPolling",
+   "doc": "Standard Azure Resource Manager operation status response",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "199",
+     "kind": "property",
+     "name": "status",
+     "serializedName": "status",
+     "doc": "The operation status",
+     "type": {
+      "$ref": "58"
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.status"
+    },
+    {
+     "$id": "200",
+     "kind": "property",
+     "name": "name",
+     "serializedName": "name",
+     "doc": "The name of the  operationStatus resource",
+     "type": {
+      "$id": "201",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.name"
+    },
+    {
+     "$id": "202",
+     "kind": "property",
+     "name": "startTime",
+     "serializedName": "startTime",
+     "doc": "Operation start time",
+     "type": {
+      "$id": "203",
+      "kind": "utcDateTime",
+      "name": "utcDateTime",
+      "encode": "rfc3339",
+      "wireType": {
+       "$id": "204",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.startTime"
+    },
+    {
+     "$id": "205",
+     "kind": "property",
+     "name": "endTime",
+     "serializedName": "endTime",
+     "doc": "Operation complete time",
+     "type": {
+      "$id": "206",
+      "kind": "utcDateTime",
+      "name": "utcDateTime",
+      "encode": "rfc3339",
+      "wireType": {
+       "$id": "207",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.endTime"
+    },
+    {
+     "$id": "208",
+     "kind": "property",
+     "name": "percentComplete",
+     "serializedName": "percentComplete",
+     "doc": "The progress made toward completing the operation",
+     "type": {
+      "$id": "209",
+      "kind": "float64",
+      "name": "float64",
+      "crossLanguageDefinitionId": "TypeSpec.float64",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.percentComplete"
+    },
+    {
+     "$id": "210",
+     "kind": "property",
+     "name": "error",
+     "serializedName": "error",
+     "doc": "Errors that occurred if the operation ended with Canceled or Failed status",
+     "type": {
+      "$ref": "132"
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus.error"
+    }
+   ]
+  },
+  {
+   "$id": "211",
+   "kind": "model",
+   "name": "AccountListResult",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
+   "usage": "Output,Json",
+   "doc": "The response of a Account list operation.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "212",
+     "kind": "property",
+     "name": "value",
+     "serializedName": "value",
+     "doc": "The Account items on this page",
+     "type": {
+      "$id": "213",
+      "kind": "array",
+      "name": "ArrayAccount",
+      "valueType": {
+       "$ref": "170"
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult.value"
+    },
+    {
+     "$id": "214",
+     "kind": "property",
+     "name": "nextLink",
+     "serializedName": "nextLink",
+     "doc": "The link to the next page of items",
+     "type": {
+      "$id": "215",
+      "kind": "url",
+      "name": "ResourceLocation",
+      "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+      "baseType": {
+       "$id": "216",
+       "kind": "url",
+       "name": "url",
+       "crossLanguageDefinitionId": "TypeSpec.url",
+       "decorators": []
+      },
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult.nextLink"
+    }
+   ]
+  },
+  {
+   "$id": "217",
+   "kind": "model",
+   "name": "PlaywrightTestingNameAvailabilityRequest",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.CheckNameAvailabilityRequest",
+   "usage": "Input,Json",
+   "doc": "The check availability request body.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "218",
+     "kind": "property",
+     "name": "name",
+     "serializedName": "name",
+     "doc": "The name of the resource for which availability needs to be checked.",
+     "type": {
+      "$id": "219",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.CheckNameAvailabilityRequest.name"
+    },
+    {
+     "$id": "220",
+     "kind": "property",
+     "name": "type",
+     "serializedName": "type",
+     "doc": "The resource type.",
+     "type": {
+      "$id": "221",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.CheckNameAvailabilityRequest.type"
+    }
+   ]
+  },
+  {
+   "$id": "222",
+   "kind": "model",
+   "name": "PlaywrightTestingNameAvailabilityResult",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.CheckNameAvailabilityResponse",
+   "usage": "Output,Json",
+   "doc": "The check availability result.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "223",
+     "kind": "property",
+     "name": "IsNameAvailable",
+     "serializedName": "nameAvailable",
+     "doc": "Indicates if the resource name is available.",
+     "type": {
+      "$id": "224",
+      "kind": "boolean",
+      "name": "boolean",
+      "crossLanguageDefinitionId": "TypeSpec.boolean",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.CheckNameAvailabilityResponse.nameAvailable"
+    },
+    {
+     "$id": "225",
+     "kind": "property",
+     "name": "reason",
+     "serializedName": "reason",
+     "doc": "The reason why the given name is not available.",
+     "type": {
+      "$ref": "66"
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.CheckNameAvailabilityResponse.reason"
+    },
+    {
+     "$id": "226",
+     "kind": "property",
+     "name": "message",
+     "serializedName": "message",
+     "doc": "Detailed reason why the given name is not available.",
+     "type": {
+      "$id": "227",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.CheckNameAvailabilityResponse.message"
+    }
+   ]
+  },
+  {
+   "$id": "228",
+   "kind": "model",
+   "name": "OperationListResult",
+   "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationListResult",
+   "usage": "Output,Json",
+   "doc": "A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "229",
+     "kind": "property",
+     "name": "value",
+     "serializedName": "value",
+     "doc": "The Operation items on this page",
+     "type": {
+      "$id": "230",
+      "kind": "array",
+      "name": "ArrayOperation",
+      "valueType": {
+       "$id": "231",
+       "kind": "model",
+       "name": "Operation",
+       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation",
+       "usage": "Output,Json",
+       "doc": "Details of a REST API operation, returned from the Resource Provider Operations API",
+       "decorators": [],
+       "properties": [
+        {
+         "$id": "232",
+         "kind": "property",
+         "name": "name",
+         "serializedName": "name",
+         "doc": "The name of the operation, as per Resource-Based Access Control (RBAC). Examples: \"Microsoft.Compute/virtualMachines/write\", \"Microsoft.Compute/virtualMachines/capture/action\"",
+         "type": {
+          "$id": "233",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "optional": true,
+         "readOnly": true,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.name"
+        },
+        {
+         "$id": "234",
+         "kind": "property",
+         "name": "isDataAction",
+         "serializedName": "isDataAction",
+         "doc": "Whether the operation applies to data-plane. This is \"true\" for data-plane operations and \"false\" for Azure Resource Manager/control-plane operations.",
+         "type": {
+          "$id": "235",
+          "kind": "boolean",
+          "name": "boolean",
+          "crossLanguageDefinitionId": "TypeSpec.boolean",
+          "decorators": []
+         },
+         "optional": true,
+         "readOnly": true,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.isDataAction"
+        },
+        {
+         "$id": "236",
+         "kind": "property",
+         "name": "display",
+         "serializedName": "display",
+         "doc": "Localized display information for this particular operation.",
+         "type": {
+          "$id": "237",
+          "kind": "model",
+          "name": "OperationDisplay",
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay",
+          "usage": "Output,Json",
+          "doc": "Localized display information for and operation.",
+          "decorators": [],
+          "properties": [
+           {
+            "$id": "238",
+            "kind": "property",
+            "name": "provider",
+            "serializedName": "provider",
+            "doc": "The localized friendly form of the resource provider name, e.g. \"Microsoft Monitoring Insights\" or \"Microsoft Compute\".",
+            "type": {
+             "$id": "239",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay.provider"
+           },
+           {
+            "$id": "240",
+            "kind": "property",
+            "name": "resource",
+            "serializedName": "resource",
+            "doc": "The localized friendly name of the resource type related to this operation. E.g. \"Virtual Machines\" or \"Job Schedule Collections\".",
+            "type": {
+             "$id": "241",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay.resource"
+           },
+           {
+            "$id": "242",
+            "kind": "property",
+            "name": "operation",
+            "serializedName": "operation",
+            "doc": "The concise, localized friendly name for the operation; suitable for dropdowns. E.g. \"Create or Update Virtual Machine\", \"Restart Virtual Machine\".",
+            "type": {
+             "$id": "243",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay.operation"
+           },
+           {
+            "$id": "244",
+            "kind": "property",
+            "name": "description",
+            "serializedName": "description",
+            "doc": "The short, localized friendly description of the operation; suitable for tool tips and detailed views.",
+            "type": {
+             "$id": "245",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": true,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay.description"
+           }
+          ]
+         },
+         "optional": true,
+         "readOnly": false,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.display"
+        },
+        {
+         "$id": "246",
+         "kind": "property",
+         "name": "origin",
+         "serializedName": "origin",
+         "doc": "The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is \"user,system\"",
+         "type": {
+          "$ref": "72"
+         },
+         "optional": true,
+         "readOnly": true,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.origin"
+        },
+        {
+         "$id": "247",
+         "kind": "property",
+         "name": "actionType",
+         "serializedName": "actionType",
+         "doc": "Extensible enum. Indicates the action type. \"Internal\" refers to actions that are for internal only APIs.",
+         "type": {
+          "$ref": "80"
+         },
+         "optional": true,
+         "readOnly": true,
+         "discriminator": false,
+         "flatten": false,
+         "decorators": [],
+         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.actionType"
+        }
+       ]
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationListResult.value"
+    },
+    {
+     "$id": "248",
+     "kind": "property",
+     "name": "nextLink",
+     "serializedName": "nextLink",
+     "doc": "The link to the next page of items",
+     "type": {
+      "$id": "249",
+      "kind": "url",
+      "name": "ResourceLocation",
+      "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+      "baseType": {
+       "$id": "250",
+       "kind": "url",
+       "name": "url",
+       "crossLanguageDefinitionId": "TypeSpec.url",
+       "decorators": []
+      },
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationListResult.nextLink"
+    }
+   ]
+  },
+  {
+   "$ref": "231"
+  },
+  {
+   "$ref": "237"
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "251",
+   "Name": "AzurePlaywrightServiceClient",
+   "Doc": "Microsoft.AzurePlaywrightService Resource Provider Management API.",
+   "Operations": [],
+   "Protocol": {
+    "$id": "252"
+   },
+   "Parameters": [
+    {
+     "$id": "253",
+     "Name": "endpoint",
+     "NameInRequest": "endpoint",
+     "Doc": "Service host",
+     "Type": {
+      "$id": "254",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "Location": "Uri",
+     "IsApiVersion": false,
+     "IsResourceParameter": false,
+     "IsContentType": false,
+     "IsRequired": true,
+     "IsEndpoint": true,
+     "SkipUrlEncoding": false,
+     "Explode": false,
+     "Kind": "Client",
+     "DefaultValue": {
+      "$id": "255",
+      "Type": {
+       "$id": "256",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string"
+      },
+      "Value": "https://management.azure.com"
+     }
+    }
+   ],
+   "Decorators": []
+  },
+  {
+   "$id": "257",
+   "Name": "Operations",
+   "Operations": [
+    {
+     "$id": "258",
+     "Name": "list",
+     "ResourceName": "Operations",
+     "Doc": "List the operations for the provider",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "259",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "260",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "261",
+        "Type": {
+         "$id": "262",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-12-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "263",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "264",
+        "kind": "constant",
+        "valueType": {
+         "$id": "265",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "266",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "228"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/providers/Microsoft.AzurePlaywrightService/operations",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "267",
+      "ItemName": "value",
+      "NextLinkName": "nextLink"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "268",
+       "kind": "http",
+       "name": "Operations_List",
+       "description": "Operations_List",
+       "filePath": "2024-12-01/Operations_List.json",
+       "parameters": [
+        {
+         "$id": "269",
+         "parameter": {
+          "$ref": "259"
+         },
+         "value": {
+          "$id": "270",
+          "kind": "string",
+          "type": {
+           "$ref": "260"
+          },
+          "value": "2024-12-01"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "271",
+         "response": {
+          "$ref": "266"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "272",
+          "kind": "model",
+          "type": {
+           "$ref": "228"
+          },
+          "value": {
+           "$id": "273",
+           "value": {
+            "$id": "274",
+            "kind": "array",
+            "type": {
+             "$ref": "230"
+            },
+            "value": [
+             {
+              "$id": "275",
+              "kind": "model",
+              "type": {
+               "$ref": "231"
+              },
+              "value": {
+               "$id": "276",
+               "name": {
+                "$id": "277",
+                "kind": "string",
+                "type": {
+                 "$ref": "233"
+                },
+                "value": "Microsoft.AzurePlaywrightService/accounts/Write"
+               },
+               "isDataAction": {
+                "$id": "278",
+                "kind": "boolean",
+                "type": {
+                 "$ref": "235"
+                },
+                "value": false
+               },
+               "display": {
+                "$id": "279",
+                "kind": "model",
+                "type": {
+                 "$ref": "237"
+                },
+                "value": {
+                 "$id": "280",
+                 "provider": {
+                  "$id": "281",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "239"
+                  },
+                  "value": "Microsoft.AzurePlaywrightService"
+                 },
+                 "resource": {
+                  "$id": "282",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "241"
+                  },
+                  "value": "accounts"
+                 },
+                 "operation": {
+                  "$id": "283",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "243"
+                  },
+                  "value": "Creates or updates the PlaywrightAccounts"
+                 },
+                 "description": {
+                  "$id": "284",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "245"
+                  },
+                  "value": "Set PlaywrightAccounts"
+                 }
+                }
+               }
+              }
+             },
+             {
+              "$id": "285",
+              "kind": "model",
+              "type": {
+               "$ref": "231"
+              },
+              "value": {
+               "$id": "286",
+               "name": {
+                "$id": "287",
+                "kind": "string",
+                "type": {
+                 "$ref": "233"
+                },
+                "value": "Microsoft.AzurePlaywrightService/accounts/Delete"
+               },
+               "isDataAction": {
+                "$id": "288",
+                "kind": "boolean",
+                "type": {
+                 "$ref": "235"
+                },
+                "value": false
+               },
+               "display": {
+                "$id": "289",
+                "kind": "model",
+                "type": {
+                 "$ref": "237"
+                },
+                "value": {
+                 "$id": "290",
+                 "provider": {
+                  "$id": "291",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "239"
+                  },
+                  "value": "Microsoft.AzurePlaywrightService"
+                 },
+                 "resource": {
+                  "$id": "292",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "241"
+                  },
+                  "value": "accounts"
+                 },
+                 "operation": {
+                  "$id": "293",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "243"
+                  },
+                  "value": "Deletes the PlaywrightAccounts"
+                 },
+                 "description": {
+                  "$id": "294",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "245"
+                  },
+                  "value": "Delete PlaywrightAccounts"
+                 }
+                }
+               }
+              }
+             },
+             {
+              "$id": "295",
+              "kind": "model",
+              "type": {
+               "$ref": "231"
+              },
+              "value": {
+               "$id": "296",
+               "name": {
+                "$id": "297",
+                "kind": "string",
+                "type": {
+                 "$ref": "233"
+                },
+                "value": "Microsoft.AzurePlaywrightService/accounts/Read"
+               },
+               "isDataAction": {
+                "$id": "298",
+                "kind": "boolean",
+                "type": {
+                 "$ref": "235"
+                },
+                "value": false
+               },
+               "display": {
+                "$id": "299",
+                "kind": "model",
+                "type": {
+                 "$ref": "237"
+                },
+                "value": {
+                 "$id": "300",
+                 "provider": {
+                  "$id": "301",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "239"
+                  },
+                  "value": "Microsoft.AzurePlaywrightService"
+                 },
+                 "resource": {
+                  "$id": "302",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "241"
+                  },
+                  "value": "accounts"
+                 },
+                 "operation": {
+                  "$id": "303",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "243"
+                  },
+                  "value": "Reads the PlaywrightAccounts"
+                 },
+                 "description": {
+                  "$id": "304",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "245"
+                  },
+                  "value": "Read PlaywrightAccounts"
+                 }
+                }
+               }
+              }
+             }
+            ]
+           },
+           "nextLink": {
+            "$id": "305",
+            "kind": "string",
+            "type": {
+             "$ref": "249"
+            },
+            "value": "http://nextlink.contoso.com"
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "Protocol": {
+    "$id": "306"
+   },
+   "Parent": "AzurePlaywrightServiceClient",
+   "Parameters": [
+    {
+     "$id": "307",
+     "Name": "endpoint",
+     "NameInRequest": "endpoint",
+     "Doc": "Service host",
+     "Type": {
+      "$id": "308",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "Location": "Uri",
+     "IsApiVersion": false,
+     "IsResourceParameter": false,
+     "IsContentType": false,
+     "IsRequired": true,
+     "IsEndpoint": true,
+     "SkipUrlEncoding": false,
+     "Explode": false,
+     "Kind": "Client",
+     "DefaultValue": {
+      "$id": "309",
+      "Type": {
+       "$id": "310",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string"
+      },
+      "Value": "https://management.azure.com"
+     }
+    }
+   ],
+   "Decorators": []
+  },
+  {
+   "$id": "311",
+   "Name": "Accounts",
+   "Operations": [
+    {
+     "$id": "312",
+     "Name": "get",
+     "ResourceName": "Account",
+     "Doc": "Get a Account",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "313",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "314",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "315",
+        "Type": {
+         "$id": "316",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-12-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "317",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Doc": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "318",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "319",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "320",
+       "Name": "resourceGroupName",
+       "NameInRequest": "resourceGroupName",
+       "Doc": "The name of the resource group. The name is case insensitive.",
+       "Type": {
+        "$id": "321",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "322",
+       "Name": "accountName",
+       "NameInRequest": "accountName",
+       "Doc": "Name of account.",
+       "Type": {
+        "$id": "323",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "324",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "325",
+        "kind": "constant",
+        "valueType": {
+         "$id": "326",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "327",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "170"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": []
+    },
+    {
+     "$id": "328",
+     "Name": "createOrUpdate",
+     "ResourceName": "Account",
+     "Doc": "Create a Account",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "329",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "330",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "331",
+        "Type": {
+         "$id": "332",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-12-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "333",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Doc": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "334",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "335",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "336",
+       "Name": "resourceGroupName",
+       "NameInRequest": "resourceGroupName",
+       "Doc": "The name of the resource group. The name is case insensitive.",
+       "Type": {
+        "$id": "337",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "338",
+       "Name": "accountName",
+       "NameInRequest": "accountName",
+       "Doc": "Name of account.",
+       "Type": {
+        "$id": "339",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "340",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Doc": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "341",
+        "kind": "constant",
+        "valueType": {
+         "$id": "342",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "343",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "344",
+        "kind": "constant",
+        "valueType": {
+         "$id": "345",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "346",
+       "Name": "resource",
+       "NameInRequest": "resource",
+       "Doc": "Resource create parameters.",
+       "Type": {
+        "$ref": "170"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "347",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "170"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      },
+      {
+       "$id": "348",
+       "StatusCodes": [
+        201
+       ],
+       "BodyType": {
+        "$ref": "170"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "349",
+         "Name": "retryAfter",
+         "NameInResponse": "Retry-After",
+         "Doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+         "Type": {
+          "$id": "350",
+          "kind": "int32",
+          "name": "int32",
+          "crossLanguageDefinitionId": "TypeSpec.int32",
+          "decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "PUT",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "351",
+      "FinalStateVia": 0,
+      "FinalResponse": {
+       "$id": "352",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "170"
+       },
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": [
+      {
+       "$id": "353",
+       "name": "Azure.Core.@useFinalStateVia",
+       "arguments": {
+        "$id": "354",
+        "finalState": "azure-async-operation"
+       }
+      }
+     ],
+     "Examples": [
+      {
+       "$id": "355",
+       "kind": "http",
+       "name": "Accounts_CreateOrUpdate",
+       "description": "Accounts_CreateOrUpdate",
+       "filePath": "2024-12-01/Accounts_CreateOrUpdate.json",
+       "parameters": [
+        {
+         "$id": "356",
+         "parameter": {
+          "$ref": "329"
+         },
+         "value": {
+          "$id": "357",
+          "kind": "string",
+          "type": {
+           "$ref": "330"
+          },
+          "value": "2024-12-01"
+         }
+        },
+        {
+         "$id": "358",
+         "parameter": {
+          "$ref": "333"
+         },
+         "value": {
+          "$id": "359",
+          "kind": "string",
+          "type": {
+           "$ref": "334"
+          },
+          "value": "00000000-0000-0000-0000-000000000000"
+         }
+        },
+        {
+         "$id": "360",
+         "parameter": {
+          "$ref": "336"
+         },
+         "value": {
+          "$id": "361",
+          "kind": "string",
+          "type": {
+           "$ref": "337"
+          },
+          "value": "dummyrg"
+         }
+        },
+        {
+         "$id": "362",
+         "parameter": {
+          "$ref": "338"
+         },
+         "value": {
+          "$id": "363",
+          "kind": "string",
+          "type": {
+           "$ref": "339"
+          },
+          "value": "myPlaywrightAccount"
+         }
+        },
+        {
+         "$id": "364",
+         "parameter": {
+          "$ref": "346"
+         },
+         "value": {
+          "$id": "365",
+          "kind": "model",
+          "type": {
+           "$ref": "170"
+          },
+          "value": {
+           "$id": "366",
+           "location": {
+            "$id": "367",
+            "kind": "string",
+            "type": {
+             "$ref": "177"
+            },
+            "value": "westus"
+           },
+           "tags": {
+            "$id": "368",
+            "kind": "dict",
+            "type": {
+             "$ref": "173"
+            },
+            "value": {
+             "$id": "369",
+             "Team": {
+              "$id": "370",
+              "kind": "string",
+              "type": {
+               "$ref": "175"
+              },
+              "value": "Dev Exp"
+             }
+            }
+           },
+           "properties": {
+            "$id": "371",
+            "kind": "model",
+            "type": {
+             "$ref": "179"
+            },
+            "value": {
+             "$id": "372",
+             "regionalAffinity": {
+              "$id": "373",
+              "kind": "string",
+              "type": {
+               "$ref": "52"
+              },
+              "value": "Enabled"
+             }
+            }
+           }
+          }
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "374",
+         "response": {
+          "$ref": "347"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "375",
+          "kind": "model",
+          "type": {
+           "$ref": "170"
+          },
+          "value": {
+           "$id": "376",
+           "location": {
+            "$id": "377",
+            "kind": "string",
+            "type": {
+             "$ref": "177"
+            },
+            "value": "westus"
+           },
+           "properties": {
+            "$id": "378",
+            "kind": "model",
+            "type": {
+             "$ref": "179"
+            },
+            "value": {
+             "$id": "379",
+             "dashboardUri": {
+              "$id": "380",
+              "kind": "string",
+              "type": {
+               "$ref": "181"
+              },
+              "value": "https://dashboard.00000000-0000-0000-0000-000000000000.domain.com"
+             },
+             "provisioningState": {
+              "$id": "381",
+              "kind": "string",
+              "type": {
+               "$ref": "8"
+              },
+              "value": "Succeeded"
+             },
+             "regionalAffinity": {
+              "$id": "382",
+              "kind": "string",
+              "type": {
+               "$ref": "52"
+              },
+              "value": "Enabled"
+             },
+             "scalableExecution": {
+              "$id": "383",
+              "kind": "string",
+              "type": {
+               "$ref": "52"
+              },
+              "value": "Enabled"
+             },
+             "reporting": {
+              "$id": "384",
+              "kind": "string",
+              "type": {
+               "$ref": "52"
+              },
+              "value": "Enabled"
+             },
+             "localAuth": {
+              "$id": "385",
+              "kind": "string",
+              "type": {
+               "$ref": "52"
+              },
+              "value": "Enabled"
+             }
+            }
+           },
+           "id": {
+            "$id": "386",
+            "kind": "string",
+            "type": {
+             "$ref": "92"
+            },
+            "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.AzurePlaywrightService/accounts/myPlaywrightAccount"
+           },
+           "name": {
+            "$id": "387",
+            "kind": "string",
+            "type": {
+             "$id": "388",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "value": "myPlaywrightAccount"
+           },
+           "type": {
+            "$id": "389",
+            "kind": "string",
+            "type": {
+             "$ref": "97"
+            },
+            "value": "Microsoft.AzurePlaywrightService/accounts"
+           },
+           "tags": {
+            "$id": "390",
+            "kind": "dict",
+            "type": {
+             "$ref": "173"
+            },
+            "value": {
+             "$id": "391",
+             "Team": {
+              "$id": "392",
+              "kind": "string",
+              "type": {
+               "$ref": "175"
+              },
+              "value": "Dev Exp"
+             }
+            }
+           },
+           "systemData": {
+            "$id": "393",
+            "kind": "model",
+            "type": {
+             "$ref": "100"
+            },
+            "value": {
+             "$id": "394",
+             "createdBy": {
+              "$id": "395",
+              "kind": "string",
+              "type": {
+               "$ref": "102"
+              },
+              "value": "userId1001"
+             },
+             "createdByType": {
+              "$id": "396",
+              "kind": "string",
+              "type": {
+               "$ref": "22"
+              },
+              "value": "User"
+             },
+             "createdAt": {
+              "$id": "397",
+              "kind": "string",
+              "type": {
+               "$ref": "105"
+              },
+              "value": "2021-09-28T12:32:33Z"
+             },
+             "lastModifiedBy": {
+              "$id": "398",
+              "kind": "string",
+              "type": {
+               "$ref": "108"
+              },
+              "value": "userId1001"
+             },
+             "lastModifiedByType": {
+              "$id": "399",
+              "kind": "string",
+              "type": {
+               "$ref": "22"
+              },
+              "value": "User"
+             },
+             "lastModifiedAt": {
+              "$id": "400",
+              "kind": "string",
+              "type": {
+               "$ref": "111"
+              },
+              "value": "2021-09-28T12:32:33Z"
+             }
+            }
+           }
+          }
+         }
+        },
+        {
+         "$id": "401",
+         "response": {
+          "$ref": "348"
+         },
+         "statusCode": 201,
+         "bodyValue": {
+          "$id": "402",
+          "kind": "model",
+          "type": {
+           "$ref": "170"
+          },
+          "value": {
+           "$id": "403",
+           "location": {
+            "$id": "404",
+            "kind": "string",
+            "type": {
+             "$ref": "177"
+            },
+            "value": "westus"
+           },
+           "properties": {
+            "$id": "405",
+            "kind": "model",
+            "type": {
+             "$ref": "179"
+            },
+            "value": {
+             "$id": "406",
+             "dashboardUri": {
+              "$id": "407",
+              "kind": "string",
+              "type": {
+               "$ref": "181"
+              },
+              "value": "https://dashboard.00000000-0000-0000-0000-000000000000.domain.com"
+             },
+             "provisioningState": {
+              "$id": "408",
+              "kind": "string",
+              "type": {
+               "$ref": "8"
+              },
+              "value": "Succeeded"
+             },
+             "regionalAffinity": {
+              "$id": "409",
+              "kind": "string",
+              "type": {
+               "$ref": "52"
+              },
+              "value": "Enabled"
+             },
+             "scalableExecution": {
+              "$id": "410",
+              "kind": "string",
+              "type": {
+               "$ref": "52"
+              },
+              "value": "Enabled"
+             },
+             "reporting": {
+              "$id": "411",
+              "kind": "string",
+              "type": {
+               "$ref": "52"
+              },
+              "value": "Enabled"
+             },
+             "localAuth": {
+              "$id": "412",
+              "kind": "string",
+              "type": {
+               "$ref": "52"
+              },
+              "value": "Enabled"
+             }
+            }
+           },
+           "id": {
+            "$id": "413",
+            "kind": "string",
+            "type": {
+             "$ref": "92"
+            },
+            "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.AzurePlaywrightService/accounts/myPlaywrightAccount"
+           },
+           "name": {
+            "$id": "414",
+            "kind": "string",
+            "type": {
+             "$ref": "388"
+            },
+            "value": "myPlaywrightAccount"
+           },
+           "type": {
+            "$id": "415",
+            "kind": "string",
+            "type": {
+             "$ref": "97"
+            },
+            "value": "Microsoft.AzurePlaywrightService/accounts"
+           },
+           "tags": {
+            "$id": "416",
+            "kind": "dict",
+            "type": {
+             "$ref": "173"
+            },
+            "value": {
+             "$id": "417",
+             "Team": {
+              "$id": "418",
+              "kind": "string",
+              "type": {
+               "$ref": "175"
+              },
+              "value": "Dev Exp"
+             }
+            }
+           },
+           "systemData": {
+            "$id": "419",
+            "kind": "model",
+            "type": {
+             "$ref": "100"
+            },
+            "value": {
+             "$id": "420",
+             "createdBy": {
+              "$id": "421",
+              "kind": "string",
+              "type": {
+               "$ref": "102"
+              },
+              "value": "userId1001"
+             },
+             "createdByType": {
+              "$id": "422",
+              "kind": "string",
+              "type": {
+               "$ref": "22"
+              },
+              "value": "User"
+             },
+             "createdAt": {
+              "$id": "423",
+              "kind": "string",
+              "type": {
+               "$ref": "105"
+              },
+              "value": "2021-09-28T12:32:33Z"
+             },
+             "lastModifiedBy": {
+              "$id": "424",
+              "kind": "string",
+              "type": {
+               "$ref": "108"
+              },
+              "value": "userId1001"
+             },
+             "lastModifiedByType": {
+              "$id": "425",
+              "kind": "string",
+              "type": {
+               "$ref": "22"
+              },
+              "value": "User"
+             },
+             "lastModifiedAt": {
+              "$id": "426",
+              "kind": "string",
+              "type": {
+               "$ref": "111"
+              },
+              "value": "2021-09-28T12:32:33Z"
+             }
+            }
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "427",
+     "Name": "update",
+     "ResourceName": "Account",
+     "Doc": "Update a Account",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "428",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "429",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "430",
+        "Type": {
+         "$id": "431",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-12-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "432",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Doc": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "433",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "434",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "435",
+       "Name": "resourceGroupName",
+       "NameInRequest": "resourceGroupName",
+       "Doc": "The name of the resource group. The name is case insensitive.",
+       "Type": {
+        "$id": "436",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "437",
+       "Name": "accountName",
+       "NameInRequest": "accountName",
+       "Doc": "Name of account.",
+       "Type": {
+        "$id": "438",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "439",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Doc": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "440",
+        "kind": "constant",
+        "valueType": {
+         "$id": "441",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "442",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "443",
+        "kind": "constant",
+        "valueType": {
+         "$id": "444",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "445",
+       "Name": "properties",
+       "NameInRequest": "properties",
+       "Doc": "The resource properties to be updated.",
+       "Type": {
+        "$ref": "187"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "446",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "170"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "PATCH",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": false,
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "447",
+       "kind": "http",
+       "name": "Accounts_Update",
+       "description": "Accounts_Update",
+       "filePath": "2024-12-01/Accounts_Update.json",
+       "parameters": [
+        {
+         "$id": "448",
+         "parameter": {
+          "$ref": "428"
+         },
+         "value": {
+          "$id": "449",
+          "kind": "string",
+          "type": {
+           "$ref": "429"
+          },
+          "value": "2024-12-01"
+         }
+        },
+        {
+         "$id": "450",
+         "parameter": {
+          "$ref": "432"
+         },
+         "value": {
+          "$id": "451",
+          "kind": "string",
+          "type": {
+           "$ref": "433"
+          },
+          "value": "00000000-0000-0000-0000-000000000000"
+         }
+        },
+        {
+         "$id": "452",
+         "parameter": {
+          "$ref": "435"
+         },
+         "value": {
+          "$id": "453",
+          "kind": "string",
+          "type": {
+           "$ref": "436"
+          },
+          "value": "dummyrg"
+         }
+        },
+        {
+         "$id": "454",
+         "parameter": {
+          "$ref": "437"
+         },
+         "value": {
+          "$id": "455",
+          "kind": "string",
+          "type": {
+           "$ref": "438"
+          },
+          "value": "myPlaywrightAccount"
+         }
+        },
+        {
+         "$id": "456",
+         "parameter": {
+          "$ref": "445"
+         },
+         "value": {
+          "$id": "457",
+          "kind": "model",
+          "type": {
+           "$ref": "187"
+          },
+          "value": {
+           "$id": "458",
+           "tags": {
+            "$id": "459",
+            "kind": "dict",
+            "type": {
+             "$ref": "189"
+            },
+            "value": {
+             "$id": "460",
+             "Team": {
+              "$id": "461",
+              "kind": "string",
+              "type": {
+               "$ref": "191"
+              },
+              "value": "Dev Exp"
+             },
+             "Division": {
+              "$id": "462",
+              "kind": "string",
+              "type": {
+               "$ref": "191"
+              },
+              "value": "LT"
+             }
+            }
+           },
+           "properties": {
+            "$id": "463",
+            "kind": "model",
+            "type": {
+             "$ref": "193"
+            },
+            "value": {
+             "$id": "464",
+             "regionalAffinity": {
+              "$id": "465",
+              "kind": "string",
+              "type": {
+               "$ref": "52"
+              },
+              "value": "Enabled"
+             }
+            }
+           }
+          }
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "466",
+         "response": {
+          "$ref": "446"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "467",
+          "kind": "model",
+          "type": {
+           "$ref": "170"
+          },
+          "value": {
+           "$id": "468",
+           "location": {
+            "$id": "469",
+            "kind": "string",
+            "type": {
+             "$ref": "177"
+            },
+            "value": "westus"
+           },
+           "properties": {
+            "$id": "470",
+            "kind": "model",
+            "type": {
+             "$ref": "179"
+            },
+            "value": {
+             "$id": "471",
+             "dashboardUri": {
+              "$id": "472",
+              "kind": "string",
+              "type": {
+               "$ref": "181"
+              },
+              "value": "https://dashboard.00000000-0000-0000-0000-000000000000.domain.com"
+             },
+             "provisioningState": {
+              "$id": "473",
+              "kind": "string",
+              "type": {
+               "$ref": "8"
+              },
+              "value": "Succeeded"
+             },
+             "regionalAffinity": {
+              "$id": "474",
+              "kind": "string",
+              "type": {
+               "$ref": "52"
+              },
+              "value": "Enabled"
+             },
+             "scalableExecution": {
+              "$id": "475",
+              "kind": "string",
+              "type": {
+               "$ref": "52"
+              },
+              "value": "Enabled"
+             },
+             "reporting": {
+              "$id": "476",
+              "kind": "string",
+              "type": {
+               "$ref": "52"
+              },
+              "value": "Enabled"
+             },
+             "localAuth": {
+              "$id": "477",
+              "kind": "string",
+              "type": {
+               "$ref": "52"
+              },
+              "value": "Enabled"
+             }
+            }
+           },
+           "id": {
+            "$id": "478",
+            "kind": "string",
+            "type": {
+             "$ref": "92"
+            },
+            "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.AzurePlaywrightService/accounts/myPlaywrightAccount"
+           },
+           "name": {
+            "$id": "479",
+            "kind": "string",
+            "type": {
+             "$ref": "388"
+            },
+            "value": "myPlaywrightAccount"
+           },
+           "type": {
+            "$id": "480",
+            "kind": "string",
+            "type": {
+             "$ref": "97"
+            },
+            "value": "Microsoft.AzurePlaywrightService/accounts"
+           },
+           "tags": {
+            "$id": "481",
+            "kind": "dict",
+            "type": {
+             "$ref": "173"
+            },
+            "value": {
+             "$id": "482",
+             "Team": {
+              "$id": "483",
+              "kind": "string",
+              "type": {
+               "$ref": "175"
+              },
+              "value": "Dev Exp"
+             }
+            }
+           },
+           "systemData": {
+            "$id": "484",
+            "kind": "model",
+            "type": {
+             "$ref": "100"
+            },
+            "value": {
+             "$id": "485",
+             "createdBy": {
+              "$id": "486",
+              "kind": "string",
+              "type": {
+               "$ref": "102"
+              },
+              "value": "userId1001"
+             },
+             "createdByType": {
+              "$id": "487",
+              "kind": "string",
+              "type": {
+               "$ref": "22"
+              },
+              "value": "User"
+             },
+             "createdAt": {
+              "$id": "488",
+              "kind": "string",
+              "type": {
+               "$ref": "105"
+              },
+              "value": "2021-09-28T12:32:33Z"
+             },
+             "lastModifiedBy": {
+              "$id": "489",
+              "kind": "string",
+              "type": {
+               "$ref": "108"
+              },
+              "value": "userId1001"
+             },
+             "lastModifiedByType": {
+              "$id": "490",
+              "kind": "string",
+              "type": {
+               "$ref": "22"
+              },
+              "value": "User"
+             },
+             "lastModifiedAt": {
+              "$id": "491",
+              "kind": "string",
+              "type": {
+               "$ref": "111"
+              },
+              "value": "2021-09-28T12:32:33Z"
+             }
+            }
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "492",
+     "Name": "delete",
+     "ResourceName": "Account",
+     "Doc": "Delete a Account",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "493",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "494",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "495",
+        "Type": {
+         "$id": "496",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-12-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "497",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Doc": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "498",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "499",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "500",
+       "Name": "resourceGroupName",
+       "NameInRequest": "resourceGroupName",
+       "Doc": "The name of the resource group. The name is case insensitive.",
+       "Type": {
+        "$id": "501",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "502",
+       "Name": "accountName",
+       "NameInRequest": "accountName",
+       "Doc": "Name of account.",
+       "Type": {
+        "$id": "503",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "504",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "505",
+        "kind": "constant",
+        "valueType": {
+         "$id": "506",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "507",
+       "StatusCodes": [
+        202
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "508",
+         "Name": "location",
+         "NameInResponse": "Location",
+         "Doc": "The Location header contains the URL where the status of the long running operation can be checked.",
+         "Type": {
+          "$id": "509",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         }
+        },
+        {
+         "$id": "510",
+         "Name": "retryAfter",
+         "NameInResponse": "Retry-After",
+         "Doc": "The Retry-After header can indicate how long the client should wait before polling the operation status.",
+         "Type": {
+          "$id": "511",
+          "kind": "int32",
+          "name": "int32",
+          "crossLanguageDefinitionId": "TypeSpec.int32",
+          "decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      },
+      {
+       "$id": "512",
+       "StatusCodes": [
+        204
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "DELETE",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}",
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "513",
+      "FinalStateVia": 1,
+      "FinalResponse": {
+       "$id": "514",
+       "StatusCodes": [
+        204
+       ],
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "515",
+       "kind": "http",
+       "name": "Accounts_Delete",
+       "description": "Accounts_Delete",
+       "filePath": "2024-12-01/Accounts_Delete.json",
+       "parameters": [
+        {
+         "$id": "516",
+         "parameter": {
+          "$ref": "493"
+         },
+         "value": {
+          "$id": "517",
+          "kind": "string",
+          "type": {
+           "$ref": "494"
+          },
+          "value": "2024-12-01"
+         }
+        },
+        {
+         "$id": "518",
+         "parameter": {
+          "$ref": "497"
+         },
+         "value": {
+          "$id": "519",
+          "kind": "string",
+          "type": {
+           "$ref": "498"
+          },
+          "value": "00000000-0000-0000-0000-000000000000"
+         }
+        },
+        {
+         "$id": "520",
+         "parameter": {
+          "$ref": "500"
+         },
+         "value": {
+          "$id": "521",
+          "kind": "string",
+          "type": {
+           "$ref": "501"
+          },
+          "value": "dummyrg"
+         }
+        },
+        {
+         "$id": "522",
+         "parameter": {
+          "$ref": "502"
+         },
+         "value": {
+          "$id": "523",
+          "kind": "string",
+          "type": {
+           "$ref": "503"
+          },
+          "value": "myPlaywrightAccount"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "524",
+         "response": {
+          "$ref": "507"
+         },
+         "statusCode": 202
+        },
+        {
+         "$id": "525",
+         "response": {
+          "$ref": "512"
+         },
+         "statusCode": 204
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "526",
+     "Name": "listByResourceGroup",
+     "ResourceName": "Account",
+     "Doc": "List Account resources by resource group",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "527",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "528",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "529",
+        "Type": {
+         "$id": "530",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-12-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "531",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Doc": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "532",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "533",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "534",
+       "Name": "resourceGroupName",
+       "NameInRequest": "resourceGroupName",
+       "Doc": "The name of the resource group. The name is case insensitive.",
+       "Type": {
+        "$id": "535",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "536",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "537",
+        "kind": "constant",
+        "valueType": {
+         "$id": "538",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "539",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "211"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "540",
+      "ItemName": "value",
+      "NextLinkName": "nextLink"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": []
+    },
+    {
+     "$id": "541",
+     "Name": "listBySubscription",
+     "ResourceName": "Account",
+     "Doc": "List Account resources by subscription ID",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "542",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "543",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "544",
+        "Type": {
+         "$id": "545",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-12-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "546",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Doc": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "547",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "548",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "549",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "550",
+        "kind": "constant",
+        "valueType": {
+         "$id": "551",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "552",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "211"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/accounts",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "553",
+      "ItemName": "value",
+      "NextLinkName": "nextLink"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": []
+    },
+    {
+     "$id": "554",
+     "Name": "CheckPlaywrightTestingNameAvailability",
+     "ResourceName": "Accounts",
+     "Doc": "Adds check global name availability operation, normally used if a resource name must be globally unique.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "555",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "556",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "557",
+        "Type": {
+         "$id": "558",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-12-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "559",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Doc": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "560",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "561",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "562",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Doc": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "563",
+        "kind": "constant",
+        "valueType": {
+         "$id": "564",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "565",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "566",
+        "kind": "constant",
+        "valueType": {
+         "$id": "567",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "568",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Doc": "The CheckAvailability request",
+       "Type": {
+        "$ref": "217"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "569",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "222"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/checkNameAvailability",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "570",
+       "kind": "http",
+       "name": "Accounts_CheckNameAvailability",
+       "description": "Accounts_CheckNameAvailability",
+       "filePath": "2024-12-01/Accounts_CheckNameAvailability.json",
+       "parameters": [
+        {
+         "$id": "571",
+         "parameter": {
+          "$ref": "555"
+         },
+         "value": {
+          "$id": "572",
+          "kind": "string",
+          "type": {
+           "$ref": "556"
+          },
+          "value": "2024-12-01"
+         }
+        },
+        {
+         "$id": "573",
+         "parameter": {
+          "$ref": "559"
+         },
+         "value": {
+          "$id": "574",
+          "kind": "string",
+          "type": {
+           "$ref": "560"
+          },
+          "value": "00000000-0000-0000-0000-000000000000"
+         }
+        },
+        {
+         "$id": "575",
+         "parameter": {
+          "$ref": "568"
+         },
+         "value": {
+          "$id": "576",
+          "kind": "model",
+          "type": {
+           "$ref": "217"
+          },
+          "value": {
+           "$id": "577",
+           "name": {
+            "$id": "578",
+            "kind": "string",
+            "type": {
+             "$ref": "219"
+            },
+            "value": "dummyName"
+           },
+           "type": {
+            "$id": "579",
+            "kind": "string",
+            "type": {
+             "$ref": "221"
+            },
+            "value": "Microsoft.AzurePlaywrightService/Accounts"
+           }
+          }
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "580",
+         "response": {
+          "$ref": "569"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "581",
+          "kind": "model",
+          "type": {
+           "$ref": "222"
+          },
+          "value": {
+           "$id": "582",
+           "nameAvailable": {
+            "$id": "583",
+            "kind": "boolean",
+            "type": {
+             "$ref": "224"
+            },
+            "value": true
+           },
+           "message": {
+            "$id": "584",
+            "kind": "string",
+            "type": {
+             "$ref": "227"
+            },
+            "value": "Test message."
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "Protocol": {
+    "$id": "585"
+   },
+   "Parent": "AzurePlaywrightServiceClient",
+   "Parameters": [
+    {
+     "$id": "586",
+     "Name": "endpoint",
+     "NameInRequest": "endpoint",
+     "Doc": "Service host",
+     "Type": {
+      "$id": "587",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "Location": "Uri",
+     "IsApiVersion": false,
+     "IsResourceParameter": false,
+     "IsContentType": false,
+     "IsRequired": true,
+     "IsEndpoint": true,
+     "SkipUrlEncoding": false,
+     "Explode": false,
+     "Kind": "Client",
+     "DefaultValue": {
+      "$id": "588",
+      "Type": {
+       "$id": "589",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string"
+      },
+      "Value": "https://management.azure.com"
+     }
+    }
+   ],
+   "Decorators": []
+  },
+  {
+   "$id": "590",
+   "Name": "Quotas",
+   "Operations": [
+    {
+     "$id": "591",
+     "Name": "get",
+     "ResourceName": "Quota",
+     "Doc": "Get subscription quota by name.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "592",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "593",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "594",
+        "Type": {
+         "$id": "595",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-12-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "596",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Doc": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "597",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "598",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "599",
+       "Name": "location",
+       "NameInRequest": "location",
+       "Doc": "The location of quota in ARM Normalized format like eastus, southeastasia etc.",
+       "Type": {
+        "$id": "600",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "601",
+       "Name": "quotaName",
+       "NameInRequest": "quotaName",
+       "Doc": "The quota name.",
+       "Type": {
+        "$ref": "2"
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "602",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "603",
+        "kind": "constant",
+        "valueType": {
+         "$id": "604",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "605",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "154"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas/{quotaName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "606",
+       "kind": "http",
+       "name": "Quotas_Get",
+       "description": "Quotas_Get",
+       "filePath": "2024-12-01/Quotas_Get.json",
+       "parameters": [
+        {
+         "$id": "607",
+         "parameter": {
+          "$ref": "592"
+         },
+         "value": {
+          "$id": "608",
+          "kind": "string",
+          "type": {
+           "$ref": "593"
+          },
+          "value": "2024-12-01"
+         }
+        },
+        {
+         "$id": "609",
+         "parameter": {
+          "$ref": "596"
+         },
+         "value": {
+          "$id": "610",
+          "kind": "string",
+          "type": {
+           "$ref": "597"
+          },
+          "value": "00000000-0000-0000-0000-000000000000"
+         }
+        },
+        {
+         "$id": "611",
+         "parameter": {
+          "$ref": "599"
+         },
+         "value": {
+          "$id": "612",
+          "kind": "string",
+          "type": {
+           "$ref": "600"
+          },
+          "value": "eastus"
+         }
+        },
+        {
+         "$id": "613",
+         "parameter": {
+          "$ref": "601"
+         },
+         "value": {
+          "$id": "614",
+          "kind": "string",
+          "type": {
+           "$ref": "2"
+          },
+          "value": "ScalableExecution"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "615",
+         "response": {
+          "$ref": "605"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "616",
+          "kind": "model",
+          "type": {
+           "$ref": "154"
+          },
+          "value": {
+           "$id": "617",
+           "id": {
+            "$id": "618",
+            "kind": "string",
+            "type": {
+             "$ref": "92"
+            },
+            "value": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.AzurePlaywrightService/locations/eastus/quotas/ScalableExecution"
+           },
+           "name": {
+            "$id": "619",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "ScalableExecution"
+           },
+           "type": {
+            "$id": "620",
+            "kind": "string",
+            "type": {
+             "$ref": "97"
+            },
+            "value": "Microsoft.AzurePlaywrightService/Locations/Quotas"
+           },
+           "properties": {
+            "$id": "621",
+            "kind": "model",
+            "type": {
+             "$ref": "156"
+            },
+            "value": {
+             "$id": "622",
+             "freeTrial": {
+              "$id": "623",
+              "kind": "model",
+              "type": {
+               "$ref": "158"
+              },
+              "value": {
+               "$id": "624",
+               "accountId": {
+                "$id": "625",
+                "kind": "string",
+                "type": {
+                 "$ref": "160"
+                },
+                "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+               },
+               "state": {
+                "$id": "626",
+                "kind": "string",
+                "type": {
+                 "$ref": "32"
+                },
+                "value": "Active"
+               }
+              }
+             },
+             "offeringType": {
+              "$id": "627",
+              "kind": "string",
+              "type": {
+               "$ref": "42"
+              },
+              "value": "NotApplicable"
+             },
+             "provisioningState": {
+              "$id": "628",
+              "kind": "string",
+              "type": {
+               "$ref": "8"
+              },
+              "value": "Succeeded"
+             }
+            }
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "629",
+     "Name": "listBySubscription",
+     "ResourceName": "Quota",
+     "Doc": "List quotas for a given subscription Id.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "630",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "631",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "632",
+        "Type": {
+         "$id": "633",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-12-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "634",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Doc": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "635",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "636",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "637",
+       "Name": "location",
+       "NameInRequest": "location",
+       "Doc": "The location of quota in ARM Normalized format like eastus, southeastasia etc.",
+       "Type": {
+        "$id": "638",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "639",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "640",
+        "kind": "constant",
+        "valueType": {
+         "$id": "641",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "642",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "164"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/providers/Microsoft.AzurePlaywrightService/locations/{location}/quotas",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "643",
+      "ItemName": "value",
+      "NextLinkName": "nextLink"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "644",
+       "kind": "http",
+       "name": "Quotas_ListBySubscription",
+       "description": "Quotas_ListBySubscription",
+       "filePath": "2024-12-01/Quotas_ListBySubscription.json",
+       "parameters": [
+        {
+         "$id": "645",
+         "parameter": {
+          "$ref": "630"
+         },
+         "value": {
+          "$id": "646",
+          "kind": "string",
+          "type": {
+           "$ref": "631"
+          },
+          "value": "2024-12-01"
+         }
+        },
+        {
+         "$id": "647",
+         "parameter": {
+          "$ref": "634"
+         },
+         "value": {
+          "$id": "648",
+          "kind": "string",
+          "type": {
+           "$ref": "635"
+          },
+          "value": "00000000-0000-0000-0000-000000000000"
+         }
+        },
+        {
+         "$id": "649",
+         "parameter": {
+          "$ref": "637"
+         },
+         "value": {
+          "$id": "650",
+          "kind": "string",
+          "type": {
+           "$ref": "638"
+          },
+          "value": "eastus"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "651",
+         "response": {
+          "$ref": "642"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "652",
+          "kind": "model",
+          "type": {
+           "$ref": "164"
+          },
+          "value": {
+           "$id": "653",
+           "value": {
+            "$id": "654",
+            "kind": "array",
+            "type": {
+             "$ref": "166"
+            },
+            "value": [
+             {
+              "$id": "655",
+              "kind": "model",
+              "type": {
+               "$ref": "154"
+              },
+              "value": {
+               "$id": "656",
+               "properties": {
+                "$id": "657",
+                "kind": "model",
+                "type": {
+                 "$ref": "156"
+                },
+                "value": {
+                 "$id": "658",
+                 "freeTrial": {
+                  "$id": "659",
+                  "kind": "model",
+                  "type": {
+                   "$ref": "158"
+                  },
+                  "value": {
+                   "$id": "660",
+                   "accountId": {
+                    "$id": "661",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "160"
+                    },
+                    "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+                   },
+                   "state": {
+                    "$id": "662",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "32"
+                    },
+                    "value": "Active"
+                   }
+                  }
+                 },
+                 "offeringType": {
+                  "$id": "663",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "42"
+                  },
+                  "value": "NotApplicable"
+                 },
+                 "provisioningState": {
+                  "$id": "664",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "8"
+                  },
+                  "value": "Succeeded"
+                 }
+                }
+               },
+               "id": {
+                "$id": "665",
+                "kind": "string",
+                "type": {
+                 "$ref": "92"
+                },
+                "value": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.AzurePlaywrightService/locations/eastus/quotas/ScalableExecution"
+               },
+               "name": {
+                "$id": "666",
+                "kind": "string",
+                "type": {
+                 "$ref": "2"
+                },
+                "value": "ScalableExecution"
+               },
+               "type": {
+                "$id": "667",
+                "kind": "string",
+                "type": {
+                 "$ref": "97"
+                },
+                "value": "Microsoft.AzurePlaywrightService/Locations/Quotas"
+               }
+              }
+             },
+             {
+              "$id": "668",
+              "kind": "model",
+              "type": {
+               "$ref": "154"
+              },
+              "value": {
+               "$id": "669",
+               "properties": {
+                "$id": "670",
+                "kind": "model",
+                "type": {
+                 "$ref": "156"
+                },
+                "value": {
+                 "$id": "671",
+                 "freeTrial": {
+                  "$id": "672",
+                  "kind": "model",
+                  "type": {
+                   "$ref": "158"
+                  },
+                  "value": {
+                   "$id": "673",
+                   "accountId": {
+                    "$id": "674",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "160"
+                    },
+                    "value": "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+                   },
+                   "state": {
+                    "$id": "675",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "32"
+                    },
+                    "value": "Active"
+                   }
+                  }
+                 },
+                 "offeringType": {
+                  "$id": "676",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "42"
+                  },
+                  "value": "PrivatePreview"
+                 },
+                 "provisioningState": {
+                  "$id": "677",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "8"
+                  },
+                  "value": "Succeeded"
+                 }
+                }
+               },
+               "id": {
+                "$id": "678",
+                "kind": "string",
+                "type": {
+                 "$ref": "92"
+                },
+                "value": "/subscriptions/00000000-0000-0000-0000-000000000000/providers/Microsoft.AzurePlaywrightService/locations/eastus/quotas/Reporting"
+               },
+               "name": {
+                "$id": "679",
+                "kind": "string",
+                "type": {
+                 "$ref": "2"
+                },
+                "value": "Reporting"
+               },
+               "type": {
+                "$id": "680",
+                "kind": "string",
+                "type": {
+                 "$ref": "97"
+                },
+                "value": "Microsoft.AzurePlaywrightService/Locations/Quotas"
+               }
+              }
+             }
+            ]
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "Protocol": {
+    "$id": "681"
+   },
+   "Parent": "AzurePlaywrightServiceClient",
+   "Parameters": [
+    {
+     "$id": "682",
+     "Name": "endpoint",
+     "NameInRequest": "endpoint",
+     "Doc": "Service host",
+     "Type": {
+      "$id": "683",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "Location": "Uri",
+     "IsApiVersion": false,
+     "IsResourceParameter": false,
+     "IsContentType": false,
+     "IsRequired": true,
+     "IsEndpoint": true,
+     "SkipUrlEncoding": false,
+     "Explode": false,
+     "Kind": "Client",
+     "DefaultValue": {
+      "$id": "684",
+      "Type": {
+       "$id": "685",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string"
+      },
+      "Value": "https://management.azure.com"
+     }
+    }
+   ],
+   "Decorators": []
+  },
+  {
+   "$id": "686",
+   "Name": "AccountQuotas",
+   "Operations": [
+    {
+     "$id": "687",
+     "Name": "get",
+     "ResourceName": "AccountQuota",
+     "Doc": "Get quota by name for an account.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "688",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "689",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "690",
+        "Type": {
+         "$id": "691",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-12-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "692",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Doc": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "693",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "694",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "695",
+       "Name": "resourceGroupName",
+       "NameInRequest": "resourceGroupName",
+       "Doc": "The name of the resource group. The name is case insensitive.",
+       "Type": {
+        "$id": "696",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "697",
+       "Name": "accountName",
+       "NameInRequest": "accountName",
+       "Doc": "Name of account.",
+       "Type": {
+        "$id": "698",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "699",
+       "Name": "quotaName",
+       "NameInRequest": "quotaName",
+       "Doc": "The Playwright service account quota name.",
+       "Type": {
+        "$ref": "2"
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "700",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "701",
+        "kind": "constant",
+        "valueType": {
+         "$id": "702",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "703",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "88"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}/quotas/{quotaName}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "704",
+       "kind": "http",
+       "name": "AccountQuotas_Get",
+       "description": "AccountQuotas_Get",
+       "filePath": "2024-12-01/AccountQuotas_Get.json",
+       "parameters": [
+        {
+         "$id": "705",
+         "parameter": {
+          "$ref": "688"
+         },
+         "value": {
+          "$id": "706",
+          "kind": "string",
+          "type": {
+           "$ref": "689"
+          },
+          "value": "2024-12-01"
+         }
+        },
+        {
+         "$id": "707",
+         "parameter": {
+          "$ref": "692"
+         },
+         "value": {
+          "$id": "708",
+          "kind": "string",
+          "type": {
+           "$ref": "693"
+          },
+          "value": "00000000-0000-0000-0000-000000000000"
+         }
+        },
+        {
+         "$id": "709",
+         "parameter": {
+          "$ref": "695"
+         },
+         "value": {
+          "$id": "710",
+          "kind": "string",
+          "type": {
+           "$ref": "696"
+          },
+          "value": "dummyrg"
+         }
+        },
+        {
+         "$id": "711",
+         "parameter": {
+          "$ref": "697"
+         },
+         "value": {
+          "$id": "712",
+          "kind": "string",
+          "type": {
+           "$ref": "698"
+          },
+          "value": "myPlaywrightAccount"
+         }
+        },
+        {
+         "$id": "713",
+         "parameter": {
+          "$ref": "699"
+         },
+         "value": {
+          "$id": "714",
+          "kind": "string",
+          "type": {
+           "$ref": "2"
+          },
+          "value": "ScalableExecution"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "715",
+         "response": {
+          "$ref": "703"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "716",
+          "kind": "model",
+          "type": {
+           "$ref": "88"
+          },
+          "value": {
+           "$id": "717",
+           "id": {
+            "$id": "718",
+            "kind": "string",
+            "type": {
+             "$ref": "92"
+            },
+            "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.AzurePlaywrightService/accounts/myPlaywrightAccount/quotas/ScalableExecution"
+           },
+           "name": {
+            "$id": "719",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "ScalableExecution"
+           },
+           "type": {
+            "$id": "720",
+            "kind": "string",
+            "type": {
+             "$ref": "97"
+            },
+            "value": "Microsoft.AzurePlaywrightService/Accounts/Quotas"
+           },
+           "properties": {
+            "$id": "721",
+            "kind": "model",
+            "type": {
+             "$ref": "114"
+            },
+            "value": {
+             "$id": "722",
+             "freeTrial": {
+              "$id": "723",
+              "kind": "model",
+              "type": {
+               "$ref": "116"
+              },
+              "value": {
+               "$id": "724",
+               "createdAt": {
+                "$id": "725",
+                "kind": "string",
+                "type": {
+                 "$ref": "118"
+                },
+                "value": "2023-08-31T10:19:36.081Z"
+               },
+               "expiryAt": {
+                "$id": "726",
+                "kind": "string",
+                "type": {
+                 "$ref": "121"
+                },
+                "value": "2023-08-31T10:19:36.081Z"
+               },
+               "allocatedValue": {
+                "$id": "727",
+                "kind": "number",
+                "type": {
+                 "$ref": "124"
+                },
+                "value": 0
+               },
+               "usedValue": {
+                "$id": "728",
+                "kind": "number",
+                "type": {
+                 "$ref": "126"
+                },
+                "value": 0
+               },
+               "percentageUsed": {
+                "$id": "729",
+                "kind": "number",
+                "type": {
+                 "$ref": "128"
+                },
+                "value": 100
+               }
+              }
+             },
+             "provisioningState": {
+              "$id": "730",
+              "kind": "string",
+              "type": {
+               "$ref": "8"
+              },
+              "value": "Succeeded"
+             }
+            }
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "731",
+     "Name": "listByAccount",
+     "ResourceName": "AccountQuota",
+     "Doc": "List quotas for a given account.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "732",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "733",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "734",
+        "Type": {
+         "$id": "735",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-12-01"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "736",
+       "Name": "subscriptionId",
+       "NameInRequest": "subscriptionId",
+       "Doc": "The ID of the target subscription. The value must be an UUID.",
+       "Type": {
+        "$id": "737",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "738",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "739",
+       "Name": "resourceGroupName",
+       "NameInRequest": "resourceGroupName",
+       "Doc": "The name of the resource group. The name is case insensitive.",
+       "Type": {
+        "$id": "740",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "741",
+       "Name": "accountName",
+       "NameInRequest": "accountName",
+       "Doc": "Name of account.",
+       "Type": {
+        "$id": "742",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "743",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "744",
+        "kind": "constant",
+        "valueType": {
+         "$id": "745",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "746",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "148"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}/quotas",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "747",
+      "ItemName": "value",
+      "NextLinkName": "nextLink"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "748",
+       "kind": "http",
+       "name": "AccountQuotas_ListByAccount",
+       "description": "AccountQuotas_ListByAccount",
+       "filePath": "2024-12-01/AccountQuotas_ListByAccount.json",
+       "parameters": [
+        {
+         "$id": "749",
+         "parameter": {
+          "$ref": "732"
+         },
+         "value": {
+          "$id": "750",
+          "kind": "string",
+          "type": {
+           "$ref": "733"
+          },
+          "value": "2024-12-01"
+         }
+        },
+        {
+         "$id": "751",
+         "parameter": {
+          "$ref": "736"
+         },
+         "value": {
+          "$id": "752",
+          "kind": "string",
+          "type": {
+           "$ref": "737"
+          },
+          "value": "00000000-0000-0000-0000-000000000000"
+         }
+        },
+        {
+         "$id": "753",
+         "parameter": {
+          "$ref": "739"
+         },
+         "value": {
+          "$id": "754",
+          "kind": "string",
+          "type": {
+           "$ref": "740"
+          },
+          "value": "dummyrg"
+         }
+        },
+        {
+         "$id": "755",
+         "parameter": {
+          "$ref": "741"
+         },
+         "value": {
+          "$id": "756",
+          "kind": "string",
+          "type": {
+           "$ref": "742"
+          },
+          "value": "myPlaywrightAccount"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "757",
+         "response": {
+          "$ref": "746"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "758",
+          "kind": "model",
+          "type": {
+           "$ref": "148"
+          },
+          "value": {
+           "$id": "759",
+           "value": {
+            "$id": "760",
+            "kind": "array",
+            "type": {
+             "$ref": "150"
+            },
+            "value": [
+             {
+              "$id": "761",
+              "kind": "model",
+              "type": {
+               "$ref": "88"
+              },
+              "value": {
+               "$id": "762",
+               "id": {
+                "$id": "763",
+                "kind": "string",
+                "type": {
+                 "$ref": "92"
+                },
+                "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.AzurePlaywrightService/accounts/myPlaywrightAccount/quotas/ScalableExecution"
+               },
+               "name": {
+                "$id": "764",
+                "kind": "string",
+                "type": {
+                 "$ref": "2"
+                },
+                "value": "ScalableExecution"
+               },
+               "type": {
+                "$id": "765",
+                "kind": "string",
+                "type": {
+                 "$ref": "97"
+                },
+                "value": "Microsoft.AzurePlaywrightService/Accounts/Quotas"
+               },
+               "properties": {
+                "$id": "766",
+                "kind": "model",
+                "type": {
+                 "$ref": "114"
+                },
+                "value": {
+                 "$id": "767",
+                 "freeTrial": {
+                  "$id": "768",
+                  "kind": "model",
+                  "type": {
+                   "$ref": "116"
+                  },
+                  "value": {
+                   "$id": "769",
+                   "createdAt": {
+                    "$id": "770",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "118"
+                    },
+                    "value": "2023-08-31T10:19:36.081Z"
+                   },
+                   "expiryAt": {
+                    "$id": "771",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "121"
+                    },
+                    "value": "2023-08-31T10:19:36.081Z"
+                   },
+                   "allocatedValue": {
+                    "$id": "772",
+                    "kind": "number",
+                    "type": {
+                     "$ref": "124"
+                    },
+                    "value": 0
+                   },
+                   "usedValue": {
+                    "$id": "773",
+                    "kind": "number",
+                    "type": {
+                     "$ref": "126"
+                    },
+                    "value": 0
+                   },
+                   "percentageUsed": {
+                    "$id": "774",
+                    "kind": "number",
+                    "type": {
+                     "$ref": "128"
+                    },
+                    "value": 100
+                   }
+                  }
+                 },
+                 "provisioningState": {
+                  "$id": "775",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "8"
+                  },
+                  "value": "Succeeded"
+                 }
+                }
+               }
+              }
+             },
+             {
+              "$id": "776",
+              "kind": "model",
+              "type": {
+               "$ref": "88"
+              },
+              "value": {
+               "$id": "777",
+               "id": {
+                "$id": "778",
+                "kind": "string",
+                "type": {
+                 "$ref": "92"
+                },
+                "value": "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/dummyrg/providers/Microsoft.AzurePlaywrightService/accounts/myPlaywrightAccount/quotas/Reporting"
+               },
+               "name": {
+                "$id": "779",
+                "kind": "string",
+                "type": {
+                 "$ref": "2"
+                },
+                "value": "Reporting"
+               },
+               "type": {
+                "$id": "780",
+                "kind": "string",
+                "type": {
+                 "$ref": "97"
+                },
+                "value": "Microsoft.AzurePlaywrightService/Accounts/Quotas"
+               },
+               "properties": {
+                "$id": "781",
+                "kind": "model",
+                "type": {
+                 "$ref": "114"
+                },
+                "value": {
+                 "$id": "782",
+                 "freeTrial": {
+                  "$id": "783",
+                  "kind": "model",
+                  "type": {
+                   "$ref": "116"
+                  },
+                  "value": {
+                   "$id": "784",
+                   "createdAt": {
+                    "$id": "785",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "118"
+                    },
+                    "value": "2023-08-31T10:19:36.081Z"
+                   },
+                   "expiryAt": {
+                    "$id": "786",
+                    "kind": "string",
+                    "type": {
+                     "$ref": "121"
+                    },
+                    "value": "2023-08-31T10:19:36.081Z"
+                   },
+                   "allocatedValue": {
+                    "$id": "787",
+                    "kind": "number",
+                    "type": {
+                     "$ref": "124"
+                    },
+                    "value": 0
+                   },
+                   "usedValue": {
+                    "$id": "788",
+                    "kind": "number",
+                    "type": {
+                     "$ref": "126"
+                    },
+                    "value": 0
+                   },
+                   "percentageUsed": {
+                    "$id": "789",
+                    "kind": "number",
+                    "type": {
+                     "$ref": "128"
+                    },
+                    "value": 100
+                   }
+                  }
+                 },
+                 "provisioningState": {
+                  "$id": "790",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "8"
+                  },
+                  "value": "Succeeded"
+                 }
+                }
+               }
+              }
+             }
+            ]
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "Protocol": {
+    "$id": "791"
+   },
+   "Parent": "AzurePlaywrightServiceClient",
+   "Parameters": [
+    {
+     "$id": "792",
+     "Name": "endpoint",
+     "NameInRequest": "endpoint",
+     "Doc": "Service host",
+     "Type": {
+      "$id": "793",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "Location": "Uri",
+     "IsApiVersion": false,
+     "IsResourceParameter": false,
+     "IsContentType": false,
+     "IsRequired": true,
+     "IsEndpoint": true,
+     "SkipUrlEncoding": false,
+     "Explode": false,
+     "Kind": "Client",
+     "DefaultValue": {
+      "$id": "794",
+      "Type": {
+       "$id": "795",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string"
+      },
+      "Value": "https://management.azure.com"
+     }
+    }
+   ],
+   "Decorators": []
+  }
+ ],
+ "Auth": {
+  "$id": "796",
+  "OAuth2": {
+   "$id": "797",
+   "Scopes": [
+    "user_impersonation"
+   ]
+  }
+ }
+}
