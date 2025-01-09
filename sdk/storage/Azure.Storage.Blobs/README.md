@@ -194,14 +194,14 @@ For more advanced scenarios like transferring blob virtual directories, we recom
 
 Upload a local directory to the root of the `BlobContainerClient`.
 ```C# Snippet:ExtensionMethodSimpleUploadToRoot
-DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath);
+TransferOperation transfer = await container.StartUploadDirectoryAsync(localPath);
 
 await transfer.WaitForCompletionAsync();
 ```
 
 Upload a local directory to a virtual blob directory in the `BlobContainerClient` by specifying a directory prefix
 ```C# Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
-DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix);
+TransferOperation transfer = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix);
 
 await transfer.WaitForCompletionAsync();
 ```
@@ -214,27 +214,27 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     {
         BlobDirectoryPrefix = blobDirectoryPrefix
     },
-    TransferOptions = new DataTransferOptions()
+    TransferOptions = new TransferOptions()
     {
         CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
     }
 };
 
-DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, options);
+TransferOperation transfer = await container.StartUploadDirectoryAsync(localPath, options);
 
 await transfer.WaitForCompletionAsync();
 ```
 
 Download the entire `BlobContainerClient` to a local directory
 ```C# Snippet:ExtensionMethodSimpleDownloadContainer
-DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath);
+TransferOperation transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath);
 
 await transfer.WaitForCompletionAsync();
 ```
 
 Download a virtual blob directory in the `BlobContainerClient` by specifying a directory prefix
 ```C# Snippet:ExtensionMethodSimpleDownloadContainerDirectory
-DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
+TransferOperation transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
 
 await transfer.WaitForCompletionAsync();
 ```
@@ -247,13 +247,13 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     {
         BlobDirectoryPrefix = blobDirectoryPrefix
     },
-    TransferOptions = new DataTransferOptions()
+    TransferOptions = new TransferOptions()
     {
         CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
     }
 };
 
-DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
+TransferOperation transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
 
 await transfer.WaitForCompletionAsync();
 ```

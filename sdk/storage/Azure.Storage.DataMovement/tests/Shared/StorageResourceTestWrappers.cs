@@ -43,7 +43,7 @@ public class StorageResourceItemFailureWrapper : StorageResourceItem
 
     protected internal override string ResourceId => ThrowOr(_inner.ResourceId);
 
-    protected internal override DataTransferOrder TransferType => ThrowOr(_inner.TransferType);
+    protected internal override TransferOrder TransferType => ThrowOr(_inner.TransferType);
 
     protected internal override long MaxSupportedSingleTransferSize => ThrowOr(_inner.MaxSupportedSingleTransferSize);
 

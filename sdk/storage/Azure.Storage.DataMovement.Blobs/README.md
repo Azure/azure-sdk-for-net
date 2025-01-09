@@ -143,16 +143,16 @@ An upload takes place between a local file `StorageResource` as source and blob 
 Upload a block blob.
 
 ```C# Snippet:SimpleBlobUpload
-DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+TransferOperation transferOperation = await transferManager.StartTransferAsync(
     sourceResource: files.FromFile(sourceLocalPath),
     destinationResource: blobs.FromBlob(destinationBlobUri));
-await dataTransfer.WaitForCompletionAsync();
+await transferOperation.WaitForCompletionAsync();
 ```
 
 Upload a directory as a specific blob type.
 
 ```C# Snippet:SimpleDirectoryUpload
-DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+TransferOperation transferOperation = await transferManager.StartTransferAsync(
     sourceResource: files.FromDirectory(sourcePath),
     destinationResource: blobs.FromContainer(
         blobContainerUri,
@@ -171,16 +171,16 @@ A download takes place between a blob `StorageResource` as source and local file
 Download a blob.
 
 ```C# Snippet:SimpleBlockBlobDownload
-DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+TransferOperation transferOperation = await transferManager.StartTransferAsync(
     sourceResource: blobs.FromBlob(sourceBlobUri),
     destinationResource: files.FromFile(downloadPath));
-await dataTransfer.WaitForCompletionAsync();
+await transferOperation.WaitForCompletionAsync();
 ```
 
 Download a container which may contain a mix of blob types.
 
 ```C# Snippet:SimpleDirectoryDownload_Blob
-DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+TransferOperation transferOperation = await transferManager.StartTransferAsync(
     sourceResource: blobs.FromContainer(
         blobContainerUri,
         new BlobStorageResourceContainerOptions()
@@ -188,7 +188,7 @@ DataTransfer dataTransfer = await transferManager.StartTransferAsync(
             BlobDirectoryPrefix = optionalSourcePrefix
         }),
     destinationResource: files.FromDirectory(downloadPath));
-await dataTransfer.WaitForCompletionAsync();
+await transferOperation.WaitForCompletionAsync();
 ```
 
 ### Blob Copy
@@ -198,16 +198,16 @@ A copy takes place between two blob `StorageResource` instances. Copying between
 Copy a single blob. Note the destination blob is an append blob, regardless of the first blob's type.
 
 ```C# Snippet:s2sCopyBlob
-DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+TransferOperation transferOperation = await transferManager.StartTransferAsync(
     sourceResource: blobs.FromBlob(sourceBlobUri),
     destinationResource: blobs.FromBlob(destinationBlobUri, new AppendBlobStorageResourceOptions()));
-await dataTransfer.WaitForCompletionAsync();
+await transferOperation.WaitForCompletionAsync();
 ```
 
 Copy a blob container.
 
 ```C# Snippet:s2sCopyBlobContainer
-DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+TransferOperation transferOperation = await transferManager.StartTransferAsync(
 sourceResource: blobs.FromContainer(
     sourceContainerUri,
     new BlobStorageResourceContainerOptions()
@@ -223,7 +223,7 @@ destinationResource: blobs.FromContainer(
         BlobType = new(BlobType.Block),
         BlobDirectoryPrefix = downloadPath
     }));
-await dataTransfer.WaitForCompletionAsync();
+await transferOperation.WaitForCompletionAsync();
 ```
 
 ### Extensions on `BlobContainerClient`
@@ -239,14 +239,14 @@ BlobContainerClient container = service.GetBlobContainerClient(containerName);
 
 Upload a local directory to the root of the container
 ```C# Snippet:ExtensionMethodSimpleUploadToRoot
-DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath);
+TransferOperation transfer = await container.StartUploadDirectoryAsync(localPath);
 
 await transfer.WaitForCompletionAsync();
 ```
 
 Upload a local directory to a virtual directory in the container by specifying a directory prefix
 ```C# Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
-DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix);
+TransferOperation transfer = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix);
 
 await transfer.WaitForCompletionAsync();
 ```
@@ -259,27 +259,27 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     {
         BlobDirectoryPrefix = blobDirectoryPrefix
     },
-    TransferOptions = new DataTransferOptions()
+    TransferOptions = new TransferOptions()
     {
         CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
     }
 };
 
-DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, options);
+TransferOperation transfer = await container.StartUploadDirectoryAsync(localPath, options);
 
 await transfer.WaitForCompletionAsync();
 ```
 
 Download the entire container to a local directory
 ```C# Snippet:ExtensionMethodSimpleDownloadContainer
-DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath);
+TransferOperation transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath);
 
 await transfer.WaitForCompletionAsync();
 ```
 
 Download a directory in the container by specifying a directory prefix
 ```C# Snippet:ExtensionMethodSimpleDownloadContainerDirectory
-DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
+TransferOperation transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
 
 await transfer.WaitForCompletionAsync();
 ```
@@ -292,13 +292,13 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     {
         BlobDirectoryPrefix = blobDirectoryPrefix
     },
-    TransferOptions = new DataTransferOptions()
+    TransferOptions = new TransferOptions()
     {
         CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
     }
 };
 
-DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
+TransferOperation transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
 
 await transfer.WaitForCompletionAsync();
 ```

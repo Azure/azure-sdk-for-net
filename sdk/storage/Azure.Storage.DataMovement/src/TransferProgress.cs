@@ -6,9 +6,9 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Progress Handler to track how many files and bytes were transferred, along with files that failed or were skipped in transfer.
     /// </summary>
-    public class DataTransferProgress
+    public class TransferProgress
     {
-        internal DataTransferProgress() { }
+        internal TransferProgress() { }
 
         /// <summary>
         /// Number of files that were transferred successfully.

@@ -104,7 +104,7 @@ An upload takes place between a local file `StorageResource` as source and file 
 Upload a file.
 
 ```C# Snippet:SimplefileUpload_Shares
-DataTransfer fileTransfer = await transferManager.StartTransferAsync(
+TransferOperation fileTransfer = await transferManager.StartTransferAsync(
     sourceResource: files.FromFile(sourceLocalFile),
     destinationResource: shares.FromFile(destinationFileUri));
 await fileTransfer.WaitForCompletionAsync();
@@ -113,7 +113,7 @@ await fileTransfer.WaitForCompletionAsync();
 Upload a directory.
 
 ```C# Snippet:SimpleDirectoryUpload_Shares
-DataTransfer folderTransfer = await transferManager.StartTransferAsync(
+TransferOperation folderTransfer = await transferManager.StartTransferAsync(
     sourceResource: files.FromDirectory(sourceLocalDirectory),
     destinationResource: shares.FromDirectory(destinationFolderUri));
 await folderTransfer.WaitForCompletionAsync();
@@ -126,7 +126,7 @@ A download takes place between a file share `StorageResource` as source and loca
 Download a file.
 
 ```C# Snippet:SimpleFileDownload_Shares
-DataTransfer fileTransfer = await transferManager.StartTransferAsync(
+TransferOperation fileTransfer = await transferManager.StartTransferAsync(
     sourceResource: shares.FromFile(sourceFileUri),
     destinationResource: files.FromFile(destinationLocalFile));
 await fileTransfer.WaitForCompletionAsync();
@@ -135,7 +135,7 @@ await fileTransfer.WaitForCompletionAsync();
 Download a Directory.
 
 ```C# Snippet:SimpleDirectoryDownload_Shares
-DataTransfer directoryTransfer = await transferManager.StartTransferAsync(
+TransferOperation directoryTransfer = await transferManager.StartTransferAsync(
     sourceResource: shares.FromDirectory(sourceDirectoryUri),
     destinationResource: files.FromDirectory(destinationLocalDirectory));
 await directoryTransfer.WaitForCompletionAsync();
@@ -148,7 +148,7 @@ A copy takes place between two share `StorageResource` instances. Copying betwee
 Copy a single file.
 
 ```C# Snippet:s2sCopyFile_Shares
-DataTransfer fileTransfer = await transferManager.StartTransferAsync(
+TransferOperation fileTransfer = await transferManager.StartTransferAsync(
     sourceResource: shares.FromFile(sourceFileUri),
     destinationResource: shares.FromFile(destinationFileUri));
 await fileTransfer.WaitForCompletionAsync();
@@ -157,7 +157,7 @@ await fileTransfer.WaitForCompletionAsync();
 Copy a directory.
 
 ```C# Snippet:s2sCopyDirectory_Shares
-DataTransfer directoryTransfer = await transferManager.StartTransferAsync(
+TransferOperation directoryTransfer = await transferManager.StartTransferAsync(
     sourceResource: shares.FromDirectory(sourceDirectoryUri),
     destinationResource: shares.FromDirectory(destinationDirectoryUri));
 await directoryTransfer.WaitForCompletionAsync();

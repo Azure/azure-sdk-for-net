@@ -9,7 +9,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Defines the status of the Transfer Job.
     /// </summary>
-    public class DataTransferStatus : IEquatable<DataTransferStatus>
+    public class TransferStatus : IEquatable<TransferStatus>
     {
         private int _hasFailedItemValue;
         private int _hasSkippedItemValue;
@@ -18,13 +18,13 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Defines the state of the transfer.
         /// </summary>
-        public DataTransferState State => (DataTransferState)_stateValue;
+        public TransferState State => (TransferState)_stateValue;
 
         /// <summary>
         /// Represents if the transfer has completed successfully without any failure or skipped items.
         /// </summary>
         public bool HasCompletedSuccessfully =>
-            (State == DataTransferState.Completed) &&
+            (State == TransferState.Completed) &&
             !HasFailedItems &&
             !HasSkippedItems;
 
@@ -43,16 +43,16 @@ namespace Azure.Storage.DataMovement
         /// If set to `false`, the transfer currently has no items that has been skipped.
         ///
         /// It's possible to never have any items skipped if
-        /// <see cref="StorageResourceCreationPreference.SkipIfExists"/> is not enabled in the <see cref="DataTransferOptions.CreationPreference"/>.
+        /// <see cref="StorageResourceCreationPreference.SkipIfExists"/> is not enabled in the <see cref="TransferOptions.CreationPreference"/>.
         /// </summary>
         public bool HasSkippedItems => _hasSkippedItemValue != 0;
 
         /// <summary>
-        /// Constructor to set the initial state to <see cref="DataTransferState.Queued"/> with no failures or skipped items.
+        /// Constructor to set the initial state to <see cref="TransferState.Queued"/> with no failures or skipped items.
         /// </summary>
-        protected internal DataTransferStatus()
+        protected internal TransferStatus()
         {
-            _stateValue = (int)DataTransferState.Queued;
+            _stateValue = (int)TransferState.Queued;
             _hasFailedItemValue = 0; // Initialized to false
             _hasSkippedItemValue = 0; // Initialized to false
         }
@@ -60,15 +60,15 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Constructor to have a custom state, failure state, and skipped state.
         /// </summary>
-        protected internal DataTransferStatus(DataTransferState state, bool hasFailureItems, bool hasSkippedItems)
+        protected internal TransferStatus(TransferState state, bool hasFailureItems, bool hasSkippedItems)
         {
             _stateValue = (int)state;
             _hasFailedItemValue = hasFailureItems ? 1 : 0;
             _hasSkippedItemValue = hasSkippedItems ? 1 : 0;
         }
 
-        internal bool IsCompletedWithFailedItems => State.Equals(DataTransferState.Completed) && HasFailedItems;
-        internal bool IsCompletedWithSkippedItems => State.Equals(DataTransferState.Completed) && HasSkippedItems;
+        internal bool IsCompletedWithFailedItems => State.Equals(TransferState.Completed) && HasFailedItems;
+        internal bool IsCompletedWithSkippedItems => State.Equals(TransferState.Completed) && HasSkippedItems;
 
         /// <summary>
         /// Accordingly update the <see cref="HasFailedItems"/> to true. If already set to true, nothing will happen.
@@ -99,13 +99,13 @@ namespace Azure.Storage.DataMovement
         /// This should only be triggered when the state updates.
         /// </summary>
         /// <returns>True if <see cref="State"/> was changed from its original state. False otherwise.</returns>
-        internal bool SetTransferStateChange(DataTransferState state)
+        internal bool SetTransferStateChange(TransferState state)
         {
             return Interlocked.Exchange(ref _stateValue, (int)state) != (int)state;
         }
 
         /// <inheritdoc/>
-        public bool Equals(DataTransferStatus other)
+        public bool Equals(TransferStatus other)
         {
             if (other == null)
             {
@@ -123,7 +123,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="left">The left hand side.</param>
         /// <param name="right">The right hand side.</param>
         /// <returns>True, if the two values are equal; otherwise false.</returns>
-        public static bool operator ==(DataTransferStatus left, DataTransferStatus right)
+        public static bool operator ==(TransferStatus left, TransferStatus right)
         {
             if (left is null != right is null)
             {
@@ -138,10 +138,10 @@ namespace Azure.Storage.DataMovement
         /// <param name="left">The left hand side.</param>
         /// <param name="right">The right hand side.</param>
         /// <returns>True, if the two values are not equal; otherwise false.</returns>
-        public static bool operator !=(DataTransferStatus left, DataTransferStatus right) => !(left == right);
+        public static bool operator !=(TransferStatus left, TransferStatus right) => !(left == right);
 
         /// <inheritdoc/>
-        public override bool Equals(object obj) => Equals(obj as DataTransferStatus);
+        public override bool Equals(object obj) => Equals(obj as TransferStatus);
 
         /// <inheritdoc/>
         public override int GetHashCode()
@@ -154,10 +154,10 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Performs a Deep Copy of the <see cref="DataTransferStatus"/>.
+        /// Performs a Deep Copy of the <see cref="TransferStatus"/>.
         /// </summary>
-        /// <returns>A deep copy of the respective <see cref="DataTransferStatus"/>.</returns>
-        internal DataTransferStatus DeepCopy()
+        /// <returns>A deep copy of the respective <see cref="TransferStatus"/>.</returns>
+        internal TransferStatus DeepCopy()
             => new()
             {
                 _stateValue = _stateValue,

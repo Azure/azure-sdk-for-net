@@ -8,7 +8,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Defines the types of the state a transfer can have.
     /// </summary>
-    public enum DataTransferState
+    public enum TransferState
     {
         /// <summary>
         /// Default value.
@@ -29,14 +29,14 @@ namespace Azure.Storage.DataMovement
         /// The transfer is in progress and is in the process of being paused.
         ///
         /// Transfer can be stopped if  <see cref="TransferManager.PauseTransferIfRunningAsync(string, System.Threading.CancellationToken)"/>
-        /// or <see cref="DataTransfer.PauseAsync(CancellationToken)"/> is called.
+        /// or <see cref="TransferOperation.PauseAsync(CancellationToken)"/> is called.
         /// </summary>
         Pausing = 3,
 
         /// <summary>
         /// The transfer is in progress and is in the process of being stopped.
         ///
-        /// Transfer can be stopped if <see cref="DataTransferErrorMode.StopOnAnyFailure"/> is
+        /// Transfer can be stopped if <see cref="TransferErrorMode.StopOnAnyFailure"/> is
         /// enabled in the <see cref="TransferManagerOptions.ErrorHandling"/>.
         /// </summary>
         Stopping = 4,

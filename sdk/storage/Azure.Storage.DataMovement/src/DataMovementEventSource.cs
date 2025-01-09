@@ -43,7 +43,7 @@ namespace Azure.Storage.DataMovement
         }
 
         [NonEvent]
-        public void TransferCompleted(string transferId, DataTransferStatus status)
+        public void TransferCompleted(string transferId, TransferStatus status)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
@@ -58,7 +58,7 @@ namespace Azure.Storage.DataMovement
         }
 
         [NonEvent]
-        public void JobPartStatus(string transferId, int jobPart, DataTransferStatus status)
+        public void JobPartStatus(string transferId, int jobPart, TransferStatus status)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
