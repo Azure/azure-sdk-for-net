@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.IoTOperations.Models
         public string X509SecretRef
         {
             get => Auth is null ? default : Auth.X509SecretRef;
-            set => Auth = new BrokerAuthenticatorCustomAuth(new X509ManualCertificate(value));
+            set => Auth = new BrokerAuthenticatorCustomAuth(value);
         }
 
         /// <summary> Optional CA certificate for validating the custom authentication server's certificate. </summary>

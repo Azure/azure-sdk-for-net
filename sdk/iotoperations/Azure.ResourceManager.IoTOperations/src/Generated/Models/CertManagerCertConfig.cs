@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Naming", "AZC0030:Model name 'CertManagerCertOptions' ends with 'Options'. Suggest to rename it to 'CertManagerCertConfig' or any other appropriate name.", Justification = "...")]
 namespace Azure.ResourceManager.IoTOperations.Models
 {
     /// <summary> Cert Manager Cert properties. </summary>
-    public partial class CertManagerCertOptions
+    public partial class CertManagerCertConfig
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,12 +45,12 @@ namespace Azure.ResourceManager.IoTOperations.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="CertManagerCertOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertManagerCertConfig"/>. </summary>
         /// <param name="duration"> Lifetime of certificate. Must be specified using a Go time.Duration format (h|m|s). E.g. 240h for 240 hours and 45m for 45 minutes. </param>
         /// <param name="renewBefore"> When to begin renewing certificate. Must be specified using a Go time.Duration format (h|m|s). E.g. 240h for 240 hours and 45m for 45 minutes. </param>
         /// <param name="privateKey"> Configuration of certificate private key. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="duration"/>, <paramref name="renewBefore"/> or <paramref name="privateKey"/> is null. </exception>
-        public CertManagerCertOptions(string duration, string renewBefore, CertManagerPrivateKey privateKey)
+        public CertManagerCertConfig(string duration, string renewBefore, CertManagerPrivateKey privateKey)
         {
             Argument.AssertNotNull(duration, nameof(duration));
             Argument.AssertNotNull(renewBefore, nameof(renewBefore));
@@ -63,12 +61,12 @@ namespace Azure.ResourceManager.IoTOperations.Models
             PrivateKey = privateKey;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CertManagerCertOptions"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CertManagerCertConfig"/>. </summary>
         /// <param name="duration"> Lifetime of certificate. Must be specified using a Go time.Duration format (h|m|s). E.g. 240h for 240 hours and 45m for 45 minutes. </param>
         /// <param name="renewBefore"> When to begin renewing certificate. Must be specified using a Go time.Duration format (h|m|s). E.g. 240h for 240 hours and 45m for 45 minutes. </param>
         /// <param name="privateKey"> Configuration of certificate private key. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CertManagerCertOptions(string duration, string renewBefore, CertManagerPrivateKey privateKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CertManagerCertConfig(string duration, string renewBefore, CertManagerPrivateKey privateKey, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Duration = duration;
             RenewBefore = renewBefore;
@@ -76,8 +74,8 @@ namespace Azure.ResourceManager.IoTOperations.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="CertManagerCertOptions"/> for deserialization. </summary>
-        internal CertManagerCertOptions()
+        /// <summary> Initializes a new instance of <see cref="CertManagerCertConfig"/> for deserialization. </summary>
+        internal CertManagerCertConfig()
         {
         }
 

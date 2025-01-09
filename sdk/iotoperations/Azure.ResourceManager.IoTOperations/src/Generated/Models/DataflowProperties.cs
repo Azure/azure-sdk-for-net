@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.IoTOperations.Models
         /// <summary> Initializes a new instance of <see cref="DataflowProperties"/>. </summary>
         /// <param name="operations"> List of operations including source and destination references as well as transformation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operations"/> is null. </exception>
-        public DataflowProperties(IEnumerable<DataflowOperation> operations)
+        public DataflowProperties(IEnumerable<DataflowAction> operations)
         {
             Argument.AssertNotNull(operations, nameof(operations));
 
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.IoTOperations.Models
         /// <param name="operations"> List of operations including source and destination references as well as transformation. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowProperties(OperationalMode? mode, IList<DataflowOperation> operations, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataflowProperties(OperationalMode? mode, IList<DataflowAction> operations, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
             Operations = operations;
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.IoTOperations.Models
         /// <summary> Mode for Dataflow. Optional; defaults to Enabled. </summary>
         public OperationalMode? Mode { get; set; }
         /// <summary> List of operations including source and destination references as well as transformation. </summary>
-        public IList<DataflowOperation> Operations { get; }
+        public IList<DataflowAction> Operations { get; }
         /// <summary> The status of the last operation. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }

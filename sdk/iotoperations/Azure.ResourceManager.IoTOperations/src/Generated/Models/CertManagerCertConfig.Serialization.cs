@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IoTOperations.Models
 {
-    public partial class CertManagerCertOptions : IUtf8JsonSerializable, IJsonModel<CertManagerCertOptions>
+    public partial class CertManagerCertConfig : IUtf8JsonSerializable, IJsonModel<CertManagerCertConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertManagerCertOptions>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CertManagerCertConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<CertManagerCertOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CertManagerCertConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.IoTOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertManagerCertOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CertManagerCertConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertManagerCertOptions)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CertManagerCertConfig)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("duration"u8);
@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.IoTOperations.Models
             }
         }
 
-        CertManagerCertOptions IJsonModel<CertManagerCertOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CertManagerCertConfig IJsonModel<CertManagerCertConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertManagerCertOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CertManagerCertConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertManagerCertOptions)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CertManagerCertConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCertManagerCertOptions(document.RootElement, options);
+            return DeserializeCertManagerCertConfig(document.RootElement, options);
         }
 
-        internal static CertManagerCertOptions DeserializeCertManagerCertOptions(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CertManagerCertConfig DeserializeCertManagerCertConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -105,38 +105,38 @@ namespace Azure.ResourceManager.IoTOperations.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CertManagerCertOptions(duration, renewBefore, privateKey, serializedAdditionalRawData);
+            return new CertManagerCertConfig(duration, renewBefore, privateKey, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<CertManagerCertOptions>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CertManagerCertConfig>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertManagerCertOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CertManagerCertConfig>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CertManagerCertOptions)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertManagerCertConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CertManagerCertOptions IPersistableModel<CertManagerCertOptions>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CertManagerCertConfig IPersistableModel<CertManagerCertConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CertManagerCertOptions>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CertManagerCertConfig>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCertManagerCertOptions(document.RootElement, options);
+                        return DeserializeCertManagerCertConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CertManagerCertOptions)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertManagerCertConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CertManagerCertOptions>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CertManagerCertConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

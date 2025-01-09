@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.IoTOperations.Models
                 return null;
             }
             OperationalMode? mode = default;
-            IList<DataflowOperation> operations = default;
+            IList<DataflowAction> operations = default;
             ProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -106,10 +106,10 @@ namespace Azure.ResourceManager.IoTOperations.Models
                 }
                 if (property.NameEquals("operations"u8))
                 {
-                    List<DataflowOperation> array = new List<DataflowOperation>();
+                    List<DataflowAction> array = new List<DataflowAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataflowOperation.DeserializeDataflowOperation(item, options));
+                        array.Add(DataflowAction.DeserializeDataflowAction(item, options));
                     }
                     operations = array;
                     continue;

@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Naming", "AZC0033:Model name 'DataflowOperation' ends with 'Operation'. Suggest to rename it to 'DataflowData' or 'DataflowInfo', if an appropriate name could not be found.", Justification = "...")]
 namespace Azure.ResourceManager.IoTOperations.Models
 {
     /// <summary> Dataflow Operation properties. NOTE - One only method is allowed to be used for one entry. </summary>
-    public partial class DataflowOperation
+    public partial class DataflowAction
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,21 +45,21 @@ namespace Azure.ResourceManager.IoTOperations.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataflowOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataflowAction"/>. </summary>
         /// <param name="operationType"> Type of operation. </param>
-        public DataflowOperation(OperationType operationType)
+        public DataflowAction(OperationType operationType)
         {
             OperationType = operationType;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataflowOperation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataflowAction"/>. </summary>
         /// <param name="operationType"> Type of operation. </param>
         /// <param name="name"> Optional user provided name of the transformation. </param>
         /// <param name="sourceSettings"> Source configuration. </param>
         /// <param name="builtInTransformationSettings"> Built In Transformation configuration. </param>
         /// <param name="destinationSettings"> Destination configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowOperation(OperationType operationType, string name, DataflowSourceOperationSettings sourceSettings, DataflowBuiltInTransformationSettings builtInTransformationSettings, DataflowDestinationOperationSettings destinationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataflowAction(OperationType operationType, string name, DataflowSourceOperationSettings sourceSettings, DataflowBuiltInTransformationSettings builtInTransformationSettings, DataflowDestinationOperationSettings destinationSettings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationType = operationType;
             Name = name;
@@ -71,8 +69,8 @@ namespace Azure.ResourceManager.IoTOperations.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataflowOperation"/> for deserialization. </summary>
-        internal DataflowOperation()
+        /// <summary> Initializes a new instance of <see cref="DataflowAction"/> for deserialization. </summary>
+        internal DataflowAction()
         {
         }
 

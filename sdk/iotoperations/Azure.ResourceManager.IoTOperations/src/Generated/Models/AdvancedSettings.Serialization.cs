@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.IoTOperations.Models
             }
             ClientConfig clients = default;
             OperationalMode? encryptInternalTraffic = default;
-            CertManagerCertOptions internalCerts = default;
+            CertManagerCertConfig internalCerts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.IoTOperations.Models
                     {
                         continue;
                     }
-                    internalCerts = CertManagerCertOptions.DeserializeCertManagerCertOptions(property.Value, options);
+                    internalCerts = CertManagerCertConfig.DeserializeCertManagerCertConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IoTOperations.Models
         /// <param name="encryptInternalTraffic"> The setting to enable or disable encryption of internal Traffic. </param>
         /// <param name="internalCerts"> Certificate rotation and private key configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AdvancedSettings(ClientConfig clients, OperationalMode? encryptInternalTraffic, CertManagerCertOptions internalCerts, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AdvancedSettings(ClientConfig clients, OperationalMode? encryptInternalTraffic, CertManagerCertConfig internalCerts, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Clients = clients;
             EncryptInternalTraffic = encryptInternalTraffic;
@@ -68,6 +68,6 @@ namespace Azure.ResourceManager.IoTOperations.Models
         /// <summary> The setting to enable or disable encryption of internal Traffic. </summary>
         public OperationalMode? EncryptInternalTraffic { get; set; }
         /// <summary> Certificate rotation and private key configuration. </summary>
-        public CertManagerCertOptions InternalCerts { get; set; }
+        public CertManagerCertConfig InternalCerts { get; set; }
     }
 }

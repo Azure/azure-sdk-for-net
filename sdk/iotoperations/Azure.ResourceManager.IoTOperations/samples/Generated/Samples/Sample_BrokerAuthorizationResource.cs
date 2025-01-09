@@ -118,7 +118,7 @@ new BrokerResourceRule(BrokerResourceDefinitionMethod.Subscribe)
 {
 Topics = {"commands/{principal.attributes.organization}"},
 }
-}, new PrincipalDefinition
+}, new PrincipalConfig
 {
 Attributes = {
 {
@@ -178,7 +178,7 @@ new BrokerResourceRule(BrokerResourceDefinitionMethod.Connect)
 ClientIds = {"nlc"},
 Topics = {"wvuca"},
 }
-}, new PrincipalDefinition
+}, new PrincipalConfig
 {
 Attributes = {
 {
@@ -238,7 +238,7 @@ new BrokerResourceRule(BrokerResourceDefinitionMethod.Subscribe)
 {
 Topics = {"topic", "topic/with/wildcard/#"},
 }
-}, new PrincipalDefinition
+}, new PrincipalConfig
 {
 Attributes = {
 {

@@ -85,9 +85,9 @@ namespace Azure.ResourceManager.IoTOperations.Models
         /// <param name="operations"> List of operations including source and destination references as well as transformation. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.DataflowProperties"/> instance for mocking. </returns>
-        public static DataflowProperties DataflowProperties(OperationalMode? mode = null, IEnumerable<DataflowOperation> operations = null, ProvisioningState? provisioningState = null)
+        public static DataflowProperties DataflowProperties(OperationalMode? mode = null, IEnumerable<DataflowAction> operations = null, ProvisioningState? provisioningState = null)
         {
-            operations ??= new List<DataflowOperation>();
+            operations ??= new List<DataflowAction>();
 
             return new DataflowProperties(mode, operations?.ToList(), provisioningState, serializedAdditionalRawData: null);
         }

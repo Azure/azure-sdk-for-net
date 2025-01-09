@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.IoTOperations.Models
                 return null;
             }
             IList<BrokerResourceRule> brokerResources = default;
-            PrincipalDefinition principals = default;
+            PrincipalConfig principals = default;
             IList<StateStoreResourceRule> stateStoreResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.IoTOperations.Models
                 }
                 if (property.NameEquals("principals"u8))
                 {
-                    principals = PrincipalDefinition.DeserializePrincipalDefinition(property.Value, options);
+                    principals = PrincipalConfig.DeserializePrincipalConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("stateStoreResources"u8))

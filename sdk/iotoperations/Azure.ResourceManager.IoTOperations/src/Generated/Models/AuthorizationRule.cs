@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.IoTOperations.Models
         /// <param name="brokerResources"> Give access to Broker methods and topics. </param>
         /// <param name="principals"> Give access to clients based on the following properties. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="brokerResources"/> or <paramref name="principals"/> is null. </exception>
-        public AuthorizationRule(IEnumerable<BrokerResourceRule> brokerResources, PrincipalDefinition principals)
+        public AuthorizationRule(IEnumerable<BrokerResourceRule> brokerResources, PrincipalConfig principals)
         {
             Argument.AssertNotNull(brokerResources, nameof(brokerResources));
             Argument.AssertNotNull(principals, nameof(principals));
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.IoTOperations.Models
         /// <param name="principals"> Give access to clients based on the following properties. </param>
         /// <param name="stateStoreResources"> Give access to state store resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AuthorizationRule(IList<BrokerResourceRule> brokerResources, PrincipalDefinition principals, IList<StateStoreResourceRule> stateStoreResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AuthorizationRule(IList<BrokerResourceRule> brokerResources, PrincipalConfig principals, IList<StateStoreResourceRule> stateStoreResources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             BrokerResources = brokerResources;
             Principals = principals;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.IoTOperations.Models
         /// <summary> Give access to Broker methods and topics. </summary>
         public IList<BrokerResourceRule> BrokerResources { get; }
         /// <summary> Give access to clients based on the following properties. </summary>
-        public PrincipalDefinition Principals { get; set; }
+        public PrincipalConfig Principals { get; set; }
         /// <summary> Give access to state store resources. </summary>
         public IList<StateStoreResourceRule> StateStoreResources { get; }
     }

@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.IoTOperations.Samples
             // invoke the operation
             DataflowResourceData data = new DataflowResourceData(new ExtendedLocation("qmbrfwcpwwhggszhrdjv", ExtendedLocationType.CustomLocation))
             {
-                Properties = new DataflowProperties(new DataflowOperation[]
+                Properties = new DataflowProperties(new DataflowAction[]
             {
-new DataflowOperation(OperationType.Source)
+new DataflowAction(OperationType.Source)
 {
 Name = "source1",
 SourceSettings = new DataflowSourceOperationSettings("aio-builtin-broker-endpoint", new string[]{"azure-iot-operations/data/thermostat"}),
 },
-new DataflowOperation(OperationType.BuiltInTransformation)
+new DataflowAction(OperationType.BuiltInTransformation)
 {
 Name = "transformation1",
 BuiltInTransformationSettings = new DataflowBuiltInTransformationSettings
@@ -120,7 +120,7 @@ Expression = "$1 == $2",
 Map = {new DataflowBuiltInTransformationMap(new string[]{"*"}, "*"), new DataflowBuiltInTransformationMap(new string[]{"$context(quality).*"}, "enriched.*")},
 },
 },
-new DataflowOperation(OperationType.Destination)
+new DataflowAction(OperationType.Destination)
 {
 Name = "destination1",
 DestinationSettings = new DataflowDestinationOperationSettings("adx-endpoint", "mytable"),
@@ -165,14 +165,14 @@ DestinationSettings = new DataflowDestinationOperationSettings("adx-endpoint", "
             // invoke the operation
             DataflowResourceData data = new DataflowResourceData(new ExtendedLocation("qmbrfwcpwwhggszhrdjv", ExtendedLocationType.CustomLocation))
             {
-                Properties = new DataflowProperties(new DataflowOperation[]
+                Properties = new DataflowProperties(new DataflowAction[]
             {
-new DataflowOperation(OperationType.Source)
+new DataflowAction(OperationType.Source)
 {
 Name = "source1",
 SourceSettings = new DataflowSourceOperationSettings("aio-builtin-broker-endpoint", new string[]{"azure-iot-operations/data/thermostat"}),
 },
-new DataflowOperation(OperationType.BuiltInTransformation)
+new DataflowAction(OperationType.BuiltInTransformation)
 {
 BuiltInTransformationSettings = new DataflowBuiltInTransformationSettings
 {
@@ -198,7 +198,7 @@ Expression = "scale ($1,0,10,0,100)",
 }},
 },
 },
-new DataflowOperation(OperationType.Destination)
+new DataflowAction(OperationType.Destination)
 {
 Name = "destination1",
 DestinationSettings = new DataflowDestinationOperationSettings("event-hub-endpoint", "myuniqueeventhub"),
@@ -243,14 +243,14 @@ DestinationSettings = new DataflowDestinationOperationSettings("event-hub-endpoi
             // invoke the operation
             DataflowResourceData data = new DataflowResourceData(new ExtendedLocation("qmbrfwcpwwhggszhrdjv", ExtendedLocationType.CustomLocation))
             {
-                Properties = new DataflowProperties(new DataflowOperation[]
+                Properties = new DataflowProperties(new DataflowAction[]
             {
-new DataflowOperation(OperationType.Source)
+new DataflowAction(OperationType.Source)
 {
 Name = "source1",
 SourceSettings = new DataflowSourceOperationSettings("aio-builtin-broker-endpoint", new string[]{"azure-iot-operations/data/thermostat"}),
 },
-new DataflowOperation(OperationType.BuiltInTransformation)
+new DataflowAction(OperationType.BuiltInTransformation)
 {
 Name = "transformation1",
 BuiltInTransformationSettings = new DataflowBuiltInTransformationSettings
@@ -266,7 +266,7 @@ Type = DataflowMappingType.PassThrough,
 }},
 },
 },
-new DataflowOperation(OperationType.Destination)
+new DataflowAction(OperationType.Destination)
 {
 Name = "destination1",
 DestinationSettings = new DataflowDestinationOperationSettings("aio-builtin-broker-endpoint", "data/filtered/thermostat"),
@@ -311,9 +311,9 @@ DestinationSettings = new DataflowDestinationOperationSettings("aio-builtin-brok
             // invoke the operation
             DataflowResourceData data = new DataflowResourceData(new ExtendedLocation("qmbrfwcpwwhggszhrdjv", ExtendedLocationType.CustomLocation))
             {
-                Properties = new DataflowProperties(new DataflowOperation[]
+                Properties = new DataflowProperties(new DataflowAction[]
             {
-new DataflowOperation(OperationType.Source)
+new DataflowAction(OperationType.Source)
 {
 Name = "knnafvkwoeakm",
 SourceSettings = new DataflowSourceOperationSettings("iixotodhvhkkfcfyrkoveslqig", new string[]{"chkkpymxhp"})
@@ -386,14 +386,14 @@ DestinationSettings = new DataflowDestinationOperationSettings("kybkchnzimerguek
             // invoke the operation
             DataflowResourceData data = new DataflowResourceData(new ExtendedLocation("qmbrfwcpwwhggszhrdjv", ExtendedLocationType.CustomLocation))
             {
-                Properties = new DataflowProperties(new DataflowOperation[]
+                Properties = new DataflowProperties(new DataflowAction[]
             {
-new DataflowOperation(OperationType.Source)
+new DataflowAction(OperationType.Source)
 {
 Name = "source1",
 SourceSettings = new DataflowSourceOperationSettings("aio-builtin-broker-endpoint", new string[]{"thermostats/+/telemetry/temperature/#"}),
 },
-new DataflowOperation(OperationType.Destination)
+new DataflowAction(OperationType.Destination)
 {
 Name = "destination1",
 DestinationSettings = new DataflowDestinationOperationSettings("event-grid-endpoint", "factory/telemetry"),
@@ -438,14 +438,14 @@ DestinationSettings = new DataflowDestinationOperationSettings("event-grid-endpo
             // invoke the operation
             DataflowResourceData data = new DataflowResourceData(new ExtendedLocation("qmbrfwcpwwhggszhrdjv", ExtendedLocationType.CustomLocation))
             {
-                Properties = new DataflowProperties(new DataflowOperation[]
+                Properties = new DataflowProperties(new DataflowAction[]
             {
-new DataflowOperation(OperationType.Source)
+new DataflowAction(OperationType.Source)
 {
 Name = "source1",
 SourceSettings = new DataflowSourceOperationSettings("aio-builtin-broker-endpoint", new string[]{"azure-iot-operations/data/thermostat"}),
 },
-new DataflowOperation(OperationType.BuiltInTransformation)
+new DataflowAction(OperationType.BuiltInTransformation)
 {
 BuiltInTransformationSettings = new DataflowBuiltInTransformationSettings
 {
@@ -453,7 +453,7 @@ SerializationFormat = TransformationSerializationFormat.Parquet,
 SchemaRef = "aio-sr://exampleNamespace/exmapleParquetSchema:1.0.0",
 },
 },
-new DataflowOperation(OperationType.Destination)
+new DataflowAction(OperationType.Destination)
 {
 Name = "destination1",
 DestinationSettings = new DataflowDestinationOperationSettings("fabric-endpoint", "telemetryTable"),

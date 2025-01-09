@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IoTOperations.Models
 {
-    public partial class DataflowOperation : IUtf8JsonSerializable, IJsonModel<DataflowOperation>
+    public partial class DataflowAction : IUtf8JsonSerializable, IJsonModel<DataflowAction>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataflowOperation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataflowAction>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DataflowOperation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataflowAction>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.IoTOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowOperation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataflowAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataflowOperation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataflowAction)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("operationType"u8);
@@ -73,19 +73,19 @@ namespace Azure.ResourceManager.IoTOperations.Models
             }
         }
 
-        DataflowOperation IJsonModel<DataflowOperation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataflowAction IJsonModel<DataflowAction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowOperation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataflowAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataflowOperation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataflowAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataflowOperation(document.RootElement, options);
+            return DeserializeDataflowAction(document.RootElement, options);
         }
 
-        internal static DataflowOperation DeserializeDataflowOperation(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DataflowAction DeserializeDataflowAction(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.IoTOperations.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataflowOperation(
+            return new DataflowAction(
                 operationType,
                 name,
                 sourceSettings,
@@ -154,35 +154,35 @@ namespace Azure.ResourceManager.IoTOperations.Models
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DataflowOperation>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DataflowAction>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowOperation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataflowAction>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataflowOperation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataflowAction)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DataflowOperation IPersistableModel<DataflowOperation>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DataflowAction IPersistableModel<DataflowAction>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataflowOperation>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataflowAction>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDataflowOperation(document.RootElement, options);
+                        return DeserializeDataflowAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataflowOperation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataflowAction)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DataflowOperation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataflowAction>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

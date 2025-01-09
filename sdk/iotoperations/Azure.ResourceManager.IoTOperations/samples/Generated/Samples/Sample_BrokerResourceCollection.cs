@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.IoTOperations.Samples
                             MaxKeepAliveSeconds = 3744,
                         },
                         EncryptInternalTraffic = OperationalMode.Enabled,
-                        InternalCerts = new CertManagerCertOptions("bchrc", "xkafmpgjfifkwwrhkswtopdnne", new CertManagerPrivateKey(PrivateKeyAlgorithm.Ec256, PrivateKeyRotationPolicy.Always)),
+                        InternalCerts = new CertManagerCertConfig("bchrc", "xkafmpgjfifkwwrhkswtopdnne", new CertManagerPrivateKey(PrivateKeyAlgorithm.Ec256, PrivateKeyRotationPolicy.Always)),
                     },
                     Cardinality = new Cardinality(new BackendChain(11, 5)
                     {

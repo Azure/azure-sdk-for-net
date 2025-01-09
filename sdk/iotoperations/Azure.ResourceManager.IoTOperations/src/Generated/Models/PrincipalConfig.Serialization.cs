@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IoTOperations.Models
 {
-    public partial class PrincipalDefinition : IUtf8JsonSerializable, IJsonModel<PrincipalDefinition>
+    public partial class PrincipalConfig : IUtf8JsonSerializable, IJsonModel<PrincipalConfig>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrincipalDefinition>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PrincipalConfig>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<PrincipalDefinition>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<PrincipalConfig>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.IoTOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrincipalDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PrincipalConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrincipalDefinition)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(PrincipalConfig)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Attributes))
@@ -92,19 +92,19 @@ namespace Azure.ResourceManager.IoTOperations.Models
             }
         }
 
-        PrincipalDefinition IJsonModel<PrincipalDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        PrincipalConfig IJsonModel<PrincipalConfig>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrincipalDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PrincipalConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrincipalDefinition)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(PrincipalConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrincipalDefinition(document.RootElement, options);
+            return DeserializePrincipalConfig(document.RootElement, options);
         }
 
-        internal static PrincipalDefinition DeserializePrincipalDefinition(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static PrincipalConfig DeserializePrincipalConfig(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -179,38 +179,38 @@ namespace Azure.ResourceManager.IoTOperations.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PrincipalDefinition(attributes ?? new ChangeTrackingList<IDictionary<string, string>>(), clientIds ?? new ChangeTrackingList<string>(), usernames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
+            return new PrincipalConfig(attributes ?? new ChangeTrackingList<IDictionary<string, string>>(), clientIds ?? new ChangeTrackingList<string>(), usernames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<PrincipalDefinition>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<PrincipalConfig>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrincipalDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PrincipalConfig>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrincipalDefinition)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrincipalConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PrincipalDefinition IPersistableModel<PrincipalDefinition>.Create(BinaryData data, ModelReaderWriterOptions options)
+        PrincipalConfig IPersistableModel<PrincipalConfig>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<PrincipalDefinition>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<PrincipalConfig>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePrincipalDefinition(document.RootElement, options);
+                        return DeserializePrincipalConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrincipalDefinition)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrincipalConfig)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PrincipalDefinition>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<PrincipalConfig>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

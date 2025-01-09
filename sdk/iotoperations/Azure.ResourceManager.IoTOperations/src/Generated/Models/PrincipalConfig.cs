@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Naming", "AZC0031:Model name 'PrincipalDefinition' ends with 'Definition'. Suggest to rename it to an appropriate name.", Justification = "...")]
 namespace Azure.ResourceManager.IoTOperations.Models
 {
     /// <summary> PrincipalDefinition properties of Rule. </summary>
-    public partial class PrincipalDefinition
+    public partial class PrincipalConfig
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,20 +45,20 @@ namespace Azure.ResourceManager.IoTOperations.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PrincipalDefinition"/>. </summary>
-        public PrincipalDefinition()
+        /// <summary> Initializes a new instance of <see cref="PrincipalConfig"/>. </summary>
+        public PrincipalConfig()
         {
             Attributes = new ChangeTrackingList<IDictionary<string, string>>();
             ClientIds = new ChangeTrackingList<string>();
             Usernames = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrincipalDefinition"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="PrincipalConfig"/>. </summary>
         /// <param name="attributes"> A list of key-value pairs that match the attributes of the clients. The attributes are case-sensitive and must match the attributes provided by the clients during authentication. </param>
         /// <param name="clientIds"> A list of client IDs that match the clients. The client IDs are case-sensitive and must match the client IDs provided by the clients during connection. </param>
         /// <param name="usernames"> A list of usernames that match the clients. The usernames are case-sensitive and must match the usernames provided by the clients during authentication. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PrincipalDefinition(IList<IDictionary<string, string>> attributes, IList<string> clientIds, IList<string> usernames, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PrincipalConfig(IList<IDictionary<string, string>> attributes, IList<string> clientIds, IList<string> usernames, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Attributes = attributes;
             ClientIds = clientIds;
