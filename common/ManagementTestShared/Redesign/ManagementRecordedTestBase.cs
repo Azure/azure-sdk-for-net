@@ -127,7 +127,6 @@ namespace Azure.ResourceManager.TestFramework
         protected ArmClient GetArmClient(ArmClientOptions clientOptions = default, string subscriptionId = default, bool enableDeleteAfter = false)
         {
             var options = InstrumentClientOptions(clientOptions ?? new ArmClientOptions());
-            options.Diagnostics.IsLoggingContentEnabled = true;
             options.Environment = GetArmEnvironment(TestEnvironment);
             options.AddPolicy(ResourceGroupCleanupPolicy, HttpPipelinePosition.PerCall);
             options.AddPolicy(ManagementGroupCleanupPolicy, HttpPipelinePosition.PerCall);
