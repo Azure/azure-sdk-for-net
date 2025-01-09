@@ -9,11 +9,11 @@ using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class DownloadChunkHandler : IDisposable
+    internal class DownloadChunkHandler : IAsyncDisposable
     {
         #region Delegate Definitions
         public delegate Task CopyToDestinationFileInternal(long offset, long length, Stream stream, long expectedLength, bool initial);
-        public delegate void ReportProgressInBytes(long bytesWritten);
+        public delegate ValueTask ReportProgressInBytes(long bytesWritten);
         public delegate Task QueueCompleteFileDownloadInternal();
         public delegate Task InvokeFailedEventHandlerInternal(Exception ex);
         #endregion Delegate Definitions
@@ -40,6 +40,8 @@ namespace Azure.Storage.DataMovement
 
         private long _bytesTransferred;
         private readonly long _expectedLength;
+
+        internal bool _isChunkHandlerRunning;
 
         /// <summary>
         /// The controller for downloading the chunks to each file.
@@ -89,11 +91,13 @@ namespace Azure.Storage.DataMovement
                 readers: 1,
                 capacity: DataMovementConstants.Channels.DownloadChunkCapacity);
             _downloadRangeProcessor.Process = ProcessDownloadRange;
+            _isChunkHandlerRunning = true;
         }
 
-        public void Dispose()
+        public async ValueTask DisposeAsync()
         {
-            _downloadRangeProcessor.TryComplete();
+            _isChunkHandlerRunning = false;
+            await _downloadRangeProcessor.DisposeAsync().ConfigureAwait(false);
         }
 
         public async ValueTask QueueChunkAsync(QueueDownloadChunkArgs args)
@@ -115,7 +119,8 @@ namespace Azure.Storage.DataMovement
                         _expectedLength,
                         initial: _bytesTransferred == 0).ConfigureAwait(false);
                 }
-                UpdateBytesAndRange(args.Length);
+                _bytesTransferred += args.Length;
+                await _reportProgressInBytes(args.Length).ConfigureAwait(false);
 
                 // Check if we finished downloading the blob
                 if (_bytesTransferred == _expectedLength)
@@ -125,15 +130,15 @@ namespace Azure.Storage.DataMovement
             }
             catch (Exception ex)
             {
-                // This will trigger the job part to call Dispose on this object
-                await _invokeFailedEventHandler(ex).ConfigureAwait(false);
+                // If we are disposing, we don't want to invoke the failed event handler
+                // because the error is likely due to the job part being disposed and was
+                // invoked by another InvokeFailedEventHandler call.
+                if (_isChunkHandlerRunning)
+                {
+                    // This will trigger the job part to call Dispose on this object
+                    _ = Task.Run(() => _invokeFailedEventHandler(ex));
+                }
             }
-        }
-
-        private void UpdateBytesAndRange(long bytesDownloaded)
-        {
-            _bytesTransferred += bytesDownloaded;
-            _reportProgressInBytes(bytesDownloaded);
         }
     }
 }

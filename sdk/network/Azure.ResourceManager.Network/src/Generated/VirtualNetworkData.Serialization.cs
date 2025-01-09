@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Network
             ResourceType? type = default;
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
-            AddressSpace addressSpace = default;
+            VirtualNetworkAddressSpace addressSpace = default;
             DhcpOptions dhcpOptions = default;
             int? flowTimeoutInMinutes = default;
             IList<SubnetData> subnets = default;
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Network
                             {
                                 continue;
                             }
-                            addressSpace = AddressSpace.DeserializeAddressSpace(property0.Value, options);
+                            addressSpace = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("dhcpOptions"u8))

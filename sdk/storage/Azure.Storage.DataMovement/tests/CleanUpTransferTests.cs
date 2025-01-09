@@ -103,9 +103,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             TransferManager transferManager = new();
-            DataTransferOptions options = new DataTransferOptions();
+            TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 sourceMock.Object,
                 destMock.Object,
                 options);
@@ -147,9 +147,9 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             TransferManager transferManager = new();
-            DataTransferOptions options = new DataTransferOptions();
+            TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 sourceMock.Object,
                 destMock.Object,
                 options);

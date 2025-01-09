@@ -5,6 +5,17 @@
 ### Features Added
 
 ### Breaking Changes
+- Renamed the following types:
+    - `DataTransfer` -> `TransferOperation`
+        - Addtionally renamed the `TransferStatus` property to `Status`
+    - `DataTransferEventArgs` -> `TransferEventArgs`
+    - `DataTransferOptions` -> `TransferOptions`
+    - `DataTransferOrder` -> `TransferOrder`
+    - `DataTransferProgress` -> `TransferProgress`
+    - `DataTransferProperties` -> `TransferProperties`
+    - `DataTransferState` -> `TransferState`
+    - `DataTransferStatus` -> `TransferStatus`
+    - `DataTransferErrorMode` -> `TransferErrorMode`
 
 ### Bugs Fixed
 - Fixed bug where adding multiple transfers in parallel could cause a collision (`InvalidOperationException`) in the data transfers stored within the `TransferManager`.

@@ -25,7 +25,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             return stream.ToArray();
         }
 
-        private static Mock<DataTransferProperties> GetProperties(
+        private static Mock<TransferProperties> GetProperties(
             string transferId,
             string sourcePath,
             string destinationPath,
@@ -35,7 +35,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareFileSourceCheckpointData sourceCheckpointData,
             ShareFileDestinationCheckpointData destinationCheckpointData)
         {
-            var mock = new Mock<DataTransferProperties>(MockBehavior.Strict);
+            var mock = new Mock<TransferProperties>(MockBehavior.Strict);
             mock.Setup(p => p.TransferId).Returns(transferId);
             mock.Setup(p => p.SourceUri).Returns(new Uri(sourcePath));
             mock.Setup(p => p.DestinationUri).Returns(new Uri(destinationPath));
@@ -56,7 +56,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string destinationPath = "https://storageaccount.file.core.windows.net/share/dir2/file2";
             string originalPath = isSource ? sourcePath : destinationPath;
 
-            DataTransferProperties transferProperties = GetProperties(
+            TransferProperties transferProperties = GetProperties(
                 transferId,
                 sourcePath,
                 destinationPath,
@@ -101,7 +101,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 {
                     {  r.NextString(8),  r.NextString(8) }
                 }));
-            DataTransferProperties transferProperties = GetProperties(
+            TransferProperties transferProperties = GetProperties(
                 transferId,
                 sourcePath,
                 destinationPath,
@@ -159,7 +159,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 destinationPaths.Add(string.Join("/", destinationPath, childPath));
             }
 
-            DataTransferProperties transferProperties = GetProperties(
+            TransferProperties transferProperties = GetProperties(
                 transferId,
                 sourcePath,
                 destinationPath,

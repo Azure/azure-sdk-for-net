@@ -1,13 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Core;
+using Azure.Generator.InputTransformation;
 using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Azure.Generator.Providers.Abstraction;
 using Microsoft.Generator.CSharp.ClientModel;
 using Microsoft.Generator.CSharp.ClientModel.Providers;
-using Microsoft.Generator.CSharp.ClientModel.Snippets;
 using Microsoft.Generator.CSharp.Expressions;
 using Microsoft.Generator.CSharp.Input;
 using Microsoft.Generator.CSharp.Primitives;
@@ -16,16 +15,12 @@ using Microsoft.Generator.CSharp.Statements;
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using static Microsoft.Generator.CSharp.Snippets.Snippet;
 
 namespace Azure.Generator
 {
     /// <inheritdoc/>
     public class AzureTypeFactory : ScmTypeFactory
     {
-        /// <inheritdoc/>
-        public override CSharpType KeyCredentialType => typeof(AzureKeyCredential);
-
         /// <inheritdoc/>
         public override IClientResponseApi ClientResponseApi => AzureClientResponseProvider.Instance;
 
@@ -69,7 +64,7 @@ namespace Azure.Generator
             InputPrimitiveType? primitiveType = inputType;
             while (primitiveType != null)
             {
-                if (KnownAzureTypes.PrimitiveTypes.TryGetValue(primitiveType.CrossLanguageDefinitionId, out var knownType))
+                if (KnownAzureTypes.TryGetPrimitiveType(primitiveType.CrossLanguageDefinitionId, out var knownType))
                 {
                     return knownType;
                 }
@@ -81,40 +76,38 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
-        public override ValueExpression GetValueTypeDeserializationExpression(Type valueType, ScopedApi<JsonElement> element, SerializationFormat format)
+        public override ValueExpression DeserializeJsonValue(Type valueType, ScopedApi<JsonElement> element, SerializationFormat format)
         {
-            var expression = GetValueTypeDeserializationExpressionCore(valueType, element, format);
-            return expression ?? base.GetValueTypeDeserializationExpression(valueType, element, format);
+            var expression = DeserializeJsonValueCore(valueType, element, format);
+            return expression ?? base.DeserializeJsonValue(valueType, element, format);
         }
 
-        private ValueExpression? GetValueTypeDeserializationExpressionCore(
+        private ValueExpression? DeserializeJsonValueCore(
             Type valueType,
             ScopedApi<JsonElement> element,
             SerializationFormat format)
         {
-            return valueType switch
-            {
-                Type t when t == typeof(ResourceIdentifier) =>
-                    New.Instance(valueType, element.GetString()),
-                _ => null,
-            };
+            return KnownAzureTypes.TryGetJsonDeserializationExpression(valueType, out var deserializationExpression) ?
+                deserializationExpression(new CSharpType(valueType), element, format) :
+                null;
         }
 
         /// <inheritdoc/>
-        public override MethodBodyStatement SerializeValueType(CSharpType type, SerializationFormat serializationFormat, ValueExpression value, Type valueType, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter)
+        public override MethodBodyStatement SerializeJsonValue(Type valueType, ValueExpression value, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter, SerializationFormat serializationFormat)
         {
-            var statement = SerializeValueTypeCore(type, serializationFormat, value, valueType, utf8JsonWriter, mrwOptionsParameter);
-            return statement ?? base.SerializeValueType(type, serializationFormat, value, valueType, utf8JsonWriter, mrwOptionsParameter);
+            var statement = SerializeValueTypeCore(serializationFormat, value, valueType, utf8JsonWriter, mrwOptionsParameter);
+            return statement ?? base.SerializeJsonValue(valueType, value, utf8JsonWriter, mrwOptionsParameter, serializationFormat);
         }
 
-        private MethodBodyStatement? SerializeValueTypeCore(CSharpType type, SerializationFormat serializationFormat, ValueExpression value, Type valueType, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter)
+        private MethodBodyStatement? SerializeValueTypeCore(SerializationFormat serializationFormat, ValueExpression value, Type valueType, ScopedApi<Utf8JsonWriter> utf8JsonWriter, ScopedApi<ModelReaderWriterOptions> mrwOptionsParameter)
         {
-            return valueType switch
-            {
-                Type t when t == typeof(ResourceIdentifier) =>
-                    utf8JsonWriter.WriteStringValue(value.Property(nameof(ResourceIdentifier.Name))),
-                _ => null,
-            };
+            return KnownAzureTypes.TryGetJsonSerializationExpression(valueType, out var serializationExpression) ?
+                serializationExpression(value, utf8JsonWriter, mrwOptionsParameter, serializationFormat) :
+                null;
         }
+
+        /// <inheritdoc/>
+        protected override ClientProvider CreateClientCore(InputClient inputClient)
+            => AzureClientPlugin.Instance.IsAzureArm.Value ? base.CreateClientCore(InputClientTransformer.TransformInputClient(inputClient)) : base.CreateClientCore(inputClient);
     }
 }

@@ -37,17 +37,17 @@ namespace Azure.Storage.DataMovement
         }
 
         [Event(TransferCompletedEvent, Level = EventLevel.Informational, Message = "Transfer [{0}] Transfer completed: HasFailed={1}, HasKsipped={2}")]
-        public void TrasnferCompleted(string trasnferId, bool hasFailed, bool hasSkipped)
+        public void TransferCompleted(string transferId, bool hasFailed, bool hasSkipped)
         {
-            WriteEvent(TransferCompletedEvent, trasnferId, hasFailed, hasSkipped);
+            WriteEvent(TransferCompletedEvent, transferId, hasFailed, hasSkipped);
         }
 
         [NonEvent]
-        public void TrasnferCompleted(string trasnferId, DataTransferStatus status)
+        public void TransferCompleted(string transferId, TransferStatus status)
         {
             if (IsEnabled(EventLevel.Informational, EventKeywords.None))
             {
-                TrasnferCompleted(trasnferId, status.HasFailedItems, status.HasSkippedItems);
+                TransferCompleted(transferId, status.HasFailedItems, status.HasSkippedItems);
             }
         }
 
@@ -58,7 +58,7 @@ namespace Azure.Storage.DataMovement
         }
 
         [NonEvent]
-        public void JobPartStatus(string transferId, int jobPart, DataTransferStatus status)
+        public void JobPartStatus(string transferId, int jobPart, TransferStatus status)
         {
             if (IsEnabled(EventLevel.Verbose, EventKeywords.None))
             {
