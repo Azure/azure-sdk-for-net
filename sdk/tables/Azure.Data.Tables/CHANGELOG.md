@@ -1,14 +1,17 @@
 # Release History
 
-## 12.10.0-beta.1 (Unreleased)
-
-### Features Added
+## 12.10.0 (2025-01-14)
 
 ### Breaking Changes
 
-- Calling `TableClient.Query`, `TableClient.QueryAsync`, or `TableClient.CreateQueryFilter` with a filter expression that uses `string.Equals` or `string.Compare` with a `StringComparison` parameter will now throw an exception. This is because the Azure Table service does not support these methods in query filters. Previously the `StringComparison` argument was silently ignored, which can lead to subtle bugs in client code.
+- Calling `TableClient.Query`, `TableClient.QueryAsync`, or `TableClient.CreateQueryFilter` with a filter expression that uses `string.Equals` or `string.Compare` with a `StringComparison` parameter will now throw an exception. This is because the Azure Table service does not support these methods in query filters. Previously the `StringComparison` argument was silently ignored, which can lead to subtle bugs in client code. The new behavior can be overridden by either setting an AppContext switch named "Azure.Data.Tables.DisableThrowOnStringComparisonFilter" to `true` or by setting the environment variable "AZURE_DATA_TABLES_DISABLE_THROWONSTRINGCOMPARISONFILTER" to "true". Note: AppContext switches can also be configured via configuration like below:
 
-### Bugs Fixed
+```xml
+<ItemGroup>
+    <RuntimeHostConfigurationOption Include="Azure.Data.Tables.DisableThrowOnStringComparisonFilter" Value="true" />
+</ItemGroup>
+  ```
+
 
 ### Other Changes
 - Improved the performance of `TableServiceClient.GetTableClient()`
