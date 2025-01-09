@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_HybridConnectivityEndpointsServiceconfigurationsGetSSH()
         {
-            // Generated from example definition: 2023-03-15/ServiceConfigurationsGetSSH.json
+            // Generated from example definition: 2024-12-01/ServiceConfigurationsGetSSH.json
             // this example is just showing the usage of "ServiceConfigurationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_HybridConnectivityEndpointsServiceconfigurationsGetWAC()
         {
-            // Generated from example definition: 2023-03-15/ServiceConfigurationsGetWAC.json
+            // Generated from example definition: 2024-12-01/ServiceConfigurationsGetWAC.json
             // this example is just showing the usage of "ServiceConfigurationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ServiceConfigurationsDeleteSSH()
         {
-            // Generated from example definition: 2023-03-15/ServiceConfigurationsDeleteSSH.json
+            // Generated from example definition: 2024-12-01/ServiceConfigurationsDeleteSSH.json
             // this example is just showing the usage of "ServiceConfigurationResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_ServiceConfigurationsPatchSSH()
         {
-            // Generated from example definition: 2023-03-15/ServiceConfigurationsPatchSSH.json
+            // Generated from example definition: 2024-12-01/ServiceConfigurationsPatchSSH.json
             // this example is just showing the usage of "ServiceConfigurationResource_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ServiceConfigurationsPutSSH()
         {
-            // Generated from example definition: 2023-03-15/ServiceConfigurationsPutSSH.json
+            // Generated from example definition: 2024-12-01/ServiceConfigurationsPutSSH.json
             // this example is just showing the usage of "ServiceConfigurationResource_CreateOrupdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_ServiceConfigurationsPutWAC()
         {
-            // Generated from example definition: 2023-03-15/ServiceConfigurationsPutWAC.json
+            // Generated from example definition: 2024-12-01/ServiceConfigurationsPutWAC.json
             // this example is just showing the usage of "ServiceConfigurationResource_CreateOrupdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_HybridConnectivityEndpointsServiceconfigurationsGetSSH()
         {
-            // Generated from example definition: 2023-03-15/ServiceConfigurationsGetSSH.json
+            // Generated from example definition: 2024-12-01/ServiceConfigurationsGetSSH.json
             // this example is just showing the usage of "ServiceConfigurationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_HybridConnectivityEndpointsServiceconfigurationsGetWAC()
         {
-            // Generated from example definition: 2023-03-15/ServiceConfigurationsGetWAC.json
+            // Generated from example definition: 2024-12-01/ServiceConfigurationsGetWAC.json
             // this example is just showing the usage of "ServiceConfigurationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetClustersExample()
         {
-            // Generated from example definition: 2023-03-15/ServiceConfigurationsList.json
+            // Generated from example definition: 2024-12-01/ServiceConfigurationsList.json
             // this example is just showing the usage of "ServiceConfigurationResource_ListByEndpointResource" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_HybridConnectivityEndpointsServiceconfigurationsGetSSH()
         {
-            // Generated from example definition: 2023-03-15/ServiceConfigurationsGetSSH.json
+            // Generated from example definition: 2024-12-01/ServiceConfigurationsGetSSH.json
             // this example is just showing the usage of "ServiceConfigurationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_HybridConnectivityEndpointsServiceconfigurationsGetWAC()
         {
-            // Generated from example definition: 2023-03-15/ServiceConfigurationsGetWAC.json
+            // Generated from example definition: 2024-12-01/ServiceConfigurationsGetWAC.json
             // this example is just showing the usage of "ServiceConfigurationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_HybridConnectivityEndpointsServiceconfigurationsGetSSH()
         {
-            // Generated from example definition: 2023-03-15/ServiceConfigurationsGetSSH.json
+            // Generated from example definition: 2024-12-01/ServiceConfigurationsGetSSH.json
             // this example is just showing the usage of "ServiceConfigurationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_HybridConnectivityEndpointsServiceconfigurationsGetWAC()
         {
-            // Generated from example definition: 2023-03-15/ServiceConfigurationsGetWAC.json
+            // Generated from example definition: 2024-12-01/ServiceConfigurationsGetWAC.json
             // this example is just showing the usage of "ServiceConfigurationResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

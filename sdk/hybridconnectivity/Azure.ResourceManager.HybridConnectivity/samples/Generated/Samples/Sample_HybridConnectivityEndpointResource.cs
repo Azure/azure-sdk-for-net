@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_HybridConnectivityEndpointsGetCustom()
         {
-            // Generated from example definition: 2023-03-15/EndpointsGetCustom.json
+            // Generated from example definition: 2024-12-01/EndpointsGetCustom.json
             // this example is just showing the usage of "EndpointResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_HybridConnectivityEndpointsGetDefault()
         {
-            // Generated from example definition: 2023-03-15/EndpointsGetDefault.json
+            // Generated from example definition: 2024-12-01/EndpointsGetDefault.json
             // this example is just showing the usage of "EndpointResource_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_HybridConnectivityEndpointsDeleteDefault()
         {
-            // Generated from example definition: 2023-03-15/EndpointsDeleteDefault.json
+            // Generated from example definition: 2024-12-01/EndpointsDeleteDefault.json
             // this example is just showing the usage of "EndpointResource_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_HybridConnectivityEndpointsPatchDefault()
         {
-            // Generated from example definition: 2023-03-15/EndpointsPatchDefault.json
+            // Generated from example definition: 2024-12-01/EndpointsPatchDefault.json
             // this example is just showing the usage of "EndpointResource_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetCredentials_HybridConnectivityEndpointsPostListCredentials()
         {
-            // Generated from example definition: 2023-03-15/EndpointsPostListCredentials.json
+            // Generated from example definition: 2024-12-01/EndpointsPostListCredentials.json
             // this example is just showing the usage of "EndpointResources_ListCredentials" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIngressGatewayCredentials_HybridConnectivityEndpointsPostListIngressGatewayCredentials()
         {
-            // Generated from example definition: 2023-03-15/EndpointsPostListIngressGatewayCredentials.json
+            // Generated from example definition: 2024-12-01/EndpointsPostListIngressGatewayCredentials.json
             // this example is just showing the usage of "EndpointResources_ListIngressGatewayCredentials" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetManagedProxyDetails_HybridConnectivityEndpointsPostListManagedProxyDetails()
         {
-            // Generated from example definition: 2023-03-15/EndpointsPostListManagedProxyDetails.json
+            // Generated from example definition: 2024-12-01/EndpointsPostListManagedProxyDetails.json
             // this example is just showing the usage of "EndpointResources_ListManagedProxyDetails" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
