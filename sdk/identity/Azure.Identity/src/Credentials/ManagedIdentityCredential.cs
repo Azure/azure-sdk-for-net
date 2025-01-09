@@ -154,7 +154,7 @@ namespace Azure.Identity
             // The managed_identity_response_parse_failure error is thrown when the response from the managed identity endpoint cannot be parsed.
             // Since for non-DAC invocations of the credential, we do not participate in parsing the raw response, we rely on this error to indicate
             // that the response was not valid JSON.
-            catch (MsalServiceException e) when (e.ErrorCode == "managed_identity_response_parse_failure")
+            catch (MsalServiceException e) when (e.ErrorCode == MsalError.ManagedIdentityResponseParseFailure)
             {
                 throw scope.FailWrapAndThrow(new CredentialUnavailableException(MsiUnavailableError, e), Troubleshooting);
             }
