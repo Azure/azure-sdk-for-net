@@ -64,7 +64,7 @@ namespace Azure.DigitalTwins.Core.Tests
                     await client.GetDigitalTwinAsync<BasicDigitalTwin>(roomTwinId).ConfigureAwait(false);
                 };
 
-                await act.Should().ThrowAsync<RequestFailedException>()
+                (await act.Should().ThrowAsync<RequestFailedException>())
                     .And.Status.Should().Be((int)HttpStatusCode.NotFound);
             }
             catch (Exception ex)
@@ -101,7 +101,7 @@ namespace Azure.DigitalTwins.Core.Tests
             };
 
             // assert
-            await act.Should().ThrowAsync<RequestFailedException>()
+            (await act.Should().ThrowAsync<RequestFailedException>())
                 .And.Status.Should().Be((int)HttpStatusCode.Unauthorized);
         }
 
@@ -118,7 +118,7 @@ namespace Azure.DigitalTwins.Core.Tests
             };
 
             // assert
-            await act.Should().ThrowAsync<RequestFailedException>()
+            (await act.Should().ThrowAsync<RequestFailedException>())
                 .And.Status.Should().Be((int)HttpStatusCode.NotFound);
         }
 
@@ -190,7 +190,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 };
 
                 // assert
-                await act.Should().ThrowAsync<RequestFailedException>()
+                (await act.Should().ThrowAsync<RequestFailedException>())
                     .And.Status.Should().Be((int)HttpStatusCode.PreconditionFailed);
             }
             catch (Exception ex)
@@ -307,7 +307,7 @@ namespace Azure.DigitalTwins.Core.Tests
                     await client.UpdateDigitalTwinAsync(roomTwinId, secondUpdateTwinPatchDocument, etagBeforeUpdate).ConfigureAwait(false);
                 };
 
-                await act.Should().ThrowAsync<RequestFailedException>()
+                (await act.Should().ThrowAsync<RequestFailedException>())
                     .And.Status.Should().Be((int)HttpStatusCode.PreconditionFailed);
             }
             catch (Exception ex)
@@ -440,7 +440,7 @@ namespace Azure.DigitalTwins.Core.Tests
                     await client.DeleteDigitalTwinAsync(roomTwinId, etagBeforeUpdate).ConfigureAwait(false);
                 };
 
-                await act.Should().ThrowAsync<RequestFailedException>()
+                (await act.Should().ThrowAsync<RequestFailedException>())
                     .And.Status.Should().Be((int)HttpStatusCode.PreconditionFailed);
             }
             catch (Exception ex)

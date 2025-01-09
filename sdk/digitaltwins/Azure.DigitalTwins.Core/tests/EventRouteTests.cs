@@ -79,12 +79,12 @@ namespace Azure.DigitalTwins.Core.Tests
             Func<Task> act = async () => await client.GetEventRouteAsync(eventRouteId).ConfigureAwait(false);
 
             // assert
-            act.Should().Throw<RequestFailedException>()
+            (await act.Should().ThrowAsync<RequestFailedException>())
                 .And.Status.Should().Be((int)HttpStatusCode.NotFound);
         }
 
         [Test]
-        public void EventRoutes_EventRouteNotExist_ThrowsNotFoundException()
+        public async Task EventRoutes_EventRouteNotExist_ThrowsNotFoundException()
         {
             // arrange
             DigitalTwinsClient client = GetClient();
@@ -93,12 +93,12 @@ namespace Azure.DigitalTwins.Core.Tests
             Func<Task> act = async () => await client.GetEventRouteAsync("someNonExistantEventRoute").ConfigureAwait(false);
 
             // assert
-            act.Should().Throw<RequestFailedException>()
+            (await act.Should().ThrowAsync<RequestFailedException>())
                 .And.Status.Should().Be((int)HttpStatusCode.NotFound);
         }
 
         [Test]
-        public void EventRoutes_MalformedEventRouteFilter_ThrowsBadRequestException()
+        public async Task EventRoutes_MalformedEventRouteFilter_ThrowsBadRequestException()
         {
             // arrange
 
@@ -111,7 +111,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
             // Test CreateEventRoute
             Func<Task> act = async () => await client.CreateOrReplaceEventRouteAsync(eventRouteId, eventRoute).ConfigureAwait(false);
-            act.Should().Throw<RequestFailedException>()
+            (await act.Should().ThrowAsync<RequestFailedException>())
                 .And.Status.Should().Be((int)HttpStatusCode.BadRequest);
         }
     }

@@ -17,7 +17,7 @@ namespace Azure.IoT.ModelsRepository.Tests
 
         [TestCase(ModelsRepositoryTestBase.ClientType.Local, false)]
         [TestCase(ModelsRepositoryTestBase.ClientType.Remote, false)]
-        public void GetModelWrongDtmiCasingThrowsException(ModelsRepositoryTestBase.ClientType clientType, bool hasMetadata)
+        public async Task GetModelWrongDtmiCasingThrowsException(ModelsRepositoryTestBase.ClientType clientType, bool hasMetadata)
         {
             const string dtmi = "dtmi:com:example:thermostat;1";
 
@@ -28,45 +28,45 @@ namespace Azure.IoT.ModelsRepository.Tests
                 string.Format(StandardStrings.IncorrectDtmi, "dtmi:com:example:thermostat;1", "dtmi:com:example:Thermostat;1");
 
             Func<Task> act = async () => await client.GetModelAsync(dtmi);
-            act.Should().Throw<RequestFailedException>().WithMessage(expectedExMsg);
+            (await act.Should().ThrowAsync<RequestFailedException>()).WithMessage(expectedExMsg);
         }
 
         [TestCase("dtmi:com:example:Thermostat:1")]
         [TestCase("dtmi:com:example::Thermostat;1")]
         [TestCase("com:example:Thermostat;1")]
-        public void GetModelInvalidDtmiFormatThrowsException(string dtmi)
+        public async Task GetModelInvalidDtmiFormatThrowsException(string dtmi)
         {
             ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local);
             string expectedExMsg = $"{string.Format(StandardStrings.GenericGetModelsError, dtmi)} {string.Format(StandardStrings.InvalidDtmiFormat, dtmi)}";
 
             Func<Task> act = async () => await client.GetModelAsync(dtmi);
-            act.Should().Throw<ArgumentException>().WithMessage(expectedExMsg);
+            (await act.Should().ThrowAsync<ArgumentException>()).WithMessage(expectedExMsg);
         }
 
         [TestCase(ModelsRepositoryTestBase.ClientType.Local)]
         [TestCase(ModelsRepositoryTestBase.ClientType.Remote)]
-        public void GetModelNonExistentDtmiFileThrowsException(ModelsRepositoryTestBase.ClientType clientType)
+        public async Task GetModelNonExistentDtmiFileThrowsException(ModelsRepositoryTestBase.ClientType clientType)
         {
             const string dtmi = "dtmi:com:example:thermojax;999";
 
             ModelsRepositoryClient client = GetClient(clientType);
 
             Func<Task> act = async () => await client.GetModelAsync(dtmi);
-            act.Should().Throw<RequestFailedException>();
+            await act.Should().ThrowAsync<RequestFailedException>();
         }
 
         [Test]
-        public void GetModelInvalidFileContentFormatThrowsException()
+        public async Task GetModelInvalidFileContentFormatThrowsException()
         {
             const string dtmi = "dtmi:com:example:invalidformat;1";
 
             ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local);
             Func<Task> act = async () => await client.GetModelAsync(dtmi);
-            act.Should().Throw<JsonException>();
+            await act.Should().ThrowAsync<JsonException>();
         }
 
         [Test]
-        public void GetModelInvalidDtmiDependencyThrowsException()
+        public async Task GetModelInvalidDtmiDependencyThrowsException()
         {
             const string dtmi = "dtmi:com:example:invalidmodel;1";
             const string invalidDep = "dtmi:azure:fakeDeviceManagement:FakeDeviceInformation;2";
@@ -75,7 +75,7 @@ namespace Azure.IoT.ModelsRepository.Tests
 
             ModelsRepositoryClient client = GetClient(ModelsRepositoryTestBase.ClientType.Local);
             Func<Task> act = async () => await client.GetModelAsync(dtmi);
-            act.Should().Throw<RequestFailedException>().WithMessage(expectedExMsg);
+            (await act.Should().ThrowAsync<RequestFailedException>()).WithMessage(expectedExMsg);
         }
 
         [TestCase(ModelsRepositoryTestBase.ClientType.Local, true)]
