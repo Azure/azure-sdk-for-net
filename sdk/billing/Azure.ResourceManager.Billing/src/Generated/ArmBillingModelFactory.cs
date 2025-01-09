@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="Models.BillingRoleAssignmentProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the resource during a long-running operation. </param>
         /// <param name="createdOn"> The date the role assignment was created. </param>
-        /// <param name="createdByPrincipalTenantIdString"> The tenant Id of the user who created the role assignment. </param>
+        /// <param name="createdByPrincipalTenantId"> The tenant Id of the user who created the role assignment. </param>
         /// <param name="createdByPrincipalId"> The object ID of the user who created the role assignment. </param>
         /// <param name="createdByPrincipalPuid"> The principal PUID of the user who created the role assignment. </param>
         /// <param name="createdByUserEmailAddress"> The email address of the user who created the role assignment. This is supported only for billing accounts with agreement type Enterprise Agreement. </param>
@@ -851,12 +851,12 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="customerId"> The fully qualified ID that uniquely identifies a customer. </param>
         /// <param name="customerDisplayName"> The name of the customer. </param>
         /// <returns> A new <see cref="Models.BillingRoleAssignmentProperties"/> instance for mocking. </returns>
-        public static BillingRoleAssignmentProperties BillingRoleAssignmentProperties(BillingProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, string createdByPrincipalTenantIdString = null, string createdByPrincipalId = null, string createdByPrincipalPuid = null, string createdByUserEmailAddress = null, DateTimeOffset? modifiedOn = null, string modifiedByPrincipalPuid = null, string modifiedByUserEmailAddress = null, string modifiedByPrincipalId = null, Guid? modifiedByPrincipalTenantId = null, string principalPuid = null, string principalId = null, Guid? principalTenantId = null, ResourceIdentifier roleDefinitionId = null, string scope = null, string userAuthenticationType = null, string userEmailAddress = null, string principalTenantName = null, string principalDisplayName = null, BillingPrincipalType? principalType = null, ResourceIdentifier billingRequestId = null, ResourceIdentifier billingAccountId = null, string billingAccountDisplayName = null, ResourceIdentifier billingProfileId = null, string billingProfileDisplayName = null, ResourceIdentifier invoiceSectionId = null, string invoiceSectionDisplayName = null, ResourceIdentifier customerId = null, string customerDisplayName = null)
+        public static BillingRoleAssignmentProperties BillingRoleAssignmentProperties(BillingProvisioningState? provisioningState = null, DateTimeOffset? createdOn = null, Guid? createdByPrincipalTenantId = null, string createdByPrincipalId = null, string createdByPrincipalPuid = null, string createdByUserEmailAddress = null, DateTimeOffset? modifiedOn = null, string modifiedByPrincipalPuid = null, string modifiedByUserEmailAddress = null, string modifiedByPrincipalId = null, Guid? modifiedByPrincipalTenantId = null, string principalPuid = null, string principalId = null, Guid? principalTenantId = null, ResourceIdentifier roleDefinitionId = null, string scope = null, string userAuthenticationType = null, string userEmailAddress = null, string principalTenantName = null, string principalDisplayName = null, BillingPrincipalType? principalType = null, ResourceIdentifier billingRequestId = null, ResourceIdentifier billingAccountId = null, string billingAccountDisplayName = null, ResourceIdentifier billingProfileId = null, string billingProfileDisplayName = null, ResourceIdentifier invoiceSectionId = null, string invoiceSectionDisplayName = null, ResourceIdentifier customerId = null, string customerDisplayName = null)
         {
             return new BillingRoleAssignmentProperties(
                 provisioningState,
                 createdOn,
-                createdByPrincipalTenantIdString,
+                createdByPrincipalTenantId,
                 createdByPrincipalId,
                 createdByPrincipalPuid,
                 createdByUserEmailAddress,

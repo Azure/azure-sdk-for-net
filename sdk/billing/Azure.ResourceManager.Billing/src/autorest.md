@@ -113,7 +113,6 @@ rename-mapping:
   BillingProfileProperties.invoiceEmailOptIn: IsInvoiceEmailOptIn
   BillingRelationshipType.CSPPartner: CspPartner
   BillingRelationshipType.CSPCustomer: CspCustomer
-  BillingRoleAssignmentProperties.createdByPrincipalTenantId: CreatedByPrincipalTenantIdString
   BillingSubscription.properties.customerId: SubscriptionCustomerId
   BillingSubscription.properties.beneficiaryTenantId: SubscriptionBeneficiaryTenantId
   BillingSubscriptionAlias.properties.billingSubscriptionId: SubscriptionAliasSubscriptionId

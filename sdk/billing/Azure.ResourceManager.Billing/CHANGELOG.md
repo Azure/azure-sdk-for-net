@@ -10,7 +10,7 @@
 
 ### Bugs Fixed
 
-Convert properties of type Guid to type String in BillingRoleAssignmentProperties. Issue at https://github.com/Azure/azure-sdk-for-net/issues/47341.
+Added detection for empty string in the return value of createdByPrincipalTenantId in BillingRoleAssignmentProperties. Issue at https://github.com/Azure/azure-sdk-for-net/issues/47341.
 
 ### Other Changes
 

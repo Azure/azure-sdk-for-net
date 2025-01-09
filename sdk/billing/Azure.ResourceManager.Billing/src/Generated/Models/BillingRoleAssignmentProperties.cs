@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Billing.Models
         /// <summary> Initializes a new instance of <see cref="BillingRoleAssignmentProperties"/>. </summary>
         /// <param name="provisioningState"> The provisioning state of the resource during a long-running operation. </param>
         /// <param name="createdOn"> The date the role assignment was created. </param>
-        /// <param name="createdByPrincipalTenantIdString"> The tenant Id of the user who created the role assignment. </param>
+        /// <param name="createdByPrincipalTenantId"> The tenant Id of the user who created the role assignment. </param>
         /// <param name="createdByPrincipalId"> The object ID of the user who created the role assignment. </param>
         /// <param name="createdByPrincipalPuid"> The principal PUID of the user who created the role assignment. </param>
         /// <param name="createdByUserEmailAddress"> The email address of the user who created the role assignment. This is supported only for billing accounts with agreement type Enterprise Agreement. </param>
@@ -88,11 +88,11 @@ namespace Azure.ResourceManager.Billing.Models
         /// <param name="customerId"> The fully qualified ID that uniquely identifies a customer. </param>
         /// <param name="customerDisplayName"> The name of the customer. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BillingRoleAssignmentProperties(BillingProvisioningState? provisioningState, DateTimeOffset? createdOn, string createdByPrincipalTenantIdString, string createdByPrincipalId, string createdByPrincipalPuid, string createdByUserEmailAddress, DateTimeOffset? modifiedOn, string modifiedByPrincipalPuid, string modifiedByUserEmailAddress, string modifiedByPrincipalId, Guid? modifiedByPrincipalTenantId, string principalPuid, string principalId, Guid? principalTenantId, ResourceIdentifier roleDefinitionId, string scope, string userAuthenticationType, string userEmailAddress, string principalTenantName, string principalDisplayName, BillingPrincipalType? principalType, ResourceIdentifier billingRequestId, ResourceIdentifier billingAccountId, string billingAccountDisplayName, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, ResourceIdentifier customerId, string customerDisplayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BillingRoleAssignmentProperties(BillingProvisioningState? provisioningState, DateTimeOffset? createdOn, Guid? createdByPrincipalTenantId, string createdByPrincipalId, string createdByPrincipalPuid, string createdByUserEmailAddress, DateTimeOffset? modifiedOn, string modifiedByPrincipalPuid, string modifiedByUserEmailAddress, string modifiedByPrincipalId, Guid? modifiedByPrincipalTenantId, string principalPuid, string principalId, Guid? principalTenantId, ResourceIdentifier roleDefinitionId, string scope, string userAuthenticationType, string userEmailAddress, string principalTenantName, string principalDisplayName, BillingPrincipalType? principalType, ResourceIdentifier billingRequestId, ResourceIdentifier billingAccountId, string billingAccountDisplayName, ResourceIdentifier billingProfileId, string billingProfileDisplayName, ResourceIdentifier invoiceSectionId, string invoiceSectionDisplayName, ResourceIdentifier customerId, string customerDisplayName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
-            CreatedByPrincipalTenantIdString = createdByPrincipalTenantIdString;
+            CreatedByPrincipalTenantId = createdByPrincipalTenantId;
             CreatedByPrincipalId = createdByPrincipalId;
             CreatedByPrincipalPuid = createdByPrincipalPuid;
             CreatedByUserEmailAddress = createdByUserEmailAddress;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Billing.Models
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> The tenant Id of the user who created the role assignment. </summary>
         [WirePath("createdByPrincipalTenantId")]
-        public string CreatedByPrincipalTenantIdString { get; }
+        public Guid? CreatedByPrincipalTenantId { get; }
         /// <summary> The object ID of the user who created the role assignment. </summary>
         [WirePath("createdByPrincipalId")]
         public string CreatedByPrincipalId { get; }
