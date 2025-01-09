@@ -82,22 +82,22 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobDestinationCheckpointData data = CreatePreserveValues();
 
             Assert.AreEqual(DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion, data.Version);
-            Assert.AreEqual(true, data.PreserveBlobType);
+            Assert.AreEqual(true, data.IsBlobTypeSet);
             Assert.IsNull(data.BlobType);
-            Assert.AreEqual(true, data.PreserveContentType);
+            Assert.AreEqual(true, data.IsContentTypeSet);
             Assert.IsEmpty(data.ContentTypeBytes);
-            Assert.AreEqual(true, data.PreserveContentEncoding);
+            Assert.AreEqual(true, data.IsContentEncodingSet);
             Assert.IsEmpty(data.ContentEncodingBytes);
-            Assert.AreEqual(true, data.PreserveContentLanguage);
+            Assert.AreEqual(true, data.IsContentLanguageSet);
             Assert.IsEmpty(data.ContentLanguageBytes);
-            Assert.AreEqual(true, data.PreserveContentDisposition);
+            Assert.AreEqual(true, data.IsContentDispositionSet);
             Assert.IsEmpty(data.ContentDispositionBytes);
-            Assert.AreEqual(true, data.PreserveCacheControl);
+            Assert.AreEqual(true, data.IsCacheControlSet);
             Assert.IsEmpty(data.CacheControlBytes);
             Assert.IsNull(data.AccessTierValue);
-            Assert.AreEqual(true, data.PreserveMetadata);
+            Assert.AreEqual(true, data.IsMetadataSet);
             Assert.IsNull(data.Metadata);
-            Assert.AreEqual(false, data.PreserveTags);
+            Assert.AreEqual(false, data.IsTagsSet);
             Assert.IsNull(data.Tags);
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             BlobDestinationCheckpointData data = CreateSetSampleValues();
             data.Tags = default;
-            data.PreserveTags = true;
+            data.IsTagsSet = true;
             data.TagsBytes = default;
 
             string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.2.bin");
@@ -212,22 +212,22 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         private void VerifySampleValues(BlobDestinationCheckpointData data, int version)
         {
             Assert.AreEqual(version, data.Version);
-            Assert.IsFalse(data.PreserveBlobType);
+            Assert.IsFalse(data.IsBlobTypeSet);
             Assert.AreEqual(DefaultBlobType, data.BlobTypeValue);
-            Assert.AreEqual(false, data.PreserveContentType);
+            Assert.AreEqual(false, data.IsContentTypeSet);
             Assert.AreEqual(StringToByteArray(DefaultContentType), data.ContentTypeBytes);
-            Assert.AreEqual(false, data.PreserveContentEncoding);
+            Assert.AreEqual(false, data.IsContentEncodingSet);
             Assert.AreEqual(StringToByteArray(DefaultContentEncoding), data.ContentEncodingBytes);
-            Assert.AreEqual(false, data.PreserveContentLanguage);
+            Assert.AreEqual(false, data.IsContentLanguageSet);
             Assert.AreEqual(StringToByteArray(DefaultContentLanguage), data.ContentLanguageBytes);
-            Assert.AreEqual(false, data.PreserveContentDisposition);
+            Assert.AreEqual(false, data.IsContentDispositionSet);
             Assert.AreEqual(StringToByteArray(DefaultContentDisposition), data.ContentDispositionBytes);
-            Assert.AreEqual(false, data.PreserveCacheControl);
+            Assert.AreEqual(false, data.IsCacheControlSet);
             Assert.AreEqual(StringToByteArray(DefaultCacheControl), data.CacheControlBytes);
             Assert.AreEqual(DefaultAccessTier, data.AccessTierValue);
-            Assert.AreEqual(false, data.PreserveMetadata);
+            Assert.AreEqual(false, data.IsMetadataSet);
             CollectionAssert.AreEquivalent(DefaultMetadata.Value, data.Metadata.Value);
-            Assert.AreEqual(false, data.PreserveTags);
+            Assert.AreEqual(false, data.IsTagsSet);
             CollectionAssert.AreEquivalent(DefaultTags.Value, data.Tags.Value);
         }
 

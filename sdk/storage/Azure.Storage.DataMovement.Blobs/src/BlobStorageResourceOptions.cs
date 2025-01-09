@@ -12,6 +12,24 @@ namespace Azure.Storage.DataMovement.Blobs
     /// </summary>
     public class BlobStorageResourceOptions
     {
+        private Metadata _metadata = default;
+        internal bool _isMetadataSet = false;
+
+        private string _cacheControl = default;
+        internal bool _isCacheControlSet = false;
+
+        private string _contentDisposition = default;
+        internal bool _isContentDispositionSet = false;
+
+        private string _contentEncoding = default;
+        internal bool _isContentEncodingSet = false;
+
+        private string _contentLanguage = default;
+        internal bool _isContentLanguageSet = false;
+
+        private string _contentType = default;
+        internal bool _isContentTypeSet = false;
+
         /// <summary>
         /// Default constructor.
         /// </summary>
@@ -29,7 +47,6 @@ namespace Azure.Storage.DataMovement.Blobs
             ContentType = other?.ContentType;
             AccessTier = other?.AccessTier;
         }
-
         /// <summary>
         /// Optional. For transferring metadata from the source to the destination storage resource.
         ///
@@ -37,7 +54,15 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
-        public DataTransferProperty<Metadata> Metadata { get; set; }
+        public Metadata Metadata
+        {
+            get => _metadata;
+            set
+            {
+                _metadata = value;
+                _isMetadataSet = true;
+            }
+        }
 
         /// <summary>
         /// Optional. Sets the Cache Control header which
@@ -47,7 +72,15 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
-        public DataTransferProperty<string> CacheControl { get; set; }
+        public string CacheControl
+        {
+            get => _cacheControl;
+            set
+            {
+                _cacheControl = value;
+                _isCacheControlSet = true;
+            }
+        }
 
         /// <summary>
         /// Optional. Sets the Content Disposition header which
@@ -61,7 +94,15 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
-        public DataTransferProperty<string> ContentDisposition { get; set; }
+        public string ContentDisposition
+        {
+            get => _contentDisposition;
+            set
+            {
+                _contentDisposition = value;
+                _isContentDispositionSet = true;
+            }
+        }
 
         /// <summary>
         /// Optional. Sets the Content Encoding header which
@@ -74,7 +115,15 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
-        public DataTransferProperty<string> ContentEncoding { get; set; }
+        public string ContentEncoding
+        {
+            get => _contentEncoding;
+            set
+            {
+                _contentEncoding = value;
+                _isContentEncodingSet = true;
+            }
+        }
 
         /// <summary>
         /// Optional. Sets the Content Language header which
@@ -84,7 +133,15 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
-        public DataTransferProperty<string> ContentLanguage { get; set; }
+        public string ContentLanguage
+        {
+            get => _contentLanguage;
+            set
+            {
+                _contentLanguage = value;
+                _isContentLanguageSet = true;
+            }
+        }
 
         /// <summary>
         /// Optional. Sets the Content Type header which
@@ -94,7 +151,15 @@ namespace Azure.Storage.DataMovement.Blobs
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
-        public DataTransferProperty<string> ContentType { get; set; }
+        public string ContentType
+        {
+            get => _contentType;
+            set
+            {
+                _contentType = value;
+                _isContentTypeSet = true;
+            }
+        }
 
         /// <summary>
         /// Optional. See <see cref="Storage.Blobs.Models.AccessTier"/>.
