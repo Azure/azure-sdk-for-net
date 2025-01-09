@@ -29,11 +29,11 @@ namespace Azure.Generator.Tests.Providers
             var client = InputFactory.Client(TestClientName, operations: [operation]);
             var plugin = MockHelpers.LoadMockPlugin(inputModels: () => [responseModel], clients: () => [client]);
 
-            var typeProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p.Name == $"{StringHelpers.ToCleanName(resourceModelName)}Data") as ModelProvider;
-            Assert.NotNull(typeProvider);
-            Assert.IsTrue(typeProvider is ResourceDataProvider);
+            var resourceDataProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p.Name == $"{StringHelpers.ToCleanName(resourceModelName)}Data") as ModelProvider;
+            Assert.NotNull(resourceDataProvider);
+            Assert.IsTrue(resourceDataProvider is ResourceDataProvider);
 
-            var serializationProvider = typeProvider?.SerializationProviders.FirstOrDefault();
+            var serializationProvider = resourceDataProvider?.SerializationProviders.FirstOrDefault();
             Assert.NotNull(serializationProvider);
             Assert.IsTrue(serializationProvider is ResourceDataSerializationProvider);
         }
