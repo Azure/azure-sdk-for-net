@@ -10,6 +10,7 @@
     <PackageReference Include="Microsoft.Azure.Management.ResourceManager" />
     <PackageReference Include="Microsoft.Azure.Management.EventGrid" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" VersionOverride="2.3.24" />
     <PackageReference Include="System.Net.WebSockets.Client" />
     <PackageReference Include="System.ValueTuple" />
     <PackageReference Include="NUnit" />
