@@ -1,0 +1,5153 @@
+{
+ "$id": "1",
+ "Name": "HealthDataAIServices.DeidServices",
+ "ApiVersions": [
+  "2024-11-15"
+ ],
+ "Enums": [
+  {
+   "$id": "2",
+   "kind": "enum",
+   "name": "DeidentificationOperationType",
+   "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationOperationType",
+   "valueType": {
+    "$id": "3",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "4",
+     "kind": "enumvalue",
+     "name": "Redact",
+     "value": "Redact",
+     "valueType": {
+      "$id": "5",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "doc": "Redact Operation will remove all entities of PHI and replace them with a placeholder value.",
+     "decorators": []
+    },
+    {
+     "$id": "6",
+     "kind": "enumvalue",
+     "name": "Surrogate",
+     "value": "Surrogate",
+     "valueType": {
+      "$id": "7",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "doc": "Surrogation Operation will replace all entities of PHI with a surrogate value.",
+     "decorators": []
+    },
+    {
+     "$id": "8",
+     "kind": "enumvalue",
+     "name": "Tag",
+     "value": "Tag",
+     "valueType": {
+      "$id": "9",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "2"
+     },
+     "doc": "Tag Operation will detect all entities of PHI, their type, and return their locations in the document.",
+     "decorators": []
+    }
+   ],
+   "doc": "Enum of supported Operation Types.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Input,Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+   "decorators": []
+  },
+  {
+   "$id": "10",
+   "kind": "enum",
+   "name": "OperationState",
+   "crossLanguageDefinitionId": "Azure.Core.Foundations.OperationState",
+   "valueType": {
+    "$id": "11",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "12",
+     "kind": "enumvalue",
+     "name": "NotStarted",
+     "value": "NotStarted",
+     "valueType": {
+      "$id": "13",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "10"
+     },
+     "doc": "The operation has not started.",
+     "decorators": []
+    },
+    {
+     "$id": "14",
+     "kind": "enumvalue",
+     "name": "Running",
+     "value": "Running",
+     "valueType": {
+      "$id": "15",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "10"
+     },
+     "doc": "The operation is in progress.",
+     "decorators": []
+    },
+    {
+     "$id": "16",
+     "kind": "enumvalue",
+     "name": "Succeeded",
+     "value": "Succeeded",
+     "valueType": {
+      "$id": "17",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "10"
+     },
+     "doc": "The operation has completed successfully.",
+     "decorators": []
+    },
+    {
+     "$id": "18",
+     "kind": "enumvalue",
+     "name": "Failed",
+     "value": "Failed",
+     "valueType": {
+      "$id": "19",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "10"
+     },
+     "doc": "The operation has failed.",
+     "decorators": []
+    },
+    {
+     "$id": "20",
+     "kind": "enumvalue",
+     "name": "Canceled",
+     "value": "Canceled",
+     "valueType": {
+      "$id": "21",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "10"
+     },
+     "doc": "The operation has been canceled by the user.",
+     "decorators": []
+    }
+   ],
+   "doc": "Enum describing allowed operation states.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+   "decorators": []
+  },
+  {
+   "$id": "22",
+   "kind": "enum",
+   "name": "PhiCategory",
+   "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.PhiCategory",
+   "valueType": {
+    "$id": "23",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "24",
+     "kind": "enumvalue",
+     "name": "Unknown",
+     "value": "Unknown",
+     "valueType": {
+      "$id": "25",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Unknown PHI Type.",
+     "decorators": []
+    },
+    {
+     "$id": "26",
+     "kind": "enumvalue",
+     "name": "Account",
+     "value": "Account",
+     "valueType": {
+      "$id": "27",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Account Number.",
+     "decorators": []
+    },
+    {
+     "$id": "28",
+     "kind": "enumvalue",
+     "name": "Age",
+     "value": "Age",
+     "valueType": {
+      "$id": "29",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Age.",
+     "decorators": []
+    },
+    {
+     "$id": "30",
+     "kind": "enumvalue",
+     "name": "BioID",
+     "value": "BioID",
+     "valueType": {
+      "$id": "31",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Biological Identifier, such as a fingerprint or retinal scan.",
+     "decorators": []
+    },
+    {
+     "$id": "32",
+     "kind": "enumvalue",
+     "name": "City",
+     "value": "City",
+     "valueType": {
+      "$id": "33",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "City.",
+     "decorators": []
+    },
+    {
+     "$id": "34",
+     "kind": "enumvalue",
+     "name": "CountryOrRegion",
+     "value": "CountryOrRegion",
+     "valueType": {
+      "$id": "35",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Country or Region.",
+     "decorators": []
+    },
+    {
+     "$id": "36",
+     "kind": "enumvalue",
+     "name": "Date",
+     "value": "Date",
+     "valueType": {
+      "$id": "37",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Date.",
+     "decorators": []
+    },
+    {
+     "$id": "38",
+     "kind": "enumvalue",
+     "name": "Device",
+     "value": "Device",
+     "valueType": {
+      "$id": "39",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Device ID or serial numbers.",
+     "decorators": []
+    },
+    {
+     "$id": "40",
+     "kind": "enumvalue",
+     "name": "Doctor",
+     "value": "Doctor",
+     "valueType": {
+      "$id": "41",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Doctor's Name.",
+     "decorators": []
+    },
+    {
+     "$id": "42",
+     "kind": "enumvalue",
+     "name": "Email",
+     "value": "Email",
+     "valueType": {
+      "$id": "43",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Email Addresses.",
+     "decorators": []
+    },
+    {
+     "$id": "44",
+     "kind": "enumvalue",
+     "name": "Fax",
+     "value": "Fax",
+     "valueType": {
+      "$id": "45",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Fax Number.",
+     "decorators": []
+    },
+    {
+     "$id": "46",
+     "kind": "enumvalue",
+     "name": "HealthPlan",
+     "value": "HealthPlan",
+     "valueType": {
+      "$id": "47",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Health Plan ID Numbers.",
+     "decorators": []
+    },
+    {
+     "$id": "48",
+     "kind": "enumvalue",
+     "name": "Hospital",
+     "value": "Hospital",
+     "valueType": {
+      "$id": "49",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Hospital Name.",
+     "decorators": []
+    },
+    {
+     "$id": "50",
+     "kind": "enumvalue",
+     "name": "IDNum",
+     "value": "IDNum",
+     "valueType": {
+      "$id": "51",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Id Number, eg. passport number.",
+     "decorators": []
+    },
+    {
+     "$id": "52",
+     "kind": "enumvalue",
+     "name": "IPAddress",
+     "value": "IPAddress",
+     "valueType": {
+      "$id": "53",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "IP Address.",
+     "decorators": []
+    },
+    {
+     "$id": "54",
+     "kind": "enumvalue",
+     "name": "License",
+     "value": "License",
+     "valueType": {
+      "$id": "55",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "License, eg. Driver's license or medical license.",
+     "decorators": []
+    },
+    {
+     "$id": "56",
+     "kind": "enumvalue",
+     "name": "LocationOther",
+     "value": "LocationOther",
+     "valueType": {
+      "$id": "57",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Location Other, eg. Golden Gate Park.",
+     "decorators": []
+    },
+    {
+     "$id": "58",
+     "kind": "enumvalue",
+     "name": "MedicalRecord",
+     "value": "MedicalRecord",
+     "valueType": {
+      "$id": "59",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Medical Record Number.",
+     "decorators": []
+    },
+    {
+     "$id": "60",
+     "kind": "enumvalue",
+     "name": "Organization",
+     "value": "Organization",
+     "valueType": {
+      "$id": "61",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Organization, eg. Microsoft.",
+     "decorators": []
+    },
+    {
+     "$id": "62",
+     "kind": "enumvalue",
+     "name": "Patient",
+     "value": "Patient",
+     "valueType": {
+      "$id": "63",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Patient Name.",
+     "decorators": []
+    },
+    {
+     "$id": "64",
+     "kind": "enumvalue",
+     "name": "Phone",
+     "value": "Phone",
+     "valueType": {
+      "$id": "65",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Phone Number.",
+     "decorators": []
+    },
+    {
+     "$id": "66",
+     "kind": "enumvalue",
+     "name": "Profession",
+     "value": "Profession",
+     "valueType": {
+      "$id": "67",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Profession.",
+     "decorators": []
+    },
+    {
+     "$id": "68",
+     "kind": "enumvalue",
+     "name": "SocialSecurity",
+     "value": "SocialSecurity",
+     "valueType": {
+      "$id": "69",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Social Security Number.",
+     "decorators": []
+    },
+    {
+     "$id": "70",
+     "kind": "enumvalue",
+     "name": "State",
+     "value": "State",
+     "valueType": {
+      "$id": "71",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "State.",
+     "decorators": []
+    },
+    {
+     "$id": "72",
+     "kind": "enumvalue",
+     "name": "Street",
+     "value": "Street",
+     "valueType": {
+      "$id": "73",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Street.",
+     "decorators": []
+    },
+    {
+     "$id": "74",
+     "kind": "enumvalue",
+     "name": "Url",
+     "value": "Url",
+     "valueType": {
+      "$id": "75",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Web URL.",
+     "decorators": []
+    },
+    {
+     "$id": "76",
+     "kind": "enumvalue",
+     "name": "Username",
+     "value": "Username",
+     "valueType": {
+      "$id": "77",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Usernames, eg. a social media handle.",
+     "decorators": []
+    },
+    {
+     "$id": "78",
+     "kind": "enumvalue",
+     "name": "Vehicle",
+     "value": "Vehicle",
+     "valueType": {
+      "$id": "79",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Vehicle IDs, eg. license plate or VIN number.",
+     "decorators": []
+    },
+    {
+     "$id": "80",
+     "kind": "enumvalue",
+     "name": "Zip",
+     "value": "Zip",
+     "valueType": {
+      "$id": "81",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "22"
+     },
+     "doc": "Zip Code.",
+     "decorators": []
+    }
+   ],
+   "doc": "List of PHI Entities.",
+   "isFixed": false,
+   "isFlags": false,
+   "usage": "Output,Json",
+   "decorators": []
+  },
+  {
+   "$id": "82",
+   "kind": "enum",
+   "name": "Versions",
+   "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.Versions",
+   "valueType": {
+    "$id": "83",
+    "kind": "string",
+    "name": "string",
+    "crossLanguageDefinitionId": "TypeSpec.string",
+    "decorators": []
+   },
+   "values": [
+    {
+     "$id": "84",
+     "kind": "enumvalue",
+     "name": "v2024_11_15",
+     "value": "2024-11-15",
+     "valueType": {
+      "$id": "85",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "enumType": {
+      "$ref": "82"
+     },
+     "decorators": []
+    }
+   ],
+   "doc": "Azure Health Data Services de-identification service versions.",
+   "isFixed": true,
+   "isFlags": false,
+   "usage": "ApiVersionEnum",
+   "decorators": []
+  }
+ ],
+ "Models": [
+  {
+   "$id": "86",
+   "kind": "model",
+   "name": "DeidentificationJob",
+   "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJob",
+   "usage": "Input,Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+   "doc": "A job containing a batch of documents to de-identify.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "87",
+     "kind": "property",
+     "name": "name",
+     "serializedName": "name",
+     "doc": "The name of a job.",
+     "type": {
+      "$id": "88",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJob.name"
+    },
+    {
+     "$id": "89",
+     "kind": "property",
+     "name": "operation",
+     "serializedName": "operation",
+     "doc": "Operation to perform on the input documents.",
+     "type": {
+      "$ref": "2"
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJob.operation"
+    },
+    {
+     "$id": "90",
+     "kind": "property",
+     "name": "sourceLocation",
+     "serializedName": "sourceLocation",
+     "doc": "Storage location to perform the operation on.",
+     "type": {
+      "$id": "91",
+      "kind": "model",
+      "name": "SourceStorageLocation",
+      "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.SourceStorageLocation",
+      "usage": "Input,Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+      "doc": "Storage location.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "92",
+        "kind": "property",
+        "name": "location",
+        "serializedName": "location",
+        "doc": "URL to storage location.",
+        "type": {
+         "$id": "93",
+         "kind": "url",
+         "name": "url",
+         "crossLanguageDefinitionId": "TypeSpec.url",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.SourceStorageLocation.location"
+       },
+       {
+        "$id": "94",
+        "kind": "property",
+        "name": "prefix",
+        "serializedName": "prefix",
+        "doc": "Prefix to filter path by.",
+        "type": {
+         "$id": "95",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.SourceStorageLocation.prefix"
+       },
+       {
+        "$id": "96",
+        "kind": "property",
+        "name": "extensions",
+        "serializedName": "extensions",
+        "doc": "List of extensions to filter path by.",
+        "type": {
+         "$id": "97",
+         "kind": "array",
+         "name": "Array",
+         "valueType": {
+          "$id": "98",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "crossLanguageDefinitionId": "TypeSpec.Array",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.SourceStorageLocation.extensions"
+       }
+      ]
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJob.sourceLocation"
+    },
+    {
+     "$id": "99",
+     "kind": "property",
+     "name": "targetLocation",
+     "serializedName": "targetLocation",
+     "doc": "Target location to store output of operation.",
+     "type": {
+      "$id": "100",
+      "kind": "model",
+      "name": "TargetStorageLocation",
+      "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.TargetStorageLocation",
+      "usage": "Input,Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+      "doc": "Storage location.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "101",
+        "kind": "property",
+        "name": "location",
+        "serializedName": "location",
+        "doc": "URL to storage location.",
+        "type": {
+         "$id": "102",
+         "kind": "url",
+         "name": "url",
+         "crossLanguageDefinitionId": "TypeSpec.url",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.TargetStorageLocation.location"
+       },
+       {
+        "$id": "103",
+        "kind": "property",
+        "name": "prefix",
+        "serializedName": "prefix",
+        "doc": "Replaces the input prefix of a file path with the output prefix, preserving the rest of the path structure.\n\nExample:\nFile full path: documents/user/note.txt\nInput Prefix: \"documents/user/\"\nOutput Prefix: \"output_docs/\"\n\nOutput file: \"output_docs/note.txt\"",
+        "type": {
+         "$id": "104",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.TargetStorageLocation.prefix"
+       },
+       {
+        "$id": "105",
+        "kind": "property",
+        "name": "overwrite",
+        "serializedName": "overwrite",
+        "doc": "When set to true during a job, the service will overwrite the output location if it already exists.",
+        "type": {
+         "$id": "106",
+         "kind": "boolean",
+         "name": "boolean",
+         "crossLanguageDefinitionId": "TypeSpec.boolean",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.TargetStorageLocation.overwrite"
+       }
+      ]
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJob.targetLocation"
+    },
+    {
+     "$id": "107",
+     "kind": "property",
+     "name": "customizations",
+     "serializedName": "customizations",
+     "doc": "Customization parameters to override default service behaviors.",
+     "type": {
+      "$id": "108",
+      "kind": "model",
+      "name": "DeidentificationJobCustomizationOptions",
+      "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJobCustomizationOptions",
+      "usage": "Input,Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+      "doc": "Customizations options to override default service behaviors for job usage.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "109",
+        "kind": "property",
+        "name": "redactionFormat",
+        "serializedName": "redactionFormat",
+        "doc": "Format of the redacted output. Only valid when Operation is Redact. \nPlease refer to https://learn.microsoft.com/en-us/azure/healthcare-apis/deidentification/redaction-format for more details.",
+        "type": {
+         "$id": "110",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJobCustomizationOptions.redactionFormat"
+       },
+       {
+        "$id": "111",
+        "kind": "property",
+        "name": "surrogateLocale",
+        "serializedName": "surrogateLocale",
+        "doc": "Locale in which the output surrogates are written.",
+        "type": {
+         "$id": "112",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJobCustomizationOptions.surrogateLocale"
+       }
+      ]
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJob.customizations"
+    },
+    {
+     "$id": "113",
+     "kind": "property",
+     "name": "status",
+     "serializedName": "status",
+     "doc": "Current status of a job.",
+     "type": {
+      "$ref": "10"
+     },
+     "optional": false,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJob.status"
+    },
+    {
+     "$id": "114",
+     "kind": "property",
+     "name": "error",
+     "serializedName": "error",
+     "doc": "Error when job fails in it's entirety.",
+     "type": {
+      "$id": "115",
+      "kind": "model",
+      "name": "Error",
+      "crossLanguageDefinitionId": "Azure.Core.Foundations.Error",
+      "usage": "Output,Json,Exception,LroInitial,LroPolling,LroFinalEnvelope",
+      "doc": "The error object.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "116",
+        "kind": "property",
+        "name": "code",
+        "serializedName": "code",
+        "doc": "One of a server-defined set of error codes.",
+        "type": {
+         "$id": "117",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.code"
+       },
+       {
+        "$id": "118",
+        "kind": "property",
+        "name": "message",
+        "serializedName": "message",
+        "doc": "A human-readable representation of the error.",
+        "type": {
+         "$id": "119",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.message"
+       },
+       {
+        "$id": "120",
+        "kind": "property",
+        "name": "target",
+        "serializedName": "target",
+        "doc": "The target of the error.",
+        "type": {
+         "$id": "121",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.target"
+       },
+       {
+        "$id": "122",
+        "kind": "property",
+        "name": "details",
+        "serializedName": "details",
+        "doc": "An array of details about specific errors that led to this reported error.",
+        "type": {
+         "$id": "123",
+         "kind": "array",
+         "name": "ArrayError",
+         "valueType": {
+          "$ref": "115"
+         },
+         "crossLanguageDefinitionId": "TypeSpec.Array",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.details"
+       },
+       {
+        "$id": "124",
+        "kind": "property",
+        "name": "innererror",
+        "serializedName": "innererror",
+        "doc": "An object containing more specific information than the current object about the error.",
+        "type": {
+         "$id": "125",
+         "kind": "model",
+         "name": "InnerError",
+         "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
+         "usage": "Output,Json,Exception,LroInitial,LroPolling,LroFinalEnvelope",
+         "doc": "An object containing more specific information about the error. As per Microsoft One API guidelines - https://github.com/Microsoft/api-guidelines/blob/vNext/Guidelines.md#7102-error-condition-responses.",
+         "decorators": [],
+         "properties": [
+          {
+           "$id": "126",
+           "kind": "property",
+           "name": "code",
+           "serializedName": "code",
+           "doc": "One of a server-defined set of error codes.",
+           "type": {
+            "$id": "127",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+           },
+           "optional": true,
+           "readOnly": false,
+           "discriminator": false,
+           "flatten": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError.code"
+          },
+          {
+           "$id": "128",
+           "kind": "property",
+           "name": "innererror",
+           "serializedName": "innererror",
+           "doc": "Inner error.",
+           "type": {
+            "$ref": "125"
+           },
+           "optional": true,
+           "readOnly": false,
+           "discriminator": false,
+           "flatten": false,
+           "decorators": [],
+           "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError.innererror"
+          }
+         ]
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "Azure.Core.Foundations.Error.innererror"
+       }
+      ]
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJob.error"
+    },
+    {
+     "$id": "129",
+     "kind": "property",
+     "name": "lastUpdatedAt",
+     "serializedName": "lastUpdatedAt",
+     "doc": "Date and time when the job was completed.\n\nIf the job is canceled, this is the time when the job was canceled.\n\nIf the job failed, this is the time when the job failed.",
+     "type": {
+      "$id": "130",
+      "kind": "utcDateTime",
+      "name": "utcDateTime",
+      "encode": "rfc3339",
+      "wireType": {
+       "$id": "131",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJob.lastUpdatedAt"
+    },
+    {
+     "$id": "132",
+     "kind": "property",
+     "name": "createdAt",
+     "serializedName": "createdAt",
+     "doc": "Date and time when the job was created.",
+     "type": {
+      "$id": "133",
+      "kind": "utcDateTime",
+      "name": "utcDateTime",
+      "encode": "rfc3339",
+      "wireType": {
+       "$id": "134",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJob.createdAt"
+    },
+    {
+     "$id": "135",
+     "kind": "property",
+     "name": "startedAt",
+     "serializedName": "startedAt",
+     "doc": "Date and time when the job was started.",
+     "type": {
+      "$id": "136",
+      "kind": "utcDateTime",
+      "name": "utcDateTime",
+      "encode": "rfc3339",
+      "wireType": {
+       "$id": "137",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string",
+       "decorators": []
+      },
+      "crossLanguageDefinitionId": "TypeSpec.utcDateTime",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJob.startedAt"
+    },
+    {
+     "$id": "138",
+     "kind": "property",
+     "name": "summary",
+     "serializedName": "summary",
+     "doc": "Summary of a job. Exists only when the job is completed.",
+     "type": {
+      "$id": "139",
+      "kind": "model",
+      "name": "DeidentificationJobSummary",
+      "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJobSummary",
+      "usage": "Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
+      "doc": "Summary metrics of a job.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "140",
+        "kind": "property",
+        "name": "successful",
+        "serializedName": "successful",
+        "doc": "Number of documents that have completed.",
+        "type": {
+         "$id": "141",
+         "kind": "int32",
+         "name": "int32",
+         "crossLanguageDefinitionId": "TypeSpec.int32",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJobSummary.successful"
+       },
+       {
+        "$id": "142",
+        "kind": "property",
+        "name": "failed",
+        "serializedName": "failed",
+        "doc": "Number of documents that have failed.",
+        "type": {
+         "$id": "143",
+         "kind": "int32",
+         "name": "int32",
+         "crossLanguageDefinitionId": "TypeSpec.int32",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJobSummary.failed"
+       },
+       {
+        "$id": "144",
+        "kind": "property",
+        "name": "canceled",
+        "serializedName": "canceled",
+        "doc": "Number of documents that have been canceled.",
+        "type": {
+         "$id": "145",
+         "kind": "int32",
+         "name": "int32",
+         "crossLanguageDefinitionId": "TypeSpec.int32",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJobSummary.canceled"
+       },
+       {
+        "$id": "146",
+        "kind": "property",
+        "name": "total",
+        "serializedName": "total",
+        "doc": "Number of documents total.",
+        "type": {
+         "$id": "147",
+         "kind": "int32",
+         "name": "int32",
+         "crossLanguageDefinitionId": "TypeSpec.int32",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJobSummary.total"
+       },
+       {
+        "$id": "148",
+        "kind": "property",
+        "name": "bytesProcessed",
+        "serializedName": "bytesProcessed",
+        "doc": "Number of bytes processed.",
+        "type": {
+         "$id": "149",
+         "kind": "int64",
+         "name": "int64",
+         "crossLanguageDefinitionId": "TypeSpec.int64",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJobSummary.bytesProcessed"
+       }
+      ]
+     },
+     "optional": true,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationJob.summary"
+    }
+   ]
+  },
+  {
+   "$ref": "91"
+  },
+  {
+   "$ref": "100"
+  },
+  {
+   "$ref": "108"
+  },
+  {
+   "$ref": "115"
+  },
+  {
+   "$ref": "125"
+  },
+  {
+   "$ref": "139"
+  },
+  {
+   "$id": "150",
+   "kind": "model",
+   "name": "DeidentificationDocumentDetails",
+   "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationDocumentDetails",
+   "access": "public",
+   "usage": "Output,Json",
+   "doc": "Details of a single document in a job.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "151",
+     "kind": "property",
+     "name": "id",
+     "serializedName": "id",
+     "doc": "Id of the document details.",
+     "type": {
+      "$id": "152",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": true,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationDocumentDetails.id"
+    },
+    {
+     "$id": "153",
+     "kind": "property",
+     "name": "input",
+     "serializedName": "input",
+     "doc": "Location for the input.",
+     "type": {
+      "$id": "154",
+      "kind": "model",
+      "name": "DeidentificationDocumentLocation",
+      "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationDocumentLocation",
+      "usage": "Output,Json",
+      "doc": "Location of a document.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "155",
+        "kind": "property",
+        "name": "location",
+        "serializedName": "location",
+        "doc": "Location of document in storage.",
+        "type": {
+         "$id": "156",
+         "kind": "url",
+         "name": "url",
+         "crossLanguageDefinitionId": "TypeSpec.url",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationDocumentLocation.location"
+       },
+       {
+        "$id": "157",
+        "kind": "property",
+        "name": "etag",
+        "serializedName": "etag",
+        "doc": "The entity tag for this resource.",
+        "type": {
+         "$id": "158",
+         "kind": "string",
+         "name": "eTag",
+         "crossLanguageDefinitionId": "Azure.Core.eTag",
+         "baseType": {
+          "$id": "159",
+          "kind": "string",
+          "name": "string",
+          "crossLanguageDefinitionId": "TypeSpec.string",
+          "decorators": []
+         },
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": true,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationDocumentLocation.etag"
+       }
+      ]
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationDocumentDetails.input"
+    },
+    {
+     "$id": "160",
+     "kind": "property",
+     "name": "output",
+     "serializedName": "output",
+     "doc": "Location for the output.",
+     "type": {
+      "$ref": "154"
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationDocumentDetails.output"
+    },
+    {
+     "$id": "161",
+     "kind": "property",
+     "name": "status",
+     "serializedName": "status",
+     "doc": "Status of the document.",
+     "type": {
+      "$ref": "10"
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationDocumentDetails.status"
+    },
+    {
+     "$id": "162",
+     "kind": "property",
+     "name": "error",
+     "serializedName": "error",
+     "doc": "Error when document fails.",
+     "type": {
+      "$ref": "115"
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationDocumentDetails.error"
+    }
+   ]
+  },
+  {
+   "$ref": "154"
+  },
+  {
+   "$id": "163",
+   "kind": "model",
+   "name": "DeidentificationContent",
+   "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationContent",
+   "usage": "Input,Json",
+   "doc": "Request body for de-identification operation.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "164",
+     "kind": "property",
+     "name": "inputText",
+     "serializedName": "inputText",
+     "doc": "Input text to de-identify.",
+     "type": {
+      "$id": "165",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationContent.inputText"
+    },
+    {
+     "$id": "166",
+     "kind": "property",
+     "name": "operation",
+     "serializedName": "operation",
+     "doc": "Operation to perform on the input documents.",
+     "type": {
+      "$ref": "2"
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationContent.operation"
+    },
+    {
+     "$id": "167",
+     "kind": "property",
+     "name": "customizations",
+     "serializedName": "customizations",
+     "doc": "Customization parameters to override default service behaviors.",
+     "type": {
+      "$id": "168",
+      "kind": "model",
+      "name": "DeidentificationCustomizationOptions",
+      "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationCustomizationOptions",
+      "usage": "Input,Json",
+      "doc": "Customizations options to override default service behaviors for synchronous usage.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "169",
+        "kind": "property",
+        "name": "redactionFormat",
+        "serializedName": "redactionFormat",
+        "doc": "Format of the redacted output. Only valid when Operation is Redact. \nPlease refer to https://learn.microsoft.com/en-us/azure/healthcare-apis/deidentification/redaction-format for more details.",
+        "type": {
+         "$id": "170",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationCustomizationOptions.redactionFormat"
+       },
+       {
+        "$id": "171",
+        "kind": "property",
+        "name": "surrogateLocale",
+        "serializedName": "surrogateLocale",
+        "doc": "Locale in which the output surrogates are written.",
+        "type": {
+         "$id": "172",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "optional": true,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationCustomizationOptions.surrogateLocale"
+       }
+      ]
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationContent.customizations"
+    }
+   ]
+  },
+  {
+   "$ref": "168"
+  },
+  {
+   "$id": "173",
+   "kind": "model",
+   "name": "DeidentificationResult",
+   "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationResult",
+   "usage": "Output,Json",
+   "doc": "Response body for de-identification operation.",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "174",
+     "kind": "property",
+     "name": "outputText",
+     "serializedName": "outputText",
+     "doc": "Output text after de-identification. Not available for \"Tag\" operation.",
+     "type": {
+      "$id": "175",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationResult.outputText"
+    },
+    {
+     "$id": "176",
+     "kind": "property",
+     "name": "taggerResult",
+     "serializedName": "taggerResult",
+     "doc": "Result of the \"Tag\" operation. Only available for \"Tag\" Operation.",
+     "type": {
+      "$id": "177",
+      "kind": "model",
+      "name": "PhiTaggerResult",
+      "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.PhiTaggerResult",
+      "usage": "Output,Json",
+      "doc": "Result of the \"Tag\" operation.",
+      "decorators": [],
+      "properties": [
+       {
+        "$id": "178",
+        "kind": "property",
+        "name": "entities",
+        "serializedName": "entities",
+        "doc": "List of entities detected in the input.",
+        "type": {
+         "$id": "179",
+         "kind": "array",
+         "name": "ArrayPhiEntity",
+         "valueType": {
+          "$id": "180",
+          "kind": "model",
+          "name": "PhiEntity",
+          "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.PhiEntity",
+          "usage": "Output,Json",
+          "doc": "PHI Entity tag in the input.",
+          "decorators": [],
+          "properties": [
+           {
+            "$id": "181",
+            "kind": "property",
+            "name": "category",
+            "serializedName": "category",
+            "doc": "PHI Category of the entity.",
+            "type": {
+             "$ref": "22"
+            },
+            "optional": false,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.PhiEntity.category"
+           },
+           {
+            "$id": "182",
+            "kind": "property",
+            "name": "offset",
+            "serializedName": "offset",
+            "doc": "Starting index of the location from within the input text.",
+            "type": {
+             "$id": "183",
+             "kind": "model",
+             "name": "StringIndex",
+             "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.StringIndex",
+             "usage": "Output,Json",
+             "doc": "String index encoding model.",
+             "decorators": [],
+             "properties": [
+              {
+               "$id": "184",
+               "kind": "property",
+               "name": "utf8",
+               "serializedName": "utf8",
+               "doc": "The offset or length of the substring in UTF-8 encoding",
+               "type": {
+                "$id": "185",
+                "kind": "int32",
+                "name": "int32",
+                "crossLanguageDefinitionId": "TypeSpec.int32",
+                "decorators": []
+               },
+               "optional": false,
+               "readOnly": false,
+               "discriminator": false,
+               "flatten": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.StringIndex.utf8"
+              },
+              {
+               "$id": "186",
+               "kind": "property",
+               "name": "utf16",
+               "serializedName": "utf16",
+               "doc": "The offset or length of the substring in UTF-16 encoding.\n\nPrimary encoding used by .NET, Java, and JavaScript.",
+               "type": {
+                "$id": "187",
+                "kind": "int32",
+                "name": "int32",
+                "crossLanguageDefinitionId": "TypeSpec.int32",
+                "decorators": []
+               },
+               "optional": false,
+               "readOnly": false,
+               "discriminator": false,
+               "flatten": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.StringIndex.utf16"
+              },
+              {
+               "$id": "188",
+               "kind": "property",
+               "name": "codePoint",
+               "serializedName": "codePoint",
+               "doc": "The offset or length of the substring in CodePoint encoding.\n\nPrimary encoding used by Python.",
+               "type": {
+                "$id": "189",
+                "kind": "int32",
+                "name": "int32",
+                "crossLanguageDefinitionId": "TypeSpec.int32",
+                "decorators": []
+               },
+               "optional": false,
+               "readOnly": false,
+               "discriminator": false,
+               "flatten": false,
+               "decorators": [],
+               "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.StringIndex.codePoint"
+              }
+             ]
+            },
+            "optional": false,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.PhiEntity.offset"
+           },
+           {
+            "$id": "190",
+            "kind": "property",
+            "name": "length",
+            "serializedName": "length",
+            "doc": "Length of the input text.",
+            "type": {
+             "$ref": "183"
+            },
+            "optional": false,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.PhiEntity.length"
+           },
+           {
+            "$id": "191",
+            "kind": "property",
+            "name": "text",
+            "serializedName": "text",
+            "doc": "Text of the entity.",
+            "type": {
+             "$id": "192",
+             "kind": "string",
+             "name": "string",
+             "crossLanguageDefinitionId": "TypeSpec.string",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.PhiEntity.text"
+           },
+           {
+            "$id": "193",
+            "kind": "property",
+            "name": "confidenceScore",
+            "serializedName": "confidenceScore",
+            "doc": "Confidence score of the category match.",
+            "type": {
+             "$id": "194",
+             "kind": "float64",
+             "name": "float64",
+             "crossLanguageDefinitionId": "TypeSpec.float64",
+             "decorators": []
+            },
+            "optional": true,
+            "readOnly": false,
+            "discriminator": false,
+            "flatten": false,
+            "decorators": [],
+            "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.PhiEntity.confidenceScore"
+           }
+          ]
+         },
+         "crossLanguageDefinitionId": "TypeSpec.Array",
+         "decorators": []
+        },
+        "optional": false,
+        "readOnly": false,
+        "discriminator": false,
+        "flatten": false,
+        "decorators": [],
+        "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.PhiTaggerResult.entities"
+       }
+      ]
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "HealthDataAIServices.DeidServices.DeidentificationResult.taggerResult"
+    }
+   ]
+  },
+  {
+   "$ref": "177"
+  },
+  {
+   "$ref": "180"
+  },
+  {
+   "$ref": "183"
+  },
+  {
+   "$id": "195",
+   "kind": "model",
+   "name": "PagedDeidentificationJob",
+   "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage",
+   "usage": "Output,Json",
+   "doc": "Paged collection of DeidentificationJob items",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "196",
+     "kind": "property",
+     "name": "value",
+     "serializedName": "value",
+     "doc": "The DeidentificationJob items on this page",
+     "type": {
+      "$id": "197",
+      "kind": "array",
+      "name": "ArrayDeidentificationJob",
+      "valueType": {
+       "$ref": "86"
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage.value"
+    },
+    {
+     "$id": "198",
+     "kind": "property",
+     "name": "nextLink",
+     "serializedName": "nextLink",
+     "doc": "The link to the next page of items",
+     "type": {
+      "$id": "199",
+      "kind": "url",
+      "name": "ResourceLocation",
+      "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+      "baseType": {
+       "$id": "200",
+       "kind": "url",
+       "name": "url",
+       "crossLanguageDefinitionId": "TypeSpec.url",
+       "decorators": []
+      },
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage.nextLink"
+    }
+   ]
+  },
+  {
+   "$id": "201",
+   "kind": "model",
+   "name": "PagedDeidentificationDocumentDetails",
+   "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage",
+   "usage": "Output,Json",
+   "doc": "Paged collection of DeidentificationDocumentDetails items",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "202",
+     "kind": "property",
+     "name": "value",
+     "serializedName": "value",
+     "doc": "The DeidentificationDocumentDetails items on this page",
+     "type": {
+      "$id": "203",
+      "kind": "array",
+      "name": "ArrayDeidentificationDocumentDetails",
+      "valueType": {
+       "$ref": "150"
+      },
+      "crossLanguageDefinitionId": "TypeSpec.Array",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage.value"
+    },
+    {
+     "$id": "204",
+     "kind": "property",
+     "name": "nextLink",
+     "serializedName": "nextLink",
+     "doc": "The link to the next page of items",
+     "type": {
+      "$id": "205",
+      "kind": "url",
+      "name": "ResourceLocation",
+      "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+      "baseType": {
+       "$id": "206",
+       "kind": "url",
+       "name": "url",
+       "crossLanguageDefinitionId": "TypeSpec.url",
+       "decorators": []
+      },
+      "decorators": []
+     },
+     "optional": true,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage.nextLink"
+    }
+   ]
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "207",
+   "Name": "DeidentificationClient",
+   "Operations": [
+    {
+     "$id": "208",
+     "Name": "getJob",
+     "ResourceName": "DeidentificationJob",
+     "Summary": "Get a de-identification job.",
+     "Doc": "Resource read operation template.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "209",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "210",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "211",
+        "Type": {
+         "$id": "212",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-11-15"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "213",
+       "Name": "name",
+       "NameInRequest": "name",
+       "Doc": "The name of a job.",
+       "Type": {
+        "$id": "214",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "215",
+       "Name": "clientRequestId",
+       "NameInRequest": "x-ms-client-request-id",
+       "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+       "Type": {
+        "$id": "216",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "217",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "218",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "219",
+        "kind": "constant",
+        "valueType": {
+         "$id": "220",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "221",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "86"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "222",
+         "Name": "clientRequestId",
+         "NameInResponse": "x-ms-client-request-id",
+         "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+         "Type": {
+          "$id": "223",
+          "kind": "string",
+          "name": "uuid",
+          "crossLanguageDefinitionId": "Azure.Core.uuid",
+          "baseType": {
+           "$id": "224",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/jobs/{name}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "225",
+       "kind": "http",
+       "name": "Get a de-identification job.",
+       "description": "Get a de-identification job.",
+       "filePath": "2024-11-15/GetJob.json",
+       "parameters": [
+        {
+         "$id": "226",
+         "parameter": {
+          "$ref": "209"
+         },
+         "value": {
+          "$id": "227",
+          "kind": "string",
+          "type": {
+           "$ref": "210"
+          },
+          "value": "2024-11-15"
+         }
+        },
+        {
+         "$id": "228",
+         "parameter": {
+          "$ref": "213"
+         },
+         "value": {
+          "$id": "229",
+          "kind": "string",
+          "type": {
+           "$ref": "214"
+          },
+          "value": "job_smith_documents_1"
+         }
+        },
+        {
+         "$id": "230",
+         "parameter": {
+          "$ref": "215"
+         },
+         "value": {
+          "$id": "231",
+          "kind": "string",
+          "type": {
+           "$ref": "216"
+          },
+          "value": "00000000-0000-0000-0000-000000000000"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "232",
+         "response": {
+          "$ref": "221"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "233",
+          "kind": "model",
+          "type": {
+           "$ref": "86"
+          },
+          "value": {
+           "$id": "234",
+           "name": {
+            "$id": "235",
+            "kind": "string",
+            "type": {
+             "$ref": "88"
+            },
+            "value": "job_smith_documents_1"
+           },
+           "operation": {
+            "$id": "236",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "Surrogate"
+           },
+           "sourceLocation": {
+            "$id": "237",
+            "kind": "model",
+            "type": {
+             "$ref": "91"
+            },
+            "value": {
+             "$id": "238",
+             "location": {
+              "$id": "239",
+              "kind": "string",
+              "type": {
+               "$ref": "93"
+              },
+              "value": "https://blobtest.blob.core.windows.net/container"
+             },
+             "prefix": {
+              "$id": "240",
+              "kind": "string",
+              "type": {
+               "$ref": "95"
+              },
+              "value": "documents/"
+             }
+            }
+           },
+           "targetLocation": {
+            "$id": "241",
+            "kind": "model",
+            "type": {
+             "$ref": "100"
+            },
+            "value": {
+             "$id": "242",
+             "location": {
+              "$id": "243",
+              "kind": "string",
+              "type": {
+               "$ref": "102"
+              },
+              "value": "https://blobtest.blob.core.windows.net/container"
+             },
+             "prefix": {
+              "$id": "244",
+              "kind": "string",
+              "type": {
+               "$ref": "104"
+              },
+              "value": "_output/"
+             },
+             "overwrite": {
+              "$id": "245",
+              "kind": "boolean",
+              "type": {
+               "$ref": "106"
+              },
+              "value": true
+             }
+            }
+           },
+           "customizations": {
+            "$id": "246",
+            "kind": "model",
+            "type": {
+             "$ref": "108"
+            },
+            "value": {
+             "$id": "247",
+             "surrogateLocale": {
+              "$id": "248",
+              "kind": "string",
+              "type": {
+               "$ref": "112"
+              },
+              "value": "en-US"
+             }
+            }
+           },
+           "status": {
+            "$id": "249",
+            "kind": "string",
+            "type": {
+             "$ref": "10"
+            },
+            "value": "Succeeded"
+           },
+           "lastUpdatedAt": {
+            "$id": "250",
+            "kind": "string",
+            "type": {
+             "$ref": "130"
+            },
+            "value": "2024-01-26T01:15:00.009Z"
+           },
+           "createdAt": {
+            "$id": "251",
+            "kind": "string",
+            "type": {
+             "$ref": "133"
+            },
+            "value": "2024-01-25T23:27:43.009Z"
+           },
+           "startedAt": {
+            "$id": "252",
+            "kind": "string",
+            "type": {
+             "$ref": "136"
+            },
+            "value": "2024-01-25T23:27:43.009Z"
+           },
+           "summary": {
+            "$id": "253",
+            "kind": "model",
+            "type": {
+             "$ref": "139"
+            },
+            "value": {
+             "$id": "254",
+             "successful": {
+              "$id": "255",
+              "kind": "number",
+              "type": {
+               "$ref": "141"
+              },
+              "value": 10
+             },
+             "failed": {
+              "$id": "256",
+              "kind": "number",
+              "type": {
+               "$ref": "143"
+              },
+              "value": 0
+             },
+             "canceled": {
+              "$id": "257",
+              "kind": "number",
+              "type": {
+               "$ref": "145"
+              },
+              "value": 0
+             },
+             "total": {
+              "$id": "258",
+              "kind": "number",
+              "type": {
+               "$ref": "147"
+              },
+              "value": 10
+             },
+             "bytesProcessed": {
+              "$id": "259",
+              "kind": "number",
+              "type": {
+               "$ref": "149"
+              },
+              "value": 4096
+             }
+            }
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "260",
+     "Name": "deidentifyDocuments",
+     "ResourceName": "DeidentificationJob",
+     "Summary": "Create a de-identification job.",
+     "Doc": "Long-running resource create or replace operation template.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "261",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "262",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "263",
+        "Type": {
+         "$id": "264",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-11-15"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "265",
+       "Name": "name",
+       "NameInRequest": "name",
+       "Doc": "The name of a job.",
+       "Type": {
+        "$id": "266",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "267",
+       "Name": "clientRequestId",
+       "NameInRequest": "x-ms-client-request-id",
+       "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+       "Type": {
+        "$id": "268",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "269",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "270",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Doc": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "271",
+        "kind": "constant",
+        "valueType": {
+         "$id": "272",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "273",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "274",
+        "kind": "constant",
+        "valueType": {
+         "$id": "275",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "276",
+       "Name": "resource",
+       "NameInRequest": "resource",
+       "Doc": "The resource instance.",
+       "Type": {
+        "$ref": "86"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "277",
+       "StatusCodes": [
+        201
+       ],
+       "BodyType": {
+        "$ref": "86"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "278",
+         "Name": "clientRequestId",
+         "NameInResponse": "x-ms-client-request-id",
+         "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+         "Type": {
+          "$id": "279",
+          "kind": "string",
+          "name": "uuid",
+          "crossLanguageDefinitionId": "Azure.Core.uuid",
+          "baseType": {
+           "$id": "280",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "decorators": []
+         }
+        },
+        {
+         "$id": "281",
+         "Name": "operationLocation",
+         "NameInResponse": "Operation-Location",
+         "Doc": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "282",
+          "kind": "url",
+          "name": "ResourceLocation",
+          "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+          "baseType": {
+           "$id": "283",
+           "kind": "url",
+           "name": "url",
+           "crossLanguageDefinitionId": "TypeSpec.url",
+           "decorators": []
+          },
+          "decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      },
+      {
+       "$id": "284",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "86"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "285",
+         "Name": "clientRequestId",
+         "NameInResponse": "x-ms-client-request-id",
+         "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+         "Type": {
+          "$id": "286",
+          "kind": "string",
+          "name": "uuid",
+          "crossLanguageDefinitionId": "Azure.Core.uuid",
+          "baseType": {
+           "$id": "287",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "decorators": []
+         }
+        },
+        {
+         "$id": "288",
+         "Name": "operationLocation",
+         "NameInResponse": "Operation-Location",
+         "Doc": "The location for monitoring the operation state.",
+         "Type": {
+          "$id": "289",
+          "kind": "url",
+          "name": "ResourceLocation",
+          "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+          "baseType": {
+           "$id": "290",
+           "kind": "url",
+           "name": "url",
+           "crossLanguageDefinitionId": "TypeSpec.url",
+           "decorators": []
+          },
+          "decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "PUT",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}",
+     "Path": "/jobs/{name}",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "LongRunning": {
+      "$id": "291",
+      "FinalStateVia": 2,
+      "FinalResponse": {
+       "$id": "292",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "86"
+       },
+       "BodyMediaType": "Json"
+      }
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "293",
+       "kind": "http",
+       "name": "Create a de-identification job.",
+       "description": "Create a de-identification job.",
+       "filePath": "2024-11-15/DeidentifyDocuments.json",
+       "parameters": [
+        {
+         "$id": "294",
+         "parameter": {
+          "$ref": "261"
+         },
+         "value": {
+          "$id": "295",
+          "kind": "string",
+          "type": {
+           "$ref": "262"
+          },
+          "value": "2024-11-15"
+         }
+        },
+        {
+         "$id": "296",
+         "parameter": {
+          "$ref": "265"
+         },
+         "value": {
+          "$id": "297",
+          "kind": "string",
+          "type": {
+           "$ref": "266"
+          },
+          "value": "job_smith_documents_1"
+         }
+        },
+        {
+         "$id": "298",
+         "parameter": {
+          "$ref": "267"
+         },
+         "value": {
+          "$id": "299",
+          "kind": "string",
+          "type": {
+           "$ref": "268"
+          },
+          "value": "00000000-0000-0000-0000-000000000000"
+         }
+        },
+        {
+         "$id": "300",
+         "parameter": {
+          "$ref": "276"
+         },
+         "value": {
+          "$id": "301",
+          "kind": "model",
+          "type": {
+           "$ref": "86"
+          },
+          "value": {
+           "$id": "302",
+           "operation": {
+            "$id": "303",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "Redact"
+           },
+           "sourceLocation": {
+            "$id": "304",
+            "kind": "model",
+            "type": {
+             "$ref": "91"
+            },
+            "value": {
+             "$id": "305",
+             "location": {
+              "$id": "306",
+              "kind": "string",
+              "type": {
+               "$ref": "93"
+              },
+              "value": "https://blobtest.blob.core.windows.net/container"
+             },
+             "prefix": {
+              "$id": "307",
+              "kind": "string",
+              "type": {
+               "$ref": "95"
+              },
+              "value": "documents/"
+             }
+            }
+           },
+           "targetLocation": {
+            "$id": "308",
+            "kind": "model",
+            "type": {
+             "$ref": "100"
+            },
+            "value": {
+             "$id": "309",
+             "location": {
+              "$id": "310",
+              "kind": "string",
+              "type": {
+               "$ref": "102"
+              },
+              "value": "https://blobtest.blob.core.windows.net/container"
+             },
+             "prefix": {
+              "$id": "311",
+              "kind": "string",
+              "type": {
+               "$ref": "104"
+              },
+              "value": "_output/"
+             },
+             "overwrite": {
+              "$id": "312",
+              "kind": "boolean",
+              "type": {
+               "$ref": "106"
+              },
+              "value": true
+             }
+            }
+           },
+           "customizations": {
+            "$id": "313",
+            "kind": "model",
+            "type": {
+             "$ref": "108"
+            },
+            "value": {
+             "$id": "314",
+             "redactionFormat": {
+              "$id": "315",
+              "kind": "string",
+              "type": {
+               "$ref": "110"
+              },
+              "value": "[{type}]"
+             }
+            }
+           }
+          }
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "316",
+         "response": {
+          "$ref": "284"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "317",
+          "kind": "model",
+          "type": {
+           "$ref": "86"
+          },
+          "value": {
+           "$id": "318",
+           "name": {
+            "$id": "319",
+            "kind": "string",
+            "type": {
+             "$ref": "88"
+            },
+            "value": "job_smith_documents_1"
+           },
+           "operation": {
+            "$id": "320",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "Redact"
+           },
+           "sourceLocation": {
+            "$id": "321",
+            "kind": "model",
+            "type": {
+             "$ref": "91"
+            },
+            "value": {
+             "$id": "322",
+             "location": {
+              "$id": "323",
+              "kind": "string",
+              "type": {
+               "$ref": "93"
+              },
+              "value": "https://blobtest.blob.core.windows.net/container"
+             },
+             "prefix": {
+              "$id": "324",
+              "kind": "string",
+              "type": {
+               "$ref": "95"
+              },
+              "value": "documents/"
+             }
+            }
+           },
+           "targetLocation": {
+            "$id": "325",
+            "kind": "model",
+            "type": {
+             "$ref": "100"
+            },
+            "value": {
+             "$id": "326",
+             "location": {
+              "$id": "327",
+              "kind": "string",
+              "type": {
+               "$ref": "102"
+              },
+              "value": "https://blobtest.blob.core.windows.net/container"
+             },
+             "prefix": {
+              "$id": "328",
+              "kind": "string",
+              "type": {
+               "$ref": "104"
+              },
+              "value": "_output/"
+             },
+             "overwrite": {
+              "$id": "329",
+              "kind": "boolean",
+              "type": {
+               "$ref": "106"
+              },
+              "value": true
+             }
+            }
+           },
+           "customizations": {
+            "$id": "330",
+            "kind": "model",
+            "type": {
+             "$ref": "108"
+            },
+            "value": {
+             "$id": "331",
+             "redactionFormat": {
+              "$id": "332",
+              "kind": "string",
+              "type": {
+               "$ref": "110"
+              },
+              "value": "[{type}]"
+             }
+            }
+           },
+           "status": {
+            "$id": "333",
+            "kind": "string",
+            "type": {
+             "$ref": "10"
+            },
+            "value": "NotStarted"
+           },
+           "lastUpdatedAt": {
+            "$id": "334",
+            "kind": "string",
+            "type": {
+             "$ref": "130"
+            },
+            "value": "2024-01-26T01:15:00.009Z"
+           },
+           "createdAt": {
+            "$id": "335",
+            "kind": "string",
+            "type": {
+             "$ref": "133"
+            },
+            "value": "2024-01-25T23:27:43.009Z"
+           }
+          }
+         }
+        },
+        {
+         "$id": "336",
+         "response": {
+          "$ref": "277"
+         },
+         "statusCode": 201,
+         "bodyValue": {
+          "$id": "337",
+          "kind": "model",
+          "type": {
+           "$ref": "86"
+          },
+          "value": {
+           "$id": "338",
+           "name": {
+            "$id": "339",
+            "kind": "string",
+            "type": {
+             "$ref": "88"
+            },
+            "value": "job_smith_documents_1"
+           },
+           "operation": {
+            "$id": "340",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "Redact"
+           },
+           "sourceLocation": {
+            "$id": "341",
+            "kind": "model",
+            "type": {
+             "$ref": "91"
+            },
+            "value": {
+             "$id": "342",
+             "location": {
+              "$id": "343",
+              "kind": "string",
+              "type": {
+               "$ref": "93"
+              },
+              "value": "https://blobtest.blob.core.windows.net/container"
+             },
+             "prefix": {
+              "$id": "344",
+              "kind": "string",
+              "type": {
+               "$ref": "95"
+              },
+              "value": "documents/"
+             }
+            }
+           },
+           "targetLocation": {
+            "$id": "345",
+            "kind": "model",
+            "type": {
+             "$ref": "100"
+            },
+            "value": {
+             "$id": "346",
+             "location": {
+              "$id": "347",
+              "kind": "string",
+              "type": {
+               "$ref": "102"
+              },
+              "value": "https://blobtest.blob.core.windows.net/container"
+             },
+             "prefix": {
+              "$id": "348",
+              "kind": "string",
+              "type": {
+               "$ref": "104"
+              },
+              "value": "_output/"
+             },
+             "overwrite": {
+              "$id": "349",
+              "kind": "boolean",
+              "type": {
+               "$ref": "106"
+              },
+              "value": true
+             }
+            }
+           },
+           "customizations": {
+            "$id": "350",
+            "kind": "model",
+            "type": {
+             "$ref": "108"
+            },
+            "value": {
+             "$id": "351",
+             "redactionFormat": {
+              "$id": "352",
+              "kind": "string",
+              "type": {
+               "$ref": "110"
+              },
+              "value": "[{type}]"
+             }
+            }
+           },
+           "status": {
+            "$id": "353",
+            "kind": "string",
+            "type": {
+             "$ref": "10"
+            },
+            "value": "NotStarted"
+           },
+           "lastUpdatedAt": {
+            "$id": "354",
+            "kind": "string",
+            "type": {
+             "$ref": "130"
+            },
+            "value": "2024-01-26T01:15:00.009Z"
+           },
+           "createdAt": {
+            "$id": "355",
+            "kind": "string",
+            "type": {
+             "$ref": "133"
+            },
+            "value": "2024-01-25T23:27:43.009Z"
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "356",
+     "Name": "listJobsInternal",
+     "ResourceName": "DeidentificationJob",
+     "Summary": "List de-identification jobs.",
+     "Doc": "Resource list operation template.",
+     "Accessibility": "internal",
+     "Parameters": [
+      {
+       "$id": "357",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "358",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "359",
+        "Type": {
+         "$id": "360",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-11-15"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "361",
+       "Name": "maxpagesize",
+       "NameInRequest": "maxpagesize",
+       "Doc": "The maximum number of result items per page.",
+       "Type": {
+        "$id": "362",
+        "kind": "int32",
+        "name": "int32",
+        "crossLanguageDefinitionId": "TypeSpec.int32",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "363",
+       "Name": "continuationToken",
+       "NameInRequest": "continuationToken",
+       "Doc": "Token to continue a previous query.",
+       "Type": {
+        "$id": "364",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "365",
+       "Name": "clientRequestId",
+       "NameInRequest": "x-ms-client-request-id",
+       "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+       "Type": {
+        "$id": "366",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "367",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "368",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "369",
+        "kind": "constant",
+        "valueType": {
+         "$id": "370",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "371",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "195"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "372",
+         "Name": "clientRequestId",
+         "NameInResponse": "x-ms-client-request-id",
+         "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+         "Type": {
+          "$id": "373",
+          "kind": "string",
+          "name": "uuid",
+          "crossLanguageDefinitionId": "Azure.Core.uuid",
+          "baseType": {
+           "$id": "374",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/jobs",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "375",
+      "ItemName": "value",
+      "NextLinkName": "nextLink"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "376",
+       "kind": "http",
+       "name": "List de-identification jobs.",
+       "description": "List de-identification jobs.",
+       "filePath": "2024-11-15/ListJobs.json",
+       "parameters": [
+        {
+         "$id": "377",
+         "parameter": {
+          "$ref": "357"
+         },
+         "value": {
+          "$id": "378",
+          "kind": "string",
+          "type": {
+           "$ref": "358"
+          },
+          "value": "2024-11-15"
+         }
+        },
+        {
+         "$id": "379",
+         "parameter": {
+          "$ref": "361"
+         },
+         "value": {
+          "$id": "380",
+          "kind": "number",
+          "type": {
+           "$ref": "362"
+          },
+          "value": 10
+         }
+        },
+        {
+         "$id": "381",
+         "parameter": {
+          "$ref": "363"
+         },
+         "value": {
+          "$id": "382",
+          "kind": "string",
+          "type": {
+           "$ref": "364"
+          },
+          "value": "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ=="
+         }
+        },
+        {
+         "$id": "383",
+         "parameter": {
+          "$ref": "365"
+         },
+         "value": {
+          "$id": "384",
+          "kind": "string",
+          "type": {
+           "$ref": "366"
+          },
+          "value": "00000000-0000-0000-0000-000000000000"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "385",
+         "response": {
+          "$ref": "371"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "386",
+          "kind": "model",
+          "type": {
+           "$ref": "195"
+          },
+          "value": {
+           "$id": "387",
+           "value": {
+            "$id": "388",
+            "kind": "array",
+            "type": {
+             "$ref": "197"
+            },
+            "value": [
+             {
+              "$id": "389",
+              "kind": "model",
+              "type": {
+               "$ref": "86"
+              },
+              "value": {
+               "$id": "390",
+               "name": {
+                "$id": "391",
+                "kind": "string",
+                "type": {
+                 "$ref": "88"
+                },
+                "value": "job_smith_documents_1"
+               },
+               "operation": {
+                "$id": "392",
+                "kind": "string",
+                "type": {
+                 "$ref": "2"
+                },
+                "value": "Redact"
+               },
+               "sourceLocation": {
+                "$id": "393",
+                "kind": "model",
+                "type": {
+                 "$ref": "91"
+                },
+                "value": {
+                 "$id": "394",
+                 "location": {
+                  "$id": "395",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "93"
+                  },
+                  "value": "https://blobtest.blob.core.windows.net/container"
+                 },
+                 "prefix": {
+                  "$id": "396",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "95"
+                  },
+                  "value": "documents/"
+                 }
+                }
+               },
+               "targetLocation": {
+                "$id": "397",
+                "kind": "model",
+                "type": {
+                 "$ref": "100"
+                },
+                "value": {
+                 "$id": "398",
+                 "location": {
+                  "$id": "399",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "102"
+                  },
+                  "value": "https://blobtest.blob.core.windows.net/container"
+                 },
+                 "prefix": {
+                  "$id": "400",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "104"
+                  },
+                  "value": "_output/"
+                 },
+                 "overwrite": {
+                  "$id": "401",
+                  "kind": "boolean",
+                  "type": {
+                   "$ref": "106"
+                  },
+                  "value": true
+                 }
+                }
+               },
+               "customizations": {
+                "$id": "402",
+                "kind": "model",
+                "type": {
+                 "$ref": "108"
+                },
+                "value": {
+                 "$id": "403",
+                 "redactionFormat": {
+                  "$id": "404",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "110"
+                  },
+                  "value": "[{type}]"
+                 }
+                }
+               },
+               "status": {
+                "$id": "405",
+                "kind": "string",
+                "type": {
+                 "$ref": "10"
+                },
+                "value": "Succeeded"
+               },
+               "lastUpdatedAt": {
+                "$id": "406",
+                "kind": "string",
+                "type": {
+                 "$ref": "130"
+                },
+                "value": "2024-01-26T01:15:00.009Z"
+               },
+               "createdAt": {
+                "$id": "407",
+                "kind": "string",
+                "type": {
+                 "$ref": "133"
+                },
+                "value": "2024-01-25T23:27:43.009Z"
+               },
+               "startedAt": {
+                "$id": "408",
+                "kind": "string",
+                "type": {
+                 "$ref": "136"
+                },
+                "value": "2024-01-25T23:27:43.009Z"
+               },
+               "summary": {
+                "$id": "409",
+                "kind": "model",
+                "type": {
+                 "$ref": "139"
+                },
+                "value": {
+                 "$id": "410",
+                 "successful": {
+                  "$id": "411",
+                  "kind": "number",
+                  "type": {
+                   "$ref": "141"
+                  },
+                  "value": 10
+                 },
+                 "failed": {
+                  "$id": "412",
+                  "kind": "number",
+                  "type": {
+                   "$ref": "143"
+                  },
+                  "value": 0
+                 },
+                 "canceled": {
+                  "$id": "413",
+                  "kind": "number",
+                  "type": {
+                   "$ref": "145"
+                  },
+                  "value": 0
+                 },
+                 "total": {
+                  "$id": "414",
+                  "kind": "number",
+                  "type": {
+                   "$ref": "147"
+                  },
+                  "value": 10
+                 },
+                 "bytesProcessed": {
+                  "$id": "415",
+                  "kind": "number",
+                  "type": {
+                   "$ref": "149"
+                  },
+                  "value": 4096
+                 }
+                }
+               }
+              }
+             }
+            ]
+           },
+           "nextLink": {
+            "$id": "416",
+            "kind": "string",
+            "type": {
+             "$ref": "199"
+            },
+            "value": "https://deidtest.api.deid.azure.com/jobs?maxpagesize=10&continuationToken=K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ=="
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "417",
+     "Name": "listJobDocumentsInternal",
+     "ResourceName": "DeidentificationDocumentDetails",
+     "Summary": "List processed documents within a job.",
+     "Doc": "Resource list operation template.",
+     "Accessibility": "internal",
+     "Parameters": [
+      {
+       "$id": "418",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "419",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "420",
+        "Type": {
+         "$id": "421",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-11-15"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "422",
+       "Name": "name",
+       "NameInRequest": "name",
+       "Doc": "The name of a job.",
+       "Type": {
+        "$id": "423",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "424",
+       "Name": "maxpagesize",
+       "NameInRequest": "maxpagesize",
+       "Doc": "The maximum number of result items per page.",
+       "Type": {
+        "$id": "425",
+        "kind": "int32",
+        "name": "int32",
+        "crossLanguageDefinitionId": "TypeSpec.int32",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "426",
+       "Name": "continuationToken",
+       "NameInRequest": "continuationToken",
+       "Doc": "Token to continue a previous query.",
+       "Type": {
+        "$id": "427",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "428",
+       "Name": "clientRequestId",
+       "NameInRequest": "x-ms-client-request-id",
+       "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+       "Type": {
+        "$id": "429",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "430",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "431",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "432",
+        "kind": "constant",
+        "valueType": {
+         "$id": "433",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "434",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "201"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "435",
+         "Name": "clientRequestId",
+         "NameInResponse": "x-ms-client-request-id",
+         "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+         "Type": {
+          "$id": "436",
+          "kind": "string",
+          "name": "uuid",
+          "crossLanguageDefinitionId": "Azure.Core.uuid",
+          "baseType": {
+           "$id": "437",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/jobs/{name}/documents",
+     "BufferResponse": true,
+     "Paging": {
+      "$id": "438",
+      "ItemName": "value",
+      "NextLinkName": "nextLink"
+     },
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "439",
+       "kind": "http",
+       "name": "List processed documents within a job.",
+       "description": "List processed documents within a job.",
+       "filePath": "2024-11-15/ListJobDocuments.json",
+       "parameters": [
+        {
+         "$id": "440",
+         "parameter": {
+          "$ref": "418"
+         },
+         "value": {
+          "$id": "441",
+          "kind": "string",
+          "type": {
+           "$ref": "419"
+          },
+          "value": "2024-11-15"
+         }
+        },
+        {
+         "$id": "442",
+         "parameter": {
+          "$ref": "422"
+         },
+         "value": {
+          "$id": "443",
+          "kind": "string",
+          "type": {
+           "$ref": "423"
+          },
+          "value": "job_smith_documents_1"
+         }
+        },
+        {
+         "$id": "444",
+         "parameter": {
+          "$ref": "424"
+         },
+         "value": {
+          "$id": "445",
+          "kind": "number",
+          "type": {
+           "$ref": "425"
+          },
+          "value": 10
+         }
+        },
+        {
+         "$id": "446",
+         "parameter": {
+          "$ref": "426"
+         },
+         "value": {
+          "$id": "447",
+          "kind": "string",
+          "type": {
+           "$ref": "427"
+          },
+          "value": "K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ=="
+         }
+        },
+        {
+         "$id": "448",
+         "parameter": {
+          "$ref": "428"
+         },
+         "value": {
+          "$id": "449",
+          "kind": "string",
+          "type": {
+           "$ref": "429"
+          },
+          "value": "00000000-0000-0000-0000-000000000000"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "450",
+         "response": {
+          "$ref": "434"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "451",
+          "kind": "model",
+          "type": {
+           "$ref": "201"
+          },
+          "value": {
+           "$id": "452",
+           "value": {
+            "$id": "453",
+            "kind": "array",
+            "type": {
+             "$ref": "203"
+            },
+            "value": [
+             {
+              "$id": "454",
+              "kind": "model",
+              "type": {
+               "$ref": "150"
+              },
+              "value": {
+               "$id": "455",
+               "id": {
+                "$id": "456",
+                "kind": "string",
+                "type": {
+                 "$ref": "152"
+                },
+                "value": "00000000-0000-0000-0000-000000000000"
+               },
+               "input": {
+                "$id": "457",
+                "kind": "model",
+                "type": {
+                 "$ref": "154"
+                },
+                "value": {
+                 "$id": "458",
+                 "location": {
+                  "$id": "459",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "156"
+                  },
+                  "value": "https://blobtest.blob.core.windows.net/container/documents/patient_doc_1"
+                 },
+                 "etag": {
+                  "$id": "460",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "158"
+                  },
+                  "value": "0x8DB638EEA0CC717"
+                 }
+                }
+               },
+               "status": {
+                "$id": "461",
+                "kind": "string",
+                "type": {
+                 "$ref": "10"
+                },
+                "value": "Failed"
+               },
+               "error": {
+                "$id": "462",
+                "kind": "model",
+                "type": {
+                 "$ref": "115"
+                },
+                "value": {
+                 "$id": "463",
+                 "code": {
+                  "$id": "464",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "117"
+                  },
+                  "value": "FileNotFound"
+                 },
+                 "message": {
+                  "$id": "465",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "119"
+                  },
+                  "value": "File was moved after job started."
+                 },
+                 "target": {
+                  "$id": "466",
+                  "kind": "string",
+                  "type": {
+                   "$ref": "121"
+                  },
+                  "value": "SourceFile"
+                 },
+                 "details": {
+                  "$id": "467",
+                  "kind": "array",
+                  "type": {
+                   "$ref": "123"
+                  },
+                  "value": []
+                 }
+                }
+               }
+              }
+             }
+            ]
+           },
+           "nextLink": {
+            "$id": "468",
+            "kind": "string",
+            "type": {
+             "$ref": "205"
+            },
+            "value": "https://deidtest.api.deid.azure.com/jobs/00000000-0000-0000-0000-000000000000/documents?maxpagesize=10&continuationToken=K1JJRDpzOEtaQWZabUQrQUNBQUFBQUFBQUFBQT09I1JUOjEjVFJDOjEwI0ZQQzpBZ0VBQUFBTUFDUUFBQUFBQUE9PQ=="
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "469",
+     "Name": "cancelJob",
+     "ResourceName": "DeidServices",
+     "Summary": "Cancel a de-identification job.",
+     "Doc": "Cancels a job that is in progress. \n\nThe job will be marked as canceled and the service will stop processing the job. The service will not delete any documents that have already been processed.\n\nIf the job is already complete, this will have no effect. ",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "470",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "471",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "472",
+        "Type": {
+         "$id": "473",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-11-15"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "474",
+       "Name": "name",
+       "NameInRequest": "name",
+       "Doc": "The name of a job.",
+       "Type": {
+        "$id": "475",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "476",
+       "Name": "clientRequestId",
+       "NameInRequest": "x-ms-client-request-id",
+       "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+       "Type": {
+        "$id": "477",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "478",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "479",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "480",
+        "kind": "constant",
+        "valueType": {
+         "$id": "481",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "482",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "86"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "483",
+         "Name": "clientRequestId",
+         "NameInResponse": "x-ms-client-request-id",
+         "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+         "Type": {
+          "$id": "484",
+          "kind": "string",
+          "name": "uuid",
+          "crossLanguageDefinitionId": "Azure.Core.uuid",
+          "baseType": {
+           "$id": "485",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/jobs/{name}:cancel",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "486",
+       "kind": "http",
+       "name": "Cancel a de-identification job.",
+       "description": "Cancel a de-identification job.",
+       "filePath": "2024-11-15/CancelJob.json",
+       "parameters": [
+        {
+         "$id": "487",
+         "parameter": {
+          "$ref": "470"
+         },
+         "value": {
+          "$id": "488",
+          "kind": "string",
+          "type": {
+           "$ref": "471"
+          },
+          "value": "2024-11-15"
+         }
+        },
+        {
+         "$id": "489",
+         "parameter": {
+          "$ref": "474"
+         },
+         "value": {
+          "$id": "490",
+          "kind": "string",
+          "type": {
+           "$ref": "475"
+          },
+          "value": "job_smith_documents_1"
+         }
+        },
+        {
+         "$id": "491",
+         "parameter": {
+          "$ref": "476"
+         },
+         "value": {
+          "$id": "492",
+          "kind": "string",
+          "type": {
+           "$ref": "477"
+          },
+          "value": "00000000-0000-0000-0000-000000000000"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "493",
+         "response": {
+          "$ref": "482"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "494",
+          "kind": "model",
+          "type": {
+           "$ref": "86"
+          },
+          "value": {
+           "$id": "495",
+           "name": {
+            "$id": "496",
+            "kind": "string",
+            "type": {
+             "$ref": "88"
+            },
+            "value": "job_smith_documents_1"
+           },
+           "operation": {
+            "$id": "497",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "Redact"
+           },
+           "sourceLocation": {
+            "$id": "498",
+            "kind": "model",
+            "type": {
+             "$ref": "91"
+            },
+            "value": {
+             "$id": "499",
+             "location": {
+              "$id": "500",
+              "kind": "string",
+              "type": {
+               "$ref": "93"
+              },
+              "value": "https://blobtest.blob.core.windows.net/container"
+             },
+             "prefix": {
+              "$id": "501",
+              "kind": "string",
+              "type": {
+               "$ref": "95"
+              },
+              "value": "documents/"
+             }
+            }
+           },
+           "targetLocation": {
+            "$id": "502",
+            "kind": "model",
+            "type": {
+             "$ref": "100"
+            },
+            "value": {
+             "$id": "503",
+             "location": {
+              "$id": "504",
+              "kind": "string",
+              "type": {
+               "$ref": "102"
+              },
+              "value": "https://blobtest.blob.core.windows.net/container"
+             },
+             "prefix": {
+              "$id": "505",
+              "kind": "string",
+              "type": {
+               "$ref": "104"
+              },
+              "value": "_output/"
+             },
+             "overwrite": {
+              "$id": "506",
+              "kind": "boolean",
+              "type": {
+               "$ref": "106"
+              },
+              "value": true
+             }
+            }
+           },
+           "customizations": {
+            "$id": "507",
+            "kind": "model",
+            "type": {
+             "$ref": "108"
+            },
+            "value": {
+             "$id": "508",
+             "redactionFormat": {
+              "$id": "509",
+              "kind": "string",
+              "type": {
+               "$ref": "110"
+              },
+              "value": "[{type}]"
+             }
+            }
+           },
+           "status": {
+            "$id": "510",
+            "kind": "string",
+            "type": {
+             "$ref": "10"
+            },
+            "value": "Canceled"
+           },
+           "lastUpdatedAt": {
+            "$id": "511",
+            "kind": "string",
+            "type": {
+             "$ref": "130"
+            },
+            "value": "2024-01-26T01:15:00.009Z"
+           },
+           "createdAt": {
+            "$id": "512",
+            "kind": "string",
+            "type": {
+             "$ref": "133"
+            },
+            "value": "2024-01-25T23:27:43.009Z"
+           },
+           "startedAt": {
+            "$id": "513",
+            "kind": "string",
+            "type": {
+             "$ref": "136"
+            },
+            "value": "2024-01-25T23:27:43.009Z"
+           },
+           "summary": {
+            "$id": "514",
+            "kind": "model",
+            "type": {
+             "$ref": "139"
+            },
+            "value": {
+             "$id": "515",
+             "successful": {
+              "$id": "516",
+              "kind": "number",
+              "type": {
+               "$ref": "141"
+              },
+              "value": 10
+             },
+             "failed": {
+              "$id": "517",
+              "kind": "number",
+              "type": {
+               "$ref": "143"
+              },
+              "value": 0
+             },
+             "canceled": {
+              "$id": "518",
+              "kind": "number",
+              "type": {
+               "$ref": "145"
+              },
+              "value": 2
+             },
+             "total": {
+              "$id": "519",
+              "kind": "number",
+              "type": {
+               "$ref": "147"
+              },
+              "value": 12
+             },
+             "bytesProcessed": {
+              "$id": "520",
+              "kind": "number",
+              "type": {
+               "$ref": "149"
+              },
+              "value": 4096
+             }
+            }
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "521",
+     "Name": "deleteJob",
+     "ResourceName": "DeidentificationJob",
+     "Summary": "Delete a de-identification job.",
+     "Doc": "Removes the record of the job from the service. Does not delete any documents.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "522",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "523",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "524",
+        "Type": {
+         "$id": "525",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-11-15"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "526",
+       "Name": "name",
+       "NameInRequest": "name",
+       "Doc": "The name of a job.",
+       "Type": {
+        "$id": "527",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Path",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "528",
+       "Name": "clientRequestId",
+       "NameInRequest": "x-ms-client-request-id",
+       "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+       "Type": {
+        "$id": "529",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "530",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "531",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "532",
+        "kind": "constant",
+        "valueType": {
+         "$id": "533",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "534",
+       "StatusCodes": [
+        204
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "535",
+         "Name": "clientRequestId",
+         "NameInResponse": "x-ms-client-request-id",
+         "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+         "Type": {
+          "$id": "536",
+          "kind": "string",
+          "name": "uuid",
+          "crossLanguageDefinitionId": "Azure.Core.uuid",
+          "baseType": {
+           "$id": "537",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "DELETE",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/jobs/{name}",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "538",
+       "kind": "http",
+       "name": "Delete a de-identification job.",
+       "description": "Delete a de-identification job.",
+       "filePath": "2024-11-15/DeleteJob.json",
+       "parameters": [
+        {
+         "$id": "539",
+         "parameter": {
+          "$ref": "522"
+         },
+         "value": {
+          "$id": "540",
+          "kind": "string",
+          "type": {
+           "$ref": "523"
+          },
+          "value": "2024-11-15"
+         }
+        },
+        {
+         "$id": "541",
+         "parameter": {
+          "$ref": "526"
+         },
+         "value": {
+          "$id": "542",
+          "kind": "string",
+          "type": {
+           "$ref": "527"
+          },
+          "value": "job_smith_documents_1"
+         }
+        },
+        {
+         "$id": "543",
+         "parameter": {
+          "$ref": "528"
+         },
+         "value": {
+          "$id": "544",
+          "kind": "string",
+          "type": {
+           "$ref": "529"
+          },
+          "value": "00000000-0000-0000-0000-000000000000"
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "545",
+         "response": {
+          "$ref": "534"
+         },
+         "statusCode": 204
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "$id": "546",
+     "Name": "deidentifyText",
+     "ResourceName": "DeidServices",
+     "Summary": "De-identify text.",
+     "Doc": "A remote procedure call (RPC) operation.",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "547",
+       "Name": "apiVersion",
+       "NameInRequest": "api-version",
+       "Doc": "The API version to use for this operation.",
+       "Type": {
+        "$id": "548",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+       },
+       "Location": "Query",
+       "IsApiVersion": true,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Client",
+       "DefaultValue": {
+        "$id": "549",
+        "Type": {
+         "$id": "550",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string"
+        },
+        "Value": "2024-11-15"
+       },
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "551",
+       "Name": "clientRequestId",
+       "NameInRequest": "x-ms-client-request-id",
+       "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+       "Type": {
+        "$id": "552",
+        "kind": "string",
+        "name": "uuid",
+        "crossLanguageDefinitionId": "Azure.Core.uuid",
+        "baseType": {
+         "$id": "553",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": false,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "554",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Doc": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "555",
+        "kind": "constant",
+        "valueType": {
+         "$id": "556",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "557",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "558",
+        "kind": "constant",
+        "valueType": {
+         "$id": "559",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "560",
+       "Name": "content",
+       "NameInRequest": "content",
+       "Doc": "Request body for de-identification operation.",
+       "Type": {
+        "$ref": "163"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "561",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "173"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [
+        {
+         "$id": "562",
+         "Name": "clientRequestId",
+         "NameInResponse": "x-ms-client-request-id",
+         "Doc": "An opaque, globally-unique, client-generated string identifier for the request.",
+         "Type": {
+          "$id": "563",
+          "kind": "string",
+          "name": "uuid",
+          "crossLanguageDefinitionId": "Azure.Core.uuid",
+          "baseType": {
+           "$id": "564",
+           "kind": "string",
+           "name": "string",
+           "crossLanguageDefinitionId": "TypeSpec.string",
+           "decorators": []
+          },
+          "decorators": []
+         }
+        }
+       ],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}",
+     "Path": "/deid",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "Decorators": [],
+     "Examples": [
+      {
+       "$id": "565",
+       "kind": "http",
+       "name": "De-identify text.",
+       "description": "De-identify text.",
+       "filePath": "2024-11-15/DeidentifyText.json",
+       "parameters": [
+        {
+         "$id": "566",
+         "parameter": {
+          "$ref": "547"
+         },
+         "value": {
+          "$id": "567",
+          "kind": "string",
+          "type": {
+           "$ref": "548"
+          },
+          "value": "2024-11-15"
+         }
+        },
+        {
+         "$id": "568",
+         "parameter": {
+          "$ref": "551"
+         },
+         "value": {
+          "$id": "569",
+          "kind": "string",
+          "type": {
+           "$ref": "552"
+          },
+          "value": "00000000-0000-0000-0000-000000000000"
+         }
+        },
+        {
+         "$id": "570",
+         "parameter": {
+          "$ref": "560"
+         },
+         "value": {
+          "$id": "571",
+          "kind": "model",
+          "type": {
+           "$ref": "163"
+          },
+          "value": {
+           "$id": "572",
+           "inputText": {
+            "$id": "573",
+            "kind": "string",
+            "type": {
+             "$ref": "165"
+            },
+            "value": "Hello my name is John Smith."
+           },
+           "operation": {
+            "$id": "574",
+            "kind": "string",
+            "type": {
+             "$ref": "2"
+            },
+            "value": "Redact"
+           },
+           "customizations": {
+            "$id": "575",
+            "kind": "model",
+            "type": {
+             "$ref": "168"
+            },
+            "value": {
+             "$id": "576",
+             "redactionFormat": {
+              "$id": "577",
+              "kind": "string",
+              "type": {
+               "$ref": "170"
+              },
+              "value": "[{type}]"
+             }
+            }
+           }
+          }
+         }
+        }
+       ],
+       "responses": [
+        {
+         "$id": "578",
+         "response": {
+          "$ref": "561"
+         },
+         "statusCode": 200,
+         "bodyValue": {
+          "$id": "579",
+          "kind": "model",
+          "type": {
+           "$ref": "173"
+          },
+          "value": {
+           "$id": "580",
+           "outputText": {
+            "$id": "581",
+            "kind": "string",
+            "type": {
+             "$ref": "175"
+            },
+            "value": "Hello my name is [name]."
+           }
+          }
+         }
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "Protocol": {
+    "$id": "582"
+   },
+   "Parameters": [
+    {
+     "$id": "583",
+     "Name": "endpoint",
+     "NameInRequest": "endpoint",
+     "Doc": "Url of your De-identification Service.",
+     "Type": {
+      "$id": "584",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "Location": "Uri",
+     "IsApiVersion": false,
+     "IsResourceParameter": false,
+     "IsContentType": false,
+     "IsRequired": true,
+     "IsEndpoint": true,
+     "SkipUrlEncoding": false,
+     "Explode": false,
+     "Kind": "Client"
+    }
+   ],
+   "Decorators": []
+  }
+ ],
+ "Auth": {
+  "$id": "585",
+  "OAuth2": {
+   "$id": "586",
+   "Scopes": [
+    "https://deid.azure.com/.default"
+   ]
+  }
+ }
+}
