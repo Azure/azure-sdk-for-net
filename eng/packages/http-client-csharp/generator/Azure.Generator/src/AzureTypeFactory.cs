@@ -5,7 +5,6 @@ using Azure.Generator.InputTransformation;
 using Azure.Generator.Primitives;
 using Azure.Generator.Providers;
 using Azure.Generator.Providers.Abstraction;
-using Azure.Generator.Utilities;
 using Microsoft.Generator.CSharp.ClientModel;
 using Microsoft.Generator.CSharp.ClientModel.Providers;
 using Microsoft.Generator.CSharp.Expressions;
@@ -16,6 +15,7 @@ using Microsoft.Generator.CSharp.Snippets;
 using Microsoft.Generator.CSharp.Statements;
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.Generator
@@ -23,7 +23,7 @@ namespace Azure.Generator
     /// <inheritdoc/>
     public class AzureTypeFactory : ScmTypeFactory
     {
-        private Dictionary<InputModelType, ResourceDataProvider?> _resourceDataProvdierCache = new();
+        private Dictionary<InputModelType, ResourceDataProvider> _resourceDataProvdierCache = new();
 
         /// <inheritdoc/>
         public override IClientResponseApi ClientResponseApi => AzureClientResponseProvider.Instance;
@@ -61,28 +61,6 @@ namespace Azure.Generator
                 }
             }
             return base.CreateCSharpTypeCore(inputType);
-        }
-
-        /// <inheritdoc/>
-        public override bool TryGetPropertyTypeReplacement(InputModelType inputModelType, [NotNullWhen(true)] out SystemObjectProvider? replacement)
-        {
-            replacement = PropertyReferenceTypeChooser.GetExactMatch(inputModelType);
-            if (replacement is null)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        /// <inheritdoc/>
-        public override bool TryGetTypeReplacement(InputModelType inputModelType, [NotNullWhen(true)] out SystemObjectProvider? replacement)
-        {
-            replacement = TypeReferenceTypeChooser.GetExactMatch(inputModelType);
-            if (replacement is null)
-            {
-                return false;
-            }
-            return true;
         }
 
         private CSharpType? CreateKnownPrimitiveType(InputPrimitiveType inputType)
@@ -135,5 +113,41 @@ namespace Azure.Generator
         /// <inheritdoc/>
         protected override ClientProvider CreateClientCore(InputClient inputClient)
             => AzureClientPlugin.Instance.IsAzureArm.Value ? base.CreateClientCore(InputClientTransformer.TransformInputClient(inputClient)) : base.CreateClientCore(inputClient);
+
+        internal ResourceDataProvider CreateResourceData(InputModelType inputModelType)
+        {
+            if (_resourceDataProvdierCache.TryGetValue(inputModelType, out var resourceDataProvider))
+            {
+                return resourceDataProvider;
+            }
+
+            resourceDataProvider = new ResourceDataProvider(inputModelType);
+            _resourceDataProvdierCache.Add(inputModelType, resourceDataProvider);
+            return resourceDataProvider;
+        }
+
+        /// <inheritdoc/>
+        protected override IReadOnlyList<TypeProvider> CreateSerializationsCore(InputType inputType, TypeProvider typeProvider)
+        {
+            if (inputType is InputModelType inputModel
+                && typeProvider is ModelProvider modelProvider
+                && AzureClientPlugin.Instance.OutputLibrary.IsResource(StringHelpers.ToCleanName(inputType.Name))
+                && inputModel.Usage.HasFlag(InputModelTypeUsage.Json))
+            {
+                return [new ResourceDataSerializationProvider(inputModel, modelProvider)];
+            }
+
+            return base.CreateSerializationsCore(inputType, typeProvider);
+        }
+
+        /// <inheritdoc/>
+        protected override ModelProvider? CreateModelCore(InputModelType model)
+        {
+            if (AzureClientPlugin.Instance.OutputLibrary.IsResource(StringHelpers.ToCleanName(model.Name)))
+            {
+                return CreateResourceData(model);
+            }
+            return base.CreateModelCore(model);
+        }
     }
 }

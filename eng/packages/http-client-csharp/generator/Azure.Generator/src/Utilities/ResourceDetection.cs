@@ -24,15 +24,15 @@ namespace Azure.Generator.Utilities
         private static InputModelType? FindObjectSchemaWithName(string name, InputNamespace? inputNamespace = null)
             => inputNamespace?.Models.OfType<InputModelType>().FirstOrDefault(inputModel => inputModel.Name == name);
 
-        public static bool TryGetResourceDataSchema(this OperationSet set, [MaybeNullWhen(false)] out string resourceSchemaName, out InputModelType? inputModel, InputNamespace? inputNamespace)
+        public static bool TryGetResourceDataSchema(this OperationSet set, [MaybeNullWhen(false)] out string resourceSpecName, out InputModelType? inputModel, InputNamespace? inputNamespace)
         {
-            resourceSchemaName = null;
+            resourceSpecName = null;
             inputModel = null;
 
             // get the result from cache
             if (_resourceDataSchemaCache.TryGetValue(set.RequestPath, out var resourceSchemaTuple))
             {
-                resourceSchemaName = resourceSchemaTuple?.Name;
+                resourceSpecName = resourceSchemaTuple is null ? null : StringHelpers.ToCleanName(resourceSchemaTuple?.Name!);
                 inputModel = resourceSchemaTuple?.InputModel;
                 return resourceSchemaTuple != null;
             }
@@ -50,16 +50,16 @@ namespace Azure.Generator.Utilities
             // try put operation to get the resource name
             if (set.TryOperationWithMethod(RequestMethod.Put, out inputModel))
             {
-                resourceSchemaName = inputModel.Name;
-                _resourceDataSchemaCache.TryAdd(set.RequestPath, (resourceSchemaName, inputModel));
+                resourceSpecName = StringHelpers.ToCleanName(inputModel.Name);
+                _resourceDataSchemaCache.TryAdd(set.RequestPath, (resourceSpecName, inputModel));
                 return true;
             }
 
             // try get operation to get the resource name
             if (set.TryOperationWithMethod(RequestMethod.Get, out inputModel))
             {
-                resourceSchemaName = inputModel.Name;
-                _resourceDataSchemaCache.TryAdd(set.RequestPath, (resourceSchemaName, inputModel));
+                resourceSpecName = StringHelpers.ToCleanName(inputModel.Name);
+                _resourceDataSchemaCache.TryAdd(set.RequestPath, (resourceSpecName, inputModel));
                 return true;
             }
 

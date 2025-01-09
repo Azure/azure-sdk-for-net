@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The complex type of the extended location. </summary>
-    internal partial class ExtendedLocation
+    public partial class ExtendedLocation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

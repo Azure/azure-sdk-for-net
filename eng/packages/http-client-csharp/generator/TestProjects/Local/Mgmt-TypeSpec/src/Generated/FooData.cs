@@ -7,31 +7,27 @@
 
 using System;
 using System.Collections.Generic;
-using MgmtTypeSpec;
+using Azure.Core;
 
 namespace MgmtTypeSpec.Models
 {
     /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
-    public partial class FooData : MgmtTypeSpec.TrackedResourceData
+    public partial class FooData : TrackedResource
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
-        internal FooData()
+        internal FooData(string location) : base(location)
         {
         }
 
-        internal FooData(FooProperties properties, MgmtTypeSpec.ExtendedLocation extendedLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooData(ResourceIdentifier id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties, IDictionary<string, string> tags, string location, FooProperties properties, ExtendedLocation extendedLocation) : base(id, name, @type, systemData, additionalBinaryDataProperties, tags, location)
         {
             Properties = properties;
             ExtendedLocation = extendedLocation;
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The resource-specific properties for this resource. </summary>
         public FooProperties Properties { get; }
 
         /// <summary> Gets the ExtendedLocation. </summary>
-        public MgmtTypeSpec.ExtendedLocation ExtendedLocation { get; }
+        public ExtendedLocation ExtendedLocation { get; }
     }
 }

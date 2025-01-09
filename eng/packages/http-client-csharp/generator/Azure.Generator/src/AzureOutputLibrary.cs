@@ -6,9 +6,7 @@ using Azure.Generator.Providers;
 using Azure.Generator.Utilities;
 using Microsoft.Generator.CSharp.ClientModel;
 using Microsoft.Generator.CSharp.Providers;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Azure.Generator
 {
@@ -17,15 +15,13 @@ namespace Azure.Generator
     {
         // TODO: categorize clients into operationSets, which contains operations sharing the same Path
         private Dictionary<string, OperationSet> _pathToOperationSetMap;
-        private Dictionary<string, HashSet<OperationSet>> _resourceDataMap;
-        private HashSet<string> _resourceDataNames;
+        private Dictionary<string, HashSet<OperationSet>> _resourceDataBySpecNameMap;
 
         /// <inheritdoc/>
         public AzureOutputLibrary()
         {
             _pathToOperationSetMap = CategorizeClients();
-            _resourceDataMap = EnsureResourceDataMap();
-            _resourceDataNames = _resourceDataMap.Keys.ToHashSet();
+            _resourceDataBySpecNameMap = EnsureResourceDataMap();
         }
 
         private Dictionary<string, HashSet<OperationSet>> EnsureResourceDataMap()
@@ -33,7 +29,7 @@ namespace Azure.Generator
             var result = new Dictionary<string, HashSet<OperationSet>>();
             foreach (var operationSet in _pathToOperationSetMap.Values)
             {
-                if (operationSet.TryGetResourceDataSchema(out var resourceSchemaName, out var resourceSchema, AzureClientPlugin.Instance.InputLibrary.InputNamespace))
+                if (operationSet.TryGetResourceDataSchema(out var resourceSpecName, out var resourceSchema, AzureClientPlugin.Instance.InputLibrary.InputNamespace))
                 {
                     //// Skip the renaming for partial resource when resourceSchema is null but resourceSchemaName is not null
                     //if (resourceSchema is not null)
@@ -45,19 +41,13 @@ namespace Azure.Generator
                     //        resourceSchemaName = resourceSchemaName.LastWordToSingular(false);
                     //        resourceSchema.Name = resourceSchemaName;
                     //    }
-                    //    else
-                    //    {
-                    //        MgmtReport.Instance.TransformSection.AddTransformLog(
-                    //            new TransformItem(TransformTypeName.KeepPluralResourceData, resourceSchemaName),
-                    //            resourceSchema.GetFullSerializedName(), $"Keep ObjectName as Plural: {resourceSchemaName}");
-                    //    }
                     //}
 
                     // if this operation set corresponds to a SDK resource, we add it to the map
-                    if (!result.TryGetValue(resourceSchemaName!, out HashSet<OperationSet>? value))
+                    if (!result.TryGetValue(resourceSpecName!, out HashSet<OperationSet>? value))
                     {
                         value = new HashSet<OperationSet>();
-                        result.Add(resourceSchemaName!, value);
+                        result.Add(resourceSpecName!, value);
                     }
                     value.Add(operationSet);
                 }
@@ -96,30 +86,10 @@ namespace Azure.Generator
             return result;
         }
 
+        // TODO: generate resources and collections
         /// <inheritdoc/>
-        protected override TypeProvider[] BuildTypeProviders()
-        {
-            var providers = base.BuildTypeProviders();
-            var models = providers.Where(p => !_resourceDataMap.ContainsKey(p.Name));
+        protected override TypeProvider[] BuildTypeProviders() => [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
 
-            return [.. models, new RequestContextExtensionsDefinition(), .. BuildResourceDatas(), .. BuildResources()];
-        }
-
-        private IReadOnlyList<TypeProvider> BuildResources()
-        {
-            // TODO: Implement resource providers
-            return Array.Empty<ResourceProvdier>();
-        }
-
-        private IReadOnlyList<ResourceDataProvider> BuildResourceDatas()
-        {
-            var result = new List<ResourceDataProvider>();
-            var resourceDatas = AzureClientPlugin.Instance.InputLibrary.InputNamespace.Models.Where(m => _resourceDataNames.Contains(m.Name));
-            foreach (var resourceData in resourceDatas)
-            {
-                result.Add(AzureClientPlugin.Instance.TypeFactory.CreateResourceData(resourceData));
-            }
-            return result;
-        }
+        internal bool IsResource(string name) => _resourceDataBySpecNameMap.ContainsKey(name);
     }
 }

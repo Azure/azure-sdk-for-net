@@ -7,23 +7,19 @@
 
 using System;
 using System.Collections.Generic;
-using MgmtTypeSpec;
+using Azure.Core;
 
 namespace MgmtTypeSpec.Models
 {
     /// <summary> The resource model definition for a Azure Resource Manager proxy resource. It will not have tags and a location. </summary>
-    public partial class ProxyResource : MgmtTypeSpec.ResourceData
+    public partial class ProxyResource : Resource
     {
-        /// <summary> Keeps track of any properties unknown to the library. </summary>
-        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-
         internal ProxyResource()
         {
         }
 
-        internal ProxyResource(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProxyResource(ResourceIdentifier id, string name, string @type, SystemData systemData, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, @type, systemData, additionalBinaryDataProperties)
         {
-            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
     }
 }

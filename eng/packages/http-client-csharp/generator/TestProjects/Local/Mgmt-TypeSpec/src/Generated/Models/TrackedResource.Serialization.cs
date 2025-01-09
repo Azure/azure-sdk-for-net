@@ -16,9 +16,13 @@ using MgmtTypeSpec;
 namespace MgmtTypeSpec.Models
 {
     /// <summary></summary>
-    public partial class PrivateLinkResource : IJsonModel<PrivateLinkResource>
+    public partial class TrackedResource : IJsonModel<TrackedResource>
     {
-        void IJsonModel<PrivateLinkResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        internal TrackedResource()
+        {
+        }
+
+        void IJsonModel<TrackedResource>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,40 +33,48 @@ namespace MgmtTypeSpec.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrackedResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkResource)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(TrackedResource)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
-            if (Optional.IsDefined(Properties))
+            if (Optional.IsCollectionDefined(Tags))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Identity))
-            {
-                writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity, options);
-            }
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location);
         }
 
-        PrivateLinkResource IJsonModel<PrivateLinkResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (PrivateLinkResource)JsonModelCreateCore(ref reader, options);
+        TrackedResource IJsonModel<TrackedResource>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (TrackedResource)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override Resource JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrackedResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkResource)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(TrackedResource)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePrivateLinkResource(document.RootElement, options);
+            return DeserializeTrackedResource(document.RootElement, options);
         }
 
-        internal static PrivateLinkResource DeserializePrivateLinkResource(JsonElement element, ModelReaderWriterOptions options)
+        internal static TrackedResource DeserializeTrackedResource(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -73,8 +85,8 @@ namespace MgmtTypeSpec.Models
             string @type = default;
             SystemData systemData = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            PrivateLinkResourceProperties properties = default;
-            ManagedServiceIdentity identity = default;
+            IDictionary<string, string> tags = default;
+            string location = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("id"u8))
@@ -105,22 +117,30 @@ namespace MgmtTypeSpec.Models
                     systemData = SystemData.DeserializeSystemData(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("properties"u8))
+                if (prop.NameEquals("tags"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    properties = PrivateLinkResourceProperties.DeserializePrivateLinkResourceProperties(prop.Value, options);
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    tags = dictionary;
                     continue;
                 }
-                if (prop.NameEquals("identity"u8))
+                if (prop.NameEquals("location"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    identity = ManagedServiceIdentity.DeserializeManagedServiceIdentity(prop.Value, options);
+                    location = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -128,70 +148,70 @@ namespace MgmtTypeSpec.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PrivateLinkResource(
+            return new TrackedResource(
                 id,
                 name,
                 @type,
                 systemData,
                 additionalBinaryDataProperties,
-                properties,
-                identity);
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location);
         }
 
-        BinaryData IPersistableModel<PrivateLinkResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<TrackedResource>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrackedResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkResource)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrackedResource)} does not support writing '{options.Format}' format.");
             }
         }
 
-        PrivateLinkResource IPersistableModel<PrivateLinkResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (PrivateLinkResource)PersistableModelCreateCore(data, options);
+        TrackedResource IPersistableModel<TrackedResource>.Create(BinaryData data, ModelReaderWriterOptions options) => (TrackedResource)PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override Resource PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PrivateLinkResource>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<TrackedResource>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializePrivateLinkResource(document.RootElement, options);
+                        return DeserializeTrackedResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkResource)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrackedResource)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<PrivateLinkResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<TrackedResource>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="privateLinkResource"> The <see cref="PrivateLinkResource"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(PrivateLinkResource privateLinkResource)
+        /// <param name="trackedResource"> The <see cref="TrackedResource"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(TrackedResource trackedResource)
         {
-            if (privateLinkResource == null)
+            if (trackedResource == null)
             {
                 return null;
             }
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(privateLinkResource, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(trackedResource, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="PrivateLinkResource"/> from. </param>
-        public static explicit operator PrivateLinkResource(Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="TrackedResource"/> from. </param>
+        public static explicit operator TrackedResource(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializePrivateLinkResource(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeTrackedResource(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }
