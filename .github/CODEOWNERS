@@ -592,9 +592,6 @@
 # ServiceLabel: %Logic App
 # ServiceOwners:                                                   @Azure/azure-logicapps-team
 
-# ServiceLabel: %LOUIS
-# ServiceOwners:                                                   @minamnmik
-
 # ServiceLabel: %Managed Identity
 # ServiceOwners:                                                   @varunkch
 
