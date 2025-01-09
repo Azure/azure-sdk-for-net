@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             {
                 Properties = new DataflowProperties(
                     [
-                        new DataflowOperation(OperationType.Source)
+                        new DataflowAction(OperationType.Source)
                         {
                             Name = "source1",
                             SourceSettings = new DataflowSourceOperationSettings(
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
                                 ["thermostats/+/telemetry/temperature/#"]
                             ),
                         },
-                        new DataflowOperation(OperationType.Destination)
+                        new DataflowAction(OperationType.Destination)
                         {
                             Name = "destination1",
                             DestinationSettings = new DataflowDestinationOperationSettings(

@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
                                         Topics = { "topic", "topic/with/wildcard/#" }
                                     },
                                 },
-                                new PrincipalDefinition
+                                new PrincipalConfig
                                 {
                                     ClientIds = { "my-client-id" },
                                     Usernames = { "clientUserName" },
