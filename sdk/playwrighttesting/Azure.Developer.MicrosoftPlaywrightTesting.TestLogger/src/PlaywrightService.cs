@@ -42,23 +42,7 @@ public class PlaywrightService
             _serviceAuth = value;
         }
     }
-    /// <summary>
-    /// handles one time perform operation
-    /// </summary>
-    internal void PerformOneTimeOperation()
-    {
-        var oneTimeOperationFlag = Environment.GetEnvironmentVariable(Constants.s_playwright_service_one_time_operation_flag_environment_variable) == "true";
 
-        if (oneTimeOperationFlag)
-            return;
-
-        Environment.SetEnvironmentVariable(Constants.s_playwright_service_one_time_operation_flag_environment_variable, "true");
-
-        if (ServiceAuth == ServiceAuthType.AccessToken)
-        {
-            WarnIfAccessTokenCloseToExpiry();
-        }
-    }
     /// <summary>
     /// Gets or sets the rotation timer for Playwright service.
     /// </summary>
@@ -297,6 +281,20 @@ public class PlaywrightService
     {
         _frameworkLogger?.Info("Cleaning up Playwright service resources.");
         RotationTimer?.Dispose();
+    }
+    internal void PerformOneTimeOperation()
+    {
+        var oneTimeOperationFlag = Environment.GetEnvironmentVariable(Constants.s_playwright_service_one_time_operation_flag_environment_variable) == "true";
+
+        if (oneTimeOperationFlag)
+            return;
+
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_one_time_operation_flag_environment_variable, "true");
+
+        if (ServiceAuth == ServiceAuthType.AccessToken)
+        {
+            WarnIfAccessTokenCloseToExpiry();
+        }
     }
 
     internal async void RotationHandlerAsync(object? _)
