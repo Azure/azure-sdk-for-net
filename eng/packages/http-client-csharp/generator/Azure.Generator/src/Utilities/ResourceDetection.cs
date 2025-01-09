@@ -111,17 +111,9 @@ namespace Azure.Generator.Utilities
             bool idPropertyFound = false;
             bool typePropertyFound = false;
             bool namePropertyFound = false;
-            //bool typePropertyFound = !Configuration.MgmtConfiguration.DoesResourceModelRequireType;
-            //bool namePropertyFound = !Configuration.MgmtConfiguration.DoesResourceModelRequireName;
 
             foreach (var property in allProperties)
             {
-                // TODO: FlattenedNames is missing in the InputProperty
-                // check if this property is flattened from lower level, we should only consider first level properties in this model
-                // therefore if flattenedNames is not empty, this property is flattened, we skip this property
-                //if (property.FlattenedNames is not null && property.FlattenedNames.Any())
-                //    continue;
-
                 switch (property.SerializedName)
                 {
                     case "id":

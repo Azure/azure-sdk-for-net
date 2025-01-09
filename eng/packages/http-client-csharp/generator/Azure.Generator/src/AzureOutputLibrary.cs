@@ -31,18 +31,6 @@ namespace Azure.Generator
             {
                 if (operationSet.TryGetResourceDataSchema(out var resourceSpecName, out var resourceSchema, AzureClientPlugin.Instance.InputLibrary.InputNamespace))
                 {
-                    //// Skip the renaming for partial resource when resourceSchema is null but resourceSchemaName is not null
-                    //if (resourceSchema is not null)
-                    //{
-                    //    // ensure the name of resource data is singular
-                    //    // skip this step if the configuration is set to keep this plural
-                    //    if (!Configuration.MgmtConfiguration.KeepPluralResourceData.Contains(resourceSchemaName))
-                    //    {
-                    //        resourceSchemaName = resourceSchemaName.LastWordToSingular(false);
-                    //        resourceSchema.Name = resourceSchemaName;
-                    //    }
-                    //}
-
                     // if this operation set corresponds to a SDK resource, we add it to the map
                     if (!result.TryGetValue(resourceSpecName!, out HashSet<OperationSet>? value))
                     {
@@ -86,8 +74,8 @@ namespace Azure.Generator
             return result;
         }
 
-        // TODO: generate resources and collections
         /// <inheritdoc/>
+        // TODO: generate resources and collections
         protected override TypeProvider[] BuildTypeProviders() => [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
 
         internal bool IsResource(string name) => _resourceDataBySpecNameMap.ContainsKey(name);
