@@ -8,7 +8,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Properties of a transfer that can be used for resuming.
     /// </summary>
-    public class DataTransferProperties
+    public class TransferProperties
     {
         /// <summary>
         /// Contains the transfer ID which to rehydrate the StorageResource from.
@@ -53,6 +53,6 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// For mocking.
         /// </summary>
-        protected internal DataTransferProperties() { }
+        protected internal TransferProperties() { }
     }
 }

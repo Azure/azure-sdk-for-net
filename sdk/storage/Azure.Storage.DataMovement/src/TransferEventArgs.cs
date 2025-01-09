@@ -1,26 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 using System.Threading;
-using Azure.Core;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Event Arguments for any Storage Transfer Event Handler.
+    /// Common event arguments for any Storage Transfer Event Handler.
     /// </summary>
-    public abstract class DataTransferEventArgs : SyncAsyncEventArgs
+    public abstract class TransferEventArgs : SyncAsyncEventArgs
     {
         /// <summary>
-        /// Job ID.
+        /// Transfer id.
         /// </summary>
         public string TransferId { get; internal set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DataTransferEventArgs"/>.
+        /// Initializes a new instance of the <see cref="TransferEventArgs"/>.
         /// </summary>
         /// <param name="transferId">The transfer ID.</param>
         /// <param name="isRunningSynchronously">
@@ -38,7 +35,7 @@ namespace Azure.Storage.DataMovement
         /// <exception cref="System.ArgumentNullException">
         /// Thrown if <paramref name="transferId"/> is empty or null.
         /// </exception>
-        protected DataTransferEventArgs(
+        protected TransferEventArgs(
             string transferId,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)

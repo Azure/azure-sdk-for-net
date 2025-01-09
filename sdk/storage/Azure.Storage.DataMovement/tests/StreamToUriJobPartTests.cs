@@ -160,14 +160,14 @@ namespace Azure.Storage.DataMovement.Tests
                 destination: mockDestination.Object);
 
             TransferJobInternal job = new(
-                new DataTransfer(id: transferId),
+                new TransferOperation(id: transferId),
                 mockSource.Object,
                 mockDestination.Object,
                 StreamToUriJobPart.CreateJobPartAsync,
                 StreamToUriJobPart.CreateJobPartAsync,
-                new DataTransferOptions(),
+                new TransferOptions(),
                 checkpointer,
-                DataTransferErrorMode.StopOnAnyFailure,
+                TransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
                 new ClientDiagnostics(ClientOptions.Default));
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
@@ -267,14 +267,14 @@ namespace Azure.Storage.DataMovement.Tests
             Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = MockQueueInternalTasks.GetPartQueueChunkTask();
 
             TransferJobInternal job = new(
-                new DataTransfer(id: transferId),
+                new TransferOperation(id: transferId),
                 mockSource.Object,
                 mockDestination.Object,
                 StreamToUriJobPart.CreateJobPartAsync,
                 StreamToUriJobPart.CreateJobPartAsync,
-                new DataTransferOptions(),
+                new TransferOptions(),
                 checkpointer,
-                DataTransferErrorMode.StopOnAnyFailure,
+                TransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
                 new ClientDiagnostics(ClientOptions.Default));
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(

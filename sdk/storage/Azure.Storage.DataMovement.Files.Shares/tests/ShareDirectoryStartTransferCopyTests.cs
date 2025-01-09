@@ -407,12 +407,12 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 GetDestinationStorageResourceContainer(destinationContainer, destPrefix, propertiesType);
 
             // Create Transfer Manager
-            DataTransferOptions options = new DataTransferOptions();
+            TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 sourceResource,
                 destinationResource,
                 options).ConfigureAwait(false);
@@ -426,7 +426,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             // Verify completion
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
             await testEventsRaised.AssertContainerCompletedCheck(4);
 
             // Assert
