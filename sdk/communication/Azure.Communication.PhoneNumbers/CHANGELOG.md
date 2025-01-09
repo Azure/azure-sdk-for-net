@@ -5,6 +5,10 @@
 ### Features Added
 
 - GA release of Number Insight.
+- API version `2023-05-01-preview` is the default
+
+### Bugs Fixed
+- OperatorDetails.Name is now optional in OperatorInformation Response.
 
 ## 1.3.0-beta.5 (2024-03-01)
 
