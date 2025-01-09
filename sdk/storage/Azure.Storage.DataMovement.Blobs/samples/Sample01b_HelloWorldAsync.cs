@@ -205,10 +205,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create simple transfer single blob upload job
                 #region Snippet:SimpleBlobUpload
-                DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+                TransferOperation transferOperation = await transferManager.StartTransferAsync(
                     sourceResource: files.FromFile(sourceLocalPath),
                     destinationResource: blobs.FromBlob(destinationBlobUri));
-                await dataTransfer.WaitForCompletionAsync();
+                await transferOperation.WaitForCompletionAsync();
                 #endregion
                 #endregion
             }
@@ -271,7 +271,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Create Blob Data Controller to skip through all failures
                 TransferManagerOptions options = new TransferManagerOptions()
                 {
-                    ErrorHandling = DataTransferErrorMode.ContinueOnFailure
+                    ErrorHandling = TransferErrorMode.ContinueOnFailure
                 };
                 TransferManager transferManager = new TransferManager(options);
                 BlobsStorageResourceProvider blobs = new();
@@ -279,10 +279,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Simple Download Single Blob Job
                 #region Snippet:SimpleBlockBlobDownload
-                DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+                TransferOperation transferOperation = await transferManager.StartTransferAsync(
                     sourceResource: blobs.FromBlob(sourceBlobUri),
                     destinationResource: files.FromFile(downloadPath));
-                await dataTransfer.WaitForCompletionAsync();
+                await transferOperation.WaitForCompletionAsync();
                 #endregion
 
                 StorageResource sourceResource2 = blobs.FromClient(sourceBlobClient);
@@ -365,7 +365,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions transferManagerOptions = new TransferManagerOptions();
-                DataTransferOptions options = new DataTransferOptions()
+                TransferOptions options = new TransferOptions()
                 {
                     MaximumTransferChunkSize = 4 * Constants.MB,
                     CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
@@ -375,7 +375,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Create simple transfer directory upload job which uploads the directory and the contents of that directory
                 string optionalDestinationPrefix = "sample-directory2";
                 #region Snippet:SimpleDirectoryUpload
-                DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+                TransferOperation transferOperation = await transferManager.StartTransferAsync(
                     sourceResource: files.FromDirectory(sourcePath),
                     destinationResource: blobs.FromContainer(
                         blobContainerUri,
@@ -458,7 +458,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 LocalFilesStorageResourceProvider files = new();
                 // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
-                DataTransferOptions transferOptions = new DataTransferOptions();
+                TransferOptions transferOptions = new TransferOptions();
                 transferOptions.ItemTransferCompleted += (TransferItemCompletedEventArgs args) =>
                 {
                     using (StreamWriter logStream = File.AppendText(logFile))
@@ -470,7 +470,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 TransferManager transferManager = new TransferManager(options);
 
                 // Create simple transfer directory upload job which uploads the directory and the contents of that directory
-                DataTransfer uploadDirectoryJobId = await transferManager.StartTransferAsync(
+                TransferOperation uploadDirectoryJobId = await transferManager.StartTransferAsync(
                     files.FromDirectory(sourcePath),
                     blobs.FromClient(
                         container,
@@ -545,7 +545,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             {
                 // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
-                DataTransferOptions transferOptions = new DataTransferOptions();
+                TransferOptions transferOptions = new TransferOptions();
                 transferOptions.TransferStatusChanged += (TransferStatusEventArgs args) =>
                 {
                     if (args.TransferStatus.HasCompletedSuccessfully)
@@ -577,7 +577,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 LocalFilesStorageResourceProvider files = new();
 
                 // Create simple transfer directory upload job which uploads the directory and the contents of that directory
-                DataTransfer uploadDirectoryJobId = await transferManager.StartTransferAsync(
+                TransferOperation uploadDirectoryJobId = await transferManager.StartTransferAsync(
                     files.FromDirectory(sourcePath),
                     blobs.FromClient(
                         container,
@@ -647,7 +647,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create BlobTransferManager with event handler in Options bag
                 TransferManagerOptions options = new TransferManagerOptions();
-                DataTransferOptions downloadOptions = new DataTransferOptions();
+                TransferOptions downloadOptions = new TransferOptions();
                 downloadOptions.ItemTransferFailed += async (TransferItemFailedEventArgs args) =>
                 {
                     // Log Exception Message
@@ -664,7 +664,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Create different download transfer
                 string optionalSourcePrefix = "sample-blob-directory2";
                 #region Snippet:SimpleDirectoryDownload_Blob
-                DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+                TransferOperation transferOperation = await transferManager.StartTransferAsync(
                     sourceResource: blobs.FromContainer(
                         blobContainerUri,
                         new BlobStorageResourceContainerOptions()
@@ -672,7 +672,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                             BlobDirectoryPrefix = optionalSourcePrefix
                         }),
                     destinationResource: files.FromDirectory(downloadPath));
-                await dataTransfer.WaitForCompletionAsync();
+                await transferOperation.WaitForCompletionAsync();
                 #endregion
             }
             finally
@@ -733,14 +733,14 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create simple transfer single blob upload job
                 #region Snippet:s2sCopyBlob
-                DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+                TransferOperation transferOperation = await transferManager.StartTransferAsync(
                     sourceResource: blobs.FromBlob(sourceBlobUri),
                     destinationResource: blobs.FromBlob(destinationBlobUri, new AppendBlobStorageResourceOptions()));
-                await dataTransfer.WaitForCompletionAsync();
+                await transferOperation.WaitForCompletionAsync();
                 #endregion
 
                 Assert.IsTrue(await destinationAppendBlobClient.ExistsAsync());
-                Assert.AreEqual(DataTransferState.Completed, dataTransfer.TransferStatus.State);
+                Assert.AreEqual(TransferState.Completed, transferOperation.Status.State);
             }
             finally
             {
@@ -817,7 +817,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Create Blob Transfer Manager
                 TransferManager transferManager = new TransferManager(default);
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-                DataTransferOptions options = new DataTransferOptions();
+                TransferOptions options = new TransferOptions();
                 options.ItemTransferFailed += async (TransferItemFailedEventArgs args) =>
                 {
                     //await LogFailedFileAsync(args.SourceFileUri, args.DestinationFileClient.Uri, args.Exception.Message);
@@ -828,7 +828,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 BlobContainerClient sourceContainer = container;
                 BlobContainerClient destinationContainer = container;
                 #region Snippet:s2sCopyBlobContainer
-                DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+                TransferOperation transferOperation = await transferManager.StartTransferAsync(
                 sourceResource: blobs.FromContainer(
                     sourceContainerUri,
                     new BlobStorageResourceContainerOptions()
@@ -844,7 +844,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         BlobType = new(BlobType.Block),
                         BlobDirectoryPrefix = downloadPath
                     }));
-                await dataTransfer.WaitForCompletionAsync();
+                await transferOperation.WaitForCompletionAsync();
                 #endregion
             }
             finally
@@ -894,10 +894,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 StorageResource destinationResource = files.FromFile(downloadPath);
 
                 // Create simple transfer single blob download job
-                DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+                TransferOperation transferOperation = await transferManager.StartTransferAsync(
                     sourceResource: sourceResource,
                     destinationResource: destinationResource);
-                string transferId = dataTransfer.Id;
+                string transferId = transferOperation.Id;
 
                 // Pause from the Transfer Manager using the Transfer Id
                 #region Snippet:PauseFromManager
@@ -905,11 +905,11 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #endregion
 
                 // Resume all transfers
-                List<DataTransfer> transfers = await transferManager.ResumeAllTransfersAsync();
+                List<TransferOperation> transfers = await transferManager.ResumeAllTransfersAsync();
 
                 // Resume a single transfer
                 #region Snippet:DataMovement_ResumeSingle
-                DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(transferId);
+                TransferOperation resumedTransfer = await transferManager.ResumeTransferAsync(transferId);
                 #endregion
 
                 // Wait for download to finish
@@ -955,17 +955,17 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 StorageResource destinationResource = files.FromFile(downloadPath);
 
                 // Create simple transfer single blob download job
-                DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+                TransferOperation transferOperation = await transferManager.StartTransferAsync(
                     sourceResource: sourceResource,
                     destinationResource: destinationResource);
 
-                // Pause from the DataTransfer object
+                // Pause from the TransferOperation object
                 #region Snippet:PauseFromTransfer
-                await dataTransfer.PauseAsync();
+                await transferOperation.PauseAsync();
                 #endregion
 
-                DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(
-                    transferId: dataTransfer.Id);
+                TransferOperation resumedTransfer = await transferManager.ResumeTransferAsync(
+                    transferId: transferOperation.Id);
 
                 // Wait for download to finish
                 await resumedTransfer.WaitForCompletionAsync();
@@ -1006,7 +1006,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     // upload files to the root of the container
                     #region Snippet:ExtensionMethodSimpleUploadToRoot
-                    DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath);
+                    TransferOperation transfer = await container.StartUploadDirectoryAsync(localPath);
 
                     await transfer.WaitForCompletionAsync();
                     #endregion
@@ -1014,7 +1014,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     // upload files with to a specific directory prefix
                     #region Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
-                    DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix);
+                    TransferOperation transfer = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix);
 
                     await transfer.WaitForCompletionAsync();
                     #endregion
@@ -1027,13 +1027,13 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         {
                             BlobDirectoryPrefix = blobDirectoryPrefix
                         },
-                        TransferOptions = new DataTransferOptions()
+                        TransferOptions = new TransferOptions()
                         {
                             CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
                         }
                     };
 
-                    DataTransfer transfer = await container.StartUploadDirectoryAsync(localPath, options);
+                    TransferOperation transfer = await container.StartUploadDirectoryAsync(localPath, options);
 
                     await transfer.WaitForCompletionAsync();
                     #endregion
@@ -1076,7 +1076,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     // download the entire container to the local directory
                     #region Snippet:ExtensionMethodSimpleDownloadContainer
-                    DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath);
+                    TransferOperation transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath);
 
                     await transfer.WaitForCompletionAsync();
                     #endregion
@@ -1084,7 +1084,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     // download a virtual directory, with a specific prefix, within the container
                     #region Snippet:ExtensionMethodSimpleDownloadContainerDirectory
-                    DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
+                    TransferOperation transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
 
                     await transfer.WaitForCompletionAsync();
                     #endregion
@@ -1097,13 +1097,13 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         {
                             BlobDirectoryPrefix = blobDirectoryPrefix
                         },
-                        TransferOptions = new DataTransferOptions()
+                        TransferOptions = new TransferOptions()
                         {
                             CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
                         }
                     };
 
-                    DataTransfer transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
+                    TransferOperation transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
 
                     await transfer.WaitForCompletionAsync();
                     #endregion
@@ -1136,19 +1136,19 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #region Snippet:EnumerateTransfers
                 async Task CheckTransfersAsync(TransferManager transferManager)
                 {
-                    await foreach (DataTransfer transfer in transferManager.GetTransfersAsync())
+                    await foreach (TransferOperation transfer in transferManager.GetTransfersAsync())
                     {
                         using StreamWriter logStream = File.AppendText(logFile);
-                        logStream.WriteLine(Enum.GetName(typeof(DataTransferStatus), transfer.TransferStatus));
+                        logStream.WriteLine(Enum.GetName(typeof(TransferStatus), transfer.Status));
                     }
                 }
                 #endregion
 
                 #region Snippet:ListenToTransferEvents
-                async Task<DataTransfer> ListenToTransfersAsync(TransferManager transferManager,
+                async Task<TransferOperation> ListenToTransfersAsync(TransferManager transferManager,
                     StorageResource source, StorageResource destination)
                 {
-                    DataTransferOptions transferOptions = new();
+                    TransferOptions transferOptions = new();
                     transferOptions.ItemTransferCompleted += (TransferItemCompletedEventArgs args) =>
                     {
                         using StreamWriter logStream = File.AppendText(logFile);
@@ -1163,10 +1163,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #endregion
 
                 #region Snippet:ListenToProgress
-                async Task<DataTransfer> ListenToProgressAsync(TransferManager transferManager, IProgress<DataTransferProgress> progress,
+                async Task<TransferOperation> ListenToProgressAsync(TransferManager transferManager, IProgress<TransferProgress> progress,
                     StorageResource source, StorageResource destination)
                 {
-                    DataTransferOptions transferOptions = new()
+                    TransferOptions transferOptions = new()
                     {
                         // optionally include the below if progress updates on bytes transferred are desired
                         ProgressHandlerOptions = new(progress, trackBytesTransferred: true)
@@ -1181,15 +1181,15 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 BlobsStorageResourceProvider blobs = new();
                 StorageResource destinationResource1 = blobs.FromClient(container.GetBlockBlobClient("sample-blob-1"));
                 StorageResource destinationResource2 = blobs.FromClient(container.GetBlockBlobClient("sample-blob-2"));
-                DataTransfer dataTransfer1 = await ListenToTransfersAsync(transferManager, sourceResource, destinationResource1);
-                DataTransfer dataTransfer2 = await ListenToProgressAsync(transferManager, new Progress<DataTransferProgress>(p => { }), sourceResource, destinationResource2);
+                TransferOperation dataTransfer1 = await ListenToTransfersAsync(transferManager, sourceResource, destinationResource1);
+                TransferOperation dataTransfer2 = await ListenToProgressAsync(transferManager, new Progress<TransferProgress>(p => { }), sourceResource, destinationResource2);
                 await CheckTransfersAsync(transferManager);
                 await dataTransfer1.WaitForCompletionAsync();
 
                 #region Snippet:LogTotalTransferFailure
                 await dataTransfer2.WaitForCompletionAsync();
-                if (dataTransfer2.TransferStatus.State == DataTransferState.Completed
-                    && dataTransfer2.TransferStatus.HasFailedItems)
+                if (dataTransfer2.Status.State == TransferState.Completed
+                    && dataTransfer2.Status.HasFailedItems)
                 {
                     using (StreamWriter logStream = File.AppendText(logFile))
                     {

@@ -112,7 +112,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
 
                 // Create simple transfer single share file upload job
                 #region Snippet:SimplefileUpload_Shares
-                DataTransfer fileTransfer = await transferManager.StartTransferAsync(
+                TransferOperation fileTransfer = await transferManager.StartTransferAsync(
                     sourceResource: files.FromFile(sourceLocalFile),
                     destinationResource: shares.FromFile(destinationFileUri));
                 await fileTransfer.WaitForCompletionAsync();
@@ -120,7 +120,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
 
                 // Create simple transfer single share directory upload job
                 #region Snippet:SimpleDirectoryUpload_Shares
-                DataTransfer folderTransfer = await transferManager.StartTransferAsync(
+                TransferOperation folderTransfer = await transferManager.StartTransferAsync(
                     sourceResource: files.FromDirectory(sourceLocalDirectory),
                     destinationResource: shares.FromDirectory(destinationFolderUri));
                 await folderTransfer.WaitForCompletionAsync();
@@ -156,7 +156,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
 
                 // Create simple transfer single share file upload job
                 #region Snippet:SimpleFileDownload_Shares
-                DataTransfer fileTransfer = await transferManager.StartTransferAsync(
+                TransferOperation fileTransfer = await transferManager.StartTransferAsync(
                     sourceResource: shares.FromFile(sourceFileUri),
                     destinationResource: files.FromFile(destinationLocalFile));
                 await fileTransfer.WaitForCompletionAsync();
@@ -164,7 +164,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
 
                 // Create simple transfer single share directory upload job
                 #region Snippet:SimpleDirectoryDownload_Shares
-                DataTransfer directoryTransfer = await transferManager.StartTransferAsync(
+                TransferOperation directoryTransfer = await transferManager.StartTransferAsync(
                     sourceResource: shares.FromDirectory(sourceDirectoryUri),
                     destinationResource: files.FromDirectory(destinationLocalDirectory));
                 await directoryTransfer.WaitForCompletionAsync();
@@ -198,7 +198,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
 
                 // Create simple transfer single share file upload job
                 #region Snippet:s2sCopyFile_Shares
-                DataTransfer fileTransfer = await transferManager.StartTransferAsync(
+                TransferOperation fileTransfer = await transferManager.StartTransferAsync(
                     sourceResource: shares.FromFile(sourceFileUri),
                     destinationResource: shares.FromFile(destinationFileUri));
                 await fileTransfer.WaitForCompletionAsync();
@@ -206,7 +206,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
 
                 // Create simple transfer single share directory upload job
                 #region Snippet:s2sCopyDirectory_Shares
-                DataTransfer directoryTransfer = await transferManager.StartTransferAsync(
+                TransferOperation directoryTransfer = await transferManager.StartTransferAsync(
                     sourceResource: shares.FromDirectory(sourceDirectoryUri),
                     destinationResource: shares.FromDirectory(destinationDirectoryUri));
                 await directoryTransfer.WaitForCompletionAsync();

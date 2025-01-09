@@ -88,10 +88,10 @@ LocalFilesStorageResourceProvider files = new();
 BlobsStorageResourceProvider blobs = new(tokenCredential);
 
 // Create simple transfer single blob upload job
-DataTransfer dataTransfer = await transferManager.StartTransferAsync(
+TransferOperation transferOperation = await transferManager.StartTransferAsync(
     sourceResource: files.FromFile(sourceLocalPath),
     destinationResource: blobs.FromBlob(destinationBlobUri));
-await dataTransfer.WaitForCompletionAsync();
+await transferOperation.WaitForCompletionAsync();
 ```
 
 ### Resuming Existing Transfers
@@ -116,7 +116,7 @@ TransferManager transferManager = new(new TransferManagerOptions()
 To resume a transfer, provide the transfer's ID, as shown below. In the case where your application does not have the desired transfer ID available, use `TransferManager.GetTransfersAsync()` to find that transfer and it's ID.
 
 ```C# Snippet:DataMovement_ResumeSingle
-DataTransfer resumedTransfer = await transferManager.ResumeTransferAsync(transferId);
+TransferOperation resumedTransfer = await transferManager.ResumeTransferAsync(transferId);
 ```
 
 #### Pause and Resume Checkpointing
@@ -152,10 +152,10 @@ A function that writes the status of each transfer to console:
 ```C# Snippet:EnumerateTransfers
 async Task CheckTransfersAsync(TransferManager transferManager)
 {
-    await foreach (DataTransfer transfer in transferManager.GetTransfersAsync())
+    await foreach (TransferOperation transfer in transferManager.GetTransfersAsync())
     {
         using StreamWriter logStream = File.AppendText(logFile);
-        logStream.WriteLine(Enum.GetName(typeof(DataTransferStatus), transfer.TransferStatus));
+        logStream.WriteLine(Enum.GetName(typeof(TransferStatus), transfer.Status));
     }
 }
 ```
@@ -171,10 +171,10 @@ When starting a transfer, `TransferOptions` contains multiple events that can be
 A function that listens to status events for a given transfer:
 
 ```C# Snippet:ListenToTransferEvents
-async Task<DataTransfer> ListenToTransfersAsync(TransferManager transferManager,
+async Task<TransferOperation> ListenToTransfersAsync(TransferManager transferManager,
     StorageResource source, StorageResource destination)
 {
-    DataTransferOptions transferOptions = new();
+    TransferOptions transferOptions = new();
     transferOptions.ItemTransferCompleted += (TransferItemCompletedEventArgs args) =>
     {
         using StreamWriter logStream = File.AppendText(logFile);
@@ -195,10 +195,10 @@ When starting a transfer, `TransferOptions` allows setting a progress handler th
 A function that listens to progress updates for a given transfer with a supplied `IProgress<TStorageTransferProgress>`:
 
 ```C# Snippet:ListenToProgress
-async Task<DataTransfer> ListenToProgressAsync(TransferManager transferManager, IProgress<DataTransferProgress> progress,
+async Task<TransferOperation> ListenToProgressAsync(TransferManager transferManager, IProgress<TransferProgress> progress,
     StorageResource source, StorageResource destination)
 {
-    DataTransferOptions transferOptions = new()
+    TransferOptions transferOptions = new()
     {
         // optionally include the below if progress updates on bytes transferred are desired
         ProgressHandlerOptions = new(progress, trackBytesTransferred: true)
@@ -215,7 +215,7 @@ async Task<DataTransfer> ListenToProgressAsync(TransferManager transferManager, 
 Transfers can be paused either by a given `DataTransfer` or through the `TransferManager` handling the transfer by referencing the transfer ID. The ID can be found on the `DataTransfer` object you received upon transfer start.
 
 ```C# Snippet:PauseFromTransfer
-await dataTransfer.PauseAsync();
+await transferOperation.PauseAsync();
 ```
 
 ```C# Snippet:PauseFromManager
@@ -230,8 +230,8 @@ Below logs failure for a single transfer by checking its status after completion
 
 ```C# Snippet:LogTotalTransferFailure
 await dataTransfer2.WaitForCompletionAsync();
-if (dataTransfer2.TransferStatus.State == DataTransferState.Completed
-    && dataTransfer2.TransferStatus.HasFailedItems)
+if (dataTransfer2.Status.State == TransferState.Completed
+    && dataTransfer2.Status.HasFailedItems)
 {
     using (StreamWriter logStream = File.AppendText(logFile))
     {
