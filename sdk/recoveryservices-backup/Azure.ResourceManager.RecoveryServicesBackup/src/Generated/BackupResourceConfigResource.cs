@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BackupResourceStorageConfigsNonCRR_Patch</description>
+        /// <description>BackupResourceStorageConfigsNonCRR_patch</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BackupResourceStorageConfigsNonCRR_Patch</description>
+        /// <description>BackupResourceStorageConfigsNonCRR_patch</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

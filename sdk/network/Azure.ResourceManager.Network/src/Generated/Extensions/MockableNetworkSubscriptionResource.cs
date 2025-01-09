@@ -2316,7 +2316,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LoadBalancers_SwapPublicIPAddresses</description>
+        /// <description>LoadBalancers_SwapPublicIpAddresses</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -2363,7 +2363,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>LoadBalancers_SwapPublicIPAddresses</description>
+        /// <description>LoadBalancers_SwapPublicIpAddresses</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
         public async Task Get_ServerlessRuntimesGet()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ServerlessRuntimes_get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
         public async Task Get_ServerlessRuntimesGetMin()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ServerlessRuntimes_get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
         public async Task Delete_ServerlessRuntimesDelete()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Delete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ServerlessRuntimes_delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
         public async Task Update_ServerlessRuntimesUpdate()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ServerlessRuntimes_update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -194,7 +194,7 @@ Value = "uyiuegxnkgp",
         public async Task Update_ServerlessRuntimesUpdateMin()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_Update_MinimumSet_Gen.json
-            // this example is just showing the usage of "InformaticaServerlessRuntimeResource_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ServerlessRuntimes_update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -226,7 +226,7 @@ Value = "uyiuegxnkgp",
         public async Task CheckDependencies_ServerlessRuntimesCheckDependencies()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_CheckDependencies_MaximumSet_Gen.json
-            // this example is just showing the usage of "ServerlessRuntimes_CheckDependencies" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ServerlessRuntimes_checkDependencies" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -253,7 +253,7 @@ Value = "uyiuegxnkgp",
         public async Task CheckDependencies_ServerlessRuntimesCheckDependenciesMin()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_CheckDependencies_MinimumSet_Gen.json
-            // this example is just showing the usage of "ServerlessRuntimes_CheckDependencies" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ServerlessRuntimes_checkDependencies" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -280,7 +280,7 @@ Value = "uyiuegxnkgp",
         public async Task StartFailedServerlessRuntime_ServerlessRuntimesStartFailedServerlessRuntime()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_StartFailedServerlessRuntime_MaximumSet_Gen.json
-            // this example is just showing the usage of "ServerlessRuntimes_StartFailedServerlessRuntime" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ServerlessRuntimes_startFailedServerlessRuntime" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -307,7 +307,7 @@ Value = "uyiuegxnkgp",
         public async Task GetServerlessResourceById_ServerlessRuntimesServerlessResourceById()
         {
             // Generated from example definition: 2024-05-08/ServerlessRuntimes_ServerlessResourceById_MaximumSet_Gen.json
-            // this example is just showing the usage of "ServerlessRuntimes_GetServerlessResourceById" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ServerlessRuntimes_serverlessResourceById" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

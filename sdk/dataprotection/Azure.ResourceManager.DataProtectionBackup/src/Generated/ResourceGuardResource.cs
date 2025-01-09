@@ -472,7 +472,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ResourceGuards_GetBackupSecurityPinRequestsObjects</description>
+        /// <description>ResourceGuards_GetBackupSecurityPINRequestsObjects</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -486,11 +486,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> An async collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetBackupSecurityPinObjectsAsync(CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<ResourceGuardProtectedObjectData> GetBackupSecurityPinRequestsObjectsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetBackupSecurityPinRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetBackupSecurityPinRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetBackupSecurityPinObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetBackupSecurityPinRequestsObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ResourceGuards_GetBackupSecurityPinRequestsObjects</description>
+        /// <description>ResourceGuards_GetBackupSecurityPINRequestsObjects</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -516,11 +516,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ResourceGuardProtectedObjectData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ResourceGuardProtectedObjectData> GetBackupSecurityPinObjects(CancellationToken cancellationToken = default)
+        public virtual Pageable<ResourceGuardProtectedObjectData> GetBackupSecurityPinRequestsObjects(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _resourceGuardRestClient.CreateGetBackupSecurityPinRequestsObjectsRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _resourceGuardRestClient.CreateGetBackupSecurityPinRequestsObjectsNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetBackupSecurityPinObjects", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(e), _resourceGuardClientDiagnostics, Pipeline, "ResourceGuardResource.GetBackupSecurityPinRequestsObjects", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -884,7 +884,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ResourceGuards_GetDefaultBackupSecurityPinRequestsObject</description>
+        /// <description>ResourceGuards_GetDefaultBackupSecurityPINRequestsObject</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -900,11 +900,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
-        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetBackupSecurityPinObjectAsync(string requestName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ResourceGuardProtectedObjectData>> GetDefaultBackupSecurityPinRequestsObjectAsync(string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.GetBackupSecurityPinObject");
+            using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultBackupSecurityPinRequestsObject");
             scope.Start();
             try
             {
@@ -927,7 +927,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ResourceGuards_GetDefaultBackupSecurityPinRequestsObject</description>
+        /// <description>ResourceGuards_GetDefaultBackupSecurityPINRequestsObject</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -943,11 +943,11 @@ namespace Azure.ResourceManager.DataProtectionBackup
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="requestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="requestName"/> is null. </exception>
-        public virtual Response<ResourceGuardProtectedObjectData> GetBackupSecurityPinObject(string requestName, CancellationToken cancellationToken = default)
+        public virtual Response<ResourceGuardProtectedObjectData> GetDefaultBackupSecurityPinRequestsObject(string requestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(requestName, nameof(requestName));
 
-            using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.GetBackupSecurityPinObject");
+            using var scope = _resourceGuardClientDiagnostics.CreateScope("ResourceGuardResource.GetDefaultBackupSecurityPinRequestsObject");
             scope.Start();
             try
             {

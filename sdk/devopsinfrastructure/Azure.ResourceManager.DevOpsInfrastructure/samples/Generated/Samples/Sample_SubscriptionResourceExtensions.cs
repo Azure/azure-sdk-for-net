@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         public async Task GetDevOpsPools_PoolsListBySubscription()
         {
             // Generated from example definition: 2024-10-19/ListPoolsBySubscription.json
-            // this example is just showing the usage of "Pool_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Pools_listBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         public async Task GetSkusByLocation_SkuListByLocation()
         {
             // Generated from example definition: 2024-10-19/Sku_ListByLocation.json
-            // this example is just showing the usage of "ResourceSku_ListByLocation" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Sku_listByLocation" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Samples
         public async Task GetUsages_SubscriptionUsagesUsages()
         {
             // Generated from example definition: 2024-10-19/SubscriptionUsages_Usages.json
-            // this example is just showing the usage of "SubscriptionUsages_GetUsages" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "SubscriptionUsages_usages" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

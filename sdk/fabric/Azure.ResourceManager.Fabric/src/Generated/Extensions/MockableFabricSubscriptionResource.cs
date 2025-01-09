@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacity_ListBySubscription</description>
+        /// <description>FabricCapacities_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacity_ListBySubscription</description>
+        /// <description>FabricCapacities_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacities_CheckFabricCapacityNameAvailability</description>
+        /// <description>FabricCapacities_checkNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacities_CheckFabricCapacityNameAvailability</description>
+        /// <description>FabricCapacities_checkNameAvailability</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacities_ListSkus</description>
+        /// <description>FabricCapacities_listSkus</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Fabric.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacities_ListSkus</description>
+        /// <description>FabricCapacities_listSkus</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

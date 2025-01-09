@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SapSizingRecommendations</description>
+        /// <description>SAPSizingRecommendations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SapSizingRecommendations</description>
+        /// <description>SAPSizingRecommendations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SapSupportedSku</description>
+        /// <description>SAPSupportedSku</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SapSupportedSku</description>
+        /// <description>SAPSupportedSku</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SapDiskConfigurations</description>
+        /// <description>SAPDiskConfigurations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SapDiskConfigurations</description>
+        /// <description>SAPDiskConfigurations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SapAvailabilityZoneDetails</description>
+        /// <description>SAPAvailabilityZoneDetails</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Workloads.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SapAvailabilityZoneDetails</description>
+        /// <description>SAPAvailabilityZoneDetails</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

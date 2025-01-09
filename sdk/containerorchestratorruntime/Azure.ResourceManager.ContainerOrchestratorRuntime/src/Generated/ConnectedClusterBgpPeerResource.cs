@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BgpPeer_Get</description>
+        /// <description>BgpPeers_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BgpPeer_Get</description>
+        /// <description>BgpPeers_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BgpPeer_Delete</description>
+        /// <description>BgpPeers_delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BgpPeer_Delete</description>
+        /// <description>BgpPeers_delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BgpPeer_CreateOrUpdate</description>
+        /// <description>BgpPeers_createOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>BgpPeer_CreateOrUpdate</description>
+        /// <description>BgpPeers_createOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

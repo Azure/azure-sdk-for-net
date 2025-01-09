@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <description>Organizations_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <description>Organizations_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Delete</description>
+        /// <description>Organizations_delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Delete</description>
+        /// <description>Organizations_delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Update</description>
+        /// <description>Organizations_update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Update</description>
+        /// <description>Organizations_update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <description>Organizations_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <description>Organizations_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <description>Organizations_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <description>Organizations_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <description>Organizations_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.NeonPostgres
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>OrganizationResource_Get</description>
+        /// <description>Organizations_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

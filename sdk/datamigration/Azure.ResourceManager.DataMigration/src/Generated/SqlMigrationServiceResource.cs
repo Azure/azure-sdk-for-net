@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_ListAuthKeys</description>
+        /// <description>SqlMigrationServices_listAuthKeys</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_ListAuthKeys</description>
+        /// <description>SqlMigrationServices_listAuthKeys</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_RegenerateAuthKeys</description>
+        /// <description>SqlMigrationServices_regenerateAuthKeys</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_RegenerateAuthKeys</description>
+        /// <description>SqlMigrationServices_regenerateAuthKeys</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_DeleteNode</description>
+        /// <description>SqlMigrationServices_deleteNode</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_DeleteNode</description>
+        /// <description>SqlMigrationServices_deleteNode</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_ListMigrations</description>
+        /// <description>SqlMigrationServices_listMigrations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -630,7 +630,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_ListMigrations</description>
+        /// <description>SqlMigrationServices_listMigrations</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -660,7 +660,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_ListMonitoringData</description>
+        /// <description>SqlMigrationServices_listMonitoringData</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -698,7 +698,7 @@ namespace Azure.ResourceManager.DataMigration
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>SqlMigrationServices_ListMonitoringData</description>
+        /// <description>SqlMigrationServices_listMonitoringData</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

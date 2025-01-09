@@ -1204,7 +1204,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AllTrafficFilters_List</description>
+        /// <description>AllTrafficFilters_list</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1238,7 +1238,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>AllTrafficFilters_List</description>
+        /// <description>AllTrafficFilters_list</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1272,7 +1272,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>listAssociatedTrafficFilters_List</description>
+        /// <description>listAssociatedTrafficFilters_list</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1281,9 +1281,9 @@ namespace Azure.ResourceManager.Elastic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ElasticTrafficFilterListResult>> GetAssociatedTrafficFiltersAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ElasticTrafficFilterListResult>> GetListAssociatedTrafficFilterAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _listAssociatedTrafficFiltersClientDiagnostics.CreateScope("ElasticMonitorResource.GetAssociatedTrafficFilters");
+            using var scope = _listAssociatedTrafficFiltersClientDiagnostics.CreateScope("ElasticMonitorResource.GetListAssociatedTrafficFilter");
             scope.Start();
             try
             {
@@ -1306,7 +1306,7 @@ namespace Azure.ResourceManager.Elastic
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>listAssociatedTrafficFilters_List</description>
+        /// <description>listAssociatedTrafficFilters_list</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1315,9 +1315,9 @@ namespace Azure.ResourceManager.Elastic
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ElasticTrafficFilterListResult> GetAssociatedTrafficFilters(CancellationToken cancellationToken = default)
+        public virtual Response<ElasticTrafficFilterListResult> GetListAssociatedTrafficFilter(CancellationToken cancellationToken = default)
         {
-            using var scope = _listAssociatedTrafficFiltersClientDiagnostics.CreateScope("ElasticMonitorResource.GetAssociatedTrafficFilters");
+            using var scope = _listAssociatedTrafficFiltersClientDiagnostics.CreateScope("ElasticMonitorResource.GetListAssociatedTrafficFilter");
             scope.Start();
             try
             {

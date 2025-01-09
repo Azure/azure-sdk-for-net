@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task CreateOrUpdate_LoadBalancersCreateOrUpdate()
         {
             // Generated from example definition: 2024-03-01/LoadBalancers_CreateOrUpdate.json
-            // this example is just showing the usage of "LoadBalancer_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "LoadBalancers_createOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task Get_LoadBalancersGet()
         {
             // Generated from example definition: 2024-03-01/LoadBalancers_Get.json
-            // this example is just showing the usage of "LoadBalancer_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "LoadBalancers_get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task GetAll_LoadBalancersList()
         {
             // Generated from example definition: 2024-03-01/LoadBalancers_List.json
-            // this example is just showing the usage of "LoadBalancer_List" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "LoadBalancers_list" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task Exists_LoadBalancersGet()
         {
             // Generated from example definition: 2024-03-01/LoadBalancers_Get.json
-            // this example is just showing the usage of "LoadBalancer_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "LoadBalancers_get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task GetIfExists_LoadBalancersGet()
         {
             // Generated from example definition: 2024-03-01/LoadBalancers_Get.json
-            // this example is just showing the usage of "LoadBalancer_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "LoadBalancers_get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

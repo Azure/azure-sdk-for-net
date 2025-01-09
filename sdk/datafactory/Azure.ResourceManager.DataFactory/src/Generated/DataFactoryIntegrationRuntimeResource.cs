@@ -1661,7 +1661,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IntegrationRuntimeNodes_GetIPAddress</description>
+        /// <description>IntegrationRuntimeNodes_GetIpAddress</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -1700,7 +1700,7 @@ namespace Azure.ResourceManager.DataFactory
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>IntegrationRuntimeNodes_GetIPAddress</description>
+        /// <description>IntegrationRuntimeNodes_GetIpAddress</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

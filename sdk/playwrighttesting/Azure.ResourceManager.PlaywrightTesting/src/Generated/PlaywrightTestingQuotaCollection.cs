@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <description>Quotas_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <description>Quotas_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_ListBySubscription</description>
+        /// <description>Quotas_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_ListBySubscription</description>
+        /// <description>Quotas_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <description>Quotas_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <description>Quotas_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <description>Quotas_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Quota_Get</description>
+        /// <description>Quotas_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

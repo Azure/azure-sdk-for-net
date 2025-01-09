@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pool_Get</description>
+        /// <description>Pools_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>Pool_Get</description>
+        /// <description>Pools_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ImageVersion_ListByImage</description>
+        /// <description>ImageVersions_listByImage</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ImageVersion_ListByImage</description>
+        /// <description>ImageVersions_listByImage</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

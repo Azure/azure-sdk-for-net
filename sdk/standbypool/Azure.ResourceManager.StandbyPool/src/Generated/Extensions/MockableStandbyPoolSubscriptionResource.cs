@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachinePoolResource_ListBySubscription</description>
+        /// <description>StandbyVirtualMachinePools_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachinePoolResource_ListBySubscription</description>
+        /// <description>StandbyVirtualMachinePools_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolResource_ListBySubscription</description>
+        /// <description>StandbyContainerGroupPools_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.StandbyPool.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolResource_ListBySubscription</description>
+        /// <description>StandbyContainerGroupPools_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

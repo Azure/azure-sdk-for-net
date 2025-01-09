@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InformaticaOrganizationResource_Get</description>
+        /// <description>Organizations_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InformaticaOrganizationResource_Get</description>
+        /// <description>Organizations_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InformaticaOrganizationResource_ListBySubscription</description>
+        /// <description>Organizations_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InformaticaOrganizationResource_ListBySubscription</description>
+        /// <description>Organizations_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

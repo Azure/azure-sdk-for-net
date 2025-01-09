@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacity_CreateOrUpdate</description>
+        /// <description>FabricCapacities_createOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacity_CreateOrUpdate</description>
+        /// <description>FabricCapacities_createOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacity_Get</description>
+        /// <description>FabricCapacities_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacity_Get</description>
+        /// <description>FabricCapacities_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacity_ListByResourceGroup</description>
+        /// <description>FabricCapacities_listByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacity_ListByResourceGroup</description>
+        /// <description>FabricCapacities_listByResourceGroup</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacity_Get</description>
+        /// <description>FabricCapacities_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacity_Get</description>
+        /// <description>FabricCapacities_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacity_Get</description>
+        /// <description>FabricCapacities_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.Fabric
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>FabricCapacity_Get</description>
+        /// <description>FabricCapacities_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

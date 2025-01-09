@@ -2533,6 +2533,7 @@
      "$id": "248",
      "Name": "send",
      "ResourceName": "NotificationMessagesClient",
+     "OperationId": "NotificationMessagesClient_send",
      "Doc": "Sends a notification message from Business to User.",
      "Accessibility": "public",
      "Parameters": [
@@ -2787,6 +2788,7 @@
      "$id": "273",
      "Name": "downloadMediaInternal",
      "ResourceName": "MessageDataStream",
+     "OperationId": "NotificationMessagesClient_downloadMedia",
      "Doc": "Download the Media payload from a User to Business message.",
      "Accessibility": "internal",
      "Parameters": [
@@ -3065,6 +3067,7 @@
      "$id": "305",
      "Name": "getTemplates",
      "ResourceName": "MessageTemplateItem",
+     "OperationId": "MessageTemplateClient_listTemplates",
      "Doc": "List all templates for given Azure Communication Services channel",
      "Accessibility": "public",
      "Parameters": [

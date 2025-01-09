@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         public async Task GetCounters_PreRulesGetCountersMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_getCounters_MaximumSet_Gen.json
-            // this example is just showing the usage of "PreRules_GetCounters" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PreRules_getCounters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         public async Task GetCounters_PreRulesGetCountersMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_getCounters_MinimumSet_Gen.json
-            // this example is just showing the usage of "PreRules_GetCounters" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PreRules_getCounters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         public async Task RefreshCounters_PreRulesRefreshCountersMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_refreshCounters_MaximumSet_Gen.json
-            // this example is just showing the usage of "PreRules_RefreshCounters" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PreRules_refreshCounters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         public async Task RefreshCounters_PreRulesRefreshCountersMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_refreshCounters_MinimumSet_Gen.json
-            // this example is just showing the usage of "PreRules_RefreshCounters" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PreRules_refreshCounters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         public async Task ResetCounters_PreRulesResetCountersMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_resetCounters_MaximumSet_Gen.json
-            // this example is just showing the usage of "PreRules_ResetCounters" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PreRules_resetCounters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
         public async Task ResetCounters_PreRulesResetCountersMinimumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/PreRules_resetCounters_MinimumSet_Gen.json
-            // this example is just showing the usage of "PreRules_ResetCounters" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PreRules_resetCounters" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Samples
         public async Task Get_DeidServicesGetGeneratedByMaximumSetRuleStable()
         {
             // Generated from example definition: 2024-09-20/DeidServices_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "DeidService_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "DeidServices_get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Samples
         public async Task Delete_DeidServicesDeleteGeneratedByMaximumSetRuleStable()
         {
             // Generated from example definition: 2024-09-20/DeidServices_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "DeidService_Delete" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "DeidServices_delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Samples
         public async Task Update_DeidServicesUpdateGeneratedByMaximumSetRuleStable()
         {
             // Generated from example definition: 2024-09-20/DeidServices_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "DeidService_Update" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "DeidServices_update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.HealthDataAIServices.Samples
         public async Task GetPrivateLinks_PrivateLinksListByDeidServiceGeneratedByMaximumSetRuleStable()
         {
             // Generated from example definition: 2024-09-20/PrivateLinks_ListByDeidService_MaximumSet_Gen.json
-            // this example is just showing the usage of "PrivateLinkResource_ListByDeidService" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "PrivateLinks_listByDeidService" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachinePoolResource_Get</description>
+        /// <description>StandbyVirtualMachinePools_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachinePoolResource_Get</description>
+        /// <description>StandbyVirtualMachinePools_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolResource_Get</description>
+        /// <description>StandbyContainerGroupPools_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolResource_Get</description>
+        /// <description>StandbyContainerGroupPools_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachinePoolResource_ListBySubscription</description>
+        /// <description>StandbyVirtualMachinePools_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyVirtualMachinePoolResource_ListBySubscription</description>
+        /// <description>StandbyVirtualMachinePools_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolResource_ListBySubscription</description>
+        /// <description>StandbyContainerGroupPools_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.StandbyPool
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StandbyContainerGroupPoolResource_ListBySubscription</description>
+        /// <description>StandbyContainerGroupPools_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

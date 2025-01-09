@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
         public async Task SubmitVirtualMachineDeallocate_ScheduledActionsVirtualMachinesSubmitDeallocate()
         {
             // Generated from example definition: 2024-10-01/ScheduledActions_VirtualMachinesSubmitDeallocate.json
-            // this example is just showing the usage of "ScheduledActions_SubmitVirtualMachineDeallocate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ScheduledActions_virtualMachinesSubmitDeallocate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
         public async Task SubmitVirtualMachineHibernate_ScheduledActionsVirtualMachinesSubmitHibernate()
         {
             // Generated from example definition: 2024-10-01/ScheduledActions_VirtualMachinesSubmitHibernate.json
-            // this example is just showing the usage of "ScheduledActions_SubmitVirtualMachineHibernate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ScheduledActions_virtualMachinesSubmitHibernate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
         public async Task SubmitVirtualMachineStart_ScheduledActionsVirtualMachinesSubmitStart()
         {
             // Generated from example definition: 2024-10-01/ScheduledActions_VirtualMachinesSubmitStart.json
-            // this example is just showing the usage of "ScheduledActions_SubmitVirtualMachineStart" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ScheduledActions_virtualMachinesSubmitStart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
         public async Task ExecuteVirtualMachineDeallocate_ScheduledActionsVirtualMachinesExecuteDeallocate()
         {
             // Generated from example definition: 2024-10-01/ScheduledActions_VirtualMachinesExecuteDeallocate.json
-            // this example is just showing the usage of "ScheduledActions_ExecuteVirtualMachineDeallocate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ScheduledActions_virtualMachinesExecuteDeallocate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
         public async Task ExecuteVirtualMachineHibernate_ScheduledActionsVirtualMachinesExecuteHibernate()
         {
             // Generated from example definition: 2024-10-01/ScheduledActions_VirtualMachinesExecuteHibernate.json
-            // this example is just showing the usage of "ScheduledActions_ExecuteVirtualMachineHibernate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ScheduledActions_virtualMachinesExecuteHibernate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
         public async Task ExecuteVirtualMachineStart_ScheduledActionsVirtualMachinesExecuteStart()
         {
             // Generated from example definition: 2024-10-01/ScheduledActions_VirtualMachinesExecuteStart.json
-            // this example is just showing the usage of "ScheduledActions_ExecuteVirtualMachineStart" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ScheduledActions_virtualMachinesExecuteStart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
         public async Task GetVirtualMachineOperationStatus_ScheduledActionsVirtualMachinesGetOperationStatus()
         {
             // Generated from example definition: 2024-10-01/ScheduledActions_VirtualMachinesGetOperationStatus.json
-            // this example is just showing the usage of "ScheduledActions_GetVirtualMachineOperationStatus" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ScheduledActions_virtualMachinesGetOperationStatus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
         public async Task CancelVirtualMachineOperations_ScheduledActionsVirtualMachinesCancelOperations()
         {
             // Generated from example definition: 2024-10-01/ScheduledActions_VirtualMachinesCancelOperations.json
-            // this example is just showing the usage of "ScheduledActions_CancelVirtualMachineOperations" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ScheduledActions_virtualMachinesCancelOperations" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Samples
         public async Task GetVirtualMachineOperationErrors_ScheduledActionsVirtualMachinesGetOperationErrors()
         {
             // Generated from example definition: 2024-10-01/ScheduledActions_VirtualMachinesGetOperationErrors.json
-            // this example is just showing the usage of "ScheduledActions_GetVirtualMachineOperationErrors" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "ScheduledActions_virtualMachinesGetOperationErrors" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

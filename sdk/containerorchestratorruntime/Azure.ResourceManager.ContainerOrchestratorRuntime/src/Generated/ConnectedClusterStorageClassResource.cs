@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageClassResource_Get</description>
+        /// <description>StorageClass_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageClassResource_Get</description>
+        /// <description>StorageClass_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageClassResource_Delete</description>
+        /// <description>StorageClass_delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageClassResource_Delete</description>
+        /// <description>StorageClass_delete</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageClassResource_Update</description>
+        /// <description>StorageClass_update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>StorageClassResource_Update</description>
+        /// <description>StorageClass_update</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

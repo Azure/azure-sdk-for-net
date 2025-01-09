@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InformaticaOrganizationResource_ListBySubscription</description>
+        /// <description>Organizations_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Mocking
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>InformaticaOrganizationResource_ListBySubscription</description>
+        /// <description>Organizations_listBySubscription</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

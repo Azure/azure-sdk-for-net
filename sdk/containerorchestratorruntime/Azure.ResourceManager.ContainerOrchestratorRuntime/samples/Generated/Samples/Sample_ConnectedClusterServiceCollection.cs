@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task CreateOrUpdate_ServicesCreateOrUpdate()
         {
             // Generated from example definition: 2024-03-01/Services_CreateOrUpdate.json
-            // this example is just showing the usage of "ServiceResource_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Services_createOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task Get_ServicesGet()
         {
             // Generated from example definition: 2024-03-01/Services_Get.json
-            // this example is just showing the usage of "ServiceResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Services_get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task GetAll_ServicesList()
         {
             // Generated from example definition: 2024-03-01/Services_List.json
-            // this example is just showing the usage of "ServiceResource_List" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Services_list" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task Exists_ServicesGet()
         {
             // Generated from example definition: 2024-03-01/Services_Get.json
-            // this example is just showing the usage of "ServiceResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Services_get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime.Samples
         public async Task GetIfExists_ServicesGet()
         {
             // Generated from example definition: 2024-03-01/Services_Get.json
-            // this example is just showing the usage of "ServiceResource_Get" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "Services_get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();

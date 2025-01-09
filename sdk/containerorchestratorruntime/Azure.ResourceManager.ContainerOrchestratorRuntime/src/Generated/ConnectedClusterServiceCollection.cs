@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceResource_CreateOrUpdate</description>
+        /// <description>Services_createOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceResource_CreateOrUpdate</description>
+        /// <description>Services_createOrUpdate</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceResource_Get</description>
+        /// <description>Services_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceResource_Get</description>
+        /// <description>Services_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceResource_List</description>
+        /// <description>Services_list</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceResource_List</description>
+        /// <description>Services_list</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceResource_Get</description>
+        /// <description>Services_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceResource_Get</description>
+        /// <description>Services_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceResource_Get</description>
+        /// <description>Services_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.ContainerOrchestratorRuntime
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>ServiceResource_Get</description>
+        /// <description>Services_get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>

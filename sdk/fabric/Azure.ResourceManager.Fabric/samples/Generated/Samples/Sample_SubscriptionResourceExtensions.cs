@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         public async Task GetFabricCapacities_ListCapacitiesBySubscription()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_ListBySubscription.json
-            // this example is just showing the usage of "FabricCapacity_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "FabricCapacities_listBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         public async Task CheckFabricCapacityNameAvailability_CheckNameAvailabilityOfACapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_CheckNameAvailability.json
-            // this example is just showing the usage of "FabricCapacities_CheckFabricCapacityNameAvailability" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "FabricCapacities_checkNameAvailability" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Fabric.Samples
         public async Task GetSkusFabricCapacities_ListEligibleSKUsForANewCapacity()
         {
             // Generated from example definition: 2023-11-01/FabricCapacities_ListSkus.json
-            // this example is just showing the usage of "FabricCapacities_ListSkus" operation, for the dependent resources, they will have to be created separately.
+            // this example is just showing the usage of "FabricCapacities_listSkus" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
