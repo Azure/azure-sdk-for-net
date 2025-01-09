@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
+using Microsoft.Extensions.Logging;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
 {
@@ -28,7 +29,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
             {
                 return false;
             }
-            _logger.Info($"Adding message with key: {key}");
+            _logger.LogInformation("Adding message with key: {key}", key);
 
             ProcessedErrorMessageKeys.Add(key!);
             InformationalMessages.Add(message!);

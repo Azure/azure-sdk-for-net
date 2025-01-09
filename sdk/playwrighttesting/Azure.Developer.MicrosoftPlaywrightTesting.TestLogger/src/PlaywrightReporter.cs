@@ -12,6 +12,7 @@ using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Processor;
 using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.Extensions.Logging;
 
 namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 
@@ -78,41 +79,52 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
     {
         Dictionary<string, object> runParameters = _xmlRunSettings.GetTestRunParameters(xmlSettings);
         Dictionary<string, object> nunitParameters = _xmlRunSettings.GetNUnitParameters(xmlSettings);
-        runParameters.TryGetValue(RunSettingKey.RunId, out var runId);
+        runParameters.TryGetValue(RunSettingKey.RunId.ToString(), out var runId);
         // If run id is not provided and not set via env, try fetching it from CI info.
         CIInfo cIInfo = CiInfoProvider.GetCIInfo(_environment);
-        if (string.IsNullOrEmpty(_environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId)))
+        if (string.IsNullOrEmpty(_environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId.ToString())))
         {
             if (string.IsNullOrEmpty(runId?.ToString()))
-                _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, ReporterUtils.GetRunId(cIInfo));
+                _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId.ToString(), ReporterUtils.GetRunId(cIInfo));
             else
-                _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, runId!.ToString()!); // runId is checked above
+                _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId.ToString(), runId!.ToString()!); // runId is checked above
         }
         else
         {
             PlaywrightService.GetDefaultRunId(); // will not set run id if already present in the environment variable
         }
 
-        runParameters.TryGetValue(RunSettingKey.ServiceAuthType, out var serviceAuth);
-        runParameters.TryGetValue(RunSettingKey.AzureTokenCredentialType, out var azureTokenCredential);
-        runParameters.TryGetValue(RunSettingKey.ManagedIdentityClientId, out var managedIdentityClientId);
-        runParameters.TryGetValue(RunSettingKey.EnableGitHubSummary, out var enableGithubSummary);
-        runParameters.TryGetValue(RunSettingKey.EnableResultPublish, out var enableResultPublish);
-        runParameters.TryGetValue(RunSettingKey.Os, out var osType);
-        runParameters.TryGetValue(RunSettingKey.ExposeNetwork, out var exposeNetwork);
-        nunitParameters.TryGetValue(RunSettingKey.NumberOfTestWorkers, out var numberOfTestWorkers);
-        runParameters.TryGetValue(RunSettingKey.RunName, out var runName);
+        runParameters.TryGetValue(RunSettingKey.ServiceAuthType.ToString(), out var serviceAuth);
+        runParameters.TryGetValue(RunSettingKey.AzureTokenCredentialType.ToString(), out var azureTokenCredential);
+        runParameters.TryGetValue(RunSettingKey.ManagedIdentityClientId.ToString(), out var managedIdentityClientId);
+        runParameters.TryGetValue(RunSettingKey.EnableGitHubSummary.ToString(), out var enableGithubSummary);
+        runParameters.TryGetValue(RunSettingKey.EnableResultPublish.ToString(), out var enableResultPublish);
+        runParameters.TryGetValue(RunSettingKey.OS.ToString(), out var osType);
+        runParameters.TryGetValue(RunSettingKey.ExposeNetwork.ToString(), out var exposeNetwork);
+        nunitParameters.TryGetValue(RunSettingKey.NumberOfTestWorkers.ToString(), out var numberOfTestWorkers);
+        runParameters.TryGetValue(RunSettingKey.RunName.ToString(), out var runName);
 
         string? enableGithubSummaryString = enableGithubSummary?.ToString();
         string? enableResultPublishString = enableResultPublish?.ToString();
 
         bool _enableGitHubSummary = string.IsNullOrEmpty(enableGithubSummaryString) || bool.Parse(enableGithubSummaryString!);
         bool _enableResultPublish = string.IsNullOrEmpty(enableResultPublishString) || bool.Parse(enableResultPublishString!);
-
+        Console.WriteLine(serviceAuth);
         PlaywrightServiceOptions? playwrightServiceSettings;
         try
         {
-            playwrightServiceSettings = new(runId: runId?.ToString(), serviceAuth: serviceAuth?.ToString(), azureTokenCredentialType: azureTokenCredential?.ToString(), managedIdentityClientId: managedIdentityClientId?.ToString(), os: PlaywrightService.GetOSPlatform(osType?.ToString()), exposeNetwork: exposeNetwork?.ToString());
+            playwrightServiceSettings = new()
+            {
+                RunId = runId?.ToString(),
+                TokenCredentialType = azureTokenCredential?.ToString(),
+                ManagedIdentityClientId = managedIdentityClientId?.ToString(),
+                OS = PlaywrightService.GetOSPlatform(osType?.ToString()),
+                ExposeNetwork = exposeNetwork?.ToString()
+            };
+            if (!string.IsNullOrEmpty(serviceAuth?.ToString()))
+            {
+                playwrightServiceSettings.ServiceAuth = new ServiceAuthType(serviceAuth!.ToString()!);
+            }
         }
         catch (Exception ex)
         {
@@ -121,23 +133,20 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             return;
         }
         // setup entra rotation handlers
-        IFrameworkLogger frameworkLogger = new VSTestFrameworkLogger(_logger);
         try
         {
-            _playwrightService = new PlaywrightService(null, playwrightServiceSettings!.RunId, null, playwrightServiceSettings.ServiceAuth, null, entraLifecycle: null, jsonWebTokenHandler: _jsonWebTokenHandler, credential: playwrightServiceSettings.AzureTokenCredential, frameworkLogger: frameworkLogger);
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-            _playwrightService.InitializeAsync().GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+            _playwrightService = new PlaywrightService(null, playwrightServiceSettings!.RunId, null, playwrightServiceSettings.ServiceAuth, null, entraLifecycle: null, jsonWebTokenHandler: _jsonWebTokenHandler, credential: playwrightServiceSettings.AzureTokenCredential, logger: _logger);
+            _playwrightService.Initialize();
         }
         catch (Exception ex)
         {
             // We have checks for access token and base url in the next block, so we can ignore the exception here.
-            _logger.Error("Failed to initialize PlaywrightService: " + ex);
+            _logger.LogError("Failed to initialize PlaywrightService: {ex}", ex);
         }
 
-        var cloudRunId = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId);
+        var cloudRunId = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId.ToString());
         string? baseUrl = _environment.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_REPORTING_URL);
-        string? accessToken = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken);
+        string? accessToken = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken.ToString());
         if (string.IsNullOrEmpty(baseUrl))
         {
             _consoleWriter.WriteError(Constants.s_no_service_endpoint_error_message);
@@ -180,6 +189,6 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
         };
 
         _testProcessor = new TestProcessor(cloudRunMetadata, cIInfo);
-        _logger.Info("Playwright Service Reporter Initialized");
+        _logger.LogInformation("Playwright Service Reporter Initialized");
     }
 }

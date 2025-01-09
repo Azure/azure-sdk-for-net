@@ -9,16 +9,21 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger;
 /// Represents the connect options for a generic type.
 /// </summary>
 /// <typeparam name="T">The type parameter.</typeparam>
-public class ConnectOptions<T> where T : class, new()
+/// <remarks>
+/// Initializes a new instance of the <see cref="ConnectOptions{T}"/> class.
+/// </remarks>
+/// <param name="WsEndpoint"></param>
+/// <param name="Options"></param>
+public class ConnectOptions<T>(string WsEndpoint, T Options) where T : class, new()
 {
     /// <summary>
     /// A browser websocket endpoint to connect to.
     /// </summary>
-    public string? WsEndpoint { get; set; }
+    public string WsEndpoint { get; set; } = WsEndpoint;
     /// <summary>
     /// Connect options for the service.
     /// </summary>
-    public T? Options { get; set; }
+    public T Options { get; set; } = Options;
 }
 
 internal class BrowserConnectOptions
