@@ -103,14 +103,14 @@ namespace Azure.Storage.DataMovement.Tests
             return Task.FromResult(new StorageResourceReadStreamResult(result));
         }
 
-        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new MockResourceCheckpointData();
+            return new MockResourceCheckpointDetails();
         }
 
-        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
-            return new MockResourceCheckpointData();
+            return new MockResourceCheckpointDetails();
         }
 
         protected internal override Task CopyFromStreamAsync(Stream stream, long streamLength, bool overwrite, long completeLength, StorageResourceWriteToOffsetOptions options = null, CancellationToken cancellationToken = default)

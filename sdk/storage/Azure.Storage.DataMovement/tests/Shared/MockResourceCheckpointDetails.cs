@@ -7,16 +7,16 @@ using System.Text;
 
 namespace Azure.Storage.DataMovement.Tests
 {
-    public class MockResourceCheckpointData : StorageResourceCheckpointData
+    public class MockResourceCheckpointDetails : StorageResourceCheckpointDetails
     {
         public byte[] Bytes;
 
         public override int Length => Bytes.Length;
 
-        public static MockResourceCheckpointData DefaultInstance => s_instance.Value;
-        private static Lazy<MockResourceCheckpointData> s_instance = new(() => new MockResourceCheckpointData());
+        public static MockResourceCheckpointDetails DefaultInstance => s_instance.Value;
+        private static Lazy<MockResourceCheckpointDetails> s_instance = new(() => new MockResourceCheckpointDetails());
 
-        public MockResourceCheckpointData()
+        public MockResourceCheckpointDetails()
         {
             string testString = "Hello World!";
             using (MemoryStream stream = new MemoryStream())
