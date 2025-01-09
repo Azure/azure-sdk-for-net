@@ -16,7 +16,7 @@
 
 ### Features Added
 
-- Updated AppConfiguration RP API version to `2024-05-01` (SnapshotCollection, SnapshotResource, SnapshotData and DataPlaneProxy)
+- Updated AppConfiguration RP API version to `2024-05-01` (AppConfigurationSnapshotCollection, AppConfigurationSnapshotResource, AppConfigurationSnapshotData and DataPlaneProxy)
 
 ## 1.3.2 (2024-05-07)
 
