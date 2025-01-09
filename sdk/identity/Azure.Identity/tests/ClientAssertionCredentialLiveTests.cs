@@ -29,11 +29,15 @@ namespace Azure.Identity.Tests
         [TestCase(true)]
         [TestCase(false)]
         [PlaybackOnly("Live tests involving secrets will be temporarily disabled.")]
-        public async Task AuthnenticateWithAssertionCallback(bool useAsyncCallback)
+        public async Task AuthenticateWithAssertionCallback(bool useAsyncCallback)
         {
             var tenantId = TestEnvironment.ServicePrincipalTenantId;
             var clientId = TestEnvironment.ServicePrincipalClientId;
+#if NET9_0_OR_GREATER
+            var cert = X509CertificateLoader.LoadCertificateFromFile(TestEnvironment.ServicePrincipalCertificatePfxPath);
+#else
             var cert = new X509Certificate2(TestEnvironment.ServicePrincipalCertificatePfxPath);
+#endif
 
             var options = InstrumentClientOptions(new ClientAssertionCredentialOptions());
 

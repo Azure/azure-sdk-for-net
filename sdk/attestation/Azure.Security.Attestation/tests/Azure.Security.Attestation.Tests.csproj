@@ -9,7 +9,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Moq" />
     <PackageReference Include="System.Security.Cryptography.Cng" />
-    <PackageReference Include="System.Format.Asn1" />
+    <PackageReference Include="System.Formats.Asn1" />
   </ItemGroup>
 
   <ItemGroup>

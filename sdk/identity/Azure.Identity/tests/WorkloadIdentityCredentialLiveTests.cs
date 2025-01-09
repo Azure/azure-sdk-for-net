@@ -39,7 +39,11 @@ namespace Azure.Identity.Tests
             };
 
             var certificatePath = TestEnvironment.ServicePrincipalCertificatePfxPath;
+#if NET9_0_OR_GREATER
+            var cert = X509CertificateLoader.LoadCertificateFromFile(certificatePath);
+#else
             var cert = new X509Certificate2(certificatePath);
+#endif
 
             string assertion = CredentialTestHelpers.CreateClientAssertionJWT(options.AuthorityHost, options.ClientId, options.TenantId, cert);
 
