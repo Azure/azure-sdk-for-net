@@ -7,6 +7,7 @@
     -->
     <PackageReference Include="Azure.Core" VersionOverride="1.0.0" />
     <PackageReference Include="CommandLineParser" />
+    <PackageReference Include="System.Collections.Immutable" />
     <PackageReference Include="System.Reflection.Emit" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Text.Encodings.Web" />

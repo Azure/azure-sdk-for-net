@@ -192,7 +192,7 @@ namespace Azure.DigitalTwins.Core.Tests
                             floorContainsRoomRelationshipId)
                         .ConfigureAwait(false);
                 };
-                act.Should().Throw<RequestFailedException>()
+                await act.Should().ThrowAsync<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.NotFound);
 
                 act = async () =>
@@ -203,7 +203,7 @@ namespace Azure.DigitalTwins.Core.Tests
                             roomContainedInFloorRelationshipId)
                         .ConfigureAwait(false);
                 };
-                act.Should().Throw<RequestFailedException>().
+                await act.Should().ThrowAsync<RequestFailedException>().
                     And.Status.Should().Be((int)HttpStatusCode.NotFound);
 
                 act = async () =>
@@ -214,7 +214,7 @@ namespace Azure.DigitalTwins.Core.Tests
                             floorCooledByHvacRelationshipId)
                         .ConfigureAwait(false);
                 };
-                act.Should().Throw<RequestFailedException>().
+                await act.Should().ThrowAsync<RequestFailedException>().
                     And.Status.Should().Be((int)HttpStatusCode.NotFound);
 
                 act = async () =>
@@ -225,7 +225,7 @@ namespace Azure.DigitalTwins.Core.Tests
                             hvacCoolsFloorRelationshipId)
                         .ConfigureAwait(false);
                 };
-                act.Should().Throw<RequestFailedException>()
+                await act.Should().ThrowAsync<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.NotFound);
             }
             catch (Exception ex)
@@ -441,7 +441,7 @@ namespace Azure.DigitalTwins.Core.Tests
                         .ConfigureAwait(false);
                 };
 
-                act.Should().Throw<RequestFailedException>()
+                await act.Should().ThrowAsync<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.PreconditionFailed);
 
                 await client
@@ -656,7 +656,7 @@ namespace Azure.DigitalTwins.Core.Tests
                         .ConfigureAwait(false);
                 };
 
-                act.Should().Throw<RequestFailedException>()
+                await act.Should().ThrowAsync<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.PreconditionFailed);
 
                 await client
@@ -887,7 +887,7 @@ namespace Azure.DigitalTwins.Core.Tests
                         .ConfigureAwait(false);
                 };
 
-                act.Should().Throw<RequestFailedException>()
+                await act.Should().ThrowAsync<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.PreconditionFailed);
 
                 // clean up without specifying an etag

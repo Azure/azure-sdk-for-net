@@ -138,7 +138,7 @@ namespace Azure.Storage.Test.Shared
             // Act
             Stream outputStream = await OpenReadAsync(client);
             byte[] outputBytes = new byte[size];
-            await outputStream.ReadAsync(outputBytes, 0, size);
+            int numBytesRead = await outputStream.ReadAsync(outputBytes, 0, size);
 
             // Assert
             Assert.AreEqual(data.Length, outputStream.Length);
@@ -332,7 +332,7 @@ namespace Azure.Storage.Test.Shared
             // Act
             Stream outputStream = await OpenReadAsync(client, bufferSize: bufferSize);
             byte[] outputBytes = new byte[size];
-            await outputStream.ReadAsync(outputBytes, 0, size / 2);
+            int numBytesRead = await outputStream.ReadAsync(outputBytes, 0, size / 2);
 
             // Modify the blob.
             await ModifyDataAsync(client, new MemoryStream(GetRandomBuffer(size)), ModifyDataMode.Replace);
@@ -369,12 +369,12 @@ namespace Azure.Storage.Test.Shared
             // Act
             Stream outputStream = await OpenReadAsync(client, allowModifications: true);
             byte[] outputBytes = new byte[2 * size];
-            await outputStream.ReadAsync(outputBytes, 0, size);
+            int numBytesRead = await outputStream.ReadAsync(outputBytes, 0, size);
 
             // Modify the blob.
             await ModifyDataAsync(client, new MemoryStream(data1), ModifyDataMode.Append);
 
-            await outputStream.ReadAsync(outputBytes, size, size);
+            int numBytesReadModified = await outputStream.ReadAsync(outputBytes, size, size);
 
             // Assert
             TestHelper.AssertSequenceEqual(expectedData, outputBytes);
@@ -480,7 +480,7 @@ namespace Azure.Storage.Test.Shared
 
             Assert.AreEqual(0, outputStream.Position);
 
-            await outputStream.ReadAsync(outputBytes, 0, size);
+            int numBytesRead = await outputStream.ReadAsync(outputBytes, 0, size);
 
             // Assert
             Assert.AreEqual(data.Length, outputStream.Length);
@@ -547,7 +547,7 @@ namespace Azure.Storage.Test.Shared
 
             Stream outputStream = await OpenReadAsync(client);
             int readBytes = 512;
-            await outputStream.ReadAsync(new byte[readBytes], 0, readBytes);
+            int numBytesRead = await outputStream.ReadAsync(new byte[readBytes], 0, readBytes);
             Assert.AreEqual(512, outputStream.Position);
 
             // Act
@@ -673,14 +673,14 @@ namespace Azure.Storage.Test.Shared
             // Act
             Stream outputStream = await OpenReadAsyncOverload(client, allowModifications: true);
             byte[] outputBytesBeforeModify = new byte[size];
-            await outputStream.ReadAsync(outputBytesBeforeModify, 0, size);
+            int numBytesRead = await outputStream.ReadAsync(outputBytesBeforeModify, 0, size);
 
             // Modify the blob.
             await ModifyDataAsync(client, new MemoryStream(data1), ModifyDataMode.Append);
 
             byte[] outputBytesAfterModify = new byte[size];
             byte[] emptyBytes = new byte[size];
-            await outputStream.ReadAsync(outputBytesAfterModify, 0, size);
+            int numBytesReadModified = await outputStream.ReadAsync(outputBytesAfterModify, 0, size);
 
             // Assert
             TestHelper.AssertSequenceEqual(expectedDataBeforeModify, outputBytesBeforeModify);
@@ -708,14 +708,14 @@ namespace Azure.Storage.Test.Shared
             // Act
             Stream outputStream = await OpenReadAsyncOverload(client, allowModifications: false);
             byte[] outputBytesBeforeModify = new byte[size];
-            await outputStream.ReadAsync(outputBytesBeforeModify, 0, size);
+            int numBytesRead = await outputStream.ReadAsync(outputBytesBeforeModify, 0, size);
 
             // Modify the blob.
             await ModifyDataAsync(client, new MemoryStream(data1), ModifyDataMode.Append);
 
             byte[] outputBytesAfterModify = new byte[size];
             byte[] emptyBytes = new byte[size];
-            await outputStream.ReadAsync(outputBytesAfterModify, 0, size);
+            int numBytesReadModified = await outputStream.ReadAsync(outputBytesAfterModify, 0, size);
 
             // Assert
             TestHelper.AssertSequenceEqual(expectedDataBeforeModify, outputBytesBeforeModify);

@@ -43,11 +43,11 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             {
                 for (count = 6; count < 37; count += 6)
                 {
-                    await lazyStream.ReadAsync(actualData, offset, count);
+                    int numBytesRead = await lazyStream.ReadAsync(actualData, offset, count);
                     offset += count;
                 }
             }
-            await lazyStream.ReadAsync(actualData, offset, length - offset);
+            int numBytesReadRemaining = await lazyStream.ReadAsync(actualData, offset, length - offset);
 
             // Assert
             TestHelper.AssertSequenceEqual(exectedData, actualData);

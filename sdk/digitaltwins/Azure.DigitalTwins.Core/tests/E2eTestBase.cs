@@ -34,7 +34,8 @@ namespace Azure.DigitalTwins.Core.Tests
         public virtual void SetupE2eTestBase()
         {
             // TODO: set via client options and pipeline instead
-            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+            // ServicePointManager is obsolete and doesn't affect HttpClient
+            // ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
         }
 
         protected DigitalTwinsClient GetClient(DigitalTwinsClientOptions options = null)

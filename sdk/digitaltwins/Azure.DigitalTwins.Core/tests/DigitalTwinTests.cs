@@ -64,7 +64,7 @@ namespace Azure.DigitalTwins.Core.Tests
                     await client.GetDigitalTwinAsync<BasicDigitalTwin>(roomTwinId).ConfigureAwait(false);
                 };
 
-                act.Should().Throw<RequestFailedException>()
+                await act.Should().ThrowAsync<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.NotFound);
             }
             catch (Exception ex)
@@ -89,7 +89,7 @@ namespace Azure.DigitalTwins.Core.Tests
         }
 
         [Test]
-        public void DigitalTwins_IncorrectCredentials_ThrowsUnauthorizedException()
+        public async Task DigitalTwins_IncorrectCredentials_ThrowsUnauthorizedException()
         {
             // arrange
             DigitalTwinsClient unauthorizedClient = GetFakeClient();
@@ -101,12 +101,12 @@ namespace Azure.DigitalTwins.Core.Tests
             };
 
             // assert
-            act.Should().Throw<RequestFailedException>()
+            await act.Should().ThrowAsync<RequestFailedException>()
                 .And.Status.Should().Be((int)HttpStatusCode.Unauthorized);
         }
 
         [Test]
-        public void DigitalTwins_TwinNotExist_ThrowsNotFoundException()
+        public async Task DigitalTwins_TwinNotExist_ThrowsNotFoundException()
         {
             // arrange
             DigitalTwinsClient client = GetClient();
@@ -118,7 +118,7 @@ namespace Azure.DigitalTwins.Core.Tests
             };
 
             // assert
-            act.Should().Throw<RequestFailedException>()
+            await act.Should().ThrowAsync<RequestFailedException>()
                 .And.Status.Should().Be((int)HttpStatusCode.NotFound);
         }
 
@@ -190,7 +190,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 };
 
                 // assert
-                act.Should().Throw<RequestFailedException>()
+                await act.Should().ThrowAsync<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.PreconditionFailed);
             }
             catch (Exception ex)
@@ -307,7 +307,7 @@ namespace Azure.DigitalTwins.Core.Tests
                     await client.UpdateDigitalTwinAsync(roomTwinId, secondUpdateTwinPatchDocument, etagBeforeUpdate).ConfigureAwait(false);
                 };
 
-                act.Should().Throw<RequestFailedException>()
+                await act.Should().ThrowAsync<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.PreconditionFailed);
             }
             catch (Exception ex)
@@ -440,7 +440,7 @@ namespace Azure.DigitalTwins.Core.Tests
                     await client.DeleteDigitalTwinAsync(roomTwinId, etagBeforeUpdate).ConfigureAwait(false);
                 };
 
-                act.Should().Throw<RequestFailedException>()
+                await act.Should().ThrowAsync<RequestFailedException>()
                     .And.Status.Should().Be((int)HttpStatusCode.PreconditionFailed);
             }
             catch (Exception ex)
