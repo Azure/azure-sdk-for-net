@@ -23,8 +23,6 @@ namespace Azure.Generator
     /// <inheritdoc/>
     public class AzureTypeFactory : ScmTypeFactory
     {
-        private Dictionary<InputModelType, ResourceDataProvider> _resourceDataProviderCache = new();
-
         /// <inheritdoc/>
         public override IClientResponseApi ClientResponseApi => AzureClientResponseProvider.Instance;
 
@@ -114,18 +112,6 @@ namespace Azure.Generator
         protected override ClientProvider CreateClientCore(InputClient inputClient)
             => AzureClientPlugin.Instance.IsAzureArm.Value ? base.CreateClientCore(InputClientTransformer.TransformInputClient(inputClient)) : base.CreateClientCore(inputClient);
 
-        internal ResourceDataProvider CreateResourceData(InputModelType inputModelType)
-        {
-            if (_resourceDataProviderCache.TryGetValue(inputModelType, out var resourceDataProvider))
-            {
-                return resourceDataProvider;
-            }
-
-            resourceDataProvider = new ResourceDataProvider(inputModelType);
-            _resourceDataProviderCache.Add(inputModelType, resourceDataProvider);
-            return resourceDataProvider;
-        }
-
         /// <inheritdoc/>
         protected override IReadOnlyList<TypeProvider> CreateSerializationsCore(InputType inputType, TypeProvider typeProvider)
         {
@@ -145,7 +131,7 @@ namespace Azure.Generator
         {
             if (AzureClientPlugin.Instance.OutputLibrary.IsResource(model.Name))
             {
-                return CreateResourceData(model);
+                return new ResourceDataProvider(model);
             }
             return base.CreateModelCore(model);
         }
