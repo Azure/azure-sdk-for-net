@@ -19,7 +19,7 @@ namespace Azure.AI.Language.Conversations
         /// <param name="conversationInput"> The input ConversationItem and its optional parameters. </param>
         /// <param name="actionContent"> Input parameters necessary for a Conversation language understanding task. </param>
         /// <returns> A new <see cref="Models.ConversationLanguageUnderstandingInput"/> instance for mocking. </returns>
-        public static ConversationLanguageUnderstandingInput ConversationLanguageUnderstandingInput(ConversationAnalysisInput conversationInput = null, ConversationLanguageUnderstandingActionContent actionContent = null)
+        public static ConversationLanguageUnderstandingInput ConversationLanguageUnderstandingInput(ConversationAnalysisInput conversationInput = null, ConversationActionContent actionContent = null)
         {
             return new ConversationLanguageUnderstandingInput(AnalyzeConversationInputKind.Conversation, serializedAdditionalRawData: null, conversationInput, actionContent);
         }
@@ -44,7 +44,7 @@ namespace Azure.AI.Language.Conversations
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationLanguageUnderstandingActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ConversationActionContent"/>. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the deployment to use. </param>
         /// <param name="verbose"> If true, the service will return more detailed information in the response. </param>
@@ -56,12 +56,12 @@ namespace Azure.AI.Language.Conversations
         /// Please note <see cref="AnalysisConfig"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ConversationConfig"/>, <see cref="LuisConfig"/> and <see cref="QuestionAnsweringConfig"/>.
         /// </param>
-        /// <returns> A new <see cref="Models.ConversationLanguageUnderstandingActionContent"/> instance for mocking. </returns>
-        public static ConversationLanguageUnderstandingActionContent ConversationLanguageUnderstandingActionContent(string projectName = null, string deploymentName = null, bool? verbose = null, bool? isLoggingEnabled = null, StringIndexType? stringIndexType = null, string directTarget = null, IDictionary<string, AnalysisConfig> targetProjectParameters = null)
+        /// <returns> A new <see cref="Models.ConversationActionContent"/> instance for mocking. </returns>
+        public static ConversationActionContent ConversationActionContent(string projectName = null, string deploymentName = null, bool? verbose = null, bool? isLoggingEnabled = null, StringIndexType? stringIndexType = null, string directTarget = null, IDictionary<string, AnalysisConfig> targetProjectParameters = null)
         {
             targetProjectParameters ??= new Dictionary<string, AnalysisConfig>();
 
-            return new ConversationLanguageUnderstandingActionContent(
+            return new ConversationActionContent(
                 projectName,
                 deploymentName,
                 verbose,
@@ -749,8 +749,11 @@ namespace Azure.AI.Language.Conversations
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
+        /// <param name="mask"> Exact mask text to mask the PII entity. </param>
+        /// <param name="maskOffset"> Offset of the mask text. </param>
+        /// <param name="maskLength"> Length of the mask text. </param>
         /// <returns> A new <see cref="Models.NamedEntity"/> instance for mocking. </returns>
-        public static NamedEntity NamedEntity(string text = null, string category = null, string subcategory = null, int offset = default, int length = default, double confidenceScore = default)
+        public static NamedEntity NamedEntity(string text = null, string category = null, string subcategory = null, int offset = default, int length = default, double confidenceScore = default, string mask = null, int? maskOffset = null, int? maskLength = null)
         {
             return new NamedEntity(
                 text,
@@ -759,6 +762,9 @@ namespace Azure.AI.Language.Conversations
                 offset,
                 length,
                 confidenceScore,
+                mask,
+                maskOffset,
+                maskLength,
                 serializedAdditionalRawData: null);
         }
 
