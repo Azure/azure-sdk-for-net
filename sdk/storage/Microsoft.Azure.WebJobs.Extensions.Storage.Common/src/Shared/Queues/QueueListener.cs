@@ -73,7 +73,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             ConcurrencyManager concurrencyManager = null,
             string functionId = null,
             TimeSpan? maxPollingInterval = null,
-            IDrainModeManager drainModeManager = null)
+            IDrainModeManager drainModeManager = null,
+            CancellationTokenSource shutdownCancellationTokenSource = null)
         {
             if (queueOptions == null)
             {
@@ -133,7 +134,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
             _delayStrategy = new RandomizedExponentialBackoffStrategy(QueuePollingIntervals.Minimum, maximumInterval);
 
-            _shutdownCancellationTokenSource = new CancellationTokenSource();
+            _shutdownCancellationTokenSource = shutdownCancellationTokenSource ?? new CancellationTokenSource();
             _executionCancellationTokenSource = new CancellationTokenSource();
 
             _concurrencyManager = concurrencyManager;
@@ -169,9 +170,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
         public async Task StopAsync(CancellationToken cancellationToken)
         {
-            if (!_drainModeManager?.IsDrainModeEnabled ?? false)
+            if (!_drainModeManager?.IsDrainModeEnabled ?? true)
             {
-                // Cancel execution if drain mode unless drain mode is disabled
+                // Cancel execution only if drain mode is explicitly disabled
                 _executionCancellationTokenSource.Cancel();
             }
 
