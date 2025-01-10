@@ -344,6 +344,8 @@
     <PackageReference Update="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Update="Microsoft.Extensions.Hosting" Version="8.0.1" />
     <PackageReference Update="Microsoft.Extensions.Logging.Configuration" Version="8.0.1" />
+    <PackageReference Update="Microsoft.Extensions.Logging" Version="8.0.1" />
+    <PackageReference Update="Microsoft.Extensions.Logging.Abstractions" Version="8.0.2" />
     <PackageReference Update="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
     <PackageReference Update="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
     <PackageReference Update="Microsoft.Graph" Version="5.68.0" />
@@ -382,6 +384,7 @@
     <PackageReference Update="System.Net.Http" Version="4.3.4" />
     <PackageReference Update="System.Net.Security" Version="4.3.2" />
     <PackageReference Update="System.Net.WebSockets.Client" Version="4.3.2" />
+    <PackageReference Update="System.Private.Uri" Version="4.3.2" />
     <PackageReference Update="System.Reflection.Emit" Version="4.7.0" />
     <PackageReference Update="System.Reflection.Metadata" Version="8.0.1" />
     <PackageReference Update="System.Runtime.InteropServices" Version="4.3.0" />

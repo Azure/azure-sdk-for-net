@@ -10,6 +10,8 @@
     <PackageReference Include="Microsoft.Azure.WebJobs" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" />
+    <PackageReference Include="Microsoft.Extensions.Logging"/>
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"/>
     <PackageReference Include="Moq" />
 
     <PackageReference Include="Azure.Security.KeyVault.Secrets" />
