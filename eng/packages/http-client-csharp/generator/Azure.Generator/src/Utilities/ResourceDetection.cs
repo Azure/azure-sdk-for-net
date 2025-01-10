@@ -111,11 +111,10 @@ namespace Azure.Generator.Utilities
             bool idPropertyFound = false;
             bool typePropertyFound = false;
             bool namePropertyFound = false;
-            bool isResource = idPropertyFound && typePropertyFound && namePropertyFound;
 
             foreach (var property in allProperties)
             {
-                if (isResource)
+                if (FoundPropertiesForResource())
                 {
                     return true;
                 }
@@ -137,7 +136,9 @@ namespace Azure.Generator.Utilities
                 }
             }
 
-            return isResource;
+            return FoundPropertiesForResource();
+
+            bool FoundPropertiesForResource() => idPropertyFound && typePropertyFound && namePropertyFound;
         }
     }
 }
