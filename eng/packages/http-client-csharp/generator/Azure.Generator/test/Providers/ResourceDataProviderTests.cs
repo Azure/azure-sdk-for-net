@@ -29,7 +29,7 @@ namespace Azure.Generator.Tests.Providers
             var client = InputFactory.Client(TestClientName, operations: [operation]);
             var plugin = MockHelpers.LoadMockPlugin(inputModels: () => [responseModel], clients: () => [client]);
 
-            var resourceDataProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p.Name == $"{StringHelpers.ToCleanName(resourceModelName)}Data") as ModelProvider;
+            var resourceDataProvider = plugin.Object.OutputLibrary.TypeProviders.FirstOrDefault(p => p.Name == "ResponseTypeData") as ModelProvider;
             Assert.NotNull(resourceDataProvider);
             Assert.IsTrue(resourceDataProvider is ResourceDataProvider);
 

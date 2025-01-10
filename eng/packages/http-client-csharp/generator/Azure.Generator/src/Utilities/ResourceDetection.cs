@@ -32,7 +32,7 @@ namespace Azure.Generator.Utilities
             // get the result from cache
             if (_resourceDataSchemaCache.TryGetValue(set.RequestPath, out var resourceSchemaTuple))
             {
-                resourceSpecName = resourceSchemaTuple is null ? null : StringHelpers.ToCleanName(resourceSchemaTuple?.Name!);
+                resourceSpecName = resourceSchemaTuple is null ? null : resourceSchemaTuple?.Name!;
                 inputModel = resourceSchemaTuple?.InputModel;
                 return resourceSchemaTuple != null;
             }
@@ -50,7 +50,7 @@ namespace Azure.Generator.Utilities
             // try put operation to get the resource name
             if (set.TryOperationWithMethod(RequestMethod.Put, out inputModel))
             {
-                resourceSpecName = StringHelpers.ToCleanName(inputModel.Name);
+                resourceSpecName = inputModel.Name;
                 _resourceDataSchemaCache.TryAdd(set.RequestPath, (resourceSpecName, inputModel));
                 return true;
             }
@@ -58,7 +58,7 @@ namespace Azure.Generator.Utilities
             // try get operation to get the resource name
             if (set.TryOperationWithMethod(RequestMethod.Get, out inputModel))
             {
-                resourceSpecName = StringHelpers.ToCleanName(inputModel.Name);
+                resourceSpecName = inputModel.Name;
                 _resourceDataSchemaCache.TryAdd(set.RequestPath, (resourceSpecName, inputModel));
                 return true;
             }
@@ -111,9 +111,15 @@ namespace Azure.Generator.Utilities
             bool idPropertyFound = false;
             bool typePropertyFound = false;
             bool namePropertyFound = false;
+            bool isResource = idPropertyFound && typePropertyFound && namePropertyFound;
 
             foreach (var property in allProperties)
             {
+                if (isResource)
+                {
+                    return true;
+                }
+
                 switch (property.SerializedName)
                 {
                     case "id":
@@ -131,7 +137,7 @@ namespace Azure.Generator.Utilities
                 }
             }
 
-            return idPropertyFound && typePropertyFound && namePropertyFound;
+            return isResource;
         }
     }
 }

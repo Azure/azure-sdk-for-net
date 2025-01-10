@@ -23,7 +23,7 @@ namespace Azure.Generator
     /// <inheritdoc/>
     public class AzureTypeFactory : ScmTypeFactory
     {
-        private Dictionary<InputModelType, ResourceDataProvider> _resourceDataProvdierCache = new();
+        private Dictionary<InputModelType, ResourceDataProvider> _resourceDataProviderCache = new();
 
         /// <inheritdoc/>
         public override IClientResponseApi ClientResponseApi => AzureClientResponseProvider.Instance;
@@ -116,13 +116,13 @@ namespace Azure.Generator
 
         internal ResourceDataProvider CreateResourceData(InputModelType inputModelType)
         {
-            if (_resourceDataProvdierCache.TryGetValue(inputModelType, out var resourceDataProvider))
+            if (_resourceDataProviderCache.TryGetValue(inputModelType, out var resourceDataProvider))
             {
                 return resourceDataProvider;
             }
 
             resourceDataProvider = new ResourceDataProvider(inputModelType);
-            _resourceDataProvdierCache.Add(inputModelType, resourceDataProvider);
+            _resourceDataProviderCache.Add(inputModelType, resourceDataProvider);
             return resourceDataProvider;
         }
 
@@ -131,7 +131,7 @@ namespace Azure.Generator
         {
             if (inputType is InputModelType inputModel
                 && typeProvider is ModelProvider modelProvider
-                && AzureClientPlugin.Instance.OutputLibrary.IsResource(StringHelpers.ToCleanName(inputType.Name))
+                && AzureClientPlugin.Instance.OutputLibrary.IsResource(inputType.Name)
                 && inputModel.Usage.HasFlag(InputModelTypeUsage.Json))
             {
                 return [new ResourceDataSerializationProvider(inputModel, modelProvider)];
@@ -143,7 +143,7 @@ namespace Azure.Generator
         /// <inheritdoc/>
         protected override ModelProvider? CreateModelCore(InputModelType model)
         {
-            if (AzureClientPlugin.Instance.OutputLibrary.IsResource(StringHelpers.ToCleanName(model.Name)))
+            if (AzureClientPlugin.Instance.OutputLibrary.IsResource(model.Name))
             {
                 return CreateResourceData(model);
             }
