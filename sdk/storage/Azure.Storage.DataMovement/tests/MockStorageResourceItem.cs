@@ -77,11 +77,12 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken token = default)
         {
-            return Task.FromResult(new StorageResourceItemProperties(
-                resourceLength: Length ?? 0,
-                eTag: new ETag("etag"),
-                lastModifiedTime: DateTimeOffset.UtcNow,
-                properties: default));
+            return Task.FromResult(new StorageResourceItemProperties()
+            {
+                ResourceLength = Length ?? 0,
+                ETag = new ETag("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow
+            });
         }
 
         protected internal override Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)

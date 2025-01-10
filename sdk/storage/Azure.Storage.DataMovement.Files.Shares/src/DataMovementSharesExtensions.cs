@@ -208,11 +208,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.CacheControl, fileProperties.CacheControl);
             }
-            return new StorageResourceItemProperties(
-                resourceLength: fileProperties.ContentLength,
-                eTag: fileProperties.ETag,
-                lastModifiedTime: fileProperties.LastModified,
-                properties: rawProperties);
+            return new StorageResourceItemProperties()
+            {
+                ResourceLength = fileProperties.ContentLength,
+                ETag = fileProperties.ETag,
+                LastModifiedTime = fileProperties.LastModified,
+                RawProperties = rawProperties
+            };
         }
 
         internal static void AddToStorageResourceItemProperties(
@@ -341,11 +343,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
             return new StorageResourceReadStreamResult(
                 content: info?.Content,
                 range: ContentRange.ToHttpRange(contentRange),
-                properties: new StorageResourceItemProperties(
-                    resourceLength: contentRange.Size,
-                    eTag: info.Details.ETag,
-                    lastModifiedTime: info.Details.LastModified,
-                    properties: properties));
+                new StorageResourceItemProperties()
+                {
+                    ResourceLength = contentRange.Size,
+                    ETag = info.Details.ETag,
+                    LastModifiedTime = info.Details.LastModified,
+                    RawProperties = properties
+                });
         }
 
         internal static StorageResourceItemProperties ToResourceProperties(
@@ -361,11 +365,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 properties.Add(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, destinationPermissionKey);
             }
-            return new StorageResourceItemProperties(
-                resourceLength: shareItem?.FileSize,
-                eTag: shareItem?.Properties?.ETag,
-                lastModifiedTime: shareItem?.Properties?.LastModified,
-                properties: properties);
+            return new StorageResourceItemProperties()
+            {
+                ResourceLength = shareItem?.FileSize,
+                ETag = shareItem?.Properties?.ETag,
+                LastModifiedTime = shareItem?.Properties?.LastModified,
+                RawProperties = properties
+            };
         }
 
         private static string[] ConvertContentPropertyObjectToStringArray(string contentPropertyName, object contentPropertyValue)

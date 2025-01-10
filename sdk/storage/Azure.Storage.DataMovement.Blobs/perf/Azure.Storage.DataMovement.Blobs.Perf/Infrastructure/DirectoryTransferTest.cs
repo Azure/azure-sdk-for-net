@@ -29,8 +29,8 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
 
             TransferManagerOptions managerOptions = new()
             {
-                ErrorHandling = TransferErrorMode.StopOnAnyFailure,
-                CheckpointerOptions = Options.DisableCheckpointer ? TransferCheckpointStoreOptions.Disabled() : default,
+                ErrorMode = TransferErrorMode.StopOnAnyFailure,
+                CheckpointStoreOptions = Options.DisableCheckpointer ? TransferCheckpointStoreOptions.Disabled() : default,
                 MaximumConcurrency = Options.Concurrency
             };
             _transferManager = new TransferManager(managerOptions);
@@ -85,7 +85,7 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
         {
             TransferOptions options = new()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
+                CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
                 InitialTransferSize = Options.InitialTransferSize,
                 MaximumTransferChunkSize = Options.ChunkSize,
             };

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 namespace Azure.Storage.DataMovement
 {
     /// <summary>
-    /// Properties of a Storage Resource
+    /// Properties of a Storage Resource.
     /// </summary>
     public class StorageResourceItemProperties
     {
@@ -34,28 +34,9 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Base constructor for mocking.
         /// </summary>
-        protected StorageResourceItemProperties()
+        public StorageResourceItemProperties()
         {
             RawProperties = new Dictionary<string, object>();
-        }
-
-        /// <summary>
-        /// Constructor for StorageResourceProperties
-        /// </summary>
-        /// <param name="resourceLength"></param>
-        /// <param name="eTag"></param>
-        /// <param name="lastModifiedTime"></param>
-        /// <param name="properties"></param>
-        public StorageResourceItemProperties(
-            long? resourceLength,
-            ETag? eTag,
-            DateTimeOffset? lastModifiedTime,
-            Dictionary<string, object> properties)
-        {
-            ResourceLength = resourceLength;
-            ETag = eTag;
-            LastModifiedTime = lastModifiedTime;
-            RawProperties = properties != default ? properties : new();
         }
     }
 }

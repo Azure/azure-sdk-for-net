@@ -52,11 +52,13 @@ namespace Azure.Storage.DataMovement.Blobs
                 properties.Add(DataMovementConstants.ResourceProperties.AccessTier, new AccessTier(blobProperties.AccessTier));
             }
 
-            return new StorageResourceItemProperties(
-                resourceLength: blobProperties.ContentLength,
-                eTag: blobProperties.ETag,
-                lastModifiedTime: blobProperties.LastModified,
-                properties: properties);
+            return new StorageResourceItemProperties()
+            {
+                ResourceLength = blobProperties.ContentLength,
+                ETag = blobProperties.ETag,
+                LastModifiedTime = blobProperties.LastModified,
+                RawProperties = properties
+            };
         }
 
         internal static StorageResourceItemProperties ToStorageResourceItemProperties(this BlobDownloadStreamingResult result)
@@ -102,11 +104,13 @@ namespace Azure.Storage.DataMovement.Blobs
                 size = contentRange.Size;
             }
 
-            return new StorageResourceItemProperties(
-                resourceLength: size,
-                eTag : result?.Details.ETag,
-                lastModifiedTime: result?.Details.LastModified,
-                properties: properties);
+            return new StorageResourceItemProperties()
+            {
+                ResourceLength = size,
+                ETag = result?.Details.ETag,
+                LastModifiedTime = result?.Details.LastModified,
+                RawProperties = properties
+            };
         }
 
         internal static StorageResourceReadStreamResult ToReadStreamStorageResourceInfo(this BlobDownloadStreamingResult result)
@@ -162,11 +166,13 @@ namespace Azure.Storage.DataMovement.Blobs
             return new StorageResourceReadStreamResult(
                 content: result.Content,
                 range: range,
-                properties: new StorageResourceItemProperties(
-                    resourceLength: size.HasValue ? size : result.Details.ContentLength,
-                    eTag: result.Details.ETag,
-                    lastModifiedTime: result?.Details.LastModified,
-                    properties: properties));
+                properties: new StorageResourceItemProperties()
+                {
+                    ResourceLength = size.HasValue ? size : result.Details.ContentLength,
+                    ETag = result.Details.ETag,
+                    LastModifiedTime = result?.Details.LastModified,
+                    RawProperties = properties
+                });
         }
 
         /// <summary>
@@ -631,11 +637,13 @@ namespace Azure.Storage.DataMovement.Blobs
                 properties.Add(DataMovementConstants.ResourceProperties.CacheControl, blobItem.Properties.CacheControl);
             }
 
-            return new StorageResourceItemProperties(
-                resourceLength: blobItem.Properties.ContentLength,
-                eTag: blobItem.Properties.ETag,
-                lastModifiedTime: blobItem.Properties.LastModified,
-                properties: properties);
+            return new StorageResourceItemProperties()
+            {
+                ResourceLength = blobItem.Properties.ContentLength,
+                ETag = blobItem.Properties.ETag,
+                LastModifiedTime = blobItem.Properties.LastModified,
+                RawProperties = properties
+            };
         }
 
         private static string ConvertContentPropertyObjectToString(string contentPropertyName, object contentPropertyValue)

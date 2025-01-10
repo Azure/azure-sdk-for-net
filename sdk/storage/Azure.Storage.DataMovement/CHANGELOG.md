@@ -5,7 +5,7 @@
 ### Features Added
 
 ### Breaking Changes
-- Renamed the following types:
+- Renamed the following types/properties:
     - `DataTransfer` -> `TransferOperation`
         - Addtionally renamed the `TransferStatus` property to `Status`
     - `DataTransferEventArgs` -> `TransferEventArgs`
@@ -16,6 +16,13 @@
     - `DataTransferState` -> `TransferState`
     - `DataTransferStatus` -> `TransferStatus`
     - `DataTransferErrorMode` -> `TransferErrorMode`
+    - `StorageResourceCreationPreference` -> `StorageResourceCreateMode`
+    - `TransferManagerOptions.ErrorHandling` -> `TransferManagerOptions.ErrorMode`
+    - `TransferManagerOptions.CheckpointerOptions` -> `TransferManagerOptions.CheckpointStoreOptions`
+    - `TransferItemCompletedEventArgs.SourceResource` -> `TransferItemCompletedEventArgs.Source` and `TransferItemCompletedEventArgs.DestinationResource` -> `TransferItemCompletedEventArgs.Destination`
+    - `TransferItemFailedEventArgs.SourceResource` -> `TransferItemFailedEventArgs.Source` and `TransferItemFailedEventArgs.DestinationResource` -> `TransferItemFailedEventArgs.Destination`
+    - `TransferItemSkippedEventArgs.SourceResource` -> `TransferItemSkippedEventArgs.Source` and `TransferItemSkippedEventArgs.DestinationResource` -> `TransferItemSkippedEventArgs.Destination`
+- Changed constructor for `StorageResourceItemProperties` to default since properties are settable.
 
 ### Bugs Fixed
 - Fixed bug where adding multiple transfers in parallel could cause a collision (`InvalidOperationException`) in the data transfers stored within the `TransferManager`.

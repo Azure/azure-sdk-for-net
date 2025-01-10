@@ -20,7 +20,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             TransferManagerOptions managerOptions = new()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Disabled()
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.Disabled()
             };
             TransferManager transferManager = new(managerOptions);
 
@@ -36,7 +36,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             TransferManagerOptions managerOptions = new()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Disabled()
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.Disabled()
             };
             TransferManager transferManager = new(managerOptions);
 
@@ -53,7 +53,7 @@ namespace Azure.Storage.DataMovement.Tests
             (StorageResourceItem source, StorageResourceItem destination) = MockStorageResourceItem.GetMockTransferResources(transferDirection);
             TransferManagerOptions managerOptions = new()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Disabled()
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.Disabled()
             };
             TransferManager transferManager = new(managerOptions);
 
@@ -97,7 +97,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Disabled()
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.Disabled()
             };
             TransferManager transferManager = new(managerOptions);
 

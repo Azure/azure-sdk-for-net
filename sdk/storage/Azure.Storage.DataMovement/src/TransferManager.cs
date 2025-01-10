@@ -68,9 +68,9 @@ namespace Azure.Storage.DataMovement
                 readers: options?.MaximumConcurrency ?? DataMovementConstants.Channels.MaxJobChunkReaders,
                 capacity: DataMovementConstants.Channels.JobChunkCapacity),
             new(ArrayPool<byte>.Shared,
-                options?.ErrorHandling ?? TransferErrorMode.StopOnAnyFailure,
+                options?.ErrorMode ?? TransferErrorMode.StopOnAnyFailure,
                 new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default)),
-                CheckpointerExtensions.BuildCheckpointer(options?.CheckpointerOptions),
+                CheckpointerExtensions.BuildCheckpointer(options?.CheckpointStoreOptions),
                 options?.ResumeProviders != null ? new List<StorageResourceProvider>(options.ResumeProviders) : new(),
                 default)
         {}

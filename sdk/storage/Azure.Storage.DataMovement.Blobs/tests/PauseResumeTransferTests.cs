@@ -248,8 +248,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -302,8 +302,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferOptions transferOptions = new TransferOptions();
@@ -346,8 +346,8 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure
             };
             TransferManager transferManager = new TransferManager(options);
 
@@ -372,8 +372,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferOptions transferOptions = new TransferOptions();
@@ -432,8 +432,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferOptions transferOptions = new TransferOptions();
@@ -470,7 +470,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOptions resumeOptions = new TransferOptions()
             {
                 // Enable overwrite on resume, to overwrite destination.
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists
+                CreationPreference = StorageResourceCreationMode.OverwriteIfExists
             };
             TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
             TransferOperation resumeTransfer = await transferManager.ResumeTransferAsync(
@@ -512,8 +512,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferOptions transferOptions = new TransferOptions();
@@ -587,8 +587,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -833,8 +833,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -885,8 +885,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -937,8 +937,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -995,8 +995,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -1040,7 +1040,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Act - Resume Job
             TransferOptions resumeOptions = new()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists
+                CreationPreference = StorageResourceCreationMode.OverwriteIfExists
             };
             TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
             TransferOperation resumeTransfer = await transferManager.ResumeTransferAsync(
@@ -1083,8 +1083,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -1128,7 +1128,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Act - Resume Job
             TransferOptions resumeOptions = new()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists
+                CreationPreference = StorageResourceCreationMode.OverwriteIfExists
             };
             TestEventsRaised testEventsRaised2 = new TestEventsRaised(resumeOptions);
             TransferOperation resumeTransfer = await transferManager.ResumeTransferAsync(
@@ -1178,8 +1178,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
