@@ -3,9 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.IoTOperations.Models;
 using Azure.ResourceManager.IoTOperations.Tests.Helpers;
 using NUnit.Framework;
 
@@ -51,7 +49,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             ArmOperation<DataflowProfileResource> resp =
                 await dataflowProfileResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
-                    "sdk-test",
+                    "sdk-test" + utcTime.Substring(utcTime.Length - 4),
                     dataflowProfileResourceData
                 );
             DataflowProfileResource createdDataflowProfile = resp.Value;
