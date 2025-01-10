@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Common;
+using static System.Net.WebRequestMethods;
 
 namespace Azure.Storage.DataMovement
 {
@@ -353,6 +354,7 @@ namespace Azure.Storage.DataMovement
         #region Start Transfer
         /// <summary>
         /// Starts a transfer from the given source resource to the given destination resource.
+        /// Ensure <see cref="StorageResource"/> instances are built with <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/README.md#permissions">appropriate permissions</see>.
         /// </summary>
         /// <param name="sourceResource">A <see cref="StorageResource"/> representing the source.</param>
         /// <param name="destinationResource">A <see cref="StorageResource"/> representing the destination.</param>
