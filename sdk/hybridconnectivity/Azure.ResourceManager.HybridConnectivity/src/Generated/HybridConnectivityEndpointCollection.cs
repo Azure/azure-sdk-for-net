@@ -66,11 +66,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="data"> Endpoint details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HybridConnectivityEndpointResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string endpointName, HybridConnectivityEndpointData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointCollection.CreateOrUpdate");
@@ -117,11 +116,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="data"> Endpoint details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HybridConnectivityEndpointResource> CreateOrUpdate(WaitUntil waitUntil, string endpointName, HybridConnectivityEndpointData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointCollection.CreateOrUpdate");
@@ -166,11 +164,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </summary>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<Response<HybridConnectivityEndpointResource>> GetAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
 
             using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointCollection.Get");
             scope.Start();
@@ -211,11 +208,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </summary>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual Response<HybridConnectivityEndpointResource> Get(string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
 
             using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointCollection.Get");
             scope.Start();
@@ -316,11 +312,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </summary>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
 
             using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointCollection.Exists");
             scope.Start();
@@ -359,11 +354,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </summary>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual Response<bool> Exists(string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
 
             using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointCollection.Exists");
             scope.Start();
@@ -402,11 +396,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </summary>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual async Task<NullableResponse<HybridConnectivityEndpointResource>> GetIfExistsAsync(string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
 
             using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointCollection.GetIfExists");
             scope.Start();
@@ -447,11 +440,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </summary>
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
         public virtual NullableResponse<HybridConnectivityEndpointResource> GetIfExists(string endpointName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
 
             using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointCollection.GetIfExists");
             scope.Start();

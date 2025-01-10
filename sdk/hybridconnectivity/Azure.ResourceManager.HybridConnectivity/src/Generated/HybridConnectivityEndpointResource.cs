@@ -118,7 +118,6 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="serviceConfigurationName"> The service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HybridConnectivityServiceConfigurationResource>> GetHybridConnectivityServiceConfigurationAsync(string serviceConfigurationName, CancellationToken cancellationToken = default)
         {
@@ -149,7 +148,6 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="serviceConfigurationName"> The service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HybridConnectivityServiceConfigurationResource> GetHybridConnectivityServiceConfiguration(string serviceConfigurationName, CancellationToken cancellationToken = default)
         {

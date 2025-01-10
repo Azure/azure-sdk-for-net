@@ -76,11 +76,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="serviceConfigurationName"> The service name. </param>
         /// <param name="data"> Service details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<HybridConnectivityServiceConfigurationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string serviceConfigurationName, HybridConnectivityServiceConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serviceConfigurationName, nameof(serviceConfigurationName));
+            Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.CreateOrUpdate");
@@ -127,11 +126,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="serviceConfigurationName"> The service name. </param>
         /// <param name="data"> Service details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceConfigurationName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<HybridConnectivityServiceConfigurationResource> CreateOrUpdate(WaitUntil waitUntil, string serviceConfigurationName, HybridConnectivityServiceConfigurationData data, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serviceConfigurationName, nameof(serviceConfigurationName));
+            Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.CreateOrUpdate");
@@ -176,11 +174,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </summary>
         /// <param name="serviceConfigurationName"> The service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceConfigurationName"/> is null. </exception>
         public virtual async Task<Response<HybridConnectivityServiceConfigurationResource>> GetAsync(string serviceConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serviceConfigurationName, nameof(serviceConfigurationName));
+            Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
 
             using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.Get");
             scope.Start();
@@ -221,11 +218,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </summary>
         /// <param name="serviceConfigurationName"> The service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceConfigurationName"/> is null. </exception>
         public virtual Response<HybridConnectivityServiceConfigurationResource> Get(string serviceConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serviceConfigurationName, nameof(serviceConfigurationName));
+            Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
 
             using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.Get");
             scope.Start();
@@ -326,11 +322,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </summary>
         /// <param name="serviceConfigurationName"> The service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceConfigurationName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serviceConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serviceConfigurationName, nameof(serviceConfigurationName));
+            Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
 
             using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.Exists");
             scope.Start();
@@ -369,11 +364,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </summary>
         /// <param name="serviceConfigurationName"> The service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceConfigurationName"/> is null. </exception>
         public virtual Response<bool> Exists(string serviceConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serviceConfigurationName, nameof(serviceConfigurationName));
+            Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
 
             using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.Exists");
             scope.Start();
@@ -412,11 +406,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </summary>
         /// <param name="serviceConfigurationName"> The service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceConfigurationName"/> is null. </exception>
         public virtual async Task<NullableResponse<HybridConnectivityServiceConfigurationResource>> GetIfExistsAsync(string serviceConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serviceConfigurationName, nameof(serviceConfigurationName));
+            Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
 
             using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.GetIfExists");
             scope.Start();
@@ -457,11 +450,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </summary>
         /// <param name="serviceConfigurationName"> The service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="serviceConfigurationName"/> is null. </exception>
         public virtual NullableResponse<HybridConnectivityServiceConfigurationResource> GetIfExists(string serviceConfigurationName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(serviceConfigurationName, nameof(serviceConfigurationName));
+            Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
 
             using var scope = _hybridConnectivityServiceConfigurationServiceConfigurationResourcesClientDiagnostics.CreateScope("HybridConnectivityServiceConfigurationCollection.GetIfExists");
             scope.Start();

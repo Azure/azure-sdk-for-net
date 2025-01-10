@@ -70,7 +70,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual async Task<Response<HybridConnectivityEndpointResource>> GetHybridConnectivityEndpointAsync(ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
         {
@@ -102,7 +101,6 @@ namespace Azure.ResourceManager.HybridConnectivity.Mocking
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
         public virtual Response<HybridConnectivityEndpointResource> GetHybridConnectivityEndpoint(ResourceIdentifier scope, string endpointName, CancellationToken cancellationToken = default)
         {

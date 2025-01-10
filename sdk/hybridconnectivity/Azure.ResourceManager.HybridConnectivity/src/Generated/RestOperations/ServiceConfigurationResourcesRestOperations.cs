@@ -43,9 +43,9 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
-            uri.AppendPath(endpointName, true);
+            uri.AppendPath(endpointName, false);
             uri.AppendPath("/serviceConfigurations/", false);
-            uri.AppendPath(serviceConfigurationName, true);
+            uri.AppendPath(serviceConfigurationName, false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
-            uri.AppendPath(endpointName, true);
+            uri.AppendPath(endpointName, false);
             uri.AppendPath("/serviceConfigurations/", false);
-            uri.AppendPath(serviceConfigurationName, true);
+            uri.AppendPath(serviceConfigurationName, false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -76,12 +76,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="serviceConfigurationName"> The service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/> or <paramref name="serviceConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> or <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HybridConnectivityServiceConfigurationData>> GetAsync(string resourceUri, string endpointName, string serviceConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
-            Argument.AssertNotNullOrEmpty(serviceConfigurationName, nameof(serviceConfigurationName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
 
             using var message = CreateGetRequest(resourceUri, endpointName, serviceConfigurationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -107,12 +106,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="serviceConfigurationName"> The service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/> or <paramref name="serviceConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> or <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HybridConnectivityServiceConfigurationData> Get(string resourceUri, string endpointName, string serviceConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
-            Argument.AssertNotNullOrEmpty(serviceConfigurationName, nameof(serviceConfigurationName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
 
             using var message = CreateGetRequest(resourceUri, endpointName, serviceConfigurationName);
             _pipeline.Send(message, cancellationToken);
@@ -139,9 +137,9 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
-            uri.AppendPath(endpointName, true);
+            uri.AppendPath(endpointName, false);
             uri.AppendPath("/serviceConfigurations/", false);
-            uri.AppendPath(serviceConfigurationName, true);
+            uri.AppendPath(serviceConfigurationName, false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
@@ -156,9 +154,9 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
-            uri.AppendPath(endpointName, true);
+            uri.AppendPath(endpointName, false);
             uri.AppendPath("/serviceConfigurations/", false);
-            uri.AppendPath(serviceConfigurationName, true);
+            uri.AppendPath(serviceConfigurationName, false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -177,12 +175,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="data"> Service details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/>, <paramref name="serviceConfigurationName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> or <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HybridConnectivityServiceConfigurationData>> CreateOrupdateAsync(string resourceUri, string endpointName, string serviceConfigurationName, HybridConnectivityServiceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
-            Argument.AssertNotNullOrEmpty(serviceConfigurationName, nameof(serviceConfigurationName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrupdateRequest(resourceUri, endpointName, serviceConfigurationName, data);
@@ -209,12 +206,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="data"> Service details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/>, <paramref name="serviceConfigurationName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> or <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HybridConnectivityServiceConfigurationData> CreateOrupdate(string resourceUri, string endpointName, string serviceConfigurationName, HybridConnectivityServiceConfigurationData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
-            Argument.AssertNotNullOrEmpty(serviceConfigurationName, nameof(serviceConfigurationName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
             Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrupdateRequest(resourceUri, endpointName, serviceConfigurationName, data);
@@ -241,9 +237,9 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
-            uri.AppendPath(endpointName, true);
+            uri.AppendPath(endpointName, false);
             uri.AppendPath("/serviceConfigurations/", false);
-            uri.AppendPath(serviceConfigurationName, true);
+            uri.AppendPath(serviceConfigurationName, false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
@@ -258,9 +254,9 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
-            uri.AppendPath(endpointName, true);
+            uri.AppendPath(endpointName, false);
             uri.AppendPath("/serviceConfigurations/", false);
-            uri.AppendPath(serviceConfigurationName, true);
+            uri.AppendPath(serviceConfigurationName, false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -279,12 +275,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="patch"> Service details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/>, <paramref name="serviceConfigurationName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> or <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<HybridConnectivityServiceConfigurationData>> UpdateAsync(string resourceUri, string endpointName, string serviceConfigurationName, HybridConnectivityServiceConfigurationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
-            Argument.AssertNotNullOrEmpty(serviceConfigurationName, nameof(serviceConfigurationName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
             Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(resourceUri, endpointName, serviceConfigurationName, patch);
@@ -310,12 +305,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="patch"> Service details. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/>, <paramref name="serviceConfigurationName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> or <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<HybridConnectivityServiceConfigurationData> Update(string resourceUri, string endpointName, string serviceConfigurationName, HybridConnectivityServiceConfigurationPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
-            Argument.AssertNotNullOrEmpty(serviceConfigurationName, nameof(serviceConfigurationName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
             Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(resourceUri, endpointName, serviceConfigurationName, patch);
@@ -341,9 +335,9 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
-            uri.AppendPath(endpointName, true);
+            uri.AppendPath(endpointName, false);
             uri.AppendPath("/serviceConfigurations/", false);
-            uri.AppendPath(serviceConfigurationName, true);
+            uri.AppendPath(serviceConfigurationName, false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
@@ -358,9 +352,9 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
-            uri.AppendPath(endpointName, true);
+            uri.AppendPath(endpointName, false);
             uri.AppendPath("/serviceConfigurations/", false);
-            uri.AppendPath(serviceConfigurationName, true);
+            uri.AppendPath(serviceConfigurationName, false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -374,12 +368,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="serviceConfigurationName"> The service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/> or <paramref name="serviceConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> or <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string resourceUri, string endpointName, string serviceConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
-            Argument.AssertNotNullOrEmpty(serviceConfigurationName, nameof(serviceConfigurationName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
 
             using var message = CreateDeleteRequest(resourceUri, endpointName, serviceConfigurationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -399,12 +392,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="serviceConfigurationName"> The service name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/>, <paramref name="endpointName"/> or <paramref name="serviceConfigurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> or <paramref name="serviceConfigurationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string resourceUri, string endpointName, string serviceConfigurationName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
-            Argument.AssertNotNullOrEmpty(serviceConfigurationName, nameof(serviceConfigurationName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(serviceConfigurationName, nameof(serviceConfigurationName));
 
             using var message = CreateDeleteRequest(resourceUri, endpointName, serviceConfigurationName);
             _pipeline.Send(message, cancellationToken);
@@ -425,7 +417,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
-            uri.AppendPath(endpointName, true);
+            uri.AppendPath(endpointName, false);
             uri.AppendPath("/serviceConfigurations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
@@ -441,7 +433,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             uri.AppendPath("/", false);
             uri.AppendPath(resourceUri, false);
             uri.AppendPath("/providers/Microsoft.HybridConnectivity/endpoints/", false);
-            uri.AppendPath(endpointName, true);
+            uri.AppendPath(endpointName, false);
             uri.AppendPath("/serviceConfigurations", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -455,11 +447,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="endpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceConfigurationList>> ListByEndpointResourceAsync(string resourceUri, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
 
             using var message = CreateListByEndpointResourceRequest(resourceUri, endpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -482,11 +473,10 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> or <paramref name="endpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceConfigurationList> ListByEndpointResource(string resourceUri, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
 
             using var message = CreateListByEndpointResourceRequest(resourceUri, endpointName);
             _pipeline.Send(message, cancellationToken);
@@ -532,12 +522,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceUri"/> or <paramref name="endpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServiceConfigurationList>> ListByEndpointResourceNextPageAsync(string nextLink, string resourceUri, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
 
             using var message = CreateListByEndpointResourceNextPageRequest(nextLink, resourceUri, endpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -561,12 +550,11 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// <param name="endpointName"> The endpoint name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="resourceUri"/> or <paramref name="endpointName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="endpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServiceConfigurationList> ListByEndpointResourceNextPage(string nextLink, string resourceUri, string endpointName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNull(resourceUri, nameof(resourceUri));
-            Argument.AssertNotNullOrEmpty(endpointName, nameof(endpointName));
+            Argument.AssertNotNull(endpointName, nameof(endpointName));
 
             using var message = CreateListByEndpointResourceNextPageRequest(nextLink, resourceUri, endpointName);
             _pipeline.Send(message, cancellationToken);
