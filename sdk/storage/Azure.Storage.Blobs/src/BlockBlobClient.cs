@@ -1420,6 +1420,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.SourceConditions,
                 options?.DestinationConditions,
                 options?.SourceAuthentication,
+                options?.SourceShareTokenIntent,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1476,6 +1477,7 @@ namespace Azure.Storage.Blobs.Specialized
                 options?.SourceConditions,
                 options?.DestinationConditions,
                 options?.SourceAuthentication,
+                options?.SourceShareTokenIntent,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1559,6 +1561,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceConditions,
                 conditions,
                 sourceAuthentication: default,
+                sourceShareTokenIntent: default,
                 async: false,
                 cancellationToken)
                 .EnsureCompleted();
@@ -1642,6 +1645,7 @@ namespace Azure.Storage.Blobs.Specialized
                 sourceConditions,
                 conditions,
                 sourceAuthentication: default,
+                sourceShareTokenIntent: default,
                 async: true,
                 cancellationToken)
                 .ConfigureAwait(false);
@@ -1697,6 +1701,10 @@ namespace Azure.Storage.Blobs.Specialized
         /// <param name="sourceAuthentication">
         /// Optional. Source bearer token used to access the source blob.
         /// </param>
+        /// <param name="sourceShareTokenIntent">
+        /// Optional, only applicable (but required) when the source is Azure Storage Files and using token authentication.
+        /// Used to indicate the intent of the request.
+        /// </param>
         /// <param name="async">
         /// Whether to invoke the operation asynchronously.
         /// </param>
@@ -1720,6 +1728,7 @@ namespace Azure.Storage.Blobs.Specialized
             RequestConditions sourceConditions,
             BlobRequestConditions conditions,
             HttpAuthorization sourceAuthentication,
+            ShareTokenIntent? sourceShareTokenIntent,
             bool async,
             CancellationToken cancellationToken)
         {
@@ -1774,6 +1783,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             copySourceAuthorization: sourceAuthentication?.ToString(),
+                            fileRequestIntent: sourceShareTokenIntent?.ToString(),
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -1795,6 +1805,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             copySourceAuthorization: sourceAuthentication?.ToString(),
+                            fileRequestIntent: sourceShareTokenIntent?.ToString(),
                             cancellationToken: cancellationToken);
                     }
 
