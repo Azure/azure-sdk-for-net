@@ -11,8 +11,10 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
-    internal class BlobDestinationCheckpointData : BlobCheckpointData
+    internal class BlobDestinationCheckpointData : StorageResourceCheckpointData
     {
+        public int Version;
+
         /// <summary>
         /// The type of blob.
         /// </summary>
@@ -74,8 +76,8 @@ namespace Azure.Storage.DataMovement.Blobs
             AccessTier? accessTier,
             DataTransferProperty<Metadata> metadata,
             DataTransferProperty<Tags> tags)
-            : base(DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion)
         {
+            Version = DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion;
             BlobType = blobType;
             PreserveBlobType = blobType?.Preserve ?? true;
             BlobTypeValue = blobType?.Value != default ? blobType.Value : default;
@@ -266,7 +268,7 @@ namespace Azure.Storage.DataMovement.Blobs
             int version = reader.ReadInt32();
             if (version != DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion)
             {
-                throw Errors.UnsupportedJobSchemaVersionHeader(version.ToString());
+                throw Errors.UnsupportedJobSchemaVersionHeader(version);
             }
 
             // Index Values

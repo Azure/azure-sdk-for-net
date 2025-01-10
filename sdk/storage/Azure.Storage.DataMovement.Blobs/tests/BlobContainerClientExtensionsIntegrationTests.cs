@@ -63,11 +63,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await CreateRandomFileAsync(lockedSubfolder, "blob3", size: size);
         }
 
-        private async Task<DataTransfer> CreateStartUploadDirectoryAsync_WithOptions(
+        private async Task<TransferOperation> CreateStartUploadDirectoryAsync_WithOptions(
             string directoryPath,
             BlobContainerClient containerClient,
             bool createFailedCondition = false,
-            DataTransferOptions options = default,
+            TransferOptions options = default,
             int size = Constants.KB)
         {
             await CreateTempDirectoryStructureAsync(directoryPath, size);
@@ -88,7 +88,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             return await containerClient.StartUploadDirectoryAsync(directoryPath, transferOptions);
         }
 
-        private async Task<DataTransfer> CreateStartUploadDirectoryAsync_WithDirectoryPrefix(
+        private async Task<TransferOperation> CreateStartUploadDirectoryAsync_WithDirectoryPrefix(
             string directoryPath,
             BlobContainerClient containerClient,
             string blobDirectoryPrefix = default,
@@ -109,21 +109,21 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await using var disposingContainer = await ClientBuilder.GetTestContainerAsync(publicAccessType: PublicAccessType.None);
             BlobContainerClient containerClient = disposingContainer.Container;
 
-            DataTransferOptions options = new DataTransferOptions();
+            TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
             // Act
-            DataTransfer dataTransfer = await CreateStartUploadDirectoryAsync_WithOptions(directoryPath, containerClient, false, options, 1);
+            TransferOperation transferOperation = await CreateStartUploadDirectoryAsync_WithOptions(directoryPath, containerClient, false, options, 1);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
-                dataTransfer,
+                transferOperation,
                 testEventsRaised,
                 cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
-            Assert.IsNotNull(dataTransfer);
-            Assert.IsTrue(dataTransfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, dataTransfer.TransferStatus.State);
+            Assert.IsNotNull(transferOperation);
+            Assert.IsTrue(transferOperation.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transferOperation.Status.State);
             var blobItems = await containerClient.GetBlobsAsync().ToListAsync();
             Assert.AreEqual(4, blobItems.Count);
             HashSet<string> allBlobNames = new HashSet<string>();
@@ -154,14 +154,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string blobDirectoryPrefix = "foo";
 
             // Act
-            DataTransfer dataTransfer = await CreateStartUploadDirectoryAsync_WithDirectoryPrefix(directoryPath, containerClient, blobDirectoryPrefix, 1);
+            TransferOperation transferOperation = await CreateStartUploadDirectoryAsync_WithDirectoryPrefix(directoryPath, containerClient, blobDirectoryPrefix, 1);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await dataTransfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transferOperation.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
-            Assert.IsNotNull(dataTransfer);
-            Assert.IsTrue(dataTransfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, dataTransfer.TransferStatus.State);
+            Assert.IsNotNull(transferOperation);
+            Assert.IsTrue(transferOperation.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transferOperation.Status.State);
             var blobItems = await containerClient.GetBlobsAsync().ToListAsync();
             Assert.AreEqual(4, blobItems.Count);
             HashSet<string> allBlobNames = new HashSet<string>();
@@ -190,23 +190,23 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await using var disposingContainer = await ClientBuilder.GetTestContainerAsync(publicAccessType: PublicAccessType.None);
             BlobContainerClient containerClient = disposingContainer.Container;
 
-            DataTransferOptions options = new DataTransferOptions();
+            TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
             // Act
-            DataTransfer dataTransfer = await CreateStartUploadDirectoryAsync_WithOptions(directoryPath, containerClient, true, options, 1);
+            TransferOperation transferOperation = await CreateStartUploadDirectoryAsync_WithOptions(directoryPath, containerClient, true, options, 1);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
-                dataTransfer,
+                transferOperation,
                 testEventsRaised,
                 cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
             await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
-            Assert.NotNull(dataTransfer);
-            Assert.IsTrue(dataTransfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, dataTransfer.TransferStatus.State);
-            Assert.AreEqual(true, dataTransfer.TransferStatus.HasFailedItems);
+            Assert.NotNull(transferOperation);
+            Assert.IsTrue(transferOperation.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transferOperation.Status.State);
+            Assert.AreEqual(true, transferOperation.Status.HasFailedItems);
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("BlobAlreadyExists"));
         }
 
@@ -221,26 +221,26 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await using var disposingContainer = await ClientBuilder.GetTestContainerAsync(publicAccessType: PublicAccessType.None);
             BlobContainerClient containerClient = disposingContainer.Container;
 
-            DataTransferOptions options = new DataTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreationPreference = StorageResourceCreationPreference.SkipIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
             // Act
-            DataTransfer dataTransfer = await CreateStartUploadDirectoryAsync_WithOptions(directoryPath, containerClient, true, options, 1);
+            TransferOperation transferOperation = await CreateStartUploadDirectoryAsync_WithOptions(directoryPath, containerClient, true, options, 1);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
-                dataTransfer,
+                transferOperation,
                 testEventsRaised,
                 cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
             await testEventsRaised.AssertContainerCompletedWithSkippedCheck(1);
-            Assert.NotNull(dataTransfer);
-            Assert.IsTrue(dataTransfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, dataTransfer.TransferStatus.State);
-            Assert.AreEqual(true, dataTransfer.TransferStatus.HasSkippedItems);
+            Assert.NotNull(transferOperation);
+            Assert.IsTrue(transferOperation.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transferOperation.Status.State);
+            Assert.AreEqual(true, transferOperation.Status.HasSkippedItems);
         }
         #endregion StartUploadDirectoryAsyncTests
 
@@ -267,10 +267,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await CreateBlockBlobAsync(client, blobName3, size);
         }
 
-        private async Task<DataTransfer> CreateStartDownloadToDirectoryAsync_WithOptions(
+        private async Task<TransferOperation> CreateStartDownloadToDirectoryAsync_WithOptions(
             string directoryPath,
             BlobContainerClient containerClient,
-            DataTransferOptions options = default,
+            TransferOptions options = default,
             int size = Constants.KB)
         {
             string sourceBlobPrefix = "sourceFolder";
@@ -285,7 +285,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             return await containerClient.StartDownloadToDirectoryAsync(directoryPath, transferOptions);
         }
 
-        private async Task<DataTransfer> CreateStartDownloadToDirectoryAsync_WithDirectoryPrefix(
+        private async Task<TransferOperation> CreateStartDownloadToDirectoryAsync_WithDirectoryPrefix(
             string directoryPath,
             BlobContainerClient containerClient,
             string prefixFilter = default,
@@ -310,21 +310,21 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await using var disposingContainer = await ClientBuilder.GetTestContainerAsync(publicAccessType: PublicAccessType.None);
             BlobContainerClient containerClient = disposingContainer.Container;
 
-            DataTransferOptions options = new DataTransferOptions();
+            TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
             // Act
-            DataTransfer dataTransfer = await CreateStartDownloadToDirectoryAsync_WithOptions(directoryPath, containerClient, options, 1);
+            TransferOperation transferOperation = await CreateStartDownloadToDirectoryAsync_WithOptions(directoryPath, containerClient, options, 1);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
-                dataTransfer,
+                transferOperation,
                 testEventsRaised,
                 cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
-            Assert.NotNull(dataTransfer);
-            Assert.IsTrue(dataTransfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, dataTransfer.TransferStatus.State);
+            Assert.NotNull(transferOperation);
+            Assert.IsTrue(transferOperation.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transferOperation.Status.State);
             string[] allLocalFilePaths = Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories);
             Assert.AreEqual(4, allLocalFilePaths.Length);
             HashSet<string> allFileNames = new HashSet<string>();
@@ -354,14 +354,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string prefixFilter = "/pik"; // should only download blob3 based on dir prefix
 
             // Act
-            DataTransfer dataTransfer = await CreateStartDownloadToDirectoryAsync_WithDirectoryPrefix(directoryPath, containerClient, prefixFilter, 1);
+            TransferOperation transferOperation = await CreateStartDownloadToDirectoryAsync_WithDirectoryPrefix(directoryPath, containerClient, prefixFilter, 1);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await dataTransfer.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
+            await transferOperation.WaitForCompletionAsync(cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
-            Assert.NotNull(dataTransfer);
-            Assert.IsTrue(dataTransfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, dataTransfer.TransferStatus.State);
+            Assert.NotNull(transferOperation);
+            Assert.IsTrue(transferOperation.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transferOperation.Status.State);
             string[] allLocalFilePaths = Directory.GetFiles(directoryPath, "*", SearchOption.AllDirectories);
             Assert.AreEqual(1, allLocalFilePaths.Length);
             string localFileName = Path.GetFileName(allLocalFilePaths.First());
@@ -379,7 +379,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await using var disposingContainer = await ClientBuilder.GetTestContainerAsync(publicAccessType: PublicAccessType.None);
             BlobContainerClient containerClient = disposingContainer.Container;
 
-            DataTransferOptions options = new DataTransferOptions();
+            TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
             // Create at least one of the dest files to make it fail
@@ -388,18 +388,18 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             File.Create(Path.Combine(folderPath, "blob0")).Close();
 
             // Act
-            DataTransfer dataTransfer = await CreateStartDownloadToDirectoryAsync_WithOptions(directoryPath, containerClient, options, 1);
+            TransferOperation transferOperation = await CreateStartDownloadToDirectoryAsync_WithOptions(directoryPath, containerClient, options, 1);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
-                dataTransfer,
+                transferOperation,
                 testEventsRaised,
                 cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
-            Assert.NotNull(dataTransfer);
-            Assert.IsTrue(dataTransfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, dataTransfer.TransferStatus.State);
-            Assert.AreEqual(true, dataTransfer.TransferStatus.HasFailedItems);
+            Assert.NotNull(transferOperation);
+            Assert.IsTrue(transferOperation.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transferOperation.Status.State);
+            Assert.AreEqual(true, transferOperation.Status.HasFailedItems);
             Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains("Cannot overwrite file."));
             await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
         }
@@ -415,7 +415,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await using var disposingContainer = await ClientBuilder.GetTestContainerAsync(publicAccessType: PublicAccessType.None);
             BlobContainerClient containerClient = disposingContainer.Container;
 
-            DataTransferOptions options = new DataTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreationPreference = StorageResourceCreationPreference.SkipIfExists
             };
@@ -427,18 +427,18 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             File.Create(Path.Combine(folderPath, "blob0")).Dispose();
 
             // Act
-            DataTransfer dataTransfer = await CreateStartDownloadToDirectoryAsync_WithOptions(directoryPath, containerClient, options, 1);
+            TransferOperation transferOperation = await CreateStartDownloadToDirectoryAsync_WithOptions(directoryPath, containerClient, options, 1);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await TestTransferWithTimeout.WaitForCompletionAsync(
-                dataTransfer,
+                transferOperation,
                 testEventsRaised,
                 cancellationTokenSource.Token).ConfigureAwait(false);
 
             // Assert
-            Assert.NotNull(dataTransfer);
-            Assert.IsTrue(dataTransfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, dataTransfer.TransferStatus.State);
-            Assert.AreEqual(true, dataTransfer.TransferStatus.HasSkippedItems);
+            Assert.NotNull(transferOperation);
+            Assert.IsTrue(transferOperation.HasCompleted);
+            Assert.AreEqual(TransferState.Completed, transferOperation.Status.State);
+            Assert.AreEqual(true, transferOperation.Status.HasSkippedItems);
             await testEventsRaised.AssertContainerCompletedWithSkippedCheck(1);
         }
         #endregion StartDownloadToDirectoryAsyncTests

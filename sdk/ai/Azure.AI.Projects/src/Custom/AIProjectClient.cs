@@ -13,7 +13,7 @@ namespace Azure.AI.Projects
     public partial class AIProjectClient
     {
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
-        /// <param name="connectionString">The Azure AI Studio project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
+        /// <param name="connectionString">The Azure AI Foundry project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionString"/> </exception>
@@ -24,7 +24,7 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Initializes a new instance of AzureAIClient.
         /// </summary>
-        /// <param name="connectionString">The Azure AI Studio project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
+        /// <param name="connectionString">The Azure AI Foundry project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>

@@ -25,7 +25,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
         public override string ProviderId => "blob";
 
-        protected override DataTransferOrder TransferType => DataTransferOrder.Sequential;
+        protected override TransferOrder TransferType => TransferOrder.Sequential;
 
         protected override long MaxSupportedSingleTransferSize => Constants.Blob.Append.MaxAppendBlockBytes;
 

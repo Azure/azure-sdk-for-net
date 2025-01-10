@@ -162,7 +162,7 @@ namespace Azure.Data.Tables.Queryable
 
             if (visited.Method.IsStatic && visited.Method.Name == "Equals" && visited.Arguments.Count > 1)
             {
-                if (visited.Arguments.Count > 2)
+                if (visited.Arguments.Count > 2 && !TablesCompatSwitches.DisableThrowOnStringComparisonFilter)
                 {
                     throw new NotSupportedException("string.Equals method with more than two arguments is not supported.");
                 }
@@ -171,7 +171,7 @@ namespace Azure.Data.Tables.Queryable
 
             if (!visited.Method.IsStatic && visited.Method.Name == "Equals" && visited.Arguments.Count > 0)
             {
-                if (visited.Arguments.Count > 1)
+                if (visited.Arguments.Count > 1 && !TablesCompatSwitches.DisableThrowOnStringComparisonFilter)
                 {
                     throw new NotSupportedException("Equals method with more than two arguments is not supported.");
                 }
@@ -190,7 +190,7 @@ namespace Azure.Data.Tables.Queryable
 
             if (visited.Method.IsStatic && visited.Method.Name == "Compare" && visited.Arguments.Count > 1 && visited.Method.ReturnType == typeof(int))
             {
-                if (visited.Arguments.Count > 2)
+                if (visited.Arguments.Count > 2 && !TablesCompatSwitches.DisableThrowOnStringComparisonFilter)
                 {
                     throw new NotSupportedException("string.Compare method with more than two arguments is not supported.");
                 }

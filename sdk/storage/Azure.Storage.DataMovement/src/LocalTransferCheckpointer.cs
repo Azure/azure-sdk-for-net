@@ -94,7 +94,7 @@ namespace Azure.Storage.DataMovement
                 destination.ProviderId,
                 isContainer,
                 false, /* enumerationComplete */
-                new DataTransferStatus(),
+                new TransferStatus(),
                 source.Uri.ToSanitizedString(),
                 destination.Uri.ToSanitizedString(),
                 source.GetSourceCheckpointData(),
@@ -314,7 +314,7 @@ namespace Azure.Storage.DataMovement
 
         public override async Task SetJobTransferStatusAsync(
             string transferId,
-            DataTransferStatus status,
+            TransferStatus status,
             CancellationToken cancellationToken = default)
         {
             long length = DataMovementConstants.IntSizeInBytes;
@@ -335,7 +335,7 @@ namespace Azure.Storage.DataMovement
             }
 
             // if paused or other completion state, remove the memory cache but still write state to the plan file for later resume
-            if (status.State == DataTransferState.Completed || status.State == DataTransferState.Paused)
+            if (status.State == TransferState.Completed || status.State == TransferState.Paused)
             {
                 _transferStates.Remove(transferId);
             }
@@ -359,7 +359,7 @@ namespace Azure.Storage.DataMovement
         public override async Task SetJobPartTransferStatusAsync(
             string transferId,
             int partNumber,
-            DataTransferStatus status,
+            TransferStatus status,
             CancellationToken cancellationToken = default)
         {
             long length = DataMovementConstants.IntSizeInBytes;

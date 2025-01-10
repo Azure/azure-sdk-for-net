@@ -62,7 +62,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         private void TestAssertSerializedData(BlobDestinationCheckpointData data)
         {
-            string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.2.bin");
+            string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.3.bin");
             using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
             using (FileStream fileStream = File.OpenRead(samplePath))
             {
@@ -124,7 +124,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             data.PreserveTags = true;
             data.TagsBytes = default;
 
-            string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.2.bin");
+            string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.3.bin");
             using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
             using (FileStream fileStream = File.OpenRead(samplePath))
             {
@@ -163,7 +163,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobDestinationCheckpointData data = CreateSetSampleValues();
             data.AccessTierValue = AccessTier.Cold;
 
-            string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.2.bin");
+            string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.3.bin");
             using (MemoryStream dataStream = new MemoryStream(DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex))
             using (FileStream fileStream = File.OpenRead(samplePath))
             {
@@ -198,14 +198,14 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [Test]
-        public void Deserialize_File_Version_2()
+        public void Deserialize_File_Version_3()
         {
-            string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.2.bin");
+            string samplePath = Path.Combine("Resources", "BlobDestinationCheckpointData.3.bin");
             using (FileStream stream = File.OpenRead(samplePath))
             {
                 stream.Position = 0;
                 BlobDestinationCheckpointData deserialized = BlobDestinationCheckpointData.Deserialize(stream);
-                VerifySampleValues(deserialized, 2);
+                VerifySampleValues(deserialized, 3);
             }
         }
 
