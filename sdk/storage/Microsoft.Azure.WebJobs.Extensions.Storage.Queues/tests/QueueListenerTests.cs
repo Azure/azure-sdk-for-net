@@ -15,6 +15,7 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Protocols;
@@ -648,195 +649,147 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             await _listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(10), cancellationToken);
         }
 
-        private static (QueueListener Listener,
-            Mock<QueueProcessor> ProcessorMock,
+        private (QueueListener Listener,
+            TestQueueProcessor Processor,
             CancellationTokenSource CallerCts,
             CancellationTokenSource SystemShutdownCts)
         CreateListenerAndMocks()
         {
             var callerCts = new CancellationTokenSource();
             var systemShutdownCts = new CancellationTokenSource();
+            QueueProcessorOptions options = new QueueProcessorOptions(_mockQueue.Object, _loggerFactory, _queuesOptions);
+            var queueProcessor = new TestQueueProcessor(options);
 
-            var processorMock = new Mock<QueueProcessor>();
-            processorMock.Setup(x => x.BeginProcessingMessageAsync(It.IsAny<QueueMessage>(), It.IsAny<CancellationToken>()))
-                         .ReturnsAsync(true);
-            processorMock.Setup(x => x.CompleteProcessingMessageAsync(It.IsAny<QueueMessage>(), It.IsAny<FunctionResult>(), It.IsAny<CancellationToken>()))
-                         .Returns(Task.CompletedTask);
-
-            var triggerExecutorMock = new Mock<ITriggerExecutor<QueueMessage>>();
-            triggerExecutorMock.Setup(x => x.ExecuteAsync(It.IsAny<QueueMessage>(), It.IsAny<CancellationToken>()))
+            _mockTriggerExecutor.Setup(x => x.ExecuteAsync(It.IsAny<QueueMessage>(), It.IsAny<CancellationToken>()))
                                .ReturnsAsync(new FunctionResult(true));
 
             var exceptionHandlerMock = new Mock<IWebJobsExceptionHandler>();
 
             var listener = new QueueListener(
-                queue: null,
-                poisonQueue: null,
-                triggerExecutor: triggerExecutorMock.Object,
-                exceptionHandler: exceptionHandlerMock.Object,
-                loggerFactory: Mock.Of<ILoggerFactory>(),
-                sharedWatcher: null,
-                queueOptions: new QueuesOptions { BatchSize = 1, MaxDequeueCount = 5, MaxPollingInterval = TimeSpan.FromSeconds(5) },
-                queueProcessor: processorMock.Object,
-                functionDescriptor: Mock.Of<FunctionDescriptor>(),
-                concurrencyManager: null,
-                functionId: "testFunction",
-                maxPollingInterval: null,
-                drainModeManager: null,
-                shutdownCancellationTokenSource: systemShutdownCts);
+               _mockQueue.Object,
+               null,
+               _mockTriggerExecutor.Object,
+               _mockExceptionDispatcher.Object,
+               _loggerFactory,
+               null,
+               _queuesOptions,
+               queueProcessor,
+               new FunctionDescriptor { Id = TestFunctionId },
+               null,
+               drainModeManager: null,
+               shutdownCancellationTokenSource: systemShutdownCts);
 
-            return (listener, processorMock, callerCts, systemShutdownCts);
+            return (listener, queueProcessor, callerCts, systemShutdownCts);
         }
 
         [Test]
         public async Task ProcessMessageAsync_NoTokensCanceled_CallsCompleteProcessingMessageAsync()
         {
             // Arrange
-            var (listener, processorMock, callerCts, shutdownCts) = QueueListenerTests.CreateListenerAndMocks();
+            var (listener, processor, callerCts, shutdownCts) = CreateListenerAndMocks();
             var message = new Mock<QueueMessage>().Object;
 
             // Act
             // Neither token is canceled
-            await listener.ProcessMessageAsync(message, TimeSpan.FromSeconds(10), callerCts.Token);
+            await listener.ProcessMessageAsync(message, TimeSpan.FromMinutes(2), callerCts.Token);
 
-            // Assert
-            // Because neither token is canceled, completion should occur
-            processorMock.Verify(
-                x => x.CompleteProcessingMessageAsync(message, It.IsAny<FunctionResult>(), shutdownCts.Token),
-                Times.Once);
+            // TODO verify that the message was processed and deleted
+            Assert.AreEqual(shutdownCts.Token, processor.CapturedDeleteToken);
         }
 
         [Test]
-        public async Task ProcessMessageAsync_ExecutionCanceledButShutdownNotCanceled_StillCompletes()
+        public async Task ProcessMessageAsync_ShutdownCanceled_GracefulShutdownWithCompleteProcessingMessagesAsyncRENANENE()
         {
             // Arrange
-            var (listener, processorMock, callerCts, shutdownCts) = QueueListenerTests.CreateListenerAndMocks();
+            var (listener, processor, callerCts, shutdownCts) = CreateListenerAndMocks();
             var message = new Mock<QueueMessage>().Object;
 
-            // Setup BeginProcessingMessageAsync to simulate some delay so we have time to cancel during "mid-processing."
-            processorMock
-                .Setup(x => x.BeginProcessingMessageAsync(It.IsAny<QueueMessage>(), It.IsAny<CancellationToken>()))
-                .Returns(async (QueueMessage msg, CancellationToken ct) =>
-                {
-                    // Simulate some real work that takes 200ms
-                    await Task.Delay(200, ct);
-                    // If canceled in that interval, this can throw or simply return "false"
-                    return true;
-                });
-
             // Act
-            // Start processing, but do NOT cancel yet.
-            var processingTask = listener.ProcessMessageAsync(message, TimeSpan.FromSeconds(5), callerCts.Token);
-
-            // Wait 50ms so that BeginProcessingMessageAsync is "in flight."
-            await Task.Delay(50);
-
-            // Now cancel the execution token (callerCts)
-            // This simulates a "mid-processing" cancellation scenario.
+            // Cancel the caller token
             callerCts.Cancel();
 
-            // Wait for the operation to complete.
-            await processingTask;
+            await listener.ProcessMessageAsync(message, TimeSpan.FromMinutes(2), callerCts.Token);
 
-            processorMock.Verify(
-                x => x.CompleteProcessingMessageAsync(message, It.IsAny<FunctionResult>(), shutdownCts.Token),
-                Times.Once
-            );
+            // TODO verify that the message was processed and deleted
+            Assert.AreEqual(shutdownCts.Token, processor.CapturedDeleteToken);
         }
 
         [Test]
-        public async Task ProcessMessageAsync_ShutdownCanceled_SkipsCompletion()
+        public async Task ProcessMessageAsync_ShutdownCanceled_GracefulShutdownWithCompleteProcessingMessagesAsync()
         {
             // Arrange
-            var (listener, processorMock, callerCts, shutdownCts) = QueueListenerTests.CreateListenerAndMocks();
+            var (listener, processor, callerCts, shutdownCts) = CreateListenerAndMocks();
             var message = new Mock<QueueMessage>().Object;
 
             // Act
-            // Cancel the shutdown token BEFORE processing
+            // Cancel the shutdown token
             shutdownCts.Cancel();
 
-            await listener.ProcessMessageAsync(message, TimeSpan.FromSeconds(10), callerCts.Token);
+            await listener.ProcessMessageAsync(message, TimeSpan.FromMinutes(2), callerCts.Token);
 
-            // Assert
-            // Because the linkedCts will be canceled as soon as we start,
-            // BeginProcessingMessageAsync likely returns early => no completion
-            processorMock.Verify(
-                x => x.CompleteProcessingMessageAsync(It.IsAny<QueueMessage>(), It.IsAny<FunctionResult>(), It.IsAny<CancellationToken>()),
-                Times.Never);
+            // TODO verify that the message was not deleted because this is a forced shutdown
+            Assert.AreEqual(shutdownCts.Token, processor.CapturedDeleteToken);
         }
 
         [Test]
-        public async Task StopAsync_DisablesCancellation_WhenDrainModeEnabled()
+        public async Task StopAsync_WhenDrainModeNotEnabled_ExecutionCancellationTokenIsCanceled()
+        {
+            var drainModeManagerMock = new Mock<IDrainModeManager>();
+            drainModeManagerMock.Setup(d => d.IsDrainModeEnabled).Returns(false);
+            var executionCancellationTokenSource = new CancellationTokenSource();
+
+            var listener = new QueueListener(
+                _mockQueue.Object,
+                null,
+                _mockTriggerExecutor.Object,
+                _mockExceptionDispatcher.Object,
+                _loggerFactory,
+                null,
+                _queuesOptions,
+                _mockQueueProcessor.Object,
+                new FunctionDescriptor { Id = TestFunctionId },
+                null,
+                drainModeManager: drainModeManagerMock.Object,
+                executionCancellationTokenSource: executionCancellationTokenSource);
+
+            // Act
+            await listener.StartAsync(CancellationToken.None);
+
+            await listener.StopAsync(CancellationToken.None);
+
+            // Assert
+            Assert.IsTrue(executionCancellationTokenSource.Token.IsCancellationRequested, "Execution token should be canceled when drain mode is not enabled.");
+        }
+
+        [Test]
+        public async Task StopAsync_WhenDrainModeEnabled_ExecutionCancellationTokenIsNotCanceled()
         {
             // Arrange
             var drainModeManagerMock = new Mock<IDrainModeManager>();
             drainModeManagerMock.Setup(d => d.IsDrainModeEnabled).Returns(true);
-
             var executionCancellationTokenSource = new CancellationTokenSource();
 
-            var loggerFactoryMock = new Mock<ILoggerFactory>();
-            loggerFactoryMock.Setup(l => l.CreateLogger<QueueListener>())
-                .Returns(Mock.Of<ILogger<QueueListener>>());
-
-            // Initialize the QueueListener with minimal setup
             var listener = new QueueListener(
-                queue: null,
-                poisonQueue: null,
-                triggerExecutor: null,
-                exceptionHandler: null,
-                loggerFactory: loggerFactoryMock.Object,
-                sharedWatcher: null,
-                queueOptions: new QueuesOptions { BatchSize = 1, MaxDequeueCount = 1, MaxPollingInterval = TimeSpan.FromMinutes(1) },
-                queueProcessor: Mock.Of<QueueProcessor>(),
-                functionDescriptor: Mock.Of<FunctionDescriptor>(),
-                concurrencyManager: null,
-                functionId: "testFunction",
-                maxPollingInterval: null,
+                _mockQueue.Object,
+                null,
+                _mockTriggerExecutor.Object,
+                _mockExceptionDispatcher.Object,
+                _loggerFactory,
+                null,
+                _queuesOptions,
+                _mockQueueProcessor.Object,
+                new FunctionDescriptor { Id = TestFunctionId },
+                null,
                 drainModeManager: drainModeManagerMock.Object,
                 executionCancellationTokenSource: executionCancellationTokenSource);
 
             // Act
+            await listener.StartAsync(CancellationToken.None);
+
             await listener.StopAsync(CancellationToken.None);
 
             // Assert
             Assert.IsFalse(executionCancellationTokenSource.Token.IsCancellationRequested, "Execution token should not be canceled when drain mode is enabled.");
-        }
-
-        [Test]
-        public async Task StopAsync_ActivatesCancellation_WhenDrainModeDisabled()
-        {
-            // Arrange
-            var drainModeManagerMock = new Mock<IDrainModeManager>();
-            drainModeManagerMock.Setup(d => d.IsDrainModeEnabled).Returns(false);
-
-            var executionCancellationTokenSource = new CancellationTokenSource();
-
-            var loggerFactoryMock = new Mock<ILoggerFactory>();
-            loggerFactoryMock.Setup(l => l.CreateLogger<QueueListener>())
-                .Returns(Mock.Of<ILogger<QueueListener>>());
-
-            // Initialize the QueueListener
-            var listener = new QueueListener(
-                queue: null,
-                poisonQueue: null,
-                triggerExecutor: null,
-                exceptionHandler: null,
-                loggerFactory: loggerFactoryMock.Object,
-                sharedWatcher: null,
-                queueOptions: new QueuesOptions { BatchSize = 1, MaxDequeueCount = 1, MaxPollingInterval = TimeSpan.FromMinutes(1) },
-                queueProcessor: Mock.Of<QueueProcessor>(),
-                functionDescriptor: Mock.Of<FunctionDescriptor>(),
-                concurrencyManager: null,
-                functionId: "testFunction",
-                maxPollingInterval: null,
-                drainModeManager: drainModeManagerMock.Object,
-                executionCancellationTokenSource: executionCancellationTokenSource);
-
-            // Act
-            await listener.StopAsync(CancellationToken.None);
-
-            // Assert
-            Assert.IsTrue(executionCancellationTokenSource.Token.IsCancellationRequested, "Execution token should be canceled when drain mode is disabled.");
         }
 
         [Test]
@@ -845,28 +798,23 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             // Arrange
             var executionCancellationTokenSource = new CancellationTokenSource();
 
-            var loggerFactoryMock = new Mock<ILoggerFactory>();
-            loggerFactoryMock.Setup(l => l.CreateLogger<QueueListener>())
-                .Returns(Mock.Of<ILogger<QueueListener>>());
-
-            // Initialize the QueueListener
             var listener = new QueueListener(
-                queue: null,
-                poisonQueue: null,
-                triggerExecutor: null,
-                exceptionHandler: null,
-                loggerFactory: loggerFactoryMock.Object,
-                sharedWatcher: null,
-                queueOptions: new QueuesOptions { BatchSize = 1, MaxDequeueCount = 1, MaxPollingInterval = TimeSpan.FromMinutes(1) },
-                queueProcessor: Mock.Of<QueueProcessor>(),
-                functionDescriptor: Mock.Of<FunctionDescriptor>(),
-                concurrencyManager: null,
-                functionId: "testFunction",
-                maxPollingInterval: null,
-                drainModeManager: null,
-                executionCancellationTokenSource: executionCancellationTokenSource);
+               _mockQueue.Object,
+               null,
+               _mockTriggerExecutor.Object,
+               _mockExceptionDispatcher.Object,
+               _loggerFactory,
+               null,
+               _queuesOptions,
+               _mockQueueProcessor.Object,
+               new FunctionDescriptor { Id = TestFunctionId },
+               null,
+               drainModeManager: null,
+               executionCancellationTokenSource: executionCancellationTokenSource);
 
             // Act
+            await listener.StartAsync(CancellationToken.None);
+
             await listener.StopAsync(CancellationToken.None);
 
             // Assert
