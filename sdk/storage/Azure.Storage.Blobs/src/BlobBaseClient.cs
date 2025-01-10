@@ -4141,7 +4141,7 @@ namespace Azure.Storage.Blobs.Specialized
                             copySourceAuthorization: sourceAuthentication?.ToString(),
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             copySourceTags: copySourceTags,
-                            fileRequestIntent: sourceShareTokenIntent?.ToString(),
+                            fileRequestIntent: sourceShareTokenIntent,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -4168,7 +4168,7 @@ namespace Azure.Storage.Blobs.Specialized
                             copySourceAuthorization: sourceAuthentication?.ToString(),
                             encryptionScope: ClientConfiguration.EncryptionScope,
                             copySourceTags: copySourceTags,
-                            fileRequestIntent: sourceShareTokenIntent?.ToString(),
+                            fileRequestIntent: sourceShareTokenIntent,
                             cancellationToken: cancellationToken);
                     }
 

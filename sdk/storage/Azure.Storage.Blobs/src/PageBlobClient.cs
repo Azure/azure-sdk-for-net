@@ -3998,7 +3998,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             copySourceAuthorization: sourceAuthentication?.ToString(),
-                            fileRequestIntent: sourceTokenIntent?.ToString(),
+                            fileRequestIntent: sourceTokenIntent,
                             cancellationToken: cancellationToken)
                             .ConfigureAwait(false);
                     }
@@ -4028,7 +4028,7 @@ namespace Azure.Storage.Blobs.Specialized
                             sourceIfMatch: sourceConditions?.IfMatch?.ToString(),
                             sourceIfNoneMatch: sourceConditions?.IfNoneMatch?.ToString(),
                             copySourceAuthorization: sourceAuthentication?.ToString(),
-                            fileRequestIntent: sourceTokenIntent?.ToString(),
+                            fileRequestIntent: sourceTokenIntent,
                             cancellationToken: cancellationToken);
                     }
 
