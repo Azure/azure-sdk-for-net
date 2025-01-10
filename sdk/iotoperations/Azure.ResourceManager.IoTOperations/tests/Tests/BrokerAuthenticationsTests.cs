@@ -3,10 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.IoTOperations.Models;
-using Azure.ResourceManager.IoTOperations.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.IoTOperations.Tests
@@ -31,16 +28,14 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         {
             // Get BrokerAuthentications
             BrokerAuthenticationResourceCollection brokerAuthenticationResourceCollection =
-                await GetBrokerAuthenticationResourceCollectionAsync(
-                    IoTOperationsManagementTestUtilities.DefaultResourceGroupName
-                );
+                await GetBrokerAuthenticationResourceCollectionAsync(ResourceGroup);
 
             BrokerAuthenticationResource brokerAuthenticationResource =
-                await brokerAuthenticationResourceCollection.GetAsync("default");
+                await brokerAuthenticationResourceCollection.GetAsync(BrokersAuthenticationsName);
 
             Assert.IsNotNull(brokerAuthenticationResource);
             Assert.IsNotNull(brokerAuthenticationResource.Data);
-            Assert.AreEqual(brokerAuthenticationResource.Data.Name, "default");
+            Assert.AreEqual(brokerAuthenticationResource.Data.Name, BrokersAuthenticationsName);
 
             // Create BrokerAuthentication
             string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");

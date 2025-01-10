@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.IoTOperations.Models;
-using Azure.ResourceManager.IoTOperations.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.IoTOperations.Tests
@@ -32,17 +31,15 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         {
             // Get Instances
             InstanceResourceCollection instanceResourceCollection =
-                await GetInstanceResourceCollectionAsync(
-                    IoTOperationsManagementTestUtilities.DefaultResourceGroupName
-                );
+                await GetInstanceResourceCollectionAsync(ResourceGroup);
 
             InstanceResource instanceResource = await instanceResourceCollection.GetAsync(
-                "aio-o5fjq"
+                InstanceName
             );
 
             Assert.IsNotNull(instanceResource);
             Assert.IsNotNull(instanceResource.Data);
-            Assert.AreEqual(instanceResource.Data.Name, "aio-o5fjq");
+            Assert.AreEqual(instanceResource.Data.Name, InstanceName);
 
             // Update Instance
             string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");
@@ -54,7 +51,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             ArmOperation<InstanceResource> resp =
                 await instanceResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
-                    "aio-o5fjq",
+                    InstanceName,
                     instanceResourceData
                 );
             InstanceResource updatedInstance = resp.Value;
@@ -75,7 +72,7 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         )
         {
             return new InstanceResourceData(
-                new AzureLocation(IoTOperationsManagementTestUtilities.DefaultResourceLocation),
+                new AzureLocation(DefaultResourceLocation),
                 instanceResource.Data.ExtendedLocation
             )
             {

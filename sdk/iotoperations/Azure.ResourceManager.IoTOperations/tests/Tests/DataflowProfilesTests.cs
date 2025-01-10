@@ -4,7 +4,6 @@
 using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.IoTOperations.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.IoTOperations.Tests
@@ -29,16 +28,14 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         {
             // Get DataflowProfiles
             DataflowProfileResourceCollection dataflowProfileResourceCollection =
-                await GetDataflowProfileResourceCollectionAsync(
-                    IoTOperationsManagementTestUtilities.DefaultResourceGroupName
-                );
+                await GetDataflowProfileResourceCollectionAsync(ResourceGroup);
 
             DataflowProfileResource dataflowProfileResource =
-                await dataflowProfileResourceCollection.GetAsync("default");
+                await dataflowProfileResourceCollection.GetAsync(DataflowEndpointsName);
 
             Assert.IsNotNull(dataflowProfileResource);
             Assert.IsNotNull(dataflowProfileResource.Data);
-            Assert.AreEqual(dataflowProfileResource.Data.Name, "default");
+            Assert.AreEqual(dataflowProfileResource.Data.Name, DataflowEndpointsName);
 
             // Create new DataflowProfile
             string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");

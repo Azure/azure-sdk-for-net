@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.IoTOperations.Models;
-using Azure.ResourceManager.IoTOperations.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.IoTOperations.Tests
@@ -32,46 +31,15 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         {
             // Get Brokers
             BrokerResourceCollection brokerResourceCollection =
-                await GetBrokerResourceCollectionAsync(
-                    IoTOperationsManagementTestUtilities.DefaultResourceGroupName
-                );
+                await GetBrokerResourceCollectionAsync(ResourceGroup);
 
-            BrokerResource brokerResource = await brokerResourceCollection.GetAsync("default");
+            BrokerResource brokerResource = await brokerResourceCollection.GetAsync(BrokersName);
 
             Assert.IsNotNull(brokerResource);
             Assert.IsNotNull(brokerResource.Data);
-            Assert.AreEqual(brokerResource.Data.Name, "default");
+            Assert.AreEqual(brokerResource.Data.Name, BrokersName);
 
-            // // Update Broker
-            // BrokerResourceData brokerResourceData = CreateBrokerResourceData(
-            //     brokerResource,
-            //     "High"
-            // );
-
-            // ArmOperation<BrokerResource> resp = await brokerResourceCollection.CreateOrUpdateAsync(
-            //     WaitUntil.Completed,
-            //     "default",
-            //     brokerResourceData
-            // );
-            // BrokerResource updatedBroker = resp.Value;
-
-            // Assert.IsNotNull(updatedBroker);
-            // Assert.IsNotNull(updatedBroker.Data);
-            // Assert.IsNotNull(updatedBroker.Data.Properties);
-
-            // brokerResourceData = CreateBrokerResourceData(brokerResource, "Medium");
-
-            // resp = await brokerResourceCollection.CreateOrUpdateAsync(
-            //     WaitUntil.Completed,
-            //     "default",
-            //     brokerResourceData
-            // );
-
-            // updatedBroker = resp.Value;
-
-            // Assert.IsNotNull(updatedBroker);
-            // Assert.IsNotNull(updatedBroker.Data);
-            // Assert.IsNotNull(updatedBroker.Data.Properties);
+            // Cant update Broker
         }
 
         private BrokerResourceData CreateBrokerResourceData(

@@ -3,10 +3,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.IoTOperations.Models;
-using Azure.ResourceManager.IoTOperations.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.IoTOperations.Tests
@@ -31,18 +29,9 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         {
             // Get Dataflows
             DataflowResourceCollection dataflowResourceCollection =
-                await GetDataflowResourceCollectionAsync(
-                    IoTOperationsManagementTestUtilities.DefaultResourceGroupName
-                );
+                await GetDataflowResourceCollectionAsync(ResourceGroup);
 
-            // DataflowResource dataflowResource = await dataflowResourceCollection.GetAsync(
-            //     "default"
-            // );
-
-            // Assert.IsNotNull(dataflowResource);
-            // Assert.IsNotNull(dataflowResource.Data);
-            // Assert.AreEqual(dataflowResource.Data.Name, "default");
-
+            // None are created in a fresh AIO deployment
             // Create Dataflow
             string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");
             DataflowResourceData dataflowResourceData = CreateDataflowResourceData();
@@ -71,10 +60,8 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         private DataflowResourceData CreateDataflowResourceData()
         {
             return new DataflowResourceData(
-                new ExtendedLocation(
-                    "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.ExtendedLocation/customLocations/location-o5fjq",
-                    ExtendedLocationType.CustomLocation
-                )
+                // Can normally use the CL from already deployed resource in other RTs but since we are creating new ones in this test we need to construct the CL.
+                new ExtendedLocation(ExtendedLocation, ExtendedLocationType.CustomLocation)
             )
             {
                 Properties = new DataflowProperties(

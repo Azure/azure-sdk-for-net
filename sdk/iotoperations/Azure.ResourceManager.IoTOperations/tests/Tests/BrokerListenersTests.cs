@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.IoTOperations.Models;
-using Azure.ResourceManager.IoTOperations.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.IoTOperations.Tests
@@ -30,16 +29,14 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         {
             // Get BrokerListeners
             BrokerListenerResourceCollection brokerListenerResourceCollection =
-                await GetBrokerListenerResourceCollectionAsync(
-                    IoTOperationsManagementTestUtilities.DefaultResourceGroupName
-                );
+                await GetBrokerListenerResourceCollectionAsync(ResourceGroup);
 
             BrokerListenerResource brokerListenerResource =
-                await brokerListenerResourceCollection.GetAsync("default");
+                await brokerListenerResourceCollection.GetAsync(BrokersListenersName);
 
             Assert.IsNotNull(brokerListenerResource);
             Assert.IsNotNull(brokerListenerResource.Data);
-            Assert.AreEqual(brokerListenerResource.Data.Name, "default");
+            Assert.AreEqual(brokerListenerResource.Data.Name, BrokersListenersName);
 
             // Create new BrokerListener
             string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");

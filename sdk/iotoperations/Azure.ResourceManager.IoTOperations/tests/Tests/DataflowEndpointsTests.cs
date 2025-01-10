@@ -3,10 +3,7 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.IoTOperations.Models;
-using Azure.ResourceManager.IoTOperations.Tests.Helpers;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.IoTOperations.Tests
@@ -31,16 +28,14 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         {
             // Get DataflowEndpoints
             DataflowEndpointResourceCollection dataflowEndpointsResourceCollection =
-                await GetDataflowEndpointResourceCollectionAsync(
-                    IoTOperationsManagementTestUtilities.DefaultResourceGroupName
-                );
+                await GetDataflowEndpointResourceCollectionAsync(ResourceGroup);
 
             DataflowEndpointResource dataflowEndpointsResource =
-                await dataflowEndpointsResourceCollection.GetAsync("default");
+                await dataflowEndpointsResourceCollection.GetAsync(DataflowEndpointsName);
 
             Assert.IsNotNull(dataflowEndpointsResource);
             Assert.IsNotNull(dataflowEndpointsResource.Data);
-            Assert.AreEqual(dataflowEndpointsResource.Data.Name, "default");
+            Assert.AreEqual(dataflowEndpointsResource.Data.Name, DataflowEndpointsName);
 
             // Create new DataflowEndpoint
             string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");

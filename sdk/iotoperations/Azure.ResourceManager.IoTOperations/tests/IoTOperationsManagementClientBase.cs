@@ -1,10 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.ResourceManager.IoTOperations.Models;
 using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.TestFramework;
 
@@ -15,11 +13,17 @@ namespace Azure.ResourceManager.IoTOperations.Tests
     {
         public string SubscriptionId { get; set; }
         public ArmClient ArmClient { get; private set; }
-        public ResourceGroupCollection ResourceGroupsOperations { get; set; }
         public SubscriptionResource Subscription { get; set; }
+        public string ResourceGroup { get; set; }
         public string InstanceName { get; set; }
         public string BrokersName { get; set; }
+        public string BrokersListenersName { get; set; }
+        public string BrokersAuthenticationsName { get; set; }
         public string DataflowProfilesName { get; set; }
+        public string DataflowEndpointsName { get; set; }
+        public string ExtendedLocation { get; set; }
+        public string CustomLocationName { get; set; }
+        public const string DefaultResourceLocation = "eastus2";
 
         protected IoTOperationsManagementClientBase(bool isAsync)
             : base(isAsync) { }
@@ -31,14 +35,21 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         {
             ArmClient = GetArmClient();
             Subscription = await ArmClient.GetDefaultSubscriptionAsync();
-            ResourceGroupsOperations = Subscription.GetResourceGroups();
-            InstanceName = "aio-o5fjq";
+            ResourceGroup = "sdk-test-cluster-112208379";
+            CustomLocationName = "location-cozp6";
+            InstanceName = "aio-cozp6";
             BrokersName = "default";
+            BrokersListenersName = "default";
+            BrokersAuthenticationsName = "default";
             DataflowProfilesName = "default";
+            DataflowEndpointsName = "default";
+            ExtendedLocation =
+                $"/subscriptions/{Subscription.Data.Id}/resourceGroups{ResourceGroup}/providers/Microsoft.ExtendedLocation/customLocations/{CustomLocationName}";
         }
 
         public async Task<ResourceGroupResource> GetResourceGroupAsync(string name)
         {
+            string idk = Subscription.Data.Id;
             return await Subscription.GetResourceGroups().GetAsync(name);
         }
 
@@ -116,7 +127,9 @@ namespace Azure.ResourceManager.IoTOperations.Tests
         {
             DataflowProfileResourceCollection dataflowProfiles =
                 await GetDataflowProfileResourceCollectionAsync(resourceGroupName);
-            DataflowProfileResource dataflowProfile = await dataflowProfiles.GetAsync(DataflowProfilesName);
+            DataflowProfileResource dataflowProfile = await dataflowProfiles.GetAsync(
+                DataflowProfilesName
+            );
             return dataflowProfile.GetDataflowResources();
         }
 
