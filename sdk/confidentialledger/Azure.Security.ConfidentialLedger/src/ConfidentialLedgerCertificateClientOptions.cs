@@ -31,7 +31,8 @@ namespace Azure.Security.ConfidentialLedger.Certificate
         {
             Version = version switch
             {
-                ServiceVersion.V2024_01_26_Preview => "V2024_01_26_Preview",
+                ServiceVersion.V2022_05_13 => "2022-05-13",
+                ServiceVersion.V2024_01_26_Preview => "2024-01-26-Preview",
                 _ => throw new NotSupportedException()
             };
         }
