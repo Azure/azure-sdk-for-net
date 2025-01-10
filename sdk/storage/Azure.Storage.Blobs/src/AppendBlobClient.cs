@@ -1613,7 +1613,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// Optional. Source authentication used to access the source blob.
         /// </param>
         /// <param name="sourceTokenIntent">
-        /// Optional, only applicable (but required) when the source is Azure Storage Files using token authentication.
+        /// Optional, only applicable (but required) when the source is Azure Storage Files and using token authentication.
         /// Used to indicate the intent of the request.
         /// </param>
         /// <param name="async">
