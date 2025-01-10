@@ -1081,7 +1081,7 @@ namespace Azure.Core.Tests
         [Test]
         public async Task ClientCertificateIsHonored([Values(true, false)] bool setClientCertificate)
         {
-#if !NET9_0_OR_GREATER // ServicePointManager is obsolete in .NET 9
+#if NETFRAMEWORK
             // This test assumes ServicePointManager.ServerCertificateValidationCallback will be unset.
             ServicePointManager.ServerCertificateValidationCallback = null;
 #endif
@@ -1089,7 +1089,7 @@ namespace Azure.Core.Tests
             X509Certificate2 clientCert;
 
 #if NET9_0_OR_GREATER
-            clientCert = X509CertificateLoader.LoadCertificate(cer);
+            clientCert = X509CertificateLoader.LoadPkcs12(cer, null);
 #else
             clientCert = new X509Certificate2(cer);
 #endif

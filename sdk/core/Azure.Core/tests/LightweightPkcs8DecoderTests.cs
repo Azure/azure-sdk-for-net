@@ -191,7 +191,7 @@ namespace Azure.Core.Tests
             X509Certificate2 clientCert;
 
 #if NET9_0_OR_GREATER
-            clientCert = X509CertificateLoader.LoadCertificate(cer);
+            clientCert = X509CertificateLoader.LoadPkcs12(cer, null);
 #else
             clientCert = new X509Certificate2(cer);
 #endif
