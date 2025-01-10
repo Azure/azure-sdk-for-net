@@ -14,6 +14,7 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
+using Azure.Storage.Files.Shares;
 using Azure.Storage.Sas;
 using NUnit.Framework;
 
@@ -221,6 +222,19 @@ namespace Azure.Storage.Test.Shared
                 new BlobServiceClient(
                     new Uri($"{Tenants.TestConfigOAuth.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceIdentitySasCredentialsBlob(containerName: containerName, blobName: blobName, userDelegationKey: userDelegationKey, accountName: Tenants.TestConfigOAuth.AccountName)}"),
                     BlobsClientBuilder.GetOptions()));
+
+        public ShareServiceClient GetShareServiceClient_SharedKey()
+        {
+            ShareClientOptions options = new ShareClientOptions();
+            if (Mode != RecordedTestMode.Live)
+            {
+                options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
+            }
+            return InstrumentClient(
+                new ShareServiceClient(
+                    new Uri(Tenants.TestConfigDefault.FileServiceEndpoint),
+                    options));
+        }
 
         public BlobSasQueryParameters GetNewBlobServiceSasCredentialsContainer(string containerName, StorageSharedKeyCredential sharedKeyCredentials = default)
         {
