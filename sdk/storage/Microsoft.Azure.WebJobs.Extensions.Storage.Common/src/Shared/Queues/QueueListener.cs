@@ -173,7 +173,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
         {
             if (!_drainModeManager?.IsDrainModeEnabled ?? true)
             {
-                // Cancel execution only if drain mode is explicitly disabled
+                // Cancel the execution token when drain mode is not enabled or drain mode manager is not set.
                 _executionCancellationTokenSource.Cancel();
             }
 
