@@ -44,12 +44,11 @@ namespace Azure.ResourceManager.IoTOperations.Tests
             DataflowProfilesName = "default";
             DataflowEndpointsName = "default";
             ExtendedLocation =
-                $"/subscriptions/{Subscription.Data.Id}/resourceGroups{ResourceGroup}/providers/Microsoft.ExtendedLocation/customLocations/{CustomLocationName}";
+                $"/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups{ResourceGroup}/providers/Microsoft.ExtendedLocation/customLocations/{CustomLocationName}";
         }
 
         public async Task<ResourceGroupResource> GetResourceGroupAsync(string name)
         {
-            string idk = Subscription.Data.Id;
             return await Subscription.GetResourceGroups().GetAsync(name);
         }
 

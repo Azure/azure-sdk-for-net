@@ -6,7 +6,7 @@
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-616047ac6dcaabcdcfe86141acd27761-4e76a4d70b39bbdc-00",
+        "traceparent": "00-6beb81da7af28f716383bc53907a1e66-f57c329a98fe4209-00",
         "User-Agent": "azsdk-net-ResourceManager/1.13.0 (.NET 8.0.10; Ubuntu 22.04.3 LTS)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -17,18 +17,18 @@
         "Cache-Control": "no-cache",
         "Content-Length": "473",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 10 Jan 2025 17:37:31 GMT",
+        "Date": "Fri, 10 Jan 2025 21:31:29 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "33b7d259-8ce8-4215-86ba-86287abdc06d",
+        "x-ms-correlation-request-id": "ad30e54f-7226-4ae4-84ab-dac1abf59f62",
         "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
         "x-ms-ratelimit-remaining-subscription-reads": "1099",
-        "x-ms-request-id": "33b7d259-8ce8-4215-86ba-86287abdc06d",
-        "x-ms-routing-request-id": "WESTUS2:20250110T173732Z:33b7d259-8ce8-4215-86ba-86287abdc06d",
-        "X-MSEdge-Ref": "Ref A: 7082F92191154BF2A6F86666D6686EE6 Ref B: CO6AA3150219047 Ref C: 2025-01-10T17:37:32Z"
+        "x-ms-request-id": "ad30e54f-7226-4ae4-84ab-dac1abf59f62",
+        "x-ms-routing-request-id": "WESTUS2:20250110T213129Z:ad30e54f-7226-4ae4-84ab-dac1abf59f62",
+        "X-MSEdge-Ref": "Ref A: CDDA62D914BB41C4875FD809D368FD1A Ref B: CO6AA3150218053 Ref C: 2025-01-10T21:31:29Z"
       },
       "ResponseBody": {
         "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd",
@@ -49,12 +49,12 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourcegroups/sdk-test-cluster-110596935?api-version=2022-09-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourcegroups/sdk-test-cluster-112208379?api-version=2022-09-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-4f43393486b8306ea0a2f8554bfaa7db-876aae87a8e67bf5-00",
+        "traceparent": "00-a8f0d01fcd11b3fc8beb14b5c1a966d9-2d0ffdf260610206-00",
         "User-Agent": "azsdk-net-ResourceManager/1.13.0 (.NET 8.0.10; Ubuntu 22.04.3 LTS)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -65,29 +65,29 @@
         "Cache-Control": "no-cache",
         "Content-Length": "423",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 10 Jan 2025 17:37:31 GMT",
+        "Date": "Fri, 10 Jan 2025 21:31:30 GMT",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
-        "x-ms-correlation-request-id": "278a9712-05bf-47a3-afa2-bdd5d7f9f1c1",
+        "x-ms-correlation-request-id": "57d496be-68da-43a3-92e3-2f8606208b59",
         "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
         "x-ms-ratelimit-remaining-subscription-reads": "1099",
-        "x-ms-request-id": "278a9712-05bf-47a3-afa2-bdd5d7f9f1c1",
-        "x-ms-routing-request-id": "WESTUS2:20250110T173732Z:278a9712-05bf-47a3-afa2-bdd5d7f9f1c1",
-        "X-MSEdge-Ref": "Ref A: CC94574B042B42C1B13EB959F10B8165 Ref B: CO6AA3150219047 Ref C: 2025-01-10T17:37:32Z"
+        "x-ms-request-id": "57d496be-68da-43a3-92e3-2f8606208b59",
+        "x-ms-routing-request-id": "WESTUS2:20250110T213130Z:57d496be-68da-43a3-92e3-2f8606208b59",
+        "X-MSEdge-Ref": "Ref A: D576196FCD6A4121BA678B2F4A15C9D8 Ref B: CO6AA3150218053 Ref C: 2025-01-10T21:31:30Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935",
-        "name": "sdk-test-cluster-110596935",
+        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-112208379",
+        "name": "sdk-test-cluster-112208379",
         "type": "Microsoft.Resources/resourceGroups",
         "location": "eastus2",
         "tags": {
           "x-iot-environment": "atlas-on-demand",
           "x-iot-owner": "henrymorales@microsoft.com",
           "x-iot-do-not-delete": "true",
-          "x-iot-create-time": "1734470045",
+          "x-iot-create-time": "1736536095",
           "PREDEPLOYED": "true"
         },
         "properties": {
@@ -96,12 +96,12 @@
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.IoTOperations/instances/aio-o5fjq?api-version=2024-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-112208379/providers/Microsoft.IoTOperations/instances/aio-cozp6?api-version=2024-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-27cf8343f0ed495bed44acfa577807c1-4feb2430f94d6a85-00",
+        "traceparent": "00-5a65ee7223fb20b25231aed84e9a77de-095049d1861d9125-00",
         "User-Agent": "azsdk-net-ResourceManager.IoTOperations/1.0.0-alpha.20250110.1 (.NET 8.0.10; Ubuntu 22.04.3 LTS)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -110,40 +110,40 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1024",
+        "Content-Length": "1025",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 10 Jan 2025 17:37:31 GMT",
-        "ETag": "\"790d3e24-0000-0200-0000-676ccb850000\"",
+        "Date": "Fri, 10 Jan 2025 21:31:30 GMT",
+        "ETag": "\"ea006137-0000-0200-0000-678191720000\"",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-correlation-request-id": "c515be98-64bb-484d-9e4f-fcd407b1822c",
+        "x-ms-correlation-request-id": "ed06cdc2-ac19-4bfb-8194-8165fe2020bb",
         "x-ms-providerhub-traffic": "True",
-        "x-ms-ratelimit-remaining-subscription-global-reads": "16498",
-        "x-ms-ratelimit-remaining-subscription-reads": "1098",
-        "x-ms-request-id": "9ab07b16-9297-4ad2-abcf-545c45a7ffed",
-        "x-ms-routing-request-id": "WESTUS2:20250110T173732Z:c515be98-64bb-484d-9e4f-fcd407b1822c",
-        "X-MSEdge-Ref": "Ref A: 044D9B98B31B41029067B2B971AD465F Ref B: CO6AA3150219047 Ref C: 2025-01-10T17:37:32Z"
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "05426608-6a39-42b3-bf8e-7e552256e313",
+        "x-ms-routing-request-id": "WESTUS2:20250110T213130Z:ed06cdc2-ac19-4bfb-8194-8165fe2020bb",
+        "X-MSEdge-Ref": "Ref A: 8552C363A2754D9FAC65D6A52B3D896F Ref B: CO6AA3150218053 Ref C: 2025-01-10T21:31:30Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.IoTOperations/instances/aio-o5fjq",
-        "name": "aio-o5fjq",
+        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-112208379/providers/Microsoft.IoTOperations/instances/aio-cozp6",
+        "name": "aio-cozp6",
         "type": "microsoft.iotoperations/instances",
         "location": "eastus2",
         "extendedLocation": {
-          "name": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.ExtendedLocation/customLocations/location-o5fjq",
+          "name": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-112208379/providers/Microsoft.ExtendedLocation/customLocations/location-cozp6",
           "type": "CustomLocation"
         },
         "systemData": {
           "createdBy": "Sanitized",
           "createdByType": "Application",
-          "createdAt": "2024-12-17T21:50:03.8760218Z",
+          "createdAt": "2025-01-10T19:46:25.5204128Z",
           "lastModifiedBy": "Sanitized",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2024-12-26T03:20:37.846983Z"
+          "lastModifiedAt": "2025-01-10T21:30:26.4563785Z"
         },
         "identity": {
           "type": "None"
@@ -151,20 +151,20 @@
         "properties": {
           "provisioningState": "Succeeded",
           "version": "1.0.9",
-          "description": "Updated Description: 20241219T001053",
+          "description": "Updated Description: 20250110T212950",
           "schemaRegistryRef": {
-            "resourceId": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.DeviceRegistry/schemaRegistries/aio-sr-a66bef4c65"
+            "resourceId": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-112208379/providers/Microsoft.DeviceRegistry/schemaRegistries/aio-sr-02ec9d9240"
           }
         }
       }
     },
     {
-      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.IoTOperations/instances/aio-o5fjq/brokers/default?api-version=2024-11-01",
+      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-112208379/providers/Microsoft.IoTOperations/instances/aio-cozp6/brokers/default?api-version=2024-11-01",
       "RequestMethod": "GET",
       "RequestHeaders": {
         "Accept": "application/json",
         "Authorization": "Sanitized",
-        "traceparent": "00-4bb3c3d2426731d2ff38c45b1db82fe2-d4debc8a5f05dd68-00",
+        "traceparent": "00-18d3f4bd39f4e6becb75bd15c9630185-4c7fdb5f8af7481c-00",
         "User-Agent": "azsdk-net-ResourceManager.IoTOperations/1.0.0-alpha.20250110.1 (.NET 8.0.10; Ubuntu 22.04.3 LTS)",
         "x-ms-client-request-id": "Sanitized",
         "x-ms-return-client-request-id": "true"
@@ -173,55 +173,59 @@
       "StatusCode": 200,
       "ResponseHeaders": {
         "Cache-Control": "no-cache",
-        "Content-Length": "1239",
+        "Content-Length": "1241",
         "Content-Type": "application/json; charset=utf-8",
-        "Date": "Fri, 10 Jan 2025 17:37:32 GMT",
-        "ETag": "\"15016d7f-0000-0200-0000-678047480000\"",
+        "Date": "Fri, 10 Jan 2025 21:31:30 GMT",
+        "ETag": "\"a5016b22-0000-0200-0000-6781912d0000\"",
         "Expires": "-1",
         "Pragma": "no-cache",
         "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
         "X-Cache": "CONFIG_NOCACHE",
         "X-Content-Type-Options": "nosniff",
         "x-ms-client-request-id": "Sanitized",
-        "x-ms-correlation-request-id": "c70fa260-83df-4f5f-961a-3b13ad2cf54b",
+        "x-ms-correlation-request-id": "db72c18c-c388-43f5-8ce4-8c51bf2ddcaf",
         "x-ms-providerhub-traffic": "True",
         "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
         "x-ms-ratelimit-remaining-subscription-reads": "1099",
-        "x-ms-request-id": "ace7f711-743b-46eb-90bc-6b0a6d6bc288",
-        "x-ms-routing-request-id": "WESTUS2:20250110T173732Z:c70fa260-83df-4f5f-961a-3b13ad2cf54b",
-        "X-MSEdge-Ref": "Ref A: 2734F64B1E9B41B1A2B9AC2253DE7CB1 Ref B: CO6AA3150219047 Ref C: 2025-01-10T17:37:32Z"
+        "x-ms-request-id": "e248db87-df39-48cc-b465-d0e76ba3fcba",
+        "x-ms-routing-request-id": "WESTUS2:20250110T213130Z:db72c18c-c388-43f5-8ce4-8c51bf2ddcaf",
+        "X-MSEdge-Ref": "Ref A: B59F19FFD54946F8978509155997982E Ref B: CO6AA3150218053 Ref C: 2025-01-10T21:31:30Z"
       },
       "ResponseBody": {
-        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.IoTOperations/instances/aio-o5fjq/brokers/default",
+        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-112208379/providers/Microsoft.IoTOperations/instances/aio-cozp6/brokers/default",
         "name": "default",
         "type": "microsoft.iotoperations/instances/brokers",
         "extendedLocation": {
-          "name": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-110596935/providers/Microsoft.ExtendedLocation/customLocations/location-o5fjq",
+          "name": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/sdk-test-cluster-112208379/providers/Microsoft.ExtendedLocation/customLocations/location-cozp6",
           "type": "CustomLocation"
         },
         "systemData": {
           "createdBy": "Sanitized",
           "createdByType": "Application",
-          "createdAt": "2024-12-17T21:51:53.4995728Z",
+          "createdAt": "2025-01-10T19:48:48.0206112Z",
           "lastModifiedBy": "Sanitized",
           "lastModifiedByType": "Application",
-          "lastModifiedAt": "2025-01-09T22:01:44.0503765Z"
+          "lastModifiedAt": "2025-01-10T21:29:17.835017Z"
         },
         "properties": {
-          "provisioningState": "Failed",
-          "advanced": {
-            "encryptInternalTraffic": "Enabled"
+          "provisioningState": "Succeeded",
+          "memoryProfile": "Medium",
+          "generateResourceLimits": {
+            "cpu": "Disabled"
           },
           "cardinality": {
             "backendChain": {
               "partitions": 2,
-              "redundancyFactor": 2,
-              "workers": 2
+              "workers": 2,
+              "redundancyFactor": 2
             },
             "frontend": {
               "replicas": 2,
               "workers": 2
             }
+          },
+          "advanced": {
+            "encryptInternalTraffic": "Enabled"
           },
           "diagnostics": {
             "logs": {
@@ -231,30 +235,26 @@
               "prometheusPort": 9600
             },
             "selfCheck": {
-              "mode": "Enabled",
               "intervalSeconds": 30,
+              "mode": "Enabled",
               "timeoutSeconds": 15
             },
             "traces": {
-              "mode": "Enabled",
               "cacheSizeMegabytes": 16,
+              "mode": "Enabled",
               "selfTracing": {
-                "mode": "Enabled",
-                "intervalSeconds": 30
+                "intervalSeconds": 30,
+                "mode": "Enabled"
               },
               "spanChannelCapacity": 1000
             }
-          },
-          "generateResourceLimits": {
-            "cpu": "Disabled"
-          },
-          "memoryProfile": "Medium"
+          }
         }
       }
     }
   ],
   "Variables": {
-    "RandomSeed": "391098581",
+    "RandomSeed": "1475482312",
     "RESOURCE_MANAGER_URL": null,
     "SUBSCRIPTION_ID": "d4ccd08b-0809-446d-a8b7-7af8a90109cd"
   }
