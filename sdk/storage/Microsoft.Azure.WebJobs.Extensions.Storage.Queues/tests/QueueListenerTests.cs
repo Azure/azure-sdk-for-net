@@ -649,9 +649,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         private static (QueueListener Listener,
-          Mock<QueueProcessor> ProcessorMock,
-          CancellationTokenSource CallerCts,
-          CancellationTokenSource SystemShutdownCts)
+            Mock<QueueProcessor> ProcessorMock,
+            CancellationTokenSource CallerCts,
+            CancellationTokenSource SystemShutdownCts)
         CreateListenerAndMocks()
         {
             var callerCts = new CancellationTokenSource();
@@ -713,55 +713,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var (listener, processorMock, callerCts, shutdownCts) = QueueListenerTests.CreateListenerAndMocks();
             var message = new Mock<QueueMessage>().Object;
 
-            // Act
-            // Start processing
-            var processingTask = listener.ProcessMessageAsync(message, TimeSpan.FromSeconds(10), callerCts.Token);
-
-            // Wait a bit, then cancel the execution token
-            await Task.Delay(50);
-            callerCts.Cancel();
-
-            // Wait for the operation to finish
-            await processingTask;
-
-            // Assert
-            // Because the shutdown token was not canceled, code calls CompleteProcessingMessageAsync to handle gracefully.
-            processorMock.Verify(
-                x => x.CompleteProcessingMessageAsync(message, It.IsAny<FunctionResult>(), shutdownCts.Token),
-                Times.Once);
-        }
-
-        [Test]
-        public async Task ProcessMessageAsync_ShutdownCanceled_SkipsCompletion()
-        {
-            // Arrange
-            var (listener, processorMock, callerCts, shutdownCts) = QueueListenerTests.CreateListenerAndMocks();
-            var message = new Mock<QueueMessage>().Object;
-
-            // Act
-            // Cancel the shutdown token BEFORE processing
-            shutdownCts.Cancel();
-
-            await listener.ProcessMessageAsync(message, TimeSpan.FromSeconds(10), callerCts.Token);
-
-            // Assert
-            // Because the linkedCts will be canceled as soon as we start,
-            // BeginProcessingMessageAsync likely returns early => no completion
-            processorMock.Verify(
-                x => x.CompleteProcessingMessageAsync(It.IsAny<QueueMessage>(), It.IsAny<FunctionResult>(), It.IsAny<CancellationToken>()),
-                Times.Never);
-        }
-
-        [Test]
-        public async Task ProcessMessageAsync_MidProcessingExecutionTokenCanceled_AfterBeginProcessing_BeforeCompletion()
-        {
-            // Arrange
-            // Create the listener, processor, and tokens.
-            var (listener, processorMock, callerCts, shutdownCts) = QueueListenerTests.CreateListenerAndMocks();
-            var message = new Mock<QueueMessage>().Object;
-
-            // Setup BeginProcessingMessageAsync to simulate some delay
-            // so we have time to cancel during "mid-processing."
+            // Setup BeginProcessingMessageAsync to simulate some delay so we have time to cancel during "mid-processing."
             processorMock
                 .Setup(x => x.BeginProcessingMessageAsync(It.IsAny<QueueMessage>(), It.IsAny<CancellationToken>()))
                 .Returns(async (QueueMessage msg, CancellationToken ct) =>
@@ -793,6 +745,29 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [Test]
+        public async Task ProcessMessageAsync_ShutdownCanceled_SkipsCompletion()
+        {
+            // Arrange
+            var (listener, processorMock, callerCts, shutdownCts) = QueueListenerTests.CreateListenerAndMocks();
+            var message = new Mock<QueueMessage>().Object;
+
+            // Act
+            // Cancel the shutdown token BEFORE processing
+            shutdownCts.Cancel();
+
+            await listener.ProcessMessageAsync(message, TimeSpan.FromSeconds(10), callerCts.Token);
+
+            // Assert
+            // Because the linkedCts will be canceled as soon as we start,
+            // BeginProcessingMessageAsync likely returns early => no completion
+            processorMock.Verify(
+                x => x.CompleteProcessingMessageAsync(It.IsAny<QueueMessage>(), It.IsAny<FunctionResult>(), It.IsAny<CancellationToken>()),
+                Times.Never);
+        }
+
+
+
+        [Test]
         public async Task StopAsync_DisablesCancellation_WhenDrainModeEnabled()
         {
             // Arrange
@@ -819,11 +794,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 concurrencyManager: null,
                 functionId: "testFunction",
                 maxPollingInterval: null,
-                drainModeManager: drainModeManagerMock.Object);
-
-            // Use reflection to set private _executionCancellationTokenSource
-            var field = typeof(QueueListener).GetField("_executionCancellationTokenSource", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            field?.SetValue(listener, executionCancellationTokenSource);
+                drainModeManager: drainModeManagerMock.Object,
+                executionCancellationTokenSource: executionCancellationTokenSource);
 
             // Act
             await listener.StopAsync(CancellationToken.None);
@@ -859,11 +831,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 concurrencyManager: null,
                 functionId: "testFunction",
                 maxPollingInterval: null,
-                drainModeManager: drainModeManagerMock.Object);
-
-            // Inject the executionCancellationTokenSource
-            var field = typeof(QueueListener).GetField("_executionCancellationTokenSource", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            field?.SetValue(listener, executionCancellationTokenSource);
+                drainModeManager: drainModeManagerMock.Object,
+                executionCancellationTokenSource: executionCancellationTokenSource);
 
             // Act
             await listener.StopAsync(CancellationToken.None);
@@ -896,11 +865,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 concurrencyManager: null,
                 functionId: "testFunction",
                 maxPollingInterval: null,
-                drainModeManager: null);
-
-            // Inject the executionCancellationTokenSource
-            var field = typeof(QueueListener).GetField("_executionCancellationTokenSource", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            field?.SetValue(listener, executionCancellationTokenSource);
+                drainModeManager: null,
+                executionCancellationTokenSource: executionCancellationTokenSource);
 
             // Act
             await listener.StopAsync(CancellationToken.None);
