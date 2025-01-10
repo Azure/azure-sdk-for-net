@@ -10,22 +10,6 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public static class TestTransferWithTimeout
     {
-        public static void WaitForCompletion(
-            TransferOperation transferOperation,
-            TestEventsRaised testEventsRaised,
-            CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                transferOperation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception ex)
-            when (ex is OperationCanceledException || ex is TaskCanceledException)
-            {
-                PrintAllEvents(testEventsRaised);
-            }
-        }
-
         public static async Task WaitForCompletionAsync(
             TransferOperation transferOperation,
             TestEventsRaised testEventsRaised,

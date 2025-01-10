@@ -61,17 +61,7 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Ensures completion of the TransferOperation and attempts to get result
-        /// </summary>
-        public void WaitForCompletion(CancellationToken cancellationToken = default)
-        {
-#pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-            WaitForCompletionAsync(cancellationToken).GetAwaiter().GetResult();
-#pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-        }
-
-        /// <summary>
-        /// Waits until the data transfer itself has completed
+        /// Waits until the transfer has completed.
         /// </summary>
         /// <param name="cancellationToken"></param>
         public async Task WaitForCompletionAsync(CancellationToken cancellationToken = default)
@@ -80,11 +70,11 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <summary>
-        /// Attempts to pause the current Data Transfer.
+        /// Attempts to pause the current transfer.
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns>
-        /// Will return false if the data transfer has already been completed.
+        /// Will return false if the transfer has already been completed.
         ///
         /// Will return true if the pause has taken place.
         /// </returns>
