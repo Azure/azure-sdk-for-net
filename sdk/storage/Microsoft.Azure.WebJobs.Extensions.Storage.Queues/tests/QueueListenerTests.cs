@@ -765,8 +765,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 Times.Never);
         }
 
-
-
         [Test]
         public async Task StopAsync_DisablesCancellation_WhenDrainModeEnabled()
         {
