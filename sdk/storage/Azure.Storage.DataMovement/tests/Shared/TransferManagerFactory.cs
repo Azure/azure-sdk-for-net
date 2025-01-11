@@ -24,8 +24,8 @@ namespace Azure.Storage.DataMovement.Tests
             if (transfers != default)
             {
                 // populate checkpointer
-                Argument.AssertNotNullOrWhiteSpace(_options.CheckpointStoreOptions.CheckpointerPath, nameof(transfers));
-                LocalTransferCheckpointerFactory checkpointerFactory = new LocalTransferCheckpointerFactory(_options.CheckpointStoreOptions.CheckpointerPath);
+                Argument.AssertNotNullOrWhiteSpace(_options.CheckpointStoreOptions.CheckpointPath, nameof(transfers));
+                LocalTransferCheckpointerFactory checkpointerFactory = new LocalTransferCheckpointerFactory(_options.CheckpointStoreOptions.CheckpointPath);
                 checkpointerFactory.BuildCheckpointer(transfers);
             }
             TransferManager transferManager = new TransferManager(_options);

@@ -30,7 +30,7 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
             TransferManagerOptions managerOptions = new()
             {
                 ErrorMode = TransferErrorMode.StopOnAnyFailure,
-                CheckpointStoreOptions = Options.DisableCheckpointer ? TransferCheckpointStoreOptions.Disabled() : default,
+                CheckpointStoreOptions = Options.DisableCheckpointer ? TransferCheckpointStoreOptions.DisableCheckpoint() : default,
                 MaximumConcurrency = Options.Concurrency
             };
             _transferManager = new TransferManager(managerOptions);

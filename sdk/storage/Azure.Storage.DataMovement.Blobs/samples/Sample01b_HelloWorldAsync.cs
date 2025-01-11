@@ -901,7 +901,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Pause from the Transfer Manager using the Transfer Id
                 #region Snippet:PauseFromManager
-                await transferManager.PauseTransferIfRunningAsync(transferId);
+                await transferManager.PauseTransferAsync(transferId);
                 #endregion
 
                 // Resume all transfers

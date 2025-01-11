@@ -339,7 +339,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Pause transfer
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transferManager.PauseTransferIfRunningAsync(transfer.Id, tokenSource.Token);
+            await transferManager.PauseTransferAsync(transfer.Id, tokenSource.Token);
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             // Record the current number of progress updates to use during assertions

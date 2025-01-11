@@ -17,11 +17,14 @@
     - `DataTransferStatus` -> `TransferStatus`
     - `DataTransferErrorMode` -> `TransferErrorMode`
     - `StorageResourceCreationPreference` -> `StorageResourceCreateMode`
+    - `TransferManager.PauseTransferIfRunningAsync` -> `TransferManager.PauseTransferAsync`
     - `TransferManagerOptions.ErrorHandling` -> `TransferManagerOptions.ErrorMode`
     - `TransferManagerOptions.CheckpointerOptions` -> `TransferManagerOptions.CheckpointStoreOptions`
     - `TransferItemCompletedEventArgs.SourceResource` -> `TransferItemCompletedEventArgs.Source` and `TransferItemCompletedEventArgs.DestinationResource` -> `TransferItemCompletedEventArgs.Destination`
     - `TransferItemFailedEventArgs.SourceResource` -> `TransferItemFailedEventArgs.Source` and `TransferItemFailedEventArgs.DestinationResource` -> `TransferItemFailedEventArgs.Destination`
     - `TransferItemSkippedEventArgs.SourceResource` -> `TransferItemSkippedEventArgs.Source` and `TransferItemSkippedEventArgs.DestinationResource` -> `TransferItemSkippedEventArgs.Destination`
+    - `TransferCheckpointStoreOptions.Local` -> `TransferCheckpointStoreOptions.CreateLocalStore`
+    - `TransferCheckpointStoreOptions.Disabled` -> `TransferCheckpointStoreOptions.DisableCheckpoint`
 - Removed properties from `StorageResourceItemProperties` constructor since properties are settable.
 - Changed type of `StorageResourceItemProperties.RawProperties` to `IDictionary`.
 

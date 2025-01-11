@@ -131,8 +131,8 @@ namespace Azure.Storage.DataMovement
     public partial class TransferCheckpointStoreOptions
     {
         internal TransferCheckpointStoreOptions() { }
-        public static Azure.Storage.DataMovement.TransferCheckpointStoreOptions Disabled() { throw null; }
-        public static Azure.Storage.DataMovement.TransferCheckpointStoreOptions Local(string localCheckpointerPath) { throw null; }
+        public static Azure.Storage.DataMovement.TransferCheckpointStoreOptions CreateLocalStore(string localCheckpointPath) { throw null; }
+        public static Azure.Storage.DataMovement.TransferCheckpointStoreOptions DisableCheckpoint() { throw null; }
     }
     [System.FlagsAttribute]
     public enum TransferErrorMode
@@ -170,7 +170,7 @@ namespace Azure.Storage.DataMovement
         public TransferManager(Azure.Storage.DataMovement.TransferManagerOptions options = null) { }
         public virtual System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.TransferProperties> GetResumableTransfersAsync([System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Collections.Generic.IAsyncEnumerable<Azure.Storage.DataMovement.TransferOperation> GetTransfersAsync(System.Collections.Generic.ICollection<Azure.Storage.DataMovement.TransferStatus> filterByStatus = null, [System.Runtime.CompilerServices.EnumeratorCancellationAttribute] System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public virtual System.Threading.Tasks.Task PauseTransferIfRunningAsync(string transferId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task PauseTransferAsync(string transferId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.List<Azure.Storage.DataMovement.TransferOperation>> ResumeAllTransfersAsync(Azure.Storage.DataMovement.TransferOptions transferOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Storage.DataMovement.TransferOperation> ResumeTransferAsync(string transferId, Azure.Storage.DataMovement.TransferOptions transferOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Storage.DataMovement.TransferOperation> StartTransferAsync(Azure.Storage.DataMovement.StorageResource sourceResource, Azure.Storage.DataMovement.StorageResource destinationResource, Azure.Storage.DataMovement.TransferOptions transferOptions = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
