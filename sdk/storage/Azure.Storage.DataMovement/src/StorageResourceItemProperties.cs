@@ -29,7 +29,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Dictionary of the properties associated with this resource.
         /// </summary>
-        public Dictionary<string, object> RawProperties { get; set; }
+        public IDictionary<string, object> RawProperties { get; set; }
 
         /// <summary>
         /// Base constructor for mocking.

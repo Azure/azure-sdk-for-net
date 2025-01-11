@@ -664,7 +664,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
         private static BlobHttpHeaders GetHttpHeaders(
             BlobStorageResourceOptions options,
-            Dictionary<string, object> properties)
+            IDictionary<string, object> properties)
             => new()
             {
                 ContentType = (options?.ContentType?.Preserve ?? true)
@@ -697,7 +697,7 @@ namespace Azure.Storage.DataMovement.Blobs
         // Get the access tier property
         private static AccessTier? GetAccessTier(
             BlobStorageResourceOptions options,
-            Dictionary<string, object> properties)
+            IDictionary<string, object> properties)
             => options?.AccessTier != default
                 ? options?.AccessTier
                 : properties?.TryGetValue(DataMovementConstants.ResourceProperties.AccessTier, out object accessTierObject) == true
@@ -707,7 +707,7 @@ namespace Azure.Storage.DataMovement.Blobs
         // By default we preserve the metadata
         private static Metadata GetMetadata(
             BlobStorageResourceOptions options,
-            Dictionary<string, object> properties)
+            IDictionary<string, object> properties)
             => (options?.Metadata?.Preserve ?? true)
                 ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.Metadata, out object metadataObject) == true
                     ? (Metadata) metadataObject

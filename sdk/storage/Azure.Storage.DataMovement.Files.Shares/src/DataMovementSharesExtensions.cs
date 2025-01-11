@@ -12,7 +12,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
     {
         public static ShareFileHttpHeaders GetShareFileHttpHeaders(
             this ShareFileStorageResourceOptions options,
-            Dictionary<string, object> properties)
+            IDictionary<string, object> properties)
             => new()
             {
                 ContentType = (options?.ContentType?.Preserve ?? true)
@@ -44,7 +44,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public static Metadata GetFileMetadata(
             this ShareFileStorageResourceOptions options,
-            Dictionary<string, object> properties)
+            IDictionary<string, object> properties)
             => (options?.FileMetadata?.Preserve ?? true)
                     ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.Metadata, out object metadata) == true
                         ? (Metadata) metadata
@@ -53,7 +53,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public static string GetFilePermission(
             this ShareFileStorageResourceOptions options,
-            Dictionary<string, object> properties)
+            IDictionary<string, object> properties)
             => (options?.FilePermissions?.Preserve ?? false)
                 ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.FilePermissions, out object permission) == true
                         ? (string) permission
@@ -61,19 +61,19 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     : default;
 
         public static string GetSourcePermissionKey(
-            this Dictionary<string, object> properties)
+            this IDictionary<string, object> properties)
             => properties?.TryGetValue(DataMovementConstants.ResourceProperties.SourceFilePermissionKey, out object permissionKey) == true
                 ? (string)permissionKey
                 : default;
 
         public static string GetDestinationPermissionKey(
-            this Dictionary<string, object> properties)
+            this IDictionary<string, object> properties)
             => properties?.TryGetValue(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, out object permissionKey) == true
                 ? (string)permissionKey
                 : default;
 
         public static string GetPermission(
-            this Dictionary<string, object> properties)
+            this IDictionary<string, object> properties)
             => properties?.TryGetValue(DataMovementConstants.ResourceProperties.FilePermissions, out object permission) == true
                 ? (string) permission
                 : default;
@@ -141,7 +141,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             };
 
         private static void WriteKeyValue(
-            this Dictionary<string, object> properties,
+            this IDictionary<string, object> properties,
             string key,
             object value)
         {
