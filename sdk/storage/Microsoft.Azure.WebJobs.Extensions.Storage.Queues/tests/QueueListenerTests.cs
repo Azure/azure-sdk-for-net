@@ -46,17 +46,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         private TestLoggerProvider _loggerProvider;
         private QueuesOptions _queuesOptions;
 
-        [OneTimeSetUp]
-        public void OneTimeSetUp()
-        {
-            Fixture = new TestFixture();
-        }
+        //[OneTimeSetUp]
+        //public void OneTimeSetUp()
+        //{
+        //    Fixture = new TestFixture();
+        //}
 
-        [OneTimeTearDown]
-        public void OneTimeTearDown()
-        {
-            Fixture.Dispose();
-        }
+        //[OneTimeTearDown]
+        //public void OneTimeTearDown()
+        //{
+        //    Fixture.Dispose();
+        //}
 
         [SetUp]
         public void SetUp()
@@ -687,11 +687,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         {
             // Arrange
             var (listener, processor, callerCts, shutdownCts) = CreateListenerAndMocks();
-            var message = new Mock<QueueMessage>().Object;
 
             // Act
             // Neither token is canceled
-            await listener.ProcessMessageAsync(message, TimeSpan.FromMinutes(2), callerCts.Token);
+            await listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(2), callerCts.Token);
 
             // TODO verify that the message was processed and deleted
             Assert.AreEqual(shutdownCts.Token, processor.CapturedDeleteToken);
@@ -702,13 +701,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         {
             // Arrange
             var (listener, processor, callerCts, shutdownCts) = CreateListenerAndMocks();
-            var message = new Mock<QueueMessage>().Object;
 
             // Act
             // Cancel the caller token
             callerCts.Cancel();
 
-            await listener.ProcessMessageAsync(message, TimeSpan.FromMinutes(2), callerCts.Token);
+            await listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(2), callerCts.Token);
 
             // TODO verify that the message was processed and deleted
             Assert.AreEqual(shutdownCts.Token, processor.CapturedDeleteToken);
@@ -719,13 +717,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         {
             // Arrange
             var (listener, processor, callerCts, shutdownCts) = CreateListenerAndMocks();
-            var message = new Mock<QueueMessage>().Object;
 
             // Act
             // Cancel the shutdown token
             shutdownCts.Cancel();
 
-            await listener.ProcessMessageAsync(message, TimeSpan.FromMinutes(2), callerCts.Token);
+            await listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(2), callerCts.Token);
 
             // TODO verify that the message was not deleted because this is a forced shutdown
             Assert.AreEqual(shutdownCts.Token, processor.CapturedDeleteToken);
