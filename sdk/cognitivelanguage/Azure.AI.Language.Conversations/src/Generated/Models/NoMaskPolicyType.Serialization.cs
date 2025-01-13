@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class DoNotRedactPolicyType : IUtf8JsonSerializable, IJsonModel<DoNotRedactPolicyType>
+    public partial class NoMaskPolicyType : IUtf8JsonSerializable, IJsonModel<NoMaskPolicyType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DoNotRedactPolicyType>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NoMaskPolicyType>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DoNotRedactPolicyType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<NoMaskPolicyType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,28 +28,28 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DoNotRedactPolicyType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NoMaskPolicyType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DoNotRedactPolicyType)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(NoMaskPolicyType)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
         }
 
-        DoNotRedactPolicyType IJsonModel<DoNotRedactPolicyType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        NoMaskPolicyType IJsonModel<NoMaskPolicyType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DoNotRedactPolicyType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NoMaskPolicyType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DoNotRedactPolicyType)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(NoMaskPolicyType)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDoNotRedactPolicyType(document.RootElement, options);
+            return DeserializeNoMaskPolicyType(document.RootElement, options);
         }
 
-        internal static DoNotRedactPolicyType DeserializeDoNotRedactPolicyType(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static NoMaskPolicyType DeserializeNoMaskPolicyType(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -73,46 +73,46 @@ namespace Azure.AI.Language.Conversations.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DoNotRedactPolicyType(policyKind, serializedAdditionalRawData);
+            return new NoMaskPolicyType(policyKind, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DoNotRedactPolicyType>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<NoMaskPolicyType>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DoNotRedactPolicyType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NoMaskPolicyType>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DoNotRedactPolicyType)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NoMaskPolicyType)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DoNotRedactPolicyType IPersistableModel<DoNotRedactPolicyType>.Create(BinaryData data, ModelReaderWriterOptions options)
+        NoMaskPolicyType IPersistableModel<NoMaskPolicyType>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DoNotRedactPolicyType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<NoMaskPolicyType>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDoNotRedactPolicyType(document.RootElement, options);
+                        return DeserializeNoMaskPolicyType(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DoNotRedactPolicyType)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NoMaskPolicyType)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DoNotRedactPolicyType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<NoMaskPolicyType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new DoNotRedactPolicyType FromResponse(Response response)
+        internal static new NoMaskPolicyType FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDoNotRedactPolicyType(document.RootElement);
+            return DeserializeNoMaskPolicyType(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

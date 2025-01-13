@@ -22,16 +22,16 @@ namespace Azure.AI.Language.Conversations.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string DoNotRedactValue = "DoNotRedact";
-        private const string MaskWithRedactionCharacterValue = "MaskWithRedactionCharacter";
-        private const string MaskWithEntityTypeValue = "MaskWithEntityType";
+        private const string NoMaskValue = "noMask";
+        private const string CharacterMaskValue = "characterMask";
+        private const string EntityMaskValue = "entityMask";
 
-        /// <summary> Do not redact detected entities. </summary>
-        public static RedactionPolicyKind DoNotRedact { get; } = new RedactionPolicyKind(DoNotRedactValue);
-        /// <summary> Redact detected entities with redaction character. </summary>
-        public static RedactionPolicyKind MaskWithRedactionCharacter { get; } = new RedactionPolicyKind(MaskWithRedactionCharacterValue);
-        /// <summary> Redact detected entities with entity type. </summary>
-        public static RedactionPolicyKind MaskWithEntityType { get; } = new RedactionPolicyKind(MaskWithEntityTypeValue);
+        /// <summary> Do not mask detected entities. </summary>
+        public static RedactionPolicyKind NoMask { get; } = new RedactionPolicyKind(NoMaskValue);
+        /// <summary> Mask detected entities with redaction character. </summary>
+        public static RedactionPolicyKind CharacterMask { get; } = new RedactionPolicyKind(CharacterMaskValue);
+        /// <summary> Mask detected entities with entity type. </summary>
+        public static RedactionPolicyKind EntityMask { get; } = new RedactionPolicyKind(EntityMaskValue);
         /// <summary> Determines if two <see cref="RedactionPolicyKind"/> values are the same. </summary>
         public static bool operator ==(RedactionPolicyKind left, RedactionPolicyKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="RedactionPolicyKind"/> values are not the same. </summary>

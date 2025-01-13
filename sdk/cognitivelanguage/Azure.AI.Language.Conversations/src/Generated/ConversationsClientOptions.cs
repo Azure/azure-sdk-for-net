@@ -24,8 +24,10 @@ namespace Azure.AI.Language.Conversations
             V2023_04_01 = 2,
             /// <summary> Service version "2024-05-01". </summary>
             V2024_05_01 = 3,
+            /// <summary> Service version "2024-11-01". </summary>
+            V2024_11_01 = 4,
             /// <summary> Service version "2024-11-15-preview". </summary>
-            V2024_11_15_Preview = 4,
+            V2024_11_15_Preview = 5,
         }
 
         internal string Version { get; }
@@ -38,6 +40,7 @@ namespace Azure.AI.Language.Conversations
                 ServiceVersion.V2022_05_01 => "2022-05-01",
                 ServiceVersion.V2023_04_01 => "2023-04-01",
                 ServiceVersion.V2024_05_01 => "2024-05-01",
+                ServiceVersion.V2024_11_01 => "2024-11-01",
                 ServiceVersion.V2024_11_15_Preview => "2024-11-15-preview",
                 _ => throw new NotSupportedException()
             };

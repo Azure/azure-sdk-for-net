@@ -36,7 +36,8 @@ namespace Azure.AI.Language.Conversations
             V2022_05_01 = 1,
             V2023_04_01 = 2,
             V2024_05_01 = 3,
-            V2024_11_15_Preview = 4,
+            V2024_11_01 = 4,
+            V2024_11_15_Preview = 5,
         }
     }
     public static partial class ConversationsModelFactory
@@ -427,6 +428,17 @@ namespace Azure.AI.Language.Conversations.Models
         Azure.AI.Language.Conversations.Models.BooleanResolution System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.BooleanResolution>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.BooleanResolution>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.BooleanResolution>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class CharacterMaskPolicyType : Azure.AI.Language.Conversations.Models.BaseRedactionPolicy, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.CharacterMaskPolicyType>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.CharacterMaskPolicyType>
+    {
+        public CharacterMaskPolicyType() { }
+        public Azure.AI.Language.Conversations.Models.RedactionCharacter? RedactionCharacter { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Conversations.Models.CharacterMaskPolicyType System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.CharacterMaskPolicyType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.CharacterMaskPolicyType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Conversations.Models.CharacterMaskPolicyType System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.CharacterMaskPolicyType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.CharacterMaskPolicyType>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.CharacterMaskPolicyType>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ConversationActionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationActionContent>
     {
@@ -844,6 +856,7 @@ namespace Azure.AI.Language.Conversations.Models
     public partial class ConversationSummarizationActionContent : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.ConversationSummarizationActionContent>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.ConversationSummarizationActionContent>
     {
         public ConversationSummarizationActionContent(System.Collections.Generic.IEnumerable<Azure.AI.Language.Conversations.Models.SummaryAspect> summaryAspects) { }
+        public string Instruction { get { throw null; } set { } }
         public bool? LoggingOptOut { get { throw null; } set { } }
         public string ModelVersion { get { throw null; } set { } }
         public int? SentenceCount { get { throw null; } set { } }
@@ -982,15 +995,15 @@ namespace Azure.AI.Language.Conversations.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.DocumentError>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.DocumentError>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class DoNotRedactPolicyType : Azure.AI.Language.Conversations.Models.BaseRedactionPolicy, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.DoNotRedactPolicyType>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.DoNotRedactPolicyType>
+    public partial class EntityMaskTypePolicyType : Azure.AI.Language.Conversations.Models.BaseRedactionPolicy, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.EntityMaskTypePolicyType>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.EntityMaskTypePolicyType>
     {
-        public DoNotRedactPolicyType() { }
+        public EntityMaskTypePolicyType() { }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.DoNotRedactPolicyType System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.DoNotRedactPolicyType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.DoNotRedactPolicyType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.DoNotRedactPolicyType System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.DoNotRedactPolicyType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.DoNotRedactPolicyType>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.DoNotRedactPolicyType>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        Azure.AI.Language.Conversations.Models.EntityMaskTypePolicyType System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.EntityMaskTypePolicyType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.EntityMaskTypePolicyType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Conversations.Models.EntityMaskTypePolicyType System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.EntityMaskTypePolicyType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.EntityMaskTypePolicyType>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.EntityMaskTypePolicyType>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class EntitySubtype : Azure.AI.Language.Conversations.Models.ConversationEntityExtraInformation, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.EntitySubtype>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.EntitySubtype>
     {
@@ -1325,27 +1338,6 @@ namespace Azure.AI.Language.Conversations.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.LuisTargetIntentResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.LuisTargetIntentResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MaskWithEntityTypePolicyType : Azure.AI.Language.Conversations.Models.BaseRedactionPolicy, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.MaskWithEntityTypePolicyType>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.MaskWithEntityTypePolicyType>
-    {
-        public MaskWithEntityTypePolicyType() { }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.MaskWithEntityTypePolicyType System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.MaskWithEntityTypePolicyType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.MaskWithEntityTypePolicyType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.MaskWithEntityTypePolicyType System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.MaskWithEntityTypePolicyType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.MaskWithEntityTypePolicyType>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.MaskWithEntityTypePolicyType>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class MaskWithRedactionCharacterPolicyType : Azure.AI.Language.Conversations.Models.BaseRedactionPolicy, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.MaskWithRedactionCharacterPolicyType>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.MaskWithRedactionCharacterPolicyType>
-    {
-        public MaskWithRedactionCharacterPolicyType() { }
-        public Azure.AI.Language.Conversations.Models.RedactionCharacter? RedactionCharacter { get { throw null; } set { } }
-        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.MaskWithRedactionCharacterPolicyType System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.MaskWithRedactionCharacterPolicyType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.MaskWithRedactionCharacterPolicyType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.Language.Conversations.Models.MaskWithRedactionCharacterPolicyType System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.MaskWithRedactionCharacterPolicyType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.MaskWithRedactionCharacterPolicyType>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.MaskWithRedactionCharacterPolicyType>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class MetadataFilter : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.MetadataFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.MetadataFilter>
     {
         public MetadataFilter() { }
@@ -1399,6 +1391,16 @@ namespace Azure.AI.Language.Conversations.Models
         Azure.AI.Language.Conversations.Models.NamedEntity System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.NamedEntity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.NamedEntity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.NamedEntity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class NoMaskPolicyType : Azure.AI.Language.Conversations.Models.BaseRedactionPolicy, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.NoMaskPolicyType>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.NoMaskPolicyType>
+    {
+        public NoMaskPolicyType() { }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Conversations.Models.NoMaskPolicyType System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.NoMaskPolicyType>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.NoMaskPolicyType>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Language.Conversations.Models.NoMaskPolicyType System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.NoMaskPolicyType>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.NoMaskPolicyType>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.NoMaskPolicyType>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class NoneLinkedTargetIntentResult : Azure.AI.Language.Conversations.Models.TargetIntentResult, System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.Conversations.Models.NoneLinkedTargetIntentResult>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.Conversations.Models.NoneLinkedTargetIntentResult>
     {

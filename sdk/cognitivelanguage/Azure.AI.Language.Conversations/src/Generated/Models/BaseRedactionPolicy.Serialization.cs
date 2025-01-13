@@ -77,9 +77,9 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DoNotRedact": return DoNotRedactPolicyType.DeserializeDoNotRedactPolicyType(element, options);
-                    case "MaskWithEntityType": return MaskWithEntityTypePolicyType.DeserializeMaskWithEntityTypePolicyType(element, options);
-                    case "MaskWithRedactionCharacter": return MaskWithRedactionCharacterPolicyType.DeserializeMaskWithRedactionCharacterPolicyType(element, options);
+                    case "characterMask": return CharacterMaskPolicyType.DeserializeCharacterMaskPolicyType(element, options);
+                    case "entityMask": return EntityMaskTypePolicyType.DeserializeEntityMaskTypePolicyType(element, options);
+                    case "noMask": return NoMaskPolicyType.DeserializeNoMaskPolicyType(element, options);
                 }
             }
             return UnknownBaseRedactionPolicy.DeserializeUnknownBaseRedactionPolicy(element, options);

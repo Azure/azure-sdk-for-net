@@ -63,7 +63,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="redactionPolicy">
         /// Optional parameter determine what type of redaction to use.
         /// Please note <see cref="BaseRedactionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DoNotRedactPolicyType"/>, <see cref="MaskWithEntityTypePolicyType"/> and <see cref="MaskWithRedactionCharacterPolicyType"/>.
+        /// The available derived classes include <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskTypePolicyType"/> and <see cref="NoMaskPolicyType"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal PiiActionContent(bool? loggingOptOut, string modelVersion, IList<ConversationPiiCategories> piiCategories, bool? redactAudioTiming, TranscriptContentType? redactionSource, RedactionCharacter? redactionCharacter, IList<ConversationPiiCategoryExclusions> excludePiiCategories, BaseRedactionPolicy redactionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -96,7 +96,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// <summary>
         /// Optional parameter determine what type of redaction to use.
         /// Please note <see cref="BaseRedactionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="DoNotRedactPolicyType"/>, <see cref="MaskWithEntityTypePolicyType"/> and <see cref="MaskWithRedactionCharacterPolicyType"/>.
+        /// The available derived classes include <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskTypePolicyType"/> and <see cref="NoMaskPolicyType"/>.
         /// </summary>
         public BaseRedactionPolicy RedactionPolicy { get; set; }
     }

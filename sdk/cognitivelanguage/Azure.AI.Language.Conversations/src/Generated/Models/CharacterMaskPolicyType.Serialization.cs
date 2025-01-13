@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    public partial class MaskWithRedactionCharacterPolicyType : IUtf8JsonSerializable, IJsonModel<MaskWithRedactionCharacterPolicyType>
+    public partial class CharacterMaskPolicyType : IUtf8JsonSerializable, IJsonModel<CharacterMaskPolicyType>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MaskWithRedactionCharacterPolicyType>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CharacterMaskPolicyType>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<MaskWithRedactionCharacterPolicyType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CharacterMaskPolicyType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.Conversations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaskWithRedactionCharacterPolicyType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CharacterMaskPolicyType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaskWithRedactionCharacterPolicyType)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CharacterMaskPolicyType)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -42,19 +42,19 @@ namespace Azure.AI.Language.Conversations.Models
             }
         }
 
-        MaskWithRedactionCharacterPolicyType IJsonModel<MaskWithRedactionCharacterPolicyType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CharacterMaskPolicyType IJsonModel<CharacterMaskPolicyType>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaskWithRedactionCharacterPolicyType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CharacterMaskPolicyType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaskWithRedactionCharacterPolicyType)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CharacterMaskPolicyType)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMaskWithRedactionCharacterPolicyType(document.RootElement, options);
+            return DeserializeCharacterMaskPolicyType(document.RootElement, options);
         }
 
-        internal static MaskWithRedactionCharacterPolicyType DeserializeMaskWithRedactionCharacterPolicyType(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CharacterMaskPolicyType DeserializeCharacterMaskPolicyType(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -88,46 +88,46 @@ namespace Azure.AI.Language.Conversations.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MaskWithRedactionCharacterPolicyType(policyKind, serializedAdditionalRawData, redactionCharacter);
+            return new CharacterMaskPolicyType(policyKind, serializedAdditionalRawData, redactionCharacter);
         }
 
-        BinaryData IPersistableModel<MaskWithRedactionCharacterPolicyType>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CharacterMaskPolicyType>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaskWithRedactionCharacterPolicyType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CharacterMaskPolicyType>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MaskWithRedactionCharacterPolicyType)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CharacterMaskPolicyType)} does not support writing '{options.Format}' format.");
             }
         }
 
-        MaskWithRedactionCharacterPolicyType IPersistableModel<MaskWithRedactionCharacterPolicyType>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CharacterMaskPolicyType IPersistableModel<CharacterMaskPolicyType>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<MaskWithRedactionCharacterPolicyType>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CharacterMaskPolicyType>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeMaskWithRedactionCharacterPolicyType(document.RootElement, options);
+                        return DeserializeCharacterMaskPolicyType(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaskWithRedactionCharacterPolicyType)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CharacterMaskPolicyType)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<MaskWithRedactionCharacterPolicyType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CharacterMaskPolicyType>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new MaskWithRedactionCharacterPolicyType FromResponse(Response response)
+        internal static new CharacterMaskPolicyType FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeMaskWithRedactionCharacterPolicyType(document.RootElement);
+            return DeserializeCharacterMaskPolicyType(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

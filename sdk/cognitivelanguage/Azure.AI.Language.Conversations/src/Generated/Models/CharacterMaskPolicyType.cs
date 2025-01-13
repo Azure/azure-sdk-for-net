@@ -10,20 +10,20 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations.Models
 {
-    /// <summary> Represents the policy of redacting with a redaction character. </summary>
-    public partial class MaskWithRedactionCharacterPolicyType : BaseRedactionPolicy
+    /// <summary> Represents the policy of masking with a redaction character. </summary>
+    public partial class CharacterMaskPolicyType : BaseRedactionPolicy
     {
-        /// <summary> Initializes a new instance of <see cref="MaskWithRedactionCharacterPolicyType"/>. </summary>
-        public MaskWithRedactionCharacterPolicyType()
+        /// <summary> Initializes a new instance of <see cref="CharacterMaskPolicyType"/>. </summary>
+        public CharacterMaskPolicyType()
         {
-            PolicyKind = RedactionPolicyKind.MaskWithRedactionCharacter;
+            PolicyKind = RedactionPolicyKind.CharacterMask;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MaskWithRedactionCharacterPolicyType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CharacterMaskPolicyType"/>. </summary>
         /// <param name="policyKind"> The entity RedactionPolicy object kind. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="redactionCharacter"> Optional parameter to use a Custom Character to be used for redaction in PII responses. Default character will be * as before. We allow specific ascii characters for redaction. </param>
-        internal MaskWithRedactionCharacterPolicyType(RedactionPolicyKind policyKind, IDictionary<string, BinaryData> serializedAdditionalRawData, RedactionCharacter? redactionCharacter) : base(policyKind, serializedAdditionalRawData)
+        internal CharacterMaskPolicyType(RedactionPolicyKind policyKind, IDictionary<string, BinaryData> serializedAdditionalRawData, RedactionCharacter? redactionCharacter) : base(policyKind, serializedAdditionalRawData)
         {
             RedactionCharacter = redactionCharacter;
         }
