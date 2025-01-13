@@ -165,7 +165,7 @@ AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
             id: "1",
             participantId: "participant1",
             text: "Send an email to Carol about tomorrow's demo")),
-    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
+    new ConversationActionContent(projectName, deploymentName)
     {
         // Use Utf16CodeUnit for strings in .NET.
         StringIndexType = StringIndexType.Utf16CodeUnit,
@@ -223,7 +223,7 @@ AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
             id: "1",
             participantId: "participant1",
             text: "Send an email to Carol about tomorrow's demo")),
-    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
+    new ConversationActionContent(projectName, deploymentName)
 {
     // Use Utf16CodeUnit for strings in .NET.
     StringIndexType = StringIndexType.Utf16CodeUnit,
@@ -251,7 +251,7 @@ AnalyzeConversationInput data =
             {
                 Language = "es"
             }),
-    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
+    new ConversationActionContent(projectName, deploymentName)
     {
         // Use Utf16CodeUnit for strings in .NET.
         StringIndexType = StringIndexType.Utf16CodeUnit,
@@ -275,7 +275,7 @@ AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
             id: "1",
             participantId: "participant1",
             text: "How are you?")),
-    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
+    new ConversationActionContent(projectName, deploymentName)
     {
         StringIndexType = StringIndexType.Utf16CodeUnit,
     });
@@ -426,7 +426,7 @@ List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationO
     {
         new PiiOperationAction()
         {
-            ActionContent = new ConversationPiiActionContent(),
+            ActionContent = new PiiActionContent(),
             Name = "Conversation PII",
         }
     };
