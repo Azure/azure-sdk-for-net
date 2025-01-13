@@ -16,15 +16,13 @@ namespace Azure.Storage.DataMovement.Blobs
 
         internal class SourceCheckpointData
         {
-            internal const int SchemaVersion = 2;
-
-            internal const int VersionIndex = 0;
-            internal const int DataSize = VersionIndex + IntSizeInBytes;
+            internal const int DataSize = 0;
         }
 
         internal class DestinationCheckpointData
         {
-            internal const int SchemaVersion = 2;
+            internal const int SchemaVersion_3 = 3;
+            internal const int SchemaVersion = SchemaVersion_3;
 
             internal const int VersionIndex = 0;
             internal const int PreserveBlobTypeIndex = VersionIndex + IntSizeInBytes;

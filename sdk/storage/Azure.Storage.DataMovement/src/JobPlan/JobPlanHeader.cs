@@ -4,7 +4,6 @@
 using System;
 using System.IO;
 using System.Text;
-using Azure.Core;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement.JobPlan
@@ -14,7 +13,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// <summary>
         /// Version for the job plan schema.
         /// </summary>
-        public string Version;
+        public int Version;
 
         /// <summary>
         /// The transfer id.
@@ -54,7 +53,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// <summary>
         /// The current status of the transfer job.
         /// </summary>
-        public DataTransferStatus JobStatus;
+        public TransferStatus JobStatus;
 
         /// <summary>
         /// The parent path for the source of the transfer.
@@ -82,7 +81,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         private StorageResourceCheckpointData _destinationCheckpointData;
 
         public JobPlanHeader(
-            string version,
+            int version,
             string transferId,
             DateTimeOffset createTime,
             JobPlanOperation operationType,
@@ -90,13 +89,12 @@ namespace Azure.Storage.DataMovement.JobPlan
             string destinationProviderId,
             bool isContainer,
             bool enumerationComplete,
-            DataTransferStatus jobStatus,
+            TransferStatus jobStatus,
             string parentSourcePath,
             string parentDestinationPath,
             StorageResourceCheckpointData sourceCheckpointData,
             StorageResourceCheckpointData destinationCheckpointData)
         {
-            Argument.AssertNotNull(version, nameof(version));
             Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
             Argument.AssertNotNullOrEmpty(sourceProviderId, nameof(sourceProviderId));
             Argument.AssertNotNullOrEmpty(destinationProviderId, nameof(destinationProviderId));
@@ -133,7 +131,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         }
 
         private JobPlanHeader(
-            string version,
+            int version,
             string transferId,
             DateTimeOffset createTime,
             JobPlanOperation operationType,
@@ -141,7 +139,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             string destinationProviderId,
             bool isContainer,
             bool enumerationComplete,
-            DataTransferStatus jobStatus,
+            TransferStatus jobStatus,
             string parentSourcePath,
             string parentDestinationPath,
             byte[] sourceCheckpointData,
@@ -170,7 +168,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             BinaryWriter writer = new BinaryWriter(stream);
 
             // Version
-            writer.WritePaddedString(Version, DataMovementConstants.JobPlanFile.VersionStrNumBytes);
+            writer.Write(Version);
 
             // TransferId (write as bytes)
             Guid transferId = Guid.Parse(TransferId);
@@ -229,11 +227,11 @@ namespace Azure.Storage.DataMovement.JobPlan
             reader.BaseStream.Position = 0;
 
             // Version
-            byte[] versionBuffer = reader.ReadBytes(DataMovementConstants.JobPlanFile.VersionStrNumBytes);
-            string version = versionBuffer.ToString(DataMovementConstants.JobPlanFile.VersionStrLength);
-
-            // Assert the schema version before continuing
-            CheckSchemaVersion(version);
+            int version = reader.ReadInt32();
+            if (version != DataMovementConstants.JobPlanFile.SchemaVersion)
+            {
+                throw Errors.UnsupportedJobSchemaVersionHeader(version);
+            }
 
             // TransferId
             byte[] transferIdBuffer = reader.ReadBytes(DataMovementConstants.GuidSizeInBytes);
@@ -323,19 +321,11 @@ namespace Azure.Storage.DataMovement.JobPlan
                 destProviderId,
                 isContainer,
                 enumerationComplete,
-                jobPlanStatus.ToDataTransferStatus(),
+                jobPlanStatus.ToTransferStatus(),
                 parentSourcePath,
                 parentDestinationPath,
                 sourceCheckpointData,
                 destinationCheckpointData);
-        }
-
-        private static void CheckSchemaVersion(string version)
-        {
-            if (version != DataMovementConstants.JobPlanFile.SchemaVersion)
-            {
-                throw Errors.UnsupportedJobSchemaVersionHeader(version);
-            }
         }
     }
 }

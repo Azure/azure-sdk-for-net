@@ -507,7 +507,7 @@ namespace Azure.Storage.DataMovement.Blobs
             };
         }
 
-        internal static BlobCheckpointData GetCheckpointData(this DataTransferProperties properties, bool isSource)
+        internal static StorageResourceCheckpointData GetCheckpointData(this TransferProperties properties, bool isSource)
         {
             if (isSource)
             {

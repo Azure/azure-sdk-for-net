@@ -130,7 +130,7 @@ jobs:
         Write-Host "##vso[task.setvariable variable=InternalVariableGroups]$internalVariableGroups"
         Write-Host "##vso[task.setvariable variable=TestVariableGroups]$testVariableGroups"
         Write-Host "##vso[task.setvariable variable=TestServiceConnections]$testServiceConnections"
-        Write-Host "##vso[task.setvariable variable=InternalServiceConnections]$internalServviceConnections"
+        Write-Host "##vso[task.setvariable variable=InternalServiceConnections]$internalServiceConnections"
         Write-host "##vso[task.setvariable variable=GeneratePublicCIPipeline]$generatePublicCIPipeline"
         Write-Host "##vso[task.setvariable variable=GenerateUnifiedWeekly]$generateUnifiedWeekly"
       displayName: Setup pipeline generation variables
