@@ -8,9 +8,6 @@
 - Added support for analyze-conversation API Versions
   - 2024-11-01
   - 2024-11-15-preview
-### Breaking Changes
-
-### Bugs Fixed
 
 ### Other Changes
 - Removed support for analyze-conversation API Versions
