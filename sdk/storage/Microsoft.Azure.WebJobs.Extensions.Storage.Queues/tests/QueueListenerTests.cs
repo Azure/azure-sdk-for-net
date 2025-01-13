@@ -560,6 +560,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [Test]
+        public async Task ProcessMessageAsync_GracefulShutdown()
+        {
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
+            cancellationTokenSource.Cancel();
+            CancellationToken cancellationToken = cancellationTokenSource.Token;
+
+            FunctionResult result = new FunctionResult(true);
+            _mockQueueProcessor.Setup(p => p.BeginProcessingMessageAsync(_queueMessage, It.IsAny<CancellationToken>())).ReturnsAsync(true);
+            _mockTriggerExecutor.Setup(p => p.ExecuteAsync(_queueMessage, It.IsAny<CancellationToken>())).ReturnsAsync(result);
+            _mockQueueProcessor.Setup(p => p.CompleteProcessingMessageAsync(_queueMessage, result, It.IsNotIn(cancellationToken))).Returns(Task.FromResult(true));
+
+            await _listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(10), cancellationToken);
+        }
+
+        [Test]
         public async Task GetMessages_QueueCheckThrowsTransientError_ReturnsBackoffResult()
         {
             CancellationToken cancellationToken = new CancellationToken();
@@ -751,7 +766,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             // Act
             await listener.StartAsync(CancellationToken.None);
-
             await listener.StopAsync(CancellationToken.None);
 
             // Assert
@@ -782,7 +796,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             // Act
             await listener.StartAsync(CancellationToken.None);
-
             await listener.StopAsync(CancellationToken.None);
 
             // Assert
