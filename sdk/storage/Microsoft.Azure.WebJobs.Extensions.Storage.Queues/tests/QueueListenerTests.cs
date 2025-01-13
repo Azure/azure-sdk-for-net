@@ -46,17 +46,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         private TestLoggerProvider _loggerProvider;
         private QueuesOptions _queuesOptions;
 
-        //[OneTimeSetUp]
-        //public void OneTimeSetUp()
-        //{
-        //    Fixture = new TestFixture();
-        //}
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            Fixture = new TestFixture();
+        }
 
-        //[OneTimeTearDown]
-        //public void OneTimeTearDown()
-        //{
-        //    Fixture.Dispose();
-        //}
+        [OneTimeTearDown]
+        public void OneTimeTearDown()
+        {
+            Fixture.Dispose();
+        }
 
         [SetUp]
         public void SetUp()
