@@ -363,12 +363,12 @@
     <PackageReference Update="NSubstitute" Version="5.3.0" />
     <PackageReference Update="NUnit" Version="3.14.0" />
     <PackageReference Update="NUnit3TestAdapter" Version="4.6.0" />
-    <PackageReference Update="OpenTelemetry" Version="1.10.0" />
-    <PackageReference Update="OpenTelemetry.Exporter.Console" Version="1.10.0" />
-    <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.10.0" />
-    <PackageReference Update="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.10.0" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.10.0" />
-    <PackageReference Update="OpenTelemetry.Instrumentation.SqlClient" Version="1.10.0-beta.1" />
+    <PackageReference Update="OpenTelemetry" Version="1.9.0" />
+    <PackageReference Update="OpenTelemetry.Exporter.Console" Version="1.9.0" />
+    <PackageReference Update="OpenTelemetry.Exporter.InMemory" Version="1.9.0" />
+    <PackageReference Update="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.9.0" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.Http" Version="1.9.0" />
+    <PackageReference Update="OpenTelemetry.Instrumentation.SqlClient" Version="1.9.0-beta.1" />
     <PackageReference Update="Polly" Version="8.5.0" />
     <PackageReference Update="Polly.Contrib.WaitAndRetry" Version="1.1.1" />
     <PackageReference Update="Portable.BouncyCastle" Version="1.9.0" />
