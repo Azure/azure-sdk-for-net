@@ -1,18 +1,12 @@
 # Release History
 
-## 1.4.0 (2025-01-10)
+## 1.4.0 (2025-01-14)
 
 ### Features Added
 
 - Updated AppConfiguration RP API version to `2024-05-01` (AppConfigurationSnapshotCollection, AppConfigurationSnapshotResource, AppConfigurationSnapshotData and DataPlaneProxy)
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.3.2 (2024-05-07)
 
