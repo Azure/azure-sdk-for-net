@@ -194,9 +194,8 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="status"> The status of the execution. </param>
         /// <param name="startedOn"> String that represents the start date time. </param>
         /// <param name="stoppedOn"> String that represents the stop date time. </param>
-        /// <param name="provisioningState"> Resource provisioning state. Not currently in use for executions. </param>
         /// <returns> A new <see cref="Chaos.ChaosExperimentExecutionData"/> instance for mocking. </returns>
-        public static ChaosExperimentExecutionData ChaosExperimentExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string status = null, DateTimeOffset? startedOn = null, DateTimeOffset? stoppedOn = null, ChaosProvisioningState? provisioningState = null)
+        public static ChaosExperimentExecutionData ChaosExperimentExecutionData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string status = null, DateTimeOffset? startedOn = null, DateTimeOffset? stoppedOn = null)
         {
             return new ChaosExperimentExecutionData(
                 id,
@@ -206,7 +205,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 status,
                 startedOn,
                 stoppedOn,
-                provisioningState,
                 serializedAdditionalRawData: null);
         }
 
@@ -218,12 +216,11 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="status"> The status of the execution. </param>
         /// <param name="startedOn"> String that represents the start date time. </param>
         /// <param name="stoppedOn"> String that represents the stop date time. </param>
-        /// <param name="provisioningState"> Resource provisioning state. Not currently in use for executions. </param>
         /// <param name="failureReason"> The reason why the execution failed. </param>
         /// <param name="lastActionOn"> String that represents the last action date time. </param>
         /// <param name="runInformationSteps"> The information of the experiment run. </param>
         /// <returns> A new <see cref="Models.ExperimentExecutionDetails"/> instance for mocking. </returns>
-        public static ExperimentExecutionDetails ExperimentExecutionDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string status = null, DateTimeOffset? startedOn = null, DateTimeOffset? stoppedOn = null, ChaosProvisioningState? provisioningState = null, string failureReason = null, DateTimeOffset? lastActionOn = null, IEnumerable<ChaosExperimentRunStepStatus> runInformationSteps = null)
+        public static ExperimentExecutionDetails ExperimentExecutionDetails(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string status = null, DateTimeOffset? startedOn = null, DateTimeOffset? stoppedOn = null, string failureReason = null, DateTimeOffset? lastActionOn = null, IEnumerable<ChaosExperimentRunStepStatus> runInformationSteps = null)
         {
             runInformationSteps ??= new List<ChaosExperimentRunStepStatus>();
 
@@ -235,7 +232,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 status,
                 startedOn,
                 stoppedOn,
-                provisioningState,
                 failureReason,
                 lastActionOn,
                 runInformationSteps != null ? new ExperimentExecutionDetailsPropertiesRunInformation(runInformationSteps?.ToList(), serializedAdditionalRawData: null) : null,
@@ -426,9 +422,8 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="description"> Localized string of the description. </param>
         /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability parameters. </param>
         /// <param name="urn"> String of the URN for this Capability Type. </param>
-        /// <param name="provisioningState"> Resource provisioning state. Not currently in use because resource is created synchronously. </param>
         /// <returns> A new <see cref="Chaos.ChaosCapabilityData"/> instance for mocking. </returns>
-        public static ChaosCapabilityData ChaosCapabilityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string publisher = null, string targetType = null, string description = null, string parametersSchema = null, string urn = null, ChaosProvisioningState? provisioningState = null)
+        public static ChaosCapabilityData ChaosCapabilityData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string publisher = null, string targetType = null, string description = null, string parametersSchema = null, string urn = null)
         {
             return new ChaosCapabilityData(
                 id,
@@ -440,25 +435,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 description,
                 parametersSchema,
                 urn,
-                provisioningState,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Chaos.ChaosCapabilityData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="publisher"> String of the Publisher that this Capability extends. </param>
-        /// <param name="targetType"> String of the Target Type that this Capability extends. </param>
-        /// <param name="description"> Localized string of the description. </param>
-        /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability parameters. </param>
-        /// <param name="urn"> String of the URN for this Capability Type. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Chaos.ChaosCapabilityData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ChaosCapabilityData ChaosCapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string targetType, string description, string parametersSchema, string urn)
-        {
-            return ChaosCapabilityData(id: id, name: name, resourceType: resourceType, systemData: systemData, publisher: publisher, targetType: targetType, description: description, parametersSchema: parametersSchema, urn: urn, provisioningState: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Chaos.ChaosExperimentData" />. </summary>
@@ -481,39 +458,6 @@ namespace Azure.ResourceManager.Chaos.Models
         public static ChaosExperimentData ChaosExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ChaosProvisioningState? provisioningState, IEnumerable<ChaosExperimentStep> steps, IEnumerable<ChaosTargetSelector> selectors)
         {
             return ChaosExperimentData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, identity: identity, provisioningState: provisioningState, steps: steps, selectors: selectors, customerDataStorage: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Chaos.ChaosExperimentExecutionData" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="status"> The status of the execution. </param>
-        /// <param name="startedOn"> String that represents the start date time. </param>
-        /// <param name="stoppedOn"> String that represents the stop date time. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Chaos.ChaosExperimentExecutionData" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ChaosExperimentExecutionData ChaosExperimentExecutionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn)
-        {
-            return ChaosExperimentExecutionData(id: id, name: name, resourceType: resourceType, systemData: systemData, status: status, startedOn: startedOn, stoppedOn: stoppedOn, provisioningState: default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Chaos.Models.ExperimentExecutionDetails" />. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="status"> The status of the execution. </param>
-        /// <param name="startedOn"> String that represents the start date time. </param>
-        /// <param name="stoppedOn"> String that represents the stop date time. </param>
-        /// <param name="failureReason"> The reason why the execution failed. </param>
-        /// <param name="lastActionOn"> String that represents the last action date time. </param>
-        /// <param name="runInformationSteps"> The information of the experiment run. </param>
-        /// <returns> A new <see cref="T:Azure.ResourceManager.Chaos.Models.ExperimentExecutionDetails" /> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ExperimentExecutionDetails ExperimentExecutionDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, string failureReason, DateTimeOffset? lastActionOn, IEnumerable<ChaosExperimentRunStepStatus> runInformationSteps)
-        {
-            return ExperimentExecutionDetails(id: id, name: name, resourceType: resourceType, systemData: systemData, status: status, startedOn: startedOn, stoppedOn: stoppedOn, provisioningState: default, failureReason: failureReason, lastActionOn: lastActionOn, runInformationSteps: runInformationSteps);
         }
     }
 }

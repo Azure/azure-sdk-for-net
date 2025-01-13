@@ -53,11 +53,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("stoppedAt"u8);
                 writer.WriteStringValue(StoppedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
             if (options.Format != "W" && Optional.IsDefined(FailureReason))
             {
                 writer.WritePropertyName("failureReason"u8);
@@ -103,7 +98,6 @@ namespace Azure.ResourceManager.Chaos.Models
             string status = default;
             DateTimeOffset? startedAt = default;
             DateTimeOffset? stoppedAt = default;
-            ChaosProvisioningState? provisioningState = default;
             string failureReason = default;
             DateTimeOffset? lastActionAt = default;
             ExperimentExecutionDetailsPropertiesRunInformation runInformation = default;
@@ -167,15 +161,6 @@ namespace Azure.ResourceManager.Chaos.Models
                             stoppedAt = property0.Value.GetDateTimeOffset("O");
                             continue;
                         }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new ChaosProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("failureReason"u8))
                         {
                             failureReason = property0.Value.GetString();
@@ -216,7 +201,6 @@ namespace Azure.ResourceManager.Chaos.Models
                 status,
                 startedAt,
                 stoppedAt,
-                provisioningState,
                 failureReason,
                 lastActionAt,
                 runInformation,

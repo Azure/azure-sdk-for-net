@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Chaos.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos
@@ -66,16 +65,14 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="description"> Localized string of the description. </param>
         /// <param name="parametersSchema"> URL to retrieve JSON schema of the Capability parameters. </param>
         /// <param name="urn"> String of the URN for this Capability Type. </param>
-        /// <param name="provisioningState"> Resource provisioning state. Not currently in use because resource is created synchronously. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosCapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string targetType, string description, string parametersSchema, string urn, ChaosProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ChaosCapabilityData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string targetType, string description, string parametersSchema, string urn, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Publisher = publisher;
             TargetType = targetType;
             Description = description;
             ParametersSchema = parametersSchema;
             Urn = urn;
-            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -89,7 +86,5 @@ namespace Azure.ResourceManager.Chaos
         public string ParametersSchema { get; }
         /// <summary> String of the URN for this Capability Type. </summary>
         public string Urn { get; }
-        /// <summary> Resource provisioning state. Not currently in use because resource is created synchronously. </summary>
-        public ChaosProvisioningState? ProvisioningState { get; }
     }
 }

@@ -60,17 +60,15 @@ namespace Azure.ResourceManager.Chaos.Models
         /// <param name="status"> The status of the execution. </param>
         /// <param name="startedOn"> String that represents the start date time. </param>
         /// <param name="stoppedOn"> String that represents the stop date time. </param>
-        /// <param name="provisioningState"> Resource provisioning state. Not currently in use for executions. </param>
         /// <param name="failureReason"> The reason why the execution failed. </param>
         /// <param name="lastActionOn"> String that represents the last action date time. </param>
         /// <param name="runInformation"> The information of the experiment run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ExperimentExecutionDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, ChaosProvisioningState? provisioningState, string failureReason, DateTimeOffset? lastActionOn, ExperimentExecutionDetailsPropertiesRunInformation runInformation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ExperimentExecutionDetails(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string status, DateTimeOffset? startedOn, DateTimeOffset? stoppedOn, string failureReason, DateTimeOffset? lastActionOn, ExperimentExecutionDetailsPropertiesRunInformation runInformation, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Status = status;
             StartedOn = startedOn;
             StoppedOn = stoppedOn;
-            ProvisioningState = provisioningState;
             FailureReason = failureReason;
             LastActionOn = lastActionOn;
             RunInformation = runInformation;
@@ -83,8 +81,6 @@ namespace Azure.ResourceManager.Chaos.Models
         public DateTimeOffset? StartedOn { get; }
         /// <summary> String that represents the stop date time. </summary>
         public DateTimeOffset? StoppedOn { get; }
-        /// <summary> Resource provisioning state. Not currently in use for executions. </summary>
-        public ChaosProvisioningState? ProvisioningState { get; }
         /// <summary> The reason why the execution failed. </summary>
         public string FailureReason { get; }
         /// <summary> String that represents the last action date time. </summary>

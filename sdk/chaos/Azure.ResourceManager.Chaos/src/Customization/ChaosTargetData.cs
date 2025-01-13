@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
+using Azure.ResourceManager.Chaos.Models;
 
 namespace Azure.ResourceManager.Chaos
 {
