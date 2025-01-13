@@ -2,7 +2,20 @@
 # This file is generated automatically and any changes will be lost.
 
 trigger: none
+
 pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/dns/ci.mgmt.yml
+    - sdk/dns/Azure.ResourceManager.Dns/
+
+
   branches:
     include:
     - main
