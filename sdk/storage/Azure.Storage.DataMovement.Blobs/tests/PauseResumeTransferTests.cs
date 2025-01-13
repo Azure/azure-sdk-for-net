@@ -231,8 +231,8 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -285,8 +285,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -355,8 +355,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.CatchAsync(async () => await transferManager.PauseTransferIfRunningAsync("bad transfer Id"));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -414,8 +414,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -494,8 +494,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -570,7 +570,6 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [Test]
         [LiveOnly]
         [TestCase(TransferDirection.Upload)]
@@ -815,8 +814,8 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -866,8 +865,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -918,8 +917,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -976,8 +975,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -1064,8 +1063,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -1152,7 +1151,6 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
-        [Ignore("Likely to fail in pipelines and takes a while to run.")]
         [Test, Pairwise]
         [LiveOnly]
         public async Task ResumeTransferAsync_Directory_Large(
