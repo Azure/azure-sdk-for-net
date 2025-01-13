@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task CreateOrUpdateTest()
         {
             string snapshotName = Recording.GenerateAssetName("testapp-");
-            SnapshotData snapshotData = new SnapshotData()
+            AppConfigurationSnapshotData snapshotData = new AppConfigurationSnapshotData()
             {
                 Filters =
                 {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 RetentionPeriod = 3600
             };
 
-            AppConfigurationSnapshotResource snapshot = (await ConfigStore.GetSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData)).Value;
+            AppConfigurationSnapshotResource snapshot = (await ConfigStore.GetAppConfigurationSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData)).Value;
 
             Assert.IsTrue(snapshot.HasData);
             Assert.IsTrue(snapshot.Data.Name.Equals(snapshotName));
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task GetTest()
         {
             string snapshotName = Recording.GenerateAssetName("testapp-");
-            SnapshotData snapshotData = new SnapshotData()
+            AppConfigurationSnapshotData snapshotData = new AppConfigurationSnapshotData()
             {
                 Filters =
                 {
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 RetentionPeriod = 3600
             };
 
-            await ConfigStore.GetSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData);
+            await ConfigStore.GetAppConfigurationSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData);
 
-            AppConfigurationSnapshotResource snapshot = (await ConfigStore.GetSnapshots().GetAsync(snapshotName)).Value;
+            AppConfigurationSnapshotResource snapshot = (await ConfigStore.GetAppConfigurationSnapshots().GetAsync(snapshotName)).Value;
 
             Assert.IsTrue(snapshotName.Equals(snapshot.Data.Name));
             Assert.IsTrue(snapshot.Data.Filters.FirstOrDefault().Key.Equals("key1/*"));
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
         public async Task ExistsTest()
         {
             string snapshotName = Recording.GenerateAssetName("testapp-");
-            SnapshotData snapshotData = new SnapshotData()
+            AppConfigurationSnapshotData snapshotData = new AppConfigurationSnapshotData()
             {
                 Filters =
                 {
@@ -110,9 +110,9 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 RetentionPeriod = 3600
             };
 
-            await ConfigStore.GetSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData);
+            await ConfigStore.GetAppConfigurationSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, snapshotName, snapshotData);
 
-            SnapshotCollection snapshots = ConfigStore.GetSnapshots();
+            AppConfigurationSnapshotCollection snapshots = ConfigStore.GetAppConfigurationSnapshots();
 
             string nonExistingSnapshotName = "nonExistingSnapshot";
 

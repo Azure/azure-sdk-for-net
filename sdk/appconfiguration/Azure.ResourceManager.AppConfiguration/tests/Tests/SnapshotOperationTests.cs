@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
 
                 // Prepare Snapshot.
                 SnapshotName = Recording.GenerateAssetName("testapp-snapshot");
-                SnapshotData snapshotData = new SnapshotData()
+                AppConfigurationSnapshotData snapshotData = new AppConfigurationSnapshotData()
                 {
                     Filters =
                     {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                     },
                     RetentionPeriod = 3600,
                 };
-                Snapshot = (await ConfigStore.GetSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, SnapshotName, snapshotData)).Value;
+                Snapshot = (await ConfigStore.GetAppConfigurationSnapshots().CreateOrUpdateAsync(WaitUntil.Completed, SnapshotName, snapshotData)).Value;
             }
         }
 
