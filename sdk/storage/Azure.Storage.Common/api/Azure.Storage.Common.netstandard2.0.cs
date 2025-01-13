@@ -45,7 +45,9 @@ namespace Azure.Storage
         internal StorageCrc64HashAlgorithm() : base (default(int)) { }
         public override void Append(System.ReadOnlySpan<byte> source) { }
         public static Azure.Storage.StorageCrc64HashAlgorithm Create() { throw null; }
+        public ulong GetCurrentHashAsUInt64() { throw null; }
         protected override void GetCurrentHashCore(System.Span<byte> destination) { }
+        public static ulong HashToUInt64(System.ReadOnlySpan<byte> source) { throw null; }
         public override void Reset() { }
     }
     public static partial class StorageExtensions
