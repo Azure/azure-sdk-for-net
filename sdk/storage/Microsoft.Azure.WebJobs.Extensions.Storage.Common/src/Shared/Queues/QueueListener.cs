@@ -61,26 +61,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             _targetScaler = new Lazy<QueueTargetScaler>(() => new QueueTargetScaler());
         }
 
-        public QueueListener(
-            QueueClient queue,
-            QueueClient poisonQueue,
-            ITriggerExecutor<QueueMessage> triggerExecutor,
-            IWebJobsExceptionHandler exceptionHandler,
-            ILoggerFactory loggerFactory,
-            SharedQueueWatcher sharedWatcher,
-            QueuesOptions queueOptions,
-            QueueProcessor queueProcessor,
-            FunctionDescriptor functionDescriptor,
-            ConcurrencyManager concurrencyManager = null,
-            string functionId = null,
-            TimeSpan? maxPollingInterval = null,
-            IDrainModeManager drainModeManager = null)
-            : this(queue, poisonQueue, triggerExecutor, exceptionHandler, loggerFactory, sharedWatcher, queueOptions,
-                  queueProcessor, functionDescriptor, concurrencyManager, functionId, maxPollingInterval, drainModeManager, null, null)
-        { }
-
-        // Internal constructor (used for testing)
-        internal QueueListener(QueueClient queue,
+        public QueueListener(QueueClient queue,
             QueueClient poisonQueue,
             ITriggerExecutor<QueueMessage> triggerExecutor,
             IWebJobsExceptionHandler exceptionHandler,
@@ -93,8 +74,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             string functionId = null,
             TimeSpan? maxPollingInterval = null,
             IDrainModeManager drainModeManager = null,
-            CancellationTokenSource shutdownCancellationTokenSource = null,
-            CancellationTokenSource executionCancellationTokenSource = null)
+            CancellationTokenSource shutdownCancellationTokenSource = null, // for testing only
+            CancellationTokenSource executionCancellationTokenSource = null) // for testing only
         {
             if (queueOptions == null)
             {
