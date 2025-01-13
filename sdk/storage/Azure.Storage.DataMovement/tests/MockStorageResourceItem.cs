@@ -20,7 +20,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override string ResourceId => "Mock";
 
-        protected internal override DataTransferOrder TransferType { get; }
+        protected internal override TransferOrder TransferType { get; }
 
         protected internal override long MaxSupportedSingleTransferSize => Constants.GB;
 
@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override long? Length { get; }
 
-        private MockStorageResourceItem(long? length, Uri uri, int failAfter, DataTransferOrder transferOrder = DataTransferOrder.Sequential)
+        private MockStorageResourceItem(long? length, Uri uri, int failAfter, TransferOrder transferOrder = TransferOrder.Sequential)
         {
             Length = length;
             _uri = uri ?? new Uri("https://example.com");
@@ -41,7 +41,7 @@ namespace Azure.Storage.DataMovement.Tests
             return new MockStorageResourceItem(length, uri, failAfter);
         }
 
-        public static MockStorageResourceItem MakeDestinationResource(Uri uri = default, DataTransferOrder transferOrder = DataTransferOrder.Sequential, int failAfter = int.MaxValue)
+        public static MockStorageResourceItem MakeDestinationResource(Uri uri = default, TransferOrder transferOrder = TransferOrder.Sequential, int failAfter = int.MaxValue)
         {
             return new MockStorageResourceItem(default, uri, failAfter, transferOrder);
         }
@@ -140,7 +140,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         public static (StorageResourceItem Source, StorageResourceItem Destination) GetMockTransferResources(
             TransferDirection transferDirection,
-            DataTransferOrder transferOrder = DataTransferOrder.Unordered,
+            TransferOrder transferOrder = TransferOrder.Unordered,
             long fileSize = 4L * Constants.KB,
             int sourceFailAfter = int.MaxValue,
             int destinationFailAfter = int.MaxValue)

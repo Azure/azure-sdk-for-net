@@ -15,7 +15,7 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         /// <param name="progressHandler"></param>
         /// <param name="trackBytesTransferred"></param>
-        public ProgressHandlerOptions(IProgress<DataTransferProgress> progressHandler, bool trackBytesTransferred = false)
+        public ProgressHandlerOptions(IProgress<TransferProgress> progressHandler, bool trackBytesTransferred = false)
         {
             ProgressHandler = progressHandler;
             TrackBytesTransferred = trackBytesTransferred;
@@ -23,12 +23,12 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Optional. An <see cref="IProgress{StorageTransferProgress}"/> for tracking progress of the transfer.
-        /// See <see cref="DataTransferProgress"/> for details on what is tracked.
+        /// See <see cref="TransferProgress"/> for details on what is tracked.
         /// </summary>
-        public IProgress<DataTransferProgress> ProgressHandler { get; set; }
+        public IProgress<TransferProgress> ProgressHandler { get; set; }
 
         /// <summary>
-        /// Set to true to populate BytesTransferred of <see cref="DataTransferProgress.BytesTransferred"/> of <see cref="ProgressHandler"/>
+        /// Set to true to populate BytesTransferred of <see cref="TransferProgress.BytesTransferred"/> of <see cref="ProgressHandler"/>
         /// in progress reports. Set to false to not track BytesTransferred (value will be null).
         /// Default value is false.
         /// </summary>

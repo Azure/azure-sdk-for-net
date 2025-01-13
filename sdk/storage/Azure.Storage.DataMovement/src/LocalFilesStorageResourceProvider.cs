@@ -25,14 +25,14 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
-        protected internal override Task<StorageResource> FromSourceAsync(DataTransferProperties properties, CancellationToken cancellationToken)
+        protected internal override Task<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
             => Task.FromResult(FromTransferProperties(properties, getSource: true));
 
         /// <inheritdoc/>
-        protected internal override Task<StorageResource> FromDestinationAsync(DataTransferProperties properties, CancellationToken cancellationToken)
+        protected internal override Task<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
             => Task.FromResult(FromTransferProperties(properties, getSource: false));
 
-        private StorageResource FromTransferProperties(DataTransferProperties properties, bool getSource)
+        private StorageResource FromTransferProperties(TransferProperties properties, bool getSource)
         {
             Argument.AssertNotNull(properties, nameof(properties));
             Uri storedUri = getSource ? properties.SourceUri : properties.DestinationUri;

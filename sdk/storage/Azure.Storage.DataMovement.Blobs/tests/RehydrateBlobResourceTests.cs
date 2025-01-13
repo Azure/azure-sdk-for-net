@@ -77,7 +77,7 @@ namespace Azure.Storage.DataMovement.Tests
             default,
             default);
 
-        private static byte[] GetBytes(BlobCheckpointData checkpointData)
+        private static byte[] GetBytes(StorageResourceCheckpointData checkpointData)
         {
             using (MemoryStream stream = new MemoryStream())
             {
@@ -86,7 +86,7 @@ namespace Azure.Storage.DataMovement.Tests
             }
         }
 
-        private static Mock<DataTransferProperties> GetProperties(
+        private static Mock<TransferProperties> GetProperties(
             string transferId,
             string sourcePath,
             string destinationPath,
@@ -96,7 +96,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobSourceCheckpointData sourceCheckpointData,
             BlobDestinationCheckpointData destinationCheckpointData)
         {
-            var mock = new Mock<DataTransferProperties>(MockBehavior.Strict);
+            var mock = new Mock<TransferProperties>(MockBehavior.Strict);
             mock.Setup(p => p.TransferId).Returns(transferId);
             mock.Setup(p => p.SourceUri).Returns(new Uri(sourcePath));
             mock.Setup(p => p.DestinationUri).Returns(new Uri(destinationPath));
@@ -120,7 +120,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceType sourceType = StorageResourceType.BlockBlob;
             StorageResourceType destinationType = StorageResourceType.BlockBlob;
 
-            DataTransferProperties transferProperties = GetProperties(
+            TransferProperties transferProperties = GetProperties(
                 transferId,
                 sourcePath,
                 destinationPath,
@@ -149,7 +149,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceType destinationType = StorageResourceType.BlockBlob;
 
             BlobDestinationCheckpointData checkpointData = GetPopulatedDestinationCheckpointData(BlobType.Block, AccessTier.Cool);
-            DataTransferProperties transferProperties = GetProperties(
+            TransferProperties transferProperties = GetProperties(
                 transferId,
                 sourcePath,
                 destinationPath,
@@ -190,7 +190,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceType sourceType = StorageResourceType.PageBlob;
             StorageResourceType destinationType = StorageResourceType.PageBlob;
 
-            DataTransferProperties transferProperties = GetProperties(
+            TransferProperties transferProperties = GetProperties(
                 transferId,
                 sourcePath,
                 destinationPath,
@@ -226,7 +226,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceType destinationType = StorageResourceType.PageBlob;
 
             BlobDestinationCheckpointData checkpointData = GetPopulatedDestinationCheckpointData(BlobType.Page, AccessTier.P30);
-            DataTransferProperties transferProperties = GetProperties(
+            TransferProperties transferProperties = GetProperties(
                 transferId,
                 sourcePath,
                 destinationPath,
@@ -266,7 +266,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceType sourceType = StorageResourceType.AppendBlob;
             StorageResourceType destinationType = StorageResourceType.AppendBlob;
 
-            DataTransferProperties transferProperties = GetProperties(
+            TransferProperties transferProperties = GetProperties(
                 transferId,
                 sourcePath,
                 destinationPath,
@@ -302,7 +302,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResourceType destinationType = StorageResourceType.AppendBlob;
 
             BlobDestinationCheckpointData checkpointData = GetPopulatedDestinationCheckpointData(BlobType.Append, accessTier: default);
-            DataTransferProperties transferProperties = GetProperties(
+            TransferProperties transferProperties = GetProperties(
                 transferId,
                 sourcePath,
                 destinationPath,
@@ -352,7 +352,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             string originalPath = isSource ? sourceParentPath : destinationParentPath;
 
-            DataTransferProperties transferProperties = GetProperties(
+            TransferProperties transferProperties = GetProperties(
                 transferId,
                 sourceParentPath,
                 destinationParentPath,

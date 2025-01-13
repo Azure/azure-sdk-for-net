@@ -7,14 +7,10 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Azure.Core;
 using Azure.Identity;
-using System.Collections.Generic;
-using System.Linq;
 using Azure.Storage.Files.Shares;
-using Azure.Storage.DataMovement.Files.Shares;
 using Azure.Storage.Sas;
-using BenchmarkDotNet.Disassemblers;
 
-namespace Azure.Storage.DataMovement.Blobs.Samples
+namespace Azure.Storage.DataMovement.Files.Shares.Samples
 {
     /// <summary>
     /// Basic Azure File Share Storage samples.
@@ -44,12 +40,12 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     // Get local filesystem provider
                     LocalFilesStorageResourceProvider files = new();
 
-                    // Get blobs provider with credential
+                    // Get shares provider with credential
                     #region Snippet:MakeProvider_TokenCredential_Shares
                     ShareFilesStorageResourceProvider shares = new(tokenCredential);
                     #endregion
 
-                    // Construct simple blob resources for data movement
+                    // Construct simple share file resources for data movement
                     #region Snippet:ResourceConstruction_Shares
                     StorageResource directory = shares.FromDirectory(
                         new Uri("http://myaccount.files.core.windows.net/share/path/to/directory"));
@@ -70,7 +66,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 }
                 {
                     StorageSharedKeyCredential sharedKeyCredential = new(StorageAccountName, StorageAccountKey);
-                    // Get blobs provider with credential
+                    // Get shares provider with credential
                     AzureSasCredential GenerateSas(Uri uri, bool readOnly)
                     {
                         // Quick sample demonstrating minimal steps
@@ -99,31 +95,32 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string sourceLocalFile = CreateTempFile(SampleFileContent);
             string sourceLocalDirectory = CreateTempDirectoryPath();
             string connectionString = ConnectionString;
-            string containerName = Randomize("sample-container");
+            string shareName = Randomize("sample-share");
 
             // Create a client that can authenticate with a connection string
-            ShareClient share = new(connectionString, containerName);
+            ShareClient share = new(connectionString, shareName);
             await share.CreateIfNotExistsAsync();
             try
             {
                 ShareFilesStorageResourceProvider shares = new(new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey));
                 LocalFilesStorageResourceProvider files = new();
 
-                // Get a reference to a destination blobs
+                // Get a reference to a destination share file/directory
                 Uri destinationFolderUri = share.GetDirectoryClient("sample-directory").Uri;
                 Uri destinationFileUri = share.GetRootDirectoryClient().GetFileClient("sample-file").Uri;
                 TransferManager transferManager = new TransferManager(new TransferManagerOptions());
 
-                // Create simple transfer single blob upload job
+                // Create simple transfer single share file upload job
                 #region Snippet:SimplefileUpload_Shares
-                DataTransfer fileTransfer = await transferManager.StartTransferAsync(
+                TransferOperation fileTransfer = await transferManager.StartTransferAsync(
                     sourceResource: files.FromFile(sourceLocalFile),
                     destinationResource: shares.FromFile(destinationFileUri));
                 await fileTransfer.WaitForCompletionAsync();
                 #endregion
 
+                // Create simple transfer single share directory upload job
                 #region Snippet:SimpleDirectoryUpload_Shares
-                DataTransfer folderTransfer = await transferManager.StartTransferAsync(
+                TransferOperation folderTransfer = await transferManager.StartTransferAsync(
                     sourceResource: files.FromDirectory(sourceLocalDirectory),
                     destinationResource: shares.FromDirectory(destinationFolderUri));
                 await folderTransfer.WaitForCompletionAsync();
@@ -142,31 +139,32 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             string destinationLocalFile = CreateTempFile(SampleFileContent);
             string destinationLocalDirectory = CreateTempDirectoryPath();
             string connectionString = ConnectionString;
-            string containerName = Randomize("sample-container");
+            string shareName = Randomize("sample-share");
 
             // Create a client that can authenticate with a connection string
-            ShareClient share = new(connectionString, containerName);
+            ShareClient share = new(connectionString, shareName);
             await share.CreateIfNotExistsAsync();
             try
             {
                 ShareFilesStorageResourceProvider shares = new(new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey));
                 LocalFilesStorageResourceProvider files = new();
 
-                // Get a reference to a destination blobs
+                // Get a reference to a destination share file/directory
                 Uri sourceDirectoryUri = share.GetDirectoryClient("sample-directory").Uri;
                 Uri sourceFileUri = share.GetRootDirectoryClient().GetFileClient("sample-file").Uri;
                 TransferManager transferManager = new TransferManager(new TransferManagerOptions());
 
-                // Create simple transfer single blob upload job
+                // Create simple transfer single share file upload job
                 #region Snippet:SimpleFileDownload_Shares
-                DataTransfer fileTransfer = await transferManager.StartTransferAsync(
+                TransferOperation fileTransfer = await transferManager.StartTransferAsync(
                     sourceResource: shares.FromFile(sourceFileUri),
                     destinationResource: files.FromFile(destinationLocalFile));
                 await fileTransfer.WaitForCompletionAsync();
                 #endregion
 
+                // Create simple transfer single share directory upload job
                 #region Snippet:SimpleDirectoryDownload_Shares
-                DataTransfer directoryTransfer = await transferManager.StartTransferAsync(
+                TransferOperation directoryTransfer = await transferManager.StartTransferAsync(
                     sourceResource: shares.FromDirectory(sourceDirectoryUri),
                     destinationResource: files.FromDirectory(destinationLocalDirectory));
                 await directoryTransfer.WaitForCompletionAsync();
@@ -182,32 +180,33 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
         public async Task Copy()
         {
             string connectionString = ConnectionString;
-            string containerName = Randomize("sample-container");
+            string shareName = Randomize("sample-share");
 
             // Create a client that can authenticate with a connection string
-            ShareClient share = new(connectionString, containerName);
+            ShareClient share = new(connectionString, shareName);
             await share.CreateIfNotExistsAsync();
             try
             {
                 ShareFilesStorageResourceProvider shares = new(new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey));
 
-                // Get a reference to a destination blobs
+                // Get a reference to a destination share files/directories
                 Uri sourceDirectoryUri = share.GetDirectoryClient("sample-directory-1").Uri;
                 Uri destinationDirectoryUri = share.GetDirectoryClient("sample-directory-2").Uri;
                 Uri sourceFileUri = share.GetRootDirectoryClient().GetFileClient("sample-file-1").Uri;
                 Uri destinationFileUri = share.GetRootDirectoryClient().GetFileClient("sample-file-2").Uri;
                 TransferManager transferManager = new TransferManager(new TransferManagerOptions());
 
-                // Create simple transfer single blob upload job
+                // Create simple transfer single share file upload job
                 #region Snippet:s2sCopyFile_Shares
-                DataTransfer fileTransfer = await transferManager.StartTransferAsync(
+                TransferOperation fileTransfer = await transferManager.StartTransferAsync(
                     sourceResource: shares.FromFile(sourceFileUri),
                     destinationResource: shares.FromFile(destinationFileUri));
                 await fileTransfer.WaitForCompletionAsync();
                 #endregion
 
+                // Create simple transfer single share directory upload job
                 #region Snippet:s2sCopyDirectory_Shares
-                DataTransfer directoryTransfer = await transferManager.StartTransferAsync(
+                TransferOperation directoryTransfer = await transferManager.StartTransferAsync(
                     sourceResource: shares.FromDirectory(sourceDirectoryUri),
                     destinationResource: shares.FromDirectory(destinationDirectoryUri));
                 await directoryTransfer.WaitForCompletionAsync();

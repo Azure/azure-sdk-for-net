@@ -224,19 +224,19 @@ namespace Azure.Storage.DataMovement.Blobs
 
         #region Abstract Class Implementation
         /// <inheritdoc/>
-        protected override Task<StorageResource> FromSourceAsync(DataTransferProperties properties, CancellationToken cancellationToken)
+        protected override Task<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
             => Task.FromResult(FromTransferProperties(properties, getSource: true, cancellationToken));
 
         /// <inheritdoc/>
-        protected override Task<StorageResource> FromDestinationAsync(DataTransferProperties properties, CancellationToken cancellationToken)
+        protected override Task<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
             => Task.FromResult(FromTransferProperties(properties, getSource: false, cancellationToken));
 
         private StorageResource FromTransferProperties(
-            DataTransferProperties properties,
+            TransferProperties properties,
             bool getSource,
             CancellationToken cancellationToken)
         {
-            BlobCheckpointData checkpointData = properties.GetCheckpointData(getSource);
+            StorageResourceCheckpointData checkpointData = properties.GetCheckpointData(getSource);
 
             ResourceType type = GetType(checkpointData, properties.IsContainer);
             Uri uri = getSource ? properties.SourceUri : properties.DestinationUri;
@@ -281,19 +281,19 @@ namespace Azure.Storage.DataMovement.Blobs
 
         /// <summary>
         /// For use in testing. Internal wrapper for protected member
-        /// <see cref="StorageResourceProvider.FromSourceAsync(DataTransferProperties, CancellationToken)"/>.
+        /// <see cref="StorageResourceProvider.FromSourceAsync(TransferProperties, CancellationToken)"/>.
         /// </summary>
         internal async Task<StorageResource> FromSourceInternalHookAsync(
-            DataTransferProperties props,
+            TransferProperties props,
             CancellationToken cancellationToken = default)
             => await FromSourceAsync(props, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// For use in testing. Internal wrapper for protected member
-        /// <see cref="StorageResourceProvider.FromDestinationAsync(DataTransferProperties, CancellationToken)"/>.
+        /// <see cref="StorageResourceProvider.FromDestinationAsync(TransferProperties, CancellationToken)"/>.
         /// </summary>
         internal async Task<StorageResource> FromDestinationInternalHookAsync(
-            DataTransferProperties props,
+            TransferProperties props,
             CancellationToken cancellationToken = default)
             => await FromDestinationAsync(props, cancellationToken).ConfigureAwait(false);
         #endregion
@@ -491,24 +491,24 @@ namespace Azure.Storage.DataMovement.Blobs
         private interface IBlobResourceRehydrator
         {
             StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 CancellationToken cancellationToken);
             StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 StorageSharedKeyCredential credential,
                 CancellationToken cancellationToken);
             StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 TokenCredential credential,
                 CancellationToken cancellationToken);
             StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 AzureSasCredential credential,
@@ -518,7 +518,7 @@ namespace Azure.Storage.DataMovement.Blobs
         private class BlobContainerResourceRehydrator : IBlobResourceRehydrator
         {
             private BlobStorageResourceContainerOptions GetOptions(
-                DataTransferProperties transferProperties,
+                TransferProperties transferProperties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource)
             {
@@ -537,20 +537,20 @@ namespace Azure.Storage.DataMovement.Blobs
                 }
             }
 
-            private Uri GetUri(DataTransferProperties properties, bool getSource)
+            private Uri GetUri(TransferProperties properties, bool getSource)
                 => getSource ? properties.SourceUri : properties.DestinationUri;
 
-            private string GetPrefix(DataTransferProperties properties, bool getSource)
+            private string GetPrefix(TransferProperties properties, bool getSource)
                 => new BlobUriBuilder(GetUri(properties, getSource)).BlobName;
 
-            private Uri GetContainerUri(DataTransferProperties properties, bool getSource)
+            private Uri GetContainerUri(TransferProperties properties, bool getSource)
                 => new BlobUriBuilder(GetUri(properties, getSource))
                 {
                     BlobName = ""
                 }.ToUri();
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 CancellationToken cancellationToken)
@@ -559,7 +559,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     GetOptions(properties, destinationCheckpointData, isSource));
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 StorageSharedKeyCredential credential,
@@ -569,7 +569,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     GetOptions(properties, destinationCheckpointData, isSource));
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 TokenCredential credential,
@@ -579,7 +579,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     GetOptions(properties, destinationCheckpointData, isSource));
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 AzureSasCredential credential,
@@ -591,11 +591,11 @@ namespace Azure.Storage.DataMovement.Blobs
 
         private class BlockBlobResourceRehydrator : IBlobResourceRehydrator
         {
-            private Uri GetUri(DataTransferProperties properties, bool getSource)
+            private Uri GetUri(TransferProperties properties, bool getSource)
                 => getSource ? properties.SourceUri : properties.DestinationUri;
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 CancellationToken cancellationToken)
@@ -604,7 +604,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     !isSource ? destinationCheckpointData.GetBlockBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 StorageSharedKeyCredential credential,
@@ -614,7 +614,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     !isSource ? destinationCheckpointData.GetBlockBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 TokenCredential credential,
@@ -624,7 +624,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     !isSource ? destinationCheckpointData.GetBlockBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 AzureSasCredential credential,
@@ -636,11 +636,11 @@ namespace Azure.Storage.DataMovement.Blobs
 
         private class PageBlobResourceRehydrator : IBlobResourceRehydrator
         {
-            private Uri GetUri(DataTransferProperties properties, bool getSource)
+            private Uri GetUri(TransferProperties properties, bool getSource)
                 => getSource ? properties.SourceUri : properties.DestinationUri;
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 CancellationToken cancellationToken)
@@ -649,7 +649,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     !isSource ? destinationCheckpointData.GetPageBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 StorageSharedKeyCredential credential,
@@ -659,7 +659,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     !isSource ? destinationCheckpointData.GetPageBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 TokenCredential credential,
@@ -669,7 +669,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     !isSource ? destinationCheckpointData.GetPageBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 AzureSasCredential credential,
@@ -681,11 +681,11 @@ namespace Azure.Storage.DataMovement.Blobs
 
         private class AppendBlobResourceRehydrator : IBlobResourceRehydrator
         {
-            private Uri GetUri(DataTransferProperties properties, bool getSource)
+            private Uri GetUri(TransferProperties properties, bool getSource)
                 => getSource ? properties.SourceUri : properties.DestinationUri;
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 CancellationToken cancellationToken)
@@ -694,7 +694,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     !isSource ? destinationCheckpointData.GetAppendBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 StorageSharedKeyCredential credential,
@@ -704,7 +704,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     !isSource ? destinationCheckpointData.GetAppendBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 TokenCredential credential,
@@ -714,7 +714,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     !isSource ? destinationCheckpointData.GetAppendBlobResourceOptions() : default);
 
             public StorageResource Rehydrate(
-                DataTransferProperties properties,
+                TransferProperties properties,
                 BlobDestinationCheckpointData destinationCheckpointData,
                 bool isSource,
                 AzureSasCredential credential,
@@ -725,7 +725,7 @@ namespace Azure.Storage.DataMovement.Blobs
         }
         #endregion
 
-        private static ResourceType GetType(BlobCheckpointData checkpointData, bool isContainer)
+        private static ResourceType GetType(StorageResourceCheckpointData checkpointData, bool isContainer)
         {
             if (isContainer)
             {
