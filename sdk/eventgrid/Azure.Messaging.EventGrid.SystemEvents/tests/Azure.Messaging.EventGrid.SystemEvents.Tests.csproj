@@ -11,7 +11,7 @@
     <PackageReference Include="Microsoft.Azure.Management.EventGrid" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime" VersionOverride="2.3.24" />
-    <PackageReference Include="System.Net.Http" />
+    <PackageReference Include="System.Net.Http" VersionOverride="4.3.4" />
     <PackageReference Include="System.Net.Security" />
     <PackageReference Include="System.Net.WebSockets.Client" />
     <PackageReference Include="System.ValueTuple" />

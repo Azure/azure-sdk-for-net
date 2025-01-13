@@ -94,14 +94,11 @@ namespace Azure.Core.TestFramework
             {
                 if (File.Exists(testEnvironmentFile))
                 {
-                    if (!RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-                    {
-                        throw new PlatformNotSupportedException();
-                    }
-
+#pragma warning disable CA1416
                     var json = JsonDocument.Parse(
                         ProtectedData.Unprotect(File.ReadAllBytes(testEnvironmentFile), null, DataProtectionScope.CurrentUser)
                     );
+#pragma warning restore CA1416
 
                     foreach (var property in json.RootElement.EnumerateObject())
                     {

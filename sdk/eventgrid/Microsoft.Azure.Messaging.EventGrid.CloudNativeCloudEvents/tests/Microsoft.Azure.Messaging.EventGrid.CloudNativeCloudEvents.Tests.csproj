@@ -13,7 +13,7 @@
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime" VersionOverride="2.3.24" />
-    <PackageReference Include="System.Net.Http" />
+    <PackageReference Include="System.Net.Http" VersionOverride="4.3.4" />
     <PackageReference Include="System.Memory" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\..\..\eventgrid\Azure.Messaging.EventGrid\tests\Azure.Messaging.EventGrid.Tests.csproj" />
