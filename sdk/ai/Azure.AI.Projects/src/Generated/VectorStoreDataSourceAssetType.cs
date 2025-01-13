@@ -5,17 +5,50 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.AI.Projects
 {
     /// <summary>
     /// Type of vector storage asset. Asset type may be a uri_asset, in this case it should contain asset URI ID,
     /// in the case of id_asset it should contain the data ID.
     /// </summary>
-    public enum VectorStoreDataSourceAssetType
+    public readonly partial struct VectorStoreDataSourceAssetType : IEquatable<VectorStoreDataSourceAssetType>
     {
-        /// <summary> uri_asset. </summary>
-        UriAsset,
-        /// <summary> id_asset. </summary>
-        IdAsset
+        private readonly string _value;
+
+        /// <summary> Initializes a new instance of <see cref="VectorStoreDataSourceAssetType"/>. </summary>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public VectorStoreDataSourceAssetType(string value)
+        {
+            _value = value ?? throw new ArgumentNullException(nameof(value));
+        }
+
+        private const string UriAssetValue = "uri_asset";
+        private const string IdAssetValue = "id_asset";
+
+        /// <summary> Azure URI. </summary>
+        public static VectorStoreDataSourceAssetType UriAsset { get; } = new VectorStoreDataSourceAssetType(UriAssetValue);
+        /// <summary> The data ID. </summary>
+        public static VectorStoreDataSourceAssetType IdAsset { get; } = new VectorStoreDataSourceAssetType(IdAssetValue);
+        /// <summary> Determines if two <see cref="VectorStoreDataSourceAssetType"/> values are the same. </summary>
+        public static bool operator ==(VectorStoreDataSourceAssetType left, VectorStoreDataSourceAssetType right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="VectorStoreDataSourceAssetType"/> values are not the same. </summary>
+        public static bool operator !=(VectorStoreDataSourceAssetType left, VectorStoreDataSourceAssetType right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="VectorStoreDataSourceAssetType"/>. </summary>
+        public static implicit operator VectorStoreDataSourceAssetType(string value) => new VectorStoreDataSourceAssetType(value);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override bool Equals(object obj) => obj is VectorStoreDataSourceAssetType other && Equals(other);
+        /// <inheritdoc />
+        public bool Equals(VectorStoreDataSourceAssetType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <inheritdoc />
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
+        /// <inheritdoc />
+        public override string ToString() => _value;
     }
 }

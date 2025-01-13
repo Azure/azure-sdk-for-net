@@ -5,7 +5,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.ClientModel;
 
-namespace Azure
+namespace Azure.Core.Rest
 {
     /// <summary>
     /// A simple REST client that sends HTTP requests and receives responses.

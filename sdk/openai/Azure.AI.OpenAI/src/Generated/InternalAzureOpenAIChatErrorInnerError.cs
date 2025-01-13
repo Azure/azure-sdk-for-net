@@ -67,4 +67,3 @@ namespace Azure.AI.OpenAI
         internal RequestContentFilterResult ContentFilterResults { get; set; }
     }
 }
-

@@ -29,7 +29,7 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
 
             TransferManagerOptions managerOptions = new()
             {
-                ErrorHandling = DataTransferErrorMode.StopOnAnyFailure,
+                ErrorHandling = TransferErrorMode.StopOnAnyFailure,
                 CheckpointerOptions = Options.DisableCheckpointer ? TransferCheckpointStoreOptions.Disabled() : default,
                 MaximumConcurrency = Options.Concurrency
             };
@@ -83,14 +83,14 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
             StorageResource destination,
             CancellationToken cancellationToken)
         {
-            DataTransferOptions options = new()
+            TransferOptions options = new()
             {
                 CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
                 InitialTransferSize = Options.InitialTransferSize,
                 MaximumTransferChunkSize = Options.ChunkSize,
             };
             options.ItemTransferFailed += HandleFailure;
-            DataTransfer transfer = await _transferManager.StartTransferAsync(
+            TransferOperation transfer = await _transferManager.StartTransferAsync(
                 source, destination, options, cancellationToken);
 
             // The test runs for a specified duration and then cancels the token.
@@ -109,8 +109,8 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
             CancellationTokenSource ctx = new(_transferTimeout);
             await transfer.WaitForCompletionAsync(ctx.Token);
 
-            if (!transfer.TransferStatus.HasCompletedSuccessfully &&
-                transfer.TransferStatus.State != DataTransferState.Paused)
+            if (!transfer.Status.HasCompletedSuccessfully &&
+                transfer.Status.State != TransferState.Paused)
             {
                 throw new Exception("A failure occurred during the transfer.");
             }

@@ -23,10 +23,10 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             Uri blobUri,
             int? blobSize,
             TransferManagerOptions transferManagerOptions,
-            DataTransferOptions dataTransferOptions,
+            TransferOptions transferOptions,
             TokenCredential tokenCredential,
             Metrics metrics,
-            string testRunId) : base(blobUri, blobSize, transferManagerOptions, dataTransferOptions, tokenCredential, metrics, testRunId)
+            string testRunId) : base(blobUri, blobSize, transferManagerOptions, transferOptions, tokenCredential, metrics, testRunId)
         {
         }
 
@@ -81,7 +81,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                         destinationResource,
                         cToken => Task.FromResult(File.OpenRead(sourceResource.Uri.AbsolutePath) as Stream),
                         async cToken => await destinationBaseBlob.OpenReadAsync(default, cToken),
-                        options: _dataTransferOptions,
+                        options: _transferOptions,
                         cancellationToken: cancellationToken);
                 }
                 catch (TaskCanceledException)

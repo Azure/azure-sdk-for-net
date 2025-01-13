@@ -6,6 +6,7 @@ using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Expressions;
+using System.Linq;
 
 namespace Azure.CloudMachine;
 
@@ -27,12 +28,13 @@ public static class Azd
 
     public static void Init(CloudMachineInfrastructure infra, string? infraDirectory = default)
     {
-        if (infraDirectory == default) infraDirectory = Path.Combine(".", "infra");
+        if (infraDirectory == default)
+            infraDirectory = Path.Combine(".", "infra");
 
         Directory.CreateDirectory(infraDirectory);
 
         infra.Build().Save(infraDirectory);
-        var cmid = CloudMachineWorkspace.ReadOrCreateCloudMachineId();
+        var cmid = CloudMachineClient.ReadOrCreateCloudMachineId();
 
         // main.bicep
         var location = new ProvisioningParameter("location", typeof(string));
@@ -64,6 +66,28 @@ public static class Azd
 
         WriteMainParametersFile(infraDirectory);
     }
+
+    public static void InitDeployment(CloudMachineInfrastructure infra, string? webProjectName)
+    {
+        var webCsproj = webProjectName switch
+        {
+            null => ".",
+            _ => webProjectName.EndsWith(".csproj") ? webProjectName : $"{webProjectName}.csproj"
+        };
+        var webProjDirectory = webCsproj switch
+        {
+            "." => null,
+            _ => Directory
+                    .GetFiles(Directory.GetCurrentDirectory(), "*" + webCsproj, SearchOption.AllDirectories)
+                    .SingleOrDefault()
+        };
+        if (webProjDirectory != null)
+        {
+            webProjDirectory = Path.GetDirectoryName(webProjDirectory)?.Replace(Directory.GetCurrentDirectory(), ".");
+        }
+        WriteAzureYamlFile(webProjDirectory ?? "./", infra.Id);
+    }
+
     private static void WriteMainParametersFile(string infraDirectory)
     {
         File.WriteAllText(Path.Combine(infraDirectory, $"{MainBicepName}.parameters.json"),
@@ -84,5 +108,24 @@ public static class Azd
           }
         }
         """);
+    }
+
+    private static void WriteAzureYamlFile(string webProjDirectory, string cmId, string? hostType = "appservice")
+    {
+        if (webProjDirectory == ".")
+        {
+            webProjDirectory = "./";
+        }
+
+        File.WriteAllText(Path.Combine(Directory.GetCurrentDirectory(), "azure.yaml"),
+        $"""
+name: {cmId}
+resourceGroup: {cmId}
+services:
+  {cmId}:
+    project: {webProjDirectory} # path to your web project
+    language: csharp # one of the supported languages
+    host: {hostType} # one of the supported Azure services
+""");
     }
 }
