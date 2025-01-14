@@ -4,7 +4,7 @@
  "ApiVersions": [
   "2024-02-01",
   "2024-08-30",
-  "2024-11-15-preview"
+  "2025-01-15-preview"
  ],
  "Enums": [
   {
@@ -701,8 +701,8 @@
     {
      "$id": "78",
      "kind": "enumvalue",
-     "name": "c2024_11_15_Preview",
-     "value": "2024-11-15-preview",
+     "name": "c2025_01_15_Preview",
+     "value": "2025-01-15-preview",
      "valueType": {
       "$id": "79",
       "kind": "string",
@@ -713,7 +713,7 @@
      "enumType": {
       "$ref": "72"
      },
-     "description": "Azure Communication Messages 2024-11-15 api version",
+     "description": "Azure Communication Messages 2025-01-15-preview api version",
      "decorators": []
     }
    ],
@@ -4055,7 +4055,7 @@
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
         },
-        "Value": "2024-11-15-preview"
+        "Value": "2025-01-15-preview"
        },
        "Decorators": [],
        "SkipUrlEncoding": false
@@ -4309,7 +4309,7 @@
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
         },
-        "Value": "2024-11-15-preview"
+        "Value": "2025-01-15-preview"
        },
        "Decorators": [],
        "SkipUrlEncoding": false
@@ -4469,7 +4469,7 @@
        "kind": "http",
        "name": "Download media",
        "description": "Download media",
-       "filePath": "2024-11-15-preview/Stream_GetMedia.json",
+       "filePath": "2025-01-15-preview/Stream_GetMedia.json",
        "parameters": [
         {
          "$id": "435",
@@ -4482,7 +4482,7 @@
           "type": {
            "$ref": "415"
           },
-          "value": "2024-11-15-preview"
+          "value": "2025-01-15-preview"
          }
         },
         {
@@ -4587,7 +4587,7 @@
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string"
         },
-        "Value": "2024-11-15-preview"
+        "Value": "2025-01-15-preview"
        },
        "Decorators": [],
        "SkipUrlEncoding": false
