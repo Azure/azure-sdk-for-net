@@ -7,12 +7,8 @@
     -->
     <PackageReference Include="Azure.Core" VersionOverride="1.0.0" />
     <PackageReference Include="CommandLineParser" />
-    <PackageReference Include="System.Collections.Immutable" />
-    <PackageReference Include="System.Reflection.Emit" />
-    <PackageReference Include="System.Reflection.Metadata" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Text.Encodings.Web" />
-    <PackageReference Include="System.Text.RegularExpressions" />
     <PackageReference Include="System.Threading.Channels" />
     <PackageReference Include="BenchmarkDotNet" />
     <PackageReference Include="BenchmarkDotNet.Diagnostics.Windows" />
