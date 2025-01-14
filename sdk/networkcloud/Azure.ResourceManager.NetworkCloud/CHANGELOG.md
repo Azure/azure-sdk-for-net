@@ -1,16 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
-
-## 1.1.0 (2025-01-02)
+## 1.1.0 (2025-01-31)
 
 - This is a stable SDK version based on the 2024-07-01 API.
 
