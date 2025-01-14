@@ -1,15 +1,15 @@
 # Release History
 
-## 1.1.0-beta.3 (Unreleased)
+## 1.1.0-beta.3 (2024-12-18-preview)
 
 ### Features Added
 
-- Exposed `JsonModelWriteCore` for model serialization procedure.
+- Replaces the GroupQuotaLimitRequest and SubscriptionQuotaAllocationRequest PUT paths with a PATCH operation in both GroupQuotaLimits and SubscriptionQuotaAllocations operations. This ensures no issues with checking for action completeness and is better aligned with the REST API design guidelines.
 
 ### Breaking Changes
 
 ### Bugs Fixed
-
+- Fixed an issue where the GroupQuotaLimits and SubscriptionQuotaAllocations operations were erroring out even though the action completed successfully.
 ### Other Changes
 
 ## 1.1.0-beta.2 (2027-07-23)
