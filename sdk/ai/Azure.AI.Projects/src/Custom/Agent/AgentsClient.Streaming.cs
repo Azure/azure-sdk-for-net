@@ -192,6 +192,32 @@ public partial class AgentsClient
         return new AsyncStreamingUpdateCollection(sendRequestAsync, cancellationToken);
     }
 
+    /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
+    /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>
+    /// <param name="toolOutputs"> The list of tool call outputs to provide as part of an output submission to an agent thread run. </param>
+    /// <param name="cancellationToken"> The cancellation token to use. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+    public virtual CollectionResult<StreamingUpdate> SubmitToolOutputsToRunStreaming(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
+    {
+        Argument.AssertNotNull(run, nameof(run));
+        return SubmitToolOutputsToRunStreaming(run.ThreadId, run.Id, toolOutputs, cancellationToken);
+    }
+
+    /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
+    /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>
+    /// <param name="toolOutputs"> The list of tool call outputs to provide as part of an output submission to an agent thread run. </param>
+    /// <param name="cancellationToken"> The cancellation token to use. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+    public virtual AsyncCollectionResult<StreamingUpdate> SubmitToolOutputsToRunStreamingAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
+    {
+        Argument.AssertNotNull(run, nameof(run));
+        return SubmitToolOutputsToRunStreamingAsync(run.ThreadId, run.Id, toolOutputs, cancellationToken);
+    }
+
     internal async Task<Response> CreateRunStreamingAsync(string threadId, RequestContent content, RequestContext context = null)
     {
         Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
