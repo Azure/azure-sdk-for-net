@@ -68,7 +68,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobContainerClient containerClient,
             bool createFailedCondition = false,
             TransferOptions options = default,
-            int size = Constants.KB)
+            int size = Constants.KB,
+            WaitUntil waitUntil = WaitUntil.Started)
         {
             await CreateTempDirectoryStructureAsync(directoryPath, size);
             BlobContainerClientTransferOptions transferOptions = new BlobContainerClientTransferOptions
@@ -85,7 +86,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     size: size);
             }
 
-            return await containerClient.StartUploadDirectoryAsync(directoryPath, transferOptions);
+            return await containerClient.UploadDirectoryAsync(waitUntil, directoryPath, transferOptions);
         }
 
         private async Task<TransferOperation> CreateStartUploadDirectoryAsync_WithDirectoryPrefix(
@@ -95,7 +96,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             int size = Constants.KB)
         {
             await CreateTempDirectoryStructureAsync(directoryPath, size);
-            return await containerClient.StartUploadDirectoryAsync(directoryPath, blobDirectoryPrefix);
+            return await containerClient.UploadDirectoryAsync(WaitUntil.Started, directoryPath, blobDirectoryPrefix);
         }
 
         [RecordedTest]
@@ -242,6 +243,34 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(TransferState.Completed, transferOperation.Status.State);
             Assert.AreEqual(true, transferOperation.Status.HasSkippedItems);
         }
+
+        [RecordedTest]
+        public async Task UploadDirectoryAsync_WaitUntil_Completed()
+        {
+            // Create a temp local directory
+            using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string directoryPath = disposingLocalDirectory.DirectoryPath;
+
+            // Create a temp blob container
+            await using var disposingContainer = await ClientBuilder.GetTestContainerAsync();
+            BlobContainerClient containerClient = disposingContainer.Container;
+
+            TransferOptions options = new();
+            TestEventsRaised testEventsRaised = new(options);
+
+            // Act
+            TransferOperation transferOperation = await CreateStartUploadDirectoryAsync_WithOptions(
+                directoryPath,
+                containerClient,
+                options: options,
+                waitUntil: WaitUntil.Completed);
+
+            // Assert
+            Assert.IsNotNull(transferOperation);
+            Assert.IsTrue(transferOperation.HasCompleted);
+            testEventsRaised.AssertUnexpectedFailureCheck();
+            await testEventsRaised.AssertContainerCompletedCheck(4);
+        }
         #endregion StartUploadDirectoryAsyncTests
 
         #region StartDownloadToDirectoryAsyncTests
@@ -271,7 +300,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             string directoryPath,
             BlobContainerClient containerClient,
             TransferOptions options = default,
-            int size = Constants.KB)
+            int size = Constants.KB,
+            WaitUntil waitUntil = WaitUntil.Started)
         {
             string sourceBlobPrefix = "sourceFolder";
             string sourceLocalFolderPath = CreateRandomDirectory(Path.GetTempPath(), sourceBlobPrefix);
@@ -282,7 +312,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 TransferOptions = options,
             };
 
-            return await containerClient.StartDownloadToDirectoryAsync(directoryPath, transferOptions);
+            return await containerClient.DownloadToDirectoryAsync(waitUntil, directoryPath, transferOptions);
         }
 
         private async Task<TransferOperation> CreateStartDownloadToDirectoryAsync_WithDirectoryPrefix(
@@ -296,7 +326,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await CreateBlobDirectoryTree(containerClient, sourceLocalFolderPath, sourceBlobPrefix, size);
             string blobDirectoryPrefix = string.Concat(sourceBlobPrefix, prefixFilter);
 
-            return await containerClient.StartDownloadToDirectoryAsync(directoryPath, blobDirectoryPrefix);
+            return await containerClient.DownloadToDirectoryAsync(WaitUntil.Started, directoryPath, blobDirectoryPrefix);
         }
 
         [RecordedTest]
@@ -440,6 +470,34 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(TransferState.Completed, transferOperation.Status.State);
             Assert.AreEqual(true, transferOperation.Status.HasSkippedItems);
             await testEventsRaised.AssertContainerCompletedWithSkippedCheck(1);
+        }
+
+        [RecordedTest]
+        public async Task DownloadToDirectoryAsync_WaitUntil_Ccompleted()
+        {
+            // Create a temp local directory
+            using DisposingLocalDirectory disposingLocalDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string directoryPath = disposingLocalDirectory.DirectoryPath;
+
+            // Create a temp blob container
+            await using var disposingContainer = await ClientBuilder.GetTestContainerAsync(publicAccessType: PublicAccessType.None);
+            BlobContainerClient containerClient = disposingContainer.Container;
+
+            TransferOptions options = new();
+            TestEventsRaised testEventsRaised = new(options);
+
+            // Act
+            TransferOperation transferOperation = await CreateStartDownloadToDirectoryAsync_WithOptions(
+                directoryPath,
+                containerClient,
+                options: options,
+                waitUntil: WaitUntil.Completed);
+
+            // Assert
+            Assert.NotNull(transferOperation);
+            Assert.IsTrue(transferOperation.HasCompleted);
+            testEventsRaised.AssertUnexpectedFailureCheck();
+            await testEventsRaised.AssertContainerCompletedCheck(4);
         }
         #endregion StartDownloadToDirectoryAsyncTests
     }

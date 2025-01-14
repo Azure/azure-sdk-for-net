@@ -7,8 +7,8 @@ namespace Azure.Storage.DataMovement.Blobs
 {
     /// <summary>
     /// Options applying to data transfer uploads and downloads using the <see cref="BlobContainerClient"/> extension methods
-    /// <see cref="BlobContainerClientExtensions.StartDownloadToDirectoryAsync(BlobContainerClient, string, BlobContainerClientTransferOptions)"/> and
-    /// <see cref="BlobContainerClientExtensions.StartUploadDirectoryAsync(BlobContainerClient, string, BlobContainerClientTransferOptions)"/>.
+    /// <see cref="BlobContainerClientExtensions.DownloadToDirectoryAsync(BlobContainerClient, WaitUntil, string, BlobContainerClientTransferOptions)"/> and
+    /// <see cref="BlobContainerClientExtensions.UploadDirectoryAsync(BlobContainerClient, WaitUntil, string, BlobContainerClientTransferOptions)"/>.
     /// </summary>
     public class BlobContainerClientTransferOptions
     {
