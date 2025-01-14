@@ -1,7 +1,7 @@
 # Migration Guide: From Microsoft.Azure.Storage.DataMovement to Azure.Storage.DataMovement
 
 This guide intends to assist customers in migrating from version 2 of the Azure Storage .NET Data Movement library to version 12.
-It will focus on side-by-side comparisons for similar operations between the v12 package, [`Azure.Storage.Blobs`](https://www.nuget.org/packages/Azure.Storage.Blobs) and v11 package, [`Microsoft.Azure.Storage.Blob`](https://www.nuget.org/packages/Microsoft.Azure.Storage.Blob/).
+It will focus on side-by-side comparisons for similar operations between the v12 package, [`Azure.Storage.DataMovement`](https://www.nuget.org/packages/Azure.Storage.DataMovement) and v2 package, [`Microsoft.Azure.Storage.DataMovement`](https://www.nuget.org/packages/Microsoft.Azure.Storage.DataMovement/).
 
 Familiarity with the legacy data movement client library is assumed. For those new to the Azure Storage Data Movement client library for .NET, please refer to the [Quickstart](TODO) for the v12 library rather than this guide.
 
@@ -17,7 +17,7 @@ Familiarity with the legacy data movement client library is assumed. For those n
 
 ## Migration benefits
 
-Version 12 of the Data Movemenet library inherits all the benefits of the 12 storage client libraries, detailed in the next section. In addition, the following are benefits of the new design:
+Version 12 of the Data Movemenet library inherits all the benefits of the version 12 storage client libraries, detailed in the next section. In addition, the following are benefits of the new design:
 
 TODO
 
@@ -41,7 +41,7 @@ Package names and the namespaces root for version 12 Azure client libraries foll
 
 In this case, the legacy package was installed with:
 ```
-dotnet add package Microsoft.Azure.Storage.Blob
+dotnet add package Microsoft.Azure.Storage.DataMovement
 ```
 
 While version 12 is now installed with:
