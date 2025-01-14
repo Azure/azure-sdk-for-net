@@ -46,45 +46,5 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_SnapshotsCreate()
-        {
-            // Generated from example definition: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/stable/2024-05-01/examples/ConfigurationStoresCreateSnapshot.json
-            // this example is just showing the usage of "Snapshots_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AppConfigurationSnapshotResource created on azure
-            // for more information of creating AppConfigurationSnapshotResource, please refer to the document of AppConfigurationSnapshotResource
-            string subscriptionId = "c80fb759-c965-4c6a-9110-9b2b2d038882";
-            string resourceGroupName = "myResourceGroup";
-            string configStoreName = "contoso";
-            string snapshotName = "mySnapshot";
-            ResourceIdentifier appConfigurationSnapshotResourceId = AppConfigurationSnapshotResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, configStoreName, snapshotName);
-            AppConfigurationSnapshotResource appConfigurationSnapshot = client.GetAppConfigurationSnapshotResource(appConfigurationSnapshotResourceId);
-
-            // invoke the operation
-            AppConfigurationSnapshotData data = new AppConfigurationSnapshotData
-            {
-                Filters = {new KeyValueFilter("app1/*")
-{
-Label = "Production",
-}},
-                RetentionPeriod = 3600L,
-            };
-            ArmOperation<AppConfigurationSnapshotResource> lro = await appConfigurationSnapshot.UpdateAsync(WaitUntil.Completed, data);
-            AppConfigurationSnapshotResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AppConfigurationSnapshotData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
     }
 }
