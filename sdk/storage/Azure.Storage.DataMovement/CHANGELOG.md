@@ -16,6 +16,11 @@
     - `DataTransferState` -> `TransferState`
     - `DataTransferStatus` -> `TransferStatus`
     - `DataTransferErrorMode` -> `TransferErrorMode`
+    - `StorageResourceCheckpointData` -> `StorageResourceCheckpointDetails`
+    - `StorageResource.GetDestinationCheckpointData` -> `StorageResource.GetDestinationCheckpointDetails`
+    - `StorageResource.GetSourceCheckpointData` -> `StorageResource.GetSourceCheckpointDetails`
+    - `TransferProperties.DestinationCheckpointData` -> `TransferProperties.DestinationCheckpointDetails`
+    - `TransferProperties.SourceCheckpointData` -> `TransferProperties.SourceCheckpointDetails`
 
 ### Bugs Fixed
 - Fixed bug where adding multiple transfers in parallel could cause a collision (`InvalidOperationException`) in the data transfers stored within the `TransferManager`.

@@ -11,7 +11,7 @@ using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Files.Shares
 {
-    internal class ShareFileDestinationCheckpointData : StorageResourceCheckpointDataInternal
+    internal class ShareFileDestinationCheckpointDetails : StorageResourceCheckpointDetailsInternal
     {
         private const char HeaderDelimiter = Constants.CommaChar;
         private const string RoundtripDateTimeFormat = "o";
@@ -92,7 +92,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public override int Length => CalculateLength();
 
-        public ShareFileDestinationCheckpointData(
+        public ShareFileDestinationCheckpointDetails(
             DataTransferProperty<string> contentType,
             DataTransferProperty<string[]> contentEncoding,
             DataTransferProperty<string[]> contentLanguage,
@@ -106,7 +106,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             DataTransferProperty<Metadata> fileMetadata,
             DataTransferProperty<Metadata> directoryMetadata)
         {
-            Version = DataMovementShareConstants.DestinationCheckpointData.SchemaVersion;
+            Version = DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion;
             CacheControl = cacheControl;
             PreserveCacheControl = cacheControl?.Preserve ?? true;
             CacheControlBytes = cacheControl?.Value != default ? Encoding.UTF8.GetBytes(cacheControl.Value) : Array.Empty<byte>();
@@ -157,7 +157,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
-            int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointData.VariableLengthStartIndex;
+            int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
             BinaryWriter writer = new(stream);
 
             // Version
@@ -235,7 +235,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
         }
 
-        internal static ShareFileDestinationCheckpointData Deserialize(Stream stream)
+        internal static ShareFileDestinationCheckpointDetails Deserialize(Stream stream)
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
@@ -243,7 +243,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             // Version
             int version = reader.ReadInt32();
-            if (version != DataMovementShareConstants.DestinationCheckpointData.SchemaVersion)
+            if (version != DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion)
             {
                 throw Storage.Errors.UnsupportedJobSchemaVersionHeader(version);
             }
@@ -373,7 +373,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         private int CalculateLength()
         {
             // Length is fixed size fields plus length of each variable length field
-            int length = DataMovementShareConstants.DestinationCheckpointData.VariableLengthStartIndex;
+            int length = DataMovementShareConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
             if (PreserveFileAttributes)
             {
                 length += DataMovementConstants.IntSizeInBytes;

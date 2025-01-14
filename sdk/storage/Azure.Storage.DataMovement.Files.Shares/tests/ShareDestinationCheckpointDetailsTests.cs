@@ -13,7 +13,7 @@ using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
-    public class ShareDestinationCheckpointDataTests
+    public class ShareDestinationCheckpointDetailsTests
     {
         private const string DefaultContentType = "text/plain";
         private readonly string[] DefaultContentEncoding = new string[] { "gzip" };
@@ -36,8 +36,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         private readonly DateTimeOffset? DefaultFileLastWrittenOn = new DateTimeOffset(2024, 11, 24, 11, 23, 45, TimeSpan.FromHours(10));
         private readonly DateTimeOffset? DefaultFileChangedOn = new DateTimeOffset(2023, 12, 25, 12, 34, 56, TimeSpan.FromMinutes(11));
 
-        private ShareFileDestinationCheckpointData CreateDefaultValues()
-        => new ShareFileDestinationCheckpointData(
+        private ShareFileDestinationCheckpointDetails CreateDefaultValues()
+        => new ShareFileDestinationCheckpointDetails(
                 default,
                 default,
                 default,
@@ -51,8 +51,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 default,
                 default);
 
-        private ShareFileDestinationCheckpointData CreateNoPreserveValues()
-        => new ShareFileDestinationCheckpointData(
+        private ShareFileDestinationCheckpointDetails CreateNoPreserveValues()
+        => new ShareFileDestinationCheckpointDetails(
                 new(false),
                 new(false),
                 new(false),
@@ -66,8 +66,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new(false),
                 new(false));
 
-        private ShareFileDestinationCheckpointData CreatePreserveValues()
-        => new ShareFileDestinationCheckpointData(
+        private ShareFileDestinationCheckpointDetails CreatePreserveValues()
+        => new ShareFileDestinationCheckpointDetails(
                 new(true),
                 new(true),
                 new(true),
@@ -81,8 +81,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new(true),
                 new(true));
 
-        private ShareFileDestinationCheckpointData CreateSetSampleValues()
-        => new ShareFileDestinationCheckpointData(
+        private ShareFileDestinationCheckpointDetails CreateSetSampleValues()
+        => new ShareFileDestinationCheckpointDetails(
                 contentType: new(DefaultContentType),
                 contentEncoding: new(DefaultContentEncoding),
                 contentLanguage: new(DefaultContentLanguage),
@@ -96,7 +96,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 fileMetadata: new(DefaultFileMetadata),
                 directoryMetadata: new(DefaultDirectoryMetadata));
 
-        private void AssertEquals(ShareFileDestinationCheckpointData left, ShareFileDestinationCheckpointData right)
+        private void AssertEquals(ShareFileDestinationCheckpointDetails left, ShareFileDestinationCheckpointDetails right)
         {
             Assert.That(left.Version, Is.EqualTo(right.Version));
 
@@ -184,8 +184,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             using MemoryStream stream = new();
             using BinaryWriter writer = new(stream);
 
-            int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointData.VariableLengthStartIndex;
-            writer.Write(DataMovementShareConstants.DestinationCheckpointData.SchemaVersion);
+            int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
+            writer.Write(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion);
             writer.WritePreservablePropertyOffset(true, DataMovementConstants.IntSizeInBytes, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
@@ -209,8 +209,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             using MemoryStream stream = new();
             using BinaryWriter writer = new(stream);
 
-            int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointData.VariableLengthStartIndex;
-            writer.Write(DataMovementShareConstants.DestinationCheckpointData.SchemaVersion);
+            int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
+            writer.Write(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion);
             writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
             writer.Write(false);
             writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
@@ -247,8 +247,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             byte[] fileMetadata = Encoding.UTF8.GetBytes(DefaultFileMetadata.DictionaryToString());
             byte[] directoryMetadata = Encoding.UTF8.GetBytes(DefaultDirectoryMetadata.DictionaryToString());
 
-            int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointData.VariableLengthStartIndex;
-            writer.Write(DataMovementShareConstants.DestinationCheckpointData.SchemaVersion);
+            int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
+            writer.Write(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion);
             writer.WritePreservablePropertyOffset(false, DataMovementConstants.IntSizeInBytes, ref currentVariableLengthIndex);
             writer.Write(preserveFilePermission);
             writer.WritePreservablePropertyOffset(false, fileCreatedOn.Length, ref currentVariableLengthIndex);
@@ -279,9 +279,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         [Test]
         public void Ctor()
         {
-            ShareFileDestinationCheckpointData data = CreateDefaultValues();
+            ShareFileDestinationCheckpointDetails data = CreateDefaultValues();
 
-            Assert.AreEqual(DataMovementShareConstants.DestinationCheckpointData.SchemaVersion, data.Version);
+            Assert.AreEqual(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion, data.Version);
             Assert.IsTrue(data.PreserveFileAttributes);
             Assert.IsNull(data.FileAttributes);
             Assert.IsFalse(data.PreserveFilePermission);
@@ -310,9 +310,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         [Test]
         public void Ctor_SetValues()
         {
-            ShareFileDestinationCheckpointData data = CreateSetSampleValues();
+            ShareFileDestinationCheckpointDetails data = CreateSetSampleValues();
 
-            Assert.That(data.Version, Is.EqualTo(DataMovementShareConstants.DestinationCheckpointData.SchemaVersion));
+            Assert.That(data.Version, Is.EqualTo(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion));
             Assert.IsFalse(data.PreserveFileAttributes);
             Assert.That(data.FileAttributes.Value, Is.EqualTo(DefaultFileAttributes));
             Assert.IsFalse(data.PreserveFilePermission);
@@ -341,9 +341,9 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         [Test]
         public void Ctor_Preserve()
         {
-            ShareFileDestinationCheckpointData data = CreatePreserveValues();
+            ShareFileDestinationCheckpointDetails data = CreatePreserveValues();
 
-            Assert.AreEqual(DataMovementShareConstants.DestinationCheckpointData.SchemaVersion, data.Version);
+            Assert.AreEqual(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion, data.Version);
             Assert.IsTrue(data.PreserveFileAttributes);
             Assert.IsTrue(data.FileAttributes.Preserve);
             Assert.IsNull(data.FileAttributes.Value);
@@ -385,7 +385,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         {
             byte[] expected = CreateSerializedSetValues();
 
-            ShareFileDestinationCheckpointData data = CreateSetSampleValues();
+            ShareFileDestinationCheckpointDetails data = CreateSetSampleValues();
             byte[] actual;
             using (MemoryStream stream = new())
             {
@@ -400,11 +400,11 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         public void Deserialize()
         {
             byte[] serialized = CreateSerializedSetValues();
-            ShareFileDestinationCheckpointData deserialized;
+            ShareFileDestinationCheckpointDetails deserialized;
 
             using (MemoryStream stream = new(serialized))
             {
-                deserialized = ShareFileDestinationCheckpointData.Deserialize(stream);
+                deserialized = ShareFileDestinationCheckpointDetails.Deserialize(stream);
             }
 
             AssertEquals(deserialized, CreateSetSampleValues());
@@ -414,11 +414,11 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         public void Deserialize_Preserve()
         {
             byte[] serialized = CreateSerializedPreserve();
-            ShareFileDestinationCheckpointData deserialized;
+            ShareFileDestinationCheckpointDetails deserialized;
 
             using (MemoryStream stream = new(serialized))
             {
-                deserialized = ShareFileDestinationCheckpointData.Deserialize(stream);
+                deserialized = ShareFileDestinationCheckpointDetails.Deserialize(stream);
             }
 
             AssertEquals(deserialized, CreatePreserveValues());
@@ -428,11 +428,11 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         public void Deserialize_NoPreserve()
         {
             byte[] serialized = CreateSerializedNoPreserve();
-            ShareFileDestinationCheckpointData deserialized;
+            ShareFileDestinationCheckpointDetails deserialized;
 
             using (MemoryStream stream = new(serialized))
             {
-                deserialized = ShareFileDestinationCheckpointData.Deserialize(stream);
+                deserialized = ShareFileDestinationCheckpointDetails.Deserialize(stream);
             }
 
             AssertEquals(deserialized, CreateNoPreserveValues());
@@ -442,25 +442,25 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         public void Deserialize_IncorrectSchemaVersion()
         {
             int incorrectSchemaVersion = 1;
-            ShareFileDestinationCheckpointData data = CreatePreserveValues();
+            ShareFileDestinationCheckpointDetails data = CreatePreserveValues();
             data.Version = incorrectSchemaVersion;
 
-            using MemoryStream dataStream = new MemoryStream(DataMovementShareConstants.DestinationCheckpointData.VariableLengthStartIndex);
+            using MemoryStream dataStream = new MemoryStream(DataMovementShareConstants.DestinationCheckpointDetails.VariableLengthStartIndex);
             data.SerializeInternal(dataStream);
             dataStream.Position = 0;
             TestHelper.AssertExpectedException(
-                () => ShareFileDestinationCheckpointData.Deserialize(dataStream),
+                () => ShareFileDestinationCheckpointDetails.Deserialize(dataStream),
                 new ArgumentException($"The checkpoint file schema version {incorrectSchemaVersion} is not supported by this version of the SDK."));
         }
 
         [Test]
         public void RoundTrip()
         {
-            ShareFileDestinationCheckpointData original = CreateSetSampleValues();
+            ShareFileDestinationCheckpointDetails original = CreateSetSampleValues();
             using MemoryStream serialized = new();
             original.SerializeInternal(serialized);
             serialized.Position = 0;
-            ShareFileDestinationCheckpointData deserialized = ShareFileDestinationCheckpointData.Deserialize(serialized);
+            ShareFileDestinationCheckpointDetails deserialized = ShareFileDestinationCheckpointDetails.Deserialize(serialized);
 
             AssertEquals(original, deserialized);
         }

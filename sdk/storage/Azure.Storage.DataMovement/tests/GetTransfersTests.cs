@@ -323,8 +323,8 @@ namespace Azure.Storage.DataMovement.Tests
                 sourceProviderId: properties.SourceProviderId,
                 destinationProviderId: properties.DestinationProviderId,
                 isContainer: properties.IsContainer,
-                sourceCheckpointData: MockResourceCheckpointData.DefaultInstance,
-                destinationCheckpointData: MockResourceCheckpointData.DefaultInstance);
+                sourceCheckpointDetails: MockResourceCheckpointDetails.DefaultInstance,
+                destinationCheckpointDetails: MockResourceCheckpointDetails.DefaultInstance);
 
             if (properties.IsContainer)
             {
@@ -377,8 +377,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(expected.DestinationUri.AbsoluteUri.TrimEnd('\\', '/'), actual.DestinationUri.AbsoluteUri.TrimEnd('\\', '/'));
             Assert.AreEqual(expected.IsContainer, actual.IsContainer);
 
-            CollectionAssert.AreEqual(MockResourceCheckpointData.DefaultInstance.Bytes, actual.SourceCheckpointData);
-            CollectionAssert.AreEqual(MockResourceCheckpointData.DefaultInstance.Bytes, actual.DestinationCheckpointData);
+            CollectionAssert.AreEqual(MockResourceCheckpointDetails.DefaultInstance.Bytes, actual.SourceCheckpointDetails);
+            CollectionAssert.AreEqual(MockResourceCheckpointDetails.DefaultInstance.Bytes, actual.DestinationCheckpointDetails);
         }
 
         private string GetTypeIdForProvider(string providerId)
