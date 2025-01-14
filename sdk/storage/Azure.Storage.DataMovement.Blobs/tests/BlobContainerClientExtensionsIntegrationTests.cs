@@ -69,7 +69,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             bool createFailedCondition = false,
             TransferOptions options = default,
             int size = Constants.KB,
-            WaitUntil waitUntil = WaitUntil.Started)
+            WaitUntil waitUntil = WaitUntil.Started,
+            CancellationToken cancellationToken = default)
         {
             await CreateTempDirectoryStructureAsync(directoryPath, size);
             BlobContainerClientTransferOptions transferOptions = new BlobContainerClientTransferOptions
@@ -86,7 +87,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     size: size);
             }
 
-            return await containerClient.UploadDirectoryAsync(waitUntil, directoryPath, transferOptions);
+            return await containerClient.UploadDirectoryAsync(waitUntil, directoryPath, transferOptions, cancellationToken);
         }
 
         private async Task<TransferOperation> CreateStartUploadDirectoryAsync_WithDirectoryPrefix(
@@ -259,11 +260,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             TestEventsRaised testEventsRaised = new(options);
 
             // Act
+            CancellationTokenSource cancellationTokenSource = new(TimeSpan.FromSeconds(30));
             TransferOperation transferOperation = await CreateStartUploadDirectoryAsync_WithOptions(
                 directoryPath,
                 containerClient,
                 options: options,
-                waitUntil: WaitUntil.Completed);
+                waitUntil: WaitUntil.Completed,
+                cancellationToken: cancellationTokenSource.Token);
 
             // Assert
             Assert.IsNotNull(transferOperation);
@@ -301,7 +304,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             BlobContainerClient containerClient,
             TransferOptions options = default,
             int size = Constants.KB,
-            WaitUntil waitUntil = WaitUntil.Started)
+            WaitUntil waitUntil = WaitUntil.Started,
+            CancellationToken cancellationToken = default)
         {
             string sourceBlobPrefix = "sourceFolder";
             string sourceLocalFolderPath = CreateRandomDirectory(Path.GetTempPath(), sourceBlobPrefix);
@@ -312,7 +316,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 TransferOptions = options,
             };
 
-            return await containerClient.DownloadToDirectoryAsync(waitUntil, directoryPath, transferOptions);
+            return await containerClient.DownloadToDirectoryAsync(waitUntil, directoryPath, transferOptions, cancellationToken);
         }
 
         private async Task<TransferOperation> CreateStartDownloadToDirectoryAsync_WithDirectoryPrefix(
@@ -487,11 +491,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             TestEventsRaised testEventsRaised = new(options);
 
             // Act
+            CancellationTokenSource cancellationTokenSource = new(TimeSpan.FromSeconds(30));
             TransferOperation transferOperation = await CreateStartDownloadToDirectoryAsync_WithOptions(
                 directoryPath,
                 containerClient,
                 options: options,
-                waitUntil: WaitUntil.Completed);
+                waitUntil: WaitUntil.Completed,
+                cancellationToken: cancellationTokenSource.Token);
 
             // Assert
             Assert.NotNull(transferOperation);

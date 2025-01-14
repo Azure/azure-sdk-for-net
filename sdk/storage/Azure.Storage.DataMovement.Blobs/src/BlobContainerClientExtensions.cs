@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Storage.DataMovement;
 using Azure.Storage.DataMovement.Blobs;
@@ -24,6 +25,10 @@ namespace Azure.Storage.Blobs
         /// <param name="waitUntil">Indicates whether this invocation should wait until the transfer is complete to return or return immediately.</param>
         /// <param name="localDirectoryPath">The full path to the local directory to be uploaded.</param>
         /// <param name="blobDirectoryPrefix">Optionally specifies the directory prefix to be prepended to all uploaded files.</param>
+        /// <param name="cancellationToken">
+        /// Cancels starting the operation or if <paramref name="waitUntil"/> is set to <see cref="WaitUntil.Completed"/>,
+        /// cancels waiting for the operation. Cancelling this token does not cancel the operation itself.
+        /// </param>
         /// <returns>
         /// A <see cref="TransferOperation"/> instance which contains information about the transfer and its status.
         /// </returns>
@@ -39,7 +44,8 @@ namespace Azure.Storage.Blobs
             this BlobContainerClient client,
             WaitUntil waitUntil,
             string localDirectoryPath,
-            string blobDirectoryPrefix = default)
+            string blobDirectoryPrefix = default,
+            CancellationToken cancellationToken = default)
             => UploadDirectoryAsync(
                 client,
                 waitUntil,
@@ -50,7 +56,8 @@ namespace Azure.Storage.Blobs
                     {
                         BlobDirectoryPrefix = blobDirectoryPrefix,
                     }
-                });
+                },
+                cancellationToken);
 
         /// <summary>
         /// Uploads the entire contents of local directory to the blob container.
@@ -59,6 +66,10 @@ namespace Azure.Storage.Blobs
         /// <param name="waitUntil">Indicates whether this invocation should wait until the transfer is complete to return or return immediately.</param>
         /// <param name="localDirectoryPath">The full path to the local directory to be uploaded.</param>
         /// <param name="options">Options which control the directory upload.</param>
+        /// <param name="cancellationToken">
+        /// Cancels starting the operation or if <paramref name="waitUntil"/> is set to <see cref="WaitUntil.Completed"/>,
+        /// cancels waiting for the operation. Cancelling this token does not cancel the operation itself.
+        /// </param>
         /// <returns>
         /// A <see cref="TransferOperation"/> instance which contains information about the transfer and its status.
         /// </returns>
@@ -70,7 +81,12 @@ namespace Azure.Storage.Blobs
         /// In either case, the caller must check the status of the transfer using the returned <see cref="TransferOperation"/> instance to determine if the transfer
         /// completed successfully or not. This method will not throw an exception if the transfer fails, but the <see cref="TransferOperation.Status"/> will indicate a failure.
         /// </remarks>
-        public static async Task<TransferOperation> UploadDirectoryAsync(this BlobContainerClient client, WaitUntil waitUntil, string localDirectoryPath, BlobContainerClientTransferOptions options)
+        public static async Task<TransferOperation> UploadDirectoryAsync(
+            this BlobContainerClient client,
+            WaitUntil waitUntil,
+            string localDirectoryPath,
+            BlobContainerClientTransferOptions options,
+            CancellationToken cancellationToken = default)
         {
             StorageResource localDirectory = s_filesProvider.Value.FromDirectory(localDirectoryPath);
             StorageResource blobDirectory = s_blobsProvider.Value.FromClient(client, options?.BlobContainerOptions);
@@ -78,10 +94,12 @@ namespace Azure.Storage.Blobs
             TransferOperation transfer = await s_defaultTransferManager.Value.StartTransferAsync(
                 localDirectory,
                 blobDirectory,
-                options?.TransferOptions).ConfigureAwait(false);
+                options?.TransferOptions,
+                cancellationToken).ConfigureAwait(false);
+
             if (waitUntil == WaitUntil.Completed)
             {
-                await transfer.WaitForCompletionAsync().ConfigureAwait(false);
+                await transfer.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
 
             return transfer;
@@ -94,6 +112,10 @@ namespace Azure.Storage.Blobs
         /// <param name="waitUntil">Indicates whether this invocation should wait until the transfer is complete to return or return immediately.</param>
         /// <param name="localDirectoryPath">The full path to the local directory where files will be dowloaded.</param>
         /// <param name="blobDirectoryPrefix">Optionally restricts the downloaded content to blobs with the specified directory prefix.</param>
+        /// <param name="cancellationToken">
+        /// Cancels starting the operation or if <paramref name="waitUntil"/> is set to <see cref="WaitUntil.Completed"/>,
+        /// cancels waiting for the operation. Cancelling this token does not cancel the operation itself.
+        /// </param>
         /// <returns>
         /// A <see cref="TransferOperation"/> instance which contains information about the transfer and its status.
         /// </returns>
@@ -109,7 +131,8 @@ namespace Azure.Storage.Blobs
             this BlobContainerClient client,
             WaitUntil waitUntil,
             string localDirectoryPath,
-            string blobDirectoryPrefix = default)
+            string blobDirectoryPrefix = default,
+            CancellationToken cancellationToken = default)
             => DownloadToDirectoryAsync(
                 client,
                 waitUntil,
@@ -120,7 +143,8 @@ namespace Azure.Storage.Blobs
                     {
                         BlobDirectoryPrefix = blobDirectoryPrefix
                     },
-                });
+                },
+                cancellationToken);
 
         /// <summary>
         /// Downloads the contents of a blob container.
@@ -129,6 +153,10 @@ namespace Azure.Storage.Blobs
         /// <param name="waitUntil">Indicates whether this invocation should wait until the transfer is complete to return or return immediately.</param>
         /// <param name="localDirectoryPath">The full path to the local directory where files will be dowloaded.</param>
         /// <param name="options">Options which control the container download.</param>
+        /// <param name="cancellationToken">
+        /// Cancels starting the operation or if <paramref name="waitUntil"/> is set to <see cref="WaitUntil.Completed"/>,
+        /// cancels waiting for the operation. Cancelling this token does not cancel the operation itself.
+        /// </param>
         /// <returns>
         /// A <see cref="TransferOperation"/> instance which contains information about the transfer and its status.
         /// </returns>
@@ -140,7 +168,12 @@ namespace Azure.Storage.Blobs
         /// In either case, the caller must check the status of the transfer using the returned <see cref="TransferOperation"/> instance to determine if the transfer
         /// completed successfully or not. This method will not throw an exception if the transfer fails, but the <see cref="TransferOperation.Status"/> will indicate a failure.
         /// </remarks>
-        public static async Task<TransferOperation> DownloadToDirectoryAsync(this BlobContainerClient client, WaitUntil waitUntil, string localDirectoryPath, BlobContainerClientTransferOptions options)
+        public static async Task<TransferOperation> DownloadToDirectoryAsync(
+            this BlobContainerClient client,
+            WaitUntil waitUntil,
+            string localDirectoryPath,
+            BlobContainerClientTransferOptions options,
+            CancellationToken cancellationToken = default)
         {
             StorageResource localDirectory = s_filesProvider.Value.FromDirectory(localDirectoryPath);
             StorageResource blobDirectory = s_blobsProvider.Value.FromClient(client, options?.BlobContainerOptions);
@@ -148,10 +181,12 @@ namespace Azure.Storage.Blobs
             TransferOperation transfer = await s_defaultTransferManager.Value.StartTransferAsync(
                 blobDirectory,
                 localDirectory,
-                options?.TransferOptions).ConfigureAwait(false);
+                options?.TransferOptions,
+                cancellationToken).ConfigureAwait(false);
+
             if (waitUntil == WaitUntil.Completed)
             {
-                await transfer.WaitForCompletionAsync().ConfigureAwait(false);
+                await transfer.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
             }
 
             return transfer;
