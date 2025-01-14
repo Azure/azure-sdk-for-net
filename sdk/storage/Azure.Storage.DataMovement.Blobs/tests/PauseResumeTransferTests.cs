@@ -244,7 +244,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
@@ -298,7 +298,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
@@ -368,7 +368,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
@@ -428,7 +428,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
@@ -508,7 +508,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
@@ -582,7 +582,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobServiceClient service = GetServiceClient_OAuth();
             await using DisposingBlobContainer blobContainer = await GetTestContainerAsync(service);
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
@@ -620,6 +620,7 @@ namespace Azure.Storage.DataMovement.Tests
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             await transferManager.PauseTransferIfRunningAsync(transfer.Id, cancellationTokenSource.Token);
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
+            await Task.Delay(150);
 
             // Act - Resume Job
             TransferOperation resumeTransfer = await transferManager.ResumeTransferAsync(transfer.Id);
@@ -828,7 +829,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
@@ -880,7 +881,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
@@ -932,7 +933,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
@@ -990,7 +991,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
@@ -1078,7 +1079,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
@@ -1172,7 +1173,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
