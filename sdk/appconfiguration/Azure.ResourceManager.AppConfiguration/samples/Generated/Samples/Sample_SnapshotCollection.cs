@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
             // get the collection of this AppConfigurationSnapshotResource
-            SnapshotCollection collection = appConfigurationStore.GetSnapshots();
+            AppConfigurationSnapshotCollection collection = appConfigurationStore.GetAppConfigurationSnapshots();
 
             // invoke the operation
             string snapshotName = "mySnapshot";
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SnapshotData resourceData = result.Data;
+            AppConfigurationSnapshotData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
             // get the collection of this AppConfigurationSnapshotResource
-            SnapshotCollection collection = appConfigurationStore.GetSnapshots();
+            AppConfigurationSnapshotCollection collection = appConfigurationStore.GetAppConfigurationSnapshots();
 
             // invoke the operation
             string snapshotName = "mySnapshot";
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
             // get the collection of this AppConfigurationSnapshotResource
-            SnapshotCollection collection = appConfigurationStore.GetSnapshots();
+            AppConfigurationSnapshotCollection collection = appConfigurationStore.GetAppConfigurationSnapshots();
 
             // invoke the operation
             string snapshotName = "mySnapshot";
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                SnapshotData resourceData = result.Data;
+                AppConfigurationSnapshotData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -146,11 +146,11 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             AppConfigurationStoreResource appConfigurationStore = client.GetAppConfigurationStoreResource(appConfigurationStoreResourceId);
 
             // get the collection of this AppConfigurationSnapshotResource
-            SnapshotCollection collection = appConfigurationStore.GetSnapshots();
+            AppConfigurationSnapshotCollection collection = appConfigurationStore.GetAppConfigurationSnapshots();
 
             // invoke the operation
             string snapshotName = "mySnapshot";
-            SnapshotData data = new SnapshotData()
+            AppConfigurationSnapshotData data = new AppConfigurationSnapshotData()
             {
                 Filters =
 {
@@ -166,7 +166,7 @@ Label = "Production",
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            SnapshotData resourceData = result.Data;
+            AppConfigurationSnapshotData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
