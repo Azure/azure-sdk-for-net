@@ -456,9 +456,9 @@ namespace Azure.AI.Inference.Tests
             ChatMessageImageContentItem imageContentItem = imageSourceKind switch
             {
                 ImageTestSourceKind.UsingInternetLocation => new(GetTestImageInternetUri(), ChatMessageImageDetailLevel.Low),
-                ImageTestSourceKind.UsingStream => new(GetTestImageStream("image/jpg"), "image/jpg", ChatMessageImageDetailLevel.Low),
-                ImageTestSourceKind.UsingBinaryData => new(GetTestImageData("image/jpg"), "image/jpg", ChatMessageImageDetailLevel.Low),
-                ImageTestSourceKind.UsingFilePath => new(TestEnvironment.TestImageJpgInputPath, "image/jpg", ChatMessageImageDetailLevel.Low),
+                ImageTestSourceKind.UsingStream => new(GetTestImageStream("image/png"), "image/png", ChatMessageImageDetailLevel.Low),
+                ImageTestSourceKind.UsingBinaryData => new(GetTestImageData("image/png"), "image/png", ChatMessageImageDetailLevel.Low),
+                ImageTestSourceKind.UsingFilePath => new(TestEnvironment.TestImagePngInputPath, "image/png", ChatMessageImageDetailLevel.Low),
                 _ => throw new ArgumentException(nameof(imageSourceKind)),
             };
 
@@ -980,7 +980,7 @@ namespace Azure.AI.Inference.Tests
             }
             return File.OpenRead(mimeType switch
             {
-                "image/jpg" => TestEnvironment.TestImageJpgInputPath,
+                "image/png" => TestEnvironment.TestImagePngInputPath,
                 _ => throw new ArgumentException(nameof(mimeType)),
             });
         }

@@ -58,19 +58,6 @@ namespace Azure.AI.Inference
             return new ChatCompletionsToolDefinition(type, function, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.FunctionDefinition"/>. </summary>
-        /// <param name="name"> The name of the function to be called. </param>
-        /// <param name="description">
-        /// A description of what the function does. The model will use this description when selecting the function and
-        /// interpreting its parameters.
-        /// </param>
-        /// <param name="parameters"> The parameters the function accepts, described as a JSON Schema object. </param>
-        /// <returns> A new <see cref="Inference.FunctionDefinition"/> instance for mocking. </returns>
-        public static FunctionDefinition FunctionDefinition(string name = null, string description = null, BinaryData parameters = null)
-        {
-            return new FunctionDefinition(name, description, parameters, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletionsNamedToolChoice"/>. </summary>
         /// <param name="type"> The type of the tool. Currently, only `function` is supported. </param>
         /// <param name="function"> The function that should be called. </param>
@@ -160,6 +147,18 @@ namespace Azure.AI.Inference
         public static EmbeddingsUsage EmbeddingsUsage(int promptTokens = default, int totalTokens = default)
         {
             return new EmbeddingsUsage(promptTokens, totalTokens, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Inference.ImageEmbeddingInput"/>. </summary>
+        /// <param name="image"> The input image encoded in base64 string as a data URL. Example: `data:image/{format};base64,{data}`. </param>
+        /// <param name="text">
+        /// Optional. The text input to feed into the model (like DINO, CLIP).
+        /// Returns a 422 error if the model doesn't support the value or parameter.
+        /// </param>
+        /// <returns> A new <see cref="Inference.ImageEmbeddingInput"/> instance for mocking. </returns>
+        public static ImageEmbeddingInput ImageEmbeddingInput(string image = null, string text = null)
+        {
+            return new ImageEmbeddingInput(image, text, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Inference.StreamingChatCompletionsUpdate"/>. </summary>
