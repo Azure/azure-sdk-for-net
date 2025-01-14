@@ -111,12 +111,12 @@ namespace Azure.Storage.DataMovement.Tests
         protected string GetNewObjectName()
             => _generatedResourceNamePrefix + ClientBuilder.Recording.Random.NewGuid();
 
-        private async Task<DataTransfer> CreateStartTransfer(
+        private async Task<TransferOperation> CreateStartTransfer(
             TContainerClient containerClient,
             string localDirectoryPath,
             int concurrency,
             bool createFailedCondition = false,
-            DataTransferOptions options = default,
+            TransferOptions options = default,
             int size = DataMovementTestConstants.KB)
         {
             // Arrange
@@ -164,9 +164,9 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             // Create transfer to do a AwaitCompletion
-            DataTransferOptions options = new DataTransferOptions();
+            TransferOptions options = new TransferOptions();
             TestEventsRaised failureTransferHolder = new TestEventsRaised(options);
-            DataTransfer transfer = await CreateStartTransfer(
+            TransferOperation transfer = await CreateStartTransfer(
                 containerClient: test.Container,
                 localDirectoryPath: testDirectory.DirectoryPath,
                 concurrency: 1,
@@ -183,7 +183,7 @@ namespace Azure.Storage.DataMovement.Tests
             failureTransferHolder.AssertUnexpectedFailureCheck();
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
         }
 
         [RecordedTest]
@@ -193,14 +193,14 @@ namespace Azure.Storage.DataMovement.Tests
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
-            DataTransferOptions options = new DataTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreationPreference = StorageResourceCreationPreference.FailIfExists
             };
             TestEventsRaised testEventRaised = new TestEventsRaised(options);
 
             // Create transfer to do a AwaitCompletion
-            DataTransfer transfer = await CreateStartTransfer(
+            TransferOperation transfer = await CreateStartTransfer(
                 containerClient: test.Container,
                 localDirectoryPath: testDirectory.DirectoryPath,
                 concurrency: 1,
@@ -217,8 +217,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
-            Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.AreEqual(true, transfer.Status.HasFailedItems);
             await testEventRaised.AssertSingleFailedCheck(1);
             Assert.AreEqual(1, testEventRaised.FailedEvents.Count);
             Assert.IsTrue(testEventRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
@@ -232,14 +232,14 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
 
             // Create transfer options with Skipping available
-            DataTransferOptions options = new DataTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreationPreference = StorageResourceCreationPreference.SkipIfExists
             };
             TestEventsRaised testEventRaised = new TestEventsRaised(options);
 
             // Create transfer to do a AwaitCompletion
-            DataTransfer transfer = await CreateStartTransfer(
+            TransferOperation transfer = await CreateStartTransfer(
                 containerClient: test.Container,
                 localDirectoryPath: testDirectory.DirectoryPath,
                 concurrency: 1,
@@ -256,115 +256,9 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
-            Assert.AreEqual(true, transfer.TransferStatus.HasSkippedItems);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.AreEqual(true, transfer.Status.HasSkippedItems);
             await testEventRaised.AssertSingleSkippedCheck();
-        }
-
-        [RecordedTest]
-        public async Task StartTransfer_EnsureCompleted()
-        {
-            // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
-
-            // Create transfer to do a EnsureCompleted
-            DataTransferOptions options = new DataTransferOptions()
-            {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists
-            };
-            TestEventsRaised testEventRaised = new TestEventsRaised(options);
-
-            // Create transfer to do a AwaitCompletion
-            DataTransfer transfer = await CreateStartTransfer(
-                containerClient: test.Container,
-                localDirectoryPath: testDirectory.DirectoryPath,
-                concurrency: 1,
-                options: options);
-
-            // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
-
-            // Assert
-            testEventRaised.AssertUnexpectedFailureCheck();
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
-        }
-
-        [RecordedTest]
-        public async Task StartTransfer_EnsureCompleted_Failed()
-        {
-            // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
-
-            DataTransferOptions options = new DataTransferOptions()
-            {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists
-            };
-            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-
-            // Create transfer to do a AwaitCompletion
-            DataTransfer transfer = await CreateStartTransfer(
-                containerClient: test.Container,
-                localDirectoryPath: testDirectory.DirectoryPath,
-                concurrency: 1,
-                createFailedCondition: true,
-                options: options);
-
-            // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            TestTransferWithTimeout.WaitForCompletion(
-                transfer,
-                testEventsRaised,
-                cancellationTokenSource.Token);
-
-            // Assert
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
-            Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
-            await testEventsRaised.AssertSingleFailedCheck(1);
-            Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
-        }
-
-        [RecordedTest]
-        public async Task StartTransfer_EnsureCompleted_Skipped()
-        {
-            // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
-
-            // Create transfer options with Skipping available
-            DataTransferOptions options = new DataTransferOptions()
-            {
-                CreationPreference = StorageResourceCreationPreference.SkipIfExists
-            };
-            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-
-            // Create transfer to do a EnsureCompleted
-            DataTransfer transfer = await CreateStartTransfer(
-                containerClient: test.Container,
-                localDirectoryPath: testDirectory.DirectoryPath,
-                concurrency: 1,
-                createFailedCondition: true,
-                options: options);
-
-            // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            TestTransferWithTimeout.WaitForCompletion(
-                transfer,
-                testEventsRaised,
-                cancellationTokenSource.Token);
-
-            // Assert
-            await testEventsRaised.AssertSingleSkippedCheck();
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
-            Assert.AreEqual(true, transfer.TransferStatus.HasSkippedItems);
         }
 
         internal class VerifyDownloadObjectContentInfo
@@ -372,7 +266,7 @@ namespace Azure.Storage.DataMovement.Tests
             public readonly TObjectClient SourceObjectClient;
             public readonly string DestinationLocalPath;
             public TestEventsRaised EventsRaised;
-            public DataTransfer DataTransfer;
+            public TransferOperation TransferOperation;
             public bool CompletedStatus;
 
             public VerifyDownloadObjectContentInfo(
@@ -385,7 +279,7 @@ namespace Azure.Storage.DataMovement.Tests
                 DestinationLocalPath = destinationFile;
                 EventsRaised = eventsRaised;
                 CompletedStatus = completed;
-                DataTransfer = default;
+                TransferOperation = default;
             }
         };
 
@@ -407,7 +301,7 @@ namespace Azure.Storage.DataMovement.Tests
             int objectCount = 1,
             TransferManagerOptions transferManagerOptions = default,
             List<string> objectNames = default,
-            List<DataTransferOptions> options = default)
+            List<TransferOptions> options = default)
         {
             using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
             // Populate objectNames list for number of objects to be created
@@ -430,7 +324,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure
+                ErrorHandling = TransferErrorMode.ContinueOnFailure
             };
 
             List<VerifyDownloadObjectContentInfo> downloadedObjectInfo = new List<VerifyDownloadObjectContentInfo>(objectCount);
@@ -471,28 +365,28 @@ namespace Azure.Storage.DataMovement.Tests
                 StorageResource destinationResource = files.FromFile(downloadedObjectInfo[i].DestinationLocalPath);
 
                 // Act
-                DataTransfer transfer = await transferManager.StartTransferAsync(
+                TransferOperation transfer = await transferManager.StartTransferAsync(
                     sourceResource,
                     destinationResource,
                     options[i]).ConfigureAwait(false);
 
-                downloadedObjectInfo[i].DataTransfer = transfer;
+                downloadedObjectInfo[i].TransferOperation = transfer;
             }
 
             for (int i = 0; i < downloadedObjectInfo.Count; i++)
             {
                 // Assert
-                Assert.NotNull(downloadedObjectInfo[i].DataTransfer);
+                Assert.NotNull(downloadedObjectInfo[i].TransferOperation);
                 CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(waitTimeInSec));
                 await TestTransferWithTimeout.WaitForCompletionAsync(
-                    downloadedObjectInfo[i].DataTransfer,
+                    downloadedObjectInfo[i].TransferOperation,
                     downloadedObjectInfo[i].EventsRaised,
                     tokenSource.Token);
-                Assert.IsTrue(downloadedObjectInfo[i].DataTransfer.HasCompleted);
+                Assert.IsTrue(downloadedObjectInfo[i].TransferOperation.HasCompleted);
 
                 // Verify Download
                 await downloadedObjectInfo[i].EventsRaised.AssertSingleCompletedCheck();
-                Assert.AreEqual(DataTransferState.Completed, downloadedObjectInfo[i].DataTransfer.TransferStatus.State);
+                Assert.AreEqual(TransferState.Completed, downloadedObjectInfo[i].TransferOperation.Status.State);
                 using Stream stream = await OpenReadAsync(downloadedObjectInfo[i].SourceObjectClient);
                 using FileStream fileStream = File.OpenRead(downloadedObjectInfo[i].DestinationLocalPath);
                 Assert.AreEqual(stream, fileStream);
@@ -533,11 +427,11 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             // Create options bag to overwrite any existing destination.
-            DataTransferOptions options = new DataTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
             };
-            List<DataTransferOptions> optionsList = new List<DataTransferOptions> { options };
+            List<TransferOptions> optionsList = new List<TransferOptions> { options };
             await DownloadObjectsAndVerify(
                 testContainer.Container,
                 waitTimeInSec: 10,
@@ -555,11 +449,11 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             // Create options bag to overwrite any existing destination.
-            DataTransferOptions options = new DataTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
             };
-            List<DataTransferOptions> optionsList = new List<DataTransferOptions> { options };
+            List<TransferOptions> optionsList = new List<TransferOptions> { options };
             await DownloadObjectsAndVerify(
                 testContainer.Container,
                 waitTimeInSec: 10,
@@ -591,7 +485,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             // Create options bag to overwrite any existing destination.
-            DataTransferOptions options = new DataTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreationPreference = StorageResourceCreationPreference.SkipIfExists,
             };
@@ -612,7 +506,7 @@ namespace Azure.Storage.DataMovement.Tests
             StorageResource destinationResource = files.FromFile(destFile);
 
             // Start transfer and await for completion.
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 GetStorageResourceItem(sourceClient),
                 destinationResource,
                 options);
@@ -625,8 +519,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
-            Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.AreEqual(true, transfer.Status.HasFailedItems);
             Assert.IsTrue(skippedSeen);
             FileInfo destFileInfo = new FileInfo(destFile);
             Assert.IsTrue(destFileInfo.Length == 0);
@@ -652,7 +546,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             // Create options bag to fail and keep track of the failure.
-            DataTransferOptions options = new DataTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 CreationPreference = StorageResourceCreationPreference.FailIfExists,
             };
@@ -664,7 +558,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferManager transferManager = new TransferManager();
 
             // Start transfer and await for completion.
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 GetStorageResourceItem(sourceClient),
                 destinationResource,
                 options);
@@ -677,8 +571,8 @@ namespace Azure.Storage.DataMovement.Tests
             // Assert
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
-            Assert.AreEqual(true, transfer.TransferStatus.HasFailedItems);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
+            Assert.AreEqual(true, transfer.Status.HasFailedItems);
             await testEventsRaised.AssertSingleFailedCheck(1);
             FileInfo destFileInfo = new FileInfo(destFile);
             Assert.IsTrue(destFileInfo.Length == 0);
@@ -691,7 +585,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             long size = DataMovementTestConstants.KB;
             int waitTimeInSec = 25;
-            DataTransferOptions options = new DataTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 InitialTransferSize = 100,
                 MaximumTransferChunkSize = 200,
@@ -700,7 +594,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Arrange
             await using IDisposingContainer<TContainerClient> testContainer = await GetDisposingContainerAsync();
 
-            List<DataTransferOptions> optionsList = new List<DataTransferOptions>() { options };
+            List<TransferOptions> optionsList = new List<TransferOptions>() { options };
             await DownloadObjectsAndVerify(
                 testContainer.Container,
                 waitTimeInSec: waitTimeInSec,
@@ -786,19 +680,19 @@ namespace Azure.Storage.DataMovement.Tests
         {
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ErrorHandling = TransferErrorMode.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 
             // Arrange
             await using IDisposingContainer<TContainerClient> testContainer = await GetDisposingContainerAsync();
 
-            DataTransferOptions options = new DataTransferOptions()
+            TransferOptions options = new TransferOptions()
             {
                 InitialTransferSize = 512,
                 MaximumTransferChunkSize = 512,
             };
-            List<DataTransferOptions> optionsList = new List<DataTransferOptions>() { options };
+            List<TransferOptions> optionsList = new List<TransferOptions>() { options };
 
             await DownloadObjectsAndVerify(
                 testContainer.Container,
@@ -819,7 +713,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = DataTransferErrorMode.ContinueOnFailure,
+                ErrorHandling = TransferErrorMode.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 

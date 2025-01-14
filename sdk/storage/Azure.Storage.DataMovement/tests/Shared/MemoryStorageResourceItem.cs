@@ -19,7 +19,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override string ResourceId => "MemoryBuffer";
 
-        protected internal override DataTransferOrder TransferType => DataTransferOrder.Unordered;
+        protected internal override TransferOrder TransferType => TransferOrder.Unordered;
 
         protected internal override long MaxSupportedSingleTransferSize => long.MaxValue;
 
@@ -79,12 +79,12 @@ namespace Azure.Storage.DataMovement.Tests
             return Task.FromResult(new StorageResourceItemProperties(Buffer.Length, new ETag("etag"), DateTimeOffset.UtcNow, default));
         }
 
-        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
             throw new NotImplementedException();
         }
 
-        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
             throw new NotImplementedException();
         }

@@ -18,31 +18,31 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
     {
         public const string ShareProviderId = "share";
 
-        private static byte[] GetBytes(StorageResourceCheckpointDataInternal checkpointData)
+        private static byte[] GetBytes(StorageResourceCheckpointDetailsInternal checkpointDetails)
         {
             using MemoryStream stream = new();
-            checkpointData.SerializeInternal(stream);
+            checkpointDetails.SerializeInternal(stream);
             return stream.ToArray();
         }
 
-        private static Mock<DataTransferProperties> GetProperties(
+        private static Mock<TransferProperties> GetProperties(
             string transferId,
             string sourcePath,
             string destinationPath,
             string sourceProviderId,
             string destinationProviderId,
             bool isContainer,
-            ShareFileSourceCheckpointData sourceCheckpointData,
-            ShareFileDestinationCheckpointData destinationCheckpointData)
+            ShareFileSourceCheckpointDetails sourceCheckpointDetails,
+            ShareFileDestinationCheckpointDetails destinationCheckpointDetails)
         {
-            var mock = new Mock<DataTransferProperties>(MockBehavior.Strict);
+            var mock = new Mock<TransferProperties>(MockBehavior.Strict);
             mock.Setup(p => p.TransferId).Returns(transferId);
             mock.Setup(p => p.SourceUri).Returns(new Uri(sourcePath));
             mock.Setup(p => p.DestinationUri).Returns(new Uri(destinationPath));
             mock.Setup(p => p.SourceProviderId).Returns(sourceProviderId);
             mock.Setup(p => p.DestinationProviderId).Returns(destinationProviderId);
-            mock.Setup(p => p.SourceCheckpointData).Returns(GetBytes(sourceCheckpointData));
-            mock.Setup(p => p.DestinationCheckpointData).Returns(GetBytes(destinationCheckpointData));
+            mock.Setup(p => p.SourceCheckpointDetails).Returns(GetBytes(sourceCheckpointDetails));
+            mock.Setup(p => p.DestinationCheckpointDetails).Returns(GetBytes(destinationCheckpointDetails));
             mock.Setup(p => p.IsContainer).Returns(isContainer);
             return mock;
         }
@@ -56,15 +56,15 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string destinationPath = "https://storageaccount.file.core.windows.net/share/dir2/file2";
             string originalPath = isSource ? sourcePath : destinationPath;
 
-            DataTransferProperties transferProperties = GetProperties(
+            TransferProperties transferProperties = GetProperties(
                 transferId,
                 sourcePath,
                 destinationPath,
                 ShareProviderId,
                 ShareProviderId,
                 isContainer: false,
-                new ShareFileSourceCheckpointData(),
-                new ShareFileDestinationCheckpointData(null, null, null, null, null, null, null, null, null, null, null, null)).Object;
+                new ShareFileSourceCheckpointDetails(),
+                new ShareFileDestinationCheckpointDetails(null, null, null, null, null, null, null, null, null, null, null, null)).Object;
 
             StorageResource storageResource = isSource
                 ? await new ShareFilesStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
@@ -82,7 +82,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string destinationPath = "https://storageaccount.file.core.windows.net/share/dir2/file2";
 
             Random r = new();
-            ShareFileDestinationCheckpointData originalDestinationData = new(
+            ShareFileDestinationCheckpointDetails originalDestinationData = new(
                 contentType: new("text/plain"),
                 contentEncoding: new(new string[] { "gzip" }),
                 contentLanguage: new(new string[] { "en-US" }),
@@ -101,14 +101,14 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 {
                     {  r.NextString(8),  r.NextString(8) }
                 }));
-            DataTransferProperties transferProperties = GetProperties(
+            TransferProperties transferProperties = GetProperties(
                 transferId,
                 sourcePath,
                 destinationPath,
                 ShareProviderId,
                 ShareProviderId,
                 isContainer: false,
-                new ShareFileSourceCheckpointData(),
+                new ShareFileSourceCheckpointDetails(),
                 originalDestinationData).Object;
 
             ShareFileStorageResource storageResource = (ShareFileStorageResource)
@@ -159,15 +159,15 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 destinationPaths.Add(string.Join("/", destinationPath, childPath));
             }
 
-            DataTransferProperties transferProperties = GetProperties(
+            TransferProperties transferProperties = GetProperties(
                 transferId,
                 sourcePath,
                 destinationPath,
                 ShareProviderId,
                 ShareProviderId,
                 isContainer: true,
-                new ShareFileSourceCheckpointData(),
-                new ShareFileDestinationCheckpointData(null, null, null, null, null, null, null, null, null, null, null, null)).Object;
+                new ShareFileSourceCheckpointDetails(),
+                new ShareFileDestinationCheckpointDetails(null, null, null, null, null, null, null, null, null, null, null, null)).Object;
 
             StorageResource storageResource = isSource
                 ? await new ShareFilesStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)

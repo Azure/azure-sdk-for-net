@@ -7,6 +7,8 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -56,21 +58,27 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <param name="marketplaceResourceId"> Marketplace Subscription Details: Resource URI. </param>
         /// <param name="marketplaceStatus"> Marketplace Subscription Details: SaaS Subscription Status. </param>
         /// <param name="billedAzureSubscriptionId"> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </param>
-        /// <param name="subscribed"> Flag specifying if the Marketplace status is subscribed or not. </param>
+        /// <param name="isSubscribed"> Flag specifying if the Marketplace status is subscribed or not. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal MarketplaceSaaSInfo(MarketplaceSaaSInfoMarketplaceSubscription marketplaceSubscription, string marketplaceName, string marketplaceResourceId, string marketplaceStatus, string billedAzureSubscriptionId, bool? subscribed, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal MarketplaceSaaSInfo(SubResource marketplaceSubscription, string marketplaceName, string marketplaceResourceId, string marketplaceStatus, string billedAzureSubscriptionId, bool? isSubscribed, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MarketplaceSubscription = marketplaceSubscription;
             MarketplaceName = marketplaceName;
             MarketplaceResourceId = marketplaceResourceId;
             MarketplaceStatus = marketplaceStatus;
             BilledAzureSubscriptionId = billedAzureSubscriptionId;
-            Subscribed = subscribed;
+            IsSubscribed = isSubscribed;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Marketplace Subscription. </summary>
-        public MarketplaceSaaSInfoMarketplaceSubscription MarketplaceSubscription { get; }
+        internal SubResource MarketplaceSubscription { get; }
+        /// <summary> Gets Id. </summary>
+        public ResourceIdentifier MarketplaceSubscriptionId
+        {
+            get => MarketplaceSubscription?.Id;
+        }
+
         /// <summary> Marketplace Subscription Details: SAAS Name. </summary>
         public string MarketplaceName { get; }
         /// <summary> Marketplace Subscription Details: Resource URI. </summary>
@@ -80,6 +88,6 @@ namespace Azure.ResourceManager.Elastic.Models
         /// <summary> The Azure Subscription ID to which the Marketplace Subscription belongs and gets billed into. </summary>
         public string BilledAzureSubscriptionId { get; }
         /// <summary> Flag specifying if the Marketplace status is subscribed or not. </summary>
-        public bool? Subscribed { get; }
+        public bool? IsSubscribed { get; }
     }
 }

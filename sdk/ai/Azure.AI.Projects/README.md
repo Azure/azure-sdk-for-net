@@ -2,7 +2,7 @@
 Use the AI Projects client library to:
 
 * **Develop Agents using the Azure AI Agent Service**, leveraging an extensive ecosystem of models, tools, and capabilities from OpenAI, Microsoft, and other LLM providers. The Azure AI Agent Service enables the building of Agents for a wide range of generative AI use cases. The package is currently in preview.
-* **Enumerate connections** in your Azure AI Studio project and get connection properties. For example, get the inference endpoint URL and credentials associated with your Azure OpenAI connection.
+* **Enumerate connections** in your Azure AI Foundry project and get connection properties. For example, get the inference endpoint URL and credentials associated with your Azure OpenAI connection.
 
 [Product documentation][product_doc]
 | [Samples][samples]
@@ -25,6 +25,8 @@ Use the AI Projects client library to:
       - [Create and execute run](#create-and-execute-run)
       - [Retrieve messages](#retrieve-messages)
     - [File search](#file-search)
+    - [Enterprise File Search](#create-agent-with-enterprise-file-search)
+    - [Code interpreter attachment](#create-message-with-code-interpreter-attachment)
     - [Function call](#function-call)
     - [Azure function call](#azure-function-call)
     - [Azure Function Call](#create-agent-with-azure-function-call)
@@ -209,6 +211,108 @@ Agent agent = agentResponse.Value;
 
 With a file ID association and a supported tool enabled, the agent will then be able to consume the associated
 data when running threads.
+
+#### Create Agent with Enterprise File Search
+
+We can upload file to Azure as it is shown in the example, or use the existing Azure blob storage. In the code below we demonstrate how this can be achieved. First we upload file to azure and create `VectorStoreDataSource`, which then is used to create vector store. This vector store is then given to the `FileSearchTool` constructor.
+
+```C# Snippet:CreateVectorStoreBlob
+var ds = new VectorStoreDataSource(
+    assetIdentifier: blobURI,
+    assetType: VectorStoreDataSourceAssetType.UriAsset
+);
+var vectorStoreTask = await client.CreateVectorStoreAsync(
+    name: "sample_vector_store",
+    storeConfiguration: new VectorStoreConfiguration(
+        dataSources: new List<VectorStoreDataSource> { ds }
+    )
+);
+var vectorStore = vectorStoreTask.Value;
+
+FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
+
+List<ToolDefinition> tools = [new FileSearchToolDefinition()];
+Response<Agent> agentResponse = await client.CreateAgentAsync(
+    model: modelName,
+    name: "my-assistant",
+    instructions: "You are helpful assistant.",
+    tools: tools,
+    toolResources: new ToolResources() { FileSearch = fileSearchResource }
+);
+```
+
+We also can attach files to the existing vector store. In the code snippet below, we first create an empty vector store and add file to it.
+
+```C# Snippet:BatchFileAttachment
+var ds = new VectorStoreDataSource(
+    assetIdentifier: blobURI,
+    assetType: VectorStoreDataSourceAssetType.UriAsset
+);
+var vectorStoreTask = await client.CreateVectorStoreAsync(
+    name: "sample_vector_store"
+);
+var vectorStore = vectorStoreTask.Value;
+
+var uploadTask = await client.CreateVectorStoreFileBatchAsync(
+    vectorStoreId: vectorStore.Id,
+    dataSources: new List<VectorStoreDataSource> { ds }
+);
+Console.WriteLine($"Created vector store file batch, vector store file batch ID: {uploadTask.Value.Id}");
+
+FileSearchToolResource fileSearchResource = new([vectorStore.Id], null);
+```
+
+#### Create Message with Code Interpreter Attachment
+
+To attach a file with the context to the message, use the `MessageAttachment` class. To be able to process the attached file contents we need to provide the `List` with the single element `CodeInterpreterToolDefinition` as a `tools` parameter to both `CreateAgent` method and `MessageAttachment` class constructor.
+
+Here is an example to pass `CodeInterpreterTool` as tool:
+
+```C# Snippet:CreateAgentWithInterpreterTool
+AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
+
+List<ToolDefinition> tools = [ new CodeInterpreterToolDefinition() ];
+Response<Agent> agentResponse = await client.CreateAgentAsync(
+    model: modelName,
+    name: "my-assistant",
+    instructions: "You are helpful assistant.",
+    tools: tools
+);
+Agent agent = agentResponse.Value;
+
+var fileResponse = await client.UploadFileAsync(filePath, AgentFilePurpose.Agents);
+var fileId = fileResponse.Value.Id;
+
+var attachment = new MessageAttachment(
+    fileId: fileId,
+    tools: tools
+);
+
+Response<AgentThread> threadResponse = await client.CreateThreadAsync();
+AgentThread thread = threadResponse.Value;
+
+Response<ThreadMessage> messageResponse = await client.CreateMessageAsync(
+    threadId: thread.Id,
+    role: MessageRole.User,
+    content: "What does the attachment say?",
+    attachments: new List< MessageAttachment > { attachment}
+    );
+ThreadMessage message = messageResponse.Value;
+```
+
+Azure blob storage can be used as a message attachment. In this case, use `VectorStoreDataSource` as a data source:
+
+```C# Snippet:CreateMessageAttachmentWithBlobStore
+var ds = new VectorStoreDataSource(
+    assetIdentifier: blobURI,
+    assetType: VectorStoreDataSourceAssetType.UriAsset
+);
+
+var attachment = new MessageAttachment(
+    ds: ds,
+    tools: tools
+);
+```
 
 #### Function call
 

@@ -132,7 +132,7 @@ namespace Azure.Storage.DataMovement
             _queuedCount += args.QueuedChange;
             _bytesTransferred += args.BytesChange;
 
-            DataTransferProgress progress = new()
+            TransferProgress progress = new()
             {
                 CompletedCount = _completedCount,
                 SkippedCount = _skippedCount,
