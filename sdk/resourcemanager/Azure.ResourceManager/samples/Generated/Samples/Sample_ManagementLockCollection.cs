@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // get the collection of this ManagementLockResource
             string scope = "subscriptions/subscriptionId";
-            ManagementLockCollection collection = client.GetManagementLocks(new ResourceIdentifier(scope));
+            ManagementLockCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetManagementLocks();
 
             // invoke the operation
             string lockName = "testlock";
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // get the collection of this ManagementLockResource
             string scope = "subscriptions/subscriptionId";
-            ManagementLockCollection collection = client.GetManagementLocks(new ResourceIdentifier(scope));
+            ManagementLockCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetManagementLocks();
 
             // invoke the operation
             string lockName = "testlock";
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // get the collection of this ManagementLockResource
             string scope = "subscriptions/subscriptionId";
-            ManagementLockCollection collection = client.GetManagementLocks(new ResourceIdentifier(scope));
+            ManagementLockCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetManagementLocks();
 
             // invoke the operation and iterate over the result
             await foreach (ManagementLockResource item in collection.GetAllAsync())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // get the collection of this ManagementLockResource
             string scope = "subscriptions/subscriptionId";
-            ManagementLockCollection collection = client.GetManagementLocks(new ResourceIdentifier(scope));
+            ManagementLockCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetManagementLocks();
 
             // invoke the operation
             string lockName = "testlock";
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // get the collection of this ManagementLockResource
             string scope = "subscriptions/subscriptionId";
-            ManagementLockCollection collection = client.GetManagementLocks(new ResourceIdentifier(scope));
+            ManagementLockCollection collection = client.GetGenericResource(new ResourceIdentifier(scope)).GetManagementLocks();
 
             // invoke the operation
             string lockName = "testlock";
