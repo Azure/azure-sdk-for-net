@@ -26,14 +26,14 @@ namespace Azure.Storage.Blobs
         /// <param name="blobDirectoryPrefix">Optionally specifies the directory prefix to be prepended to all uploaded files.</param>
         /// <returns>
         /// A <see cref="TransferOperation"/> instance which contains information about the transfer and its status.
-        /// If <paramref name="waitUntil"/> was set to <see cref="WaitUntil.Started"/>, this method will return immediately
-        /// and <see cref="TransferOperation.WaitForCompletionAsync"/> can be used to wait for the transfer to complete.
         /// </returns>
         /// <remarks>
-        /// This is an async long-running operation which means once the transfer is complete, regardless of the value of <paramref name="waitUntil"/>,
-        /// the caller should check the status of the transfer using the returned <see cref="TransferOperation"/> instance to determine if the transfer
-        /// completed successfully or not.
-        /// This will not throw an exception if the transfer fails, but the <see cref="TransferOperation.Status"/> will indicate a failure.
+        /// This is an async long-running operation which means the operation may not be complete when this methods returns. If <paramref name="waitUntil"/>
+        /// is set to <see cref="WaitUntil.Started"/>, the method will return as soon as a transfer is started and <see cref="TransferOperation.WaitForCompletionAsync"/>
+        /// can be used to wait for the transfer to complete. If <paramref name="waitUntil"/> is set to <see cref="WaitUntil.Completed"/>, the method will wait
+        /// for the entire transfer to complete.
+        /// In either case, the caller must check the status of the transfer using the returned <see cref="TransferOperation"/> instance to determine if the transfer
+        /// completed successfully or not. This method will not throw an exception if the transfer fails, but the <see cref="TransferOperation.Status"/> will indicate a failure.
         /// </remarks>
         public static Task<TransferOperation> UploadDirectoryAsync(
             this BlobContainerClient client,
@@ -61,14 +61,14 @@ namespace Azure.Storage.Blobs
         /// <param name="options">Options which control the directory upload.</param>
         /// <returns>
         /// A <see cref="TransferOperation"/> instance which contains information about the transfer and its status.
-        /// If <paramref name="waitUntil"/> was set to <see cref="WaitUntil.Started"/>, this method will return immediately
-        /// and <see cref="TransferOperation.WaitForCompletionAsync"/> can be used to wait for the transfer to complete.
         /// </returns>
         /// <remarks>
-        /// This is an async long-running operation which means once the transfer is complete, regardless of the value of <paramref name="waitUntil"/>,
-        /// the caller should check the status of the transfer using the returned <see cref="TransferOperation"/> instance to determine if the transfer
-        /// completed successfully or not.
-        /// This will not throw an exception if the transfer fails, but the <see cref="TransferOperation.Status"/> will indicate a failure.
+        /// This is an async long-running operation which means the operation may not be complete when this methods returns. If <paramref name="waitUntil"/>
+        /// is set to <see cref="WaitUntil.Started"/>, the method will return as soon as a transfer is started and <see cref="TransferOperation.WaitForCompletionAsync"/>
+        /// can be used to wait for the transfer to complete. If <paramref name="waitUntil"/> is set to <see cref="WaitUntil.Completed"/>, the method will wait
+        /// for the entire transfer to complete.
+        /// In either case, the caller must check the status of the transfer using the returned <see cref="TransferOperation"/> instance to determine if the transfer
+        /// completed successfully or not. This method will not throw an exception if the transfer fails, but the <see cref="TransferOperation.Status"/> will indicate a failure.
         /// </remarks>
         public static async Task<TransferOperation> UploadDirectoryAsync(this BlobContainerClient client, WaitUntil waitUntil, string localDirectoryPath, BlobContainerClientTransferOptions options)
         {
@@ -96,14 +96,14 @@ namespace Azure.Storage.Blobs
         /// <param name="blobDirectoryPrefix">Optionally restricts the downloaded content to blobs with the specified directory prefix.</param>
         /// <returns>
         /// A <see cref="TransferOperation"/> instance which contains information about the transfer and its status.
-        /// If <paramref name="waitUntil"/> was set to <see cref="WaitUntil.Started"/>, this method will return immediately
-        /// and <see cref="TransferOperation.WaitForCompletionAsync"/> can be used to wait for the transfer to complete.
         /// </returns>
         /// <remarks>
-        /// This is an async long-running operation which means once the transfer is complete, regardless of the value of <paramref name="waitUntil"/>,
-        /// the caller should check the status of the transfer using the returned <see cref="TransferOperation"/> instance to determine if the transfer
-        /// completed successfully or not.
-        /// This will not throw an exception if the transfer fails, but the <see cref="TransferOperation.Status"/> will indicate a failure.
+        /// This is an async long-running operation which means the operation may not be complete when this methods returns. If <paramref name="waitUntil"/>
+        /// is set to <see cref="WaitUntil.Started"/>, the method will return as soon as a transfer is started and <see cref="TransferOperation.WaitForCompletionAsync"/>
+        /// can be used to wait for the transfer to complete. If <paramref name="waitUntil"/> is set to <see cref="WaitUntil.Completed"/>, the method will wait
+        /// for the entire transfer to complete.
+        /// In either case, the caller must check the status of the transfer using the returned <see cref="TransferOperation"/> instance to determine if the transfer
+        /// completed successfully or not. This method will not throw an exception if the transfer fails, but the <see cref="TransferOperation.Status"/> will indicate a failure.
         /// </remarks>
         public static Task<TransferOperation> DownloadToDirectoryAsync(
             this BlobContainerClient client,
@@ -131,14 +131,14 @@ namespace Azure.Storage.Blobs
         /// <param name="options">Options which control the container download.</param>
         /// <returns>
         /// A <see cref="TransferOperation"/> instance which contains information about the transfer and its status.
-        /// If <paramref name="waitUntil"/> was set to <see cref="WaitUntil.Started"/>, this method will return immediately
-        /// and <see cref="TransferOperation.WaitForCompletionAsync"/> can be used to wait for the transfer to complete.
         /// </returns>
         /// <remarks>
-        /// This is an async long-running operation which means once the transfer is complete, regardless of the value of <paramref name="waitUntil"/>,
-        /// the caller should check the status of the transfer using the returned <see cref="TransferOperation"/> instance to determine if the transfer
-        /// completed successfully or not.
-        /// This will not throw an exception if the transfer fails, but the <see cref="TransferOperation.Status"/> will indicate a failure.
+        /// This is an async long-running operation which means the operation may not be complete when this methods returns. If <paramref name="waitUntil"/>
+        /// is set to <see cref="WaitUntil.Started"/>, the method will return as soon as a transfer is started and <see cref="TransferOperation.WaitForCompletionAsync"/>
+        /// can be used to wait for the transfer to complete. If <paramref name="waitUntil"/> is set to <see cref="WaitUntil.Completed"/>, the method will wait
+        /// for the entire transfer to complete.
+        /// In either case, the caller must check the status of the transfer using the returned <see cref="TransferOperation"/> instance to determine if the transfer
+        /// completed successfully or not. This method will not throw an exception if the transfer fails, but the <see cref="TransferOperation.Status"/> will indicate a failure.
         /// </remarks>
         public static async Task<TransferOperation> DownloadToDirectoryAsync(this BlobContainerClient client, WaitUntil waitUntil, string localDirectoryPath, BlobContainerClientTransferOptions options)
         {
