@@ -1210,6 +1210,20 @@ namespace Azure.Storage.DataMovement.Tests
             // Pause Transfer
             CancellationTokenSource pauseCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(30));
             await transferManager.PauseTransferIfRunningAsync(transfer.Id, pauseCancellation.Token);
+
+            // we might have already completed the transfer before we could pause it
+            if (transfer.Status.State == TransferState.Completed)
+            {
+                Assert.IsTrue(transfer.HasCompleted);
+                // Verify transfer
+                await AssertDirectorySourceAndDestinationAsync(
+                    transferType: transferType,
+                    sourceResource: sResource as StorageResourceContainer,
+                    destinationResource: dResource as StorageResourceContainer,
+                    sourceContainer: sourceContainer.Container,
+                    destinationContainer: destinationContainer.Container);
+                Assert.Pass();
+            }
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             // Resume Transfer
