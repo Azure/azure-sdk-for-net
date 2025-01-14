@@ -63,6 +63,7 @@ namespace Azure.Identity
         public AzureCliCredentialOptions() { }
         public System.Collections.Generic.IList<string> AdditionallyAllowedTenants { get { throw null; } }
         public System.TimeSpan? ProcessTimeout { get { throw null; } set { } }
+        public string Subscription { get { throw null; } set { } }
         public string TenantId { get { throw null; } set { } }
     }
     public partial class AzureDeveloperCliCredential : Azure.Core.TokenCredential

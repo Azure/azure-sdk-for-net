@@ -11,6 +11,8 @@ namespace Azure.Identity
     /// </summary>
     public class AzureCliCredentialOptions : TokenCredentialOptions, ISupportsAdditionallyAllowedTenants
     {
+        private string _subscription;
+
         /// <summary>
         /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant provided to the 'az login' command.
         /// </summary>
@@ -27,5 +29,22 @@ namespace Azure.Identity
         /// The Cli process timeout.
         /// </summary>
         public TimeSpan? ProcessTimeout { get; set; }
+
+        /// <summary>
+        /// The subscription name or Id to use for authentication. This equates to the --subscription parameter in the Azure CLI.
+        /// </summary>
+        public string Subscription
+        {
+            get => _subscription;
+            set
+            {
+                if (!Validations.IsValidateSubscriptionNameOrId(value))
+                {
+                    throw new ArgumentException("Invalid subscription name or Id provided. The subscription name or Id must be a non-empty value and cannot contain a quote character.");
+                }
+
+                _subscription = value;
+            }
+        }
     }
 }
