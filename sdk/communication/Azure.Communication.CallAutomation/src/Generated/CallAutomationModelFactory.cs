@@ -94,6 +94,16 @@ namespace Azure.Communication.CallAutomation
             return new UserConsent(recording);
         }
 
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.StartRecordingFailed"/>. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
+        /// <param name="recordingId"> The call recording id. </param>
+        /// <returns> A new <see cref="CallAutomation.StartRecordingFailed"/> instance for mocking. </returns>
+        public static StartRecordingFailed StartRecordingFailed(string callConnectionId = null, string correlationId = null, string recordingId = null)
+        {
+            return new StartRecordingFailed(callConnectionId, correlationId, recordingId);
+        }
+
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionStarted"/>. </summary>
         /// <param name="transcriptionUpdate"> Defines the result for TranscriptionUpdate with the current status and the details about the status. </param>
         /// <param name="callConnectionId"> Call connection ID. </param>
