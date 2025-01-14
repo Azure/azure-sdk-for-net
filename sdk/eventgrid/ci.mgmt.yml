@@ -2,7 +2,20 @@
 # This is for Track 2 managment plane SDK
 
 trigger: none
+
 pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/eventgrid/ci.mgmt.yml
+    - sdk/eventgrid/Azure.ResourceManager.EventGrid/
+
+
   branches:
     include:
     - main

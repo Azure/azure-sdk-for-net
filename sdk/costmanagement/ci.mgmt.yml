@@ -2,7 +2,20 @@
 # This file is generated automatically and any changes will be lost.
 
 trigger: none
+
 pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/costmanagement/ci.mgmt.yml
+    - sdk/costmanagement/Azure.ResourceManager.CostManagement/
+
+
   branches:
     include:
     - main

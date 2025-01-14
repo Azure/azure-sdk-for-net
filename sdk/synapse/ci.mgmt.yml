@@ -1,7 +1,20 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
+
 pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/synapse/ci.mgmt.yml
+    - sdk/synapse/Azure.ResourceManager.Synapse/
+
+
   branches:
     include:
     - main
