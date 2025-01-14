@@ -186,7 +186,7 @@ async Task<TransferOperation> ListenToTransfersAsync(TransferManager transferMan
     transferOptions.ItemTransferCompleted += (TransferItemCompletedEventArgs args) =>
     {
         using StreamWriter logStream = File.AppendText(logFile);
-        logStream.WriteLine($"File Completed Transfer: {args.SourceResource.Uri.LocalPath}");
+        logStream.WriteLine($"File Completed Transfer: {args.Source.Uri.LocalPath}");
         return Task.CompletedTask;
     };
     return await transferManager.StartTransferAsync(
@@ -227,7 +227,7 @@ await transferOperation.PauseAsync();
 ```
 
 ```C# Snippet:PauseFromManager
-await transferManager.PauseTransferIfRunningAsync(transferId);
+await transferManager.PauseTransferAsync(transferId);
 ```
 
 ### Handling Failed Transfers
@@ -258,8 +258,8 @@ transferOptions.ItemTransferFailed += (TransferItemFailedEventArgs args) =>
         // Specifying specific resources that failed, since its a directory transfer
         // maybe only one file failed out of many
         logStream.WriteLine($"Exception occurred with TransferId: {args.TransferId}," +
-            $"Source Resource: {args.SourceResource.Uri.AbsoluteUri}, +" +
-            $"Destination Resource: {args.DestinationResource.Uri.AbsoluteUri}," +
+            $"Source Resource: {args.Source.Uri.AbsoluteUri}, +" +
+            $"Destination Resource: {args.Destination.Uri.AbsoluteUri}," +
             $"Exception Message: {args.Exception.Message}");
     }
     return Task.CompletedTask;

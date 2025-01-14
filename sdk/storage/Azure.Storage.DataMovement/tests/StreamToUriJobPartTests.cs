@@ -50,11 +50,13 @@ namespace Azure.Storage.DataMovement.Tests
                 { "Metadata", metadata },
                 { "Tags", tags }
             };
-            return new(
-                    resourceLength: length,
-                    eTag: new("ETag"),
-                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
-                    properties: sourceProperties);
+            return new StorageResourceItemProperties()
+            {
+                ResourceLength = length,
+                ETag = new("ETag"),
+                LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
+                RawProperties = sourceProperties
+            };
         }
 
         private Mock<StorageResourceItem> GetLocalStorageResourceItem(long length = Constants.KB)

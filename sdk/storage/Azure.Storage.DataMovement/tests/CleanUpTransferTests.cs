@@ -28,11 +28,12 @@ namespace Azure.Storage.DataMovement.Tests
             mock.Setup(b => b.GetDestinationCheckpointDetails())
                 .Returns(new MockResourceCheckpointDetails());
             mock.Setup(b => b.GetPropertiesAsync(It.IsAny<CancellationToken>()))
-                .Returns(Task.FromResult(new StorageResourceItemProperties(
-                    resourceLength: length,
-                    eTag: default,
-                    lastModifiedTime: DateTimeOffset.UtcNow,
-                    properties: default)));
+                .Returns(Task.FromResult(new StorageResourceItemProperties()
+                    {
+                        ResourceLength = length,
+                        ETag = default,
+                        LastModifiedTime = DateTimeOffset.UtcNow,
+                    }));
             mock.Setup(b => b.GetCopyAuthorizationHeaderAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult<HttpAuthorization>(default));
             return mock;
