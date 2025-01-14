@@ -513,65 +513,65 @@ namespace Azure.Storage.DataMovement.Blobs
             };
         }
 
-        internal static StorageResourceCheckpointData GetCheckpointData(this TransferProperties properties, bool isSource)
+        internal static StorageResourceCheckpointDetails GetCheckpointDetails(this TransferProperties properties, bool isSource)
         {
             if (isSource)
             {
-                using (MemoryStream stream = new(properties.SourceCheckpointData))
+                using (MemoryStream stream = new(properties.SourceCheckpointDetails))
                 {
-                    return BlobSourceCheckpointData.Deserialize(stream);
+                    return BlobSourceCheckpointDetails.Deserialize(stream);
                 }
             }
             else
             {
-                using (MemoryStream stream = new(properties.DestinationCheckpointData))
+                using (MemoryStream stream = new(properties.DestinationCheckpointDetails))
                 {
-                    return BlobDestinationCheckpointData.Deserialize(stream);
+                    return BlobDestinationCheckpointDetails.Deserialize(stream);
                 }
             }
         }
 
         internal static BlobStorageResourceOptions GetBlobResourceOptions(
-            this BlobDestinationCheckpointData checkpointData)
+            this BlobDestinationCheckpointDetails checkpointDetails)
         {
             return new()
             {
-                Metadata = checkpointData.Metadata,
-                CacheControl = checkpointData.CacheControl,
-                ContentDisposition = checkpointData.ContentDisposition,
-                ContentEncoding = checkpointData.ContentEncoding,
-                ContentLanguage = checkpointData.ContentLanguage,
-                ContentType = checkpointData.ContentType,
-                AccessTier = checkpointData.AccessTierValue,
+                Metadata = checkpointDetails.Metadata,
+                CacheControl = checkpointDetails.CacheControl,
+                ContentDisposition = checkpointDetails.ContentDisposition,
+                ContentEncoding = checkpointDetails.ContentEncoding,
+                ContentLanguage = checkpointDetails.ContentLanguage,
+                ContentType = checkpointDetails.ContentType,
+                AccessTier = checkpointDetails.AccessTierValue,
             };
         }
 
         internal static BlockBlobStorageResourceOptions GetBlockBlobResourceOptions(
-            this BlobDestinationCheckpointData checkpointData)
+            this BlobDestinationCheckpointDetails checkpointDetails)
         {
-            BlobStorageResourceOptions baseOptions = checkpointData.GetBlobResourceOptions();
+            BlobStorageResourceOptions baseOptions = checkpointDetails.GetBlobResourceOptions();
             return new BlockBlobStorageResourceOptions(baseOptions);
         }
 
         internal static PageBlobStorageResourceOptions GetPageBlobResourceOptions(
-            this BlobDestinationCheckpointData checkpointData)
+            this BlobDestinationCheckpointDetails checkpointDetails)
         {
-            BlobStorageResourceOptions baseOptions = checkpointData.GetBlobResourceOptions();
+            BlobStorageResourceOptions baseOptions = checkpointDetails.GetBlobResourceOptions();
             return new PageBlobStorageResourceOptions(baseOptions);
         }
 
         internal static AppendBlobStorageResourceOptions GetAppendBlobResourceOptions(
-            this BlobDestinationCheckpointData checkpointData)
+            this BlobDestinationCheckpointDetails checkpointDetails)
         {
-            BlobStorageResourceOptions baseOptions = checkpointData.GetBlobResourceOptions();
+            BlobStorageResourceOptions baseOptions = checkpointDetails.GetBlobResourceOptions();
             return new AppendBlobStorageResourceOptions(baseOptions);
         }
 
         internal static BlobStorageResourceContainerOptions GetBlobContainerOptions(
-            this BlobDestinationCheckpointData checkpointData,
+            this BlobDestinationCheckpointDetails checkpointDetails,
             string directoryPrefix)
         {
-            BlobStorageResourceOptions baseOptions = checkpointData.GetBlobResourceOptions();
+            BlobStorageResourceOptions baseOptions = checkpointDetails.GetBlobResourceOptions();
             return new BlobStorageResourceContainerOptions()
             {
                 BlobType = default,

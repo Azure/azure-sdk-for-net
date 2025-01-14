@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
-    internal class BlobSourceCheckpointData : StorageResourceCheckpointData
+    internal class BlobSourceCheckpointDetails : StorageResourceCheckpointDetails
     {
         public override int Length => 0;
 
@@ -13,6 +13,6 @@ namespace Azure.Storage.DataMovement.Blobs
         {
         }
 
-        internal static BlobSourceCheckpointData Deserialize(Stream stream) => new();
+        internal static BlobSourceCheckpointDetails Deserialize(Stream stream) => new();
     }
 }

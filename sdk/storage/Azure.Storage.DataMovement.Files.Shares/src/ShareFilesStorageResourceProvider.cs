@@ -237,26 +237,26 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <inheritdoc/>
         protected override Task<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
         {
-            ShareFileDestinationCheckpointData checkpointData;
-            using (MemoryStream stream = new(properties.DestinationCheckpointData))
+            ShareFileDestinationCheckpointDetails checkpointDetails;
+            using (MemoryStream stream = new(properties.DestinationCheckpointDetails))
             {
-                checkpointData = ShareFileDestinationCheckpointData.Deserialize(stream);
+                checkpointDetails = ShareFileDestinationCheckpointDetails.Deserialize(stream);
             }
 
             ShareFileStorageResourceOptions options = new()
             {
-                FileAttributes = checkpointData.FileAttributes,
-                FilePermissions = new(checkpointData.PreserveFilePermission),
-                CacheControl = checkpointData.CacheControl,
-                ContentDisposition = checkpointData.ContentDisposition,
-                ContentEncoding = checkpointData.ContentEncoding,
-                ContentLanguage = checkpointData.ContentLanguage,
-                ContentType = checkpointData.ContentType,
-                FileCreatedOn = checkpointData.FileCreatedOn,
-                FileLastWrittenOn = checkpointData.FileLastWrittenOn,
-                FileChangedOn = checkpointData.FileChangedOn,
-                DirectoryMetadata = checkpointData.DirectoryMetadata,
-                FileMetadata = checkpointData.FileMetadata,
+                FileAttributes = checkpointDetails.FileAttributes,
+                FilePermissions = new(checkpointDetails.PreserveFilePermission),
+                CacheControl = checkpointDetails.CacheControl,
+                ContentDisposition = checkpointDetails.ContentDisposition,
+                ContentEncoding = checkpointDetails.ContentEncoding,
+                ContentLanguage = checkpointDetails.ContentLanguage,
+                ContentType = checkpointDetails.ContentType,
+                FileCreatedOn = checkpointDetails.FileCreatedOn,
+                FileLastWrittenOn = checkpointDetails.FileLastWrittenOn,
+                FileChangedOn = checkpointDetails.FileChangedOn,
+                DirectoryMetadata = checkpointDetails.DirectoryMetadata,
+                FileMetadata = checkpointDetails.FileMetadata,
             };
             return Task.FromResult(properties.IsContainer
                 ? FromDirectory(properties.DestinationUri, options)

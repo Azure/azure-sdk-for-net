@@ -66,10 +66,10 @@ namespace Azure.Storage.DataMovement.Tests
             mock.Setup(r => r.Uri).Returns(new Uri("C:\\User\\folder\\file"));
             mock.Setup(r => r.ResourceId).Returns("mock");
             mock.Setup(r => r.ProviderId).Returns("mock");
-            mock.Setup(r => r.GetSourceCheckpointData())
-                .Returns(new MockResourceCheckpointData());
-            mock.Setup(r => r.GetDestinationCheckpointData())
-                .Returns(new MockResourceCheckpointData());
+            mock.Setup(r => r.GetSourceCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
+            mock.Setup(r => r.GetDestinationCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
             return mock;
         }
 
@@ -80,10 +80,10 @@ namespace Azure.Storage.DataMovement.Tests
             mock.Setup(r => r.Uri).Returns(new Uri("https://storageacount.blob.core.windows.net/container/source"));
             mock.Setup(r => r.ResourceId).Returns("mock");
             mock.Setup(r => r.ProviderId).Returns("mock");
-            mock.Setup(r => r.GetSourceCheckpointData())
-                .Returns(new MockResourceCheckpointData());
-            mock.Setup(r => r.GetDestinationCheckpointData())
-                .Returns(new MockResourceCheckpointData());
+            mock.Setup(r => r.GetSourceCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
+            mock.Setup(r => r.GetDestinationCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
             return mock;
         }
 

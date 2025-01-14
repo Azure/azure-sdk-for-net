@@ -16,6 +16,11 @@
     - `DataTransferState` -> `TransferState`
     - `DataTransferStatus` -> `TransferStatus`
     - `DataTransferErrorMode` -> `TransferErrorMode`
+    - `StorageResourceCheckpointData` -> `StorageResourceCheckpointDetails`
+    - `StorageResource.GetDestinationCheckpointData` -> `StorageResource.GetDestinationCheckpointDetails`
+    - `StorageResource.GetSourceCheckpointData` -> `StorageResource.GetSourceCheckpointDetails`
+    - `TransferProperties.DestinationCheckpointData` -> `TransferProperties.DestinationCheckpointDetails`
+    - `TransferProperties.SourceCheckpointData` -> `TransferProperties.SourceCheckpointDetails`
     - `StorageResourceCreationPreference` -> `StorageResourceCreateMode`
     - `TransferManager.PauseTransferIfRunningAsync` -> `TransferManager.PauseTransferAsync`
     - `TransferManagerOptions.ErrorHandling` -> `TransferManagerOptions.ErrorMode`

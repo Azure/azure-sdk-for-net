@@ -8,7 +8,7 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Abstract class for checkpoint data related to a specific resource type.
     /// </summary>
-    public abstract class StorageResourceCheckpointData
+    public abstract class StorageResourceCheckpointDetails
     {
         /// <summary>
         /// The length of the checkpoint data in bytes.
