@@ -3,7 +3,7 @@
 This guide intends to assist customers in migrating from version 2 of the Azure Storage .NET Data Movement library to version 12.
 It will focus on side-by-side comparisons for similar operations between the v12 package, [`Azure.Storage.DataMovement`](https://www.nuget.org/packages/Azure.Storage.DataMovement) and v2 package, [`Microsoft.Azure.Storage.DataMovement`](https://www.nuget.org/packages/Microsoft.Azure.Storage.DataMovement/).
 
-Familiarity with the legacy data movement client library is assumed. For those new to the Azure Storage Data Movement client library for .NET, please refer to the [Quickstart](TODO) for the v12 library rather than this guide.
+Familiarity with the legacy data movement client library is assumed. For those new to the Azure Storage Data Movement client library for .NET, please refer to the Quickstart (TODO link) for the v12 library rather than this guide.
 
 ## Table of contents
 
@@ -89,7 +89,7 @@ TODO
 ## Additional information
 
 ### Links and references
-- [Quickstart](TODO)
-- [Samples](TODO)
-- [DataMovement reference](TODO)
+- Quickstart (TODO link)
+- Samples (TODO link)
+- DataMovement reference (TODO link)
 - [Announcing the Azure Storage v12 Client Libraries](https://techcommunity.microsoft.com/t5/azure-storage/announcing-the-azure-storage-v12-client-libraries/ba-p/1482394) blog post
