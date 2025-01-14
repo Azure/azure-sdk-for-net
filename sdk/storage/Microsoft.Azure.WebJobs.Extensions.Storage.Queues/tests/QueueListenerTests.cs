@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -560,21 +561,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [Test]
-        public async Task ProcessMessageAsync_GracefulShutdown()
-        {
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            cancellationTokenSource.Cancel();
-            CancellationToken cancellationToken = cancellationTokenSource.Token;
-
-            FunctionResult result = new FunctionResult(true);
-            _mockQueueProcessor.Setup(p => p.BeginProcessingMessageAsync(_queueMessage, It.IsAny<CancellationToken>())).ReturnsAsync(true);
-            _mockTriggerExecutor.Setup(p => p.ExecuteAsync(_queueMessage, It.IsAny<CancellationToken>())).ReturnsAsync(result);
-            _mockQueueProcessor.Setup(p => p.CompleteProcessingMessageAsync(_queueMessage, result, It.IsNotIn(cancellationToken))).Returns(Task.FromResult(true));
-
-            await _listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(10), cancellationToken);
-        }
-
-        [Test]
         public async Task GetMessages_QueueCheckThrowsTransientError_ReturnsBackoffResult()
         {
             CancellationToken cancellationToken = new CancellationToken();
@@ -664,16 +650,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             await _listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(10), cancellationToken);
         }
 
-        private (QueueListener Listener,
-            TestQueueProcessor Processor,
-            CancellationTokenSource CallerCts,
-            CancellationTokenSource SystemShutdownCts)
-        CreateListenerAndMocks()
+        [Test]
+        public async Task CompleteProcessingMessageAsync_PassesShutdownCancellationToken()
         {
-            var callerCts = new CancellationTokenSource();
             var systemShutdownCts = new CancellationTokenSource();
             QueueProcessorOptions options = new QueueProcessorOptions(_mockQueue.Object, _loggerFactory, _queuesOptions);
-            var queueProcessor = new TestQueueProcessor(options);
+            var testQueueProcessor = new TestQueueProcessor(options);
 
             _mockTriggerExecutor.Setup(x => x.ExecuteAsync(It.IsAny<QueueMessage>(), It.IsAny<CancellationToken>()))
                                .ReturnsAsync(new FunctionResult(true));
@@ -688,59 +670,17 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                _loggerFactory,
                null,
                _queuesOptions,
-               queueProcessor,
+               testQueueProcessor,
                new FunctionDescriptor { Id = TestFunctionId },
                null,
-               drainModeManager: null,
-               shutdownCancellationTokenSource: systemShutdownCts);
+               drainModeManager: null);
 
-            return (listener, queueProcessor, callerCts, systemShutdownCts);
-        }
-
-        [Test]
-        public async Task ProcessMessageAsync_NoTokensCanceled_CallsCompleteProcessingMessageAsync()
-        {
-            // Arrange
-            var (listener, processor, callerCts, shutdownCts) = CreateListenerAndMocks();
+            SetCancellationToken(listener, systemShutdownCts, "_shutdownCancellationTokenSource");
 
             // Act
-            // Neither token is canceled
-            await listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(2), callerCts.Token);
+            await listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(2), CancellationToken.None);
 
-            // TODO verify that the message was processed and deleted
-            Assert.AreEqual(shutdownCts.Token, processor.CapturedDeleteToken);
-        }
-
-        [Test]
-        public async Task ProcessMessageAsync_ShutdownCanceled_GracefulShutdownWithCompleteProcessingMessagesAsyncRENANENE()
-        {
-            // Arrange
-            var (listener, processor, callerCts, shutdownCts) = CreateListenerAndMocks();
-
-            // Act
-            // Cancel the caller token
-            callerCts.Cancel();
-
-            await listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(2), callerCts.Token);
-
-            // TODO verify that the message was processed and deleted
-            Assert.AreEqual(shutdownCts.Token, processor.CapturedDeleteToken);
-        }
-
-        [Test]
-        public async Task ProcessMessageAsync_ShutdownCanceled_GracefulShutdownWithCompleteProcessingMessagesAsync()
-        {
-            // Arrange
-            var (listener, processor, callerCts, shutdownCts) = CreateListenerAndMocks();
-
-            // Act
-            // Cancel the shutdown token
-            shutdownCts.Cancel();
-
-            await listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(2), callerCts.Token);
-
-            // TODO verify that the message was not deleted because this is a forced shutdown
-            Assert.AreEqual(shutdownCts.Token, processor.CapturedDeleteToken);
+            Assert.AreEqual(systemShutdownCts.Token, testQueueProcessor.CapturedDeleteToken);
         }
 
         [Test]
@@ -761,8 +701,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 _mockQueueProcessor.Object,
                 new FunctionDescriptor { Id = TestFunctionId },
                 null,
-                drainModeManager: drainModeManagerMock.Object,
-                executionCancellationTokenSource: executionCancellationTokenSource);
+                drainModeManager: drainModeManagerMock.Object);
+
+            SetCancellationToken(listener, executionCancellationTokenSource, "_executionCancellationTokenSource");
 
             // Act
             await listener.StartAsync(CancellationToken.None);
@@ -791,8 +732,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                 _mockQueueProcessor.Object,
                 new FunctionDescriptor { Id = TestFunctionId },
                 null,
-                drainModeManager: drainModeManagerMock.Object,
-                executionCancellationTokenSource: executionCancellationTokenSource);
+                drainModeManager: drainModeManagerMock.Object);
+
+            SetCancellationToken(listener, executionCancellationTokenSource, "_executionCancellationTokenSource");
 
             // Act
             await listener.StartAsync(CancellationToken.None);
@@ -819,8 +761,9 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
                _mockQueueProcessor.Object,
                new FunctionDescriptor { Id = TestFunctionId },
                null,
-               drainModeManager: null,
-               executionCancellationTokenSource: executionCancellationTokenSource);
+               drainModeManager: null);
+
+            SetCancellationToken(listener, executionCancellationTokenSource, "_executionCancellationTokenSource");
 
             // Act
             await listener.StartAsync(CancellationToken.None);
@@ -829,6 +772,12 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
 
             // Assert
             Assert.IsTrue(executionCancellationTokenSource.Token.IsCancellationRequested, "Execution token should be canceled when drain mode manager is null.");
+        }
+
+        private static void SetCancellationToken(QueueListener listener, CancellationTokenSource cts, string fieldName)
+        {
+            var shutdownTokenField = typeof(QueueListener).GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+            shutdownTokenField.SetValue(listener, cts);
         }
 
         [Test]
@@ -859,6 +808,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var result = localListener.GetTargetScaler();
             Assert.IsNotNull(result);
         }
+
         public class TestFixture : IDisposable
         {
             private const string TestQueuePrefix = "queuelistenertests";

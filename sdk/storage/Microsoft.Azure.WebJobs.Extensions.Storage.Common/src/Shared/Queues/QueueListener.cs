@@ -73,9 +73,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
             ConcurrencyManager concurrencyManager = null,
             string functionId = null,
             TimeSpan? maxPollingInterval = null,
-            IDrainModeManager drainModeManager = null,
-            CancellationTokenSource shutdownCancellationTokenSource = null, // for testing only
-            CancellationTokenSource executionCancellationTokenSource = null) // for testing only
+            IDrainModeManager drainModeManager = null)
         {
             if (queueOptions == null)
             {
@@ -135,8 +133,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners
 
             _delayStrategy = new RandomizedExponentialBackoffStrategy(QueuePollingIntervals.Minimum, maximumInterval);
 
-            _shutdownCancellationTokenSource = shutdownCancellationTokenSource ?? new CancellationTokenSource();
-            _executionCancellationTokenSource = executionCancellationTokenSource ?? new CancellationTokenSource();
+            _shutdownCancellationTokenSource = new CancellationTokenSource();
+            _executionCancellationTokenSource = new CancellationTokenSource();
 
             _concurrencyManager = concurrencyManager;
 
