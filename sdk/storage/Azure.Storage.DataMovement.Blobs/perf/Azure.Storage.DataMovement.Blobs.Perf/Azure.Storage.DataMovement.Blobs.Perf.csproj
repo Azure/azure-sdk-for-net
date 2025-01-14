@@ -4,6 +4,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="System.Private.Uri" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\src\Azure.Storage.DataMovement.Blobs.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\..\common\Perf\Azure.Test.Perf\Azure.Test.Perf.csproj" />
     <ProjectReference Include="$(MSBuildThisFileDirectory)..\..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />

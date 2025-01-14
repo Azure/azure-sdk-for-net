@@ -121,7 +121,8 @@ public class RotatingCertificateCredential : TokenCredential
 
             if (_credentialLastModified < certificateLastModified)
             {
-                _credential = new ClientCertificateCredential(_tenantId, _clientId, new X509Certificate2(_path));
+                var certificate = new X509Certificate2(_path);
+                _credential = new ClientCertificateCredential(_tenantId, _clientId, certificate);
 
                 _credentialLastModified = certificateLastModified;
             }
