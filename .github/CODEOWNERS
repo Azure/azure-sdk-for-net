@@ -592,9 +592,6 @@
 # ServiceLabel: %Logic App
 # ServiceOwners:                                                   @Azure/azure-logicapps-team
 
-# ServiceLabel: %LOUIS
-# ServiceOwners:                                                   @minamnmik
-
 # ServiceLabel: %Managed Identity
 # ServiceOwners:                                                   @varunkch
 
@@ -1040,10 +1037,10 @@
 # ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %New Relic
-/sdk/newrelicobservability/Azure.ResourceManager.*/                @dipeshbhakat-microsoft @vipray-ms
+/sdk/newrelicobservability/Azure.ResourceManager.*/                @vipray-ms
 
 # ServiceLabel: %New Relic %Mgmt
-# ServiceOwners:                                                   @dipeshbhakat-microsoft @vipray-ms
+# ServiceOwners:                                                   @vipray-ms
 
 # PRLabel: %Nginx
 /sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti

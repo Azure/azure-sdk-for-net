@@ -11,8 +11,10 @@ using Tags = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Blobs
 {
-    internal class BlobDestinationCheckpointData : BlobCheckpointData
+    internal class BlobDestinationCheckpointDetails : StorageResourceCheckpointDetails
     {
+        public int Version;
+
         /// <summary>
         /// The type of blob.
         /// </summary>
@@ -64,7 +66,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
         public override int Length => CalculateLength();
 
-        public BlobDestinationCheckpointData(
+        public BlobDestinationCheckpointDetails(
             DataTransferProperty<BlobType?> blobType,
             DataTransferProperty<string> contentType,
             DataTransferProperty<string> contentEncoding,
@@ -74,8 +76,8 @@ namespace Azure.Storage.DataMovement.Blobs
             AccessTier? accessTier,
             DataTransferProperty<Metadata> metadata,
             DataTransferProperty<Tags> tags)
-            : base(DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion)
         {
+            Version = DataMovementBlobConstants.DestinationCheckpointDetails.SchemaVersion;
             BlobType = blobType;
             PreserveBlobType = blobType?.Preserve ?? true;
             BlobTypeValue = blobType?.Value != default ? blobType.Value : default;
@@ -115,7 +117,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
-            int currentVariableLengthIndex = DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex;
+            int currentVariableLengthIndex = DataMovementBlobConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
             BinaryWriter writer = new BinaryWriter(stream);
 
             // Version
@@ -256,7 +258,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
         }
 
-        internal static BlobDestinationCheckpointData Deserialize(Stream stream)
+        internal static BlobDestinationCheckpointDetails Deserialize(Stream stream)
         {
             Argument.AssertNotNull(stream, nameof(stream));
 
@@ -264,9 +266,9 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // Version
             int version = reader.ReadInt32();
-            if (version != DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion)
+            if (version != DataMovementBlobConstants.DestinationCheckpointDetails.SchemaVersion)
             {
-                throw Errors.UnsupportedJobSchemaVersionHeader(version.ToString());
+                throw Errors.UnsupportedJobSchemaVersionHeader(version);
             }
 
             // Index Values
@@ -374,7 +376,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 tagsString = reader.ReadBytes(tagsLength).AsString();
             }
 
-            return new BlobDestinationCheckpointData(
+            return new BlobDestinationCheckpointDetails(
                 blobType: preserveBlobType ? new(preserveBlobType) : new(blobType),
                 contentType: preserveContentType ? new(preserveContentType) : new(contentType),
                 contentEncoding: preserveContentEncoding ? new(preserveContentEncoding): new(contentEncoding),
@@ -390,7 +392,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             // Length is calculated based on whether the property is preserved.
             // If the property is preserved, the property's length is added to the total length.
-            int length = DataMovementBlobConstants.DestinationCheckpointData.VariableLengthStartIndex;
+            int length = DataMovementBlobConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
             if (!PreserveContentType)
             {
                 length += ContentTypeBytes.Length;

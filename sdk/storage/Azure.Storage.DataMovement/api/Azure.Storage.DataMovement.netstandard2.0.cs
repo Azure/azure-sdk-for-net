@@ -39,12 +39,12 @@ namespace Azure.Storage.DataMovement
         protected internal abstract bool IsContainer { get; }
         public abstract string ProviderId { get; }
         public abstract System.Uri Uri { get; }
-        protected internal abstract Azure.Storage.DataMovement.StorageResourceCheckpointData GetDestinationCheckpointData();
-        protected internal abstract Azure.Storage.DataMovement.StorageResourceCheckpointData GetSourceCheckpointData();
+        protected internal abstract Azure.Storage.DataMovement.StorageResourceCheckpointDetails GetDestinationCheckpointDetails();
+        protected internal abstract Azure.Storage.DataMovement.StorageResourceCheckpointDetails GetSourceCheckpointDetails();
     }
-    public abstract partial class StorageResourceCheckpointData
+    public abstract partial class StorageResourceCheckpointDetails
     {
-        protected StorageResourceCheckpointData() { }
+        protected StorageResourceCheckpointDetails() { }
         public abstract int Length { get; }
         protected internal abstract void Serialize(System.IO.Stream stream);
     }
@@ -194,7 +194,6 @@ namespace Azure.Storage.DataMovement
         public Azure.Storage.DataMovement.TransferStatus Status { get { throw null; } }
         public Azure.Storage.DataMovement.TransferManager TransferManager { get { throw null; } }
         public virtual System.Threading.Tasks.Task PauseAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public void WaitForCompletion(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { }
         public System.Threading.Tasks.Task WaitForCompletionAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class TransferOptions : System.IEquatable<Azure.Storage.DataMovement.TransferOptions>
@@ -237,11 +236,11 @@ namespace Azure.Storage.DataMovement
     public partial class TransferProperties
     {
         protected internal TransferProperties() { }
-        public virtual byte[] DestinationCheckpointData { get { throw null; } }
+        public virtual byte[] DestinationCheckpointDetails { get { throw null; } }
         public virtual string DestinationProviderId { get { throw null; } }
         public virtual System.Uri DestinationUri { get { throw null; } }
         public virtual bool IsContainer { get { throw null; } }
-        public virtual byte[] SourceCheckpointData { get { throw null; } }
+        public virtual byte[] SourceCheckpointDetails { get { throw null; } }
         public virtual string SourceProviderId { get { throw null; } }
         public virtual System.Uri SourceUri { get { throw null; } }
         public virtual string TransferId { get { throw null; } }

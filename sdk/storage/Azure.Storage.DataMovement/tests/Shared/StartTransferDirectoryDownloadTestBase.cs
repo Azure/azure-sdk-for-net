@@ -558,124 +558,8 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         [Test]
-        public async Task StartTransfer_EnsureCompleted()
-        {
-            // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
-            string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-
-            // Create transfer to do a EnsureCompleted
-            TransferOptions options = new TransferOptions();
-            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-
-            TransferOperation transfer = await CreateStartTransfer(
-                test.Container,
-                destinationFolder,
-                1,
-                options: options,
-                cancellationToken: cancellationTokenSource.Token);
-
-            // Act
-            TestTransferWithTimeout.WaitForCompletion(
-                transfer,
-                testEventsRaised,
-                cancellationTokenSource.Token);
-
-            // Assert
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            await testEventsRaised.AssertContainerCompletedCheck(4);
-        }
-
-        [Test]
         [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/46717
-        public async Task StartTransfer_EnsureCompleted_Failed()
-        {
-            // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
-            string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-
-            TransferOptions options = new TransferOptions()
-            {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists
-            };
-            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-
-            // Create at least one of the dest files to make it fail
-            File.Create(string.Join("/", destinationFolder, _firstItemName)).Close();
-
-            // Create transfer to do a AwaitCompletion
-            TransferOperation transfer = await CreateStartTransfer(
-                test.Container,
-                destinationFolder,
-                1,
-                options: options,
-                cancellationToken: cancellationTokenSource.Token);
-
-            // Act
-            TestTransferWithTimeout.WaitForCompletion(
-                transfer,
-                testEventsRaised,
-                cancellationTokenSource.Token);
-
-            // Assert
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            Assert.AreEqual(true, transfer.Status.HasFailedItems);
-            Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
-            await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
-        }
-
-        [Test]
-        public async Task StartTransfer_EnsureCompleted_Skipped()
-        {
-            // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
-            string destinationFolder = CreateRandomDirectory(testDirectory.DirectoryPath);
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-
-            // Create transfer options with Skipping available
-            TransferOptions options = new TransferOptions()
-            {
-                CreationPreference = StorageResourceCreationPreference.SkipIfExists
-            };
-            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-
-            // Create at least one of the dest files to make it fail
-            File.Create(string.Join("/", destinationFolder, _firstItemName)).Close();
-
-            // Create transfer to do a EnsureCompleted
-            TransferOperation transfer = await CreateStartTransfer(
-                test.Container,
-                destinationFolder,
-                1,
-                options: options,
-                cancellationToken: cancellationTokenSource.Token);
-
-            // Act
-            TestTransferWithTimeout.WaitForCompletion(
-                transfer,
-                testEventsRaised,
-                cancellationTokenSource.Token);
-
-            // Assert
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            Assert.AreEqual(true, transfer.Status.HasSkippedItems);
-            await testEventsRaised.AssertContainerCompletedWithSkippedCheck(1);
-        }
-
-        [Test]
-        [LiveOnly] // https://github.com/Azure/azure-sdk-for-net/issues/46717
-        public async Task StartTransfer_EnsureCompleted_Failed_SmallChunks()
+        public async Task StartTransfer_AwaitCompletion_Failed_SmallChunks()
         {
             // Arrange
             await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
@@ -704,7 +588,7 @@ namespace Azure.Storage.DataMovement.Tests
                 cancellationToken: cancellationTokenSource.Token);
 
             // Act
-            TestTransferWithTimeout.WaitForCompletion(
+            await TestTransferWithTimeout.WaitForCompletionAsync(
                 transfer,
                 testEventsRaised,
                 cancellationTokenSource.Token);

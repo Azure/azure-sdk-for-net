@@ -44,6 +44,14 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 
 Authentication is specific to the targeted storage service. Please see documentation for the individual services
 
+### Permissions
+
+Data Movement must have appropriate permissions to the storage resources.
+Permissions are specific to the type of storage Data Movement is connected to.
+
+- [Blob storage permissions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement.Blobs/README.md#permissions)
+- [File share permissions](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement.Files.Shares//README.md#permissions)
+
 ## Key concepts
 
 The Azure Storage DataMovement client library contains shared infrastructure like

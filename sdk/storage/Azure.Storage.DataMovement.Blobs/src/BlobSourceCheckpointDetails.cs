@@ -3,9 +3,9 @@
 
 using System.IO;
 
-namespace Azure.Storage.DataMovement.Files.Shares
+namespace Azure.Storage.DataMovement.Blobs
 {
-    internal class ShareFileSourceCheckpointData : StorageResourceCheckpointDataInternal
+    internal class BlobSourceCheckpointDetails : StorageResourceCheckpointDetails
     {
         public override int Length => 0;
 
@@ -13,6 +13,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
         }
 
-        internal static ShareFileSourceCheckpointData Deserialize(Stream stream) => new();
+        internal static BlobSourceCheckpointDetails Deserialize(Stream stream) => new();
     }
 }

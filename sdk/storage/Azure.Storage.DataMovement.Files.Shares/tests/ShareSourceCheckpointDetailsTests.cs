@@ -7,12 +7,12 @@ using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
-    public class ShareSourceCheckpointDataTests
+    public class ShareSourceCheckpointDetailsTests
     {
         [Test]
         public void Ctor()
         {
-            ShareFileSourceCheckpointData data = new();
+            ShareFileSourceCheckpointDetails data = new();
         }
 
         [Test]
@@ -20,7 +20,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         {
             byte[] expected = Array.Empty<byte>();
 
-            ShareFileSourceCheckpointData data = new();
+            ShareFileSourceCheckpointDetails data = new();
             byte[] actual;
             using (MemoryStream stream = new())
             {
@@ -34,11 +34,11 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
         [Test]
         public void Deserialize()
         {
-            ShareFileSourceCheckpointData deserialized;
+            ShareFileSourceCheckpointDetails deserialized;
 
             using (MemoryStream stream = new())
             {
-                deserialized = ShareFileSourceCheckpointData.Deserialize(Stream.Null);
+                deserialized = ShareFileSourceCheckpointDetails.Deserialize(Stream.Null);
             }
         }
     }
