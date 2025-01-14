@@ -24,7 +24,17 @@ namespace Azure.Storage.Blobs
         /// <param name="waitUntil">Indicates whether this invocation should wait until the transfer is complete to return or return immediately.</param>
         /// <param name="localDirectoryPath">The full path to the local directory to be uploaded.</param>
         /// <param name="blobDirectoryPrefix">Optionally specifies the directory prefix to be prepended to all uploaded files.</param>
-        /// <returns>A <see cref="TransferOperation"/> instance which can be used track progress and wait for completion with <see cref="TransferOperation.WaitForCompletionAsync"/>.</returns>
+        /// <returns>
+        /// A <see cref="TransferOperation"/> instance which contains information about the transfer and its status.
+        /// If <paramref name="waitUntil"/> was set to <see cref="WaitUntil.Started"/>, this method will return immediately
+        /// and <see cref="TransferOperation.WaitForCompletionAsync"/> can be used to wait for the transfer to complete.
+        /// </returns>
+        /// <remarks>
+        /// This is an async long-running operation which means once the transfer is complete, regardless of the value of <paramref name="waitUntil"/>,
+        /// the caller should check the status of the transfer using the returned <see cref="TransferOperation"/> instance to determine if the transfer
+        /// completed successfully or not.
+        /// This will not throw an exception if the transfer fails, but the <see cref="TransferOperation.Status"/> will indicate a failure.
+        /// </remarks>
         public static Task<TransferOperation> UploadDirectoryAsync(
             this BlobContainerClient client,
             WaitUntil waitUntil,
@@ -49,7 +59,17 @@ namespace Azure.Storage.Blobs
         /// <param name="waitUntil">Indicates whether this invocation should wait until the transfer is complete to return or return immediately.</param>
         /// <param name="localDirectoryPath">The full path to the local directory to be uploaded.</param>
         /// <param name="options">Options which control the directory upload.</param>
-        /// <returns>A <see cref="TransferOperation"/> instance which can be used track progress and wait for completion with <see cref="TransferOperation.WaitForCompletionAsync"/>.</returns>
+        /// <returns>
+        /// A <see cref="TransferOperation"/> instance which contains information about the transfer and its status.
+        /// If <paramref name="waitUntil"/> was set to <see cref="WaitUntil.Started"/>, this method will return immediately
+        /// and <see cref="TransferOperation.WaitForCompletionAsync"/> can be used to wait for the transfer to complete.
+        /// </returns>
+        /// <remarks>
+        /// This is an async long-running operation which means once the transfer is complete, regardless of the value of <paramref name="waitUntil"/>,
+        /// the caller should check the status of the transfer using the returned <see cref="TransferOperation"/> instance to determine if the transfer
+        /// completed successfully or not.
+        /// This will not throw an exception if the transfer fails, but the <see cref="TransferOperation.Status"/> will indicate a failure.
+        /// </remarks>
         public static async Task<TransferOperation> UploadDirectoryAsync(this BlobContainerClient client, WaitUntil waitUntil, string localDirectoryPath, BlobContainerClientTransferOptions options)
         {
             StorageResource localDirectory = s_filesProvider.Value.FromDirectory(localDirectoryPath);
@@ -74,7 +94,17 @@ namespace Azure.Storage.Blobs
         /// <param name="waitUntil">Indicates whether this invocation should wait until the transfer is complete to return or return immediately.</param>
         /// <param name="localDirectoryPath">The full path to the local directory where files will be dowloaded.</param>
         /// <param name="blobDirectoryPrefix">Optionally restricts the downloaded content to blobs with the specified directory prefix.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// A <see cref="TransferOperation"/> instance which contains information about the transfer and its status.
+        /// If <paramref name="waitUntil"/> was set to <see cref="WaitUntil.Started"/>, this method will return immediately
+        /// and <see cref="TransferOperation.WaitForCompletionAsync"/> can be used to wait for the transfer to complete.
+        /// </returns>
+        /// <remarks>
+        /// This is an async long-running operation which means once the transfer is complete, regardless of the value of <paramref name="waitUntil"/>,
+        /// the caller should check the status of the transfer using the returned <see cref="TransferOperation"/> instance to determine if the transfer
+        /// completed successfully or not.
+        /// This will not throw an exception if the transfer fails, but the <see cref="TransferOperation.Status"/> will indicate a failure.
+        /// </remarks>
         public static Task<TransferOperation> DownloadToDirectoryAsync(
             this BlobContainerClient client,
             WaitUntil waitUntil,
@@ -99,7 +129,17 @@ namespace Azure.Storage.Blobs
         /// <param name="waitUntil">Indicates whether this invocation should wait until the transfer is complete to return or return immediately.</param>
         /// <param name="localDirectoryPath">The full path to the local directory where files will be dowloaded.</param>
         /// <param name="options">Options which control the container download.</param>
-        /// <returns></returns>
+        /// <returns>
+        /// A <see cref="TransferOperation"/> instance which contains information about the transfer and its status.
+        /// If <paramref name="waitUntil"/> was set to <see cref="WaitUntil.Started"/>, this method will return immediately
+        /// and <see cref="TransferOperation.WaitForCompletionAsync"/> can be used to wait for the transfer to complete.
+        /// </returns>
+        /// <remarks>
+        /// This is an async long-running operation which means once the transfer is complete, regardless of the value of <paramref name="waitUntil"/>,
+        /// the caller should check the status of the transfer using the returned <see cref="TransferOperation"/> instance to determine if the transfer
+        /// completed successfully or not.
+        /// This will not throw an exception if the transfer fails, but the <see cref="TransferOperation.Status"/> will indicate a failure.
+        /// </remarks>
         public static async Task<TransferOperation> DownloadToDirectoryAsync(this BlobContainerClient client, WaitUntil waitUntil, string localDirectoryPath, BlobContainerClientTransferOptions options)
         {
             StorageResource localDirectory = s_filesProvider.Value.FromDirectory(localDirectoryPath);
