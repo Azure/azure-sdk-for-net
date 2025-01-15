@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 {
     // Data plane generated client.
     /// <summary> The language service API is a suite of natural language processing (NLP) skills built with best-in-class Microsoft machine learning algorithms. The API can be used to analyze unstructured text for tasks such as sentiment analysis, key phrase extraction, language detection and question answering. Further documentation can be found in &lt;a href="https://docs.microsoft.com/en-us/azure/cognitive-services/language-service/overview"&gt;https://docs.microsoft.com/en-us/azure/cognitive-services/language-service/overview&lt;/a&gt;. </summary>
-    public partial class AuthoringClient
+    public partial class AnalyzeConversationClient
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
@@ -28,37 +28,37 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of AuthoringClient for mocking. </summary>
-        protected AuthoringClient()
+        /// <summary> Initializes a new instance of AnalyzeConversationClient for mocking. </summary>
+        protected AnalyzeConversationClient()
         {
         }
 
-        /// <summary> Initializes a new instance of AuthoringClient. </summary>
+        /// <summary> Initializes a new instance of AnalyzeConversationClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AuthoringClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AuthoringClientOptions())
+        public AnalyzeConversationClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AnalyzeConversationClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of AuthoringClient. </summary>
+        /// <summary> Initializes a new instance of AnalyzeConversationClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AuthoringClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AuthoringClientOptions())
+        public AnalyzeConversationClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AnalyzeConversationClientOptions())
         {
         }
 
-        /// <summary> Initializes a new instance of AuthoringClient. </summary>
+        /// <summary> Initializes a new instance of AnalyzeConversationClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AuthoringClient(Uri endpoint, AzureKeyCredential credential, AuthoringClientOptions options)
+        public AnalyzeConversationClient(Uri endpoint, AzureKeyCredential credential, AnalyzeConversationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AuthoringClientOptions();
+            options ??= new AnalyzeConversationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
@@ -66,16 +66,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             _endpoint = endpoint;
         }
 
-        /// <summary> Initializes a new instance of AuthoringClient. </summary>
+        /// <summary> Initializes a new instance of AnalyzeConversationClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AuthoringClient(Uri endpoint, TokenCredential credential, AuthoringClientOptions options)
+        public AnalyzeConversationClient(Uri endpoint, TokenCredential credential, AnalyzeConversationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AuthoringClientOptions();
+            options ??= new AnalyzeConversationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;

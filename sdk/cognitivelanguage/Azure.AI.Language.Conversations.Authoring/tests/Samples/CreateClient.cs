@@ -25,8 +25,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             endpoint = TestEnvironment.Endpoint;
             credential = new(TestEnvironment.ApiKey);
 #endif
-            AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-            AuthoringClient client = new AuthoringClient(endpoint, credential, options);
+            AnalyzeConversationClientOptions options = new AnalyzeConversationClientOptions(AnalyzeConversationClientOptions.ServiceVersion.V2024_11_15_Preview);
+            AnalyzeConversationClient client = new AnalyzeConversationClient(endpoint, credential, options);
             AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
             #endregion
         }
@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
             endpoint = TestEnvironment.Endpoint;
 #endif
             DefaultAzureCredential credential = new DefaultAzureCredential();
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            AnalyzeConversationClient client = new AnalyzeConversationClient(endpoint, credential);
             AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
             #endregion
         }
@@ -50,7 +50,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
+            AnalyzeConversationClient client = new AnalyzeConversationClient(endpoint, credential);
             AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
 
             #region Snippet:AuthoringClient_BadRequest
