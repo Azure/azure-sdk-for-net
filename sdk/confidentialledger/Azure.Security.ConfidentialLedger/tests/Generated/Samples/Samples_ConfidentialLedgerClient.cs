@@ -1630,64 +1630,6 @@ roleActions = new object[]
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_GetLedgerIdentity_ShortVersion()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint, credential);
-
-            Response response = client.GetLedgerIdentity("<ledgerId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLedgerIdentity_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint, credential);
-
-            Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_GetLedgerIdentity_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint, credential);
-
-            Response response = client.GetLedgerIdentity("<ledgerId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("ledgerId").ToString());
-            Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_GetLedgerIdentity_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            ConfidentialLedgerClient client = new ConfidentialLedgerClient(endpoint, credential);
-
-            Response response = await client.GetLedgerIdentityAsync("<ledgerId>");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("ledgerId").ToString());
-            Console.WriteLine(result.GetProperty("ledgerTlsCertificate").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_GetConsortiumMembers_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
