@@ -20,8 +20,10 @@ $changedServicesArray = $packageProperties | Where-Object { $packageSet -contain
 | ForEach-Object { $_.ServiceDirectory } | Get-Unique
 $changedServices = $changedServicesArray -join ","
 
-$changedProjects = $packageProperties | Where-Object { $packageSet -contains $_.ArtifactName }
-| ForEach-Object { "$($_.DirectoryPath)/**/*.csproj" }
+$changedProjects = @()
+
+$packageProperties | Where-Object { $packageSet -contains $_.ArtifactName }
+| ForEach-Object { $changedProjects += "$($_.DirectoryPath)/tests/**/*.csproj"; $changedProjects += "$($_.DirectoryPath)/src/**/*.csproj" }
 
 $projectsForGeneration = ($changedProjects | ForEach-Object { "`$(RepoRoot)$_" } | Sort-Object)
 $projectGroups = @()
