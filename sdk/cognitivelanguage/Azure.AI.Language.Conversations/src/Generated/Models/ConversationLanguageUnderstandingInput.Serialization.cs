@@ -62,7 +62,7 @@ namespace Azure.AI.Language.Conversations.Models
                 return null;
             }
             ConversationAnalysisInput analysisInput = default;
-            ConversationLanguageUnderstandingActionContent parameters = default;
+            ConversationActionContent parameters = default;
             AnalyzeConversationInputKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -75,7 +75,7 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 if (property.NameEquals("parameters"u8))
                 {
-                    parameters = ConversationLanguageUnderstandingActionContent.DeserializeConversationLanguageUnderstandingActionContent(property.Value, options);
+                    parameters = ConversationActionContent.DeserializeConversationActionContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))

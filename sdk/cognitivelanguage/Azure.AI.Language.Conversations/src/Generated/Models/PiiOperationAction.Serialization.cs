@@ -62,7 +62,7 @@ namespace Azure.AI.Language.Conversations.Models
             {
                 return null;
             }
-            ConversationPiiActionContent parameters = default;
+            PiiActionContent parameters = default;
             string taskName = default;
             AnalyzeConversationOperationActionKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -75,7 +75,7 @@ namespace Azure.AI.Language.Conversations.Models
                     {
                         continue;
                     }
-                    parameters = ConversationPiiActionContent.DeserializeConversationPiiActionContent(property.Value, options);
+                    parameters = PiiActionContent.DeserializePiiActionContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("taskName"u8))
