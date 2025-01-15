@@ -150,4 +150,3 @@ namespace Azure.AI.OpenAI.Chat
         internal string IndexName { get; set; }
     }
 }
-

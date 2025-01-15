@@ -18,18 +18,18 @@ namespace Azure.Communication.CallAutomation
         /// <summary> Initializes a new instance of <see cref="IncomingCallInternal"/>. </summary>
         /// <param name="to"> The communication identifier of the target user. </param>
         /// <param name="from"> The communication identifier of the user who initiated the call. </param>
-        /// <param name="serverCallId"> The server call id. </param>
         /// <param name="callerDisplayName"> Display name of caller. </param>
+        /// <param name="serverCallId"> The server call id. </param>
         /// <param name="customContext"> Custom Context of Incoming Call. </param>
         /// <param name="incomingCallContext"> Incoming call context. </param>
         /// <param name="onBehalfOfCallee"> The communication identifier of the user on behalf of whom the call is made. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
-        internal IncomingCallInternal(CommunicationIdentifierModel to, CommunicationIdentifierModel @from, string serverCallId, string callerDisplayName, CustomCallingContextInternal customContext, string incomingCallContext, CommunicationIdentifierModel onBehalfOfCallee, string correlationId)
+        internal IncomingCallInternal(CommunicationIdentifierModel to, CommunicationIdentifierModel @from, string callerDisplayName, string serverCallId, CustomCallingContextInternal customContext, string incomingCallContext, CommunicationIdentifierModel onBehalfOfCallee, string correlationId)
         {
             To = to;
             From = @from;
-            ServerCallId = serverCallId;
             CallerDisplayName = callerDisplayName;
+            ServerCallId = serverCallId;
             CustomContext = customContext;
             IncomingCallContext = incomingCallContext;
             OnBehalfOfCallee = onBehalfOfCallee;
@@ -40,10 +40,10 @@ namespace Azure.Communication.CallAutomation
         public CommunicationIdentifierModel To { get; }
         /// <summary> The communication identifier of the user who initiated the call. </summary>
         public CommunicationIdentifierModel From { get; }
-        /// <summary> The server call id. </summary>
-        public string ServerCallId { get; }
         /// <summary> Display name of caller. </summary>
         public string CallerDisplayName { get; }
+        /// <summary> The server call id. </summary>
+        public string ServerCallId { get; }
         /// <summary> Custom Context of Incoming Call. </summary>
         public CustomCallingContextInternal CustomContext { get; }
         /// <summary> Incoming call context. </summary>

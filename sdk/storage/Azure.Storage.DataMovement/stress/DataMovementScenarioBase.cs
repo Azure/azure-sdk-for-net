@@ -14,31 +14,31 @@ namespace Azure.Storage.DataMovement.Stress;
 public abstract class DataMovementScenarioBase : TestScenarioBase, IDisposable
 {
     protected internal readonly TransferManagerOptions _transferManagerOptions;
-    protected internal readonly DataTransferOptions _dataTransferOptions;
+    protected internal readonly TransferOptions _transferOptions;
 
     public DataMovementScenarioBase(
         TransferManagerOptions transferManagerOptions,
-        DataTransferOptions dataTransferOptions,
+        TransferOptions transferOptions,
         Metrics metrics,
         string testRunId)
         : base(metrics, testRunId)
     {
         _transferManagerOptions = transferManagerOptions;
-        _dataTransferOptions = dataTransferOptions;
+        _transferOptions = transferOptions;
 
         // Add metric call backs when transfer has updated
-        _dataTransferOptions.TransferStatusChanged += AddStatusMetricArg;
-        _dataTransferOptions.ItemTransferFailed += AddFailedMetricArg;
-        _dataTransferOptions.ItemTransferCompleted += AddCompletedItemMetricArg;
-        _dataTransferOptions.ItemTransferSkipped += AddSkippedItemMetricArg;
+        _transferOptions.TransferStatusChanged += AddStatusMetricArg;
+        _transferOptions.ItemTransferFailed += AddFailedMetricArg;
+        _transferOptions.ItemTransferCompleted += AddCompletedItemMetricArg;
+        _transferOptions.ItemTransferSkipped += AddSkippedItemMetricArg;
     }
 
     public void Dispose()
     {
-        _dataTransferOptions.TransferStatusChanged -= AddStatusMetricArg;
-        _dataTransferOptions.ItemTransferFailed -= AddFailedMetricArg;
-        _dataTransferOptions.ItemTransferCompleted -= AddCompletedItemMetricArg;
-        _dataTransferOptions.ItemTransferSkipped -= AddSkippedItemMetricArg;
+        _transferOptions.TransferStatusChanged -= AddStatusMetricArg;
+        _transferOptions.ItemTransferFailed -= AddFailedMetricArg;
+        _transferOptions.ItemTransferCompleted -= AddCompletedItemMetricArg;
+        _transferOptions.ItemTransferSkipped -= AddSkippedItemMetricArg;
     }
 
     private Task AddFailedMetricArg(TransferItemFailedEventArgs args)

@@ -136,7 +136,7 @@ For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or conta
 <!-- LINKS -->
 [microsoft_sdk_download]: https://azure.microsoft.com/downloads/?sdk=net
 [azure_sdk_target_frameworks]: https://github.com/azure/azure-sdk-for-net#target-frameworks
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/digitaltwins/Azure.DigitalTwins.Core/src
 [package]: https://www.nuget.org/packages/Azure.DigitalTwins.Core
@@ -144,12 +144,12 @@ For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or conta
 [code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [nuget]: https://www.nuget.org/
 [azure_portal]: https://portal.azure.com/
-[azure_rest_api]: https://docs.microsoft.com/rest/api/azure/
+[azure_rest_api]: https://learn.microsoft.com/rest/api/azure/
 [azure_core_library]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core
-[token_credential]: https://docs.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet
+[token_credential]: https://learn.microsoft.com/dotnet/api/azure.core.tokencredential?view=azure-dotnet
 [digital_twins_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/digitaltwins/Azure.DigitalTwins.Core/src/DigitalTwinsClient.cs
-[digital_twins_documentation]: https://docs.microsoft.com/azure/digital-twins/
+[digital_twins_documentation]: https://learn.microsoft.com/azure/digital-twins/
 [iot_cli_extension]: https://github.com/Azure/azure-iot-cli-extension/releases
-[iot_cli_doc]: https://docs.microsoft.com/cli/azure/azure-cli-reference-for-iot
-[http_status_code]: https://docs.microsoft.com/dotnet/api/system.net.httpstatuscode?view=netcore-3.1
+[iot_cli_doc]: https://learn.microsoft.com/cli/azure/azure-cli-reference-for-iot
+[http_status_code]: https://learn.microsoft.com/dotnet/api/system.net.httpstatuscode?view=netcore-3.1
 [adt_nuget]: https://www.nuget.org/packages/Azure.DigitalTwins.Core

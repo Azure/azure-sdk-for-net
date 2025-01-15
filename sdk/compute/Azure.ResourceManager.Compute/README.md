@@ -41,7 +41,7 @@ using Azure.ResourceManager;
 ArmClient armClient = new ArmClient(new DefaultAzureCredential());
 ```
 
-More documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://docs.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
+More documentation for the `Azure.Identity.DefaultAzureCredential` class can be found in [this document](https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential).
 
 ## Key concepts
 

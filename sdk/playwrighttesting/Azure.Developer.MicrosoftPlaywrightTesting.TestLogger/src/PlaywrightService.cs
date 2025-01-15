@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
@@ -138,6 +139,7 @@ public class PlaywrightService
     private readonly EntraLifecycle? _entraLifecycle;
     private readonly JsonWebTokenHandler? _jsonWebTokenHandler;
     private IFrameworkLogger? _frameworkLogger;
+    private IConsoleWriter? _consoleWriter;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PlaywrightService"/> class.
@@ -175,10 +177,11 @@ public class PlaywrightService
         _frameworkLogger = frameworkLogger;
         _entraLifecycle = new EntraLifecycle(tokenCredential: credential, frameworkLogger: _frameworkLogger);
         _jsonWebTokenHandler = new JsonWebTokenHandler();
+        _consoleWriter = new ConsoleWriter();
         InitializePlaywrightServiceEnvironmentVariables(GetServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
     }
 
-    internal PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? credential = null, IFrameworkLogger? frameworkLogger = null)
+    internal PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? credential = null, IFrameworkLogger? frameworkLogger = null, IConsoleWriter? consoleWriter = null)
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
             return;
@@ -186,6 +189,7 @@ public class PlaywrightService
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
         _entraLifecycle = entraLifecycle ?? new EntraLifecycle(credential, _jsonWebTokenHandler, _frameworkLogger);
         _frameworkLogger = frameworkLogger;
+        _consoleWriter = consoleWriter ?? new ConsoleWriter();
         InitializePlaywrightServiceEnvironmentVariables(GetServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
     }
 
@@ -257,6 +261,7 @@ public class PlaywrightService
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, null);
             return;
         }
+        PerformOneTimeOperation();
         // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler
         if (ServiceAuth == ServiceAuthType.AccessToken)
         {
@@ -276,6 +281,20 @@ public class PlaywrightService
     {
         _frameworkLogger?.Info("Cleaning up Playwright service resources.");
         RotationTimer?.Dispose();
+    }
+    internal void PerformOneTimeOperation()
+    {
+        var oneTimeOperationFlag = Environment.GetEnvironmentVariable(Constants.s_playwright_service_one_time_operation_flag_environment_variable) == "true";
+
+        if (oneTimeOperationFlag)
+            return;
+
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_one_time_operation_flag_environment_variable, "true");
+
+        if (ServiceAuth == ServiceAuthType.AccessToken)
+        {
+            WarnIfAccessTokenCloseToExpiry();
+        }
     }
 
     internal async void RotationHandlerAsync(object? _)
@@ -343,6 +362,29 @@ public class PlaywrightService
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceExposeNetwork, Constants.s_default_expose_network);
         }
         SetReportingUrlAndWorkspaceId();
+    }
+    internal virtual void WarnIfAccessTokenCloseToExpiry()
+    {
+        string accessToken =  GetAuthToken()!;
+        JsonWebToken jsonWebToken = _jsonWebTokenHandler!.ReadJsonWebToken(accessToken) ?? throw new Exception(Constants.s_invalid_mpt_pat_error);
+        long currentTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        long exp = new DateTimeOffset(jsonWebToken.ValidTo).ToUnixTimeMilliseconds();
+        if (PlaywrightService.IsTokenExpiringSoon(exp, currentTime))
+        {
+            WarnAboutTokenExpiry(exp, currentTime);
+        }
+    }
+    internal static bool IsTokenExpiringSoon(long expirationTime, long currentTime)
+    {
+        return expirationTime - currentTime <= Constants.s_sevenDaysInMs;
+    }
+
+    internal virtual void WarnAboutTokenExpiry(long expirationTime, long currentTime)
+    {
+        int daysToExpiration = (int)Math.Ceiling((expirationTime - currentTime) / (double)Constants.s_oneDayInMs);
+        string expirationDate = DateTimeOffset.FromUnixTimeMilliseconds(expirationTime).UtcDateTime.ToString("d");
+        string expirationWarning = string.Format(Constants.s_token_expiry_warning_template, daysToExpiration, expirationDate);
+        _consoleWriter?.WriteLine(expirationWarning);
     }
 
     internal static string GetDefaultRunId()

@@ -358,21 +358,27 @@
         "grek",
         "gujr",
         "gurmukhi",
+        "hani",
         "hebr",
         "inclusivity",
         "jpan",
         "khmr",
         "knda",
         "laoo",
+        "meitei",
         "mlym",
+        "mtei",
         "mymr",
         "nigiri",
         "odia",
+        "olck",
         "orya",
         "petabit",
         "picometer",
         "qnas",
         "regon",
+        "sharada",
+        "shrd",
         "taml",
         "telu",
         "thaa",
@@ -834,6 +840,7 @@
         "Gcmaes",
         "Generatevirtualwanvpnserverconfigurationvpnprofile",
         "ikev",
+        "ipam",
         "Ipconfiguration",
         "Mbps",
         "Nics",
@@ -1617,6 +1624,18 @@
       "words": [
         "AOAI",
         "Rerank"
+      ]
+    },
+    {
+      "filename": "**/sdk/cognitivelanguage/Azure.AI.Language.Text.Authoring/api/*.cs",
+      "words": [
+        "prebuilts"
+      ]
+    },
+    {
+      "filename": "**/sdk/cognitivelanguage/Azure.AI.Language.Conversations.Authoring/api/*.cs",
+      "words": [
+        "prebuilts"
       ]
     }
   ],

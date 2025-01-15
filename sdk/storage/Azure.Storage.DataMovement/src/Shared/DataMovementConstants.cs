@@ -20,6 +20,7 @@ namespace Azure.Storage.DataMovement
             internal const int JobPartCapacity = 1000;
             internal const int JobChunkCapacity = 1000;
             internal const int DownloadChunkCapacity = 16;
+            internal const int StageChunkCapacity = 1000;
         }
 
         internal static class ConcurrencyTuner
@@ -71,18 +72,16 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal static class JobPlanFile
         {
-            internal const string SchemaVersion_b1 = "b1";
-            internal const string SchemaVersion = SchemaVersion_b1;
+            internal const int SchemaVersion_1 = 1;
+            internal const int SchemaVersion = SchemaVersion_1;
 
             internal const string FileExtension = ".ndm";
 
-            internal const int VersionStrLength = 2;
-            internal const int VersionStrNumBytes = VersionStrLength * 2;
             internal const int ProviderIdMaxLength = 5;
             internal const int ProviderIdNumBytes = ProviderIdMaxLength * 2;
 
             internal const int VersionIndex = 0;
-            internal const int TransferIdIndex = VersionIndex + VersionStrNumBytes;
+            internal const int TransferIdIndex = VersionIndex + IntSizeInBytes;
             internal const int CrateTimeIndex = TransferIdIndex + GuidSizeInBytes;
             internal const int OperationTypeIndex = CrateTimeIndex + LongSizeInBytes;
             internal const int SourceProviderIdIndex = OperationTypeIndex + OneByte;
@@ -94,11 +93,11 @@ namespace Azure.Storage.DataMovement
             internal const int ParentSourcePathLengthIndex = ParentSourcePathOffsetIndex + IntSizeInBytes;
             internal const int ParentDestPathOffsetIndex = ParentSourcePathLengthIndex + IntSizeInBytes;
             internal const int ParentDestPathLengthIndex = ParentDestPathOffsetIndex + IntSizeInBytes;
-            internal const int SourceCheckpointDataOffsetIndex = ParentDestPathLengthIndex + IntSizeInBytes;
-            internal const int SourceCheckpointDataLengthIndex = SourceCheckpointDataOffsetIndex + IntSizeInBytes;
-            internal const int DestinationCheckpointDataOffsetIndex = SourceCheckpointDataLengthIndex + IntSizeInBytes;
-            internal const int DestinationCheckpointDataLengthIndex = DestinationCheckpointDataOffsetIndex + IntSizeInBytes;
-            internal const int VariableLengthStartIndex = DestinationCheckpointDataLengthIndex + IntSizeInBytes;
+            internal const int SourceCheckpointDetailsOffsetIndex = ParentDestPathLengthIndex + IntSizeInBytes;
+            internal const int SourceCheckpointDetailsLengthIndex = SourceCheckpointDetailsOffsetIndex + IntSizeInBytes;
+            internal const int DestinationCheckpointDetailsOffsetIndex = SourceCheckpointDetailsLengthIndex + IntSizeInBytes;
+            internal const int DestinationCheckpointDetailsLengthIndex = DestinationCheckpointDetailsOffsetIndex + IntSizeInBytes;
+            internal const int VariableLengthStartIndex = DestinationCheckpointDetailsLengthIndex + IntSizeInBytes;
         }
 
         /// <summary>
@@ -106,10 +105,8 @@ namespace Azure.Storage.DataMovement
         /// </summary>
         internal static class JobPartPlanFile
         {
-            internal const string SchemaVersion_b1 = "b1";
-            internal const string SchemaVersion_b2 = "b2";
-            internal const string SchemaVersion_b3 = "b3";
-            internal const string SchemaVersion = SchemaVersion_b3; // TODO: remove b for beta
+            internal const int SchemaVersion_1 = 1;
+            internal const int SchemaVersion = SchemaVersion_1;
 
             // Job Plan file extension. e.g. the file extension will look like {transferid}.{jobpartNumber}.ndmpart
             internal const string FileExtension = ".ndmpart";
@@ -117,13 +114,11 @@ namespace Azure.Storage.DataMovement
             internal const int IdSize = 36; // Size of a guid with hyphens
 
             // UTF-8 encoding, so 2 bytes per char
-            internal const int VersionStrLength = 2;
-            internal const int VersionStrNumBytes = VersionStrLength * 2;
             internal const int TypeIdMaxStrLength = 10;
             internal const int TypeIdNumBytes = TypeIdMaxStrLength * 2;
 
             internal const int VersionIndex = 0;
-            internal const int TransferIdIndex = VersionIndex + VersionStrNumBytes;
+            internal const int TransferIdIndex = VersionIndex + IntSizeInBytes;
             internal const int PartNumberIndex = TransferIdIndex + GuidSizeInBytes;
             internal const int CreateTimeIndex = PartNumberIndex + LongSizeInBytes;
             internal const int SourceTypeIdIndex = CreateTimeIndex + LongSizeInBytes;
