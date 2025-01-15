@@ -28,6 +28,7 @@ The main shared concepts of Azure.Core (and so Azure SDK libraries using Azure.C
 - Exceptions for reporting errors from service requests in a consistent fashion. (`RequestFailedException`).
 - Customizing requests (`RequestContext`).
 - Abstractions for representing Azure SDK credentials. (`TokenCredentials`).
+- An edit that will never merge
 
 Below, you will find sections explaining these shared concepts in more detail.
 
