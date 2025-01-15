@@ -78,6 +78,7 @@ rename-mapping:
   Console.properties.privateLinkServiceId: -|arm-id
   Console.properties.virtualMachineAccessId: -|uuid
   ConsolePatchParameters.properties.expiration: ExpireOn
+  IdentitySelector: ManagedServiceIdentitySelector
   ImageRepositoryCredentials.registryUrl: registryUriString
   KubernetesCluster.properties.attachedNetworkIds: -|arm-id
   KubernetesCluster.properties.clusterId: -|arm-id

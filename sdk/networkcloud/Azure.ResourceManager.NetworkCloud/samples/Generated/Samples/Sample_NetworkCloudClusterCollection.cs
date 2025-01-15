@@ -90,7 +90,7 @@ StorageApplianceName = "vmName",
                 },
                 CommandOutputSettings = new CommandOutputSettings
                 {
-                    AssociatedIdentity = new IdentitySelector
+                    AssociatedIdentity = new ManagedServiceIdentitySelector
                     {
                         IdentityType = ManagedServiceIdentitySelectorType.UserAssignedIdentity,
                         UserAssignedIdentityResourceId = new ResourceIdentifier("/subscriptions/123e4567-e89b-12d3-a456-426655440000/resourceGroups/resourceGroupName/providers/Microsoft.ManagedIdentity/userAssignedIdentities/userIdentity1"),

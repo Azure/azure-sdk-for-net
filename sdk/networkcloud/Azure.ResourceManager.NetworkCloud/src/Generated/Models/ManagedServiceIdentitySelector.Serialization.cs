@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
-    public partial class IdentitySelector : IUtf8JsonSerializable, IJsonModel<IdentitySelector>
+    public partial class ManagedServiceIdentitySelector : IUtf8JsonSerializable, IJsonModel<ManagedServiceIdentitySelector>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<IdentitySelector>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ManagedServiceIdentitySelector>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<IdentitySelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ManagedServiceIdentitySelector>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentitySelector>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentitySelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentitySelector)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServiceIdentitySelector)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(IdentityType))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             }
         }
 
-        IdentitySelector IJsonModel<IdentitySelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ManagedServiceIdentitySelector IJsonModel<ManagedServiceIdentitySelector>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentitySelector>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentitySelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentitySelector)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServiceIdentitySelector)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeIdentitySelector(document.RootElement, options);
+            return DeserializeManagedServiceIdentitySelector(document.RootElement, options);
         }
 
-        internal static IdentitySelector DeserializeIdentitySelector(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ManagedServiceIdentitySelector DeserializeManagedServiceIdentitySelector(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new IdentitySelector(identityType, userAssignedIdentityResourceId, serializedAdditionalRawData);
+            return new ManagedServiceIdentitySelector(identityType, userAssignedIdentityResourceId, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<IdentitySelector>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ManagedServiceIdentitySelector>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentitySelector>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentitySelector>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IdentitySelector)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServiceIdentitySelector)} does not support writing '{options.Format}' format.");
             }
         }
 
-        IdentitySelector IPersistableModel<IdentitySelector>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ManagedServiceIdentitySelector IPersistableModel<ManagedServiceIdentitySelector>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<IdentitySelector>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceIdentitySelector>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeIdentitySelector(document.RootElement, options);
+                        return DeserializeManagedServiceIdentitySelector(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IdentitySelector)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServiceIdentitySelector)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<IdentitySelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ManagedServiceIdentitySelector>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
