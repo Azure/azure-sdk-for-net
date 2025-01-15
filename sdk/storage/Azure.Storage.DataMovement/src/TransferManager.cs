@@ -68,9 +68,9 @@ namespace Azure.Storage.DataMovement
                 readers: options?.MaximumConcurrency ?? DataMovementConstants.Channels.MaxJobChunkReaders,
                 capacity: DataMovementConstants.Channels.JobChunkCapacity),
             new(ArrayPool<byte>.Shared,
-                options?.ErrorHandling ?? TransferErrorMode.StopOnAnyFailure,
+                options?.ErrorMode ?? TransferErrorMode.StopOnAnyFailure,
                 new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default)),
-                CheckpointerExtensions.BuildCheckpointer(options?.CheckpointerOptions),
+                CheckpointerExtensions.BuildCheckpointer(options?.CheckpointStoreOptions),
                 options?.ResumeProviders != null ? new List<StorageResourceProvider>(options.ResumeProviders) : new(),
                 default)
         {}
@@ -132,13 +132,13 @@ namespace Azure.Storage.DataMovement
         /// Return true once the transfer has been successfully paused or false if the transfer
         /// was already completed.
         /// </returns>
-        public virtual async Task PauseTransferIfRunningAsync(string transferId, CancellationToken cancellationToken = default)
+        public virtual async Task PauseTransferAsync(string transferId, CancellationToken cancellationToken = default)
         {
             cancellationToken = LinkCancellation(cancellationToken);
             Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
             if (!_transfers.TryGetValue(transferId, out TransferOperation transfer))
             {
-                throw Errors.InvalidTransferId(nameof(PauseTransferIfRunningAsync), transferId);
+                throw Errors.InvalidTransferId(nameof(PauseTransferAsync), transferId);
             }
             await transfer.PauseAsync(cancellationToken: cancellationToken).ConfigureAwait(false);
         }
