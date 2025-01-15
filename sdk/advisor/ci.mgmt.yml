@@ -1,7 +1,20 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
+
 pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/advisor/ci.mgmt.yml
+    - sdk/advisor/Azure.ResourceManager.Advisor/
+
+
   branches:
     include:
     - main

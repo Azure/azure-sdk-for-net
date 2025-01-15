@@ -1,5 +1,18 @@
 trigger: none
+
 pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/paloaltonetworks.ngfw/ci.mgmt.yml
+    - sdk/paloaltonetworks.ngfw/Azure.ResourceManager.PaloAltoNetworks.Ngfw/
+
+
   branches:
     include:
     - main
