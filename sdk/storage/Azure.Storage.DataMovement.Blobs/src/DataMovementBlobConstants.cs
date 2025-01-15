@@ -14,12 +14,12 @@ namespace Azure.Storage.DataMovement.Blobs
             internal const string AppendBlob = "AppendBlob";
         }
 
-        internal class SourceCheckpointData
+        internal class SourceCheckpointDetails
         {
             internal const int DataSize = 0;
         }
 
-        internal class DestinationCheckpointData
+        internal class DestinationCheckpointDetails
         {
             internal const int SchemaVersion_3 = 3;
             internal const int SchemaVersion = SchemaVersion_3;

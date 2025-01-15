@@ -248,8 +248,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -271,7 +271,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            await transferManager.PauseTransferIfRunningAsync(transfer.Id, cancellationTokenSource.Token);
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
             await testEventsRaised.AssertPausedCheck();
@@ -302,8 +302,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferOptions transferOptions = new TransferOptions();
@@ -325,7 +325,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            await transferManager.PauseTransferIfRunningAsync(transfer.Id, cancellationTokenSource.Token);
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
             await testEventsRaised.AssertPausedCheck();
@@ -346,13 +346,13 @@ namespace Azure.Storage.DataMovement.Tests
             using DisposingLocalDirectory checkpointerDirectory = DisposingLocalDirectory.GetTestDirectory();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure
             };
             TransferManager transferManager = new TransferManager(options);
 
             // Act / Assert
-            Assert.CatchAsync(async () => await transferManager.PauseTransferIfRunningAsync("bad transfer Id"));
+            Assert.CatchAsync(async () => await transferManager.PauseTransferAsync("bad transfer Id"));
         }
 
         [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
@@ -372,8 +372,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferOptions transferOptions = new TransferOptions();
@@ -395,14 +395,14 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            await transferManager.PauseTransferIfRunningAsync(transfer.Id, cancellationTokenSource.Token);
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
             await testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             CancellationTokenSource cancellationTokenSource2 = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            await transferManager.PauseTransferIfRunningAsync(transfer.Id, cancellationTokenSource2.Token);
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource2.Token);
 
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
@@ -432,8 +432,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferOptions transferOptions = new TransferOptions();
@@ -460,7 +460,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act - Pause Job
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            await transferManager.PauseTransferIfRunningAsync(transfer.Id, cancellationTokenSource.Token);
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert - Confirm we've paused
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
@@ -470,7 +470,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOptions resumeOptions = new TransferOptions()
             {
                 // Enable overwrite on resume, to overwrite destination.
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists
+                CreationPreference = StorageResourceCreationMode.OverwriteIfExists
             };
             TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
             TransferOperation resumeTransfer = await transferManager.ResumeTransferAsync(
@@ -512,8 +512,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferOptions transferOptions = new TransferOptions();
@@ -540,7 +540,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act - Pause Job
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            await transferManager.PauseTransferIfRunningAsync(transfer.Id, cancellationTokenSource.Token);
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert - Confirm we've paused
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
@@ -587,8 +587,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -619,7 +619,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act - Pause Job
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            await transferManager.PauseTransferIfRunningAsync(transfer.Id, cancellationTokenSource.Token);
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             // Act - Resume Job
@@ -833,8 +833,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -859,7 +859,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            await transferManager.PauseTransferIfRunningAsync(transfer.Id, cancellationTokenSource.Token);
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
             await testEventsRaised.AssertPausedCheck();
@@ -885,8 +885,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -911,7 +911,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            await transferManager.PauseTransferIfRunningAsync(transfer.Id, cancellationTokenSource.Token);
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
             await testEventsRaised.AssertPausedCheck();
@@ -937,8 +937,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -963,14 +963,14 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            await transferManager.PauseTransferIfRunningAsync(transfer.Id, cancellationTokenSource.Token);
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
             await testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             CancellationTokenSource cancellationTokenSource2 = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            await transferManager.PauseTransferIfRunningAsync(transfer.Id, cancellationTokenSource2.Token);
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource2.Token);
 
             await testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
@@ -995,8 +995,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -1030,7 +1030,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act - Pause Job
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(100));
-            await transferManager.PauseTransferIfRunningAsync(transfer.Id, cancellationTokenSource.Token);
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert - Confirm we've paused
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
@@ -1040,7 +1040,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Act - Resume Job
             TransferOptions resumeOptions = new()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists
+                CreationPreference = StorageResourceCreationMode.OverwriteIfExists
             };
             TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
             TransferOperation resumeTransfer = await transferManager.ResumeTransferAsync(
@@ -1083,8 +1083,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -1118,7 +1118,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act - Pause Job
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(100));
-            await transferManager.PauseTransferIfRunningAsync(transfer.Id, cancellationTokenSource.Token);
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert - Confirm we've paused
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
@@ -1128,7 +1128,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Act - Resume Job
             TransferOptions resumeOptions = new()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists
+                CreationPreference = StorageResourceCreationMode.OverwriteIfExists
             };
             TestEventsRaised testEventsRaised2 = new TestEventsRaised(resumeOptions);
             TransferOperation resumeTransfer = await transferManager.ResumeTransferAsync(
@@ -1178,8 +1178,8 @@ namespace Azure.Storage.DataMovement.Tests
             LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
-                CheckpointerOptions = TransferCheckpointStoreOptions.Local(checkpointerDirectory.DirectoryPath),
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 ResumeProviders = new() { blobProvider, localProvider },
             };
             TransferManager transferManager = new TransferManager(options);
@@ -1210,7 +1210,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Pause Transfer
             CancellationTokenSource pauseCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transferManager.PauseTransferIfRunningAsync(transfer.Id, pauseCancellation.Token);
+            await transferManager.PauseTransferAsync(transfer.Id, pauseCancellation.Token);
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             // Resume Transfer
