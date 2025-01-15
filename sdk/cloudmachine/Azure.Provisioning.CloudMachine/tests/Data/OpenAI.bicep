@@ -19,6 +19,7 @@ resource cm_storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   properties: {
     allowBlobPublicAccess: false
     isHnsEnabled: true
+    allowSharedKeyAccess: false
   }
   identity: {
     type: 'UserAssigned'
@@ -283,7 +284,7 @@ resource openai_cm0c420d2f21084cd_chat 'Microsoft.CognitiveServices/accounts/dep
   }
   sku: {
     name: 'Standard'
-    capacity: 120
+    capacity: 10
   }
   parent: openai
 }
@@ -301,7 +302,7 @@ resource openai_cm0c420d2f21084cd_embedding 'Microsoft.CognitiveServices/account
   }
   sku: {
     name: 'Standard'
-    capacity: 120
+    capacity: 10
   }
   parent: openai
   dependsOn: [
