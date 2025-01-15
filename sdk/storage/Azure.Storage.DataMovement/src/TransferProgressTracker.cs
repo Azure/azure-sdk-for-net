@@ -139,7 +139,7 @@ namespace Azure.Storage.DataMovement
                 FailedCount = _failedCount,
                 InProgressCount = _inProgressCount,
                 QueuedCount = _queuedCount,
-                BytesTransferred = _options.TrackBytesTransferred ? _bytesTransferred : null
+                BytesTransferred = _options?.TrackBytesTransferred == true ? _bytesTransferred : null
             };
             _options?.ProgressHandler?.Report(progress);
 
