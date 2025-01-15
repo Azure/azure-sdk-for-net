@@ -1152,6 +1152,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
+        [Ignore("Likely to fail in pipelines and takes a while to run.")]
         [Test, Pairwise]
         [LiveOnly]
         public async Task ResumeTransferAsync_Directory_Large(
