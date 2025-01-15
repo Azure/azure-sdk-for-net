@@ -16,15 +16,15 @@ namespace Azure.Generator.Utilities
         private const string ProvidersSegment = "/providers/";
         private static ConcurrentDictionary<string, (string Name, InputModelType? InputModel)?> _resourceDataSchemaCache = new ConcurrentDictionary<string, (string Name, InputModelType? InputModel)?>();
 
-        public static bool IsResource(this OperationSet set, InputNamespace? inputNamespace = null)
+        public static bool IsResource(this OperationSet set)
         {
-            return set.TryGetResourceDataSchema(out _, out _, inputNamespace);
+            return set.TryGetResourceDataSchema(out _, out _);
         }
 
-        private static InputModelType? FindObjectSchemaWithName(string name, InputNamespace? inputNamespace = null)
-            => inputNamespace?.Models.OfType<InputModelType>().FirstOrDefault(inputModel => inputModel.Name == name);
+        private static InputModelType? FindObjectSchemaWithName(string name)
+            => AzureClientPlugin.Instance.InputLibrary.InputNamespace.Models.OfType<InputModelType>().FirstOrDefault(inputModel => inputModel.Name == name);
 
-        public static bool TryGetResourceDataSchema(this OperationSet set, [MaybeNullWhen(false)] out string resourceSpecName, out InputModelType? inputModel, InputNamespace? inputNamespace)
+        public static bool TryGetResourceDataSchema(this OperationSet set, [MaybeNullWhen(false)] out string resourceSpecName, out InputModelType? inputModel)
         {
             resourceSpecName = null;
             inputModel = null;
