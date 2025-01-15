@@ -70,7 +70,7 @@ namespace Azure.Storage.Blobs
             return await TrimStreamInternal(plaintext, originalRange, contentRange, alreadyTrimmedOffset, async, cancellationToken).ConfigureAwait(false);
         }
 
-        public async Task<Stream> DecryptWholeBlobWriteInternal(
+        public Task<Stream> DecryptWholeBlobWriteInternal(
             Stream plaintextDestination,
             Metadata metadata,
             bool async,
@@ -79,14 +79,14 @@ namespace Azure.Storage.Blobs
             EncryptionData encryptionData = GetAndValidateEncryptionDataOrDefault(metadata);
             if (encryptionData == default)
             {
-                return plaintextDestination;
+                return Task.FromResult(plaintextDestination);
             }
 
-            return await _decryptor.DecryptWholeContentWriteInternal(
+            return _decryptor.DecryptWholeContentWriteInternal(
                 plaintextDestination,
                 encryptionData,
                 async,
-                cancellationToken).ConfigureAwait(false);
+                cancellationToken);
         }
 
         private static async Task<Stream> TrimStreamInternal(

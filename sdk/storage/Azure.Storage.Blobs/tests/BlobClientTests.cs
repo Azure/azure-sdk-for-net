@@ -961,43 +961,24 @@ namespace Azure.Storage.Blobs.Test
             long size,
             StorageTransferOptions transferOptions)
         {
-            var path = Path.GetTempFileName();
+            using Stream stream = await CreateLimitedMemoryStream(size);
 
-            try
-            {
-                using Stream stream = await CreateLimitedMemoryStream(size);
+            await using DisposingContainer test = await GetTestContainerAsync();
 
-                // create a new file and copy contents of stream into it, and then close the FileStream
-                // so the StagedUploadAsync call is not prevented from reading using its FileStream.
-                using (FileStream fileStream = File.Create(path))
+            var name = GetNewBlobName();
+            BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
+            var credential = new StorageSharedKeyCredential(Tenants.TestConfigDefault.AccountName, Tenants.TestConfigDefault.AccountKey);
+            blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
+
+            await blob.StagedUploadInternal(
+                stream,
+                new BlobUploadOptions
                 {
-                    await stream.CopyToAsync(fileStream);
-                }
+                    TransferOptions = transferOptions
+                },
+                async: true);
 
-                await using DisposingContainer test = await GetTestContainerAsync();
-
-                var name = GetNewBlobName();
-                BlobClient blob = InstrumentClient(test.Container.GetBlobClient(name));
-                var credential = new StorageSharedKeyCredential(Tenants.TestConfigDefault.AccountName, Tenants.TestConfigDefault.AccountKey);
-                blob = InstrumentClient(new BlobClient(blob.Uri, credential, GetOptions(true)));
-
-                await blob.StagedUploadInternal(
-                    path: path,
-                    new BlobUploadOptions
-                    {
-                        TransferOptions = transferOptions
-                    },
-                    async: true);
-
-                await DownloadAndAssertAsync(stream, blob);
-            }
-            finally
-            {
-                if (File.Exists(path))
-                {
-                    File.Delete(path);
-                }
-            }
+            await DownloadAndAssertAsync(stream, blob);
         }
 
         private static async Task DownloadAndAssertAsync(Stream stream, BlobClient blob)
