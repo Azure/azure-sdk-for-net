@@ -1209,7 +1209,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Pause Transfer
             CancellationTokenSource pauseCancellation = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transferManager.PauseTransferIfRunningAsync(transfer.Id, pauseCancellation.Token);
+            await transferManager.PauseTransferAsync(transfer.Id, pauseCancellation.Token);
 
             // we might have already completed the transfer before we could pause it
             if (transfer.Status.State == TransferState.Completed)
