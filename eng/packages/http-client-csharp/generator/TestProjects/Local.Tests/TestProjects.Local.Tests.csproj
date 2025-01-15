@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.ClientModel" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Remove="./**/*.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="../Local/**/*.cs" Exclude="../Local/**/Properties/**/*.cs" Link="Projects/%(RecursiveDir)/%(Filename)%(Extension)" />
+    <!-- TODO fix compilation errors in Mgmt-TypeSpec so we can remove the line below -->
+    <Compile Remove="../Local/Mgmt-TypeSpec/**/*.cs" />
+  </ItemGroup>
+
+  <!-- Include shared code from Azure.Core -->
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\RawRequestUriBuilder.cs" LinkBase="Shared/Core">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+
+</Project>

@@ -9,7 +9,7 @@
   "scripts": {
     "clean": "rimraf ./dist ./emitter/temp && dotnet clean ./generator",
     "build:emitter": "tsc -p ./emitter/tsconfig.build.json",
-    "build:generator": "dotnet build ./generator && copyfiles -u 5 ./node_modules/@typespec/http-client-csharp/dist/generator/Microsoft.Generator.CSharp.runtimeconfig.json ./dist/generator",
+    "build:generator": "dotnet build ./generator",
     "build": "npm run build:emitter && npm run build:generator",
     "test:emitter": "vitest run -c ./emitter/vitest.config.ts --passWithNoTests",
     "test:generator": "dotnet test ./generator --logger \"trx;LogFileName=debug.trx\"",
@@ -26,6 +26,8 @@
     "@typespec/http-client-csharp": "0.1.9-alpha.20241219.2"
   },
   "devDependencies": {
+    "@typespec/http-specs": "0.1.0-alpha.5",
+    "@azure-tools/azure-http-specs": "0.1.0-alpha.4",
     "@azure-tools/typespec-azure-core": "0.49.0",
     "@azure-tools/typespec-client-generator-core": "0.49.0",
     "@azure-tools/typespec-azure-resource-manager": "0.49.0",
