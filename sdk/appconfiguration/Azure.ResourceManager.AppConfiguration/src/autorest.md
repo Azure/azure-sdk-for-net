@@ -15,6 +15,7 @@ sample-gen:
   output-folder: $(this-folder)/../samples/Generated
   clear-output-folder: true
   skipped-operations:
+  # Snapshot is immutable once created, there won't be any update method on it. Skip generating the sample test on this method, so it will pass the build.
   - Snapshots_Create
 skip-csproj: true
 modelerfour:
