@@ -163,7 +163,7 @@ public partial class AgentsClient
         Response sendRequest() => CreateRunStreaming(threadId, createRunRequest.ToRequestContent(), context);
         return new StreamingUpdateCollection(sendRequest, cancellationToken);
     }
-    /// <summary> Submits outputs from tools as requested by tool calls in a run. Runs that need submitted tool outputs will have a status of 'requires_action' with a required_action.type of 'submit_tool_outputs'. </summary>
+    /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
     /// <param name="threadId"> Identifier of the thread. </param>
     /// <param name="runId"> Identifier of the run. </param>
     /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
@@ -177,7 +177,7 @@ public partial class AgentsClient
         return new StreamingUpdateCollection(sendRequest, cancellationToken);
     }
 
-    /// <summary> Submits outputs from tools as requested by tool calls in a run. Runs that need submitted tool outputs will have a status of 'requires_action' with a required_action.type of 'submit_tool_outputs'. </summary>
+    /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
     /// <param name="threadId"> Identifier of the thread. </param>
     /// <param name="runId"> Identifier of the run. </param>
     /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
