@@ -45,8 +45,8 @@ rename-mapping:
   Replica: AppConfigurationReplica
   ReplicaProvisioningState: AppConfigurationReplicaProvisioningState
   Snapshot: AppConfigurationSnapshot
-  Created: CreatedOn
-  Expires: ExpireOn
+  Snapshot.properties.created: CreatedOn
+  Snapshot.properties.expires: ExpireOn
 
 prepend-rp-prefix:
   - ActionsRequired

@@ -71,15 +71,15 @@ namespace Azure.ResourceManager.AppConfiguration
                 writer.WritePropertyName("compositionType"u8);
                 writer.WriteStringValue(CompositionType.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(Created))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
-                writer.WriteStringValue(Created.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(Expires))
+            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expires"u8);
-                writer.WriteStringValue(Expires.Value, "O");
+                writer.WriteStringValue(ExpireOn.Value, "O");
             }
             if (Optional.IsDefined(RetentionPeriod))
             {
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Created), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CreatedOn), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    created: ");
@@ -485,15 +485,15 @@ namespace Azure.ResourceManager.AppConfiguration
             }
             else
             {
-                if (Optional.IsDefined(Created))
+                if (Optional.IsDefined(CreatedOn))
                 {
                     builder.Append("    created: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(Created.Value, "o");
+                    var formattedDateTimeString = TypeFormatters.ToString(CreatedOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Expires), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExpireOn), out propertyOverride);
             if (hasPropertyOverride)
             {
                 builder.Append("    expires: ");
@@ -501,10 +501,10 @@ namespace Azure.ResourceManager.AppConfiguration
             }
             else
             {
-                if (Optional.IsDefined(Expires))
+                if (Optional.IsDefined(ExpireOn))
                 {
                     builder.Append("    expires: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(Expires.Value, "o");
+                    var formattedDateTimeString = TypeFormatters.ToString(ExpireOn.Value, "o");
                     builder.AppendLine($"'{formattedDateTimeString}'");
                 }
             }

@@ -68,23 +68,23 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="status"> The current status of the snapshot. </param>
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
         /// <param name="compositionType"> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </param>
-        /// <param name="created"> The time that the snapshot was created. </param>
-        /// <param name="expires"> The time that the snapshot will expire. </param>
+        /// <param name="createdOn"> The time that the snapshot was created. </param>
+        /// <param name="expireOn"> The time that the snapshot will expire. </param>
         /// <param name="retentionPeriod"> The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </param>
         /// <param name="size"> The size in bytes of the snapshot. </param>
         /// <param name="itemsCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. NOTE: These are data plane tags, not Azure Resource Manager (ARM) tags. </param>
         /// <param name="eTag"> A value representing the current state of the snapshot. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string snapshotType, AppConfigurationProvisioningState? provisioningState, SnapshotStatus? status, IList<KeyValueFilter> filters, CompositionType? compositionType, DateTimeOffset? created, DateTimeOffset? expires, long? retentionPeriod, long? size, long? itemsCount, IDictionary<string, string> tags, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppConfigurationSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string snapshotType, AppConfigurationProvisioningState? provisioningState, SnapshotStatus? status, IList<KeyValueFilter> filters, CompositionType? compositionType, DateTimeOffset? createdOn, DateTimeOffset? expireOn, long? retentionPeriod, long? size, long? itemsCount, IDictionary<string, string> tags, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SnapshotType = snapshotType;
             ProvisioningState = provisioningState;
             Status = status;
             Filters = filters;
             CompositionType = compositionType;
-            Created = created;
-            Expires = expires;
+            CreatedOn = createdOn;
+            ExpireOn = expireOn;
             RetentionPeriod = retentionPeriod;
             Size = size;
             ItemsCount = itemsCount;
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.AppConfiguration
         public CompositionType? CompositionType { get; set; }
         /// <summary> The time that the snapshot was created. </summary>
         [WirePath("properties.created")]
-        public DateTimeOffset? Created { get; }
+        public DateTimeOffset? CreatedOn { get; }
         /// <summary> The time that the snapshot will expire. </summary>
         [WirePath("properties.expires")]
-        public DateTimeOffset? Expires { get; }
+        public DateTimeOffset? ExpireOn { get; }
         /// <summary> The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </summary>
         [WirePath("properties.retentionPeriod")]
         public long? RetentionPeriod { get; set; }
