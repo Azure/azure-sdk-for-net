@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
     /// <summary> IdentitySelector represents the selection of a managed identity for use. </summary>
-    public partial class IdentitySelector
+    public partial class ManagedServiceIdentitySelector
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,16 +46,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="IdentitySelector"/>. </summary>
-        public IdentitySelector()
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentitySelector"/>. </summary>
+        public ManagedServiceIdentitySelector()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="IdentitySelector"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ManagedServiceIdentitySelector"/>. </summary>
         /// <param name="identityType"> The type of managed identity that is being selected. </param>
         /// <param name="userAssignedIdentityResourceId"> The user assigned managed identity resource ID to use. Mutually exclusive with a system assigned identity type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IdentitySelector(ManagedServiceIdentitySelectorType? identityType, ResourceIdentifier userAssignedIdentityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedServiceIdentitySelector(ManagedServiceIdentitySelectorType? identityType, ResourceIdentifier userAssignedIdentityResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IdentityType = identityType;
             UserAssignedIdentityResourceId = userAssignedIdentityResourceId;
