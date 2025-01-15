@@ -139,6 +139,7 @@ namespace Azure.Communication.Email
         /// <see cref="WaitUntil.Started"/> if it should return after starting the operation.
         /// For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="senderAddress"> From address of the email. </param>
+        /// <param name="senderDisplayName"> Email display name of the sender. </param>
         /// <param name="recipientAddress"> Email address of the TO recipient. </param>
         /// <param name="subject"> Subject for the email. </param>
         /// <param name="htmlContent"> Email body in HTML format. </param>
@@ -150,12 +151,13 @@ namespace Azure.Communication.Email
             string recipientAddress,
             string subject,
             string htmlContent,
+            string senderDisplayName = default,
             string plainTextContent = default,
             CancellationToken cancellationToken = default)
         {
             var operationId = Guid.NewGuid();
             return await SendAsync(wait, senderAddress, recipientAddress, subject,
-                htmlContent, operationId, plainTextContent, cancellationToken).ConfigureAwait(false);
+                htmlContent, operationId, senderDisplayName, plainTextContent, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Queues an email message to be sent to a single recipient. </summary>
@@ -167,8 +169,9 @@ namespace Azure.Communication.Email
         /// <param name="recipientAddress"> Email address of the TO recipient. </param>
         /// <param name="subject"> Subject for the email. </param>
         /// <param name="htmlContent"> Email body in HTML format. </param>
-        /// <param name="plainTextContent"> Email body in plain text format. </param>
         /// <param name="operationId"> The ID to identify the long running operation. </param>
+        /// <param name="senderDisplayName"> Email display name of the sender. </param>
+        /// <param name="plainTextContent"> Email body in plain text format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<EmailSendOperation> SendAsync(
             WaitUntil wait,
@@ -177,6 +180,7 @@ namespace Azure.Communication.Email
             string subject,
             string htmlContent,
             Guid operationId,
+            string senderDisplayName = default,
             string plainTextContent = default,
             CancellationToken cancellationToken = default)
         {
@@ -194,7 +198,8 @@ namespace Azure.Communication.Email
                     {
                         PlainText = plainTextContent,
                         Html = htmlContent
-                    });
+                    },
+                    senderDisplayName);
                 return await SendEmailInternalAsync(wait, message, operationId, cancellationToken).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -256,7 +261,9 @@ namespace Azure.Communication.Email
         /// <param name="recipientAddress"> Email address of the TO recipient. </param>
         /// <param name="subject"> Subject for the email. </param>
         /// <param name="htmlContent"> Email body in HTML format. </param>
+        /// <param name="senderDisplayName"> Email display name of the sender. </param>
         /// <param name="plainTextContent"> Email body in plain text format. </param>
+
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual EmailSendOperation Send(
             WaitUntil wait,
@@ -264,12 +271,13 @@ namespace Azure.Communication.Email
             string recipientAddress,
             string subject,
             string htmlContent,
+            string senderDisplayName = default,
             string plainTextContent = default,
             CancellationToken cancellationToken = default)
         {
             var operationId = Guid.NewGuid();
             return Send(wait, senderAddress, recipientAddress, subject,
-                htmlContent, operationId, plainTextContent, cancellationToken);
+                htmlContent, operationId, senderDisplayName, plainTextContent, cancellationToken);
         }
 
         /// <summary> Queues an email message to be sent to a single recipient. </summary>
@@ -282,6 +290,7 @@ namespace Azure.Communication.Email
         /// <param name="subject"> Subject for the email. </param>
         /// <param name="htmlContent"> Email body in HTML format. </param>
         /// <param name="operationId"> The ID to identify the long running operation. </param>
+        /// <param name="senderDisplayName"> Email display name of the sender. </param>
         /// <param name="plainTextContent"> Email body in plain text format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual EmailSendOperation Send(
@@ -291,6 +300,7 @@ namespace Azure.Communication.Email
             string subject,
             string htmlContent,
             Guid operationId,
+            string senderDisplayName = default,
             string plainTextContent = default,
             CancellationToken cancellationToken = default)
         {
@@ -308,7 +318,8 @@ namespace Azure.Communication.Email
                     {
                         PlainText = plainTextContent,
                         Html = htmlContent
-                    });
+                    },
+                    senderDisplayName);
                 return SendEmailInternal(wait, message, operationId, cancellationToken);
             }
             catch (Exception e)

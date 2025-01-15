@@ -14,10 +14,11 @@ namespace Azure.Communication.Email
     {
         /// <summary> Initializes a new instance of EmailMessage. </summary>
         /// <param name="senderAddress"> Sender email address from a verified domain. </param>
+        /// <param name="senderDisplayName"> Email display name of the sender. </param>
         /// <param name="content"> Email content to be sent. </param>
         /// <param name="recipientAddress"> Recipients for the email. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="senderAddress"/>, <paramref name="recipientAddress"/> or <paramref name="content"/> is null. </exception>
-        public EmailMessage(string senderAddress, string recipientAddress, EmailContent content)
+        public EmailMessage(string senderAddress, string recipientAddress, EmailContent content, string senderDisplayName = default)
         {
             Argument.AssertNotNull(senderAddress, nameof(senderAddress));
             Argument.AssertNotNull(content, nameof(content));
@@ -25,6 +26,7 @@ namespace Azure.Communication.Email
 
             Headers = new ChangeTrackingDictionary<string, string>();
             SenderAddress = senderAddress;
+            SenderDisplayName = senderDisplayName;
             Content = content;
             Recipients = new EmailRecipients(new ChangeTrackingList<EmailAddress>
             {
@@ -36,10 +38,11 @@ namespace Azure.Communication.Email
 
         /// <summary> Initializes a new instance of EmailMessage. </summary>
         /// <param name="senderAddress"> Sender email address from a verified domain. </param>
+        /// <param name="senderDisplayName"> Email display name of the sender. </param>
         /// <param name="recipients"> Recipients for the email. </param>
         /// <param name="content"> Email content to be sent. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="senderAddress"/>, <paramref name="content"/> or <paramref name="recipients"/> is null. </exception>
-        public EmailMessage(string senderAddress, EmailRecipients recipients, EmailContent content)
+        public EmailMessage(string senderAddress, EmailRecipients recipients, EmailContent content, string senderDisplayName = default)
         {
             Argument.AssertNotNull(senderAddress, nameof(senderAddress));
             Argument.AssertNotNull(recipients, nameof(recipients));
@@ -47,6 +50,7 @@ namespace Azure.Communication.Email
 
             Headers = new ChangeTrackingDictionary<string, string>();
             SenderAddress = senderAddress;
+            SenderDisplayName = senderDisplayName;
             Content = content;
             Recipients = recipients;
             Attachments = new ChangeTrackingList<EmailAttachment>();

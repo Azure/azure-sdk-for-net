@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Consumers can now provide a value for the 'SenderDisplayName' property when sending emails.
+
 ### Breaking Changes
 
 ### Bugs Fixed

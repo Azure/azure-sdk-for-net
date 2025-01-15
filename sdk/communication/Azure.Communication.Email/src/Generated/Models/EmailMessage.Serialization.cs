@@ -28,6 +28,11 @@ namespace Azure.Communication.Email
             }
             writer.WritePropertyName("senderAddress"u8);
             writer.WriteStringValue(SenderAddress);
+            if (Optional.IsDefined(SenderDisplayName))
+            {
+                writer.WritePropertyName("senderDisplayName"u8);
+                writer.WriteStringValue(SenderDisplayName);
+            }
             writer.WritePropertyName("content"u8);
             writer.WriteObjectValue(Content);
             writer.WritePropertyName("recipients"u8);
