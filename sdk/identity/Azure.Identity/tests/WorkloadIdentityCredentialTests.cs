@@ -48,7 +48,17 @@ namespace Azure.Identity.Tests
         {
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
 #if NET9_0_OR_GREATER
-            var mockCert = X509CertificateLoader.LoadCertificateFromFile(certificatePath);
+            var certType = X509Certificate2.GetCertContentType(certificatePath);
+            X509Certificate2 mockCert;
+            switch (certType)
+            {
+                case X509ContentType.Cert:
+                    mockCert = X509CertificateLoader.LoadCertificateFromFile(certificatePath);
+                    break;
+                default:
+                    mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+                    break;
+            }
 #else
             var mockCert = new X509Certificate2(certificatePath);
 #endif
@@ -77,7 +87,17 @@ namespace Azure.Identity.Tests
 
             var certificatePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
 #if NET9_0_OR_GREATER
-            var mockCert = X509CertificateLoader.LoadCertificateFromFile(certificatePath);
+            var certType = X509Certificate2.GetCertContentType(certificatePath);
+            X509Certificate2 mockCert;
+            switch (certType)
+            {
+                case X509ContentType.Cert:
+                    mockCert = X509CertificateLoader.LoadCertificateFromFile(certificatePath);
+                    break;
+                default:
+                    mockCert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+                    break;
+            }
 #else
             var mockCert = new X509Certificate2(certificatePath);
 #endif
