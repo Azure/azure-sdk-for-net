@@ -5,12 +5,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
@@ -21,9 +18,8 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTe
     public async Task FunctionCallingWithStreamingExample()
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        AgentsClient client = new AgentsClient(connectionString, new AzureCliCredential());
+        AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
 
-        #region FunctionDefinition
         // Example of a function that defines no parameters
         string GetUserFavoriteCity() => "Seattle, WA";
         FunctionToolDefinition getUserFavoriteCityTool = new("getUserFavoriteCity", "Gets the user's favorite city.");
@@ -80,9 +76,8 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTe
                     Required = new[] { "location" },
                 },
                 new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase }));
-        #endregion
 
-        #region Snippet:FunctionsHandleFunctionCallsStreaming
+        #region Snippet:FunctionsWithStreamingUpdateHandling
         ToolOutput GetResolvedToolOutput(string functionName, string toolCallId, string functionArguments)
         {
             if (functionName == getUserFavoriteCityTool.Name)
@@ -109,8 +104,6 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTe
         }
         #endregion
 
-        #region Snippet:FunctionsCreateAgentWithFunctionToolsStreaming
-        // note: parallel function calling is only supported with newer models like gpt-4-1106-preview
         Response<Agent> agentResponse = await client.CreateAgentAsync(
             model: "gpt-4",
             name: "SDK Test Agent - Functions",
@@ -120,7 +113,6 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTe
             tools: new List<ToolDefinition> { getUserFavoriteCityTool, getCityNicknameTool, getCurrentWeatherAtLocationTool }
             );
         Agent agent = agentResponse.Value;
-        #endregion
 
         Response<AgentThread> threadResponse = await client.CreateThreadAsync();
         AgentThread thread = threadResponse.Value;
@@ -131,75 +123,52 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTe
             "What's the weather like in my favorite city?");
         ThreadMessage message = messageResponse.Value;
 
+        #region Snippet:FunctionsWithStreamingUpdateCycle
         List<ToolOutput> toolOutputs = new();
         ThreadRun streamRun = null;
         await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
         {
             if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
             {
-                Console.WriteLine($"--- Run started! ---");
+                Console.WriteLine("--- Run started! ---");
             }
             else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
             {
-                toolOutputs.Add(
-                    GetResolvedToolOutput(
-                        submitToolOutputsUpdate.FunctionName,
-                        submitToolOutputsUpdate.ToolCallId,
-                        submitToolOutputsUpdate.FunctionArguments
-                ));
                 streamRun = submitToolOutputsUpdate.Value;
+                RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
+                while (streamRun.Status == RunStatus.RequiresAction) {
+                    toolOutputs.Add(
+                        GetResolvedToolOutput(
+                            newActionUpdate.FunctionName,
+                            newActionUpdate.ToolCallId,
+                            newActionUpdate.FunctionArguments
+                    ));
+                    await foreach (StreamingUpdate actionUpdate in client.SubmitToolOutputsToRunStreamingAsync(thread.Id, streamRun.Id, toolOutputs))
+                    {
+                        if (actionUpdate is MessageContentUpdate contentUpdate)
+                        {
+                            Console.Write(contentUpdate.Text);
+                        }
+                        else if (actionUpdate is RequiredActionUpdate newAction)
+                        {
+                            newActionUpdate = newAction;
+                        }
+                        else if (actionUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+                        {
+                            Console.WriteLine();
+                            Console.WriteLine("--- Run completed! ---");
+                        }
+                    }
+                    streamRun = client.GetRun(thread.Id, streamRun.Id);
+                    toolOutputs.Clear();
+                }
+                break;
             }
             else if (streamingUpdate is MessageContentUpdate contentUpdate)
             {
                 Console.Write(contentUpdate.Text);
             }
         }
-
-        #region Snippet:FunctionsHandlePollingWithRequiredActionStreaming
-
-        if (streamRun.Status == RunStatus.RequiresAction)
-        {
-            await foreach (StreamingUpdate streamingUpdate in client.SubmitToolOutputsToRunStreamingAsync(thread.Id, agent.Id, toolOutputs))
-            {
-                if (streamingUpdate is MessageContentUpdate contentUpdate)
-                {
-                    Console.Write(contentUpdate.Text);
-                }
-            }
-        }
-        //do
-        //{
-
-            //    if (runResponse.Value.Status == RunStatus.RequiresAction
-            //        && runResponse.Value.RequiredAction is SubmitToolOutputsAction submitToolOutputsAction)
-            //    {
-            //        runResponse = await client.SubmitToolOutputsToRunAsync(runResponse.Value, toolOutputs);
-            //    }
-            //}
-            //while (runResponse.Value.Status == RunStatus.Queued
-            //    || runResponse.Value.Status == RunStatus.InProgress);
-            #endregion
-
-            //    Response<PageableList<ThreadMessage>> afterRunMessagesResponse
-            //        = await client.GetMessagesAsync(thread.Id);
-            //    IReadOnlyList<ThreadMessage> messages = afterRunMessagesResponse.Value.Data;
-
-            //    // Note: messages iterate from newest to oldest, with the messages[0] being the most recent
-            //    foreach (ThreadMessage threadMessage in messages)
-            //    {
-            //        Console.Write($"{threadMessage.CreatedAt:yyyy-MM-dd HH:mm:ss} - {threadMessage.Role,10}: ");
-            //        foreach (MessageContent contentItem in threadMessage.ContentItems)
-            //        {
-            //            if (contentItem is MessageTextContent textItem)
-            //            {
-            //                Console.Write(textItem.Text);
-            //            }
-            //            else if (contentItem is MessageImageFileContent imageFileItem)
-            //            {
-            //                Console.Write($"<image from ID: {imageFileItem.FileId}");
-            //            }
-            //            Console.WriteLine();
-            //        }
-            //    }
+        #endregion
     }
 }
