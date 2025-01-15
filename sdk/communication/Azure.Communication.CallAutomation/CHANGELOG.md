@@ -1,14 +1,10 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.4.0-beta.2 (2025-01-15)
 
 ### Bugs Fixed
 
-### Other Changes
+- Media streaming with AudioFormat default Pcm24kMono is removed and changed to null if AudioFormat is not passed.
 
 ## 1.4.0-beta.1 (2024-11-22)
 
