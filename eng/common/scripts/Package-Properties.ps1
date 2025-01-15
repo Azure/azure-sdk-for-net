@@ -187,7 +187,7 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         }
     }
 
-    $existingPackageNames = $packagesWithChanges | ForEach-Object { $_.Name }
+    $existingPackageNames = @($packagesWithChanges | ForEach-Object { $_.Name })
     foreach ($addition in $additionalValidationPackages) {
         $key = $addition.Replace($RepoRoot, "").TrimStart('\/')
 
