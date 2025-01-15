@@ -270,14 +270,14 @@ namespace Azure.Storage.DataMovement
             return Task.FromResult(false);
         }
 
-        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new LocalSourceCheckpointData();
+            return new LocalSourceCheckpointDetails();
         }
 
-        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
-            return new LocalDestinationCheckpointData();
+            return new LocalDestinationCheckpointDetails();
         }
 
         // no-op for get permissions

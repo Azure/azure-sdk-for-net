@@ -863,7 +863,8 @@ namespace Azure.Identity.Tests
         }
 
         [Test]
-        public async Task VerifyClientAuthenticateReturnsInvalidJsonOnSuccess([Values(200)] int status)
+        [NonParallelizable]
+        public async Task VerifyClientAuthenticateReturnsInvalidJsonOnSuccess([Values(true, false)] bool isChained)
         {
             using var environment = new TestEnvVar(
                 new()
@@ -874,15 +875,20 @@ namespace Azure.Identity.Tests
                     { "IDENTITY_HEADER", null },
                     { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null }
                 });
-            var mockTransport = new MockTransport(request => CreateInvalidJsonResponse(status));
-            var options = new TokenCredentialOptions() { Transport = mockTransport, IsChainedCredential = true };
+            var mockTransport = new MockTransport(request => CreateInvalidJsonResponse(200));
+            var options = new TokenCredentialOptions() { Transport = mockTransport, IsChainedCredential = isChained };
             options.Retry.MaxDelay = TimeSpan.Zero;
             var pipeline = CredentialPipeline.GetInstance(options);
 
-            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential("mock-client-id", pipeline, options));
+            ManagedIdentityCredential credential = InstrumentClient(new ManagedIdentityCredential(
+                new ManagedIdentityClient(
+                    new ManagedIdentityClientOptions() { Pipeline = pipeline, ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId("mock-client-id"), IsForceRefreshEnabled = true, Options = options })));
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            Assert.IsInstanceOf(typeof(System.Text.Json.JsonException), ex.InnerException);
+            if (isChained)
+            {
+                Assert.IsInstanceOf(typeof(System.Text.Json.JsonException), ex.InnerException);
+            }
             await Task.CompletedTask;
         }
 
