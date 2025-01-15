@@ -74,7 +74,7 @@ function GeneratePRMatrixForBatch {
   param (
     [Parameter(Mandatory = $true)][array] $Packages
   )
-  # this check assumes that we have propertly separated the direct and indirect package lists
+  # this check assumes that we have properly separated the direct and indirect package lists
   $directBatch = $Packages[0].IncludedForValidation -eq $false
   Write-Host "Generating matrix for $($directBatch ? 'direct' : 'indirect') packages"
 
