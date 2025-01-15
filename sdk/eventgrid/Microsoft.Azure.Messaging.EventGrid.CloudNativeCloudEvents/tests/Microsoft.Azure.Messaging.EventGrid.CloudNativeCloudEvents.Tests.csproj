@@ -12,7 +12,7 @@
     <PackageReference Include="NUnit" />
     <PackageReference Include="NUnit3TestAdapter" />
     <PackageReference Include="Moq" />
-    <PackageReference Include="Microsoft.Rest.ClientRuntime" VersionOverride="2.3.24" />
+    <PackageReference Include="Microsoft.Rest.ClientRuntime" />
     <PackageReference Include="System.Net.Http" />
     <PackageReference Include="System.Memory" />
     <ProjectReference Include="$(AzureCoreTestFramework)" />
