@@ -45,6 +45,17 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 ### Authenticate the client
 The Azure.Storage.DataMovement.Blobs library uses clients from the Azure.Storage.Blobs package to communicate with the Azure Blob Storage service. For more information see the Azure.Storage.Blobs [authentication documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Blobs#authenticate-the-client).
 
+### Permissions
+
+The authenticated blob storage resource needs the following permissions to perform a transfer:
+
+1. Read
+2. List (for container transfers)
+3. Write
+4. Add (specific to append blobs)
+5. Delete (for cleanup of a failed transfer item)
+6. Create
+
 ## Key concepts
 
 The Azure Storage Common client library contains shared infrastructure like
@@ -261,7 +272,7 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     },
     TransferOptions = new TransferOptions()
     {
-        CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
+        CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
     }
 };
 
@@ -294,7 +305,7 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     },
     TransferOptions = new TransferOptions()
     {
-        CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
+        CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
     }
 };
 

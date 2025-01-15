@@ -10,12 +10,12 @@ using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
-    public class BlobSourceCheckpointDataTests
+    public class BlobSourceCheckpointDetailsTests
     {
         [Test]
         public void Ctor()
         {
-            BlobSourceCheckpointData data = new();
+            BlobSourceCheckpointDetails data = new();
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             byte[] expected = Array.Empty<byte>();
 
-            BlobSourceCheckpointData data = new();
+            BlobSourceCheckpointDetails data = new();
 
             byte[] actual;
             using (MemoryStream stream = new())
@@ -38,11 +38,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [Test]
         public void Deserialize()
         {
-            BlobSourceCheckpointData deserialized;
+            BlobSourceCheckpointDetails deserialized;
 
             using (MemoryStream stream = new())
             {
-                deserialized = BlobSourceCheckpointData.Deserialize(Stream.Null);
+                deserialized = BlobSourceCheckpointDetails.Deserialize(Stream.Null);
             }
         }
     }

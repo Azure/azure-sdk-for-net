@@ -144,7 +144,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure
+                ErrorMode = TransferErrorMode.ContinueOnFailure
             };
 
             StorageResourceContainer sourceResource = LocalResourceProvider.FromDirectory(sourceLocalDirectoryPath);
@@ -227,12 +227,12 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new()
             {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists
+                CreationPreference = StorageResourceCreationMode.FailIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             TransferManagerOptions transferManagerOptions = new()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure
+                ErrorMode = TransferErrorMode.ContinueOnFailure
             };
 
             StorageResourceContainer sourceResource = LocalResourceProvider.FromDirectory(disposingLocalDirectory.DirectoryPath);
@@ -296,12 +296,12 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new()
             {
-                CreationPreference = StorageResourceCreationPreference.SkipIfExists
+                CreationPreference = StorageResourceCreationMode.SkipIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             TransferManagerOptions transferManagerOptions = new()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure
+                ErrorMode = TransferErrorMode.ContinueOnFailure
             };
 
             StorageResourceContainer sourceResource = LocalResourceProvider.FromDirectory(disposingLocalDirectory.DirectoryPath);
@@ -345,7 +345,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists
+                CreationPreference = StorageResourceCreationMode.OverwriteIfExists
             };
             CancellationToken cancellationToken = TestHelper.GetTimeoutToken(waitTimeInSec);
             await InitializeDestinationDataAsync(

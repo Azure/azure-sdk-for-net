@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Azure.Storage.DataMovement
 {
-    internal class LocalSourceCheckpointData : StorageResourceCheckpointData
+    internal class LocalDestinationCheckpointDetails : StorageResourceCheckpointDetails
     {
         public override int Length => 0;
 

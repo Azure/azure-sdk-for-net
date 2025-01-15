@@ -91,7 +91,7 @@ namespace Azure.Storage.DataMovement
             TransferStatus jobPartStatus,
             long initialTransferSize,
             long transferChunkSize,
-            StorageResourceCreationPreference createPreference)
+            StorageResourceCreationMode createPreference)
             : base(transferOperation: job._transferOperation,
                   partNumber: partNumber,
                   sourceResource: sourceResource,
@@ -166,7 +166,7 @@ namespace Azure.Storage.DataMovement
             TransferStatus jobPartStatus,
             long initialTransferSize,
             long transferChunkSize,
-            StorageResourceCreationPreference createPreference)
+            StorageResourceCreationMode createPreference)
         {
             return new UriToStreamJobPart(
                 job: job,
@@ -374,7 +374,7 @@ namespace Azure.Storage.DataMovement
 
                 // Apply necessary transfer completions on the destination.
                 await _destinationResource.CompleteTransferAsync(
-                    overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                    overwrite: _createMode == StorageResourceCreationMode.OverwriteIfExists,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
                 // Dispose the handlers
@@ -444,7 +444,7 @@ namespace Azure.Storage.DataMovement
                 // TODO: change to custom offset based on chunk offset
                 await _destinationResource.CopyFromStreamAsync(
                     stream: source,
-                    overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                    overwrite: _createMode == StorageResourceCreationMode.OverwriteIfExists,
                     streamLength: sourceLength,
                     completeLength: expectedLength,
                     options: new StorageResourceWriteToOffsetOptions()
@@ -456,7 +456,7 @@ namespace Azure.Storage.DataMovement
                 return true;
             }
             catch (IOException ex)
-            when (_createMode == StorageResourceCreationPreference.SkipIfExists &&
+            when (_createMode == StorageResourceCreationMode.SkipIfExists &&
                 ex.Message.Contains("Cannot overwrite file."))
             {
                 // Skip file that already exists on the destination.
