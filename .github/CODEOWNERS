@@ -81,7 +81,7 @@
 # ServiceOwners:                                                   @adamedx
 
 # PRLabel: %AI Model Inference %AI Projects
-/sdk/ai/                                                           @trangevi @dargilco @jhakulin @glharper @nick863 @jhakulin
+/sdk/ai/                                                           @trangevi @dargilco @jhakulin @glharper @jhakulin
 
 # PRLabel: %AI Model Inference
 /sdk/ai/Azure.AI.Inference                                         @trangevi @dargilco @jhakulin @glharper
@@ -90,10 +90,10 @@
 # ServiceOwners:                                                   @trangevi @dargilco @jhakulin @glharper
 
 # PRLabel: %AI Projects
-/sdk/ai/Azure.AI.Projects                                          @nick863 @jhakulin
+/sdk/ai/Azure.AI.Projects                                          @jhakulin
 
 # ServiceLabel: %AI Projects
-# ServiceOwners:                                                   @nick863 @jhakulin
+# ServiceOwners:                                                   @dargilco @jhakulin
 
 # ServiceLabel: %AKS
 # ServiceOwners:                                                   @Azure/aks-pm
