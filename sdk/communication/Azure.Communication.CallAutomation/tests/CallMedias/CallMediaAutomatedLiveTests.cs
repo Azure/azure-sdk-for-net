@@ -2391,6 +2391,142 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
         }
 
         [RecordedTest]
+        public async Task CreateCallWithMediaStreamingWithAudioFormatPcm24KMonoTest()
+        {
+            /* Tests: CreateCall, Media Streaming
+             * Test case: ACS to ACS call
+             * 1. create a CallAutomationClient.
+             * 2. Start Media Streaming with 24k and Stop Media Streaming
+             * 3. See Media Streaming started and stopped in call
+            */
+
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null, uniqueId = null;
+
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    uniqueId = await ServiceBusWithNewCall(user, target);
+
+                    // create call and assert response
+                    MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
+                        new Uri(TestEnvironment.TransportUrl),
+                        MediaStreamingContent.Audio,
+                        MediaStreamingAudioChannel.Mixed,
+                        MediaStreamingTransport.Websocket,
+                        false)
+                    {
+                        AudioFormat = AudioFormat.Pcm24KMono
+                    };
+
+                    var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, true,
+                          mediaStreamingOptions, transcriptionOptions: null);
+                    callConnectionId = result.CallerCallConnectionId;
+                    await VerifyMediaStreaming(client, result.CallerCallConnectionId);
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId, uniqueId);
+            }
+        }
+
+        [RecordedTest]
+        public async Task AnswerCallWithMediaStreamingWithAudioFormatPcm24KMonoTest()
+        {
+            /* Tests: CreateCall, Media Streaming
+             * Test case: ACS to ACS call
+             * 1. create a CallAutomationClient.
+             * 2. Start Media Streaming with 24k and Stop Media Streaming
+             * 3. See Media Streaming started and stopped in call
+            */
+
+            // create caller and receiver
+            CommunicationUserIdentifier user = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
+            CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
+            CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
+            string? callConnectionId = null, uniqueId = null;
+
+            try
+            {
+                try
+                {
+                    // setup service bus
+                    uniqueId = await ServiceBusWithNewCall(user, target);
+
+                    // create call and assert response
+                    MediaStreamingOptions mediaStreamingOptions = new MediaStreamingOptions(
+                        new Uri(TestEnvironment.TransportUrl),
+                        MediaStreamingContent.Audio,
+                        MediaStreamingAudioChannel.Mixed,
+                        MediaStreamingTransport.Websocket,
+                        false)
+                    {
+                        AudioFormat = AudioFormat.Pcm24KMono
+                    };
+
+                    var result = await CreateAndAnswerCallWithMediaOrTranscriptionOptions(client, targetClient, target, uniqueId, false,
+                          mediaStreamingOptions, transcriptionOptions: null);
+                    callConnectionId = result.TargetCallConnectionId;
+                    await VerifyMediaStreaming(targetClient, result.TargetCallConnectionId);
+                    try
+                    {
+                        // test get properties
+                        Response<CallConnectionProperties> properties = await client.GetCallConnection(callConnectionId).GetCallConnectionPropertiesAsync().ConfigureAwait(false);
+                    }
+                    catch (RequestFailedException ex)
+                    {
+                        if (ex.Status == 404)
+                        {
+                            callConnectionId = null;
+                            return;
+                        }
+                    }
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+            catch (Exception ex)
+            {
+                Assert.Fail($"Unexpected error: {ex}");
+            }
+            finally
+            {
+                await CleanUpCall(client, callConnectionId, uniqueId);
+            }
+        }
+
+        [RecordedTest]
         public async Task AnswerCallWithMediaStreamingUnmixedTest()
         {
             /* Tests: CreateCall, Media Streaming
