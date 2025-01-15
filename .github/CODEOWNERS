@@ -81,7 +81,7 @@
 # ServiceOwners:                                                   @adamedx
 
 # PRLabel: %AI Model Inference %AI Projects
-/sdk/ai/                                                          @trangevi @dargilco @jhakulin @glharper @nick863 @jhakulin
+/sdk/ai/                                                           @trangevi @dargilco @jhakulin @glharper @nick863 @jhakulin
 
 # PRLabel: %AI Model Inference
 /sdk/ai/Azure.AI.Inference                                         @trangevi @dargilco @jhakulin @glharper
