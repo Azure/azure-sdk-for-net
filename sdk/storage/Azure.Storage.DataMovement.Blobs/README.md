@@ -239,14 +239,14 @@ BlobContainerClient container = service.GetBlobContainerClient(containerName);
 
 Upload a local directory to the root of the container
 ```C# Snippet:ExtensionMethodSimpleUploadToRoot
-TransferOperation transfer = await container.StartUploadDirectoryAsync(localPath);
+TransferOperation transfer = await container.UploadDirectoryAsync(WaitUntil.Started, localPath);
 
 await transfer.WaitForCompletionAsync();
 ```
 
 Upload a local directory to a virtual directory in the container by specifying a directory prefix
 ```C# Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
-TransferOperation transfer = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix);
+TransferOperation transfer = await container.UploadDirectoryAsync(WaitUntil.Started, localPath, blobDirectoryPrefix);
 
 await transfer.WaitForCompletionAsync();
 ```
@@ -265,21 +265,21 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     }
 };
 
-TransferOperation transfer = await container.StartUploadDirectoryAsync(localPath, options);
+TransferOperation transfer = await container.UploadDirectoryAsync(WaitUntil.Started, localPath, options);
 
 await transfer.WaitForCompletionAsync();
 ```
 
 Download the entire container to a local directory
 ```C# Snippet:ExtensionMethodSimpleDownloadContainer
-TransferOperation transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath);
+TransferOperation transfer = await container.DownloadToDirectoryAsync(WaitUntil.Started, localDirectoryPath);
 
 await transfer.WaitForCompletionAsync();
 ```
 
 Download a directory in the container by specifying a directory prefix
 ```C# Snippet:ExtensionMethodSimpleDownloadContainerDirectory
-TransferOperation transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
+TransferOperation transfer = await container.DownloadToDirectoryAsync(WaitUntil.Started, localDirectoryPath2, blobDirectoryPrefix);
 
 await transfer.WaitForCompletionAsync();
 ```
@@ -298,7 +298,7 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     }
 };
 
-TransferOperation transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
+TransferOperation transfer = await container.DownloadToDirectoryAsync(WaitUntil.Started, localDirectoryPath2, options);
 
 await transfer.WaitForCompletionAsync();
 ```
