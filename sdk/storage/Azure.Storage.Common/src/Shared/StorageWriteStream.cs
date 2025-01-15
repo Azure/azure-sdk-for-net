@@ -330,9 +330,15 @@ namespace Azure.Storage.Shared
 
             if (disposing)
             {
-                Flush();
-                ValidateCallerCrcIfAny();
-                _accumulatedDisposables.Dispose();
+                try
+                {
+                    Flush();
+                    ValidateCallerCrcIfAny();
+                }
+                finally
+                {
+                    _accumulatedDisposables.Dispose();
+                }
             }
 
             _disposed = true;
