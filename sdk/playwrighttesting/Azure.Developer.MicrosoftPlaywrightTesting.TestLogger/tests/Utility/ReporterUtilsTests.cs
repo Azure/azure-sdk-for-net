@@ -141,4 +141,25 @@ public class ReporterUtilsTests
         var expected = "PR# 543 on Repo: owner/repo (owner/repo/pull/543)";
         Assert.AreEqual(expected, result);
     }
+    [Test]
+    public void TruncateData_ValueExceedsMaxLength_ReturnsTruncatedString()
+    {
+        string value = "This is a very long string that exceeds the maximum length.";
+        int maxLength = 20;
+
+        var result = ReporterUtils.TruncateData(value, maxLength);
+
+        Assert.AreEqual("This is a very long ", result);
+    }
+
+    [Test]
+    public void TruncateData_ValueWithinMaxLength_ReturnsOriginalString()
+    {
+        string value = "Short string";
+        int maxLength = 20;
+
+        var result = ReporterUtils.TruncateData(value, maxLength);
+
+        Assert.AreEqual(value, result);
+    }
 }

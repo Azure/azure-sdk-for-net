@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            IReadOnlyList<VmResources> value = default;
+            IReadOnlyList<ElasticVmResourceInfo> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    List<VmResources> array = new List<VmResources>();
+                    List<ElasticVmResourceInfo> array = new List<ElasticVmResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VmResources.DeserializeVmResources(item, options));
+                        array.Add(ElasticVmResourceInfo.DeserializeElasticVmResourceInfo(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VmHostListResponse(value ?? new ChangeTrackingList<VmResources>(), nextLink, serializedAdditionalRawData);
+            return new VmHostListResponse(value ?? new ChangeTrackingList<ElasticVmResourceInfo>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VmHostListResponse>.Write(ModelReaderWriterOptions options)

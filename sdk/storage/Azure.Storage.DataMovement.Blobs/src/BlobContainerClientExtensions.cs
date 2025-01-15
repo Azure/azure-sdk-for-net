@@ -24,8 +24,8 @@ namespace Azure.Storage.Blobs
         /// <param name="client">The <see cref="BlobContainerClient"/> used for service operations.</param>
         /// <param name="localDirectoryPath">The full path to the local directory to be uploaded.</param>
         /// <param name="blobDirectoryPrefix">Optionally specifies the directory prefix to be prepended to all uploaded files.</param>
-        /// <returns>A <see cref="DataTransfer"/> instance which can be used track progress and wait for completion with <see cref="DataTransfer.WaitForCompletionAsync"/>.</returns>
-        public static Task<DataTransfer> StartUploadDirectoryAsync(
+        /// <returns>A <see cref="TransferOperation"/> instance which can be used track progress and wait for completion with <see cref="TransferOperation.WaitForCompletionAsync"/>.</returns>
+        public static Task<TransferOperation> StartUploadDirectoryAsync(
             this BlobContainerClient client,
             string localDirectoryPath,
             string blobDirectoryPrefix = default)
@@ -46,8 +46,8 @@ namespace Azure.Storage.Blobs
         /// <param name="client">The <see cref="BlobContainerClient"/> used for service operations.</param>
         /// <param name="localDirectoryPath">The full path to the local directory to be uploaded.</param>
         /// <param name="options">Options which control the directory upload.</param>
-        /// <returns>A <see cref="DataTransfer"/> instance which can be used track progress and wait for completion with <see cref="DataTransfer.WaitForCompletionAsync"/>.</returns>
-        public static async Task<DataTransfer> StartUploadDirectoryAsync(this BlobContainerClient client, string localDirectoryPath, BlobContainerClientTransferOptions options)
+        /// <returns>A <see cref="TransferOperation"/> instance which can be used track progress and wait for completion with <see cref="TransferOperation.WaitForCompletionAsync"/>.</returns>
+        public static async Task<TransferOperation> StartUploadDirectoryAsync(this BlobContainerClient client, string localDirectoryPath, BlobContainerClientTransferOptions options)
         {
             StorageResource localDirectory = s_filesProvider.Value.FromDirectory(localDirectoryPath);
             StorageResource blobDirectory = s_blobsProvider.Value.FromClient(client, options?.BlobContainerOptions);
@@ -62,7 +62,7 @@ namespace Azure.Storage.Blobs
         /// <param name="localDirectoryPath">The full path to the local directory where files will be dowloaded.</param>
         /// <param name="blobDirectoryPrefix">Optionally restricts the downloaded content to blobs with the specified directory prefix.</param>
         /// <returns></returns>
-        public static Task<DataTransfer> StartDownloadToDirectoryAsync(
+        public static Task<TransferOperation> StartDownloadToDirectoryAsync(
             this BlobContainerClient client,
             string localDirectoryPath,
             string blobDirectoryPrefix = default)
@@ -84,7 +84,7 @@ namespace Azure.Storage.Blobs
         /// <param name="localDirectoryPath">The full path to the local directory where files will be dowloaded.</param>
         /// <param name="options">Options which control the container download.</param>
         /// <returns></returns>
-        public static async Task<DataTransfer> StartDownloadToDirectoryAsync(this BlobContainerClient client, string localDirectoryPath, BlobContainerClientTransferOptions options)
+        public static async Task<TransferOperation> StartDownloadToDirectoryAsync(this BlobContainerClient client, string localDirectoryPath, BlobContainerClientTransferOptions options)
         {
             StorageResource localDirectory = s_filesProvider.Value.FromDirectory(localDirectoryPath);
             StorageResource blobDirectory = s_blobsProvider.Value.FromClient(client, options?.BlobContainerOptions);

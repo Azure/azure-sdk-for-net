@@ -112,7 +112,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    principalId = prop.Value.GetGuid();
+                    principalId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("tenantId"u8))
@@ -121,7 +121,7 @@ namespace MgmtTypeSpec.Models
                     {
                         continue;
                     }
-                    tenantId = prop.Value.GetGuid();
+                    tenantId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("type"u8))

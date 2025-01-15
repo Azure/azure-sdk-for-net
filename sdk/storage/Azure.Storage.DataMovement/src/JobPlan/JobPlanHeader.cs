@@ -4,7 +4,6 @@
 using System;
 using System.IO;
 using System.Text;
-using Azure.Core;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement.JobPlan
@@ -14,7 +13,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// <summary>
         /// Version for the job plan schema.
         /// </summary>
-        public string Version;
+        public int Version;
 
         /// <summary>
         /// The transfer id.
@@ -54,7 +53,7 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// <summary>
         /// The current status of the transfer job.
         /// </summary>
-        public DataTransferStatus JobStatus;
+        public TransferStatus JobStatus;
 
         /// <summary>
         /// The parent path for the source of the transfer.
@@ -70,19 +69,19 @@ namespace Azure.Storage.DataMovement.JobPlan
         /// Additional checkpoint data specific to the source resource.
         /// Only populated when using <see cref="Deserialize(Stream)"/>.
         /// </summary>
-        public byte[] SourceCheckpointData;
+        public byte[] SourceCheckpointDetails;
 
         /// <summary>
         /// Additional checkpoint data specific to the destination resource.
         /// Only populated when using <see cref="Deserialize(Stream)"/>.
         /// </summary>
-        public byte[] DestinationCheckpointData;
+        public byte[] DestinationCheckpointDetails;
 
-        private StorageResourceCheckpointData _sourceCheckpointData;
-        private StorageResourceCheckpointData _destinationCheckpointData;
+        private StorageResourceCheckpointDetails _sourceCheckpointDetails;
+        private StorageResourceCheckpointDetails _destinationCheckpointDetails;
 
         public JobPlanHeader(
-            string version,
+            int version,
             string transferId,
             DateTimeOffset createTime,
             JobPlanOperation operationType,
@@ -90,13 +89,12 @@ namespace Azure.Storage.DataMovement.JobPlan
             string destinationProviderId,
             bool isContainer,
             bool enumerationComplete,
-            DataTransferStatus jobStatus,
+            TransferStatus jobStatus,
             string parentSourcePath,
             string parentDestinationPath,
-            StorageResourceCheckpointData sourceCheckpointData,
-            StorageResourceCheckpointData destinationCheckpointData)
+            StorageResourceCheckpointDetails sourceCheckpointDetails,
+            StorageResourceCheckpointDetails destinationCheckpointDetails)
         {
-            Argument.AssertNotNull(version, nameof(version));
             Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
             Argument.AssertNotNullOrEmpty(sourceProviderId, nameof(sourceProviderId));
             Argument.AssertNotNullOrEmpty(destinationProviderId, nameof(destinationProviderId));
@@ -104,8 +102,8 @@ namespace Azure.Storage.DataMovement.JobPlan
             Argument.AssertNotNull(createTime, nameof(createTime));
             Argument.AssertNotNullOrEmpty(parentSourcePath, nameof(parentSourcePath));
             Argument.AssertNotNullOrEmpty(parentDestinationPath, nameof(parentDestinationPath));
-            Argument.AssertNotNull(sourceCheckpointData, nameof(sourceCheckpointData));
-            Argument.AssertNotNull(destinationCheckpointData, nameof(destinationCheckpointData));
+            Argument.AssertNotNull(sourceCheckpointDetails, nameof(sourceCheckpointDetails));
+            Argument.AssertNotNull(destinationCheckpointDetails, nameof(destinationCheckpointDetails));
 
             if (sourceProviderId.Length > DataMovementConstants.JobPlanFile.ProviderIdMaxLength)
             {
@@ -128,12 +126,12 @@ namespace Azure.Storage.DataMovement.JobPlan
             ParentSourcePath = parentSourcePath;
             ParentDestinationPath = parentDestinationPath;
 
-            _sourceCheckpointData = sourceCheckpointData;
-            _destinationCheckpointData = destinationCheckpointData;
+            _sourceCheckpointDetails = sourceCheckpointDetails;
+            _destinationCheckpointDetails = destinationCheckpointDetails;
         }
 
         private JobPlanHeader(
-            string version,
+            int version,
             string transferId,
             DateTimeOffset createTime,
             JobPlanOperation operationType,
@@ -141,11 +139,11 @@ namespace Azure.Storage.DataMovement.JobPlan
             string destinationProviderId,
             bool isContainer,
             bool enumerationComplete,
-            DataTransferStatus jobStatus,
+            TransferStatus jobStatus,
             string parentSourcePath,
             string parentDestinationPath,
-            byte[] sourceCheckpointData,
-            byte[] destinationCheckpointData)
+            byte[] sourceCheckpointDetails,
+            byte[] destinationCheckpointDetails)
         {
             Version = version;
             TransferId = transferId;
@@ -158,8 +156,8 @@ namespace Azure.Storage.DataMovement.JobPlan
             JobStatus = jobStatus;
             ParentSourcePath = parentSourcePath;
             ParentDestinationPath = parentDestinationPath;
-            SourceCheckpointData = sourceCheckpointData;
-            DestinationCheckpointData = destinationCheckpointData;
+            SourceCheckpointDetails = sourceCheckpointDetails;
+            DestinationCheckpointDetails = destinationCheckpointDetails;
         }
 
         public void Serialize(Stream stream)
@@ -170,7 +168,7 @@ namespace Azure.Storage.DataMovement.JobPlan
             BinaryWriter writer = new BinaryWriter(stream);
 
             // Version
-            writer.WritePaddedString(Version, DataMovementConstants.JobPlanFile.VersionStrNumBytes);
+            writer.Write(Version);
 
             // TransferId (write as bytes)
             Guid transferId = Guid.Parse(TransferId);
@@ -205,11 +203,11 @@ namespace Azure.Storage.DataMovement.JobPlan
             byte[] parentDestinationPathBytes = Encoding.UTF8.GetBytes(ParentDestinationPath);
             writer.WriteVariableLengthFieldInfo(parentDestinationPathBytes.Length, ref currentVariableLengthIndex);
 
-            // SourceCheckpointData offset/length
-            writer.WriteVariableLengthFieldInfo(_sourceCheckpointData.Length, ref currentVariableLengthIndex);
+            // SourceCheckpointDetails offset/length
+            writer.WriteVariableLengthFieldInfo(_sourceCheckpointDetails.Length, ref currentVariableLengthIndex);
 
-            // DestinationCheckpointData offset/length
-            writer.WriteVariableLengthFieldInfo(_destinationCheckpointData.Length, ref currentVariableLengthIndex);
+            // DestinationCheckpointDetails offset/length
+            writer.WriteVariableLengthFieldInfo(_destinationCheckpointDetails.Length, ref currentVariableLengthIndex);
 
             // ParentSourcePath
             writer.Write(parentSourcePathBytes);
@@ -217,8 +215,8 @@ namespace Azure.Storage.DataMovement.JobPlan
             // ParentDestinationPath
             writer.Write(parentDestinationPathBytes);
 
-            _sourceCheckpointData.Serialize(stream);
-            _destinationCheckpointData.Serialize(stream);
+            _sourceCheckpointDetails.Serialize(stream);
+            _destinationCheckpointDetails.Serialize(stream);
         }
 
         public static JobPlanHeader Deserialize(Stream stream)
@@ -229,11 +227,11 @@ namespace Azure.Storage.DataMovement.JobPlan
             reader.BaseStream.Position = 0;
 
             // Version
-            byte[] versionBuffer = reader.ReadBytes(DataMovementConstants.JobPlanFile.VersionStrNumBytes);
-            string version = versionBuffer.ToString(DataMovementConstants.JobPlanFile.VersionStrLength);
-
-            // Assert the schema version before continuing
-            CheckSchemaVersion(version);
+            int version = reader.ReadInt32();
+            if (version != DataMovementConstants.JobPlanFile.SchemaVersion)
+            {
+                throw Errors.UnsupportedJobSchemaVersionHeader(version);
+            }
 
             // TransferId
             byte[] transferIdBuffer = reader.ReadBytes(DataMovementConstants.GuidSizeInBytes);
@@ -272,13 +270,13 @@ namespace Azure.Storage.DataMovement.JobPlan
             int parentDestinationPathOffset = reader.ReadInt32();
             int parentDestinationPathLength = reader.ReadInt32();
 
-            // SourceCheckpointData offset/length
-            int sourceCheckpointDataOffset = reader.ReadInt32();
-            int sourceCheckpointDataLength = reader.ReadInt32();
+            // SourceCheckpointDetails offset/length
+            int sourceCheckpointDetailsOffset = reader.ReadInt32();
+            int sourceCheckpointDetailsLength = reader.ReadInt32();
 
-            // DestinationCheckpointData offset/length
-            int destinationCheckpointDataOffset = reader.ReadInt32();
-            int destinationCheckpointDataLength = reader.ReadInt32();
+            // DestinationCheckpointDetails offset/length
+            int destinationCheckpointDetailsOffset = reader.ReadInt32();
+            int destinationCheckpointDetailsLength = reader.ReadInt32();
 
             // ParentSourcePath
             string parentSourcePath = null;
@@ -298,20 +296,20 @@ namespace Azure.Storage.DataMovement.JobPlan
                 parentDestinationPath = parentDestinationPathBytes.ToString(parentDestinationPathLength);
             }
 
-            // SourceCheckpointData
-            byte[] sourceCheckpointData = Array.Empty<byte>();
-            if (sourceCheckpointDataOffset > 0)
+            // SourceCheckpointDetails
+            byte[] sourceCheckpointDetails = Array.Empty<byte>();
+            if (sourceCheckpointDetailsOffset > 0)
             {
-                reader.BaseStream.Position = sourceCheckpointDataOffset;
-                sourceCheckpointData = reader.ReadBytes(sourceCheckpointDataLength);
+                reader.BaseStream.Position = sourceCheckpointDetailsOffset;
+                sourceCheckpointDetails = reader.ReadBytes(sourceCheckpointDetailsLength);
             }
 
-            // DestinationCheckpointData
-            byte[] destinationCheckpointData = Array.Empty<byte>();
-            if (destinationCheckpointDataOffset > 0)
+            // DestinationCheckpointDetails
+            byte[] destinationCheckpointDetails = Array.Empty<byte>();
+            if (destinationCheckpointDetailsOffset > 0)
             {
-                reader.BaseStream.Position = destinationCheckpointDataOffset;
-                destinationCheckpointData = reader.ReadBytes(destinationCheckpointDataLength);
+                reader.BaseStream.Position = destinationCheckpointDetailsOffset;
+                destinationCheckpointDetails = reader.ReadBytes(destinationCheckpointDetailsLength);
             }
 
             return new JobPlanHeader(
@@ -323,19 +321,11 @@ namespace Azure.Storage.DataMovement.JobPlan
                 destProviderId,
                 isContainer,
                 enumerationComplete,
-                jobPlanStatus.ToDataTransferStatus(),
+                jobPlanStatus.ToTransferStatus(),
                 parentSourcePath,
                 parentDestinationPath,
-                sourceCheckpointData,
-                destinationCheckpointData);
-        }
-
-        private static void CheckSchemaVersion(string version)
-        {
-            if (version != DataMovementConstants.JobPlanFile.SchemaVersion)
-            {
-                throw Errors.UnsupportedJobSchemaVersionHeader(version);
-            }
+                sourceCheckpointDetails,
+                destinationCheckpointDetails);
         }
     }
 }

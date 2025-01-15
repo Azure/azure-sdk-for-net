@@ -11,6 +11,8 @@
 
 ### Bugs Fixed
 
+Fix an issue that the `IaasComputeVmProtectedItem` can't handle empty `resourceId`. Issue at https://github.com/Azure/azure-sdk-for-net/issues/47381
+
 ### Other Changes
 
 ## 1.2.0 (2024-01-03)

@@ -17,12 +17,12 @@ namespace MgmtTypeSpec.Models
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        internal FooListResult(IEnumerable<Foo> value)
+        internal FooListResult(IEnumerable<FooData> value)
         {
             Value = value.ToList();
         }
 
-        internal FooListResult(IList<Foo> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FooListResult(IList<FooData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -30,7 +30,7 @@ namespace MgmtTypeSpec.Models
         }
 
         /// <summary> The Foo items on this page. </summary>
-        public IList<Foo> Value { get; }
+        public IList<FooData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

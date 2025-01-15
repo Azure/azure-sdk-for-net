@@ -10,6 +10,8 @@
 
 ### Bugs Fixed
 
+- Fix an issue that the `SessionHostData` can't handle empty `resourceId`.
+
 ### Other Changes
 
 ## 1.3.0 (2024-09-10)

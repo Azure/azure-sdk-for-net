@@ -225,7 +225,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         #region Abstract Class Implementation
         /// <inheritdoc/>
-        protected override Task<StorageResource> FromSourceAsync(DataTransferProperties properties, CancellationToken cancellationToken)
+        protected override Task<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
         {
             // Source share file data currently empty, so no specific properties to grab
 
@@ -235,28 +235,28 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <inheritdoc/>
-        protected override Task<StorageResource> FromDestinationAsync(DataTransferProperties properties, CancellationToken cancellationToken)
+        protected override Task<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
         {
-            ShareFileDestinationCheckpointData checkpointData;
-            using (MemoryStream stream = new(properties.DestinationCheckpointData))
+            ShareFileDestinationCheckpointDetails checkpointDetails;
+            using (MemoryStream stream = new(properties.DestinationCheckpointDetails))
             {
-                checkpointData = ShareFileDestinationCheckpointData.Deserialize(stream);
+                checkpointDetails = ShareFileDestinationCheckpointDetails.Deserialize(stream);
             }
 
             ShareFileStorageResourceOptions options = new()
             {
-                FileAttributes = checkpointData.FileAttributes,
-                FilePermissions = new(checkpointData.PreserveFilePermission),
-                CacheControl = checkpointData.CacheControl,
-                ContentDisposition = checkpointData.ContentDisposition,
-                ContentEncoding = checkpointData.ContentEncoding,
-                ContentLanguage = checkpointData.ContentLanguage,
-                ContentType = checkpointData.ContentType,
-                FileCreatedOn = checkpointData.FileCreatedOn,
-                FileLastWrittenOn = checkpointData.FileLastWrittenOn,
-                FileChangedOn = checkpointData.FileChangedOn,
-                DirectoryMetadata = checkpointData.DirectoryMetadata,
-                FileMetadata = checkpointData.FileMetadata,
+                FileAttributes = checkpointDetails.FileAttributes,
+                FilePermissions = new(checkpointDetails.PreserveFilePermission),
+                CacheControl = checkpointDetails.CacheControl,
+                ContentDisposition = checkpointDetails.ContentDisposition,
+                ContentEncoding = checkpointDetails.ContentEncoding,
+                ContentLanguage = checkpointDetails.ContentLanguage,
+                ContentType = checkpointDetails.ContentType,
+                FileCreatedOn = checkpointDetails.FileCreatedOn,
+                FileLastWrittenOn = checkpointDetails.FileLastWrittenOn,
+                FileChangedOn = checkpointDetails.FileChangedOn,
+                DirectoryMetadata = checkpointDetails.DirectoryMetadata,
+                FileMetadata = checkpointDetails.FileMetadata,
             };
             return Task.FromResult(properties.IsContainer
                 ? FromDirectory(properties.DestinationUri, options)
@@ -265,19 +265,19 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         /// <summary>
         /// For use in testing. Internal wrapper for protected member
-        /// <see cref="StorageResourceProvider.FromSourceAsync(DataTransferProperties, CancellationToken)"/>.
+        /// <see cref="StorageResourceProvider.FromSourceAsync(TransferProperties, CancellationToken)"/>.
         /// </summary>
         internal async Task<StorageResource> FromSourceInternalHookAsync(
-            DataTransferProperties props,
+            TransferProperties props,
             CancellationToken cancellationToken = default)
             => await FromSourceAsync(props, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// For use in testing. Internal wrapper for protected member
-        /// <see cref="StorageResourceProvider.FromDestinationAsync(DataTransferProperties, CancellationToken)"/>.
+        /// <see cref="StorageResourceProvider.FromDestinationAsync(TransferProperties, CancellationToken)"/>.
         /// </summary>
         internal async Task<StorageResource> FromDestinationInternalHookAsync(
-            DataTransferProperties props,
+            TransferProperties props,
             CancellationToken cancellationToken = default)
             => await FromDestinationAsync(props, cancellationToken).ConfigureAwait(false);
         #endregion

@@ -76,6 +76,30 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("disableShowmount");
                 }
             }
+            if (Optional.IsDefined(NfsV4IdDomain))
+            {
+                if (NfsV4IdDomain != null)
+                {
+                    writer.WritePropertyName("nfsV4IDDomain"u8);
+                    writer.WriteStringValue(NfsV4IdDomain);
+                }
+                else
+                {
+                    writer.WriteNull("nfsV4IDDomain");
+                }
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsMultiAdEnabled))
+            {
+                if (IsMultiAdEnabled != null)
+                {
+                    writer.WritePropertyName("isMultiAdEnabled"u8);
+                    writer.WriteBooleanValue(IsMultiAdEnabled.Value);
+                }
+                else
+                {
+                    writer.WriteNull("isMultiAdEnabled");
+                }
+            }
             writer.WriteEndObject();
         }
 
@@ -110,6 +134,8 @@ namespace Azure.ResourceManager.NetApp.Models
             IList<NetAppAccountActiveDirectory> activeDirectories = default;
             NetAppAccountEncryption encryption = default;
             bool? disableShowmount = default;
+            string nfsV4IdDomain = default;
+            bool? isMultiAdEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -214,6 +240,26 @@ namespace Azure.ResourceManager.NetApp.Models
                             disableShowmount = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("nfsV4IDDomain"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                nfsV4IdDomain = null;
+                                continue;
+                            }
+                            nfsV4IdDomain = property0.Value.GetString();
+                            continue;
+                        }
+                        if (property0.NameEquals("isMultiAdEnabled"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                isMultiAdEnabled = null;
+                                continue;
+                            }
+                            isMultiAdEnabled = property0.Value.GetBoolean();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -235,6 +281,8 @@ namespace Azure.ResourceManager.NetApp.Models
                 activeDirectories ?? new ChangeTrackingList<NetAppAccountActiveDirectory>(),
                 encryption,
                 disableShowmount,
+                nfsV4IdDomain,
+                isMultiAdEnabled,
                 serializedAdditionalRawData);
         }
 

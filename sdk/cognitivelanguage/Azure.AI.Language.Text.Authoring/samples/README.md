@@ -3,7 +3,7 @@ page_type: sample
 languages:
 - csharp
 products:
-# Including relevant stubs from https://review.docs.microsoft.com/help/contribute/metadata-taxonomies#product
+# Including relevant stubs from https://review.learn.microsoft.com/help/contribute/metadata-taxonomies#product
 - azure
 name: Azure.AI.Language.Text.Authoring samples for .NET
 description: Samples for the Azure.AI.Language.Text.Authoring client library.

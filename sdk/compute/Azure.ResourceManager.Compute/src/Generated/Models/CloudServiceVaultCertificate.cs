@@ -52,14 +52,18 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Initializes a new instance of <see cref="CloudServiceVaultCertificate"/>. </summary>
         /// <param name="certificateUri"> This is the URL of a certificate that has been uploaded to Key Vault as a secret. </param>
+        /// <param name="isBootstrapCertificate"> Flag indicating if the certificate provided is a bootstrap certificate to be used by the Key Vault Extension to fetch the remaining certificates. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CloudServiceVaultCertificate(Uri certificateUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CloudServiceVaultCertificate(Uri certificateUri, bool? isBootstrapCertificate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CertificateUri = certificateUri;
+            IsBootstrapCertificate = isBootstrapCertificate;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> This is the URL of a certificate that has been uploaded to Key Vault as a secret. </summary>
         public Uri CertificateUri { get; set; }
+        /// <summary> Flag indicating if the certificate provided is a bootstrap certificate to be used by the Key Vault Extension to fetch the remaining certificates. </summary>
+        public bool? IsBootstrapCertificate { get; set; }
     }
 }

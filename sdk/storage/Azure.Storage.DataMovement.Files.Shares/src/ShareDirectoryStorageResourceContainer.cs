@@ -68,14 +68,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
         }
 
-        protected override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new ShareFileSourceCheckpointData();
+            return new ShareFileSourceCheckpointDetails();
         }
 
-        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
-            return new ShareFileDestinationCheckpointData(
+            return new ShareFileDestinationCheckpointDetails(
                 contentType: ResourceOptions?.ContentType,
                 contentEncoding: ResourceOptions?.ContentEncoding,
                 contentLanguage: ResourceOptions?.ContentLanguage,

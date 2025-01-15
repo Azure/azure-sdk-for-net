@@ -50,11 +50,13 @@ namespace Azure.Storage.DataMovement.Tests
                 { "Metadata", metadata },
                 { "Tags", tags }
             };
-            return new(
-                    resourceLength: length,
-                    eTag: new("ETag"),
-                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
-                    properties: sourceProperties);
+            return new StorageResourceItemProperties()
+            {
+                ResourceLength = length,
+                ETag = new("ETag"),
+                LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
+                RawProperties = sourceProperties
+            };
         }
 
         private Mock<StorageResourceItem> GetLocalStorageResourceItem(long length = Constants.KB)
@@ -64,10 +66,10 @@ namespace Azure.Storage.DataMovement.Tests
             mock.Setup(r => r.Uri).Returns(new Uri("C:\\User\\folder\\file"));
             mock.Setup(r => r.ResourceId).Returns("mock");
             mock.Setup(r => r.ProviderId).Returns("mock");
-            mock.Setup(r => r.GetSourceCheckpointData())
-                .Returns(new MockResourceCheckpointData());
-            mock.Setup(r => r.GetDestinationCheckpointData())
-                .Returns(new MockResourceCheckpointData());
+            mock.Setup(r => r.GetSourceCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
+            mock.Setup(r => r.GetDestinationCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
             return mock;
         }
 
@@ -78,10 +80,10 @@ namespace Azure.Storage.DataMovement.Tests
             mock.Setup(r => r.Uri).Returns(new Uri("https://storageacount.blob.core.windows.net/container/source"));
             mock.Setup(r => r.ResourceId).Returns("mock");
             mock.Setup(r => r.ProviderId).Returns("mock");
-            mock.Setup(r => r.GetSourceCheckpointData())
-                .Returns(new MockResourceCheckpointData());
-            mock.Setup(r => r.GetDestinationCheckpointData())
-                .Returns(new MockResourceCheckpointData());
+            mock.Setup(r => r.GetSourceCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
+            mock.Setup(r => r.GetDestinationCheckpointDetails())
+                .Returns(new MockResourceCheckpointDetails());
             return mock;
         }
 
@@ -160,14 +162,14 @@ namespace Azure.Storage.DataMovement.Tests
                 destination: mockDestination.Object);
 
             TransferJobInternal job = new(
-                new DataTransfer(id: transferId),
+                new TransferOperation(id: transferId),
                 mockSource.Object,
                 mockDestination.Object,
                 StreamToUriJobPart.CreateJobPartAsync,
                 StreamToUriJobPart.CreateJobPartAsync,
-                new DataTransferOptions(),
+                new TransferOptions(),
                 checkpointer,
-                DataTransferErrorMode.StopOnAnyFailure,
+                TransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
                 new ClientDiagnostics(ClientOptions.Default));
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(
@@ -267,14 +269,14 @@ namespace Azure.Storage.DataMovement.Tests
             Mock<JobPartInternal.QueueChunkDelegate> mockPartQueueChunkTask = MockQueueInternalTasks.GetPartQueueChunkTask();
 
             TransferJobInternal job = new(
-                new DataTransfer(id: transferId),
+                new TransferOperation(id: transferId),
                 mockSource.Object,
                 mockDestination.Object,
                 StreamToUriJobPart.CreateJobPartAsync,
                 StreamToUriJobPart.CreateJobPartAsync,
-                new DataTransferOptions(),
+                new TransferOptions(),
                 checkpointer,
-                DataTransferErrorMode.StopOnAnyFailure,
+                TransferErrorMode.StopOnAnyFailure,
                 ArrayPool<byte>.Shared,
                 new ClientDiagnostics(ClientOptions.Default));
             StreamToUriJobPart jobPart = await StreamToUriJobPart.CreateJobPartAsync(

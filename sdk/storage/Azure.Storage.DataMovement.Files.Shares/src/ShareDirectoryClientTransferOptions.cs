@@ -18,8 +18,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public ShareFileStorageResourceOptions ShareDirectoryOptions { get; set; }
 
         /// <summary>
-        /// Options pertaining to the data tranfer.
+        /// Options pertaining to the data transfer.
         /// </summary>
-        public DataTransferOptions TransferOptions { get; set; }
+        public TransferOptions TransferOptions { get; set; }
     }
 }

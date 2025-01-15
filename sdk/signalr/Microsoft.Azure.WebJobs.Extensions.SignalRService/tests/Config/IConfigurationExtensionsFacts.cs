@@ -3,14 +3,17 @@
 
 using System;
 using System.Linq;
+
 using Azure.Core.Serialization;
 using Azure.Identity;
+
 using Microsoft.Azure.SignalR;
 using Microsoft.Azure.SignalR.Tests.Common;
 using Microsoft.Azure.WebJobs.Extensions.SignalRService;
 using Microsoft.Extensions.Azure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 using Xunit;
 
 namespace SignalRServiceExtension.Tests.Config
@@ -41,7 +44,7 @@ namespace SignalRServiceExtension.Tests.Config
             Assert.True(config.GetSection("eastus").TryGetEndpointFromIdentity(factory, out var endpoint));
             Assert.Equal("eastus", endpoint.Name);
             Assert.Equal(uri, endpoint.Endpoint);
-            Assert.IsType<DefaultAzureCredential>((endpoint.AccessKey as AadAccessKey).TokenCredential);
+            Assert.IsType<DefaultAzureCredential>((endpoint.AccessKey as MicrosoftEntraAccessKey).TokenCredential);
             Assert.Equal(EndpointType.Primary, endpoint.EndpointType);
         }
 
@@ -65,7 +68,7 @@ namespace SignalRServiceExtension.Tests.Config
             Assert.Equal(uri, endpoint.Endpoint);
             Assert.Equal(new Uri("https://serverEndpoint.com"), endpoint.ServerEndpoint);
             Assert.Equal(new Uri("https://clientEndpoint.com"), endpoint.ClientEndpoint);
-            Assert.IsType<ManagedIdentityCredential>((endpoint.AccessKey as AadAccessKey).TokenCredential);
+            Assert.IsType<ManagedIdentityCredential>((endpoint.AccessKey as MicrosoftEntraAccessKey).TokenCredential);
             Assert.Equal(EndpointType.Secondary, endpoint.EndpointType);
         }
 

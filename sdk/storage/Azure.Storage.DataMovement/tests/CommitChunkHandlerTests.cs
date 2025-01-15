@@ -167,7 +167,7 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                DataTransferOrder.Unordered,
+                TransferOrder.Unordered,
                 default,
                 CancellationToken.None);
 
@@ -204,7 +204,7 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                DataTransferOrder.Unordered,
+                TransferOrder.Unordered,
                 default,
                 CancellationToken.None);
 
@@ -256,7 +256,7 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                DataTransferOrder.Unordered,
+                TransferOrder.Unordered,
                 default,
                 CancellationToken.None);
 
@@ -296,7 +296,7 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                DataTransferOrder.Unordered,
+                TransferOrder.Unordered,
                 default,
                 CancellationToken.None);
 
@@ -343,7 +343,7 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                DataTransferOrder.Sequential,
+                TransferOrder.Sequential,
                 default,
                 CancellationToken.None);
 
@@ -395,7 +395,7 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                DataTransferOrder.Sequential,
+                TransferOrder.Sequential,
                 default,
                 CancellationToken.None);
 
@@ -434,7 +434,7 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                transferOrder: DataTransferOrder.Sequential,
+                transferOrder: TransferOrder.Sequential,
                 default,
                 CancellationToken.None);
 
@@ -471,7 +471,7 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                transferOrder: DataTransferOrder.Unordered,
+                transferOrder: TransferOrder.Unordered,
                 default,
                 CancellationToken.None);
 
@@ -507,7 +507,7 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                transferOrder: DataTransferOrder.Unordered,
+                transferOrder: TransferOrder.Unordered,
                 default,
                 CancellationToken.None);
 
@@ -545,11 +545,13 @@ namespace Azure.Storage.DataMovement.Tests
                 { "Metadata", metadata },
                 { "Tags", tags }
             };
-            StorageResourceItemProperties properties = new(
-                resourceLength: expectedLength,
-                eTag: new ETag("etag"),
-                lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
-                properties: sourceProperties);
+            StorageResourceItemProperties properties = new()
+            {
+                ResourceLength = expectedLength,
+                ETag = new ETag("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
+                RawProperties = sourceProperties
+            };
             var commitBlockHandler = new CommitChunkHandler(
                 expectedLength: expectedLength,
                 blockSize: blockSize,
@@ -560,7 +562,7 @@ namespace Azure.Storage.DataMovement.Tests
                     ReportProgressInBytes = mockCommitChunkBehaviors.ReportProgressInBytesTask.Object,
                     InvokeFailedHandler = mockCommitChunkBehaviors.InvokeFailedEventHandlerTask.Object,
                 },
-                DataTransferOrder.Unordered,
+                TransferOrder.Unordered,
                 properties,
                 CancellationToken.None);
 

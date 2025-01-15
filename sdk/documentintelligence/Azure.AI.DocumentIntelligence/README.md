@@ -598,7 +598,7 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 <!-- LINKS -->
 [docint_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/documentintelligence/Azure.AI.DocumentIntelligence/src
 [docint_docs]: https://learn.microsoft.com/azure/cognitive-services/form-recognizer/
-[docint_refdocs]: https://learn.microsoft.com/dotnet/api/overview/azure/cognitiveservices/documentintelligence?view=azure-dotnet
+[docint_refdocs]: https://aka.ms/azsdk/net/docs/ref/documentintelligence
 [docint_nuget_package]: https://www.nuget.org/packages/Azure.AI.DocumentIntelligence
 [docint_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/documentintelligence/Azure.AI.DocumentIntelligence/samples/README.md
 [docint_models]: https://aka.ms/azsdk/formrecognizer/models

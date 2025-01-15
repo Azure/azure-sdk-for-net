@@ -19,16 +19,16 @@ public class PauseResumeTransferMockedTests
     private (StepProcessor<TransferJobInternal> JobProcessor, StepProcessor<JobPartInternal> PartProcessor, StepProcessor<Func<Task>> ChunkProcessor) StepProcessors()
         => (new(), new(), new());
 
-    private Dictionary<DataTransferState, int> GetJobsStateCount(List<DataTransfer> transfers, MemoryTransferCheckpointer checkpointer)
+    private Dictionary<TransferState, int> GetJobsStateCount(List<TransferOperation> transfers, MemoryTransferCheckpointer checkpointer)
     {
-        Dictionary<DataTransferState, int> jobsStateCount = new();
+        Dictionary<TransferState, int> jobsStateCount = new();
         // initialize jobsStateCount
-        foreach (DataTransferState state in Enum.GetValues(typeof(DataTransferState)))
+        foreach (TransferState state in Enum.GetValues(typeof(TransferState)))
         {
             jobsStateCount[state] = 0;
         }
         // populate jobsStateCount
-        foreach (DataTransfer transfer in transfers)
+        foreach (TransferOperation transfer in transfers)
         {
             Job job = checkpointer.Jobs[transfer.Id];
             ++jobsStateCount[job.Status.State];
@@ -36,16 +36,16 @@ public class PauseResumeTransferMockedTests
         return jobsStateCount;
     }
 
-    private Dictionary<DataTransferState, int> GetJobPartsStateCount(List<DataTransfer> transfers, MemoryTransferCheckpointer checkpointer)
+    private Dictionary<TransferState, int> GetJobPartsStateCount(List<TransferOperation> transfers, MemoryTransferCheckpointer checkpointer)
     {
-        Dictionary<DataTransferState, int> jobPartsStateCount = new();
+        Dictionary<TransferState, int> jobPartsStateCount = new();
         // initialize jobPartsStateCount
-        foreach (DataTransferState state in Enum.GetValues(typeof(DataTransferState)))
+        foreach (TransferState state in Enum.GetValues(typeof(TransferState)))
         {
             jobPartsStateCount[state] = 0;
         }
         // populate jobPartsStateCount
-        foreach (DataTransfer transfer in transfers)
+        foreach (TransferOperation transfer in transfers)
         {
             Job job = checkpointer.Jobs[transfer.Id];
             foreach (var jobPartEntry in job.Parts)
@@ -57,38 +57,38 @@ public class PauseResumeTransferMockedTests
         return jobPartsStateCount;
     }
 
-    private int GetEnumerationCompleteCount(List<DataTransfer> transfers, MemoryTransferCheckpointer checkpointer)
+    private int GetEnumerationCompleteCount(List<TransferOperation> transfers, MemoryTransferCheckpointer checkpointer)
     {
         return transfers.Count(transfer => checkpointer.Jobs[transfer.Id].EnumerationComplete);
     }
 
-    private void AssertJobProcessingSuccessful(int numJobs, List<DataTransfer> transfers, MemoryTransferCheckpointer checkpointer)
+    private void AssertJobProcessingSuccessful(int numJobs, List<TransferOperation> transfers, MemoryTransferCheckpointer checkpointer)
     {
-        int inProgressJobsCount1 = GetJobsStateCount(transfers, checkpointer)[DataTransferState.InProgress];
+        int inProgressJobsCount1 = GetJobsStateCount(transfers, checkpointer)[TransferState.InProgress];
         int enumerationCompleteCount1 = GetEnumerationCompleteCount(transfers, checkpointer);
         Assert.That(enumerationCompleteCount1, Is.EqualTo(numJobs), "Error: all jobs should have finished enumerating");
         Assert.That(inProgressJobsCount1, Is.EqualTo(numJobs), "Error: all jobs should be in InProgress state after Job Processing");
     }
 
-    private void AssertPartProcessingSuccessful(int numJobParts, List<DataTransfer> transfers, MemoryTransferCheckpointer checkpointer)
+    private void AssertPartProcessingSuccessful(int numJobParts, List<TransferOperation> transfers, MemoryTransferCheckpointer checkpointer)
     {
-        int inProgressJobPartsCount = GetJobPartsStateCount(transfers, checkpointer)[DataTransferState.InProgress];
+        int inProgressJobPartsCount = GetJobPartsStateCount(transfers, checkpointer)[TransferState.InProgress];
         Assert.That(inProgressJobPartsCount, Is.EqualTo(numJobParts), "Error: all job parts should be in InProgress state after Part Processing");
     }
 
-    private void AssertAllJobsAndPartsCompleted(int numJobs, int numJobParts, List<DataTransfer> transfers, MemoryTransferCheckpointer checkpointer)
+    private void AssertAllJobsAndPartsCompleted(int numJobs, int numJobParts, List<TransferOperation> transfers, MemoryTransferCheckpointer checkpointer)
     {
-        int completedJobsCount = GetJobsStateCount(transfers, checkpointer)[DataTransferState.Completed];
-        int completedPartsCount = GetJobPartsStateCount(transfers, checkpointer)[DataTransferState.Completed];
+        int completedJobsCount = GetJobsStateCount(transfers, checkpointer)[TransferState.Completed];
+        int completedPartsCount = GetJobPartsStateCount(transfers, checkpointer)[TransferState.Completed];
         Assert.That(completedJobsCount, Is.EqualTo(numJobs), "Error in transitioning all jobs to Completed state");
         Assert.That(completedPartsCount, Is.EqualTo(numJobParts), "Error in transitioning all job parts to Completed state");
-        foreach (DataTransfer transfer in transfers)
+        foreach (TransferOperation transfer in transfers)
         {
             Job job = checkpointer.Jobs[transfer.Id];
-            Assert.That(job.Status.State, Is.EqualTo(DataTransferState.Completed), "Error in transitioning all jobs to Completed state");
+            Assert.That(job.Status.State, Is.EqualTo(TransferState.Completed), "Error in transitioning all jobs to Completed state");
             foreach (var jobPart in job.Parts)
             {
-                Assert.That(jobPart.Value.Status.State, Is.EqualTo(DataTransferState.Completed), "Error in transitioning all job parts to Completed state");
+                Assert.That(jobPart.Value.Status.State, Is.EqualTo(TransferState.Completed), "Error in transitioning all job parts to Completed state");
             }
         }
     }
@@ -98,12 +98,12 @@ public class PauseResumeTransferMockedTests
         int numJobParts,
         int numChunks,
         int chunksPerPart,
-        List<DataTransfer> resumedTransfers,
+        List<TransferOperation> resumedTransfers,
         MemoryTransferCheckpointer checkpointer,
         StepProcessor<TransferJobInternal> jobsProcessor,
         StepProcessor<JobPartInternal> partsProcessor,
         StepProcessor<Func<Task>> chunksProcessor,
-        DataTransferState initialJobState = DataTransferState.Paused)
+        TransferState initialJobState = TransferState.Paused)
     {
         await Task.Delay(50);
         int initialJobStateCount = GetJobsStateCount(resumedTransfers, checkpointer)[initialJobState];
@@ -211,12 +211,12 @@ public class PauseResumeTransferMockedTests
             checkpointer,
             resumeProviders);
 
-        List<DataTransfer> transfers = new();
+        List<TransferOperation> transfers = new();
 
         // queue jobs
         foreach ((Mock<StorageResourceItem> srcResource, Mock<StorageResourceItem> dstResource) in resources)
         {
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 srcResource.Object,
                 dstResource.Object,
                 new()
@@ -228,7 +228,7 @@ public class PauseResumeTransferMockedTests
 
             // Assert that job plan file is created properly
             Assert.That(checkpointer.Jobs.ContainsKey(transfer.Id), Is.True, "Error during Job plan file creation.");
-            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.Queued), "Error during Job plan file creation.");
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(TransferState.Queued), "Error during Job plan file creation.");
             Assert.That(checkpointer.Jobs[transfer.Id].Parts.Count, Is.EqualTo(0), "Job Part files should not exist before job processing");
         }
         Assert.That(checkpointer.Jobs.Count, Is.EqualTo(transfers.Count), "Error during Job plan file creation.");
@@ -247,18 +247,18 @@ public class PauseResumeTransferMockedTests
         }
 
         // Issue Pause for all of the transfers
-        foreach (DataTransfer transfer in transfers)
+        foreach (TransferOperation transfer in transfers)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
-            Assert.That(DataTransferState.Pausing, Is.EqualTo(transfer.TransferStatus.State), "Error in transitioning to Pausing state");
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
+            Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
         // Process (the rest of) jobs
         await jobsProcessor.StepAll();
 
         await Task.Delay(50);
-        int pausedJobsCount = GetJobsStateCount(transfers, checkpointer)[DataTransferState.Paused];
-        int queuedPartsCount = GetJobPartsStateCount(transfers, checkpointer)[DataTransferState.Queued];
+        int pausedJobsCount = GetJobsStateCount(transfers, checkpointer)[TransferState.Paused];
+        int queuedPartsCount = GetJobPartsStateCount(transfers, checkpointer)[TransferState.Queued];
         int jobPartsCreatedCount = transfers.Sum(transfer => checkpointer.Jobs[transfer.Id].Parts.Count);
         int enumerationCompleteCount = GetEnumerationCompleteCount(transfers, checkpointer);
 
@@ -287,8 +287,8 @@ public class PauseResumeTransferMockedTests
         await Task.Delay(50);
         if (pauseLocation == PauseLocation.PauseProcessHalfway)
         {
-            int pausedJobsCount2 = GetJobsStateCount(transfers, checkpointer)[DataTransferState.Paused];
-            int pausedPartsCount2 = GetJobPartsStateCount(transfers, checkpointer)[DataTransferState.Paused];
+            int pausedJobsCount2 = GetJobsStateCount(transfers, checkpointer)[TransferState.Paused];
+            int pausedPartsCount2 = GetJobPartsStateCount(transfers, checkpointer)[TransferState.Paused];
             Assert.That(pausedJobsCount2, Is.EqualTo(items), "Error in transitioning all jobs to Paused state");
             // only half of the job part checkpointers are created in PauseProcessHalfway so only half will be in Paused state
             Assert.That(pausedPartsCount2, Is.EqualTo(items / 2), "Error in transitioning all created job parts to Paused state");
@@ -296,7 +296,7 @@ public class PauseResumeTransferMockedTests
         }
 
         // START RESUME TRANSFERS
-        List<DataTransfer> resumedTransfers = await transferManager.ResumeAllTransfersAsync(new()
+        List<TransferOperation> resumedTransfers = await transferManager.ResumeAllTransfersAsync(new()
         {
             InitialTransferSize = chunkSize,
             MaximumTransferChunkSize = chunkSize,
@@ -346,12 +346,12 @@ public class PauseResumeTransferMockedTests
             checkpointer,
             resumeProviders);
 
-        List<DataTransfer> transfers = new();
+        List<TransferOperation> transfers = new();
 
         // queue jobs
         foreach ((Mock<StorageResourceItem> srcResource, Mock<StorageResourceItem> dstResource) in resources)
         {
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 srcResource.Object,
                 dstResource.Object,
                 new()
@@ -363,7 +363,7 @@ public class PauseResumeTransferMockedTests
 
             // Assert that job plan file is created properly
             Assert.That(checkpointer.Jobs.ContainsKey(transfer.Id), Is.True, "Error during Job plan file creation.");
-            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.Queued), "Error during Job plan file creation.");
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(TransferState.Queued), "Error during Job plan file creation.");
             Assert.That(checkpointer.Jobs[transfer.Id].Parts.Count, Is.EqualTo(0), "Job Part files should not exist before job processing");
         }
         Assert.That(checkpointer.Jobs.Count, Is.EqualTo(transfers.Count), "Error during Job plan file creation.");
@@ -373,12 +373,12 @@ public class PauseResumeTransferMockedTests
         Assert.That(await jobsProcessor.StepAll(), Is.EqualTo(items), "Error during job processing");
 
         // At this point, job part files should be created for each transfer item
-        foreach (DataTransfer transfer in transfers)
+        foreach (TransferOperation transfer in transfers)
         {
-            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.InProgress), "Error transitioning Job to InProgress after job processing");
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(TransferState.InProgress), "Error transitioning Job to InProgress after job processing");
             var partsDict = checkpointer.Jobs[transfer.Id].Parts;
             Assert.That(partsDict.Count, Is.EqualTo(1), "Error during Job part file creation.");
-            Assert.That(partsDict.First().Value.Status.State, Is.EqualTo(DataTransferState.Queued), "Error during Job part file creation.");
+            Assert.That(partsDict.First().Value.Status.State, Is.EqualTo(TransferState.Queued), "Error during Job part file creation.");
         }
 
         int enumerationCompleteCount = GetEnumerationCompleteCount(transfers, checkpointer);
@@ -397,18 +397,18 @@ public class PauseResumeTransferMockedTests
         }
 
         // Issue Pause for all of the transfers
-        foreach (DataTransfer transfer in transfers)
+        foreach (TransferOperation transfer in transfers)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
-            Assert.That(DataTransferState.Pausing, Is.EqualTo(transfer.TransferStatus.State), "Error in transitioning to Pausing state");
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
+            Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
         // Process (the rest of) parts
         await partsProcessor.StepAll();
 
         await Task.Delay(50);
-        int pausedJobsCount = GetJobsStateCount(transfers, checkpointer)[DataTransferState.Paused];
-        int pausedPartsCount = GetJobPartsStateCount(transfers, checkpointer)[DataTransferState.Paused];
+        int pausedJobsCount = GetJobsStateCount(transfers, checkpointer)[TransferState.Paused];
+        int pausedPartsCount = GetJobPartsStateCount(transfers, checkpointer)[TransferState.Paused];
 
         // Assert that we properly paused for PauseProcessHalfway & PauseProcessStart
         if (pauseLocation == PauseLocation.PauseProcessHalfway)
@@ -430,13 +430,13 @@ public class PauseResumeTransferMockedTests
 
         await Task.Delay(50);
         // All jobs and job parts should be paused now
-        int pausedJobsCount2 = GetJobsStateCount(transfers, checkpointer)[DataTransferState.Paused];
-        int pausedPartsCount2 = GetJobPartsStateCount(transfers, checkpointer)[DataTransferState.Paused];
+        int pausedJobsCount2 = GetJobsStateCount(transfers, checkpointer)[TransferState.Paused];
+        int pausedPartsCount2 = GetJobPartsStateCount(transfers, checkpointer)[TransferState.Paused];
         Assert.That(pausedJobsCount2, Is.EqualTo(items), "Error in transitioning all jobs to Paused state");
         Assert.That(pausedPartsCount2, Is.EqualTo(items), "Error in transitioning all job parts to Paused state");
 
         // START RESUME TRANSFERS
-        List<DataTransfer> resumedTransfers = await transferManager.ResumeAllTransfersAsync();
+        List<TransferOperation> resumedTransfers = await transferManager.ResumeAllTransfersAsync();
 
         await AssertResumeTransfer(items, items, numChunks, chunksPerPart, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
     }
@@ -482,12 +482,12 @@ public class PauseResumeTransferMockedTests
             checkpointer,
             resumeProviders);
 
-        List<DataTransfer> transfers = new();
+        List<TransferOperation> transfers = new();
 
         // queue jobs
         foreach ((Mock<StorageResourceItem> srcResource, Mock<StorageResourceItem> dstResource) in resources)
         {
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 srcResource.Object,
                 dstResource.Object,
                 new()
@@ -499,7 +499,7 @@ public class PauseResumeTransferMockedTests
 
             // Assert that job plan file is created properly
             Assert.That(checkpointer.Jobs.ContainsKey(transfer.Id), Is.True, "Error during Job plan file creation.");
-            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.Queued), "Error during Job plan file creation.");
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(TransferState.Queued), "Error during Job plan file creation.");
             Assert.That(checkpointer.Jobs[transfer.Id].Parts.Count, Is.EqualTo(0), "Job Part files should not exist before job processing");
         }
         Assert.That(checkpointer.Jobs.Count, Is.EqualTo(transfers.Count), "Error during Job plan file creation.");
@@ -509,12 +509,12 @@ public class PauseResumeTransferMockedTests
         Assert.That(await jobsProcessor.StepAll(), Is.EqualTo(items), "Error during job processing");
 
         // At this point, job part files should be created for each transfer item
-        foreach (DataTransfer transfer in transfers)
+        foreach (TransferOperation transfer in transfers)
         {
-            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.InProgress), "Error transitioning Job to InProgress after job processing");
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(TransferState.InProgress), "Error transitioning Job to InProgress after job processing");
             var partsDict = checkpointer.Jobs[transfer.Id].Parts;
             Assert.That(partsDict.Count, Is.EqualTo(1), "Error during Job part file creation.");
-            Assert.That(partsDict.First().Value.Status.State, Is.EqualTo(DataTransferState.Queued), "Error during Job part file creation.");
+            Assert.That(partsDict.First().Value.Status.State, Is.EqualTo(TransferState.Queued), "Error during Job part file creation.");
         }
 
         int enumerationCompleteCount = GetEnumerationCompleteCount(transfers, checkpointer);
@@ -523,10 +523,10 @@ public class PauseResumeTransferMockedTests
         // Process parts
         Assert.That(await partsProcessor.StepAll(), Is.EqualTo(items), "Error in part processing");
 
-        foreach (DataTransfer transfer in transfers)
+        foreach (TransferOperation transfer in transfers)
         {
             var partsDict = checkpointer.Jobs[transfer.Id].Parts;
-            Assert.That(partsDict.First().Value.Status.State, Is.EqualTo(DataTransferState.InProgress), "Error transitioning Job Part to InProgress");
+            Assert.That(partsDict.First().Value.Status.State, Is.EqualTo(TransferState.InProgress), "Error transitioning Job Part to InProgress");
         }
 
         // Setup PauseProcessHalfway & PauseProcessStart before issuing pause
@@ -542,18 +542,18 @@ public class PauseResumeTransferMockedTests
         }
 
         // Issue Pause for all of the transfers
-        foreach (DataTransfer transfer in transfers)
+        foreach (TransferOperation transfer in transfers)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
             if (pauseLocation == PauseLocation.PauseProcessStart)
             {
-                Assert.That(DataTransferState.Pausing, Is.EqualTo(transfer.TransferStatus.State), "Error in transitioning to Pausing state");
+                Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
             }
             else
             {
                 // the half that processed before the pause will be in Completed state
-                Assert.That(transfer.TransferStatus.State,
-                    Is.AnyOf(DataTransferState.Pausing, DataTransferState.Completed),
+                Assert.That(transfer.Status.State,
+                    Is.AnyOf(TransferState.Pausing, TransferState.Completed),
                     "Error: Transfer state for PauseProcessHalfway should be either Pausing or Completed");
             }
         }
@@ -563,11 +563,11 @@ public class PauseResumeTransferMockedTests
 
         await Task.Delay(50);
         var jobsStateCount = GetJobsStateCount(transfers, checkpointer);
-        int pausedJobsCount = jobsStateCount[DataTransferState.Paused];
-        int completedJobsCount = jobsStateCount[DataTransferState.Completed];
+        int pausedJobsCount = jobsStateCount[TransferState.Paused];
+        int completedJobsCount = jobsStateCount[TransferState.Completed];
         var partsStateCount = GetJobPartsStateCount(transfers, checkpointer);
-        int pausedPartsCount = partsStateCount[DataTransferState.Paused];
-        int completedPartsCount = partsStateCount[DataTransferState.Completed];
+        int pausedPartsCount = partsStateCount[TransferState.Paused];
+        int completedPartsCount = partsStateCount[TransferState.Completed];
 
         if (pauseLocation == PauseLocation.PauseProcessHalfway)
         {
@@ -587,7 +587,7 @@ public class PauseResumeTransferMockedTests
         }
 
         // START RESUME TRANSFERS
-        List<DataTransfer> resumedTransfers = await transferManager.ResumeAllTransfersAsync();
+        List<TransferOperation> resumedTransfers = await transferManager.ResumeAllTransfersAsync();
 
         if (pauseLocation == PauseLocation.PauseProcessHalfway)
         {
@@ -641,12 +641,12 @@ public class PauseResumeTransferMockedTests
             checkpointer,
             resumeProviders);
 
-        List<DataTransfer> transfers = new();
+        List<TransferOperation> transfers = new();
 
         // queue jobs
         foreach ((Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in resources)
         {
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 srcResource.Object,
                 dstResource.Object,
                 new()
@@ -658,7 +658,7 @@ public class PauseResumeTransferMockedTests
 
             // Assert that job plan file is created properly
             Assert.That(checkpointer.Jobs.ContainsKey(transfer.Id), Is.True, "Error during Job plan file creation.");
-            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.Queued), "Error during Job plan file creation.");
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(TransferState.Queued), "Error during Job plan file creation.");
             Assert.That(checkpointer.Jobs[transfer.Id].Parts.Count, Is.EqualTo(0), "Job Part files should not exist before job processing");
         }
         Assert.That(checkpointer.Jobs.Count, Is.EqualTo(transfers.Count), "Error during Job plan file creation.");
@@ -677,18 +677,18 @@ public class PauseResumeTransferMockedTests
         }
 
         // Issue Pause for all of the transfers
-        foreach (DataTransfer transfer in transfers)
+        foreach (TransferOperation transfer in transfers)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
-            Assert.That(DataTransferState.Pausing, Is.EqualTo(transfer.TransferStatus.State), "Error in transitioning to Pausing state");
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
+            Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
         // Process (the rest of) jobs
         await jobsProcessor.StepAll();
 
         await Task.Delay(50);
-        int pausedJobsCount = GetJobsStateCount(transfers, checkpointer)[DataTransferState.Paused];
-        int queuedPartsCount = GetJobPartsStateCount(transfers, checkpointer)[DataTransferState.Queued];
+        int pausedJobsCount = GetJobsStateCount(transfers, checkpointer)[TransferState.Paused];
+        int queuedPartsCount = GetJobPartsStateCount(transfers, checkpointer)[TransferState.Queued];
         int expectedPartsCreatedCount = Enumerable.Range(1, numJobs/2).Select(GetItemCountFromContainerIndex).Sum();
         int jobPartsCreatedCount = transfers.Sum(transfer => checkpointer.Jobs[transfer.Id].Parts.Count);
         int enumerationCompleteCount = GetEnumerationCompleteCount(transfers, checkpointer);
@@ -718,15 +718,15 @@ public class PauseResumeTransferMockedTests
         await Task.Delay(50);
         if (pauseLocation == PauseLocation.PauseProcessHalfway)
         {
-            int pausedJobsCount2 = GetJobsStateCount(transfers, checkpointer)[DataTransferState.Paused];
-            int pausedPartsCount2 = GetJobPartsStateCount(transfers, checkpointer)[DataTransferState.Paused];
+            int pausedJobsCount2 = GetJobsStateCount(transfers, checkpointer)[TransferState.Paused];
+            int pausedPartsCount2 = GetJobPartsStateCount(transfers, checkpointer)[TransferState.Paused];
             Assert.That(pausedJobsCount2, Is.EqualTo(numJobs), "Error in transitioning all jobs to Paused state");
             Assert.That(pausedPartsCount2, Is.EqualTo(expectedPartsCreatedCount), "Error in transitioning all created job parts to Paused state");
             Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(0), "Error: no items should proceed to chunking");
         }
 
         // START RESUME TRANSFERS
-        List<DataTransfer> resumedTransfers = await transferManager.ResumeAllTransfersAsync(new()
+        List<TransferOperation> resumedTransfers = await transferManager.ResumeAllTransfersAsync(new()
         {
             InitialTransferSize = chunkSize,
             MaximumTransferChunkSize = chunkSize,
@@ -777,12 +777,12 @@ public class PauseResumeTransferMockedTests
             checkpointer,
             resumeProviders);
 
-        List<DataTransfer> transfers = new();
+        List<TransferOperation> transfers = new();
 
         // queue jobs
         foreach ((Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in resources)
         {
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 srcResource.Object,
                 dstResource.Object,
                 new()
@@ -794,7 +794,7 @@ public class PauseResumeTransferMockedTests
 
             // Assert that job plan file is created properly
             Assert.That(checkpointer.Jobs.ContainsKey(transfer.Id), Is.True, "Error during Job plan file creation.");
-            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.Queued), "Error during Job plan file creation.");
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(TransferState.Queued), "Error during Job plan file creation.");
             Assert.That(checkpointer.Jobs[transfer.Id].Parts.Count, Is.EqualTo(0), "Job Part files should not exist before job processing");
         }
         Assert.That(checkpointer.Jobs.Count, Is.EqualTo(transfers.Count), "Error during Job plan file creation.");
@@ -806,12 +806,12 @@ public class PauseResumeTransferMockedTests
         // At this point, job part files should be created for each transfer item
         for (int i = 0; i < transfers.Count; i++)
         {
-            DataTransfer transfer = transfers[i];
-            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.InProgress), "Error transitioning Job to InProgress after job processing");
+            TransferOperation transfer = transfers[i];
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(TransferState.InProgress), "Error transitioning Job to InProgress after job processing");
             int expectedItemCount = GetItemCountFromContainerIndex(i + 1);
             var partsDict = checkpointer.Jobs[transfer.Id].Parts;
             Assert.That(partsDict.Count, Is.EqualTo(expectedItemCount), "Error during Job part file creation.");
-            Assert.That(partsDict.Values.All(part => part.Status.State == DataTransferState.Queued),
+            Assert.That(partsDict.Values.All(part => part.Status.State == TransferState.Queued),
                 Is.True, "Error during Job part file creation: Not all parts are in the Queued state.");
         }
 
@@ -831,17 +831,17 @@ public class PauseResumeTransferMockedTests
         }
 
         // Issue Pause for all of the transfers
-        foreach (DataTransfer transfer in transfers)
+        foreach (TransferOperation transfer in transfers)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
-            Assert.That(DataTransferState.Pausing, Is.EqualTo(transfer.TransferStatus.State), "Error in transitioning to Pausing state");
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
+            Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
         // Process (the rest of) parts
         await partsProcessor.StepAll();
 
         await Task.Delay(50);
-        int pausedPartsCount = GetJobPartsStateCount(transfers, checkpointer)[DataTransferState.Paused];
+        int pausedPartsCount = GetJobPartsStateCount(transfers, checkpointer)[TransferState.Paused];
 
         if (pauseLocation == PauseLocation.PauseProcessHalfway)
         {
@@ -860,13 +860,13 @@ public class PauseResumeTransferMockedTests
 
         await Task.Delay(50);
         // All jobs and job parts should be paused now
-        int pausedJobsCount2 = GetJobsStateCount(transfers, checkpointer)[DataTransferState.Paused];
-        int pausedPartsCount2 = GetJobPartsStateCount(transfers, checkpointer)[DataTransferState.Paused];
+        int pausedJobsCount2 = GetJobsStateCount(transfers, checkpointer)[TransferState.Paused];
+        int pausedPartsCount2 = GetJobPartsStateCount(transfers, checkpointer)[TransferState.Paused];
         Assert.That(pausedJobsCount2, Is.EqualTo(numJobs), "Error in transitioning all jobs to Paused state");
         Assert.That(pausedPartsCount2, Is.EqualTo(numJobParts), "Error in transitioning all parts to Paused state");
 
         // START RESUME TRANSFERS
-        List<DataTransfer> resumedTransfers = await transferManager.ResumeAllTransfersAsync();
+        List<TransferOperation> resumedTransfers = await transferManager.ResumeAllTransfersAsync();
 
         await AssertResumeTransfer(numJobs, numJobParts, numChunks, chunksPerPart, resumedTransfers, checkpointer, jobsProcessor, partsProcessor, chunksProcessor);
     }
@@ -913,12 +913,12 @@ public class PauseResumeTransferMockedTests
             checkpointer,
             resumeProviders);
 
-        List<DataTransfer> transfers = new();
+        List<TransferOperation> transfers = new();
 
         // queue jobs
         foreach ((Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in resources)
         {
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 srcResource.Object,
                 dstResource.Object,
                 new()
@@ -930,7 +930,7 @@ public class PauseResumeTransferMockedTests
 
             // Assert that job plan file is created properly
             Assert.That(checkpointer.Jobs.ContainsKey(transfer.Id), Is.True, "Error during Job plan file creation.");
-            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.Queued), "Error during Job plan file creation.");
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(TransferState.Queued), "Error during Job plan file creation.");
             Assert.That(checkpointer.Jobs[transfer.Id].Parts.Count, Is.EqualTo(0), "Job Part files should not exist before job processing");
         }
         Assert.That(checkpointer.Jobs.Count, Is.EqualTo(transfers.Count), "Error during Job plan file creation.");
@@ -942,12 +942,12 @@ public class PauseResumeTransferMockedTests
         // At this point, job part files should be created for each transfer item
         for (int i = 0; i < transfers.Count; i++)
         {
-            DataTransfer transfer = transfers[i];
-            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.InProgress), "Error transitioning Job to InProgress after job processing");
+            TransferOperation transfer = transfers[i];
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(TransferState.InProgress), "Error transitioning Job to InProgress after job processing");
             int expectedItemCount = GetItemCountFromContainerIndex(i + 1);
             var partsDict = checkpointer.Jobs[transfer.Id].Parts;
             Assert.That(partsDict.Count, Is.EqualTo(expectedItemCount), "Error during Job part file creation.");
-            Assert.That(partsDict.Values.All(part => part.Status.State == DataTransferState.Queued),
+            Assert.That(partsDict.Values.All(part => part.Status.State == TransferState.Queued),
                 Is.True, "Error during Job part file creation: Not all parts are in the Queued state.");
         }
 
@@ -957,10 +957,10 @@ public class PauseResumeTransferMockedTests
         // Process parts
         Assert.That(await partsProcessor.StepAll(), Is.EqualTo(numJobParts), "Error processing job parts");
 
-        foreach (DataTransfer transfer in transfers)
+        foreach (TransferOperation transfer in transfers)
         {
             var partsDict = checkpointer.Jobs[transfer.Id].Parts;
-            Assert.That(partsDict.Values.All(part => part.Status.State == DataTransferState.InProgress),
+            Assert.That(partsDict.Values.All(part => part.Status.State == TransferState.InProgress),
                 Is.True, "Error transitioning each Job Part to InProgress");
         }
 
@@ -977,17 +977,17 @@ public class PauseResumeTransferMockedTests
         }
 
         // Issue Pause for all transfers
-        foreach (DataTransfer transfer in transfers)
+        foreach (TransferOperation transfer in transfers)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
             if (pauseLocation == PauseLocation.PauseProcessStart)
             {
-                Assert.That(DataTransferState.Pausing, Is.EqualTo(transfer.TransferStatus.State), "Error in transitioning to Pausing state");
+                Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
             }
             else
             {
-                Assert.That(transfer.TransferStatus.State,
-                    Is.AnyOf(DataTransferState.Pausing, DataTransferState.Completed),
+                Assert.That(transfer.Status.State,
+                    Is.AnyOf(TransferState.Pausing, TransferState.Completed),
                     "Error: Transfer state for PauseProcessHalfway should be either Pausing or Completed");
             }
         }
@@ -997,11 +997,11 @@ public class PauseResumeTransferMockedTests
 
         await Task.Delay(50);
         var jobsStateCount = GetJobsStateCount(transfers, checkpointer);
-        int pausedJobsCount = jobsStateCount[DataTransferState.Paused];
-        int completedJobsCount = jobsStateCount[DataTransferState.Completed];
+        int pausedJobsCount = jobsStateCount[TransferState.Paused];
+        int completedJobsCount = jobsStateCount[TransferState.Completed];
         var partsStateCount = GetJobPartsStateCount(transfers, checkpointer);
-        int pausedPartsCount = partsStateCount[DataTransferState.Paused];
-        int completedPartsCount = partsStateCount[DataTransferState.Completed];
+        int pausedPartsCount = partsStateCount[TransferState.Paused];
+        int completedPartsCount = partsStateCount[TransferState.Completed];
 
         int expectedAlreadyCompletedJobsCount_half = 0;
         for (int i = 1, numChunksCompleted = numChunks / 2; i <= numJobParts / 2 && numChunksCompleted > 0; ++i)
@@ -1031,7 +1031,7 @@ public class PauseResumeTransferMockedTests
         }
 
         // START RESUME TRANSFERS
-        List<DataTransfer> resumedTransfers = await transferManager.ResumeAllTransfersAsync();
+        List<TransferOperation> resumedTransfers = await transferManager.ResumeAllTransfersAsync();
 
         if (pauseLocation == PauseLocation.PauseProcessHalfway)
         {
@@ -1085,12 +1085,12 @@ public class PauseResumeTransferMockedTests
             checkpointer,
             resumeProviders);
 
-        List<DataTransfer> transfers = new();
+        List<TransferOperation> transfers = new();
 
         // queue jobs
         foreach ((Mock<StorageResourceItem> srcResource, Mock<StorageResourceItem> dstResource) in resources)
         {
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 srcResource.Object,
                 dstResource.Object,
                 new()
@@ -1102,17 +1102,17 @@ public class PauseResumeTransferMockedTests
 
             // Assert that job plan file is created properly
             Assert.That(checkpointer.Jobs.ContainsKey(transfer.Id), Is.True, "Error during Job plan file creation.");
-            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.Queued), "Error during Job plan file creation.");
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(TransferState.Queued), "Error during Job plan file creation.");
             Assert.That(checkpointer.Jobs[transfer.Id].Parts.Count, Is.EqualTo(0), "Job Part files should not exist before job processing");
         }
         Assert.That(checkpointer.Jobs.Count, Is.EqualTo(transfers.Count), "Error during Job plan file creation.");
         Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(items), "Error during initial Job queueing.");
 
         // Pause transfers #1
-        foreach (DataTransfer transfer in transfers)
+        foreach (TransferOperation transfer in transfers)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
-            Assert.That(DataTransferState.Pausing, Is.EqualTo(transfer.TransferStatus.State), "Error in transitioning to Pausing state");
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
+            Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
         // Process jobs
@@ -1120,8 +1120,8 @@ public class PauseResumeTransferMockedTests
 
         await Task.Delay(50);
         // Assert that we properly paused
-        int pausedJobsCount0 = GetJobsStateCount(transfers, checkpointer)[DataTransferState.Paused];
-        int queuedPartsCount0 = GetJobPartsStateCount(transfers, checkpointer)[DataTransferState.Queued];
+        int pausedJobsCount0 = GetJobsStateCount(transfers, checkpointer)[TransferState.Paused];
+        int queuedPartsCount0 = GetJobPartsStateCount(transfers, checkpointer)[TransferState.Queued];
         int jobPartsCreatedCount0 = transfers.Sum(transfer => checkpointer.Jobs[transfer.Id].Parts.Count);
         int enumerationCompleteCount0 = GetEnumerationCompleteCount(transfers, checkpointer);
         Assert.That(pausedJobsCount0, Is.EqualTo(items), "Error in Pausing all");
@@ -1131,7 +1131,7 @@ public class PauseResumeTransferMockedTests
         Assert.That(enumerationCompleteCount0, Is.EqualTo(0), "Error: none of the jobs should have finished enumerating");
 
         // Resume transfers #1
-        List<DataTransfer> resumedTransfers1 = await transferManager.ResumeAllTransfersAsync(new()
+        List<TransferOperation> resumedTransfers1 = await transferManager.ResumeAllTransfersAsync(new()
         {
             InitialTransferSize = chunkSize,
             MaximumTransferChunkSize = chunkSize,
@@ -1147,10 +1147,10 @@ public class PauseResumeTransferMockedTests
         Assert.That(partsProcessor.ItemsInQueue, Is.EqualTo(items), "Error: job part processing on resume #1");
 
         // Pause transfers #2
-        foreach (DataTransfer transfer in resumedTransfers1)
+        foreach (TransferOperation transfer in resumedTransfers1)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
-            Assert.That(DataTransferState.Pausing, Is.EqualTo(transfer.TransferStatus.State), "Error in transitioning to Pausing state");
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
+            Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
         // process job parts on resume #1
@@ -1158,14 +1158,14 @@ public class PauseResumeTransferMockedTests
 
         await Task.Delay(50);
         // Assert that we properly paused
-        int pausedJobsCount1 = GetJobsStateCount(transfers, checkpointer)[DataTransferState.Paused];
-        int pausedPartsCount1 = GetJobPartsStateCount(transfers, checkpointer)[DataTransferState.Paused];
+        int pausedJobsCount1 = GetJobsStateCount(transfers, checkpointer)[TransferState.Paused];
+        int pausedPartsCount1 = GetJobPartsStateCount(transfers, checkpointer)[TransferState.Paused];
         Assert.That(pausedJobsCount1, Is.EqualTo(items), "Error in Pausing all");
         Assert.That(pausedPartsCount1, Is.EqualTo(items), "Error in Pausing all");
         Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(0), "Error in Pausing all");
 
         // Resume transfers #2
-        List<DataTransfer> resumedTransfers2 = await transferManager.ResumeAllTransfersAsync(new()
+        List<TransferOperation> resumedTransfers2 = await transferManager.ResumeAllTransfersAsync(new()
         {
             InitialTransferSize = chunkSize,
             MaximumTransferChunkSize = chunkSize,
@@ -1188,10 +1188,10 @@ public class PauseResumeTransferMockedTests
         Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(numChunks), "Error: chunk processing on resume #2");
 
         // Pause transfers #3
-        foreach (DataTransfer transfer in resumedTransfers2)
+        foreach (TransferOperation transfer in resumedTransfers2)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
-            Assert.That(DataTransferState.Pausing, Is.EqualTo(transfer.TransferStatus.State), "Error in transitioning to Pausing state");
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
+            Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
         // Process chunks on resume #2
@@ -1200,18 +1200,18 @@ public class PauseResumeTransferMockedTests
         await Task.Delay(50);
         // Assert that we properly paused
         var jobsStateCount2 = GetJobsStateCount(transfers, checkpointer);
-        int pausedJobsCount2 = jobsStateCount2[DataTransferState.Paused];
-        int completedJobsCount2 = jobsStateCount2[DataTransferState.Completed];
+        int pausedJobsCount2 = jobsStateCount2[TransferState.Paused];
+        int completedJobsCount2 = jobsStateCount2[TransferState.Completed];
         var partsStateCount2 = GetJobPartsStateCount(transfers, checkpointer);
-        int pausedPartsCount2 = partsStateCount2[DataTransferState.Paused];
-        int completedPartsCount2 = partsStateCount2[DataTransferState.Completed];
+        int pausedPartsCount2 = partsStateCount2[TransferState.Paused];
+        int completedPartsCount2 = partsStateCount2[TransferState.Completed];
         Assert.That(pausedJobsCount2, Is.EqualTo(items), "Error in Pausing all");
         Assert.That(completedJobsCount2, Is.EqualTo(0), "Error in Pausing all");
         Assert.That(pausedPartsCount2, Is.EqualTo(items), "Error in Pausing all");
         Assert.That(completedPartsCount2, Is.EqualTo(0), "Error in Pausing all");
 
         // Resume transfers #3
-        List<DataTransfer> resumedTransfers3 = await transferManager.ResumeAllTransfersAsync(new()
+        List<TransferOperation> resumedTransfers3 = await transferManager.ResumeAllTransfersAsync(new()
         {
             InitialTransferSize = chunkSize,
             MaximumTransferChunkSize = chunkSize,
@@ -1260,12 +1260,12 @@ public class PauseResumeTransferMockedTests
             checkpointer,
             resumeProviders);
 
-        List<DataTransfer> transfers = new();
+        List<TransferOperation> transfers = new();
 
         // queue jobs
         foreach ((Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in resources)
         {
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 srcResource.Object,
                 dstResource.Object,
                 new()
@@ -1277,17 +1277,17 @@ public class PauseResumeTransferMockedTests
 
             // Assert that job plan file is created properly
             Assert.That(checkpointer.Jobs.ContainsKey(transfer.Id), Is.True, "Error during Job plan file creation.");
-            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.Queued), "Error during Job plan file creation.");
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(TransferState.Queued), "Error during Job plan file creation.");
             Assert.That(checkpointer.Jobs[transfer.Id].Parts.Count, Is.EqualTo(0), "Job Part files should not exist before job processing");
         }
         Assert.That(checkpointer.Jobs.Count, Is.EqualTo(transfers.Count), "Error during Job plan file creation.");
         Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(numJobs), "Error during initial Job queueing.");
 
         // Pause transfers #1
-        foreach (DataTransfer transfer in transfers)
+        foreach (TransferOperation transfer in transfers)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
-            Assert.That(DataTransferState.Pausing, Is.EqualTo(transfer.TransferStatus.State), "Error in transitioning to Pausing state");
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
+            Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
         // Process jobs
@@ -1295,8 +1295,8 @@ public class PauseResumeTransferMockedTests
 
         await Task.Delay(50);
         // Assert that we properly paused
-        int pausedJobsCount0 = GetJobsStateCount(transfers, checkpointer)[DataTransferState.Paused];
-        int queuedPartsCount0 = GetJobPartsStateCount(transfers, checkpointer)[DataTransferState.Queued];
+        int pausedJobsCount0 = GetJobsStateCount(transfers, checkpointer)[TransferState.Paused];
+        int queuedPartsCount0 = GetJobPartsStateCount(transfers, checkpointer)[TransferState.Queued];
         int jobPartsCreatedCount0 = transfers.Sum(transfer => checkpointer.Jobs[transfer.Id].Parts.Count);
         int enumerationCompleteCount0 = GetEnumerationCompleteCount(transfers, checkpointer);
         Assert.That(pausedJobsCount0, Is.EqualTo(numJobs), "Error in Pausing all");
@@ -1306,7 +1306,7 @@ public class PauseResumeTransferMockedTests
         Assert.That(enumerationCompleteCount0, Is.EqualTo(0), "Error: none of the jobs should have finished enumerating");
 
         // Resume transfers #1
-        List<DataTransfer> resumedTransfers1 = await transferManager.ResumeAllTransfersAsync(new()
+        List<TransferOperation> resumedTransfers1 = await transferManager.ResumeAllTransfersAsync(new()
         {
             InitialTransferSize = chunkSize,
             MaximumTransferChunkSize = chunkSize,
@@ -1322,10 +1322,10 @@ public class PauseResumeTransferMockedTests
         Assert.That(partsProcessor.ItemsInQueue, Is.EqualTo(numJobParts), "Error: job part processing on resume #1");
 
         // Pause transfers #2
-        foreach (DataTransfer transfer in resumedTransfers1)
+        foreach (TransferOperation transfer in resumedTransfers1)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
-            Assert.That(DataTransferState.Pausing, Is.EqualTo(transfer.TransferStatus.State), "Error in transitioning to Pausing state");
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
+            Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
         // process job parts on resume #1
@@ -1333,14 +1333,14 @@ public class PauseResumeTransferMockedTests
 
         await Task.Delay(50);
         // Assert that we properly paused
-        int pausedJobsCount1 = GetJobsStateCount(transfers, checkpointer)[DataTransferState.Paused];
-        int pausedPartsCount1 = GetJobPartsStateCount(transfers, checkpointer)[DataTransferState.Paused];
+        int pausedJobsCount1 = GetJobsStateCount(transfers, checkpointer)[TransferState.Paused];
+        int pausedPartsCount1 = GetJobPartsStateCount(transfers, checkpointer)[TransferState.Paused];
         Assert.That(pausedJobsCount1, Is.EqualTo(numJobs), "Error in Pausing all");
         Assert.That(pausedPartsCount1, Is.EqualTo(numJobParts), "Error in Pausing all");
         Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(0), "Error in Pausing all");
 
         // Resume transfers #2
-        List<DataTransfer> resumedTransfers2 = await transferManager.ResumeAllTransfersAsync(new()
+        List<TransferOperation> resumedTransfers2 = await transferManager.ResumeAllTransfersAsync(new()
         {
             InitialTransferSize = chunkSize,
             MaximumTransferChunkSize = chunkSize,
@@ -1363,10 +1363,10 @@ public class PauseResumeTransferMockedTests
         Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(numChunks), "Error: chunk processing on resume #2");
 
         // Pause transfers #3
-        foreach (DataTransfer transfer in resumedTransfers2)
+        foreach (TransferOperation transfer in resumedTransfers2)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
-            Assert.That(DataTransferState.Pausing, Is.EqualTo(transfer.TransferStatus.State), "Error in transitioning to Pausing state");
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
+            Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
         // Process chunks on resume #2
@@ -1375,18 +1375,18 @@ public class PauseResumeTransferMockedTests
         await Task.Delay(50);
         // Assert that we properly paused
         var jobsStateCount2 = GetJobsStateCount(transfers, checkpointer);
-        int pausedJobsCount2 = jobsStateCount2[DataTransferState.Paused];
-        int completedJobsCount2 = jobsStateCount2[DataTransferState.Completed];
+        int pausedJobsCount2 = jobsStateCount2[TransferState.Paused];
+        int completedJobsCount2 = jobsStateCount2[TransferState.Completed];
         var partsStateCount2 = GetJobPartsStateCount(transfers, checkpointer);
-        int pausedPartsCount2 = partsStateCount2[DataTransferState.Paused];
-        int completedPartsCount2 = partsStateCount2[DataTransferState.Completed];
+        int pausedPartsCount2 = partsStateCount2[TransferState.Paused];
+        int completedPartsCount2 = partsStateCount2[TransferState.Completed];
         Assert.That(pausedJobsCount2, Is.EqualTo(numJobs), "Error in Pausing all");
         Assert.That(completedJobsCount2, Is.EqualTo(0), "Error in Pausing all");
         Assert.That(pausedPartsCount2, Is.EqualTo(numJobParts), "Error in Pausing all");
         Assert.That(completedPartsCount2, Is.EqualTo(0), "Error in Pausing all");
 
         // Resume transfers #3
-        List<DataTransfer> resumedTransfers3 = await transferManager.ResumeAllTransfersAsync(new()
+        List<TransferOperation> resumedTransfers3 = await transferManager.ResumeAllTransfersAsync(new()
         {
             InitialTransferSize = chunkSize,
             MaximumTransferChunkSize = chunkSize,
@@ -1434,12 +1434,12 @@ public class PauseResumeTransferMockedTests
             checkpointer,
             resumeProviders);
 
-        List<DataTransfer> transfers = new();
+        List<TransferOperation> transfers = new();
 
         // queue jobs
         foreach ((Mock<StorageResourceItem> srcResource, Mock<StorageResourceItem> dstResource) in resources)
         {
-            DataTransfer transfer = await transferManager0.StartTransferAsync(
+            TransferOperation transfer = await transferManager0.StartTransferAsync(
                 srcResource.Object,
                 dstResource.Object,
                 new()
@@ -1451,7 +1451,7 @@ public class PauseResumeTransferMockedTests
 
             // Assert that job plan file is created properly
             Assert.That(checkpointer.Jobs.ContainsKey(transfer.Id), Is.True, "Error during Job plan file creation.");
-            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.Queued), "Error during Job plan file creation.");
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(TransferState.Queued), "Error during Job plan file creation.");
             Assert.That(checkpointer.Jobs[transfer.Id].Parts.Count, Is.EqualTo(0), "Job Part files should not exist before job processing");
         }
         Assert.That(checkpointer.Jobs.Count, Is.EqualTo(transfers.Count), "Error during Job plan file creation.");
@@ -1470,14 +1470,14 @@ public class PauseResumeTransferMockedTests
                 ref chunksProcessor0);
 
         // Resume transfer after Disaster #1
-        List<DataTransfer> resumedTransfers1 = await transferManager1.ResumeAllTransfersAsync(new()
+        List<TransferOperation> resumedTransfers1 = await transferManager1.ResumeAllTransfersAsync(new()
         {
             InitialTransferSize = chunkSize,
             MaximumTransferChunkSize = chunkSize,
         });
 
         await Task.Delay(50);
-        int queuedJobsCount = GetJobsStateCount(resumedTransfers1, checkpointer)[DataTransferState.Queued];
+        int queuedJobsCount = GetJobsStateCount(resumedTransfers1, checkpointer)[TransferState.Queued];
         Assert.That(queuedJobsCount, Is.EqualTo(items));
 
         // process jobs on resume #1
@@ -1499,10 +1499,10 @@ public class PauseResumeTransferMockedTests
                 ref chunksProcessor1);
 
         // Resume transfer after Disaster #2
-        List<DataTransfer> resumedTransfers2 = await transferManager2.ResumeAllTransfersAsync();
+        List<TransferOperation> resumedTransfers2 = await transferManager2.ResumeAllTransfersAsync();
 
         await Task.Delay(50);
-        int inProgressJobsCount = GetJobsStateCount(resumedTransfers2, checkpointer)[DataTransferState.InProgress];
+        int inProgressJobsCount = GetJobsStateCount(resumedTransfers2, checkpointer)[TransferState.InProgress];
         Assert.That(inProgressJobsCount, Is.EqualTo(items));
 
         // process jobs on resume #2
@@ -1530,7 +1530,7 @@ public class PauseResumeTransferMockedTests
                 ref chunksProcessor2);
 
         // Resume transfer after Disaster #3
-        List<DataTransfer> resumedTransfers3 = await transferManager3.ResumeAllTransfersAsync();
+        List<TransferOperation> resumedTransfers3 = await transferManager3.ResumeAllTransfersAsync();
 
         // Finish the resume transfer #3
         await AssertResumeTransfer(
@@ -1543,7 +1543,7 @@ public class PauseResumeTransferMockedTests
             jobsProcessor3,
             partsProcessor3,
             chunksProcessor3,
-            DataTransferState.InProgress);
+            TransferState.InProgress);
     }
 
     [Test]
@@ -1586,12 +1586,12 @@ public class PauseResumeTransferMockedTests
             checkpointer,
             resumeProviders);
 
-        List<DataTransfer> transfers = new();
+        List<TransferOperation> transfers = new();
 
         // queue jobs
         foreach ((Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in resources)
         {
-            DataTransfer transfer = await transferManager0.StartTransferAsync(
+            TransferOperation transfer = await transferManager0.StartTransferAsync(
                 srcResource.Object,
                 dstResource.Object,
                 new()
@@ -1603,7 +1603,7 @@ public class PauseResumeTransferMockedTests
 
             // Assert that job plan file is created properly
             Assert.That(checkpointer.Jobs.ContainsKey(transfer.Id), Is.True, "Error during Job plan file creation.");
-            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.Queued), "Error during Job plan file creation.");
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(TransferState.Queued), "Error during Job plan file creation.");
             Assert.That(checkpointer.Jobs[transfer.Id].Parts.Count, Is.EqualTo(0), "Job Part files should not exist before job processing");
         }
         Assert.That(checkpointer.Jobs.Count, Is.EqualTo(transfers.Count), "Error during Job plan file creation.");
@@ -1622,14 +1622,14 @@ public class PauseResumeTransferMockedTests
                 ref chunksProcessor0);
 
         // Resume transfer after Disaster #1
-        List<DataTransfer> resumedTransfers1 = await transferManager1.ResumeAllTransfersAsync(new()
+        List<TransferOperation> resumedTransfers1 = await transferManager1.ResumeAllTransfersAsync(new()
         {
             InitialTransferSize = chunkSize,
             MaximumTransferChunkSize = chunkSize,
         });
 
         await Task.Delay(50);
-        int queuedJobsCount = GetJobsStateCount(resumedTransfers1, checkpointer)[DataTransferState.Queued];
+        int queuedJobsCount = GetJobsStateCount(resumedTransfers1, checkpointer)[TransferState.Queued];
         Assert.That(queuedJobsCount, Is.EqualTo(numJobs));
 
         // process jobs on resume #1
@@ -1651,10 +1651,10 @@ public class PauseResumeTransferMockedTests
                 ref chunksProcessor1);
 
         // Resume transfer after Disaster #2
-        List<DataTransfer> resumedTransfers2 = await transferManager2.ResumeAllTransfersAsync();
+        List<TransferOperation> resumedTransfers2 = await transferManager2.ResumeAllTransfersAsync();
 
         await Task.Delay(50);
-        int inProgressJobsCount = GetJobsStateCount(resumedTransfers2, checkpointer)[DataTransferState.InProgress];
+        int inProgressJobsCount = GetJobsStateCount(resumedTransfers2, checkpointer)[TransferState.InProgress];
         Assert.That(inProgressJobsCount, Is.EqualTo(numJobs));
 
         // process jobs on resume #2
@@ -1682,7 +1682,7 @@ public class PauseResumeTransferMockedTests
                 ref chunksProcessor2);
 
         // Resume transfer after Disaster #3
-        List<DataTransfer> resumedTransfers3 = await transferManager3.ResumeAllTransfersAsync();
+        List<TransferOperation> resumedTransfers3 = await transferManager3.ResumeAllTransfersAsync();
 
         // Finish the resume transfer #3
         await AssertResumeTransfer(
@@ -1695,7 +1695,7 @@ public class PauseResumeTransferMockedTests
             jobsProcessor3,
             partsProcessor3,
             chunksProcessor3,
-            DataTransferState.InProgress);
+            TransferState.InProgress);
     }
 
     public enum PauseLocation

@@ -10,6 +10,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Elastic.Models
 {
@@ -37,7 +38,7 @@ namespace Azure.ResourceManager.Elastic.Models
             if (Optional.IsDefined(MarketplaceSubscription))
             {
                 writer.WritePropertyName("marketplaceSubscription"u8);
-                writer.WriteObjectValue(MarketplaceSubscription, options);
+                JsonSerializer.Serialize(writer, MarketplaceSubscription);
             }
             if (Optional.IsDefined(MarketplaceName))
             {
@@ -59,10 +60,10 @@ namespace Azure.ResourceManager.Elastic.Models
                 writer.WritePropertyName("billedAzureSubscriptionId"u8);
                 writer.WriteStringValue(BilledAzureSubscriptionId);
             }
-            if (Optional.IsDefined(Subscribed))
+            if (Optional.IsDefined(IsSubscribed))
             {
                 writer.WritePropertyName("subscribed"u8);
-                writer.WriteBooleanValue(Subscribed.Value);
+                writer.WriteBooleanValue(IsSubscribed.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            MarketplaceSaaSInfoMarketplaceSubscription marketplaceSubscription = default;
+            SubResource marketplaceSubscription = default;
             string marketplaceName = default;
             string marketplaceResourceId = default;
             string marketplaceStatus = default;
@@ -117,7 +118,7 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    marketplaceSubscription = MarketplaceSaaSInfoMarketplaceSubscription.DeserializeMarketplaceSaaSInfoMarketplaceSubscription(property.Value, options);
+                    marketplaceSubscription = JsonSerializer.Deserialize<SubResource>(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("marketplaceName"u8))

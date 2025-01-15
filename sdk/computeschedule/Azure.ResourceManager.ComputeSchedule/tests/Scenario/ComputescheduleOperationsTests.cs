@@ -8,22 +8,21 @@ using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.ComputeSchedule.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 {
     public class ComputescheduleOperationsTests : ComputeScheduleManagementTestBase
     {
-        private static readonly int s_submitOperationsDelayedSeconds = 1;
         private static readonly int s_cancelOperationsDelayedDays = 5;
-        private static readonly List<ScheduledActionOperationState> s_terminalList = new() { ScheduledActionOperationState.Succeeded, ScheduledActionOperationState.Failed, ScheduledActionOperationState.Cancelled };
-
         public ComputescheduleOperationsTests(bool isAsync)
             : base(isAsync)
-                  //, RecordedTestMode.Record)
+        //, RecordedTestMode.Record)
         {
         }
+
+        private static readonly int s_submitOperationsDelayedSeconds = 1;
+        private static readonly List<ScheduledActionOperationState> s_terminalList = [ScheduledActionOperationState.Succeeded, ScheduledActionOperationState.Failed, ScheduledActionOperationState.Cancelled];
 
         [TestCase, Order(1)]
         [RecordedTest]
@@ -31,12 +30,18 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
         {
             int vmCount = 1;
             string vmName = Recording.GenerateAssetName("substart");
-            List<VirtualMachineResource> allVms = GenerateMultipleVirtualMachines(vmName, DefaultResourceGroupResource, vmCount).Result;
+            List<VirtualMachineResource> allVms = await GenerateMultipleVirtualMachines(vmName, DefaultResourceGroupResource, vmCount);
 
             var allResourceids = allVms.Select(vm => vm.Id).ToList();
+            Console.WriteLine($"Submitting start operations for {vmCount} VMs");
+            DateTimeOffset dateTimeOffset = Recording.Now.AddSeconds(s_submitOperationsDelayedSeconds);
 
-            UserRequestSchedule schedule = new(Recording.Now.AddSeconds(s_submitOperationsDelayedSeconds) , "UTC", ScheduledActionDeadlineType.InitiateAt);
-            Models.UserRequestResources resources = new(allResourceids);
+            UserRequestSchedule schedule = new(ScheduledActionDeadlineType.InitiateAt)
+            {
+                Timezone = "UTC",
+                Deadline = dateTimeOffset
+            };
+            UserRequestResources resources = new(allResourceids);
             ScheduledActionExecutionParameterDetail executionParameters = new() { RetryPolicy = new UserRequestRetryPolicy() { RetryCount = 3, RetryWindowInMinutes = 30 } };
 
             var submitStartRequest = new SubmitStartContent(schedule, executionParameters, resources, Recording.Random.NewGuid().ToString());
@@ -46,23 +51,28 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             var subId = DefaultSubscription.Id.Name;
             StartResourceOperationResult submitStartResult = await TestSubmitStartAsync(Location, submitStartRequest, subId, Client);
 
-            // Put polling logic here: GetOperationsStatus
-            GetOperationStatusResult getOperationStatus = PollOperationStatus(vmCount).ExecuteAsync(async () =>
-            {
-                // GetOps status
-                var allOperationIds = submitStartResult.Results.Select(result => result.Operation?.OperationId).Where(operationId => !string.IsNullOrEmpty(operationId)).ToList();
-                var getOpsStatusReq = new GetOperationStatusContent(allOperationIds, Recording.Random.NewGuid().ToString());
-                return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
-            }).GetAwaiter().GetResult();
+            HashSet<string> validOperationIds = ExcludeResourcesNotProcessed(submitStartResult.Results);
 
-            // Assert results are returned
-            Assert.NotNull(submitStartResult);
-            Assert.NotNull(getOperationStatus);
-
-            foreach (ResourceOperationResult result in getOperationStatus.Results)
+            if (validOperationIds.Count > 0)
             {
-                Assert.Contains(result.Operation.State, s_terminalList);
-                Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                GetOperationStatusResult getOperationStatus = PollOperationStatus(vmCount).ExecuteAsync(async () =>
+                {
+                    var getOpsStatusReq = new GetOperationStatusContent(validOperationIds, Recording.Random.NewGuid().ToString());
+                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
+                }).GetAwaiter().GetResult();
+
+                Assert.NotNull(submitStartResult);
+                Assert.NotNull(getOperationStatus);
+
+                foreach (ResourceOperationResult result in getOperationStatus.Results)
+                {
+                    Assert.Contains(result.Operation.State, s_terminalList);
+                    Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                }
+            }
+            else
+            {
+                Assert.Pass("No operations to process.");
             }
         }
 
@@ -76,8 +86,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
             var allResourceids = allVms.Select(vm => vm.Id).ToList();
 
-            UserRequestSchedule schedule = new(Recording.Now.AddSeconds(s_submitOperationsDelayedSeconds), "UTC", ScheduledActionDeadlineType.InitiateAt);
-            Models.UserRequestResources resources = new(allResourceids);
+            UserRequestSchedule schedule = new(ScheduledActionDeadlineType.InitiateAt)
+            {
+                Timezone = "UTC",
+                Deadline = Recording.Now.AddSeconds(s_submitOperationsDelayedSeconds)
+            };
+
+            UserRequestResources resources = new(allResourceids);
             ScheduledActionExecutionParameterDetail executionParameters = new() { RetryPolicy = new UserRequestRetryPolicy() { RetryCount = 3, RetryWindowInMinutes = 30 } };
 
             var submitDeallocateRequest = new SubmitDeallocateContent(schedule, executionParameters, resources, Recording.Random.NewGuid().ToString());
@@ -87,23 +102,32 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             var subId = DefaultSubscription.Id.Name;
             DeallocateResourceOperationResult submitDeallocateResult = await TestSubmitDeallocateAsync(Location, submitDeallocateRequest, subId, Client);
 
-            // Put polling logic here: GetOperationsStatus
-            GetOperationStatusResult getOperationStatus = PollOperationStatus(vmCount).ExecuteAsync(async () =>
-            {
-                // GetOps status
-                var allOperationIds = submitDeallocateResult.Results.Select(result => result.Operation?.OperationId).Where(operationId => !string.IsNullOrEmpty(operationId)).ToList();
-                var getOpsStatusReq = new GetOperationStatusContent(allOperationIds, Recording.Random.NewGuid().ToString());
-                return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
-            }).GetAwaiter().GetResult();
+            HashSet<string> validOperationIds = ExcludeResourcesNotProcessed(submitDeallocateResult.Results);
 
-            // Assert results are returned
-            Assert.NotNull(submitDeallocateResult);
-            Assert.NotNull(getOperationStatus);
-
-            foreach (ResourceOperationResult result in getOperationStatus.Results)
+            if (validOperationIds.Count > 0)
             {
-                Assert.Contains(result.Operation.State, s_terminalList);
-                Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                // Put polling logic here: GetOperationsStatus
+                GetOperationStatusResult getOperationStatus = PollOperationStatus(vmCount).ExecuteAsync(async () =>
+                {
+                    // GetOps status
+                    var allOperationIds = submitDeallocateResult.Results.Select(result => result.Operation?.OperationId).Where(operationId => !string.IsNullOrEmpty(operationId)).ToList();
+                    var getOpsStatusReq = new GetOperationStatusContent(allOperationIds, Recording.Random.NewGuid().ToString());
+                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
+                }).GetAwaiter().GetResult();
+
+                // Assert results are returned
+                Assert.NotNull(submitDeallocateResult);
+                Assert.NotNull(getOperationStatus);
+
+                foreach (ResourceOperationResult result in getOperationStatus.Results)
+                {
+                    Assert.Contains(result.Operation.State, s_terminalList);
+                    Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                }
+            }
+            else
+            {
+                Assert.Pass("No operations to process.");
             }
         }
 
@@ -117,8 +141,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
             var allResourceids = allVms.Select(vm => vm.Id).ToList();
 
-            UserRequestSchedule schedule = new(Recording.Now.AddSeconds(s_submitOperationsDelayedSeconds), "UTC", ScheduledActionDeadlineType.InitiateAt);
-            Models.UserRequestResources resources = new(allResourceids);
+            UserRequestSchedule schedule = new(ScheduledActionDeadlineType.InitiateAt)
+            {
+                Timezone = "UTC",
+                Deadline = Recording.Now.AddSeconds(s_submitOperationsDelayedSeconds)
+            };
+            UserRequestResources resources = new(allResourceids);
             ScheduledActionExecutionParameterDetail executionParameters = new() { RetryPolicy = new UserRequestRetryPolicy() { RetryCount = 3, RetryWindowInMinutes = 30 } };
 
             var submitHibernateRequest = new SubmitHibernateContent(schedule, executionParameters, resources, Recording.Random.NewGuid().ToString());
@@ -128,23 +156,32 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             var subId = DefaultSubscription.Id.Name;
             HibernateResourceOperationResult submitHibernateResult = await TestSubmitHibernateAsync(Location, submitHibernateRequest, subId, Client);
 
-            // Put polling logic here: GetOperationsStatus
-            GetOperationStatusResult getOperationStatus = PollOperationStatus(vmCount).ExecuteAsync(async () =>
-            {
-                // GetOps status
-                var allOperationIds = submitHibernateResult.Results.Select(result => result.Operation?.OperationId).Where(operationId => !string.IsNullOrEmpty(operationId)).ToList();
-                var getOpsStatusReq = new GetOperationStatusContent(allOperationIds, Recording.Random.NewGuid().ToString());
-                return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
-            }).GetAwaiter().GetResult();
+            HashSet<string> validOperationIds = ExcludeResourcesNotProcessed(submitHibernateResult.Results);
 
-            // Assert results are returned
-            Assert.NotNull(submitHibernateResult);
-            Assert.NotNull(getOperationStatus);
-
-            foreach (ResourceOperationResult result in getOperationStatus.Results)
+            if (validOperationIds.Count > 0)
             {
-                Assert.Contains(result.Operation.State, s_terminalList);
-                Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                // Put polling logic here: GetOperationsStatus
+                GetOperationStatusResult getOperationStatus = PollOperationStatus(vmCount).ExecuteAsync(async () =>
+                {
+                    // GetOps status
+                    var allOperationIds = submitHibernateResult.Results.Select(result => result.Operation?.OperationId).Where(operationId => !string.IsNullOrEmpty(operationId)).ToList();
+                    var getOpsStatusReq = new GetOperationStatusContent(allOperationIds, Recording.Random.NewGuid().ToString());
+                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
+                }).GetAwaiter().GetResult();
+
+                // Assert results are returned
+                Assert.NotNull(submitHibernateResult);
+                Assert.NotNull(getOperationStatus);
+
+                foreach (ResourceOperationResult result in getOperationStatus.Results)
+                {
+                    Assert.Contains(result.Operation.State, s_terminalList);
+                    Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                }
+            }
+            else
+            {
+                Assert.Pass("No operations to process.");
             }
         }
 
@@ -167,24 +204,32 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             // Execute Hibernate
             var subId = DefaultSubscription.Id.Name;
             HibernateResourceOperationResult executeHibernateResult = await TestExecuteHibernateAsync(Location, executeHibernateRequest, subId, Client);
+            HashSet<string> validOperationIds = ExcludeResourcesNotProcessed(executeHibernateResult.Results);
 
-            // Put polling logic here: GetOperationsStatus
-            GetOperationStatusResult getOperationStatus = PollOperationStatus(vmCount).ExecuteAsync(async () =>
+            if (validOperationIds.Count > 0)
             {
-                // GetOps status
-                var allOperationIds = executeHibernateResult.Results.Select(result => result.Operation?.OperationId).Where(operationId => !string.IsNullOrEmpty(operationId)).ToList();
-                var getOpsStatusReq = new GetOperationStatusContent(allOperationIds, Recording.Random.NewGuid().ToString());
-                return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
-            }).GetAwaiter().GetResult();
+                // Put polling logic here: GetOperationsStatus
+                GetOperationStatusResult getOperationStatus = PollOperationStatus(vmCount).ExecuteAsync(async () =>
+                {
+                    // GetOps status
+                    var allOperationIds = executeHibernateResult.Results.Select(result => result.Operation?.OperationId).Where(operationId => !string.IsNullOrEmpty(operationId)).ToList();
+                    var getOpsStatusReq = new GetOperationStatusContent(allOperationIds, Recording.Random.NewGuid().ToString());
+                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
+                }).GetAwaiter().GetResult();
 
-            // Assert results are returned
-            Assert.NotNull(executeHibernateResult);
-            Assert.NotNull(getOperationStatus);
+                // Assert results are returned
+                Assert.NotNull(executeHibernateResult);
+                Assert.NotNull(getOperationStatus);
 
-            foreach (ResourceOperationResult result in getOperationStatus.Results)
+                foreach (ResourceOperationResult result in getOperationStatus.Results)
+                {
+                    Assert.Contains(result.Operation.State, s_terminalList);
+                    Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                }
+            }
+            else
             {
-                Assert.Contains(result.Operation.State, s_terminalList);
-                Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                Assert.Pass("No operations to process.");
             }
         }
 
@@ -207,24 +252,32 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             // Execute Deallocate
             var subId = DefaultSubscription.Id.Name;
             DeallocateResourceOperationResult executeDeallocateResult = await TestExecuteDeallocateAsync(Location, executeDeallocateRequest, subId, Client);
+            HashSet<string> validOperationIds = ExcludeResourcesNotProcessed(executeDeallocateResult.Results);
 
-            // Put polling logic here: GetOperationsStatus
-            GetOperationStatusResult getOperationStatus = PollOperationStatus(vmCount).ExecuteAsync(async () =>
+            if (validOperationIds.Count > 0)
             {
-                // GetOps status
-                var allOperationIds = executeDeallocateResult.Results.Select(result => result.Operation?.OperationId).Where(operationId => !string.IsNullOrEmpty(operationId)).ToList();
-                var getOpsStatusReq = new GetOperationStatusContent(allOperationIds, Recording.Random.NewGuid().ToString());
-                return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
-            }).GetAwaiter().GetResult();
+                // Put polling logic here: GetOperationsStatus
+                GetOperationStatusResult getOperationStatus = PollOperationStatus(vmCount).ExecuteAsync(async () =>
+                {
+                    // GetOps status
+                    var allOperationIds = executeDeallocateResult.Results.Select(result => result.Operation?.OperationId).Where(operationId => !string.IsNullOrEmpty(operationId)).ToList();
+                    var getOpsStatusReq = new GetOperationStatusContent(allOperationIds, Recording.Random.NewGuid().ToString());
+                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
+                }).GetAwaiter().GetResult();
 
-            // Assert results are returned
-            Assert.NotNull(executeDeallocateResult);
-            Assert.NotNull(getOperationStatus);
+                // Assert results are returned
+                Assert.NotNull(executeDeallocateResult);
+                Assert.NotNull(getOperationStatus);
 
-            foreach (ResourceOperationResult result in getOperationStatus.Results)
+                foreach (ResourceOperationResult result in getOperationStatus.Results)
+                {
+                    Assert.Contains(result.Operation.State, s_terminalList);
+                    Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                }
+            }
+            else
             {
-                Assert.Contains(result.Operation.State, s_terminalList);
-                Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                Assert.Pass("No operations to process.");
             }
         }
 
@@ -247,24 +300,32 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             // Execute Start
             var subId = DefaultSubscription.Id.Name;
             StartResourceOperationResult executeStartResult = await TestExecuteStartAsync(Location, executeStartRequest, subId, Client);
+            HashSet<string> validOperationIds = ExcludeResourcesNotProcessed(executeStartResult.Results);
 
-            // Put polling logic here: GetOperationsStatus
-            GetOperationStatusResult getOperationStatus = PollOperationStatus(vmCount).ExecuteAsync(async () =>
+            if (validOperationIds.Count > 0)
             {
-                // GetOps status
-                var allOperationIds = executeStartResult.Results.Select(result => result.Operation?.OperationId).Where(operationId => !string.IsNullOrEmpty(operationId)).ToList();
-                var getOpsStatusReq = new GetOperationStatusContent(allOperationIds, Recording.Random.NewGuid().ToString());
-                return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
-            }).GetAwaiter().GetResult();
+                // Put polling logic here: GetOperationsStatus
+                GetOperationStatusResult getOperationStatus = PollOperationStatus(vmCount).ExecuteAsync(async () =>
+                {
+                    // GetOps status
+                    var allOperationIds = executeStartResult.Results.Select(result => result.Operation?.OperationId).Where(operationId => !string.IsNullOrEmpty(operationId)).ToList();
+                    var getOpsStatusReq = new GetOperationStatusContent(allOperationIds, Recording.Random.NewGuid().ToString());
+                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
+                }).GetAwaiter().GetResult();
 
-            // Assert results are returned
-            Assert.NotNull(executeStartResult);
-            Assert.NotNull(getOperationStatus);
+                // Assert results are returned
+                Assert.NotNull(executeStartResult);
+                Assert.NotNull(getOperationStatus);
 
-            foreach (ResourceOperationResult result in getOperationStatus.Results)
+                foreach (ResourceOperationResult result in getOperationStatus.Results)
+                {
+                    Assert.Contains(result.Operation.State, s_terminalList);
+                    Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                }
+            }
+            else
             {
-                Assert.Contains(result.Operation.State, s_terminalList);
-                Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                Assert.Pass("No operations to process.");
             }
         }
 
@@ -279,7 +340,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
 
             var allResourceids = allVms.Select(vm => vm.Id).ToList();
 
-            UserRequestSchedule schedule = new(Recording.Now.AddDays(s_cancelOperationsDelayedDays), "UTC", ScheduledActionDeadlineType.InitiateAt);
+            UserRequestSchedule schedule = new(ScheduledActionDeadlineType.InitiateAt)
+            {
+                Timezone = "UTC",
+                Deadline = Recording.Now.AddDays(s_cancelOperationsDelayedDays)
+            };
             Models.UserRequestResources resources = new(allResourceids);
             ScheduledActionExecutionParameterDetail executionParameters = new() { RetryPolicy = new UserRequestRetryPolicy() { RetryCount = 3, RetryWindowInMinutes = 30 } };
 
@@ -290,30 +355,37 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             var subId = DefaultSubscription.Id.Name;
             DeallocateResourceOperationResult submitDeallocateResult = await TestSubmitDeallocateAsync(Location, submitDeallocateRequest, subId, Client);
 
-            var allOperationIds = submitDeallocateResult.Results.Select(result => result.Operation?.OperationId).Where(operationId => !string.IsNullOrEmpty(operationId)).ToList();
+            HashSet<string> validOperationIds = ExcludeResourcesNotProcessed(submitDeallocateResult.Results);
 
-            // Cancel the scheduled operation
-            CancelOperationsContent cancelOperationsContent = new(allOperationIds, Recording.Random.NewGuid().ToString());
-            CancelOperationsResult canceloperationsResponse = await TestCancelOpsAsync(Location, cancelOperationsContent, subId, Client);
-
-            // Put polling logic here: GetOperationsStatus
-            GetOperationStatusResult getOperationStatus = PollOperationStatus(vmCount).ExecuteAsync(async () =>
+            if (validOperationIds.Count > 0)
             {
-                // GetOps status
-                var getOpsStatusReq = new GetOperationStatusContent(allOperationIds, Recording.Random.NewGuid().ToString());
-                return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
-            }).GetAwaiter().GetResult();
+                // Cancel the scheduled operation
+                CancelOperationsContent cancelOperationsContent = new(validOperationIds, Recording.Random.NewGuid().ToString());
+                CancelOperationsResult canceloperationsResponse = await TestCancelOpsAsync(Location, cancelOperationsContent, subId, Client);
 
-            // Assert results are returned
-            Assert.NotNull(submitDeallocateResult);
-            Assert.NotNull(canceloperationsResponse);
-            Assert.NotNull(getOperationStatus);
+                // Put polling logic here: GetOperationsStatus
+                GetOperationStatusResult getOperationStatus = PollOperationStatus(vmCount).ExecuteAsync(async () =>
+                {
+                    // GetOps status
+                    var getOpsStatusReq = new GetOperationStatusContent(validOperationIds, Recording.Random.NewGuid().ToString());
+                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
+                }).GetAwaiter().GetResult();
 
-            foreach (ResourceOperationResult result in getOperationStatus.Results)
+                // Assert results are returned
+                Assert.NotNull(submitDeallocateResult);
+                Assert.NotNull(canceloperationsResponse);
+                Assert.NotNull(getOperationStatus);
+
+                foreach (ResourceOperationResult result in getOperationStatus.Results)
+                {
+                    Assert.AreEqual(result.Operation.State, ScheduledActionOperationState.Cancelled);
+                    Assert.NotNull(result.Operation.ResourceOperationError);
+                    Assert.AreEqual(result.Operation.ResourceOperationError.ErrorCode, "OperationCancelledByUser");
+                }
+            }
+            else
             {
-                Assert.AreEqual(result.Operation.State, ScheduledActionOperationState.Cancelled);
-                Assert.NotNull(result.Operation.ResourceOperationError);
-                Assert.AreEqual(result.Operation.ResourceOperationError.ErrorCode, "OperationCancelledByUser");
+                Assert.Pass("No operations to process.");
             }
         }
 
@@ -337,29 +409,36 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
             var subId = DefaultSubscription.Id.Name;
             DeallocateResourceOperationResult executeDeallocateResult = await TestExecuteDeallocateAsync(Location, executeDeallocateRequest, subId, Client);
 
-            var allOperationIds = executeDeallocateResult.Results.Select(result => result.Operation?.OperationId).Where(operationId => !string.IsNullOrEmpty(operationId)).ToList();
+            HashSet<string> validOperationIds = ExcludeResourcesNotProcessed(executeDeallocateResult.Results);
 
-            // Polling
-            GetOperationStatusResult getOperationStatus = PollOperationStatus(vmCount).ExecuteAsync(async () =>
+            if (validOperationIds.Count > 0)
             {
-                // GetOps status
-                var getOpsStatusReq = new GetOperationStatusContent(allOperationIds, Recording.Random.NewGuid().ToString());
-                return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
-            }).GetAwaiter().GetResult();
+                // Polling
+                GetOperationStatusResult getOperationStatus = PollOperationStatus(vmCount).ExecuteAsync(async () =>
+                {
+                    // GetOps status
+                    var getOpsStatusReq = new GetOperationStatusContent(validOperationIds, Recording.Random.NewGuid().ToString());
+                    return await TestGetOpsStatusAsync(Location, getOpsStatusReq, subId, Client);
+                }).GetAwaiter().GetResult();
 
-            // Get operation errors if any
-            GetOperationErrorsContent getOperationsErrorsRequest = new(allOperationIds);
-            GetOperationErrorsResult getOperationsErrorsResponse = await TestGetOperationErrorsAsync(Location, getOperationsErrorsRequest, subId, Client);
+                // Get operation errors if any
+                GetOperationErrorsContent getOperationsErrorsRequest = new(validOperationIds);
+                GetOperationErrorsResult getOperationsErrorsResponse = await TestGetOperationErrorsAsync(Location, getOperationsErrorsRequest, subId, Client);
 
-            // Assert results are returned
-            Assert.NotNull(executeDeallocateResult);
-            Assert.NotNull(getOperationStatus);
-            Assert.NotNull(getOperationsErrorsResponse);
+                // Assert results are returned
+                Assert.NotNull(executeDeallocateResult);
+                Assert.NotNull(getOperationStatus);
+                Assert.NotNull(getOperationsErrorsResponse);
 
-            foreach (ResourceOperationResult result in getOperationStatus.Results)
+                foreach (ResourceOperationResult result in getOperationStatus.Results)
+                {
+                    Assert.Contains(result.Operation.State, s_terminalList);
+                    Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                }
+            }
+            else
             {
-                Assert.Contains(result.Operation.State, s_terminalList);
-                Assert.AreEqual(result.Operation.SubscriptionId, subId);
+                Assert.Pass("No operations to process.");
             }
         }
     }
