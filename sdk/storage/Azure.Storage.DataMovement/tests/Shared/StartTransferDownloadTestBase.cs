@@ -195,7 +195,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists
+                CreationPreference = StorageResourceCreationMode.FailIfExists
             };
             TestEventsRaised testEventRaised = new TestEventsRaised(options);
 
@@ -234,7 +234,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create transfer options with Skipping available
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.SkipIfExists
+                CreationPreference = StorageResourceCreationMode.SkipIfExists
             };
             TestEventsRaised testEventRaised = new TestEventsRaised(options);
 
@@ -259,112 +259,6 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(TransferState.Completed, transfer.Status.State);
             Assert.AreEqual(true, transfer.Status.HasSkippedItems);
             await testEventRaised.AssertSingleSkippedCheck();
-        }
-
-        [RecordedTest]
-        public async Task StartTransfer_EnsureCompleted()
-        {
-            // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
-
-            // Create transfer to do a EnsureCompleted
-            TransferOptions options = new TransferOptions()
-            {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists
-            };
-            TestEventsRaised testEventRaised = new TestEventsRaised(options);
-
-            // Create transfer to do a AwaitCompletion
-            TransferOperation transfer = await CreateStartTransfer(
-                containerClient: test.Container,
-                localDirectoryPath: testDirectory.DirectoryPath,
-                concurrency: 1,
-                options: options);
-
-            // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            transfer.WaitForCompletion(cancellationTokenSource.Token);
-
-            // Assert
-            testEventRaised.AssertUnexpectedFailureCheck();
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-        }
-
-        [RecordedTest]
-        public async Task StartTransfer_EnsureCompleted_Failed()
-        {
-            // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
-
-            TransferOptions options = new TransferOptions()
-            {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists
-            };
-            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-
-            // Create transfer to do a AwaitCompletion
-            TransferOperation transfer = await CreateStartTransfer(
-                containerClient: test.Container,
-                localDirectoryPath: testDirectory.DirectoryPath,
-                concurrency: 1,
-                createFailedCondition: true,
-                options: options);
-
-            // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            TestTransferWithTimeout.WaitForCompletion(
-                transfer,
-                testEventsRaised,
-                cancellationTokenSource.Token);
-
-            // Assert
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            Assert.AreEqual(true, transfer.Status.HasFailedItems);
-            await testEventsRaised.AssertSingleFailedCheck(1);
-            Assert.IsTrue(testEventsRaised.FailedEvents.First().Exception.Message.Contains(_expectedOverwriteExceptionMessage));
-        }
-
-        [RecordedTest]
-        public async Task StartTransfer_EnsureCompleted_Skipped()
-        {
-            // Arrange
-            await using IDisposingContainer<TContainerClient> test = await GetDisposingContainerAsync();
-            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
-
-            // Create transfer options with Skipping available
-            TransferOptions options = new TransferOptions()
-            {
-                CreationPreference = StorageResourceCreationPreference.SkipIfExists
-            };
-            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-
-            // Create transfer to do a EnsureCompleted
-            TransferOperation transfer = await CreateStartTransfer(
-                containerClient: test.Container,
-                localDirectoryPath: testDirectory.DirectoryPath,
-                concurrency: 1,
-                createFailedCondition: true,
-                options: options);
-
-            // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            TestTransferWithTimeout.WaitForCompletion(
-                transfer,
-                testEventsRaised,
-                cancellationTokenSource.Token);
-
-            // Assert
-            await testEventsRaised.AssertSingleSkippedCheck();
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            Assert.AreEqual(true, transfer.Status.HasSkippedItems);
         }
 
         internal class VerifyDownloadObjectContentInfo
@@ -430,7 +324,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure
+                ErrorMode = TransferErrorMode.ContinueOnFailure
             };
 
             List<VerifyDownloadObjectContentInfo> downloadedObjectInfo = new List<VerifyDownloadObjectContentInfo>(objectCount);
@@ -535,7 +429,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to overwrite any existing destination.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
+                CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
             };
             List<TransferOptions> optionsList = new List<TransferOptions> { options };
             await DownloadObjectsAndVerify(
@@ -557,7 +451,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to overwrite any existing destination.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
+                CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
             };
             List<TransferOptions> optionsList = new List<TransferOptions> { options };
             await DownloadObjectsAndVerify(
@@ -593,12 +487,12 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to overwrite any existing destination.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.SkipIfExists,
+                CreationPreference = StorageResourceCreationMode.SkipIfExists,
             };
             options.ItemTransferSkipped += (TransferItemSkippedEventArgs args) =>
             {
-                if (args.SourceResource != null &&
-                    args.DestinationResource != null &&
+                if (args.Source != null &&
+                    args.Destination != null &&
                     args.TransferId != null)
                 {
                     skippedSeen = true;
@@ -654,7 +548,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to fail and keep track of the failure.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists,
+                CreationPreference = StorageResourceCreationMode.FailIfExists,
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             StorageResourceItem sourceResource = GetStorageResourceItem(sourceClient);
@@ -786,7 +680,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 
@@ -819,7 +713,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 

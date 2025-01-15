@@ -291,7 +291,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure
+                ErrorMode = TransferErrorMode.ContinueOnFailure
             };
 
             List<VerifyObjectCopyFromUriInfo> copyObjectInfo = new List<VerifyObjectCopyFromUriInfo>(objectCount);
@@ -502,7 +502,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to overwrite any existing destination.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
+                CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
             };
             List<TransferOptions> optionsList = new List<TransferOptions>() { options };
             List<string> objectNames = new List<string>() { name };
@@ -530,7 +530,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to overwrite any existing destination.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
+                CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
             };
             List<TransferOptions> optionsList = new List<TransferOptions>() { options };
 
@@ -568,7 +568,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to overwrite any existing destination.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.SkipIfExists,
+                CreationPreference = StorageResourceCreationMode.SkipIfExists,
             };
 
             // Create new source block object.
@@ -630,7 +630,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to fail and keep track of the failure.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists,
+                CreationPreference = StorageResourceCreationMode.FailIfExists,
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             // Create new source object.
@@ -759,7 +759,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists
+                CreationPreference = StorageResourceCreationMode.FailIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
@@ -805,7 +805,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create transfer options with Skipping available
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.SkipIfExists
+                CreationPreference = StorageResourceCreationMode.SkipIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
@@ -820,119 +820,6 @@ namespace Azure.Storage.DataMovement.Tests
             // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
             await TestTransferWithTimeout.WaitForCompletionAsync(
-                transfer,
-                testEventsRaised,
-                cancellationTokenSource.Token);
-
-            // Assert
-            await testEventsRaised.AssertSingleSkippedCheck();
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            Assert.AreEqual(true, transfer.Status.HasSkippedItems);
-        }
-
-        [RecordedTest]
-        public async Task StartTransfer_EnsureCompleted()
-        {
-            // Arrange
-            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
-            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
-
-            TransferOptions options = new TransferOptions();
-            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-
-            // Create transfer to do a EnsureCompleted
-            TransferOperation transfer = await CreateStartTransfer(
-                source.Container,
-                destination.Container,
-                concurrency: 1,
-                options: options);
-
-            // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            TestTransferWithTimeout.WaitForCompletion(
-                transfer,
-                testEventsRaised,
-                cancellationTokenSource.Token);
-
-            // Assert
-            await testEventsRaised.AssertSingleCompletedCheck();
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-        }
-
-        [RecordedTest]
-        public async Task StartTransfer_EnsureCompleted_Failed()
-        {
-            // Arrange
-            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
-            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
-
-            TransferOptions options = new TransferOptions()
-            {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists
-            };
-            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-
-            // Create transfer to do a AwaitCompletion
-            TransferOperation transfer = await CreateStartTransfer(
-                source.Container,
-                destination.Container,
-                concurrency: 1,
-                createFailedCondition: true,
-                options: options);
-
-            // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            TestTransferWithTimeout.WaitForCompletion(
-                transfer,
-                testEventsRaised,
-                cancellationTokenSource.Token);
-
-            // Assert
-            await testEventsRaised.AssertSingleFailedCheck(1);
-            Assert.NotNull(transfer);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
-            Assert.AreEqual(true, transfer.Status.HasFailedItems);
-            var testException = testEventsRaised.FailedEvents.First().Exception;
-            if (testException is RequestFailedException rfe)
-            {
-                Assert.That(rfe.ErrorCode, Does.Contain(_expectedOverwriteExceptionMessage));
-            }
-            else
-            {
-                Assert.IsTrue(testException.Message.Contains(_expectedOverwriteExceptionMessage));
-            }
-        }
-
-        [RecordedTest]
-        public async Task StartTransfer_EnsureCompleted_Skipped()
-        {
-            // Arrange
-            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
-            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
-
-            // Create transfer options with Skipping available
-            TransferOptions options = new TransferOptions()
-            {
-                CreationPreference = StorageResourceCreationPreference.SkipIfExists
-            };
-            TestEventsRaised testEventsRaised = new TestEventsRaised(options);
-
-            // Create transfer to do a EnsureCompleted
-            TransferOperation transfer = await CreateStartTransfer(
-                source.Container,
-                destination.Container,
-                concurrency: 1,
-                createFailedCondition: true,
-                options: options);
-
-            // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(5));
-            TestTransferWithTimeout.WaitForCompletion(
                 transfer,
                 testEventsRaised,
                 cancellationTokenSource.Token);

@@ -47,6 +47,16 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 ### Authenticate the client
 The Azure.Storage.DataMovement.Files.Shares library uses clients from the Azure.Storage.Files.Shares package to communicate with the Azure File Storage service. For more information see the Azure.Storage.Files.Shares [authentication documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Files.Shares#authenticate-the-client).
 
+### Permissions
+
+The authenticated share storage resource needs the following permissions to perform a transfer:
+
+1. Read
+2. List (for directory transfers)
+3. Write
+5. Delete (for cleanup of a failed transfer item)
+6. Create
+
 ## Key concepts
 
 The Azure Storage Common client library contains shared infrastructure like

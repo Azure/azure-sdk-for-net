@@ -12,7 +12,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
     {
         public static ShareFileHttpHeaders GetShareFileHttpHeaders(
             this ShareFileStorageResourceOptions options,
-            Dictionary<string, object> properties)
+            IDictionary<string, object> properties)
             => new()
             {
                 ContentType = (options?.ContentType?.Preserve ?? true)
@@ -44,7 +44,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public static Metadata GetFileMetadata(
             this ShareFileStorageResourceOptions options,
-            Dictionary<string, object> properties)
+            IDictionary<string, object> properties)
             => (options?.FileMetadata?.Preserve ?? true)
                     ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.Metadata, out object metadata) == true
                         ? (Metadata) metadata
@@ -53,7 +53,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         public static string GetFilePermission(
             this ShareFileStorageResourceOptions options,
-            Dictionary<string, object> properties)
+            IDictionary<string, object> properties)
             => (options?.FilePermissions?.Preserve ?? false)
                 ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.FilePermissions, out object permission) == true
                         ? (string) permission
@@ -61,19 +61,19 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     : default;
 
         public static string GetSourcePermissionKey(
-            this Dictionary<string, object> properties)
+            this IDictionary<string, object> properties)
             => properties?.TryGetValue(DataMovementConstants.ResourceProperties.SourceFilePermissionKey, out object permissionKey) == true
                 ? (string)permissionKey
                 : default;
 
         public static string GetDestinationPermissionKey(
-            this Dictionary<string, object> properties)
+            this IDictionary<string, object> properties)
             => properties?.TryGetValue(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, out object permissionKey) == true
                 ? (string)permissionKey
                 : default;
 
         public static string GetPermission(
-            this Dictionary<string, object> properties)
+            this IDictionary<string, object> properties)
             => properties?.TryGetValue(DataMovementConstants.ResourceProperties.FilePermissions, out object permission) == true
                 ? (string) permission
                 : default;
@@ -141,7 +141,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             };
 
         private static void WriteKeyValue(
-            this Dictionary<string, object> properties,
+            this IDictionary<string, object> properties,
             string key,
             object value)
         {
@@ -208,11 +208,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 rawProperties.WriteKeyValue(DataMovementConstants.ResourceProperties.CacheControl, fileProperties.CacheControl);
             }
-            return new StorageResourceItemProperties(
-                resourceLength: fileProperties.ContentLength,
-                eTag: fileProperties.ETag,
-                lastModifiedTime: fileProperties.LastModified,
-                properties: rawProperties);
+            return new StorageResourceItemProperties()
+            {
+                ResourceLength = fileProperties.ContentLength,
+                ETag = fileProperties.ETag,
+                LastModifiedTime = fileProperties.LastModified,
+                RawProperties = rawProperties
+            };
         }
 
         internal static void AddToStorageResourceItemProperties(
@@ -341,11 +343,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
             return new StorageResourceReadStreamResult(
                 content: info?.Content,
                 range: ContentRange.ToHttpRange(contentRange),
-                properties: new StorageResourceItemProperties(
-                    resourceLength: contentRange.Size,
-                    eTag: info.Details.ETag,
-                    lastModifiedTime: info.Details.LastModified,
-                    properties: properties));
+                new StorageResourceItemProperties()
+                {
+                    ResourceLength = contentRange.Size,
+                    ETag = info.Details.ETag,
+                    LastModifiedTime = info.Details.LastModified,
+                    RawProperties = properties
+                });
         }
 
         internal static StorageResourceItemProperties ToResourceProperties(
@@ -361,11 +365,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 properties.Add(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, destinationPermissionKey);
             }
-            return new StorageResourceItemProperties(
-                resourceLength: shareItem?.FileSize,
-                eTag: shareItem?.Properties?.ETag,
-                lastModifiedTime: shareItem?.Properties?.LastModified,
-                properties: properties);
+            return new StorageResourceItemProperties()
+            {
+                ResourceLength = shareItem?.FileSize,
+                ETag = shareItem?.Properties?.ETag,
+                LastModifiedTime = shareItem?.Properties?.LastModified,
+                RawProperties = properties
+            };
         }
 
         private static string[] ConvertContentPropertyObjectToStringArray(string contentPropertyName, object contentPropertyValue)

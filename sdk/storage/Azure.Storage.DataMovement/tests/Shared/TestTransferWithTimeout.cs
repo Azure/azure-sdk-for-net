@@ -10,22 +10,6 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public static class TestTransferWithTimeout
     {
-        public static void WaitForCompletion(
-            TransferOperation transferOperation,
-            TestEventsRaised testEventsRaised,
-            CancellationToken cancellationToken = default)
-        {
-            try
-            {
-                transferOperation.WaitForCompletion(cancellationToken);
-            }
-            catch (Exception ex)
-            when (ex is OperationCanceledException || ex is TaskCanceledException)
-            {
-                PrintAllEvents(testEventsRaised);
-            }
-        }
-
         public static async Task WaitForCompletionAsync(
             TransferOperation transferOperation,
             TestEventsRaised testEventsRaised,
@@ -69,15 +53,15 @@ namespace Azure.Storage.DataMovement.Tests
                         {
                             Assert.Fail(
                                 $"Skipped event occurred at Transfer id: {skippedEvent.TransferId}.\n" +
-                                $"Source Resource Path: {skippedEvent.SourceResource.Uri.AbsoluteUri}\n" +
-                                $"Destination Resource Path: {skippedEvent.DestinationResource.Uri.AbsoluteUri}\n");
+                                $"Source Resource Path: {skippedEvent.Source.Uri.AbsoluteUri}\n" +
+                                $"Destination Resource Path: {skippedEvent.Destination.Uri.AbsoluteUri}\n");
                         }
                         foreach (TransferItemCompletedEventArgs singleCompletedEvent in testEventsRaised.SingleCompletedEvents)
                         {
                             Assert.Fail(
                                 $"Single Item Transfer completed occurred at Transfer id: {singleCompletedEvent.TransferId}.\n" +
-                                $"Source Resource Path: {singleCompletedEvent.SourceResource.Uri.AbsoluteUri}\n" +
-                                $"Destination Resource Path: {singleCompletedEvent.DestinationResource.Uri.AbsoluteUri}\n");
+                                $"Source Resource Path: {singleCompletedEvent.Source.Uri.AbsoluteUri}\n" +
+                                $"Destination Resource Path: {singleCompletedEvent.Destination.Uri.AbsoluteUri}\n");
                         }
                         foreach (TransferStatusEventArgs statusEvent in testEventsRaised.StatusEvents)
                         {
