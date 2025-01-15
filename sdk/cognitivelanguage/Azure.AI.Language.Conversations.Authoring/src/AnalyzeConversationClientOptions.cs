@@ -5,7 +5,7 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    public partial class AuthoringClientOptions : ClientOptions
+    public partial class AnalyzeConversationClientOptions : ClientOptions
     {
         /// <summary>
         /// Gets or sets the audience to use for authentication with Azure Active Directory (AAD). The audience is not considered when using a shared key.

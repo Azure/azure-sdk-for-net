@@ -6,12 +6,14 @@
 #nullable disable
 
 using System;
+using Azure;
+using Azure.AI.Language.Conversations.Authoring;
 using Azure.Core.Extensions;
 
-namespace Azure.AI.Language.Conversations.Authoring
+namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="AuthoringClient"/> to client builder. </summary>
-    public static partial class ConversationsAuthoringClientBuilderExtensions
+    public static partial class AILanguageConversationsAuthoringClientBuilderExtensions
     {
         /// <summary> Registers a <see cref="AuthoringClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>

@@ -16,7 +16,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests
 {
     public class ConversationsAuthoringClientLiveTest : ConversationAuthoringTestBase
     {
-        public ConversationsAuthoringClientLiveTest(bool isAsync, AuthoringClientOptions.ServiceVersion serviceVersion)
+        public ConversationsAuthoringClientLiveTest(bool isAsync, AnalyzeConversationClientOptions.ServiceVersion serviceVersion)
             : base(isAsync, serviceVersion, null /* RecordedTestMode.Record /* to record */)
         {
         }

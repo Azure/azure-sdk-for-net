@@ -12,7 +12,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
-    public partial class Sample8_ConversationsAuthoring_GetModelEvaluationSummary : SamplesBase<AuthoringClientTestEnvironment>
+    public partial class Sample8_ConversationsAuthoring_GetModelEvaluationSummary : SamplesBase<AnalyzeConversationClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
@@ -20,14 +20,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            AnalyzeConversationClient client = new AnalyzeConversationClient(endpoint, credential);
+            AnalyzeConversationAuthoring AnalyzeConversationClient = client.GetAnalyzeConversationAnalyzeConversationClient();
 
             #region Snippet:Sample8_ConversationsAuthoring_GetModelEvaluationSummary
             string projectName = "MyProject";
             string trainedModelLabel = "YourTrainedModelLabel";
 
-            Response<EvaluationSummary> evaluationSummaryResponse = authoringClient.GetModelEvaluationSummary(
+            Response<EvaluationSummary> evaluationSummaryResponse = AnalyzeConversationClient.GetModelEvaluationSummary(
                 projectName: projectName,
                 trainedModelLabel: trainedModelLabel
             );

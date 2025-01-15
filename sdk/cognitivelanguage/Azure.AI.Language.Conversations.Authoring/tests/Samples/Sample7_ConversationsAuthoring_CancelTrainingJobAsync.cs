@@ -13,7 +13,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
-    public partial class Sample7_ConversationsAuthoring_CancelTrainingJobAsync : SamplesBase<AuthoringClientTestEnvironment>
+    public partial class Sample7_ConversationsAuthoring_CancelTrainingJobAsync : SamplesBase<AnalyzeConversationClientTestEnvironment>
     {
         [Test]
         [AsyncOnly]
@@ -21,14 +21,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            AnalyzeConversationClient client = new AnalyzeConversationClient(endpoint, credential);
+            AnalyzeConversationAuthoring AnalyzeConversationClient = client.GetAnalyzeConversationAnalyzeConversationClient();
 
             #region Snippet:Sample7_ConversationsAuthoring_CancelTrainingJobAsync
             string projectName = "MyProject";
             string jobId = "YourTrainingJobId";
 
-            Operation<TrainingJobResult> cancelOperation = await authoringClient.CancelTrainingJobAsync(
+            Operation<TrainingJobResult> cancelOperation = await AnalyzeConversationClient.CancelTrainingJobAsync(
                 waitUntil: WaitUntil.Completed,
                 projectName: projectName,
                 jobId: jobId

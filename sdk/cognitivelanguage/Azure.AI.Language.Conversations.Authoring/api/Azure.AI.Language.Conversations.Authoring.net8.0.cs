@@ -185,19 +185,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         public virtual System.Threading.Tasks.Task<Azure.Operation> UnassignDeploymentResourcesAsync(Azure.WaitUntil waitUntil, string projectName, Azure.AI.Language.Conversations.Authoring.Models.UnassignDeploymentResourcesDetails body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Operation> UnassignDeploymentResourcesAsync(Azure.WaitUntil waitUntil, string projectName, Azure.Core.RequestContent content, Azure.RequestContext context = null) { throw null; }
     }
-    public partial class AuthoringClient
+    public partial class AnalyzeConversationClient
     {
-        protected AuthoringClient() { }
-        public AuthoringClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
-        public AuthoringClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.Conversations.Authoring.AuthoringClientOptions options) { }
-        public AuthoringClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
-        public AuthoringClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Language.Conversations.Authoring.AuthoringClientOptions options) { }
+        protected AnalyzeConversationClient() { }
+        public AnalyzeConversationClient(System.Uri endpoint, Azure.AzureKeyCredential credential) { }
+        public AnalyzeConversationClient(System.Uri endpoint, Azure.AzureKeyCredential credential, Azure.AI.Language.Conversations.Authoring.AnalyzeConversationClientOptions options) { }
+        public AnalyzeConversationClient(System.Uri endpoint, Azure.Core.TokenCredential credential) { }
+        public AnalyzeConversationClient(System.Uri endpoint, Azure.Core.TokenCredential credential, Azure.AI.Language.Conversations.Authoring.AnalyzeConversationClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
-        public virtual Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoring GetAnalyzeConversationAuthoringClient(string apiVersion = "2024-11-15-preview") { throw null; }
+        public virtual Azure.AI.Language.Conversations.Authoring.AnalyzeConversationAuthoring GetAnalyzeConversationAnalyzeConversationClient(string apiVersion = "2024-11-15-preview") { throw null; }
     }
-    public partial class AuthoringClientOptions : Azure.Core.ClientOptions
+    public partial class AnalyzeConversationClientOptions : Azure.Core.ClientOptions
     {
-        public AuthoringClientOptions(Azure.AI.Language.Conversations.Authoring.AuthoringClientOptions.ServiceVersion version = Azure.AI.Language.Conversations.Authoring.AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview) { }
+        public AnalyzeConversationClientOptions(Azure.AI.Language.Conversations.Authoring.AnalyzeConversationClientOptions.ServiceVersion version = Azure.AI.Language.Conversations.Authoring.AnalyzeConversationClientOptions.ServiceVersion.V2024_11_15_Preview) { }
         public enum ServiceVersion
         {
             V2023_04_01 = 1,
@@ -205,11 +205,11 @@ namespace Azure.AI.Language.Conversations.Authoring
             V2024_11_15_Preview = 3,
         }
     }
-    public static partial class ConversationsAuthoringClientBuilderExtensions
+    public static partial class ConversationsAnalyzeConversationClientBuilderExtensions
     {
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.Authoring.AuthoringClient, Azure.AI.Language.Conversations.Authoring.AuthoringClientOptions> AddAuthoringClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.Authoring.AuthoringClient, Azure.AI.Language.Conversations.Authoring.AuthoringClientOptions> AddAuthoringClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
-        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.Authoring.AuthoringClient, Azure.AI.Language.Conversations.Authoring.AuthoringClientOptions> AddAuthoringClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.Authoring.AnalyzeConversationClient, Azure.AI.Language.Conversations.Authoring.AnalyzeConversationClientOptions> AddAnalyzeConversationClient<TBuilder>(this TBuilder builder, System.Uri endpoint) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithCredential { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.Authoring.AnalyzeConversationClient, Azure.AI.Language.Conversations.Authoring.AnalyzeConversationClientOptions> AddAnalyzeConversationClient<TBuilder>(this TBuilder builder, System.Uri endpoint, Azure.AzureKeyCredential credential) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilder { throw null; }
+        public static Azure.Core.Extensions.IAzureClientBuilder<Azure.AI.Language.Conversations.Authoring.AnalyzeConversationClient, Azure.AI.Language.Conversations.Authoring.AnalyzeConversationClientOptions> AddAnalyzeConversationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration) where TBuilder : Azure.Core.Extensions.IAzureClientFactoryBuilderWithConfiguration<TConfiguration> { throw null; }
     }
     public static partial class ConversationsAuthoringModelFactory
     {

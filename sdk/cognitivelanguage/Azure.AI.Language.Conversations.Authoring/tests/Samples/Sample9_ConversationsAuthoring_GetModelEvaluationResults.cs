@@ -11,7 +11,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
 {
-    public partial class Sample9_ConversationsAuthoring_GetModelEvaluationResults : SamplesBase<AuthoringClientTestEnvironment>
+    public partial class Sample9_ConversationsAuthoring_GetModelEvaluationResults : SamplesBase<AnalyzeConversationClientTestEnvironment>
     {
         [Test]
         [SyncOnly]
@@ -19,15 +19,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Tests.Samples
         {
             Uri endpoint = TestEnvironment.Endpoint;
             AzureKeyCredential credential = new(TestEnvironment.ApiKey);
-            AuthoringClient client = new AuthoringClient(endpoint, credential);
-            AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+            AnalyzeConversationClient client = new AnalyzeConversationClient(endpoint, credential);
+            AnalyzeConversationAuthoring AnalyzeConversationClient = client.GetAnalyzeConversationAnalyzeConversationClient();
 
             string projectName = "SampleProject";
             string trainedModelLabel = "SampleModel";
             StringIndexType stringIndexType = StringIndexType.Utf16CodeUnit;
 
             #region Snippet:Sample9_ConversationsAuthoring_GetModelEvaluationResults
-            Pageable<UtteranceEvaluationResult> results = authoringClient.GetModelEvaluationResults(
+            Pageable<UtteranceEvaluationResult> results = AnalyzeConversationClient.GetModelEvaluationResults(
                 projectName: projectName,
                 trainedModelLabel: trainedModelLabel,
                 stringIndexType: stringIndexType

@@ -2,16 +2,16 @@
 
 This sample demonstrates how to import a project synchronously using the `Azure.AI.Language.Conversations.Authoring` SDK. You can define the project's metadata and assets before importing it into the service.
 
-## Create an `AuthoringClient`
+## Create an `AnalyzeConversationClient`
 
-To create an `AuthoringClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AuthoringClientOptions` instance.
+To create an `AnalyzeConversationClient`, you will need the service endpoint and credentials of your Language resource. You can specify the service version by providing an `AnalyzeConversationClientOptions` instance.
 
 ```C#
 Uri endpoint = new Uri("https://myaccount.cognitiveservices.azure.com");
 AzureKeyCredential credential = new("your-api-key");
-AuthoringClientOptions options = new AuthoringClientOptions(AuthoringClientOptions.ServiceVersion.V2024_11_15_Preview);
-AuthoringClient client = new AuthoringClient(endpoint, credential, options);
-AnalyzeConversationAuthoring authoringClient = client.GetAnalyzeConversationAuthoringClient();
+AnalyzeConversationClientOptions options = new AnalyzeConversationClientOptions(AnalyzeConversationClientOptions.ServiceVersion.V2024_11_15_Preview);
+AnalyzeConversationClient client = new AnalyzeConversationClient(endpoint, credential, options);
+AnalyzeConversationAuthoring AnalyzeConversationClient = client.GetAnalyzeConversationAnalyzeConversationClient();
 ```
 
 The values of the endpoint and apiKey variables can be retrieved from: Environment variables, configuration settings, or any other secure approach that works for your application.
@@ -74,7 +74,7 @@ var exportedProject = new ExportedProject(
     Assets = projectAssets
 };
 
-Operation operation = authoringClient.Import(
+Operation operation = AnalyzeConversationClient.Import(
     waitUntil: WaitUntil.Completed,
     projectName: projectName,
     body: exportedProject,
