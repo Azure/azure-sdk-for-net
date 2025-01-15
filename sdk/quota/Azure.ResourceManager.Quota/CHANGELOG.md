@@ -16,7 +16,7 @@
 - Upgraded Azure.Core from 1.41.0 to 1.44.1
 - Upgraded Azure.ResourceManager from 1.12.0 to 1.13.0
 
-## 1.1.0-beta.2 (2027-07-23)
+## 1.1.0-beta.2 (2024-07-23)
 
 ### Features Added
 
