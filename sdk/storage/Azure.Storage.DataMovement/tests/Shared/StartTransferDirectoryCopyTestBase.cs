@@ -242,7 +242,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure
+                ErrorMode = TransferErrorMode.ContinueOnFailure
             };
 
             // Initialize transferManager
@@ -371,7 +371,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 MaximumConcurrency = 1,
             };
             TransferManager transferManager = new TransferManager(managerOptions);
@@ -522,7 +522,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists
+                CreationPreference = StorageResourceCreationMode.OverwriteIfExists
             };
 
             // Act
@@ -567,7 +567,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists
+                CreationPreference = StorageResourceCreationMode.OverwriteIfExists
             };
 
             // Act
@@ -728,7 +728,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists
+                CreationPreference = StorageResourceCreationMode.FailIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
@@ -766,7 +766,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create transfer options with Skipping available
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.SkipIfExists
+                CreationPreference = StorageResourceCreationMode.SkipIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
@@ -803,7 +803,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists,
+                CreationPreference = StorageResourceCreationMode.FailIfExists,
                 InitialTransferSize = 512,
                 MaximumTransferChunkSize = 512
             };

@@ -8,6 +8,7 @@
 
 ### Bugs Fixed
 - Corrected a typo in the documentation for `CertificatePolicy.KeySize`, changing the RSA key length from "4092" to "4096".
+- Removed an extra `/` when building the request Uri for `CertificateClient.ImportCertificate` and `CertificateClient.ImportCertificateAsync`.
 
 ### Other Changes
 

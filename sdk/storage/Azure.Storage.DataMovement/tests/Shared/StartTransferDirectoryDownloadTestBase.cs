@@ -152,7 +152,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure
+                ErrorMode = TransferErrorMode.ContinueOnFailure
             };
 
             StorageResourceContainer sourceResource = GetStorageResourceContainer(sourceContainer, sourcePrefix);
@@ -354,7 +354,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferManagerOptions transferManagerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = TransferErrorMode.StopOnAnyFailure,
+                ErrorMode = TransferErrorMode.StopOnAnyFailure,
                 MaximumConcurrency = 3
             };
             TransferOptions options = new TransferOptions()
@@ -486,7 +486,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists
+                CreationPreference = StorageResourceCreationMode.FailIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
@@ -528,7 +528,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create transfer options with Skipping available
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.SkipIfExists
+                CreationPreference = StorageResourceCreationMode.SkipIfExists
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
@@ -569,7 +569,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists,
+                CreationPreference = StorageResourceCreationMode.FailIfExists,
                 InitialTransferSize = 512,
                 MaximumTransferChunkSize = 512
             };

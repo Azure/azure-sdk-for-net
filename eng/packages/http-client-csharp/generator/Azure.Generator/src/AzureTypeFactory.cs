@@ -10,10 +10,12 @@ using Microsoft.Generator.CSharp.ClientModel.Providers;
 using Microsoft.Generator.CSharp.Expressions;
 using Microsoft.Generator.CSharp.Input;
 using Microsoft.Generator.CSharp.Primitives;
+using Microsoft.Generator.CSharp.Providers;
 using Microsoft.Generator.CSharp.Snippets;
 using Microsoft.Generator.CSharp.Statements;
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Azure.Generator
@@ -109,5 +111,29 @@ namespace Azure.Generator
         /// <inheritdoc/>
         protected override ClientProvider CreateClientCore(InputClient inputClient)
             => AzureClientPlugin.Instance.IsAzureArm.Value ? base.CreateClientCore(InputClientTransformer.TransformInputClient(inputClient)) : base.CreateClientCore(inputClient);
+
+        /// <inheritdoc/>
+        protected override IReadOnlyList<TypeProvider> CreateSerializationsCore(InputType inputType, TypeProvider typeProvider)
+        {
+            if (inputType is InputModelType inputModel
+                && typeProvider is ModelProvider modelProvider
+                && AzureClientPlugin.Instance.OutputLibrary.IsResource(inputType.Name)
+                && inputModel.Usage.HasFlag(InputModelTypeUsage.Json))
+            {
+                return [new ResourceDataSerializationProvider(inputModel, modelProvider)];
+            }
+
+            return base.CreateSerializationsCore(inputType, typeProvider);
+        }
+
+        /// <inheritdoc/>
+        protected override ModelProvider? CreateModelCore(InputModelType model)
+        {
+            if (AzureClientPlugin.Instance.OutputLibrary.IsResource(model.Name))
+            {
+                return new ResourceDataProvider(model);
+            }
+            return base.CreateModelCore(model);
+        }
     }
 }
