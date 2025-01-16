@@ -173,6 +173,15 @@ namespace Azure.AI.Projects
             return new AzureFunctionBinding(type, storageQueue, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Projects.ResponseFormatJsonSchemaType"/>. </summary>
+        /// <param name="type"> Type. </param>
+        /// <param name="jsonSchema"> The JSON schema, describing response format. </param>
+        /// <returns> A new <see cref="Projects.ResponseFormatJsonSchemaType"/> instance for mocking. </returns>
+        public static ResponseFormatJsonSchemaType ResponseFormatJsonSchemaType(ResponseFormatJsonSchemaTypeType type = default, ResponseFormatJsonSchema jsonSchema = null)
+        {
+            return new ResponseFormatJsonSchemaType(type, jsonSchema, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Projects.ThreadMessageOptions"/>. </summary>
         /// <param name="role">
         /// The role of the entity that is creating the message. Allowed values include:
@@ -315,13 +324,44 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="Projects.RunStepFileSearchToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. This ID must be referenced when you submit tool outputs. </param>
-        /// <param name="fileSearch"> Reserved for future use. </param>
+        /// <param name="fileSearch"> For now, this is always going to be an empty object. </param>
         /// <returns> A new <see cref="Projects.RunStepFileSearchToolCall"/> instance for mocking. </returns>
-        public static RunStepFileSearchToolCall RunStepFileSearchToolCall(string id = null, IReadOnlyDictionary<string, string> fileSearch = null)
+        public static RunStepFileSearchToolCall RunStepFileSearchToolCall(string id = null, RunStepFileSearchToolCallResults fileSearch = null)
         {
-            fileSearch ??= new Dictionary<string, string>();
-
             return new RunStepFileSearchToolCall("file_search", id, serializedAdditionalRawData: null, fileSearch);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.RunStepFileSearchToolCallResults"/>. </summary>
+        /// <param name="rankingOptions"> Ranking options for file search. </param>
+        /// <param name="results"> The array of a file search results. </param>
+        /// <returns> A new <see cref="Projects.RunStepFileSearchToolCallResults"/> instance for mocking. </returns>
+        public static RunStepFileSearchToolCallResults RunStepFileSearchToolCallResults(FileSearchRankingOptions rankingOptions = null, IEnumerable<RunStepFileSearchToolCallResult> results = null)
+        {
+            results ??= new List<RunStepFileSearchToolCallResult>();
+
+            return new RunStepFileSearchToolCallResults(rankingOptions, results?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.RunStepFileSearchToolCallResult"/>. </summary>
+        /// <param name="fileId"> The ID of the file that result was found in. </param>
+        /// <param name="fileName"> The name of the file that result was found in. </param>
+        /// <param name="score"> The score of the result. All values must be a floating point number between 0 and 1. </param>
+        /// <param name="content"> The content of the result that was found. The content is only included if requested via the include query parameter. </param>
+        /// <returns> A new <see cref="Projects.RunStepFileSearchToolCallResult"/> instance for mocking. </returns>
+        public static RunStepFileSearchToolCallResult RunStepFileSearchToolCallResult(string fileId = null, string fileName = null, float score = default, IEnumerable<FileSearchToolCallContent> content = null)
+        {
+            content ??= new List<FileSearchToolCallContent>();
+
+            return new RunStepFileSearchToolCallResult(fileId, fileName, score, content?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Projects.FileSearchToolCallContent"/>. </summary>
+        /// <param name="type"> The type of the content. </param>
+        /// <param name="text"> The text content of the file. </param>
+        /// <returns> A new <see cref="Projects.FileSearchToolCallContent"/> instance for mocking. </returns>
+        public static FileSearchToolCallContent FileSearchToolCallContent(FileSearchToolCallContentType type = default, string text = null)
+        {
+            return new FileSearchToolCallContent(type, text, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Projects.RunStepBingGroundingToolCall"/>. </summary>

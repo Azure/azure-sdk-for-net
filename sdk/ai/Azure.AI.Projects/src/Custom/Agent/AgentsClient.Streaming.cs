@@ -227,7 +227,7 @@ public partial class AgentsClient
         scope.Start();
         try
         {
-            using HttpMessage message = CreateCreateRunRequest(threadId, content, context);
+            using HttpMessage message = CreateCreateRunRequest(threadId, content, null, context);
             message.BufferResponse = false;
             return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
@@ -247,7 +247,7 @@ public partial class AgentsClient
         scope.Start();
         try
         {
-            using HttpMessage message = CreateCreateRunRequest(threadId, content, context);
+            using HttpMessage message = CreateCreateRunRequest(threadId, content, null, context);
             message.BufferResponse = false;
             return _pipeline.ProcessMessage(message, context);
         }
