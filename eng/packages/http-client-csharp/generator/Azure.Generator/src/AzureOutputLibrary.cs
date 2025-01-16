@@ -13,18 +13,35 @@ namespace Azure.Generator
     /// <inheritdoc/>
     public class AzureOutputLibrary : ScmOutputLibrary
     {
-        // TODO: categorize clients into operationSets, which contains operations sharing the same Path
         private Dictionary<string, OperationSet> _pathToOperationSetMap;
-        private Dictionary<string, HashSet<OperationSet>> _resourceDataBySpecNameMap;
+        private Dictionary<string, HashSet<OperationSet>> _specNameToOperationSetsMap;
 
         /// <inheritdoc/>
         public AzureOutputLibrary()
         {
             _pathToOperationSetMap = CategorizeClients();
-            _resourceDataBySpecNameMap = EnsureResourceDataMap();
+            _specNameToOperationSetsMap = EnsureOperationsetMap();
         }
 
-        private Dictionary<string, HashSet<OperationSet>> EnsureResourceDataMap()
+        private IReadOnlyList<ResourceProvider> BuildResources()
+        {
+            var result = new List<ResourceProvider>();
+            foreach (var model in AzureClientPlugin.Instance.InputLibrary.InputNamespace.Models)
+            {
+                if (IsResource(model.Name))
+                {
+                    // we are sure that the model is a resource, so we can cast it to ResourceDataProvider
+                    var resourceDataProvider = (ResourceDataProvider)AzureClientPlugin.Instance.TypeFactory.CreateModel(model)!;
+
+                    // TODO: set resource type
+                    var resource = new ResourceProvider(model.Name, resourceDataProvider, null!, "");
+                    result.Add(resource);
+                }
+            }
+            return result;
+        }
+
+        private Dictionary<string, HashSet<OperationSet>> EnsureOperationsetMap()
         {
             var result = new Dictionary<string, HashSet<OperationSet>>();
             foreach (var operationSet in _pathToOperationSetMap.Values)
@@ -76,8 +93,8 @@ namespace Azure.Generator
 
         /// <inheritdoc/>
         // TODO: generate resources and collections
-        protected override TypeProvider[] BuildTypeProviders() => [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
+        protected override TypeProvider[] BuildTypeProviders() => [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition(), .. BuildResources()];
 
-        internal bool IsResource(string name) => _resourceDataBySpecNameMap.ContainsKey(name);
+        internal bool IsResource(string name) => _specNameToOperationSetsMap.ContainsKey(name);
     }
 }
