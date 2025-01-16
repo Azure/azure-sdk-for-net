@@ -7,14 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.Projects
 {
-    /// <summary>
-    /// An object describing the expected output of the model. If `json_object` only `function` type `tools` are allowed to be passed to the Run.
-    /// If `text` the model can return text or any value needed.
-    /// </summary>
-    public partial class AgentsApiResponseFormat
+    /// <summary> The results of the file search. </summary>
+    public partial class RunStepFileSearchToolCallResults
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,21 +46,35 @@ namespace Azure.AI.Projects
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AgentsApiResponseFormat"/>. </summary>
-        public AgentsApiResponseFormat()
+        /// <summary> Initializes a new instance of <see cref="RunStepFileSearchToolCallResults"/>. </summary>
+        /// <param name="results"> The array of a file search results. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
+        internal RunStepFileSearchToolCallResults(IEnumerable<RunStepFileSearchToolCallResult> results)
         {
+            Argument.AssertNotNull(results, nameof(results));
+
+            Results = results.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentsApiResponseFormat"/>. </summary>
-        /// <param name="type"> Must be one of `text` or `json_object`. </param>
+        /// <summary> Initializes a new instance of <see cref="RunStepFileSearchToolCallResults"/>. </summary>
+        /// <param name="rankingOptions"> Ranking options for file search. </param>
+        /// <param name="results"> The array of a file search results. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgentsApiResponseFormat(ResponseFormat? type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RunStepFileSearchToolCallResults(FileSearchRankingOptions rankingOptions, IReadOnlyList<RunStepFileSearchToolCallResult> results, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            RankingOptions = rankingOptions;
+            Results = results;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Must be one of `text` or `json_object`. </summary>
-        public ResponseFormat? Type { get; set; }
+        /// <summary> Initializes a new instance of <see cref="RunStepFileSearchToolCallResults"/> for deserialization. </summary>
+        internal RunStepFileSearchToolCallResults()
+        {
+        }
+
+        /// <summary> Ranking options for file search. </summary>
+        public FileSearchRankingOptions RankingOptions { get; }
+        /// <summary> The array of a file search results. </summary>
+        public IReadOnlyList<RunStepFileSearchToolCallResult> Results { get; }
     }
 }
