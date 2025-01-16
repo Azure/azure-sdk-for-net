@@ -189,8 +189,7 @@ namespace Azure.Communication.PhoneNumbers
             V2021_03_07 = 1,
             V2022_01_11_Preview_2 = 2,
             V2022_12_01 = 3,
-            V2024_03_01_Preview = 4,
-            V2025_02_11 = 5,
+            V2025_02_11 = 4,
         }
     }
     public partial class PhoneNumberSearchOptions
