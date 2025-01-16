@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Description>This is the Server.Path.Single client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>SDK Code Generation Server.Path.Single</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Server.Path.Single</PackageTags>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ClientModel" Version="1.1.0-beta.4" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+  </ItemGroup>
+</Project>

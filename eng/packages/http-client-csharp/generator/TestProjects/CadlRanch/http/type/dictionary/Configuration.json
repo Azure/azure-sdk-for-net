@@ -1,0 +1,6 @@
+{
+  "output-folder": ".",
+  "namespace": "Type.Dictionary",
+  "library-name": "Type.Dictionary",
+  "use-model-reader-writer": true
+}

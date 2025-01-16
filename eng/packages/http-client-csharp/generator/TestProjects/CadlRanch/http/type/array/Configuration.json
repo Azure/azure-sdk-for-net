@@ -1,0 +1,6 @@
+{
+  "output-folder": ".",
+  "namespace": "Type.Array",
+  "library-name": "Type.Array",
+  "use-model-reader-writer": true
+}

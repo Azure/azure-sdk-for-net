@@ -1,0 +1,6 @@
+{
+  "output-folder": ".",
+  "namespace": "Routes",
+  "library-name": "Routes",
+  "use-model-reader-writer": true
+}

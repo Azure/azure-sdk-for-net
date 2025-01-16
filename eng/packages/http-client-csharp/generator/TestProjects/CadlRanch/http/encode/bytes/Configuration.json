@@ -1,0 +1,6 @@
+{
+  "output-folder": ".",
+  "namespace": "Encode.Bytes",
+  "library-name": "Encode.Bytes",
+  "use-model-reader-writer": true
+}

@@ -1,0 +1,6 @@
+{
+  "output-folder": ".",
+  "namespace": "Type.Scalar",
+  "library-name": "Type.Scalar",
+  "use-model-reader-writer": true
+}

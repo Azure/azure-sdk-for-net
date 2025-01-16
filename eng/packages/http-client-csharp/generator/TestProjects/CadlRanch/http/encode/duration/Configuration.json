@@ -1,0 +1,6 @@
+{
+  "output-folder": ".",
+  "namespace": "Encode.Duration",
+  "library-name": "Encode.Duration",
+  "use-model-reader-writer": true
+}
