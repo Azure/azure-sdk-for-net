@@ -5,6 +5,7 @@ using Azure.Generator.Mgmt.Models;
 using Azure.Generator.Providers;
 using Azure.Generator.Utilities;
 using Microsoft.Generator.CSharp.ClientModel;
+using Microsoft.Generator.CSharp.ClientModel.Providers;
 using Microsoft.Generator.CSharp.Providers;
 using System.Collections.Generic;
 
@@ -76,7 +77,33 @@ namespace Azure.Generator
 
         /// <inheritdoc/>
         // TODO: generate resources and collections
-        protected override TypeProvider[] BuildTypeProviders() => [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
+        protected override TypeProvider[] BuildTypeProviders()
+        {
+            var result = new List<TypeProvider>();
+            var baseProviders = base.BuildTypeProviders();
+            var restClientNamesToExclude = new HashSet<string>();
+            foreach(var provider in baseProviders)
+            {
+                if (provider is ClientProvider clientProvider)
+                {
+                    if (provider.Methods.Count != 0)
+                    {
+                        result.Add(provider);
+                    }
+                    else
+                    {
+                        restClientNamesToExclude.Add(clientProvider.Name);
+                    }
+                    continue;
+                }
+                if (provider is RestClientProvider restClientProvider && restClientNamesToExclude.Contains(restClientProvider.Name))
+                {
+                    continue;
+                }
+                result.Add(provider);
+            }
+            return [.. result, new RequestContextExtensionsDefinition()];
+        }
 
         internal bool IsResource(string name) => _resourceDataBySpecNameMap.ContainsKey(name);
     }

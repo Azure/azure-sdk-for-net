@@ -11,6 +11,7 @@ using System.ClientModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Azure.Generator.Tests.Providers
 {
@@ -47,6 +48,48 @@ namespace Azure.Generator.Tests.Providers
                 apiKeyAuth: apiKeyAuth,
                 oauth2Auth: oauth2Auth,
                 clients: clients);
+        }
+
+        [Test]
+        public void TestEmptyClient()
+        {
+            var client = InputFactory.Client(TestClientName);
+            var plugin = MockHelpers.LoadMockPlugin(clients: () => [client]);
+
+            var clientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is ClientProvider && t.Name == TestClientName);
+            Assert.IsNull(clientProvider);
+        }
+
+        [Test]
+        public void TestNonEmptySubClient()
+        {
+            var inputOperation = InputFactory.Operation("HelloAgain", parameters:
+            [
+                InputFactory.Parameter("p1", InputFactory.Array(InputPrimitiveType.String))
+            ]);
+            var client = InputFactory.Client(TestClientName);
+            var subClient = InputFactory.Client($"Sub{TestClientName}", [inputOperation], [], client.Name);
+            var plugin = MockHelpers.LoadMockPlugin(clients: () => [client, subClient]);
+
+            var subClientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is ClientProvider && t.Name == subClient.Name);
+            Assert.IsNotNull(subClientProvider);
+
+            var clientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is ClientProvider && t.Name == TestClientName);
+            Assert.IsNotNull(clientProvider);
+        }
+
+        [Test]
+        public void TestEmptySubClient()
+        {
+            var client = InputFactory.Client(TestClientName);
+            var subClient = InputFactory.Client($"Sub{TestClientName}", [], [], client.Name);
+            var plugin = MockHelpers.LoadMockPlugin(clients: () => [client, subClient]);
+
+            var subClientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is ClientProvider && t.Name == subClient.Name);
+            Assert.IsNull(subClientProvider);
+
+            var clientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is ClientProvider && t.Name == TestClientName);
+            Assert.IsNull(clientProvider);
         }
 
         [TestCaseSource(nameof(BuildAuthFieldsTestCases), Category = KeyAuthCategory)]
