@@ -23,7 +23,7 @@ namespace Azure.Storage.DataMovement
 
         public override string ProviderId => "local";
 
-        protected internal override DataTransferOrder TransferType => DataTransferOrder.Sequential;
+        protected internal override TransferOrder TransferType => TransferOrder.Sequential;
 
         protected internal override long MaxSupportedSingleTransferSize => Constants.Blob.Block.MaxStageBytes;
 
@@ -270,14 +270,14 @@ namespace Azure.Storage.DataMovement
             return Task.FromResult(false);
         }
 
-        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new LocalSourceCheckpointData();
+            return new LocalSourceCheckpointDetails();
         }
 
-        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
-            return new LocalDestinationCheckpointData();
+            return new LocalDestinationCheckpointDetails();
         }
 
         // no-op for get permissions

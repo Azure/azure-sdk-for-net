@@ -225,7 +225,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         #region Abstract Class Implementation
         /// <inheritdoc/>
-        protected override Task<StorageResource> FromSourceAsync(DataTransferProperties properties, CancellationToken cancellationToken)
+        protected override Task<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
         {
             // Source share file data currently empty, so no specific properties to grab
 
@@ -235,39 +235,39 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <inheritdoc/>
-        protected override Task<StorageResource> FromDestinationAsync(DataTransferProperties properties, CancellationToken cancellationToken)
+        protected override Task<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
         {
-            ShareFileDestinationCheckpointData checkpointData;
-            using (MemoryStream stream = new(properties.DestinationCheckpointData))
+            ShareFileDestinationCheckpointDetails checkpointDetails;
+            using (MemoryStream stream = new(properties.DestinationCheckpointDetails))
             {
-                checkpointData = ShareFileDestinationCheckpointData.Deserialize(stream);
+                checkpointDetails = ShareFileDestinationCheckpointDetails.Deserialize(stream);
             }
 
             ShareFileStorageResourceOptions options = new()
             {
-                FileAttributes = checkpointData.FileAttributes,
-                _isFileAttributesSet = checkpointData.IsFileAttributesSet,
-                FilePermissions = checkpointData.FilePermission,
-                CacheControl = checkpointData.CacheControl,
-                _isCacheControlSet = checkpointData.IsCacheControlSet,
-                ContentDisposition = checkpointData.ContentDisposition,
-                _isContentDispositionSet = checkpointData.IsContentDispositionSet,
-                ContentEncoding = checkpointData.ContentEncoding,
-                _isContentEncodingSet = checkpointData.IsContentEncodingSet,
-                ContentLanguage = checkpointData.ContentLanguage,
-                _isContentLanguageSet = checkpointData.IsContentLanguageSet,
-                ContentType = checkpointData.ContentType,
-                _isContentTypeSet = checkpointData.IsContentTypeSet,
-                FileCreatedOn = checkpointData.FileCreatedOn,
-                _isFileCreatedOnSet = checkpointData.IsFileCreatedOnSet,
-                FileLastWrittenOn = checkpointData.FileLastWrittenOn,
-                _isFileLastWrittenOnSet = checkpointData.IsFileLastWrittenOnSet,
-                FileChangedOn = checkpointData.FileChangedOn,
-                _isFileChangedOnSet = checkpointData.IsFileChangedOnSet,
-                DirectoryMetadata = checkpointData.DirectoryMetadata,
-                _isDirectoryMetadataSet = checkpointData.IsDirectoryMetadataSet,
-                FileMetadata = checkpointData.FileMetadata,
-                _isFileMetadataSet = checkpointData.IsFileMetadataSet,
+                FileAttributes = checkpointDetails.FileAttributes,
+                _isFileAttributesSet = checkpointDetails.IsFileAttributesSet,
+                FilePermissions = checkpointDetails.FilePermission,
+                CacheControl = checkpointDetails.CacheControl,
+                _isCacheControlSet = checkpointDetails.IsCacheControlSet,
+                ContentDisposition = checkpointDetails.ContentDisposition,
+                _isContentDispositionSet = checkpointDetails.IsContentDispositionSet,
+                ContentEncoding = checkpointDetails.ContentEncoding,
+                _isContentEncodingSet = checkpointDetails.IsContentEncodingSet,
+                ContentLanguage = checkpointDetails.ContentLanguage,
+                _isContentLanguageSet = checkpointDetails.IsContentLanguageSet,
+                ContentType = checkpointDetails.ContentType,
+                _isContentTypeSet = checkpointDetails.IsContentTypeSet,
+                FileCreatedOn = checkpointDetails.FileCreatedOn,
+                _isFileCreatedOnSet = checkpointDetails.IsFileCreatedOnSet,
+                FileLastWrittenOn = checkpointDetails.FileLastWrittenOn,
+                _isFileLastWrittenOnSet = checkpointDetails.IsFileLastWrittenOnSet,
+                FileChangedOn = checkpointDetails.FileChangedOn,
+                _isFileChangedOnSet = checkpointDetails.IsFileChangedOnSet,
+                DirectoryMetadata = checkpointDetails.DirectoryMetadata,
+                _isDirectoryMetadataSet = checkpointDetails.IsDirectoryMetadataSet,
+                FileMetadata = checkpointDetails.FileMetadata,
+                _isFileMetadataSet = checkpointDetails.IsFileMetadataSet,
             };
             return Task.FromResult(properties.IsContainer
                 ? FromDirectory(properties.DestinationUri, options)
@@ -276,19 +276,19 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         /// <summary>
         /// For use in testing. Internal wrapper for protected member
-        /// <see cref="StorageResourceProvider.FromSourceAsync(DataTransferProperties, CancellationToken)"/>.
+        /// <see cref="StorageResourceProvider.FromSourceAsync(TransferProperties, CancellationToken)"/>.
         /// </summary>
         internal async Task<StorageResource> FromSourceInternalHookAsync(
-            DataTransferProperties props,
+            TransferProperties props,
             CancellationToken cancellationToken = default)
             => await FromSourceAsync(props, cancellationToken).ConfigureAwait(false);
 
         /// <summary>
         /// For use in testing. Internal wrapper for protected member
-        /// <see cref="StorageResourceProvider.FromDestinationAsync(DataTransferProperties, CancellationToken)"/>.
+        /// <see cref="StorageResourceProvider.FromDestinationAsync(TransferProperties, CancellationToken)"/>.
         /// </summary>
         internal async Task<StorageResource> FromDestinationInternalHookAsync(
-            DataTransferProperties props,
+            TransferProperties props,
             CancellationToken cancellationToken = default)
             => await FromDestinationAsync(props, cancellationToken).ConfigureAwait(false);
         #endregion

@@ -52,11 +52,13 @@ namespace Azure.Storage.DataMovement.Blobs
                 properties.Add(DataMovementConstants.ResourceProperties.AccessTier, new AccessTier(blobProperties.AccessTier));
             }
 
-            return new StorageResourceItemProperties(
-                resourceLength: blobProperties.ContentLength,
-                eTag: blobProperties.ETag,
-                lastModifiedTime: blobProperties.LastModified,
-                properties: properties);
+            return new StorageResourceItemProperties()
+            {
+                ResourceLength = blobProperties.ContentLength,
+                ETag = blobProperties.ETag,
+                LastModifiedTime = blobProperties.LastModified,
+                RawProperties = properties
+            };
         }
 
         internal static StorageResourceItemProperties ToStorageResourceItemProperties(this BlobDownloadStreamingResult result)
@@ -102,11 +104,13 @@ namespace Azure.Storage.DataMovement.Blobs
                 size = contentRange.Size;
             }
 
-            return new StorageResourceItemProperties(
-                resourceLength: size,
-                eTag : result?.Details.ETag,
-                lastModifiedTime: result?.Details.LastModified,
-                properties: properties);
+            return new StorageResourceItemProperties()
+            {
+                ResourceLength = size,
+                ETag = result?.Details.ETag,
+                LastModifiedTime = result?.Details.LastModified,
+                RawProperties = properties
+            };
         }
 
         internal static StorageResourceReadStreamResult ToReadStreamStorageResourceInfo(this BlobDownloadStreamingResult result)
@@ -162,11 +166,13 @@ namespace Azure.Storage.DataMovement.Blobs
             return new StorageResourceReadStreamResult(
                 content: result.Content,
                 range: range,
-                properties: new StorageResourceItemProperties(
-                    resourceLength: size.HasValue ? size : result.Details.ContentLength,
-                    eTag: result.Details.ETag,
-                    lastModifiedTime: result?.Details.LastModified,
-                    properties: properties));
+                properties: new StorageResourceItemProperties()
+                {
+                    ResourceLength = size.HasValue ? size : result.Details.ContentLength,
+                    ETag = result.Details.ETag,
+                    LastModifiedTime = result?.Details.LastModified,
+                    RawProperties = properties
+                });
         }
 
         /// <summary>
@@ -508,71 +514,71 @@ namespace Azure.Storage.DataMovement.Blobs
             };
         }
 
-        internal static BlobCheckpointData GetCheckpointData(this DataTransferProperties properties, bool isSource)
+        internal static StorageResourceCheckpointDetails GetCheckpointDetails(this TransferProperties properties, bool isSource)
         {
             if (isSource)
             {
-                using (MemoryStream stream = new(properties.SourceCheckpointData))
+                using (MemoryStream stream = new(properties.SourceCheckpointDetails))
                 {
-                    return BlobSourceCheckpointData.Deserialize(stream);
+                    return BlobSourceCheckpointDetails.Deserialize(stream);
                 }
             }
             else
             {
-                using (MemoryStream stream = new(properties.DestinationCheckpointData))
+                using (MemoryStream stream = new(properties.DestinationCheckpointDetails))
                 {
-                    return BlobDestinationCheckpointData.Deserialize(stream);
+                    return BlobDestinationCheckpointDetails.Deserialize(stream);
                 }
             }
         }
 
         internal static BlobStorageResourceOptions GetBlobResourceOptions(
-            this BlobDestinationCheckpointData checkpointData)
+            this BlobDestinationCheckpointDetails checkpointDetails)
         {
             return new()
             {
-                Metadata = checkpointData.Metadata,
-                _isMetadataSet = checkpointData.IsMetadataSet,
-                CacheControl = checkpointData.CacheControl,
-                _isCacheControlSet = checkpointData.IsCacheControlSet,
-                ContentDisposition = checkpointData.ContentDisposition,
-                _isContentDispositionSet = checkpointData.IsContentDispositionSet,
-                ContentEncoding = checkpointData.ContentEncoding,
-                _isContentEncodingSet = checkpointData.IsContentEncodingSet,
-                ContentLanguage = checkpointData.ContentLanguage,
-                _isContentLanguageSet = checkpointData.IsContentLanguageSet,
-                ContentType = checkpointData.ContentType,
-                _isContentTypeSet = checkpointData.IsContentTypeSet,
-                AccessTier = checkpointData.AccessTierValue,
+                Metadata = checkpointDetails.Metadata,
+                _isMetadataSet = checkpointDetails.IsMetadataSet,
+                CacheControl = checkpointDetails.CacheControl,
+                _isCacheControlSet = checkpointDetails.IsCacheControlSet,
+                ContentDisposition = checkpointDetails.ContentDisposition,
+                _isContentDispositionSet = checkpointDetails.IsContentDispositionSet,
+                ContentEncoding = checkpointDetails.ContentEncoding,
+                _isContentEncodingSet = checkpointDetails.IsContentEncodingSet,
+                ContentLanguage = checkpointDetails.ContentLanguage,
+                _isContentLanguageSet = checkpointDetails.IsContentLanguageSet,
+                ContentType = checkpointDetails.ContentType,
+                _isContentTypeSet = checkpointDetails.IsContentTypeSet,
+                AccessTier = checkpointDetails.AccessTierValue,
             };
         }
 
         internal static BlockBlobStorageResourceOptions GetBlockBlobResourceOptions(
-            this BlobDestinationCheckpointData checkpointData)
+            this BlobDestinationCheckpointDetails checkpointDetails)
         {
-            BlobStorageResourceOptions baseOptions = checkpointData.GetBlobResourceOptions();
+            BlobStorageResourceOptions baseOptions = checkpointDetails.GetBlobResourceOptions();
             return new BlockBlobStorageResourceOptions(baseOptions);
         }
 
         internal static PageBlobStorageResourceOptions GetPageBlobResourceOptions(
-            this BlobDestinationCheckpointData checkpointData)
+            this BlobDestinationCheckpointDetails checkpointDetails)
         {
-            BlobStorageResourceOptions baseOptions = checkpointData.GetBlobResourceOptions();
+            BlobStorageResourceOptions baseOptions = checkpointDetails.GetBlobResourceOptions();
             return new PageBlobStorageResourceOptions(baseOptions);
         }
 
         internal static AppendBlobStorageResourceOptions GetAppendBlobResourceOptions(
-            this BlobDestinationCheckpointData checkpointData)
+            this BlobDestinationCheckpointDetails checkpointDetails)
         {
-            BlobStorageResourceOptions baseOptions = checkpointData.GetBlobResourceOptions();
+            BlobStorageResourceOptions baseOptions = checkpointDetails.GetBlobResourceOptions();
             return new AppendBlobStorageResourceOptions(baseOptions);
         }
 
         internal static BlobStorageResourceContainerOptions GetBlobContainerOptions(
-            this BlobDestinationCheckpointData checkpointData,
+            this BlobDestinationCheckpointDetails checkpointDetails,
             string directoryPrefix)
         {
-            BlobStorageResourceOptions baseOptions = checkpointData.GetBlobResourceOptions();
+            BlobStorageResourceOptions baseOptions = checkpointDetails.GetBlobResourceOptions();
             return new BlobStorageResourceContainerOptions()
             {
                 BlobType = default,
@@ -646,11 +652,13 @@ namespace Azure.Storage.DataMovement.Blobs
                 properties.Add(DataMovementConstants.ResourceProperties.CacheControl, blobItem.Properties.CacheControl);
             }
 
-            return new StorageResourceItemProperties(
-                resourceLength: blobItem.Properties.ContentLength,
-                eTag: blobItem.Properties.ETag,
-                lastModifiedTime: blobItem.Properties.LastModified,
-                properties: properties);
+            return new StorageResourceItemProperties()
+            {
+                ResourceLength = blobItem.Properties.ContentLength,
+                ETag = blobItem.Properties.ETag,
+                LastModifiedTime = blobItem.Properties.LastModified,
+                RawProperties = properties
+            };
         }
 
         private static string ConvertContentPropertyObjectToString(string contentPropertyName, object contentPropertyValue)
@@ -671,7 +679,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
         private static BlobHttpHeaders GetHttpHeaders(
             BlobStorageResourceOptions options,
-            Dictionary<string, object> properties)
+            IDictionary<string, object> properties)
             => new()
             {
                 ContentType = (options?._isContentTypeSet ?? false)
@@ -704,7 +712,7 @@ namespace Azure.Storage.DataMovement.Blobs
         // Get the access tier property
         private static AccessTier? GetAccessTier(
             BlobStorageResourceOptions options,
-            Dictionary<string, object> properties)
+            IDictionary<string, object> properties)
             => options?.AccessTier != default
                 ? options?.AccessTier
                 : properties?.TryGetValue(DataMovementConstants.ResourceProperties.AccessTier, out object accessTierObject) == true
@@ -714,7 +722,7 @@ namespace Azure.Storage.DataMovement.Blobs
         // By default we preserve the metadata
         private static Metadata GetMetadata(
             BlobStorageResourceOptions options,
-            Dictionary<string, object> properties)
+            IDictionary<string, object> properties)
             => (options?._isMetadataSet ?? false)
                 ? options?.Metadata
                 : properties?.TryGetValue(DataMovementConstants.ResourceProperties.Metadata, out object metadataObject) == true

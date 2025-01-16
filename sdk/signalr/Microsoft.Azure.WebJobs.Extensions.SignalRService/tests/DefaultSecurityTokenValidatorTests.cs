@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
 using Microsoft.IdentityModel.Tokens;
+
 using Xunit;
 
 namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests
@@ -47,10 +49,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.SignalRService.Tests
             {
                 parameters.IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(IssuerToken));
                 parameters.RequireSignedTokens = true;
-                parameters.ValidateAudience = false;
-                parameters.ValidateIssuer = false;
                 parameters.ValidateIssuerSigningKey = true;
                 parameters.ValidateLifetime = true;
+                parameters.ValidIssuer = "issuer";
+                parameters.ValidAudience = "audience";
             };
 
             var securityTokenValidator = new DefaultSecurityTokenValidator(configureTokenValidationParameters);

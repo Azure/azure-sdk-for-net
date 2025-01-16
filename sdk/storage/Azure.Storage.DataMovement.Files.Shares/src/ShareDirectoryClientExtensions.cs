@@ -30,10 +30,10 @@ namespace Azure.Storage.Files.Shares
         /// Options which control the directory upload.
         /// </param>
         /// <returns>
-        /// A <see cref="DataTransfer"/> instance which can be used track progress and wait for
-        /// completion with <see cref="DataTransfer.WaitForCompletionAsync"/>.
+        /// A <see cref="TransferOperation"/> instance which can be used track progress and wait for
+        /// completion with <see cref="TransferOperation.WaitForCompletionAsync"/>.
         /// </returns>
-        public static async Task<DataTransfer> StartUploadDirectoryAsync(
+        public static async Task<TransferOperation> StartUploadDirectoryAsync(
             this ShareDirectoryClient client,
             string localDirectoryPath,
             ShareDirectoryClientTransferOptions options = default)
@@ -52,7 +52,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="localDirectoryPath">The full path to the local directory where files will be dowloaded.</param>
         /// <param name="options">Options which control the container download.</param>
         /// <returns></returns>
-        public static async Task<DataTransfer> StartDownloadToDirectoryAsync(
+        public static async Task<TransferOperation> StartDownloadToDirectoryAsync(
             this ShareDirectoryClient client,
             string localDirectoryPath,
             ShareDirectoryClientTransferOptions options = default)

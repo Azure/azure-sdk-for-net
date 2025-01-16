@@ -94,14 +94,14 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="fooName"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Foo> CreateOrUpdate(Guid subscriptionId, string resourceGroupName, string fooName, Foo resource, CancellationToken cancellationToken = default)
+        public virtual Response<FooData> CreateOrUpdate(Guid subscriptionId, string resourceGroupName, string fooName, FooData resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
             Argument.AssertNotNull(resource, nameof(resource));
 
             Response result = CreateOrUpdate(subscriptionId, resourceGroupName, fooName, resource, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((Foo)result, result);
+            return Response.FromValue((FooData)result, result);
         }
 
         /// <summary> Create a Foo. </summary>
@@ -112,14 +112,14 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/>, <paramref name="fooName"/> or <paramref name="resource"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Foo>> CreateOrUpdateAsync(Guid subscriptionId, string resourceGroupName, string fooName, Foo resource, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FooData>> CreateOrUpdateAsync(Guid subscriptionId, string resourceGroupName, string fooName, FooData resource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
             Argument.AssertNotNull(resource, nameof(resource));
 
             Response result = await CreateOrUpdateAsync(subscriptionId, resourceGroupName, fooName, resource, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((Foo)result, result);
+            return Response.FromValue((FooData)result, result);
         }
 
         /// <summary>
@@ -177,13 +177,13 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Foo> Get(Guid subscriptionId, string resourceGroupName, string fooName, CancellationToken cancellationToken = default)
+        public virtual Response<FooData> Get(Guid subscriptionId, string resourceGroupName, string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
 
             Response result = Get(subscriptionId, resourceGroupName, fooName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null);
-            return Response.FromValue((Foo)result, result);
+            return Response.FromValue((FooData)result, result);
         }
 
         /// <summary> Get a Foo. </summary>
@@ -193,13 +193,13 @@ namespace MgmtTypeSpec
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupName"/> or <paramref name="fooName"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Foo>> GetAsync(Guid subscriptionId, string resourceGroupName, string fooName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FooData>> GetAsync(Guid subscriptionId, string resourceGroupName, string fooName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNull(fooName, nameof(fooName));
 
             Response result = await GetAsync(subscriptionId, resourceGroupName, fooName, cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null).ConfigureAwait(false);
-            return Response.FromValue((Foo)result, result);
+            return Response.FromValue((FooData)result, result);
         }
 
         /// <summary>
