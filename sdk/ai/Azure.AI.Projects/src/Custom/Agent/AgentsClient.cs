@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -180,7 +179,7 @@ namespace Azure.AI.Projects
         public virtual Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(run, nameof(run));
-            return SubmitToolOutputsToRunAsync(run.ThreadId, run.Id, toolOutputs, false, cancellationToken);
+            return SubmitToolOutputsToRunAsync(run.ThreadId, run.Id, toolOutputs, null, cancellationToken);
         }
 
         /// <summary>
