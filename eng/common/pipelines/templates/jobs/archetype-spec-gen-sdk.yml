@@ -68,11 +68,9 @@ jobs:
             Exit 1
           }
 
-          if ('$(SdkRepoOwner)' -eq '') {
-            $sdkRepoOwner = $Matches['organization']
-            Write-Host "##vso[task.setvariable variable=SdkRepoOwner]$sdkRepoOwner"
-            Write-Host "SdkRepoOwner variable set to: $sdkRepoOwner"
-          }
+          $sdkRepoOwner = if ('$(SdkRepoOwner)' -eq '') { $Matches['organization'] } else { '$(SdkRepoOwner)' }
+          Write-Host "##vso[task.setvariable variable=SdkRepoOwner]$sdkRepoOwner"
+          Write-Host "SdkRepoOwner variable set to: $sdkRepoOwner"
 
           $sdkRepoName = $Matches['repository']
           Write-Host "##vso[task.setvariable variable=SdkRepoName]$sdkRepoName"
@@ -84,7 +82,7 @@ jobs:
         }
 
         if ([string]::IsNullOrEmpty($SpecRepoOwner) -or [string]::IsNullOrEmpty($SpecRepoName) -or [string]::IsNullOrEmpty($SdkRepoOwner) -or [string]::IsNullOrEmpty($SdkRepoName)) {
-          Write-Host "One or more required variables are null or empty. Ensure that SpecRepourl and SdkRepoUrl are set to valid GitHub repository URLs."
+          Write-Host "One or more required variables is empty or invalid. Ensure that SpecRepourl and SdkRepoUrl are set to valid GitHub repository URLs."
           Exit 1
         }
 
