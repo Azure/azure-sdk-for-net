@@ -59,7 +59,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string localPath = Path.GetTempPath();
             Mock<ShareDirectoryClient> clientMock = new();
 
-            await Storage.Files.Shares.ShareDirectoryClientExtensions.StartUploadDirectoryAsync(
+            await Storage.Files.Shares.ShareDirectoryClientExtensions.UploadDirectoryAsync(
                 clientMock.Object,
                 WaitUntil.Started,
                 localPath,
@@ -88,7 +88,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             string localPath = Path.GetTempPath();
             Mock<ShareDirectoryClient> clientMock = new();
 
-            await Storage.Files.Shares.ShareDirectoryClientExtensions.StartDownloadToDirectoryAsync(
+            await Storage.Files.Shares.ShareDirectoryClientExtensions.DownloadToDirectoryAsync(
                 clientMock.Object,
                 WaitUntil.Started,
                 localPath,

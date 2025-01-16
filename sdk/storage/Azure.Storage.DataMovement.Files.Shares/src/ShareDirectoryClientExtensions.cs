@@ -40,7 +40,7 @@ namespace Azure.Storage.Files.Shares
         /// In either case, the caller must check the status of the transfer using the returned <see cref="TransferOperation"/> instance to determine if the transfer
         /// completed successfully or not. This method will not throw an exception if the transfer fails, but the <see cref="TransferOperation.Status"/> will indicate a failure.
         /// </remarks>
-        public static async Task<TransferOperation> StartUploadDirectoryAsync(
+        public static async Task<TransferOperation> UploadDirectoryAsync(
             this ShareDirectoryClient client,
             WaitUntil waitUntil,
             string localDirectoryPath,
@@ -85,7 +85,7 @@ namespace Azure.Storage.Files.Shares
         /// In either case, the caller must check the status of the transfer using the returned <see cref="TransferOperation"/> instance to determine if the transfer
         /// completed successfully or not. This method will not throw an exception if the transfer fails, but the <see cref="TransferOperation.Status"/> will indicate a failure.
         /// </remarks>
-        public static async Task<TransferOperation> StartDownloadToDirectoryAsync(
+        public static async Task<TransferOperation> DownloadToDirectoryAsync(
             this ShareDirectoryClient client,
             WaitUntil waitUntil,
             string localDirectoryPath,

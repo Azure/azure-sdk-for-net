@@ -8,8 +8,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
 {
     /// <summary>
     /// Options applying to data transfer uploads and downloads using the <see cref="ShareDirectoryClient"/> extension methods
-    /// <see cref="ShareDirectoryClientExtensions.StartDownloadToDirectoryAsync(ShareDirectoryClient, WaitUntil, string, ShareDirectoryClientTransferOptions, CancellationToken)"/> and
-    /// <see cref="ShareDirectoryClientExtensions.StartUploadDirectoryAsync(ShareDirectoryClient, WaitUntil, string, ShareDirectoryClientTransferOptions, CancellationToken)"/>.
+    /// <see cref="ShareDirectoryClientExtensions.DownloadToDirectoryAsync(ShareDirectoryClient, WaitUntil, string, ShareDirectoryClientTransferOptions, CancellationToken)"/> and
+    /// <see cref="ShareDirectoryClientExtensions.UploadDirectoryAsync(ShareDirectoryClient, WaitUntil, string, ShareDirectoryClientTransferOptions, CancellationToken)"/>.
     /// </summary>
     public class ShareDirectoryClientTransferOptions
     {
