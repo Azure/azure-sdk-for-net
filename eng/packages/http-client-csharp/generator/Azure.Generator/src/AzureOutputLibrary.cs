@@ -7,6 +7,7 @@ using Azure.Generator.Utilities;
 using Microsoft.Generator.CSharp.ClientModel;
 using Microsoft.Generator.CSharp.ClientModel.Providers;
 using Microsoft.Generator.CSharp.Providers;
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Generator
@@ -84,6 +85,10 @@ namespace Azure.Generator
             var restClientNamesToExclude = new HashSet<string>();
             foreach(var provider in baseProviders)
             {
+                if (provider is ResourceDataProvider)
+                {
+                    Console.WriteLine($"ResourceDataProvider found {provider.Name}");
+                }
                 if (provider is ClientProvider clientProvider)
                 {
                     if (provider.Methods.Count != 0)
