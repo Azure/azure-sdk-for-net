@@ -167,8 +167,9 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     # slashes "/". The ExcludePaths need to have a trailing slash added in order
     # correctly test for string matches without overmatching. For example, if a pr
     # had files sdk/foo/file1 and sdk/foobar/file2 with the exclude of anything in
-    # sdk/foo, it should only exclude things under sdk/foo.
-    $excludePaths = $diff.ExcludePaths | ForEach-Object { $_ + "/" }
+    # sdk/foo, it should only exclude things under sdk/foo. The TrimEnd is just in
+    # case one of the paths ends with a slash, it doesn't add a second one.
+    $excludePaths = $diff.ExcludePaths | ForEach-Object { $_.TrimEnd("/") + "/" }
 
     $additionalValidationPackages = @()
     $lookup = @{}

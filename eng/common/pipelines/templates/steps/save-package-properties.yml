@@ -34,7 +34,7 @@ steps:
             ${{ parameters.ScriptDirectory }}/Generate-PR-Diff.ps1
             -TargetPath '${{ parameters.TargetPath }}'
             -ArtifactPath '${{ parameters.DiffDirectory }}'
-            -ExcludePaths ('${{ convertToJson(parameters.ExcludePaths) }}' | convertFrom-Json)
+            -ExcludePaths ('${{ convertToJson(parameters.ExcludePaths) }}' | ConvertFrom-Json)
           pwsh: true
 
       # When running in PR mode, we want the detected changed services to be attached to the build as tags.
