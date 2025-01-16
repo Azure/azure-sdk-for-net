@@ -58,7 +58,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// The Blob tags for the destination blob.
         /// </summary>
         public Tags Tags;
-        public bool IsTagsSet;
+        public bool PreserveTags;
         public byte[] TagsBytes;
 
         public override int Length => CalculateLength();
@@ -79,7 +79,7 @@ namespace Azure.Storage.DataMovement.Blobs
             AccessTier? accessTier,
             bool isMetadataSet,
             Metadata metadata,
-            bool isTagsSet,
+            bool preserveTags,
             Tags tags)
             : base(DataMovementBlobConstants.DestinationCheckpointData.SchemaVersion)
         {
@@ -113,7 +113,7 @@ namespace Azure.Storage.DataMovement.Blobs
             MetadataBytes = metadata != default ? Encoding.UTF8.GetBytes(metadata.DictionaryToString()) : Array.Empty<byte>();
 
             Tags = tags;
-            IsTagsSet = isTagsSet;
+            PreserveTags = preserveTags;
             TagsBytes = tags != default ? Encoding.UTF8.GetBytes(tags.DictionaryToString()) : Array.Empty<byte>();
         }
 
@@ -129,7 +129,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // BlobType
             writer.Write(IsBlobTypeSet);
-            if (!IsBlobTypeSet)
+            if (IsBlobTypeSet)
             {
                 writer.Write((byte)BlobType);
             }
@@ -140,7 +140,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // Preserve Content Type
             writer.Write(IsContentTypeSet);
-            if (!IsContentTypeSet)
+            if (IsContentTypeSet)
             {
                 // Content Type offset/length
                 writer.WriteVariableLengthFieldInfo(ContentTypeBytes.Length, ref currentVariableLengthIndex);
@@ -153,7 +153,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // Preserve Content Encoding
             writer.Write(IsContentEncodingSet);
-            if (!IsContentEncodingSet)
+            if (IsContentEncodingSet)
             {
                 // ContentEncoding offset/length
                 writer.WriteVariableLengthFieldInfo(ContentEncodingBytes.Length, ref currentVariableLengthIndex);
@@ -166,7 +166,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // Preserve Content Language
             writer.Write(IsContentLanguageSet);
-            if (!IsContentLanguageSet)
+            if (IsContentLanguageSet)
             {
                 // ContentLanguage offset/length
                 writer.WriteVariableLengthFieldInfo(ContentLanguageBytes.Length, ref currentVariableLengthIndex);
@@ -179,7 +179,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // Preserve Content Disposition
             writer.Write(IsContentDispositionSet);
-            if (!IsContentDispositionSet)
+            if (IsContentDispositionSet)
             {
                 // ContentDisposition offset/length
                 writer.WriteVariableLengthFieldInfo(ContentDispositionBytes.Length, ref currentVariableLengthIndex);
@@ -192,7 +192,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // Preserve Cache Control
             writer.Write(IsCacheControlSet);
-            if (!IsCacheControlSet)
+            if (IsCacheControlSet)
             {
                 // CacheControl offset/length
                 writer.WriteVariableLengthFieldInfo(CacheControlBytes.Length, ref currentVariableLengthIndex);
@@ -208,7 +208,7 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // Preserve Metadata
             writer.Write(IsMetadataSet);
-            if (!IsMetadataSet)
+            if (IsMetadataSet)
             {
                 // Metadata offset/length
                 writer.WriteVariableLengthFieldInfo(MetadataBytes.Length, ref currentVariableLengthIndex);
@@ -220,8 +220,8 @@ namespace Azure.Storage.DataMovement.Blobs
             }
 
             // Preserve Blob Tags
-            writer.Write(IsTagsSet);
-            if (!IsTagsSet)
+            writer.Write(PreserveTags);
+            if (!PreserveTags)
             {
                 // Tags offset/length
                 writer.WriteVariableLengthFieldInfo(TagsBytes.Length, ref currentVariableLengthIndex);
@@ -232,31 +232,31 @@ namespace Azure.Storage.DataMovement.Blobs
                 writer.WriteEmptyLengthOffset();
             }
 
-            if (!IsContentTypeSet)
+            if (IsContentTypeSet)
             {
                 writer.Write(ContentTypeBytes);
             }
-            if (!IsContentEncodingSet)
+            if (IsContentEncodingSet)
             {
                 writer.Write(ContentEncodingBytes);
             }
-            if (!IsContentLanguageSet)
+            if (IsContentLanguageSet)
             {
                 writer.Write(ContentLanguageBytes);
             }
-            if (!IsContentDispositionSet)
+            if (IsContentDispositionSet)
             {
                 writer.Write(ContentDispositionBytes);
             }
-            if (!IsCacheControlSet)
+            if (IsCacheControlSet)
             {
                 writer.Write(CacheControlBytes);
             }
-            if (!IsMetadataSet)
+            if (IsMetadataSet)
             {
                 writer.Write(MetadataBytes);
             }
-            if (!IsTagsSet)
+            if (!PreserveTags)
             {
                 writer.Write(TagsBytes);
             }
@@ -319,7 +319,7 @@ namespace Azure.Storage.DataMovement.Blobs
             int metadataLength = reader.ReadInt32();
 
             // Preserve Tags and offset/length
-            bool isTagsSet = reader.ReadBoolean();
+            bool preserveTags = reader.ReadBoolean();
             int tagsOffset = reader.ReadInt32();
             int tagsLength = reader.ReadInt32();
 
@@ -396,7 +396,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 accessTier: accessTier,
                 isMetadataSet: isMetadataSet,
                 metadata: metadataString.ToDictionary(nameof(metadataString)),
-                isTagsSet: isTagsSet,
+                preserveTags: preserveTags,
                 tags: tagsString.ToDictionary(nameof(tagsString)));
         }
 
@@ -429,7 +429,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 length += MetadataBytes.Length;
             }
-            if (!IsTagsSet)
+            if (!PreserveTags)
             {
                 length += TagsBytes.Length;
             }

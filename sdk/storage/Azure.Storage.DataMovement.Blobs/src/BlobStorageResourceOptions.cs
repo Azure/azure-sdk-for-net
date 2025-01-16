@@ -40,11 +40,17 @@ namespace Azure.Storage.DataMovement.Blobs
         internal BlobStorageResourceOptions(BlobStorageResourceOptions other)
         {
             Metadata = other?.Metadata;
+            _isMetadataSet = other?._isMetadataSet ?? false;
             CacheControl = other?.CacheControl;
+            _isCacheControlSet = other?._isCacheControlSet ?? false;
             ContentDisposition = other?.ContentDisposition;
+            _isContentDispositionSet = other?._isContentDispositionSet ?? false;
             ContentEncoding = other?.ContentEncoding;
+            _isContentEncodingSet = other?._isContentEncodingSet ?? false;
             ContentLanguage = other?.ContentLanguage;
+            _isContentLanguageSet = other?._isContentLanguageSet ?? false;
             ContentType = other?.ContentType;
+            _isContentTypeSet = other?._isContentTypeSet ?? false;
             AccessTier = other?.AccessTier;
         }
         /// <summary>

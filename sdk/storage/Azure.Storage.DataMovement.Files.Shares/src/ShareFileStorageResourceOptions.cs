@@ -3,6 +3,7 @@
 
 using System;
 using Azure.Storage.Files.Shares.Models;
+using static System.Net.WebRequestMethods;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
 
 namespace Azure.Storage.DataMovement.Files.Shares
@@ -33,8 +34,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
         private DateTimeOffset? _fileCreatedOn = default;
         internal bool _isFileCreatedOnSet = false;
 
-        private DateTimeOffset? _fileLastModifiedOn = default;
-        internal bool _isFileLastModifiedOnSet = false;
+        private DateTimeOffset? _fileLastWrittenOn = default;
+        internal bool _isFileLastWrittenOnSet = false;
 
         private DateTimeOffset? _fileChangedOn = default;
         internal bool _isFileChangedOnSet = false;
@@ -175,8 +176,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         /// <summary>
         /// To preserve the key of the file permission.
+        /// If set to true, the permission key will be preserved from the source Share to the destination Share.
+        /// This requires a <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-permission">Create Share Permissions</see> operation,
+        /// which is a operation called on the Destination Share, which requires Share level permissions.
         ///
         /// By default the permission key will not be preserved from the source Share to the destination Share.
+        /// Applies only to copy transfers.
         /// </summary>
         public bool? FilePermissions { get; set; }
 
@@ -202,11 +207,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// </summary>
         public DateTimeOffset? FileLastWrittenOn
         {
-            get => _fileLastModifiedOn;
+            get => _fileLastWrittenOn;
             set
             {
-                _fileLastModifiedOn = value;
-                _isFileLastModifiedOnSet = true;
+                _fileLastWrittenOn = value;
+                _isFileLastWrittenOnSet = true;
             }
         }
 
@@ -244,13 +249,13 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 #pragma warning restore CA2227 // Collection properties should be readonly
 
-            /// <summary>
-            /// Optional. Defines custom metadata to set on the destination resource.
-            ///
-            /// Applies to upload and copy transfers.
-            ///
-            /// Preserves Metdata from the source by default.
-            /// </summary>
+        /// <summary>
+        /// Optional. Defines custom metadata to set on the destination resource.
+        ///
+        /// Applies to upload and copy transfers.
+        ///
+        /// Preserves Metdata from the source by default.
+        /// </summary>
 #pragma warning disable CA2227 // Collection properties should be readonly
         public Metadata FileMetadata
         {
@@ -274,17 +279,28 @@ namespace Azure.Storage.DataMovement.Files.Shares
             SourceConditions = options?.SourceConditions;
             DestinationConditions = options?.DestinationConditions;
             CacheControl = options?.CacheControl;
+            _isCacheControlSet = options?._isCacheControlSet ?? false;
             ContentDisposition = options?.ContentDisposition;
+            _isContentDispositionSet = options?._isContentDispositionSet ?? false;
             ContentEncoding = options?.ContentEncoding;
+            _isContentEncodingSet = options?._isContentEncodingSet ?? false;
             ContentLanguage = options?.ContentLanguage;
+            _isContentLanguageSet = options?._isContentLanguageSet ?? false;
             ContentType = options?.ContentType;
+            _isContentTypeSet = options?._isContentTypeSet ?? false;
             FileAttributes = options?.FileAttributes;
+            _isFileAttributesSet = options?._isFileAttributesSet ?? false;
             FilePermissions = options?.FilePermissions;
             FileCreatedOn = options?.FileCreatedOn;
+            _isFileCreatedOnSet = options?._isFileCreatedOnSet ?? false;
             FileLastWrittenOn = options?.FileLastWrittenOn;
+            _isFileLastWrittenOnSet = options?._isFileLastWrittenOnSet ?? false;
             FileChangedOn = options?.FileChangedOn;
+            _isFileChangedOnSet = options?._isFileChangedOnSet ?? false;
             DirectoryMetadata = options?.DirectoryMetadata;
+            _isDirectoryMetadataSet = options?._isDirectoryMetadataSet ?? false;
             FileMetadata = options?.FileMetadata;
+            _isFileMetadataSet = options?._isFileMetadataSet ?? false;
         }
     }
 }

@@ -44,7 +44,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             => await ClientBuilder.GetTestContainerAsync(service, containerName);
 
         protected override StorageResourceContainer GetStorageResourceContainer(BlobContainerClient container, string directoryPath)
-            => new BlobStorageResourceContainer(container, new() { BlobType = new(GetBlobType()), BlobDirectoryPrefix = directoryPath });
+            => new BlobStorageResourceContainer(container, new() { BlobType = GetBlobType(), BlobDirectoryPrefix = directoryPath });
 
         protected override TransferValidator.ListFilesAsync GetSourceLister(BlobContainerClient container, string prefix)
             => TransferValidator.GetBlobLister(container, prefix);

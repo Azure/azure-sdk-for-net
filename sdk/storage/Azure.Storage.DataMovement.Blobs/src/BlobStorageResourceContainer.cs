@@ -68,14 +68,14 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override StorageResourceItem GetStorageResourceReference(string path, string resourceId)
         {
             BlobType type = BlobType.Block;
-            if (_options?.BlobType?.Preserve ?? true)
+            if (_options == default || !_options._isBlobTypeSet)
             {
                 type = ToBlobType(resourceId);
             }
             else
             {
                 // If the user has set the blob type in the options, use that instead of the resourceId
-                type = _options?.BlobType?.Value ?? BlobType.Block;
+                type = _options?.BlobType ?? BlobType.Block;
             }
             return GetBlobAsStorageResource(ApplyOptionalPrefix(path), type: type);
         }
@@ -220,14 +220,22 @@ namespace Azure.Storage.DataMovement.Blobs
 
         protected override StorageResourceCheckpointData GetDestinationCheckpointData()
             => new BlobDestinationCheckpointData(
+                isBlobTypeSet: _options?._isBlobTypeSet ?? false,
                 blobType: _options?.BlobType,
+                isContentTypeSet: _options?.BlobOptions?._isContentTypeSet ?? false,
                 contentType: _options?.BlobOptions?.ContentType,
+                isContentEncodingSet: _options?.BlobOptions?._isContentEncodingSet ?? false,
                 contentEncoding: _options?.BlobOptions?.ContentEncoding,
+                isContentLanguageSet: _options?.BlobOptions?._isContentLanguageSet ?? false,
                 contentLanguage: _options?.BlobOptions?.ContentLanguage,
+                isContentDispositionSet: _options?.BlobOptions?._isContentDispositionSet ?? false,
                 contentDisposition: _options?.BlobOptions?.ContentDisposition,
+                isCacheControlSet: _options?.BlobOptions?._isCacheControlSet ?? false,
                 cacheControl: _options?.BlobOptions?.CacheControl,
                 accessTier: _options?.BlobOptions?.AccessTier,
+                isMetadataSet: _options?.BlobOptions?._isMetadataSet ?? false,
                 metadata: _options?.BlobOptions?.Metadata,
+                preserveTags: true,
                 tags: default);
 
         private string ApplyOptionalPrefix(string path)

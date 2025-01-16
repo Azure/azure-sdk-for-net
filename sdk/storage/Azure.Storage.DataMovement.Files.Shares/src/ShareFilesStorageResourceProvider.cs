@@ -246,17 +246,28 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileStorageResourceOptions options = new()
             {
                 FileAttributes = checkpointData.FileAttributes,
-                FilePermissions = new(checkpointData.IsFilePermissionSet),
+                _isFileAttributesSet = checkpointData.IsFileAttributesSet,
+                FilePermissions = checkpointData.FilePermission,
                 CacheControl = checkpointData.CacheControl,
+                _isCacheControlSet = checkpointData.IsCacheControlSet,
                 ContentDisposition = checkpointData.ContentDisposition,
+                _isContentDispositionSet = checkpointData.IsContentDispositionSet,
                 ContentEncoding = checkpointData.ContentEncoding,
+                _isContentEncodingSet = checkpointData.IsContentEncodingSet,
                 ContentLanguage = checkpointData.ContentLanguage,
+                _isContentLanguageSet = checkpointData.IsContentLanguageSet,
                 ContentType = checkpointData.ContentType,
+                _isContentTypeSet = checkpointData.IsContentTypeSet,
                 FileCreatedOn = checkpointData.FileCreatedOn,
+                _isFileCreatedOnSet = checkpointData.IsFileCreatedOnSet,
                 FileLastWrittenOn = checkpointData.FileLastWrittenOn,
+                _isFileLastWrittenOnSet = checkpointData.IsFileLastWrittenOnSet,
                 FileChangedOn = checkpointData.FileChangedOn,
+                _isFileChangedOnSet = checkpointData.IsFileChangedOnSet,
                 DirectoryMetadata = checkpointData.DirectoryMetadata,
+                _isDirectoryMetadataSet = checkpointData.IsDirectoryMetadataSet,
                 FileMetadata = checkpointData.FileMetadata,
+                _isFileMetadataSet = checkpointData.IsFileMetadataSet,
             };
             return Task.FromResult(properties.IsContainer
                 ? FromDirectory(properties.DestinationUri, options)

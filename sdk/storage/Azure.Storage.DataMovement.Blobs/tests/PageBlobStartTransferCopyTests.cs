@@ -174,33 +174,22 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 options = new PageBlobStorageResourceOptions
                 {
-                    ContentDisposition = new(_defaultContentDisposition),
-                    ContentLanguage = new(_defaultContentLanguage),
-                    CacheControl = new(_defaultCacheControl),
-                    ContentType = new(_defaultContentType),
-                    Metadata = new(_defaultMetadata)
+                    ContentDisposition = _defaultContentDisposition,
+                    ContentLanguage = _defaultContentLanguage,
+                    CacheControl = _defaultCacheControl,
+                    ContentType = _defaultContentType,
+                    Metadata = _defaultMetadata
                 };
             }
             else if (type == TransferPropertiesTestType.NoPreserve)
             {
                 options = new PageBlobStorageResourceOptions
                 {
-                    ContentDisposition = new(false),
-                    ContentLanguage = new(false),
-                    CacheControl = new(false),
-                    ContentType = new(false),
-                    Metadata = new(false)
-                };
-            }
-            else if (type == TransferPropertiesTestType.Preserve)
-            {
-                options = new PageBlobStorageResourceOptions
-                {
-                    ContentDisposition = new(true),
-                    ContentLanguage = new(true),
-                    CacheControl = new(true),
-                    ContentType = new(true),
-                    Metadata = new(true)
+                    ContentDisposition = default,
+                    ContentLanguage = default,
+                    CacheControl = default,
+                    ContentType = default,
+                    Metadata = default
                 };
             }
             return new PageBlobStorageResource(objectClient, options);

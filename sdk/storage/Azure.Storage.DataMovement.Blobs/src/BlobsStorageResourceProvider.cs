@@ -734,9 +734,9 @@ namespace Azure.Storage.DataMovement.Blobs
 
             BlobDestinationCheckpointData destinationCheckpointData = checkpointData as BlobDestinationCheckpointData;
 
-            if (null != destinationCheckpointData && destinationCheckpointData.BlobType?.Value != default)
+            if (null != destinationCheckpointData && destinationCheckpointData.BlobType != default)
             {
-                return destinationCheckpointData.BlobType.Value switch
+                return destinationCheckpointData.BlobType switch
                 {
                     BlobType.Block => ResourceType.BlockBlob,
                     BlobType.Page => ResourceType.PageBlob,

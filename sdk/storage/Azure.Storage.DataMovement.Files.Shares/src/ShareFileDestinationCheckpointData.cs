@@ -50,7 +50,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public NtfsFileAttributes? FileAttributes;
         public bool IsFileAttributesSet;
 
-        public bool IsFilePermissionSet;
+        public bool FilePermission;
 
         /// <summary>
         /// The creation time of the file. This is stored as a string with a
@@ -105,7 +105,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             string cacheControl,
             bool isFileAttributesSet,
             NtfsFileAttributes? fileAttributes,
-            bool? isFilePermissionSet,
+            bool? filePermissions,
             bool isFileCreatedOnSet,
             DateTimeOffset? fileCreatedOn,
             bool isFileLastWrittenOnSet,
@@ -141,7 +141,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             FileAttributes = fileAttributes;
             IsFileAttributesSet = isFileAttributesSet;
 
-            IsFilePermissionSet = isFilePermissionSet ?? false;
+            FilePermission = filePermissions ?? false;
 
             FileCreatedOn = fileCreatedOn;
             IsFileCreatedOnSet = isFileCreatedOnSet;
@@ -176,7 +176,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
             // SMB properties
             writer.WritePreservablePropertyOffset(IsFileAttributesSet, DataMovementConstants.IntSizeInBytes, ref currentVariableLengthIndex);
-            writer.Write(IsFilePermissionSet);
+            writer.Write(FilePermission);
             writer.WritePreservablePropertyOffset(IsFileCreatedOnSet, _fileCreatedOnBytes.Length, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(IsFileLastWrittenOnSet, _fileLastWrittenOnBytes.Length, ref currentVariableLengthIndex);
             writer.WritePreservablePropertyOffset(IsFileChangedOnSet, _fileChangedOnBytes.Length, ref currentVariableLengthIndex);
@@ -193,54 +193,54 @@ namespace Azure.Storage.DataMovement.Files.Shares
             writer.WritePreservablePropertyOffset(IsDirectoryMetadataSet, _directoryMetadataBytes.Length, ref currentVariableLengthIndex);
 
             // Variable length info
-            if (!IsFileAttributesSet)
+            if (IsFileAttributesSet)
             {
-                if (FileAttributes.Value == default)
+                if (FileAttributes == default)
                 {
                     writer.Write((int)0);
                 }
                 else
                 {
-                    writer.Write((int)FileAttributes.Value);
+                    writer.Write((int)FileAttributes);
                 }
             }
-            if (!IsFileCreatedOnSet)
+            if (IsFileCreatedOnSet)
             {
                 writer.Write(_fileCreatedOnBytes);
             }
-            if (!IsFileLastWrittenOnSet)
+            if (IsFileLastWrittenOnSet)
             {
                 writer.Write(_fileLastWrittenOnBytes);
             }
-            if (!IsFileChangedOnSet)
+            if (IsFileChangedOnSet)
             {
                 writer.Write(_fileChangedOnBytes);
             }
-            if (!IsContentTypeSet)
+            if (IsContentTypeSet)
             {
                 writer.Write(ContentTypeBytes);
             }
-            if (!IsContentEncodingSet)
+            if (IsContentEncodingSet)
             {
                 writer.Write(ContentEncodingBytes);
             }
-            if (!IsContentLanguageSet)
+            if (IsContentLanguageSet)
             {
                 writer.Write(ContentLanguageBytes);
             }
-            if (!IsContentDispositionSet)
+            if (IsContentDispositionSet)
             {
                 writer.Write(ContentDispositionBytes);
             }
-            if (!IsCacheControlSet)
+            if (IsCacheControlSet)
             {
                 writer.Write(CacheControlBytes);
             }
-            if (!IsFileMetadataSet)
+            if (IsFileMetadataSet)
             {
                 writer.Write(_fileMetadataBytes);
             }
-            if (!IsDirectoryMetadataSet)
+            if (IsDirectoryMetadataSet)
             {
                 writer.Write(_directoryMetadataBytes);
             }
@@ -379,7 +379,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 cacheControl: cacheControl,
                 isFileAttributesSet: isFileAttributesSet,
                 fileAttributes: ntfsFileAttributes,
-                isFilePermissionSet: isFilePermissionSet,
+                filePermissions: isFilePermissionSet,
                 isFileCreatedOnSet: isFileCreatedOnSet,
                 fileCreatedOn: fileCreatedOn,
                 isFileLastWrittenOnSet: isFileLastWrittenOnSet,
@@ -412,31 +412,31 @@ namespace Azure.Storage.DataMovement.Files.Shares
             {
                 length += _fileChangedOnBytes.Length;
             }
-            if (!IsContentTypeSet)
+            if (IsContentTypeSet)
             {
                 length += ContentTypeBytes.Length;
             }
-            if (!IsContentEncodingSet)
+            if (IsContentEncodingSet)
             {
                 length += ContentEncodingBytes.Length;
             }
-            if (!IsContentLanguageSet)
+            if (IsContentLanguageSet)
             {
                 length += ContentLanguageBytes.Length;
             }
-            if (!IsContentDispositionSet)
+            if (IsContentDispositionSet)
             {
                 length += ContentDispositionBytes.Length;
             }
-            if (!IsCacheControlSet)
+            if (IsCacheControlSet)
             {
                 length += CacheControlBytes.Length;
             }
-            if (!IsFileMetadataSet)
+            if (IsFileMetadataSet)
             {
                 length += _fileMetadataBytes.Length;
             }
-            if (!IsDirectoryMetadataSet)
+            if (IsDirectoryMetadataSet)
             {
                 length += _directoryMetadataBytes.Length;
             }
