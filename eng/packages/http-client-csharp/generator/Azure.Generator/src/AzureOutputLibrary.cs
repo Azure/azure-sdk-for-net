@@ -85,10 +85,7 @@ namespace Azure.Generator
             var restClientNamesToExclude = new HashSet<string>();
             foreach(var provider in baseProviders)
             {
-                if (provider is ResourceDataProvider)
-                {
-                    Console.WriteLine($"ResourceDataProvider found {provider.Name}");
-                }
+                // skip clients without methods
                 if (provider is ClientProvider clientProvider)
                 {
                     if (provider.Methods.Count != 0)
