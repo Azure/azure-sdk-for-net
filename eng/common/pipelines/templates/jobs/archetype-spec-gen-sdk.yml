@@ -1,4 +1,8 @@
 parameters:
+  - name: SpecRepoUrl
+    type: string
+  - name: SdkRepoUrl
+    type: string
   - name: SpecRepoCommit
     type: string
     default: 'HEAD'
@@ -11,21 +15,14 @@ parameters:
       - 'TypeSpec'
       - 'OpenAPI'
     default: 'TypeSpec'
-    displayName: 'Configuration Type'
+    displayName: 'API specification type'
   - name: ConfigPath
     type: string
     default: 'specification/contosowidgetmanager/Contoso.Management/tspconfig.yaml'
-    displayName: 'Path to TypeSpec or OpenAPI Configuration file'
-  - name: ApiVersion
-    type: string
-    default: 'not-specified'
-    displayName: 'API Version of Spec to be used for SDK Generation'
+    displayName: 'Path to API specification file (TypeSpec/OpenAPI)'
   - name: SkipPullRequestCreation
     type: boolean
     default: false
-
-variables:
-  SdkRepoUrl: $(SdkRepoUrlForLanguage) # This variable is set in the pipeline UI for each language e.g. https://github.com/Azure/azure-sdk-for-net for dotnet
 
 jobs:
 - job:
@@ -33,8 +30,6 @@ jobs:
 
   variables:
     - template: /eng/pipelines/templates/variables/image.yml
-    - name: SpecRepoUrl
-      value: 'https://github.com/$(Build.Repository.Name)'
     - name: NodeVersion
       value: '22.13.x'
     - name: PythonVersion
@@ -53,7 +48,7 @@ jobs:
 
     - pwsh: |
         $urlPattern = '^https://github\.com/(?<organization>[^/]+)/(?<repository>[^/]+)'
-        if ('$(SpecRepoUrl)' -match $urlPattern) {
+        if ('${{ parameters.SpecRepoUrl }}' -match $urlPattern) {
           $specRepoOwner = $Matches['organization']
           Write-Host "##vso[task.setvariable variable=SpecRepoOwner]$specRepoOwner"
           Write-Host "SpecRepoOwner variable set to: $specRepoOwner"
@@ -67,8 +62,8 @@ jobs:
           Write-Host "SpecRepoDirectory variable set to: $specRepoDirectory"
         }
 
-        if ('$(SdkRepoUrl)' -match $urlPattern) {
-          if ('$(SpecRepoUrl)'.EndsWith('-pr') -and (-not '$(SdkRepoUrl)'.EndsWith('-pr'))) {
+        if ('${{ parameters.SdkRepoUrl }}' -match $urlPattern) {
+          if ('${{ parameters.SpecRepoUrl }}'.EndsWith('-pr') -and (-not '${{ parameters.SdkRepoUrl }}'.EndsWith('-pr'))) {
             Write-Host "SdkRepoUrl must be a private repository if SpecRepoUrl is a private repository."
             Exit 1
           }
@@ -154,12 +149,8 @@ jobs:
           optional_params="$optional_params --readme-relative-path ${{ parameters.ConfigPath }}"
           sdk_gen_info="$sdk_gen_info '${{ parameters.ConfigPath }}',"
         fi
-        if [ "${{ parameters.ApiVersion }}" != "not-specified" ]; then
-          optional_params="$optional_params --api-version ${{ parameters.ApiVersion }}"
-          sdk_gen_info="$sdk_gen_info API Version: '${{ parameters.ApiVersion }}',"
-        fi
 
-        sdk_gen_info="$sdk_gen_info and CommitSHA: '$(SpecRepoCommit)', in SpecRepo: '$(SpecRepoUrl)'"
+        sdk_gen_info="$sdk_gen_info and CommitSHA: '$(SpecRepoCommit)', in SpecRepo: '${{ parameters.SpecRepoUrl }}'"
         echo "##vso[task.setvariable variable=GeneratedSDKInformation]$sdk_gen_info"
         echo "Generated SDK Information : $sdk_gen_info"
 
