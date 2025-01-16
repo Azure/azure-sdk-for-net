@@ -10,11 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary>
-    /// An object describing the expected output of the model. If `json_object` only `function` type `tools` are allowed to be passed to the Run.
-    /// If `text` the model can return text or any value needed.
-    /// </summary>
-    public partial class AgentsApiResponseFormat
+    /// <summary> The file search result content object. </summary>
+    public partial class FileSearchToolCallContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,21 +45,36 @@ namespace Azure.AI.Projects
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AgentsApiResponseFormat"/>. </summary>
-        public AgentsApiResponseFormat()
+        /// <summary> Initializes a new instance of <see cref="FileSearchToolCallContent"/>. </summary>
+        /// <param name="text"> The text content of the file. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
+        internal FileSearchToolCallContent(string text)
         {
+            Argument.AssertNotNull(text, nameof(text));
+
+            Text = text;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentsApiResponseFormat"/>. </summary>
-        /// <param name="type"> Must be one of `text` or `json_object`. </param>
+        /// <summary> Initializes a new instance of <see cref="FileSearchToolCallContent"/>. </summary>
+        /// <param name="type"> The type of the content. </param>
+        /// <param name="text"> The text content of the file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgentsApiResponseFormat(ResponseFormat? type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FileSearchToolCallContent(FileSearchToolCallContentType type, string text, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
+            Text = text;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Must be one of `text` or `json_object`. </summary>
-        public ResponseFormat? Type { get; set; }
+        /// <summary> Initializes a new instance of <see cref="FileSearchToolCallContent"/> for deserialization. </summary>
+        internal FileSearchToolCallContent()
+        {
+        }
+
+        /// <summary> The type of the content. </summary>
+        public FileSearchToolCallContentType Type { get; } = FileSearchToolCallContentType.Text;
+
+        /// <summary> The text content of the file. </summary>
+        public string Text { get; }
     }
 }

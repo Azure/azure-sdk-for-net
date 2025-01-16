@@ -10,11 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Projects
 {
-    /// <summary>
-    /// An object describing the expected output of the model. If `json_object` only `function` type `tools` are allowed to be passed to the Run.
-    /// If `text` the model can return text or any value needed.
-    /// </summary>
-    public partial class AgentsApiResponseFormat
+    /// <summary> The type of response format being defined: `json_schema`. </summary>
+    public partial class ResponseFormatJsonSchemaType
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,21 +45,36 @@ namespace Azure.AI.Projects
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AgentsApiResponseFormat"/>. </summary>
-        public AgentsApiResponseFormat()
+        /// <summary> Initializes a new instance of <see cref="ResponseFormatJsonSchemaType"/>. </summary>
+        /// <param name="jsonSchema"> The JSON schema, describing response format. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="jsonSchema"/> is null. </exception>
+        public ResponseFormatJsonSchemaType(ResponseFormatJsonSchema jsonSchema)
         {
+            Argument.AssertNotNull(jsonSchema, nameof(jsonSchema));
+
+            JsonSchema = jsonSchema;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AgentsApiResponseFormat"/>. </summary>
-        /// <param name="type"> Must be one of `text` or `json_object`. </param>
+        /// <summary> Initializes a new instance of <see cref="ResponseFormatJsonSchemaType"/>. </summary>
+        /// <param name="type"> Type. </param>
+        /// <param name="jsonSchema"> The JSON schema, describing response format. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AgentsApiResponseFormat(ResponseFormat? type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResponseFormatJsonSchemaType(ResponseFormatJsonSchemaTypeType type, ResponseFormatJsonSchema jsonSchema, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
+            JsonSchema = jsonSchema;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Must be one of `text` or `json_object`. </summary>
-        public ResponseFormat? Type { get; set; }
+        /// <summary> Initializes a new instance of <see cref="ResponseFormatJsonSchemaType"/> for deserialization. </summary>
+        internal ResponseFormatJsonSchemaType()
+        {
+        }
+
+        /// <summary> Type. </summary>
+        public ResponseFormatJsonSchemaTypeType Type { get; } = ResponseFormatJsonSchemaTypeType.JsonSchema;
+
+        /// <summary> The JSON schema, describing response format. </summary>
+        public ResponseFormatJsonSchema JsonSchema { get; set; }
     }
 }
