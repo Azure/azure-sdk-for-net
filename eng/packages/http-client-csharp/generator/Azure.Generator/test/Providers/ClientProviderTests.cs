@@ -57,7 +57,9 @@ namespace Azure.Generator.Tests.Providers
             var plugin = MockHelpers.LoadMockPlugin(clients: () => [client]);
 
             var clientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is ClientProvider && t.Name == TestClientName);
+            var restClientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is RestClientProvider && t.Name == TestClientName);
             Assert.IsNull(clientProvider);
+            Assert.IsNull(restClientProvider);
         }
 
         [Test]
@@ -86,10 +88,14 @@ namespace Azure.Generator.Tests.Providers
             var plugin = MockHelpers.LoadMockPlugin(clients: () => [client, subClient]);
 
             var subClientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is ClientProvider && t.Name == subClient.Name);
+            var subRestClientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is RestClientProvider && t.Name == subClient.Name);
             Assert.IsNull(subClientProvider);
+            Assert.IsNull(subRestClientProvider);
 
             var clientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is ClientProvider && t.Name == TestClientName);
+            var restClientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is RestClientProvider && t.Name == TestClientName);
             Assert.IsNull(clientProvider);
+            Assert.IsNull(restClientProvider);
         }
 
         [TestCaseSource(nameof(BuildAuthFieldsTestCases), Category = KeyAuthCategory)]
