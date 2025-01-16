@@ -5,6 +5,21 @@
 ### Features Added
 
 ### Breaking Changes
+- Changed `ShareFileStorangeResourceOptions.FilePermissions` from `DataTransferProperty` to `bool?`
+- Changed the following types from `DataTranferProperty<string>` to `string`
+    - `ShareFileStorageResourceOptions.ContentType`
+    - `ShareFileStorageResourceOptions.ContentDisposition`
+    - `ShareFileStorageResourceOptions.CacheControl`
+- Changed the following types from `DataTransferProperty<string[]>` to `string[]`
+    - `ShareFileStorageResourceOptions.ContentEncoding`
+    - `ShareFileStorageResourceOptions.ContentLanguage`
+- Changed the following types from `DataTransferProperty<IDictionary<string, string>>` to `IDictionary<string, string>`
+    - `ShareFileStorageResourceOptions.FileMetadata`
+    - `ShareFileStorageResourceOptions.DirectoryMetadata`
+- Changed the following types from `DataTransferProperty<DateTimeOffset?>` to `DateTimeOffset?`
+    -  `ShareFileStorageResourceOptions.FileCreatedOn`
+     - `ShareFileStorageResourceOptions.FileLastWrittenOn`
+     - `ShareFileStorageResourceOptions.FileChangedOn`
 
 ### Bugs Fixed
 

@@ -5,6 +5,7 @@
 ### Features Added
 
 ### Breaking Changes
+- Removed `DataTransferProperty` and `DataTransferProperty<T>`
 - Renamed the following types/properties:
     - `DataTransfer` -> `TransferOperation`
         - Addtionally renamed the `TransferStatus` property to `Status`
