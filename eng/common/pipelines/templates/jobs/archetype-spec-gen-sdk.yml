@@ -182,7 +182,7 @@ jobs:
 
       - task: PowerShell@2
         displayName: Create pull request
-        condition: and(succeeded(), eq('${{ parameters.SkipPullRequestCreation }}', false), eq(variables['HasChanges'], 'true'))
+        condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
         inputs:
           pwsh: true
           workingDirectory: $(SdkRepoDirectory)
