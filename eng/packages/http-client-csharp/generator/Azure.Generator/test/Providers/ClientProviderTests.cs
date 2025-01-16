@@ -61,7 +61,6 @@ namespace Azure.Generator.Tests.Providers
         }
 
         [Test]
-        [Ignore("TODO: for some reason, this test is causing failure of ValidateResourceDataProviderIsGenerated")]
         public void TestNonEmptySubClient()
         {
             var inputOperation = InputFactory.Operation("HelloAgain", parameters:
