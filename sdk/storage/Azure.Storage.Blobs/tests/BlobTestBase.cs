@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
@@ -233,6 +234,7 @@ namespace Azure.Storage.Test.Shared
             return InstrumentClient(
                 new ShareServiceClient(
                     new Uri(Tenants.TestConfigDefault.FileServiceEndpoint),
+                    new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
                     options));
         }
 
