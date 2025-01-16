@@ -263,7 +263,8 @@ function Update-DataPlanePackageFolder() {
     CreateOrUpdateAutorestConfigFile -autorestFilePath $file -namespace $namespace -inputfile "$inputfile" -readme "$readme" -autorestConfigYaml "$autorestConfigYaml"
     Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
   } else {
-    Write-Error "Project directory doesn't exist."
+    Write-Error "Project directory doesn't exist. It is a new .NET SDK."
+    Write-Error "We will not support onboard a new SDK from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
     exit 1
   }
 
@@ -311,7 +312,8 @@ function Update-MgmtPackageFolder() {
       $mgmtPackageName = $folderinfo.Name
       $projectFolder = "$sdkPath/sdk/$packageName/$mgmtPackageName"
     } else {
-      Write-Error "Project directory doesn't exist. create template."
+      Write-Error "Project directory doesn't exist. It is a new .NET SDK."
+      Write-Error "We will not support onboard a new service SDK from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
       exit 1
     }
 
