@@ -169,7 +169,7 @@ namespace Azure.AI.Projects
         public virtual Response<ThreadRun> SubmitToolOutputsToRun(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(run, nameof(run));
-            return SubmitToolOutputsToRun(run.ThreadId, run.Id, toolOutputs, false, cancellationToken);
+            return SubmitToolOutputsToRun(run.ThreadId, run.Id, toolOutputs, null, cancellationToken);
         }
 
         /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
@@ -177,10 +177,10 @@ namespace Azure.AI.Projects
         /// <param name="toolOutputs"> The list of tool call outputs to provide as part of an output submission to an agent thread run. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
-        public async virtual Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
+        public virtual Task<Response<ThreadRun>> SubmitToolOutputsToRunAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(run, nameof(run));
-            return await SubmitToolOutputsToRunAsync(run.ThreadId, run.Id, toolOutputs, false, cancellationToken).ConfigureAwait(false);
+            return SubmitToolOutputsToRunAsync(run.ThreadId, run.Id, toolOutputs, false, cancellationToken);
         }
 
         /// <summary>
