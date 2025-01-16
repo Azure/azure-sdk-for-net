@@ -21,6 +21,7 @@ using BaseShares::Azure.Storage.Files.Shares.Models;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Core;
+using ShareTokenIntent = BaseShares.Azure.Storage.Files.Shares.Models.ShareTokenIntent;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {
