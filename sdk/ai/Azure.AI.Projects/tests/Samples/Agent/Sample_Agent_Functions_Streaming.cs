@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
@@ -19,6 +18,7 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTe
     public async Task FunctionCallingWithStreamingExample()
     {
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        var modelName = TestEnvironment.MODELDEPLOYMENTNAME;
         AgentsClient client = new AgentsClient(connectionString, new DefaultAzureCredential());
 
         // Example of a function that defines no parameters
@@ -106,7 +106,7 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTe
         #endregion
 
         Response<Agent> agentResponse = await client.CreateAgentAsync(
-            model: "gpt-4",
+            model: modelName,
             name: "SDK Test Agent - Functions",
                 instructions: "You are a weather bot. Use the provided functions to help answer questions. "
                     + "Customize your responses to the user's preferences as much as possible and use friendly "

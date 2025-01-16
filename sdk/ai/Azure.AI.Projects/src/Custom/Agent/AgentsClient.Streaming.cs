@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using System.IO;
 
 namespace Azure.AI.Projects;
 
@@ -173,8 +175,26 @@ public partial class AgentsClient
     public virtual CollectionResult<StreamingUpdate> SubmitToolOutputsToStream(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
-        Response sendRequest() => SubmitToolOutputsToRunInternal(threadId, runId, toolOutputs, true, cancellationToken);
-        return new StreamingUpdateCollection(sendRequest, cancellationToken);
+        Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+        Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+        Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
+
+        SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), true, null);
+        RequestContext context = FromCancellationToken(cancellationToken);
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentsClient.SubmitToolOutputsToStream");
+        scope.Start();
+        try
+        {
+            HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context);
+            message.BufferResponse = false;
+            Response sendRequest() => _pipeline.ProcessMessage(message, context, CancellationToken.None);
+            return new StreamingUpdateCollection(sendRequest, cancellationToken);
+        }
+        catch (Exception e)
+        {
+            scope.Failed(e);
+            throw;
+        }
     }
 
     /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
@@ -188,8 +208,26 @@ public partial class AgentsClient
     public virtual AsyncCollectionResult<StreamingUpdate> SubmitToolOutputsToStreamAsync(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
-        async Task<Response> sendRequestAsync() => await SubmitToolOutputsToRunInternalAsync(threadId, runId, toolOutputs, true, cancellationToken).ConfigureAwait(false);
-        return new AsyncStreamingUpdateCollection(sendRequestAsync, cancellationToken);
+        Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+        Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+        Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
+
+        SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), true, null);
+        RequestContext context = FromCancellationToken(cancellationToken);
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentsClient.SubmitToolOutputsToStreamAsync");
+        scope.Start();
+        try
+        {
+            HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context);
+            message.BufferResponse = false;
+            async Task<Response> sendRequestAsync() => await _pipeline.ProcessMessageAsync(message, context, CancellationToken.None).ConfigureAwait(false);
+            return new AsyncStreamingUpdateCollection(sendRequestAsync, cancellationToken);
+        }
+        catch (Exception e)
+        {
+            scope.Failed(e);
+            throw;
+        }
     }
 
     /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
