@@ -167,15 +167,15 @@ if ($null -eq $filter) {
     $launchSettings = @{}
     $launchSettings.Add("profiles", @{})
     $launchSettings["profiles"].Add("Basic-TypeSpec", @{})
-    $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/$unbrandedSpec -p AzureClientPlugin")
+    $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$unbrandedSpec -p AzureClientPlugin")
     $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandName", "Executable")
-    $launchSettings["profiles"]["Basic-TypeSpec"].Add("executablePath", $mgcExe)
+    $launchSettings["profiles"]["Basic-TypeSpec"].Add("executablePath", "dotnet")
 
     foreach ($kvp in $cadlRanchLaunchProjects.GetEnumerator()) {
         $launchSettings["profiles"].Add($kvp.Key, @{})
-        $launchSettings["profiles"][$kvp.Key].Add("commandLineArgs", "`$(SolutionDir)/$($kvp.Value) -p AzureStubPlugin")
+        $launchSettings["profiles"][$kvp.Key].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$($kvp.Value) -p AzureStubPlugin")
         $launchSettings["profiles"][$kvp.Key].Add("commandName", "Executable")
-        $launchSettings["profiles"][$kvp.Key].Add("executablePath", $mgcExe)
+        $launchSettings["profiles"][$kvp.Key].Add("executablePath", "dotnet")
     }
 
     $sortedLaunchSettings = @{}
