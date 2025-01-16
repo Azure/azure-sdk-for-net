@@ -97,7 +97,7 @@ namespace Azure.Identity
                 }
                 catch (Exception)
                 {
-                    // If the response is not json, it is not the IMDS and it should be treated as CredentialUnavailable
+                    // If the response is not json or the Content was null, it is not the IMDS and it should be treated as CredentialUnavailable
                     throw new CredentialUnavailableException(UnexpectedResponse, new Exception(content));
                 }
             }
