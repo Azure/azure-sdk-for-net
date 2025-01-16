@@ -15,12 +15,15 @@ jobs:
         workingDirectory: $(Build.BinariesDirectory)
         displayName: Download and Extract DocFX
 
-      - task: PowerShell@2
+      - task: AzurePowerShell@5
         displayName: 'Generate Doc Index'
         inputs:
+          azureSubscription: 'Azure SDK Artifacts'
+          azurePowerShellVersion: latestVersion
           pwsh: true
-          filePath: $(Build.SourcesDirectory)/eng/common/docgeneration/Generate-DocIndex.ps1 
-          arguments: >
+          ScriptType: 'FilePath'
+          ScriptPath: $(Build.SourcesDirectory)/eng/common/docgeneration/Generate-DocIndex.ps1 
+          ScriptArguments: >
             -Docfx $(docfxPath)
             -RepoRoot $(Build.SourcesDirectory)
             -DocGenDir "$(Build.SourcesDirectory)/eng/common/docgeneration"
