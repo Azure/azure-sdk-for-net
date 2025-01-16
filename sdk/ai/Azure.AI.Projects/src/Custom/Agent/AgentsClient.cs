@@ -4,12 +4,9 @@
 #nullable disable
 
 using System;
-using System.ClientModel;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -203,7 +200,19 @@ namespace Azure.AI.Projects
 
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList(), stream, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            return SubmitToolOutputsToRun(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentsClient.SubmitToolOutputsToRunInternalAsync");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context);
+                message.BufferResponse = !stream;
+                return _pipeline.ProcessMessage(message, context, CancellationToken.None);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Submits outputs from tools as requested by tool calls in a run. Runs that need submitted tool outputs will have a status of 'requires_action' with a required_action.type of 'submit_tool_outputs'. </summary>
@@ -222,7 +231,19 @@ namespace Azure.AI.Projects
 
             SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new SubmitToolOutputsToRunRequest(toolOutputs.ToList(), stream, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            return await SubmitToolOutputsToRunAsync(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentsClient.SubmitToolOutputsToRunInternalAsync");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context);
+                message.BufferResponse = !stream;
+                return await _pipeline.ProcessMessageAsync(message, context, CancellationToken.None).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary>
