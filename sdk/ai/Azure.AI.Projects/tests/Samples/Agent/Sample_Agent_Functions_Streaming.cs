@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
+using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.AI.Projects.Tests;
@@ -143,7 +144,7 @@ public partial class Sample_Agent_Functions_Streaming : SamplesBase<AIProjectsTe
                             newActionUpdate.ToolCallId,
                             newActionUpdate.FunctionArguments
                     ));
-                    await foreach (StreamingUpdate actionUpdate in client.SubmitToolOutputsToRunStreamingAsync(thread.Id, streamRun.Id, toolOutputs))
+                    await foreach (StreamingUpdate actionUpdate in client.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs))
                     {
                         if (actionUpdate is MessageContentUpdate contentUpdate)
                         {

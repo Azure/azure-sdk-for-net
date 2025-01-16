@@ -511,7 +511,7 @@ await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync
                     newActionUpdate.ToolCallId,
                     newActionUpdate.FunctionArguments
             ));
-            await foreach (StreamingUpdate actionUpdate in client.SubmitToolOutputsToRunStreamingAsync(thread.Id, streamRun.Id, toolOutputs))
+            await foreach (StreamingUpdate actionUpdate in client.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs))
             {
                 if (actionUpdate is MessageContentUpdate contentUpdate)
                 {
