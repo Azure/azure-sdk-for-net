@@ -21,8 +21,8 @@ namespace Azure.Identity.Tests
 
         public void SetupKubernetesEnvironment()
         {
-            string sp = Environment.GetEnvironmentVariable("ARM_CLIENT_ID");
-            string tenant = Environment.GetEnvironmentVariable("ARM_TENANT_ID");
+            string sp = Environment.GetEnvironmentVariable("IDENTITY_CLIENT_ID");
+            string tenant = Environment.GetEnvironmentVariable("IDENTITY_TENANT_ID");
             string oidc = Environment.GetEnvironmentVariable("ARM_OIDC_TOKEN");
             string rg = Environment.GetEnvironmentVariable("IDENTITY_RESOURCE_GROUP");
             string aks = Environment.GetEnvironmentVariable("IDENTITY_AKS_CLUSTER_NAME");
