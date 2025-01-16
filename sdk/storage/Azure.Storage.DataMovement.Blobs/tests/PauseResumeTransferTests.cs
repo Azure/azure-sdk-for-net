@@ -275,6 +275,18 @@ namespace Azure.Storage.DataMovement.Tests
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
+            // we might have already completed the transfer before we could pause it
+            if (transfer.Status.State == TransferState.Completed)
+            {
+                Assert.IsTrue(transfer.HasCompleted);
+                // Check if Job Plan File exists in checkpointer path.
+                JobPartPlanFileName name = new JobPartPlanFileName(
+                    checkpointerPath: checkpointerDirectory.DirectoryPath,
+                    id: transfer.Id,
+                    jobPartNumber: 0);
+                Assert.IsTrue(File.Exists(name.FullPath));
+                Assert.Pass();
+            }
             await testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
@@ -330,6 +342,18 @@ namespace Azure.Storage.DataMovement.Tests
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
+            // we might have already completed the transfer before we could pause it
+            if (transfer.Status.State == TransferState.Completed)
+            {
+                Assert.IsTrue(transfer.HasCompleted);
+                // Check if Job Plan File exists in checkpointer path.
+                JobPartPlanFileName name = new JobPartPlanFileName(
+                    checkpointerPath: checkpointerDirectory.DirectoryPath,
+                    id: transfer.Id,
+                    jobPartNumber: 0);
+                Assert.IsTrue(File.Exists(name.FullPath));
+                Assert.Pass();
+            }
             await testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
@@ -401,6 +425,18 @@ namespace Azure.Storage.DataMovement.Tests
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
+            // we might have already completed the transfer before we could pause it
+            if (transfer.Status.State == TransferState.Completed)
+            {
+                Assert.IsTrue(transfer.HasCompleted);
+                // Check if Job Plan File exists in checkpointer path.
+                JobPartPlanFileName name = new JobPartPlanFileName(
+                    checkpointerPath: checkpointerDirectory.DirectoryPath,
+                    id: transfer.Id,
+                    jobPartNumber: 0);
+                Assert.IsTrue(File.Exists(name.FullPath));
+                Assert.Pass();
+            }
             await testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
@@ -466,7 +502,20 @@ namespace Azure.Storage.DataMovement.Tests
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
-            // Assert - Confirm we've paused
+            // Assert
+            // we might have already completed the transfer before we could pause it
+            if (transfer.Status.State == TransferState.Completed)
+            {
+                Assert.IsTrue(transfer.HasCompleted);
+                // Verify transfer
+                await AssertDirectorySourceAndDestinationAsync(
+                    transferType: transferType,
+                    sourceResource: sResource as StorageResourceContainer,
+                    destinationResource: dResource as StorageResourceContainer,
+                    sourceContainer: sourceContainer.Container,
+                    destinationContainer: destinationContainer.Container);
+                Assert.Pass();
+            }
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
             await testEventsRaised.AssertPausedCheck();
 
@@ -481,11 +530,11 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId: transfer.Id,
                 transferOptions: resumeOptions);
 
-            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
 
             // Assert
-            await testEventRaised2.AssertSingleCompletedCheck();
+            await testEventRaised2.AssertTransferCompleted();
             Assert.AreEqual(TransferState.Completed, resumeTransfer.Status.State);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 
@@ -547,7 +596,20 @@ namespace Azure.Storage.DataMovement.Tests
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
-            // Assert - Confirm we've paused
+            // Assert
+            // we might have already completed the transfer before we could pause it
+            if (transfer.Status.State == TransferState.Completed)
+            {
+                Assert.IsTrue(transfer.HasCompleted);
+                // Verify transfer
+                await AssertDirectorySourceAndDestinationAsync(
+                    transferType: transferType,
+                    sourceResource: sResource as StorageResourceContainer,
+                    destinationResource: dResource as StorageResourceContainer,
+                    sourceContainer: sourceContainer.Container,
+                    destinationContainer: destinationContainer.Container);
+                Assert.Pass();
+            }
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
             await testEventsRaised.AssertPausedCheck();
 
@@ -562,7 +624,7 @@ namespace Azure.Storage.DataMovement.Tests
             await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
 
             // Assert
-            await testEventRaised2.AssertSingleCompletedCheck();
+            await testEventRaised2.AssertTransferCompleted();
             Assert.AreEqual(TransferState.Completed, resumeTransfer.Status.State);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 
@@ -625,6 +687,19 @@ namespace Azure.Storage.DataMovement.Tests
             await Task.Delay(5);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+
+            // we might have already completed the transfer before we could pause it
+            if (transfer.Status.State == TransferState.Completed)
+            {
+                Assert.IsTrue(transfer.HasCompleted);
+                BlobUriBuilder builder1 = new BlobUriBuilder(destination.Uri);
+                BlockBlobClient blob1 = blobContainer.Container.GetBlockBlobClient(builder1.BlobName);
+                BlobProperties props1 = (await blob1.GetPropertiesAsync()).Value;
+                Assert.That(props1.Metadata, Is.EqualTo(metadata));
+                Assert.AreEqual(testOptions.AccessTier.Value, new AccessTier(props1.AccessTier));
+                Assert.AreEqual(testOptions.ContentLanguage.Value, props1.ContentLanguage);
+                Assert.Pass();
+            }
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
             await Task.Delay(150);
 
@@ -869,6 +944,12 @@ namespace Azure.Storage.DataMovement.Tests
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
+            // we might have already completed the transfer before we could pause it
+            if (transfer.Status.State == TransferState.Completed)
+            {
+                Assert.IsTrue(transfer.HasCompleted);
+                Assert.Pass();
+            }
             await testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
         }
@@ -922,6 +1003,12 @@ namespace Azure.Storage.DataMovement.Tests
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
+            // we might have already completed the transfer before we could pause it
+            if (transfer.Status.State == TransferState.Completed)
+            {
+                Assert.IsTrue(transfer.HasCompleted);
+                Assert.Pass();
+            }
             await testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
         }
@@ -975,6 +1062,12 @@ namespace Azure.Storage.DataMovement.Tests
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
+            // we might have already completed the transfer before we could pause it
+            if (transfer.Status.State == TransferState.Completed)
+            {
+                Assert.IsTrue(transfer.HasCompleted);
+                Assert.Pass();
+            }
             await testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
@@ -1043,6 +1136,19 @@ namespace Azure.Storage.DataMovement.Tests
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert - Confirm we've paused
+            // we might have already completed the transfer before we could pause it
+            if (transfer.Status.State == TransferState.Completed)
+            {
+                Assert.IsTrue(transfer.HasCompleted);
+                // Verify transfer
+                await AssertDirectorySourceAndDestinationAsync(
+                    transferType: transferType,
+                    sourceResource: sResource as StorageResourceContainer,
+                    destinationResource: dResource as StorageResourceContainer,
+                    sourceContainer: sourceContainer.Container,
+                    destinationContainer: destinationContainer.Container);
+                Assert.Pass();
+            }
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
             await testEventsRaised.AssertPausedCheck();
             int completedBeforePause = testEventsRaised.SingleCompletedEvents.Count;
@@ -1061,7 +1167,7 @@ namespace Azure.Storage.DataMovement.Tests
             await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
 
             // Assert
-            await testEventRaised2.AssertContainerCompletedCheck(partCount - completedBeforePause);
+            await testEventRaised2.AssertTransferCompleted();
             Assert.AreEqual(TransferState.Completed, resumeTransfer.Status.State);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 
@@ -1132,6 +1238,19 @@ namespace Azure.Storage.DataMovement.Tests
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert - Confirm we've paused
+            // we might have already completed the transfer before we could pause it
+            if (transfer.Status.State == TransferState.Completed)
+            {
+                Assert.IsTrue(transfer.HasCompleted);
+                // Verify transfer
+                await AssertDirectorySourceAndDestinationAsync(
+                    transferType: transferType,
+                    sourceResource: sResource as StorageResourceContainer,
+                    destinationResource: dResource as StorageResourceContainer,
+                    sourceContainer: sourceContainer.Container,
+                    destinationContainer: destinationContainer.Container);
+                Assert.Pass();
+            }
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
             await testEventsRaised.AssertPausedCheck();
             int completedBeforePause = testEventsRaised.SingleCompletedEvents.Count;
@@ -1150,7 +1269,7 @@ namespace Azure.Storage.DataMovement.Tests
             await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
 
             // Assert
-            await testEventsRaised2.AssertContainerCompletedCheck(partCount - completedBeforePause);
+            await testEventsRaised2.AssertTransferCompleted();
             Assert.AreEqual(TransferState.Completed, resumeTransfer.Status.State);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 

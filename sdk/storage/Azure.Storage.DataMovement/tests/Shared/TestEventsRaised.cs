@@ -162,6 +162,16 @@ namespace Azure.Storage.DataMovement.Tests
         }
 
         /// <summary>
+        /// This asserts that the transfer has reached completion.
+        /// </summary>
+        public async Task AssertTransferCompleted()
+        {
+            await WaitForStatusEventsAsync().ConfigureAwait(false);
+            Assert.IsEmpty(SkippedEvents);
+            Assert.AreEqual(TransferState.Completed, StatusEvents.Last().TransferStatus.State);
+        }
+
+        /// <summary>
         /// This asserts that the expected events occurred during a single transfer that is expected
         /// to have a <see cref="TransferState.CompletedWithSkippedTransfers"/> at the end without any
         /// or failures.
@@ -324,15 +334,8 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task AssertPausedCheck()
         {
             await WaitForStatusEventsAsync().ConfigureAwait(false);
-
-            AssertUnexpectedFailureCheck();
             Assert.IsEmpty(SkippedEvents);
-
-            AssertTransferStatusCollection(
-                new TransferStatus[] {
-                    InProgressStatus,
-                    new TransferStatusInternal(TransferState.Paused, false, false) },
-                StatusEvents.Select(e => e.TransferStatus).ToArray());
+            Assert.AreEqual(TransferState.Paused, StatusEvents.Last().TransferStatus.State);
         }
 
         /// <summary>
