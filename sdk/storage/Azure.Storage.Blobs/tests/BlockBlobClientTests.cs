@@ -3523,6 +3523,54 @@ namespace Azure.Storage.Blobs.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2025_07_05)]
+        public async Task SyncUploadFromUriAsync_SourceBearerToken_FilesSource()
+        {
+            // Arrange
+            BlobServiceClient serviceClient = GetServiceClient_OAuth();
+            await using DisposingContainer test = await GetTestContainerAsync(
+                service: serviceClient,
+                publicAccessType: PublicAccessType.None);
+
+            byte[] data = GetRandomBuffer(Constants.KB);
+
+            using Stream stream = new MemoryStream(data);
+
+            ShareServiceClient shareServiceClient = GetShareServiceClient_SharedKey();
+            ShareClient shareClient = await shareServiceClient.CreateShareAsync(GetNewContainerName());
+
+            try
+            {
+                ShareDirectoryClient directoryClient = await shareClient.CreateDirectoryAsync(GetNewBlobName());
+                ShareFileClient fileClient = await directoryClient.CreateFileAsync(GetNewBlobName(), Constants.KB);
+                await fileClient.UploadAsync(stream);
+
+                BlockBlobClient destBlob = InstrumentClient(test.Container.GetBlockBlobClient(GetNewBlobName()));
+
+                string sourceBearerToken = await GetAuthToken();
+
+                HttpAuthorization sourceAuth = new HttpAuthorization(
+                    "Bearer",
+                    sourceBearerToken);
+
+                BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
+                {
+                    SourceAuthentication = sourceAuth,
+                    SourceShareTokenIntent = ShareTokenIntent.Backup
+                };
+
+                // Act
+                await destBlob.SyncUploadFromUriAsync(
+                    copySource: fileClient.Uri,
+                    options: options);
+            }
+            finally
+            {
+                await shareClient.DeleteAsync();
+            }
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = BlobClientOptions.ServiceVersion.V2021_04_10)]
         [TestCase(null)]
         [TestCase(BlobCopySourceTagsMode.Replace)]
