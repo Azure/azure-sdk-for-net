@@ -167,7 +167,7 @@ function GeneratePRMatrixForBatch {
       # we instead will walk each each matrix, create a parameter named for the PRMatrixSetting, and add the targeted packages
       # as an array. This will generate a _sparse_ matrix for for whatever the incoming packages are
       else {
-        $batchSuffixNecessary = $packageBatches.Length -gt 1
+        $batchSuffixNecessary = $packageBatches.Length -gt 0
         $batchCounter = 1
         foreach ($batch in $packageBatches) {
           $namesForBatch = ($batch | ForEach-Object { $_.ArtifactName }) -join ","
