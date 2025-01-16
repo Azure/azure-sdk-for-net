@@ -92,7 +92,8 @@ namespace Azure.Storage.Blobs.Models
         public BlobCopySourceTagsMode? CopySourceTagsMode { get; set; }
 
         /// <summary>
-        /// Optional, only applicable (but required) when the source is Azure Storage Files and using token authentication.
+        /// Optional.  Note that this option is not applicable to <see cref="BlobBaseClient.StartCopyFromUri(System.Uri, BlobCopyFromUriOptions, System.Threading.CancellationToken)"/> and <see cref="BlobBaseClient.StartCopyFromUriAsync(System.Uri, BlobCopyFromUriOptions, System.Threading.CancellationToken)"/>.
+        /// Only applicable (but required) when the source is Azure Storage Files and using token authentication.
         /// Used to indicate the intent of the request.
         /// </summary>
         public ShareTokenIntent? SourceShareTokenIntent { get; set; }
