@@ -116,7 +116,7 @@ function Get-Existing-Versions
     Param (
         [Parameter(Mandatory=$true)] [String]$PkgName
     )
-    $versionUri = "https://azuresdkdocs.z19.web.core.windows.net/$($Language)/$($PkgName)/versioning/versions"
+    $versionUri = "https://azuresdkdocs.z19.web.core.windows.net/$Language/$PkgName/versioning/versions"
     LogDebug "Heading to $versionUri to retrieve known versions"
 
     try {
