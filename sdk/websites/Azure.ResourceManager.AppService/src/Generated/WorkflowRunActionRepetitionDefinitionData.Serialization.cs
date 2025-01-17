@@ -39,6 +39,11 @@ namespace Azure.ResourceManager.AppService
             }
 
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (Optional.IsDefined(StartOn))
@@ -177,6 +182,7 @@ namespace Azure.ResourceManager.AppService
             {
                 return null;
             }
+            string etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -202,6 +208,11 @@ namespace Azure.ResourceManager.AppService
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("etag"u8))
+                {
+                    etag = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -422,6 +433,7 @@ namespace Azure.ResourceManager.AppService
                 retryHistory ?? new ChangeTrackingList<WebAppRetryHistory>(),
                 iterationCount,
                 repetitionIndexes ?? new ChangeTrackingList<WorkflowRunActionRepetitionIndex>(),
+                etag,
                 serializedAdditionalRawData);
         }
 
@@ -504,6 +516,29 @@ namespace Azure.ResourceManager.AppService
                             }
                         }
                         builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  etag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    builder.Append("  etag: ");
+                    if (ETag.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ETag}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ETag}'");
                     }
                 }
             }
