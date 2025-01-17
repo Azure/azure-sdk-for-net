@@ -232,7 +232,7 @@ namespace Azure.AI.Projects
         /// <param name="runId"> Identifier of the run. </param>
         /// <param name="content"> Serialized json contents. </param>
         /// <param name="context"> Options that can be used to control the request. </param>
-        internal virtual Response SubmitToolOutputsToRun(string threadId, string runId, RequestContent content, RequestContext context = null)
+        public virtual Response SubmitToolOutputsToRun(string threadId, string runId, RequestContent content, RequestContext context = null)
         {
             return SubmitToolOutputsInternal(threadId, runId, false, content, context);
         }
