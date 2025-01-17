@@ -507,15 +507,16 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="content"> Object of type ListIngressGatewayCredentialsRequest. </param>
         /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IngressGatewayAsset>> GetIngressGatewayCredentialsAsync(long? expiresin = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IngressGatewayAsset>> GetIngressGatewayCredentialsAsync(ListIngressGatewayCredentialsContent content = null, long? expiresin = null, CancellationToken cancellationToken = default)
         {
             using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetIngressGatewayCredentials");
             scope.Start();
             try
             {
-                var response = await _hybridConnectivityEndpointEndpointResourcesRestClient.ListIngressGatewayCredentialsAsync(Id.Parent, Id.Name, expiresin, cancellationToken).ConfigureAwait(false);
+                var response = await _hybridConnectivityEndpointEndpointResourcesRestClient.ListIngressGatewayCredentialsAsync(Id.Parent, Id.Name, content, expiresin, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -546,15 +547,16 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="content"> Object of type ListIngressGatewayCredentialsRequest. </param>
         /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IngressGatewayAsset> GetIngressGatewayCredentials(long? expiresin = null, CancellationToken cancellationToken = default)
+        public virtual Response<IngressGatewayAsset> GetIngressGatewayCredentials(ListIngressGatewayCredentialsContent content = null, long? expiresin = null, CancellationToken cancellationToken = default)
         {
             using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetIngressGatewayCredentials");
             scope.Start();
             try
             {
-                var response = _hybridConnectivityEndpointEndpointResourcesRestClient.ListIngressGatewayCredentials(Id.Parent, Id.Name, expiresin, cancellationToken);
+                var response = _hybridConnectivityEndpointEndpointResourcesRestClient.ListIngressGatewayCredentials(Id.Parent, Id.Name, content, expiresin, cancellationToken);
                 return response;
             }
             catch (Exception e)
