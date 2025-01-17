@@ -166,114 +166,39 @@ public partial class AgentsClient
         return new StreamingUpdateCollection(sendRequest, cancellationToken);
     }
     /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
-    /// <param name="threadId"> Identifier of the thread. </param>
-    /// <param name="runId"> Identifier of the run. </param>
-    /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
-    /// <param name="cancellationToken"> The cancellation token to use. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="toolOutputs"/> is null. </exception>
-#pragma warning disable AZC0015 // Unexpected client method return type.
-    public virtual CollectionResult<StreamingUpdate> SubmitToolOutputsToStream(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
-#pragma warning restore AZC0015 // Unexpected client method return type.
-    {
-        Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-        Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-        Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
-
-        SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), true, null);
-        RequestContext context = FromCancellationToken(cancellationToken);
-        Response sendRequest() => SubmitToolOutputsToRunRequestInternal(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context);
-        return new StreamingUpdateCollection(sendRequest, cancellationToken);
-    }
-
-    /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
-    /// <param name="threadId"> Identifier of the thread. </param>
-    /// <param name="runId"> Identifier of the run. </param>
-    /// <param name="content"> Serialized json contents. </param>
-    /// <param name="context"> Options that can be used to control the request. </param>
-    internal Response SubmitToolOutputsToRunRequestInternal(string threadId, string runId, RequestContent content, RequestContext context = null)
-    {
-        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentsClient.SubmitToolOutputsToRunRequestInternal");
-        scope.Start();
-        try
-        {
-            using HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, content, context);
-            message.BufferResponse = false;
-            return _pipeline.ProcessMessage(message, context, CancellationToken.None);
-        }
-        catch (Exception e)
-        {
-            scope.Failed(e);
-            throw;
-        }
-    }
-
-    /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
-    /// <param name="threadId"> Identifier of the thread. </param>
-    /// <param name="runId"> Identifier of the run. </param>
-    /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
-    /// <param name="cancellationToken"> The cancellation token to use. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="toolOutputs"/> is null. </exception>
-    /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
-#pragma warning disable AZC0015 // Unexpected client method return type.
-    public virtual AsyncCollectionResult<StreamingUpdate> SubmitToolOutputsToStreamAsync(string threadId, string runId, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
-#pragma warning restore AZC0015 // Unexpected client method return type.
-    {
-        Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
-        Argument.AssertNotNullOrEmpty(runId, nameof(runId));
-        Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
-
-        SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), true, null);
-        RequestContext context = FromCancellationToken(cancellationToken);
-        async Task<Response> sendRequestAsync() => await SubmitToolOutputsToRunRequestInternalAsync(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
-        return new AsyncStreamingUpdateCollection(sendRequestAsync, cancellationToken);
-    }
-
-    /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
-    /// <param name="threadId"> Identifier of the thread. </param>
-    /// <param name="runId"> Identifier of the run. </param>
-    /// <param name="content"> Serialized json contents. </param>
-    /// <param name="context"> Options that can be used to control the request. </param>
-    internal async Task<Response> SubmitToolOutputsToRunRequestInternalAsync(string threadId, string runId, RequestContent content, RequestContext context = null)
-    {
-        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentsClient.SubmitToolOutputsToRunRequestInternalAsync");
-        scope.Start();
-        try
-        {
-            using HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, content, context);
-            message.BufferResponse = false;
-            return await _pipeline.ProcessMessageAsync(message, context, CancellationToken.None).ConfigureAwait(false);
-        }
-        catch (Exception e)
-        {
-            scope.Failed(e);
-            throw;
-        }
-    }
-
-    /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
     /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>
-    /// <param name="toolOutputs"> The list of tool call outputs to provide as part of an output submission to an agent thread run. </param>
+    /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="run"/> or <paramref name="toolOutputs"/> is null. </exception>
 #pragma warning disable AZC0015 // Unexpected client method return type.
     public virtual CollectionResult<StreamingUpdate> SubmitToolOutputsToStream(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
         Argument.AssertNotNull(run, nameof(run));
-        return SubmitToolOutputsToStream(run.ThreadId, run.Id, toolOutputs, cancellationToken);
+        Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
+
+        SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), true, null);
+        RequestContext context = FromCancellationToken(cancellationToken);
+        Response sendRequest() => SubmitToolOutputsInternal(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest.ToRequestContent(), context);
+        return new StreamingUpdateCollection(sendRequest, cancellationToken);
     }
 
-    /// <summary> Submits outputs from tool calls as requested by a run with a status of 'requires_action' with required_action.type of 'submit_tool_outputs'. </summary>
+    /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
     /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>
-    /// <param name="toolOutputs"> The list of tool call outputs to provide as part of an output submission to an agent thread run. </param>
+    /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
     /// <param name="cancellationToken"> The cancellation token to use. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="run"/>  is null. </exception>
+    /// <exception cref="ArgumentNullException"> <paramref name="run"/> or <paramref name="toolOutputs"/> is null. </exception>
 #pragma warning disable AZC0015 // Unexpected client method return type.
     public virtual AsyncCollectionResult<StreamingUpdate> SubmitToolOutputsToStreamAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
 #pragma warning restore AZC0015 // Unexpected client method return type.
     {
         Argument.AssertNotNull(run, nameof(run));
-        return SubmitToolOutputsToStreamAsync(run.ThreadId, run.Id, toolOutputs, cancellationToken);
+        Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
+
+        SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), true, null);
+        RequestContext context = FromCancellationToken(cancellationToken);
+        async Task<Response> sendRequestAsync() => await SubmitToolOutputsInternalAsync(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
+        return new AsyncStreamingUpdateCollection(sendRequestAsync, cancellationToken);
     }
 
     internal async Task<Response> CreateRunStreamingAsync(string threadId, RequestContent content, RequestContext context = null)
