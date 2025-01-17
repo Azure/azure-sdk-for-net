@@ -7,7 +7,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Model factory for Conversations Authoring models. </summary>
     [CodeGenModel("AILanguageConversationsAuthoringModelFactory")]
-    public static partial class ConversationsAuthoringModelFactory
+    public static partial class AuthoringModelFactory
     {
     }
 }

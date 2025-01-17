@@ -13,7 +13,7 @@ using Azure.AI.Language.Conversations.Authoring.Models;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class ConversationsAuthoringModelFactory
+    public static partial class AuthoringModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.ProjectMetadata"/>. </summary>
         /// <param name="createdDateTime"> Represents the project creation datetime. </param>
@@ -196,6 +196,31 @@ namespace Azure.AI.Language.Conversations.Authoring
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.ImportProjectJobState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdDateTime"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
+        /// <param name="expirationDateTime"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <returns> A new <see cref="Models.ImportProjectJobState"/> instance for mocking. </returns>
+        public static ImportProjectJobState ImportProjectJobState(string jobId = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, DateTimeOffset? expirationDateTime = null, JobStatus status = default, IEnumerable<AuthoringConversationsWarning> warnings = null, IEnumerable<AuthoringConversationsError> errors = null)
+        {
+            warnings ??= new List<AuthoringConversationsWarning>();
+            errors ??= new List<AuthoringConversationsError>();
+
+            return new ImportProjectJobState(
+                jobId,
+                createdDateTime,
+                lastUpdatedDateTime,
+                expirationDateTime,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ExportedProject"/>. </summary>
         /// <param name="projectFileVersion"> The version of the exported file. </param>
         /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
@@ -312,7 +337,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new OrchestrationExportedUtterance(text, language, intent, dataset, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ImportProjectJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TrainingJobState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdDateTime"> The creation date time of the job. </param>
         /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
@@ -320,13 +345,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.ImportProjectJobState"/> instance for mocking. </returns>
-        public static ImportProjectJobState ImportProjectJobState(string jobId = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, DateTimeOffset? expirationDateTime = null, JobStatus status = default, IEnumerable<AuthoringConversationsWarning> warnings = null, IEnumerable<AuthoringConversationsError> errors = null)
+        /// <param name="result"> Represents training tasks detailed result. </param>
+        /// <returns> A new <see cref="Models.TrainingJobState"/> instance for mocking. </returns>
+        public static TrainingJobState TrainingJobState(string jobId = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, DateTimeOffset? expirationDateTime = null, JobStatus status = default, IEnumerable<AuthoringConversationsWarning> warnings = null, IEnumerable<AuthoringConversationsError> errors = null, TrainingJobResult result = null)
         {
             warnings ??= new List<AuthoringConversationsWarning>();
             errors ??= new List<AuthoringConversationsError>();
 
-            return new ImportProjectJobState(
+            return new TrainingJobState(
                 jobId,
                 createdDateTime,
                 lastUpdatedDateTime,
@@ -334,18 +360,8 @@ namespace Azure.AI.Language.Conversations.Authoring
                 status,
                 warnings?.ToList(),
                 errors?.ToList(),
+                result,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TrainingJobDetails"/>. </summary>
-        /// <param name="modelLabel"> Represents the output model label. </param>
-        /// <param name="trainingConfigVersion"> Represents training config version. By default, "latest" value is used which uses the latest released training config version. </param>
-        /// <param name="trainingMode"> Represents the mode of the training operation. </param>
-        /// <param name="evaluationOptions"> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </param>
-        /// <returns> A new <see cref="Models.TrainingJobDetails"/> instance for mocking. </returns>
-        public static TrainingJobDetails TrainingJobDetails(string modelLabel = null, string trainingConfigVersion = null, TrainingMode trainingMode = default, EvaluationDetails evaluationOptions = null)
-        {
-            return new TrainingJobDetails(modelLabel, trainingConfigVersion, trainingMode, evaluationOptions, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TrainingJobResult"/>. </summary>
@@ -379,31 +395,15 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new SubTrainingJobState(percentComplete, startDateTime, endDateTime, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TrainingJobState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdDateTime"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
-        /// <param name="expirationDateTime"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <param name="result"> Represents training tasks detailed result. </param>
-        /// <returns> A new <see cref="Models.TrainingJobState"/> instance for mocking. </returns>
-        public static TrainingJobState TrainingJobState(string jobId = null, DateTimeOffset createdDateTime = default, DateTimeOffset lastUpdatedDateTime = default, DateTimeOffset? expirationDateTime = null, JobStatus status = default, IEnumerable<AuthoringConversationsWarning> warnings = null, IEnumerable<AuthoringConversationsError> errors = null, TrainingJobResult result = null)
+        /// <summary> Initializes a new instance of <see cref="Models.TrainingJobDetails"/>. </summary>
+        /// <param name="modelLabel"> Represents the output model label. </param>
+        /// <param name="trainingConfigVersion"> Represents training config version. By default, "latest" value is used which uses the latest released training config version. </param>
+        /// <param name="trainingMode"> Represents the mode of the training operation. </param>
+        /// <param name="evaluationOptions"> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </param>
+        /// <returns> A new <see cref="Models.TrainingJobDetails"/> instance for mocking. </returns>
+        public static TrainingJobDetails TrainingJobDetails(string modelLabel = null, string trainingConfigVersion = null, TrainingMode trainingMode = default, EvaluationDetails evaluationOptions = null)
         {
-            warnings ??= new List<AuthoringConversationsWarning>();
-            errors ??= new List<AuthoringConversationsError>();
-
-            return new TrainingJobState(
-                jobId,
-                createdDateTime,
-                lastUpdatedDateTime,
-                expirationDateTime,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                result,
-                serializedAdditionalRawData: null);
+            return new TrainingJobDetails(modelLabel, trainingConfigVersion, trainingMode, evaluationOptions, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProjectDeployment"/>. </summary>
@@ -464,17 +464,6 @@ namespace Azure.AI.Language.Conversations.Authoring
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CreateDeploymentDetails"/>. </summary>
-        /// <param name="trainedModelLabel"> Represents the trained model label. </param>
-        /// <param name="assignedResourceIds"> Represents the resource IDs to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
-        /// <returns> A new <see cref="Models.CreateDeploymentDetails"/> instance for mocking. </returns>
-        public static CreateDeploymentDetails CreateDeploymentDetails(string trainedModelLabel = null, IEnumerable<string> assignedResourceIds = null)
-        {
-            assignedResourceIds ??= new List<string>();
-
-            return new CreateDeploymentDetails(trainedModelLabel, assignedResourceIds?.ToList(), serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.DeploymentJobState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdDateTime"> The creation date time of the job. </param>
@@ -498,6 +487,17 @@ namespace Azure.AI.Language.Conversations.Authoring
                 warnings?.ToList(),
                 errors?.ToList(),
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CreateDeploymentDetails"/>. </summary>
+        /// <param name="trainedModelLabel"> Represents the trained model label. </param>
+        /// <param name="assignedResourceIds"> Represents the resource IDs to be assigned to the deployment. If provided, the deployment will be rolled out to the resources provided here as well as the original resource in which the project is created. </param>
+        /// <returns> A new <see cref="Models.CreateDeploymentDetails"/> instance for mocking. </returns>
+        public static CreateDeploymentDetails CreateDeploymentDetails(string trainedModelLabel = null, IEnumerable<string> assignedResourceIds = null)
+        {
+            assignedResourceIds ??= new List<string>();
+
+            return new CreateDeploymentDetails(trainedModelLabel, assignedResourceIds?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DeploymentDeleteFromResourcesJobState"/>. </summary>
@@ -547,17 +547,6 @@ namespace Azure.AI.Language.Conversations.Authoring
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EvaluationJobResult"/>. </summary>
-        /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
-        /// <param name="modelLabel"> Represents trained model label. </param>
-        /// <param name="trainingConfigVersion"> Represents training config version. </param>
-        /// <param name="percentComplete"> Represents progress percentage. </param>
-        /// <returns> A new <see cref="Models.EvaluationJobResult"/> instance for mocking. </returns>
-        public static EvaluationJobResult EvaluationJobResult(EvaluationDetails evaluationOptions = null, string modelLabel = null, string trainingConfigVersion = null, int percentComplete = default)
-        {
-            return new EvaluationJobResult(evaluationOptions, modelLabel, trainingConfigVersion, percentComplete, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.EvaluationJobState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdDateTime"> The creation date time of the job. </param>
@@ -583,6 +572,17 @@ namespace Azure.AI.Language.Conversations.Authoring
                 errors?.ToList(),
                 result,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.EvaluationJobResult"/>. </summary>
+        /// <param name="evaluationOptions"> Represents the options used running the evaluation. </param>
+        /// <param name="modelLabel"> Represents trained model label. </param>
+        /// <param name="trainingConfigVersion"> Represents training config version. </param>
+        /// <param name="percentComplete"> Represents progress percentage. </param>
+        /// <returns> A new <see cref="Models.EvaluationJobResult"/> instance for mocking. </returns>
+        public static EvaluationJobResult EvaluationJobResult(EvaluationDetails evaluationOptions = null, string modelLabel = null, string trainingConfigVersion = null, int percentComplete = default)
+        {
+            return new EvaluationJobResult(evaluationOptions, modelLabel, trainingConfigVersion, percentComplete, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LoadSnapshotJobState"/>. </summary>

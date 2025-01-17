@@ -8,5 +8,6 @@ namespace Azure.AI.Language.Conversations.Authoring
     [CodeGenClient("AuthoringClient")]
     public partial class AnalyzeConversationClient
     {
+
     }
 }
