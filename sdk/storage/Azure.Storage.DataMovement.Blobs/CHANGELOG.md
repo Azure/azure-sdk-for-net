@@ -7,6 +7,8 @@
 ### Breaking Changes
 - Changed `BlobContainerClient.StartUploadDirectoryAsync` to `BlobContainerClient.UploadDirectoryAsync` and added a required `waitUntil` parameter.
 - Changed `BlobContainerClient.StartDownloadToDirectoryAsync` to `BlobContainerClient.DownloadToDirectoryAsync` and added a required `waitUntil` parameter.
+- Removed `BlobsStorageResourceProvider()` empty default constructor
+- Changed `BlobsStorageResourceProvider.FromClient` methods to `static` method
 
 ### Bugs Fixed
 

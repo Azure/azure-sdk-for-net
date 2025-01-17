@@ -50,7 +50,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>
         /// Storage resource to this file.
         /// </returns>
-        public StorageResourceItem FromFile(string filePath)
+        public static StorageResourceItem FromFile(string filePath)
         {
             return new LocalFileStorageResource(filePath);
         }
@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement
         /// <returns>
         /// Storage resource to this directory.
         /// </returns>
-        public StorageResourceContainer FromDirectory(string directoryPath)
+        public static StorageResourceContainer FromDirectory(string directoryPath)
         {
             return new LocalDirectoryStorageResourceContainer(directoryPath);
         }

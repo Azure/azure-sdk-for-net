@@ -113,11 +113,10 @@ StorageResource appendBlob = blobs.FromBlob(
 Storage resources can also be initialized with the appropriate client object from Azure.Storage.Blobs. Since these resources will use the credential already present in the client object, no credential is required in the provider when using `FromClient()`. **However**, a `BlobsStorageResourceProvider` must still have a credential if it is to be used in `TransferManagerOptions` for resuming a transfer.
 
 ```C# Snippet:ResourceConstruction_FromClients_Blobs
-BlobsStorageResourceProvider blobs = new();
-StorageResource containerResource = blobs.FromClient(blobContainerClient);
-StorageResource blockBlobResource = blobs.FromClient(blockBlobClient);
-StorageResource pageBlobResource = blobs.FromClient(pageBlobClient);
-StorageResource appendBlobResource = blobs.FromClient(appendBlobClient);
+StorageResource containerResource = BlobsStorageResourceProvider.FromClient(blobContainerClient);
+StorageResource blockBlobResource = BlobsStorageResourceProvider.FromClient(blockBlobClient);
+StorageResource pageBlobResource = BlobsStorageResourceProvider.FromClient(pageBlobClient);
+StorageResource appendBlobResource = BlobsStorageResourceProvider.FromClient(appendBlobClient);
 ```
 
 There are more options which can be used when creating a blob storage resource. Below are some examples.
@@ -128,7 +127,7 @@ BlobStorageResourceContainerOptions virtualDirectoryOptions = new()
     BlobDirectoryPrefix = "blob/directory/prefix"
 };
 
-StorageResource virtualDirectoryResource = blobs.FromClient(
+StorageResource virtualDirectoryResource = BlobsStorageResourceProvider.FromClient(
     blobContainerClient,
     virtualDirectoryOptions);
 ```
@@ -142,7 +141,7 @@ BlockBlobStorageResourceOptions resourceOptions = new()
             { "key", "value" }
         })
 };
-StorageResource leasedBlockBlobResource = blobs.FromClient(
+StorageResource leasedBlockBlobResource = BlobsStorageResourceProvider.FromClient(
     blockBlobClient,
     resourceOptions);
 ```
@@ -155,7 +154,7 @@ Upload a block blob.
 
 ```C# Snippet:SimpleBlobUpload
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
-    sourceResource: files.FromFile(sourceLocalPath),
+    sourceResource: LocalFilesStorageResourceProvider.FromFile(sourceLocalPath),
     destinationResource: blobs.FromBlob(destinationBlobUri));
 await transferOperation.WaitForCompletionAsync();
 ```
@@ -164,7 +163,7 @@ Upload a directory as a specific blob type.
 
 ```C# Snippet:SimpleDirectoryUpload
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
-    sourceResource: files.FromDirectory(sourcePath),
+    sourceResource: LocalFilesStorageResourceProvider.FromDirectory(sourcePath),
     destinationResource: blobs.FromContainer(
         blobContainerUri,
         new BlobStorageResourceContainerOptions()
@@ -184,7 +183,7 @@ Download a blob.
 ```C# Snippet:SimpleBlockBlobDownload
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
     sourceResource: blobs.FromBlob(sourceBlobUri),
-    destinationResource: files.FromFile(downloadPath));
+    destinationResource: LocalFilesStorageResourceProvider.FromFile(downloadPath));
 await transferOperation.WaitForCompletionAsync();
 ```
 
@@ -198,7 +197,7 @@ TransferOperation transferOperation = await transferManager.StartTransferAsync(
         {
             BlobDirectoryPrefix = optionalSourcePrefix
         }),
-    destinationResource: files.FromDirectory(downloadPath));
+    destinationResource: LocalFilesStorageResourceProvider.FromDirectory(downloadPath));
 await transferOperation.WaitForCompletionAsync();
 ```
 

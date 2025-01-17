@@ -76,14 +76,6 @@ namespace Azure.Storage.DataMovement.Blobs
         private readonly GetAzureSasCredential _getAzureSasCredential;
 
         /// <summary>
-        /// Default constructor.
-        /// </summary>
-        public BlobsStorageResourceProvider()
-        {
-            _credentialType = CredentialType.None;
-        }
-
-        /// <summary>
         /// <para>
         /// Constructs this provider to use the given credential when making a new Blob Storage
         /// <see cref="StorageResource"/>.
@@ -412,7 +404,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromClient(
+        public static StorageResource FromClient(
             BlobContainerClient client,
             BlobStorageResourceContainerOptions options = default)
         {
@@ -433,7 +425,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromClient(
+        public static StorageResource FromClient(
             BlockBlobClient client,
             BlockBlobStorageResourceOptions options = default)
         {
@@ -454,7 +446,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromClient(
+        public static StorageResource FromClient(
             PageBlobClient client,
             PageBlobStorageResourceOptions options = default)
         {
@@ -475,7 +467,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromClient(
+        public static StorageResource FromClient(
             AppendBlobClient client,
             AppendBlobStorageResourceOptions options = default)
         {

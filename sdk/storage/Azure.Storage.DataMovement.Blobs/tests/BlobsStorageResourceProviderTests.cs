@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
-    public class BlobStorageResourceProviderTests
+    public class BlobsStorageResourceProviderTests
     {
         public enum CredType
         {
@@ -115,7 +115,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             BlobsStorageResourceProvider provider = credType switch
             {
-                CredType.None => new(),
                 CredType.SharedKey => new(mockCreds.SharedKey.Object),
                 CredType.Token => new(mockCreds.Token.Object),
                 CredType.Sas => new(mockCreds.Sas.Object),
@@ -142,7 +141,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             BlobsStorageResourceProvider provider = credType switch
             {
-                CredType.None => new(),
                 CredType.SharedKey => new(mockCreds.SharedKey.Object),
                 CredType.Token => new(mockCreds.Token.Object),
                 CredType.Sas => new(mockCreds.Sas.Object),

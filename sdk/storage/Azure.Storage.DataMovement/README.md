@@ -92,12 +92,11 @@ Transfers are defined by a source and destination `StorageResource`. There are t
 The below sample demonstrates `StorageResourceProvider` use to start transfers by uploading a file to Azure Blob Storage, using the Azure.Storage.DataMovement.Blobs package. It uses an Azure.Core token credential with permission to write to the blob.
 
 ```C# Snippet:SimpleBlobUpload_BasePackage
-LocalFilesStorageResourceProvider files = new();
 BlobsStorageResourceProvider blobs = new(tokenCredential);
 
 // Create simple transfer single blob upload job
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
-    sourceResource: files.FromFile(sourceLocalPath),
+    sourceResource: LocalFilesStorageResourceProvider.FromFile(sourceLocalPath),
     destinationResource: blobs.FromBlob(destinationBlobUri));
 await transferOperation.WaitForCompletionAsync();
 ```
@@ -117,7 +116,7 @@ LocalFilesStorageResourceProvider files = new();
 BlobsStorageResourceProvider blobs = new(tokenCredential);
 TransferManager transferManager = new(new TransferManagerOptions()
 {
-    ResumeProviders = new List<StorageResourceProvider>() { files, blobs },
+    ProvidersForResuming = new List<StorageResourceProvider>() { files, blobs },
 });
 ```
 

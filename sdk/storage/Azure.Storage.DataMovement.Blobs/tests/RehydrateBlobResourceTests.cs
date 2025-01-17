@@ -13,6 +13,8 @@ using Azure.Storage.Test;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
 using NUnit.Framework;
+using Azure.Core;
+using Azure.Identity;
 
 namespace Azure.Storage.DataMovement.Tests
 {
@@ -24,6 +26,8 @@ namespace Azure.Storage.DataMovement.Tests
         private const string DefaultContentDisposition = "inline";
         private const string DefaultCacheControl = "no-cache";
         private static string GetNewTransferId() => Guid.NewGuid().ToString();
+        private static TokenCredential _tokenCredential = new DefaultAzureCredential();
+
         public RehydrateBlobResourceTests()
         { }
 
@@ -131,8 +135,8 @@ namespace Azure.Storage.DataMovement.Tests
                 GetDefaultDestinationCheckpointDetails(BlobType.Block)).Object;
 
             StorageResource storageResource = isSource
-                ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
-                : await new BlobsStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties);
+                ? await new BlobsStorageResourceProvider(_tokenCredential).FromSourceInternalHookAsync(transferProperties)
+                : await new BlobsStorageResourceProvider(_tokenCredential).FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
             Assert.IsInstanceOf(typeof(BlockBlobStorageResource), storageResource);
@@ -159,7 +163,7 @@ namespace Azure.Storage.DataMovement.Tests
                 GetSourceCheckpointDetails(),
                 checkpointDetails).Object;
 
-            BlockBlobStorageResource storageResource = (BlockBlobStorageResource)await new BlobsStorageResourceProvider()
+            BlockBlobStorageResource storageResource = (BlockBlobStorageResource)await new BlobsStorageResourceProvider(_tokenCredential)
                     .FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
@@ -201,8 +205,8 @@ namespace Azure.Storage.DataMovement.Tests
                 GetDefaultDestinationCheckpointDetails(BlobType.Page)).Object;
 
             StorageResource storageResource = isSource
-                    ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
-                    : await new BlobsStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties);
+                    ? await new BlobsStorageResourceProvider(_tokenCredential).FromSourceInternalHookAsync(transferProperties)
+                    : await new BlobsStorageResourceProvider(_tokenCredential).FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
             if (isSource)
@@ -236,7 +240,7 @@ namespace Azure.Storage.DataMovement.Tests
                 GetSourceCheckpointDetails(),
                 checkpointDetails).Object;
 
-            PageBlobStorageResource storageResource = (PageBlobStorageResource)await new BlobsStorageResourceProvider()
+            PageBlobStorageResource storageResource = (PageBlobStorageResource)await new BlobsStorageResourceProvider(_tokenCredential)
                     .FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
@@ -277,8 +281,8 @@ namespace Azure.Storage.DataMovement.Tests
                 GetDefaultDestinationCheckpointDetails(BlobType.Append)).Object;
 
             StorageResource storageResource = isSource
-                    ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
-                    : await new BlobsStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties);
+                    ? await new BlobsStorageResourceProvider(_tokenCredential).FromSourceInternalHookAsync(transferProperties)
+                    : await new BlobsStorageResourceProvider(_tokenCredential).FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
             if (isSource)
@@ -312,7 +316,7 @@ namespace Azure.Storage.DataMovement.Tests
                 GetSourceCheckpointDetails(),
                 checkpointDetails).Object;
 
-            AppendBlobStorageResource storageResource = (AppendBlobStorageResource)await new BlobsStorageResourceProvider()
+            AppendBlobStorageResource storageResource = (AppendBlobStorageResource)await new BlobsStorageResourceProvider(_tokenCredential)
                 .FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(destinationPath, storageResource.Uri.AbsoluteUri);
@@ -363,8 +367,8 @@ namespace Azure.Storage.DataMovement.Tests
                 GetDefaultDestinationCheckpointDetails(BlobType.Block)).Object;
 
             StorageResource storageResource = isSource
-                    ? await new BlobsStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
-                    : await new BlobsStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties);
+                    ? await new BlobsStorageResourceProvider(_tokenCredential).FromSourceInternalHookAsync(transferProperties)
+                    : await new BlobsStorageResourceProvider(_tokenCredential).FromDestinationInternalHookAsync(transferProperties);
 
             Assert.AreEqual(originalPath, storageResource.Uri.AbsoluteUri);
             Assert.IsInstanceOf(typeof(BlobStorageResourceContainer), storageResource);

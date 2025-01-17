@@ -316,7 +316,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             TransferManagerOptions transferManagerOptions = new()
             {
-                ResumeProviders = [blobProvider, localProvider]
+                ProvidersForResuming = [blobProvider, localProvider]
             };
             TransferManager transferManager = new(transferManagerOptions);
 
@@ -330,7 +330,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Act - Start transfer
             TransferOperation transfer = await transferManager.StartTransferAsync(
                 blobProvider.FromContainer(source.Container.Uri),
-                localProvider.FromDirectory(destination.DirectoryPath),
+                LocalFilesStorageResourceProvider.FromDirectory(destination.DirectoryPath),
                 transferOptions);
 
             // TODO: This can likely be replaced with something better once mocking is in place
