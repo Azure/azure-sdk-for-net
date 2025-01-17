@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.IotOperations.Tests
         {
             ArmClient = GetArmClient();
             Subscription = await ArmClient.GetDefaultSubscriptionAsync();
-            ResourceGroup = "sdk-test-cluster-112208379";
-            CustomLocationName = "location-cozp6";
-            InstanceName = "aio-cozp6";
+            ResourceGroup = "aio-validation-112727342";
+            CustomLocationName = "location-112727342";
+            InstanceName = "aio-112727342";
             BrokersName = "default";
             BrokersListenersName = "default";
             BrokersAuthenticationsName = "default";
