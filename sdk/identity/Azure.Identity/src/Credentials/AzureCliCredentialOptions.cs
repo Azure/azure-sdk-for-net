@@ -40,7 +40,7 @@ namespace Azure.Identity
             {
                 if (!Validations.IsValidateSubscriptionNameOrId(value))
                 {
-                    throw new ArgumentException("Invalid subscription name or Id provided. The subscription name or Id must be a non-empty value and cannot contain a quote character.");
+                    throw new ArgumentException("The provided subscription contains invalid characters. If this is the name of a subscription, use its ID instead.");
                 }
 
                 _subscription = value;

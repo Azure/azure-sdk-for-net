@@ -59,7 +59,23 @@ namespace Azure.Identity
 
         public static bool IsValidateSubscriptionNameOrId(string subscription)
         {
-            return !string.IsNullOrEmpty(subscription) && !subscription.Contains("\"");
+            if (string.IsNullOrEmpty(subscription))
+            {
+                return false;
+            }
+            foreach (char c in subscription)
+            {
+                if (!IsValidateSubscriptionNameOrIdCharacter(c))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private static bool IsValidateSubscriptionNameOrIdCharacter(char c)
+        {
+            return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || (c == ' ') || (c == '-') || (c == '_');
         }
 
         private static bool IsValidTenantCharacter(char c)

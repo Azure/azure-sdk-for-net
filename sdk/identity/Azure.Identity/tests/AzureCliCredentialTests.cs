@@ -45,7 +45,7 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateWithCliCredential(
             [Values(null, TenantIdHint)] string tenantId,
-            [Values(null, "1a7eed92-726e-46c0-b21d-a3db74b3b58c", "My Subscription Name !@#$$%^&*()-_")] string subscription,
+            [Values(null, "1a7eed92-726e-46c0-b21d-a3db74b3b58c", "My Subscription Name -_")] string subscription,
             [Values(true)] bool allowMultiTenantAuthentication,
             [Values(null, TenantId)] string explicitTenantId)
         {
@@ -90,7 +90,7 @@ namespace Azure.Identity.Tests
         public void AzureCliCredentialOptionsValidatesSubscriptionOption()
         {
             Assert.Throws<ArgumentException>(() => new AzureCliCredentialOptions { Subscription = "My Subscription Name with a quote \"" });
-            new AzureCliCredentialOptions { Subscription = "My Subscription Name !@#$%^&**()-_=+[]{}|" };
+            new AzureCliCredentialOptions { Subscription = "My Subscription Name -_" };
             new AzureCliCredentialOptions { Subscription = Guid.NewGuid().ToString() };
         }
 
