@@ -19,7 +19,7 @@ namespace Azure.Storage.DataMovement
             }
             else
             {
-                return new LocalTransferCheckpointer(options?.CheckpointerPath);
+                return new LocalTransferCheckpointer(options?.CheckpointPath);
             }
         }
 

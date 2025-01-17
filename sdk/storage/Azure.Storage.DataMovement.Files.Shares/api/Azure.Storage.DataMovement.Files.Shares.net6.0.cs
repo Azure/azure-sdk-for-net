@@ -49,7 +49,7 @@ namespace Azure.Storage.Files.Shares
 {
     public static partial class ShareDirectoryClientExtensions
     {
-        public static System.Threading.Tasks.Task<Azure.Storage.DataMovement.TransferOperation> StartDownloadToDirectoryAsync(this Azure.Storage.Files.Shares.ShareDirectoryClient client, string localDirectoryPath, Azure.Storage.DataMovement.Files.Shares.ShareDirectoryClientTransferOptions options = null) { throw null; }
-        public static System.Threading.Tasks.Task<Azure.Storage.DataMovement.TransferOperation> StartUploadDirectoryAsync(this Azure.Storage.Files.Shares.ShareDirectoryClient client, string localDirectoryPath, Azure.Storage.DataMovement.Files.Shares.ShareDirectoryClientTransferOptions options = null) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Storage.DataMovement.TransferOperation> DownloadToDirectoryAsync(this Azure.Storage.Files.Shares.ShareDirectoryClient client, Azure.WaitUntil waitUntil, string localDirectoryPath, Azure.Storage.DataMovement.Files.Shares.ShareDirectoryClientTransferOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static System.Threading.Tasks.Task<Azure.Storage.DataMovement.TransferOperation> UploadDirectoryAsync(this Azure.Storage.Files.Shares.ShareDirectoryClient client, Azure.WaitUntil waitUntil, string localDirectoryPath, Azure.Storage.DataMovement.Files.Shares.ShareDirectoryClientTransferOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
 }

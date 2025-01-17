@@ -46,6 +46,7 @@ public class AzureClientPlugin : ClientModelPlugin
     public override void Configure()
     {
         base.Configure();
+        // Include Azure.Core
         AddMetadataReference(MetadataReference.CreateFromFile(typeof(Response).Assembly.Location));
         var sharedSourceDirectory = Path.Combine(Path.GetDirectoryName(typeof(AzureClientPlugin).Assembly.Location)!, "Shared", "Core");
         AddSharedSourceDirectory(sharedSourceDirectory);
