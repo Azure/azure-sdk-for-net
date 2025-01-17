@@ -34,19 +34,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 throw new FormatException($"The model {nameof(ProjectMetadata)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("createdDateTime"u8);
-            writer.WriteStringValue(CreatedDateTime, "O");
-            writer.WritePropertyName("lastModifiedDateTime"u8);
-            writer.WriteStringValue(LastModifiedDateTime, "O");
-            if (Optional.IsDefined(LastTrainedDateTime))
+            writer.WritePropertyName("createdOn"u8);
+            writer.WriteStringValue(CreatedOn, "O");
+            writer.WritePropertyName("lastModifiedOn"u8);
+            writer.WriteStringValue(LastModifiedOn, "O");
+            if (Optional.IsDefined(LastTrainedOn))
             {
-                writer.WritePropertyName("lastTrainedDateTime"u8);
-                writer.WriteStringValue(LastTrainedDateTime.Value, "O");
+                writer.WritePropertyName("lastTrainedOn"u8);
+                writer.WriteStringValue(LastTrainedOn.Value, "O");
             }
-            if (Optional.IsDefined(LastDeployedDateTime))
+            if (Optional.IsDefined(LastDeployedOn))
             {
-                writer.WritePropertyName("lastDeployedDateTime"u8);
-                writer.WriteStringValue(LastDeployedDateTime.Value, "O");
+                writer.WritePropertyName("lastDeployedOn"u8);
+                writer.WriteStringValue(LastDeployedOn.Value, "O");
             }
             writer.WritePropertyName("projectKind"u8);
             writer.WriteStringValue(ProjectKind.ToString());
@@ -111,11 +111,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             {
                 return null;
             }
-            DateTimeOffset createdDateTime = default;
-            DateTimeOffset lastModifiedDateTime = default;
-            DateTimeOffset? lastTrainedDateTime = default;
-            DateTimeOffset? lastDeployedDateTime = default;
-            ProjectKind projectKind = default;
+            DateTimeOffset createdOn = default;
+            DateTimeOffset lastModifiedOn = default;
+            DateTimeOffset? lastTrainedOn = default;
+            DateTimeOffset? lastDeployedOn = default;
+            AnalyzeConversationProjectKind projectKind = default;
             ProjectSettings settings = default;
             string storageInputContainerName = default;
             string projectName = default;
@@ -126,37 +126,37 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("createdDateTime"u8))
+                if (property.NameEquals("createdOn"u8))
                 {
-                    createdDateTime = property.Value.GetDateTimeOffset("O");
+                    createdOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastModifiedDateTime"u8))
+                if (property.NameEquals("lastModifiedOn"u8))
                 {
-                    lastModifiedDateTime = property.Value.GetDateTimeOffset("O");
+                    lastModifiedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastTrainedDateTime"u8))
+                if (property.NameEquals("lastTrainedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastTrainedDateTime = property.Value.GetDateTimeOffset("O");
+                    lastTrainedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("lastDeployedDateTime"u8))
+                if (property.NameEquals("lastDeployedOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    lastDeployedDateTime = property.Value.GetDateTimeOffset("O");
+                    lastDeployedOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (property.NameEquals("projectKind"u8))
                 {
-                    projectKind = new ProjectKind(property.Value.GetString());
+                    projectKind = new AnalyzeConversationProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("settings"u8))
@@ -204,10 +204,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
             serializedAdditionalRawData = rawDataDictionary;
             return new ProjectMetadata(
-                createdDateTime,
-                lastModifiedDateTime,
-                lastTrainedDateTime,
-                lastDeployedDateTime,
+                createdOn,
+                lastModifiedOn,
+                lastTrainedOn,
+                lastDeployedOn,
                 projectKind,
                 settings,
                 storageInputContainerName,

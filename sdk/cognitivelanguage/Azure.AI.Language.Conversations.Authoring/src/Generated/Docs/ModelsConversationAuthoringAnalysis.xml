@@ -1,0 +1,1067 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetTrainedModelAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetTrainedModelAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response<ProjectTrainedModel> response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
+]]></code>
+This sample shows how to call GetTrainedModelAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response<ProjectTrainedModel> response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
+]]></code></example>
+    </member>
+    <member name="GetTrainedModel(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetTrainedModel.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response<ProjectTrainedModel> response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
+]]></code>
+This sample shows how to call GetTrainedModel with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response<ProjectTrainedModel> response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
+]]></code></example>
+    </member>
+    <member name="GetTrainedModelAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetTrainedModelAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
+Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
+]]></code>
+This sample shows how to call GetTrainedModelAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
+Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
+]]></code></example>
+    </member>
+    <member name="GetTrainedModel(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetTrainedModel and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
+Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
+]]></code>
+This sample shows how to call GetTrainedModel with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("label").ToString());
+Console.WriteLine(result.GetProperty("modelId").ToString());
+Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
+Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
+Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
+]]></code></example>
+    </member>
+    <member name="DeleteTrainedModelAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteTrainedModelAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = await client.DeleteTrainedModelAsync("<projectName>", "<trainedModelLabel>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteTrainedModelAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = await client.DeleteTrainedModelAsync("<projectName>", "<trainedModelLabel>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="DeleteTrainedModel(string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteTrainedModel.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = client.DeleteTrainedModel("<projectName>", "<trainedModelLabel>");
+
+Console.WriteLine(response.Status);
+]]></code>
+This sample shows how to call DeleteTrainedModel with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = client.DeleteTrainedModel("<projectName>", "<trainedModelLabel>");
+
+Console.WriteLine(response.Status);
+]]></code></example>
+    </member>
+    <member name="GetEvaluationStatusAsync(string,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetEvaluationStatusAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response<EvaluationJobState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+]]></code>
+This sample shows how to call GetEvaluationStatusAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response<EvaluationJobState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+]]></code></example>
+    </member>
+    <member name="GetEvaluationStatus(string,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetEvaluationStatus.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response<EvaluationJobState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+]]></code>
+This sample shows how to call GetEvaluationStatus with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response<EvaluationJobState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+]]></code></example>
+    </member>
+    <member name="GetEvaluationStatusAsync(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetEvaluationStatusAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("evaluationDetails").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("percentComplete").ToString());
+]]></code>
+This sample shows how to call GetEvaluationStatusAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("evaluationDetails").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("evaluationDetails").GetProperty("trainingSplitPercentage").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("evaluationDetails").GetProperty("testingSplitPercentage").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("percentComplete").ToString());
+]]></code></example>
+    </member>
+    <member name="GetEvaluationStatus(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetEvaluationStatus and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("evaluationDetails").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("percentComplete").ToString());
+]]></code>
+This sample shows how to call GetEvaluationStatus with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("evaluationDetails").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("evaluationDetails").GetProperty("trainingSplitPercentage").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("evaluationDetails").GetProperty("testingSplitPercentage").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("modelLabel").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("trainingConfigVersion").ToString());
+Console.WriteLine(result.GetProperty("result").GetProperty("percentComplete").ToString());
+]]></code></example>
+    </member>
+    <member name="GetModelEvaluationSummaryAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetModelEvaluationSummaryAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response<EvaluationSummary> response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>");
+]]></code>
+This sample shows how to call GetModelEvaluationSummaryAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response<EvaluationSummary> response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>");
+]]></code></example>
+    </member>
+    <member name="GetModelEvaluationSummary(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetModelEvaluationSummary.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response<EvaluationSummary> response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>");
+]]></code>
+This sample shows how to call GetModelEvaluationSummary with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response<EvaluationSummary> response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>");
+]]></code></example>
+    </member>
+    <member name="GetModelEvaluationSummaryAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetModelEvaluationSummaryAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("f1").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("precision").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("recall").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("truePositiveCount").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("trueNegativeCount").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("falsePositiveCount").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("falseNegativeCount").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microF1").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microPrecision").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microRecall").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroF1").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroPrecision").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroRecall").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("f1").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("precision").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("recall").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("truePositiveCount").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("trueNegativeCount").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("falsePositiveCount").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("falseNegativeCount").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microF1").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microPrecision").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microRecall").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("macroF1").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("macroPrecision").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("macroRecall").ToString());
+]]></code>
+This sample shows how to call GetModelEvaluationSummaryAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("f1").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("precision").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("recall").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("truePositiveCount").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("trueNegativeCount").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("falsePositiveCount").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("falseNegativeCount").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microF1").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microPrecision").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microRecall").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroF1").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroPrecision").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroRecall").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("f1").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("precision").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("recall").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("truePositiveCount").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("trueNegativeCount").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("falsePositiveCount").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("falseNegativeCount").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microF1").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microPrecision").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microRecall").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("macroF1").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("macroPrecision").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("macroRecall").ToString());
+Console.WriteLine(result.GetProperty("evaluationOptions").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("evaluationOptions").GetProperty("trainingSplitPercentage").ToString());
+Console.WriteLine(result.GetProperty("evaluationOptions").GetProperty("testingSplitPercentage").ToString());
+]]></code></example>
+    </member>
+    <member name="GetModelEvaluationSummary(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetModelEvaluationSummary and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("f1").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("precision").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("recall").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("truePositiveCount").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("trueNegativeCount").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("falsePositiveCount").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("falseNegativeCount").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microF1").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microPrecision").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microRecall").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroF1").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroPrecision").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroRecall").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("f1").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("precision").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("recall").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("truePositiveCount").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("trueNegativeCount").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("falsePositiveCount").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("falseNegativeCount").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microF1").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microPrecision").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microRecall").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("macroF1").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("macroPrecision").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("macroRecall").ToString());
+]]></code>
+This sample shows how to call GetModelEvaluationSummary with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("f1").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("precision").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("recall").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("truePositiveCount").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("trueNegativeCount").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("falsePositiveCount").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("falseNegativeCount").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microF1").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microPrecision").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("microRecall").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroF1").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroPrecision").ToString());
+Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroRecall").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("f1").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("precision").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("recall").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("truePositiveCount").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("trueNegativeCount").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("falsePositiveCount").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("falseNegativeCount").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microF1").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microPrecision").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("microRecall").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("macroF1").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("macroPrecision").ToString());
+Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("macroRecall").ToString());
+Console.WriteLine(result.GetProperty("evaluationOptions").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("evaluationOptions").GetProperty("trainingSplitPercentage").ToString());
+Console.WriteLine(result.GetProperty("evaluationOptions").GetProperty("testingSplitPercentage").ToString());
+]]></code></example>
+    </member>
+    <member name="GetLoadSnapshotStatusAsync(string,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetLoadSnapshotStatusAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response<LoadSnapshotJobState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+]]></code>
+This sample shows how to call GetLoadSnapshotStatusAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response<LoadSnapshotJobState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+]]></code></example>
+    </member>
+    <member name="GetLoadSnapshotStatus(string,string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetLoadSnapshotStatus.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response<LoadSnapshotJobState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+]]></code>
+This sample shows how to call GetLoadSnapshotStatus with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response<LoadSnapshotJobState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+]]></code></example>
+    </member>
+    <member name="GetLoadSnapshotStatusAsync(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetLoadSnapshotStatusAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetLoadSnapshotStatusAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+]]></code></example>
+    </member>
+    <member name="GetLoadSnapshotStatus(string,string,string,RequestContext)">
+      <example>
+This sample shows how to call GetLoadSnapshotStatus and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetLoadSnapshotStatus with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+]]></code></example>
+    </member>
+    <member name="GetTrainedModelsAsync(string,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetTrainedModelsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+await foreach (ProjectTrainedModel item in client.GetTrainedModelsAsync("<projectName>"))
+{
+}
+]]></code>
+This sample shows how to call GetTrainedModelsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+await foreach (ProjectTrainedModel item in client.GetTrainedModelsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetTrainedModels(string,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetTrainedModels.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+foreach (ProjectTrainedModel item in client.GetTrainedModels("<projectName>"))
+{
+}
+]]></code>
+This sample shows how to call GetTrainedModels with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+foreach (ProjectTrainedModel item in client.GetTrainedModels("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetTrainedModelsAsync(string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetTrainedModelsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+await foreach (BinaryData item in client.GetTrainedModelsAsync("<projectName>", null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("label").ToString());
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
+    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+    Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
+}
+]]></code>
+This sample shows how to call GetTrainedModelsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+await foreach (BinaryData item in client.GetTrainedModelsAsync("<projectName>", 1234, 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("label").ToString());
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
+    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+    Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetTrainedModels(string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetTrainedModels and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+foreach (BinaryData item in client.GetTrainedModels("<projectName>", null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("label").ToString());
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
+    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+    Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
+}
+]]></code>
+This sample shows how to call GetTrainedModels with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+foreach (BinaryData item in client.GetTrainedModels("<projectName>", 1234, 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("label").ToString());
+    Console.WriteLine(result.GetProperty("modelId").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainingDurationInSeconds").ToString());
+    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+    Console.WriteLine(result.GetProperty("modelTrainingConfigVersion").ToString());
+    Console.WriteLine(result.GetProperty("hasSnapshot").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetModelEvaluationResultsAsync(string,string,StringIndexType,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetModelEvaluationResultsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+await foreach (UtteranceEvaluationResult item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit))
+{
+}
+]]></code>
+This sample shows how to call GetModelEvaluationResultsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+await foreach (UtteranceEvaluationResult item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetModelEvaluationResults(string,string,StringIndexType,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetModelEvaluationResults.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+foreach (UtteranceEvaluationResult item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit))
+{
+}
+]]></code>
+This sample shows how to call GetModelEvaluationResults with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+foreach (UtteranceEvaluationResult item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetModelEvaluationResultsAsync(string,string,string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetModelEvaluationResultsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+await foreach (BinaryData item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("text").ToString());
+    Console.WriteLine(result.GetProperty("language").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("category").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("offset").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("length").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("category").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("offset").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("length").ToString());
+    Console.WriteLine(result.GetProperty("intentsResult").GetProperty("expectedIntent").ToString());
+    Console.WriteLine(result.GetProperty("intentsResult").GetProperty("predictedIntent").ToString());
+}
+]]></code>
+This sample shows how to call GetModelEvaluationResultsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+await foreach (BinaryData item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("text").ToString());
+    Console.WriteLine(result.GetProperty("language").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("category").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("offset").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("length").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("category").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("offset").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("length").ToString());
+    Console.WriteLine(result.GetProperty("intentsResult").GetProperty("expectedIntent").ToString());
+    Console.WriteLine(result.GetProperty("intentsResult").GetProperty("predictedIntent").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetModelEvaluationResults(string,string,string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetModelEvaluationResults and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+foreach (BinaryData item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("text").ToString());
+    Console.WriteLine(result.GetProperty("language").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("category").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("offset").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("length").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("category").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("offset").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("length").ToString());
+    Console.WriteLine(result.GetProperty("intentsResult").GetProperty("expectedIntent").ToString());
+    Console.WriteLine(result.GetProperty("intentsResult").GetProperty("predictedIntent").ToString());
+}
+]]></code>
+This sample shows how to call GetModelEvaluationResults with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+foreach (BinaryData item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("text").ToString());
+    Console.WriteLine(result.GetProperty("language").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("category").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("offset").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("expectedEntities")[0].GetProperty("length").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("category").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("offset").ToString());
+    Console.WriteLine(result.GetProperty("entitiesResult").GetProperty("predictedEntities")[0].GetProperty("length").ToString());
+    Console.WriteLine(result.GetProperty("intentsResult").GetProperty("expectedIntent").ToString());
+    Console.WriteLine(result.GetProperty("intentsResult").GetProperty("predictedIntent").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="EvaluateModelAsync(WaitUntil,string,string,EvaluationDetails,CancellationToken)">
+      <example>
+This sample shows how to call EvaluateModelAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+EvaluationDetails body = new EvaluationDetails();
+Operation<EvaluationJobResult> operation = await client.EvaluateModelAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
+EvaluationJobResult responseData = operation.Value;
+]]></code>
+This sample shows how to call EvaluateModelAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+EvaluationDetails body = new EvaluationDetails
+{
+    Kind = AnalyzeConversationEvaluationKind.Percentage,
+    TrainingSplitPercentage = 1234,
+    TestingSplitPercentage = 1234,
+};
+Operation<EvaluationJobResult> operation = await client.EvaluateModelAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
+EvaluationJobResult responseData = operation.Value;
+]]></code></example>
+    </member>
+    <member name="EvaluateModel(WaitUntil,string,string,EvaluationDetails,CancellationToken)">
+      <example>
+This sample shows how to call EvaluateModel.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+EvaluationDetails body = new EvaluationDetails();
+Operation<EvaluationJobResult> operation = client.EvaluateModel(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
+EvaluationJobResult responseData = operation.Value;
+]]></code>
+This sample shows how to call EvaluateModel with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+EvaluationDetails body = new EvaluationDetails
+{
+    Kind = AnalyzeConversationEvaluationKind.Percentage,
+    TrainingSplitPercentage = 1234,
+    TestingSplitPercentage = 1234,
+};
+Operation<EvaluationJobResult> operation = client.EvaluateModel(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
+EvaluationJobResult responseData = operation.Value;
+]]></code></example>
+    </member>
+    <member name="EvaluateModelAsync(WaitUntil,string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call EvaluateModelAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Operation<BinaryData> operation = await client.EvaluateModelAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("evaluationDetails").ToString());
+Console.WriteLine(result.GetProperty("modelLabel").ToString());
+Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
+Console.WriteLine(result.GetProperty("percentComplete").ToString());
+]]></code>
+This sample shows how to call EvaluateModelAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    kind = "percentage",
+    trainingSplitPercentage = 1234,
+    testingSplitPercentage = 1234,
+});
+Operation<BinaryData> operation = await client.EvaluateModelAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("evaluationDetails").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("evaluationDetails").GetProperty("trainingSplitPercentage").ToString());
+Console.WriteLine(result.GetProperty("evaluationDetails").GetProperty("testingSplitPercentage").ToString());
+Console.WriteLine(result.GetProperty("modelLabel").ToString());
+Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
+Console.WriteLine(result.GetProperty("percentComplete").ToString());
+]]></code></example>
+    </member>
+    <member name="EvaluateModel(WaitUntil,string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call EvaluateModel and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new object());
+Operation<BinaryData> operation = client.EvaluateModel(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("evaluationDetails").ToString());
+Console.WriteLine(result.GetProperty("modelLabel").ToString());
+Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
+Console.WriteLine(result.GetProperty("percentComplete").ToString());
+]]></code>
+This sample shows how to call EvaluateModel with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    kind = "percentage",
+    trainingSplitPercentage = 1234,
+    testingSplitPercentage = 1234,
+});
+Operation<BinaryData> operation = client.EvaluateModel(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", content);
+BinaryData responseData = operation.Value;
+
+JsonElement result = JsonDocument.Parse(responseData.ToStream()).RootElement;
+Console.WriteLine(result.GetProperty("evaluationDetails").GetProperty("kind").ToString());
+Console.WriteLine(result.GetProperty("evaluationDetails").GetProperty("trainingSplitPercentage").ToString());
+Console.WriteLine(result.GetProperty("evaluationDetails").GetProperty("testingSplitPercentage").ToString());
+Console.WriteLine(result.GetProperty("modelLabel").ToString());
+Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
+Console.WriteLine(result.GetProperty("percentComplete").ToString());
+]]></code></example>
+    </member>
+    <member name="LoadSnapshotAsync(WaitUntil,string,string,RequestContext)">
+      <example>
+This sample shows how to call LoadSnapshotAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Operation operation = await client.LoadSnapshotAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
+]]></code>
+This sample shows how to call LoadSnapshotAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Operation operation = await client.LoadSnapshotAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
+]]></code></example>
+    </member>
+    <member name="LoadSnapshot(WaitUntil,string,string,RequestContext)">
+      <example>
+This sample shows how to call LoadSnapshot.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Operation operation = client.LoadSnapshot(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
+]]></code>
+This sample shows how to call LoadSnapshot with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ModelsConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetModelsConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+
+Operation operation = client.LoadSnapshot(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
+]]></code></example>
+    </member>
+  </members>
+</doc>

@@ -97,7 +97,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             {
                 return null;
             }
-            ProjectKind projectKind = default;
+            AnalyzeConversationProjectKind projectKind = default;
             ProjectSettings settings = default;
             string storageInputContainerName = default;
             string projectName = default;
@@ -110,7 +110,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             {
                 if (property.NameEquals("projectKind"u8))
                 {
-                    projectKind = new ProjectKind(property.Value.GetString());
+                    projectKind = new AnalyzeConversationProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("settings"u8))

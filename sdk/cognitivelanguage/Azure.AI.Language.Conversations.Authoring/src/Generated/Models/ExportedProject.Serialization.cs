@@ -85,7 +85,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             string projectFileVersion = default;
             StringIndexType stringIndexType = default;
             CreateProjectDetails metadata = default;
-            ExportedProjectAssets assets = default;
+            ExportedProjectAsset assets = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     {
                         continue;
                     }
-                    assets = ExportedProjectAssets.DeserializeExportedProjectAssets(property.Value, options);
+                    assets = ExportedProjectAsset.DeserializeExportedProjectAsset(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

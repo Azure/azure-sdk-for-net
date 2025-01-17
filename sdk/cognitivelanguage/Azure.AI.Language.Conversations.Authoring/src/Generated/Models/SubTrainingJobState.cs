@@ -48,7 +48,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> Initializes a new instance of <see cref="SubTrainingJobState"/>. </summary>
         /// <param name="percentComplete"> Represents progress percentage. </param>
         /// <param name="status"> Represents the status of the sub-operation. </param>
-        internal SubTrainingJobState(int percentComplete, JobStatus status)
+        internal SubTrainingJobState(int percentComplete, AnalyzeConversationJobStatus status)
         {
             PercentComplete = percentComplete;
             Status = status;
@@ -56,15 +56,15 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
         /// <summary> Initializes a new instance of <see cref="SubTrainingJobState"/>. </summary>
         /// <param name="percentComplete"> Represents progress percentage. </param>
-        /// <param name="startDateTime"> Represents the start date time. </param>
-        /// <param name="endDateTime"> Represents the end date time. </param>
+        /// <param name="startedOn"> Represents the start date time. </param>
+        /// <param name="endedOn"> Represents the end date time. </param>
         /// <param name="status"> Represents the status of the sub-operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubTrainingJobState(int percentComplete, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, JobStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SubTrainingJobState(int percentComplete, DateTimeOffset? startedOn, DateTimeOffset? endedOn, AnalyzeConversationJobStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PercentComplete = percentComplete;
-            StartDateTime = startDateTime;
-            EndDateTime = endDateTime;
+            StartedOn = startedOn;
+            EndedOn = endedOn;
             Status = status;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -77,10 +77,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> Represents progress percentage. </summary>
         public int PercentComplete { get; }
         /// <summary> Represents the start date time. </summary>
-        public DateTimeOffset? StartDateTime { get; }
+        public DateTimeOffset? StartedOn { get; }
         /// <summary> Represents the end date time. </summary>
-        public DateTimeOffset? EndDateTime { get; }
+        public DateTimeOffset? EndedOn { get; }
         /// <summary> Represents the status of the sub-operation. </summary>
-        public JobStatus Status { get; }
+        public AnalyzeConversationJobStatus Status { get; }
     }
 }

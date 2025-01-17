@@ -47,27 +47,27 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
         /// <summary> Initializes a new instance of <see cref="AssignedProjectDeploymentMetadata"/>. </summary>
         /// <param name="deploymentName"> Represents the deployment name. </param>
-        /// <param name="lastDeployedDateTime"> Represents deployment last deployed time. </param>
+        /// <param name="lastDeployedOn"> Represents deployment last deployed time. </param>
         /// <param name="deploymentExpirationDate"> Represents deployment expiration date in the runtime. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="deploymentName"/> is null. </exception>
-        internal AssignedProjectDeploymentMetadata(string deploymentName, DateTimeOffset lastDeployedDateTime, DateTimeOffset deploymentExpirationDate)
+        internal AssignedProjectDeploymentMetadata(string deploymentName, DateTimeOffset lastDeployedOn, DateTimeOffset deploymentExpirationDate)
         {
             Argument.AssertNotNull(deploymentName, nameof(deploymentName));
 
             DeploymentName = deploymentName;
-            LastDeployedDateTime = lastDeployedDateTime;
+            LastDeployedOn = lastDeployedOn;
             DeploymentExpirationDate = deploymentExpirationDate;
         }
 
         /// <summary> Initializes a new instance of <see cref="AssignedProjectDeploymentMetadata"/>. </summary>
         /// <param name="deploymentName"> Represents the deployment name. </param>
-        /// <param name="lastDeployedDateTime"> Represents deployment last deployed time. </param>
+        /// <param name="lastDeployedOn"> Represents deployment last deployed time. </param>
         /// <param name="deploymentExpirationDate"> Represents deployment expiration date in the runtime. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssignedProjectDeploymentMetadata(string deploymentName, DateTimeOffset lastDeployedDateTime, DateTimeOffset deploymentExpirationDate, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssignedProjectDeploymentMetadata(string deploymentName, DateTimeOffset lastDeployedOn, DateTimeOffset deploymentExpirationDate, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             DeploymentName = deploymentName;
-            LastDeployedDateTime = lastDeployedDateTime;
+            LastDeployedOn = lastDeployedOn;
             DeploymentExpirationDate = deploymentExpirationDate;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -80,7 +80,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> Represents the deployment name. </summary>
         public string DeploymentName { get; }
         /// <summary> Represents deployment last deployed time. </summary>
-        public DateTimeOffset LastDeployedDateTime { get; }
+        public DateTimeOffset LastDeployedOn { get; }
         /// <summary> Represents deployment expiration date in the runtime. </summary>
         public DateTimeOffset DeploymentExpirationDate { get; }
     }

@@ -46,39 +46,39 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TrainingJobState"/>. </summary>
-        /// <param name="createdDateTime"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
         /// <param name="status"> The job status. </param>
         /// <param name="result"> Represents training tasks detailed result. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="result"/> is null. </exception>
-        internal TrainingJobState(DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, JobStatus status, TrainingJobResult result)
+        internal TrainingJobState(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, AnalyzeConversationJobStatus status, TrainingJobResult result)
         {
             Argument.AssertNotNull(result, nameof(result));
 
-            CreatedDateTime = createdDateTime;
-            LastUpdatedDateTime = lastUpdatedDateTime;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
             Status = status;
             Warnings = new ChangeTrackingList<AuthoringConversationsWarning>();
-            Errors = new ChangeTrackingList<AuthoringConversationsError>();
+            Errors = new ChangeTrackingList<ResponseError>();
             Result = result;
         }
 
         /// <summary> Initializes a new instance of <see cref="TrainingJobState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdDateTime"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedDateTime"> The last date time the job was updated. </param>
-        /// <param name="expirationDateTime"> The expiration date time of the job. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
+        /// <param name="expiresOn"> The expiration date time of the job. </param>
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="result"> Represents training tasks detailed result. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrainingJobState(string jobId, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, DateTimeOffset? expirationDateTime, JobStatus status, IReadOnlyList<AuthoringConversationsWarning> warnings, IReadOnlyList<AuthoringConversationsError> errors, TrainingJobResult result, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrainingJobState(string jobId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DateTimeOffset? expiresOn, AnalyzeConversationJobStatus status, IReadOnlyList<AuthoringConversationsWarning> warnings, IReadOnlyList<ResponseError> errors, TrainingJobResult result, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobId = jobId;
-            CreatedDateTime = createdDateTime;
-            LastUpdatedDateTime = lastUpdatedDateTime;
-            ExpirationDateTime = expirationDateTime;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
+            ExpiresOn = expiresOn;
             Status = status;
             Warnings = warnings;
             Errors = errors;
@@ -94,17 +94,17 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> The job ID. </summary>
         public string JobId { get; }
         /// <summary> The creation date time of the job. </summary>
-        public DateTimeOffset CreatedDateTime { get; }
+        public DateTimeOffset CreatedOn { get; }
         /// <summary> The last date time the job was updated. </summary>
-        public DateTimeOffset LastUpdatedDateTime { get; }
+        public DateTimeOffset LastUpdatedOn { get; }
         /// <summary> The expiration date time of the job. </summary>
-        public DateTimeOffset? ExpirationDateTime { get; }
+        public DateTimeOffset? ExpiresOn { get; }
         /// <summary> The job status. </summary>
-        public JobStatus Status { get; }
+        public AnalyzeConversationJobStatus Status { get; }
         /// <summary> The warnings that were encountered while executing the job. </summary>
         public IReadOnlyList<AuthoringConversationsWarning> Warnings { get; }
         /// <summary> The errors encountered while executing the job. </summary>
-        public IReadOnlyList<AuthoringConversationsError> Errors { get; }
+        public IReadOnlyList<ResponseError> Errors { get; }
         /// <summary> Represents training tasks detailed result. </summary>
         public TrainingJobResult Result { get; }
     }

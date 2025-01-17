@@ -50,10 +50,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 writer.WritePropertyName("evaluationStatus"u8);
                 writer.WriteObjectValue(EvaluationStatus, options);
             }
-            if (Optional.IsDefined(EstimatedEndDateTime))
+            if (Optional.IsDefined(EstimatedEndOn))
             {
-                writer.WritePropertyName("estimatedEndDateTime"u8);
-                writer.WriteStringValue(EstimatedEndDateTime.Value, "O");
+                writer.WritePropertyName("estimatedEndOn"u8);
+                writer.WriteStringValue(EstimatedEndOn.Value, "O");
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,10 +94,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
             string modelLabel = default;
             string trainingConfigVersion = default;
-            TrainingMode? trainingMode = default;
+            AnalyzeConversationTrainingMode? trainingMode = default;
             SubTrainingJobState trainingStatus = default;
             SubTrainingJobState evaluationStatus = default;
-            DateTimeOffset? estimatedEndDateTime = default;
+            DateTimeOffset? estimatedEndOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     {
                         continue;
                     }
-                    trainingMode = new TrainingMode(property.Value.GetString());
+                    trainingMode = new AnalyzeConversationTrainingMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("trainingStatus"u8))
@@ -135,13 +135,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     evaluationStatus = SubTrainingJobState.DeserializeSubTrainingJobState(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("estimatedEndDateTime"u8))
+                if (property.NameEquals("estimatedEndOn"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    estimatedEndDateTime = property.Value.GetDateTimeOffset("O");
+                    estimatedEndOn = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -156,7 +156,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 trainingMode,
                 trainingStatus,
                 evaluationStatus,
-                estimatedEndDateTime,
+                estimatedEndOn,
                 serializedAdditionalRawData);
         }
 

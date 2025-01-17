@@ -93,7 +93,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             {
                 return null;
             }
-            ConfusionMatrix confusionMatrix = default;
+            AnalyzeConversationConfusionMatrix confusionMatrix = default;
             IReadOnlyDictionary<string, IntentEvaluationSummary> intents = default;
             float microF1 = default;
             float microPrecision = default;
@@ -107,7 +107,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             {
                 if (property.NameEquals("confusionMatrix"u8))
                 {
-                    confusionMatrix = ConfusionMatrix.DeserializeConfusionMatrix(property.Value, options);
+                    confusionMatrix = AnalyzeConversationConfusionMatrix.DeserializeAnalyzeConversationConfusionMatrix(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("intents"u8))

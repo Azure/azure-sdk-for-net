@@ -67,16 +67,16 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="trainingMode"> Represents the mode of the training operation. </param>
         /// <param name="trainingStatus"> Represents the model training status. </param>
         /// <param name="evaluationStatus"> Represents model evaluation status. </param>
-        /// <param name="estimatedEndDateTime"> Represents the estimated end date time for training and evaluation. </param>
+        /// <param name="estimatedEndOn"> Represents the estimated end date time for training and evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrainingJobResult(string modelLabel, string trainingConfigVersion, TrainingMode? trainingMode, SubTrainingJobState trainingStatus, SubTrainingJobState evaluationStatus, DateTimeOffset? estimatedEndDateTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrainingJobResult(string modelLabel, string trainingConfigVersion, AnalyzeConversationTrainingMode? trainingMode, SubTrainingJobState trainingStatus, SubTrainingJobState evaluationStatus, DateTimeOffset? estimatedEndOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelLabel = modelLabel;
             TrainingConfigVersion = trainingConfigVersion;
             TrainingMode = trainingMode;
             TrainingStatus = trainingStatus;
             EvaluationStatus = evaluationStatus;
-            EstimatedEndDateTime = estimatedEndDateTime;
+            EstimatedEndOn = estimatedEndOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -90,12 +90,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> Represents training config version. </summary>
         public string TrainingConfigVersion { get; }
         /// <summary> Represents the mode of the training operation. </summary>
-        public TrainingMode? TrainingMode { get; }
+        public AnalyzeConversationTrainingMode? TrainingMode { get; }
         /// <summary> Represents the model training status. </summary>
         public SubTrainingJobState TrainingStatus { get; }
         /// <summary> Represents model evaluation status. </summary>
         public SubTrainingJobState EvaluationStatus { get; }
         /// <summary> Represents the estimated end date time for training and evaluation. </summary>
-        public DateTimeOffset? EstimatedEndDateTime { get; }
+        public DateTimeOffset? EstimatedEndOn { get; }
     }
 }
