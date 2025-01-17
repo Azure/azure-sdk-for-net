@@ -356,21 +356,7 @@ namespace Azure.Storage.DataMovement.Blobs
             return new BlobDestinationCheckpointDetails(
                 isBlobTypeSet: true,
                 blobType: BlobType.Block,
-                isContentTypeSet: _options?._isContentTypeSet ?? false,
-                contentType: _options?.ContentType,
-                isContentEncodingSet: _options?._isContentEncodingSet ?? false,
-                contentEncoding: _options?.ContentEncoding,
-                isContentLanguageSet: _options?._isContentLanguageSet ?? false,
-                contentLanguage: _options?.ContentLanguage,
-                isContentDispositionSet: _options?._isContentDispositionSet ?? false,
-                contentDisposition: _options?.ContentDisposition,
-                isCacheControlSet: _options?._isCacheControlSet ?? false,
-                cacheControl: _options?.CacheControl,
-                accessTier: _options?.AccessTier,
-                isMetadataSet: _options?._isMetadataSet ?? false,
-                metadata: _options?.Metadata,
-                preserveTags: true,
-                tags: default);
+                blobOptions: _options);
         }
 
         // no-op for get permissions

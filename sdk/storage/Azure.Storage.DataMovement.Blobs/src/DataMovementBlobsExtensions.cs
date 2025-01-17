@@ -532,59 +532,28 @@ namespace Azure.Storage.DataMovement.Blobs
             }
         }
 
-        internal static BlobStorageResourceOptions GetBlobResourceOptions(
-            this BlobDestinationCheckpointDetails checkpointDetails)
-        {
-            return new()
-            {
-                Metadata = checkpointDetails.Metadata,
-                _isMetadataSet = checkpointDetails.IsMetadataSet,
-                CacheControl = checkpointDetails.CacheControl,
-                _isCacheControlSet = checkpointDetails.IsCacheControlSet,
-                ContentDisposition = checkpointDetails.ContentDisposition,
-                _isContentDispositionSet = checkpointDetails.IsContentDispositionSet,
-                ContentEncoding = checkpointDetails.ContentEncoding,
-                _isContentEncodingSet = checkpointDetails.IsContentEncodingSet,
-                ContentLanguage = checkpointDetails.ContentLanguage,
-                _isContentLanguageSet = checkpointDetails.IsContentLanguageSet,
-                ContentType = checkpointDetails.ContentType,
-                _isContentTypeSet = checkpointDetails.IsContentTypeSet,
-                AccessTier = checkpointDetails.AccessTierValue,
-            };
-        }
-
         internal static BlockBlobStorageResourceOptions GetBlockBlobResourceOptions(
             this BlobDestinationCheckpointDetails checkpointDetails)
-        {
-            BlobStorageResourceOptions baseOptions = checkpointDetails.GetBlobResourceOptions();
-            return new BlockBlobStorageResourceOptions(baseOptions);
-        }
+            => new BlockBlobStorageResourceOptions(checkpointDetails);
 
         internal static PageBlobStorageResourceOptions GetPageBlobResourceOptions(
             this BlobDestinationCheckpointDetails checkpointDetails)
-        {
-            BlobStorageResourceOptions baseOptions = checkpointDetails.GetBlobResourceOptions();
-            return new PageBlobStorageResourceOptions(baseOptions);
-        }
+            => new PageBlobStorageResourceOptions(checkpointDetails);
 
         internal static AppendBlobStorageResourceOptions GetAppendBlobResourceOptions(
             this BlobDestinationCheckpointDetails checkpointDetails)
-        {
-            BlobStorageResourceOptions baseOptions = checkpointDetails.GetBlobResourceOptions();
-            return new AppendBlobStorageResourceOptions(baseOptions);
-        }
+            => new AppendBlobStorageResourceOptions(checkpointDetails);
 
         internal static BlobStorageResourceContainerOptions GetBlobContainerOptions(
             this BlobDestinationCheckpointDetails checkpointDetails,
             string directoryPrefix)
         {
-            BlobStorageResourceOptions baseOptions = checkpointDetails.GetBlobResourceOptions();
             return new BlobStorageResourceContainerOptions()
             {
                 BlobType = default,
                 _isBlobTypeSet = false,
                 BlobDirectoryPrefix = directoryPrefix,
-                BlobOptions = baseOptions,
+                BlobOptions = new(checkpointDetails),
             };
         }
 
@@ -594,22 +563,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 BlobType = options?.BlobType,
                 _isBlobTypeSet = options?._isBlobTypeSet ?? false,
                 BlobDirectoryPrefix = options?.BlobDirectoryPrefix,
-                BlobOptions = new BlobStorageResourceOptions()
-                {
-                    Metadata = options?.BlobOptions?.Metadata,
-                    _isMetadataSet = options?.BlobOptions?._isMetadataSet ?? false,
-                    CacheControl = options?.BlobOptions?.CacheControl,
-                    _isCacheControlSet = options?.BlobOptions?._isCacheControlSet ?? false,
-                    ContentEncoding = options?.BlobOptions?.ContentEncoding,
-                    _isContentEncodingSet = options?.BlobOptions?._isContentEncodingSet ?? false,
-                    ContentDisposition = options?.BlobOptions?.ContentDisposition,
-                    _isContentDispositionSet = options?.BlobOptions?._isContentDispositionSet ?? false,
-                    ContentLanguage = options?.BlobOptions?.ContentLanguage,
-                    _isContentLanguageSet = options?.BlobOptions?._isContentLanguageSet ?? false,
-                    ContentType = options?.BlobOptions?.ContentType,
-                    _isContentTypeSet = options?.BlobOptions?._isContentTypeSet ?? false,
-                    AccessTier = options?.BlobOptions?.AccessTier,
-                }
+                BlobOptions = new BlobStorageResourceOptions(options?.BlobOptions)
             };
 
         internal static StorageResourceItemProperties ToResourceProperties(this BlobItem blobItem)

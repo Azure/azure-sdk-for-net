@@ -219,24 +219,7 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
-            => new BlobDestinationCheckpointDetails(
-                isBlobTypeSet: _options?._isBlobTypeSet ?? false,
-                blobType: _options?.BlobType,
-                isContentTypeSet: _options?.BlobOptions?._isContentTypeSet ?? false,
-                contentType: _options?.BlobOptions?.ContentType,
-                isContentEncodingSet: _options?.BlobOptions?._isContentEncodingSet ?? false,
-                contentEncoding: _options?.BlobOptions?.ContentEncoding,
-                isContentLanguageSet: _options?.BlobOptions?._isContentLanguageSet ?? false,
-                contentLanguage: _options?.BlobOptions?.ContentLanguage,
-                isContentDispositionSet: _options?.BlobOptions?._isContentDispositionSet ?? false,
-                contentDisposition: _options?.BlobOptions?.ContentDisposition,
-                isCacheControlSet: _options?.BlobOptions?._isCacheControlSet ?? false,
-                cacheControl: _options?.BlobOptions?.CacheControl,
-                accessTier: _options?.BlobOptions?.AccessTier,
-                isMetadataSet: _options?.BlobOptions?._isMetadataSet ?? false,
-                metadata: _options?.BlobOptions?.Metadata,
-                preserveTags: true,
-                tags: default);
+            => new BlobDestinationCheckpointDetails(_options);
 
         private string ApplyOptionalPrefix(string path)
             => IsDirectory

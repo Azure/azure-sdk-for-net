@@ -10,7 +10,7 @@ namespace Azure.Storage.DataMovement.Blobs
     /// </summary>
     public class BlobStorageResourceContainerOptions
     {
-        private BlobType _blobType = default;
+        private BlobType? _blobType = default;
         internal bool _isBlobTypeSet = false;
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace Azure.Storage.DataMovement.Blobs
             get => _blobType;
             set
             {
-                _blobType = value ?? default;
+                _blobType = value;
                 _isBlobTypeSet = true;
             }
         }

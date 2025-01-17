@@ -65,6 +65,33 @@ namespace Azure.Storage.DataMovement.Blobs
 
         public override int Length => CalculateLength();
 
+        public BlobDestinationCheckpointDetails(BlobStorageResourceContainerOptions options) : this(
+            isBlobTypeSet: options?._isBlobTypeSet ?? false,
+            blobType: options?.BlobType,
+            blobOptions: options?.BlobOptions)
+        { }
+
+        public BlobDestinationCheckpointDetails(bool isBlobTypeSet, BlobType? blobType, BlobStorageResourceOptions blobOptions)
+            : this(
+                isBlobTypeSet: isBlobTypeSet,
+                blobType: blobType,
+                isContentTypeSet: blobOptions?._isContentTypeSet ?? false,
+                contentType: blobOptions?.ContentType,
+                isContentEncodingSet: blobOptions?._isContentEncodingSet ?? false,
+                contentEncoding: blobOptions?.ContentEncoding,
+                isContentLanguageSet: blobOptions?._isContentLanguageSet ?? false,
+                contentLanguage: blobOptions?.ContentLanguage,
+                isContentDispositionSet: blobOptions?._isContentDispositionSet ?? false,
+                contentDisposition: blobOptions?.ContentDisposition,
+                isCacheControlSet: blobOptions?._isCacheControlSet ?? false,
+                cacheControl: blobOptions?.CacheControl,
+                accessTier: blobOptions?.AccessTier,
+                isMetadataSet: blobOptions?._isMetadataSet ?? false,
+                metadata: blobOptions?.Metadata,
+                preserveTags: true,
+                tags: default)
+        { }
+
         public BlobDestinationCheckpointDetails(
             bool isBlobTypeSet,
             BlobType? blobType,

@@ -53,6 +53,24 @@ namespace Azure.Storage.DataMovement.Blobs
             _isContentTypeSet = other?._isContentTypeSet ?? false;
             AccessTier = other?.AccessTier;
         }
+
+        internal BlobStorageResourceOptions(BlobDestinationCheckpointDetails checkpointDetails)
+        {
+            Metadata = checkpointDetails.Metadata;
+            _isMetadataSet = checkpointDetails.IsMetadataSet;
+            CacheControl = checkpointDetails.CacheControl;
+            _isCacheControlSet = checkpointDetails.IsCacheControlSet;
+            ContentDisposition = checkpointDetails.ContentDisposition;
+            _isContentDispositionSet = checkpointDetails.IsContentDispositionSet;
+            ContentEncoding = checkpointDetails.ContentEncoding;
+            _isContentEncodingSet = checkpointDetails.IsContentEncodingSet;
+            ContentLanguage = checkpointDetails.ContentLanguage;
+            _isContentLanguageSet = checkpointDetails.IsContentLanguageSet;
+            ContentType = checkpointDetails.ContentType;
+            _isContentTypeSet = checkpointDetails.IsContentTypeSet;
+            AccessTier = checkpointDetails.AccessTierValue;
+        }
+
         /// <summary>
         /// Optional. For transferring metadata from the source to the destination storage resource.
         ///
