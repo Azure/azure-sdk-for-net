@@ -80,11 +80,20 @@
 # ServiceLabel: %AAD
 # ServiceOwners:                                                   @adamedx
 
+# PRLabel: %AI Model Inference %AI Projects
+/sdk/ai/                                                           @trangevi @dargilco @jhakulin @glharper @jhakulin
+
 # PRLabel: %AI Model Inference
-/sdk/ai/                                                           @trangevi @dargilco @jhakulin @glharper
+/sdk/ai/Azure.AI.Inference                                         @trangevi @dargilco @jhakulin @glharper
 
 # ServiceLabel: %AI Model Inference
 # ServiceOwners:                                                   @trangevi @dargilco @jhakulin @glharper
+
+# PRLabel: %AI Projects
+/sdk/ai/Azure.AI.Projects                                          @jhakulin
+
+# ServiceLabel: %AI Projects
+# ServiceOwners:                                                   @dargilco @jhakulin
 
 # ServiceLabel: %AKS
 # ServiceOwners:                                                   @Azure/aks-pm
@@ -572,7 +581,7 @@
 
 # ServiceLabel: %KeyVault
 # AzureSdkOwners:                                                  @JonathanCrd
-# ServiceOwners:                                                   @RandalliLama @jlichwa
+# ServiceOwners:                                                   @RandalliLama
 
 # ServiceLabel: %Kubernetes Configuration
 # ServiceOwners:                                                   @NarayanThiru
@@ -1037,10 +1046,10 @@
 # ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %New Relic
-/sdk/newrelicobservability/Azure.ResourceManager.*/                @dipeshbhakat-microsoft @vipray-ms
+/sdk/newrelicobservability/Azure.ResourceManager.*/                @vipray-ms
 
 # ServiceLabel: %New Relic %Mgmt
-# ServiceOwners:                                                   @dipeshbhakat-microsoft @vipray-ms
+# ServiceOwners:                                                   @vipray-ms
 
 # PRLabel: %Nginx
 /sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti

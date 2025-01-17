@@ -97,8 +97,8 @@ namespace Azure.Storage.DataMovement
                 new TransferStatus(),
                 source.Uri.ToSanitizedString(),
                 destination.Uri.ToSanitizedString(),
-                source.GetSourceCheckpointData(),
-                destination.GetDestinationCheckpointData());
+                source.GetSourceCheckpointDetails(),
+                destination.GetDestinationCheckpointDetails());
 
             using (Stream headerStream = new MemoryStream())
             {
