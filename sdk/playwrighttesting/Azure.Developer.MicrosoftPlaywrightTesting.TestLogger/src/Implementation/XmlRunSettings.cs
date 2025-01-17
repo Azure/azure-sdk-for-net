@@ -42,7 +42,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
         private static XmlDocument ParseXmlSettings(string? settingsXml)
         {
             XmlDocument xmlDocument = new();
-            xmlDocument.LoadXml(settingsXml);
+            xmlDocument.LoadXml(settingsXml!); // this will throw argument null exception if settingsXml is null
             return xmlDocument;
         }
     }

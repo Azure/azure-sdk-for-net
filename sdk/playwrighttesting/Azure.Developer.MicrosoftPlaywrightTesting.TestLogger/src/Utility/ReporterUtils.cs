@@ -40,6 +40,12 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
                 return BitConverter.ToString(hash).Replace("-", string.Empty).ToLower();
             }
         }
+        internal static string? TruncateData(string? value, int maxLength)
+        {
+            if (string.IsNullOrEmpty(value))
+                return value;
+            return value?.Length <= maxLength ? value : value?.Substring(0, maxLength);
+        }
 
         internal static string GetRunName(CIInfo ciInfo)
         {
@@ -177,7 +183,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility
                 Uri url = new Uri(sasUri);
                 string query = url.Query;
                 var queryParams = System.Web.HttpUtility.ParseQueryString(query);
-                string expiryTime = queryParams["se"]; // 'se' is the query parameter for the expiry time
+                string? expiryTime = queryParams["se"]; // 'se' is the query parameter for the expiry time
 
                 if (!string.IsNullOrEmpty(expiryTime))
                 {

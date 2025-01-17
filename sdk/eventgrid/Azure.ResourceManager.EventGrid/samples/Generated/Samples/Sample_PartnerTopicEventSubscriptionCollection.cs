@@ -18,6 +18,54 @@ namespace Azure.ResourceManager.EventGrid.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_PartnerTopicEventSubscriptionsCreateOrUpdate()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerTopicEventSubscriptions_CreateOrUpdate.json
+            // this example is just showing the usage of "PartnerTopicEventSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PartnerTopicResource created on azure
+            // for more information of creating PartnerTopicResource, please refer to the document of PartnerTopicResource
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string resourceGroupName = "examplerg";
+            string partnerTopicName = "examplePartnerTopic1";
+            ResourceIdentifier partnerTopicResourceId = PartnerTopicResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, partnerTopicName);
+            PartnerTopicResource partnerTopic = client.GetPartnerTopicResource(partnerTopicResourceId);
+
+            // get the collection of this PartnerTopicEventSubscriptionResource
+            PartnerTopicEventSubscriptionCollection collection = partnerTopic.GetPartnerTopicEventSubscriptions();
+
+            // invoke the operation
+            string eventSubscriptionName = "exampleEventSubscriptionName1";
+            EventGridSubscriptionData data = new EventGridSubscriptionData
+            {
+                Destination = new WebHookEventSubscriptionDestination
+                {
+                    Endpoint = new Uri("https://requestb.in/15ksip71"),
+                },
+                Filter = new EventSubscriptionFilter
+                {
+                    SubjectBeginsWith = "ExamplePrefix",
+                    SubjectEndsWith = "ExampleSuffix",
+                    IsSubjectCaseSensitive = false,
+                },
+            };
+            ArmOperation<PartnerTopicEventSubscriptionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, eventSubscriptionName, data);
+            PartnerTopicEventSubscriptionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            EventGridSubscriptionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PartnerTopicEventSubscriptionsGet()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerTopicEventSubscriptions_Get.json
@@ -48,6 +96,42 @@ namespace Azure.ResourceManager.EventGrid.Samples
             EventGridSubscriptionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_PartnerTopicEventSubscriptionsListByPartnerTopic()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerTopicEventSubscriptions_ListByPartnerTopic.json
+            // this example is just showing the usage of "PartnerTopicEventSubscriptions_ListByPartnerTopic" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PartnerTopicResource created on azure
+            // for more information of creating PartnerTopicResource, please refer to the document of PartnerTopicResource
+            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
+            string resourceGroupName = "examplerg";
+            string partnerTopicName = "examplePartnerTopic1";
+            ResourceIdentifier partnerTopicResourceId = PartnerTopicResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, partnerTopicName);
+            PartnerTopicResource partnerTopic = client.GetPartnerTopicResource(partnerTopicResourceId);
+
+            // get the collection of this PartnerTopicEventSubscriptionResource
+            PartnerTopicEventSubscriptionCollection collection = partnerTopic.GetPartnerTopicEventSubscriptions();
+
+            // invoke the operation and iterate over the result
+            await foreach (PartnerTopicEventSubscriptionResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                EventGridSubscriptionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -120,90 +204,6 @@ namespace Azure.ResourceManager.EventGrid.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_PartnerTopicEventSubscriptionsCreateOrUpdate()
-        {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerTopicEventSubscriptions_CreateOrUpdate.json
-            // this example is just showing the usage of "PartnerTopicEventSubscriptions_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PartnerTopicResource created on azure
-            // for more information of creating PartnerTopicResource, please refer to the document of PartnerTopicResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
-            string resourceGroupName = "examplerg";
-            string partnerTopicName = "examplePartnerTopic1";
-            ResourceIdentifier partnerTopicResourceId = PartnerTopicResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, partnerTopicName);
-            PartnerTopicResource partnerTopic = client.GetPartnerTopicResource(partnerTopicResourceId);
-
-            // get the collection of this PartnerTopicEventSubscriptionResource
-            PartnerTopicEventSubscriptionCollection collection = partnerTopic.GetPartnerTopicEventSubscriptions();
-
-            // invoke the operation
-            string eventSubscriptionName = "exampleEventSubscriptionName1";
-            EventGridSubscriptionData data = new EventGridSubscriptionData()
-            {
-                Destination = new WebHookEventSubscriptionDestination()
-                {
-                    Endpoint = new Uri("https://requestb.in/15ksip71"),
-                },
-                Filter = new EventSubscriptionFilter()
-                {
-                    SubjectBeginsWith = "ExamplePrefix",
-                    SubjectEndsWith = "ExampleSuffix",
-                    IsSubjectCaseSensitive = false,
-                },
-            };
-            ArmOperation<PartnerTopicEventSubscriptionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, eventSubscriptionName, data);
-            PartnerTopicEventSubscriptionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            EventGridSubscriptionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_PartnerTopicEventSubscriptionsListByPartnerTopic()
-        {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/PartnerTopicEventSubscriptions_ListByPartnerTopic.json
-            // this example is just showing the usage of "PartnerTopicEventSubscriptions_ListByPartnerTopic" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PartnerTopicResource created on azure
-            // for more information of creating PartnerTopicResource, please refer to the document of PartnerTopicResource
-            string subscriptionId = "8f6b6269-84f2-4d09-9e31-1127efcd1e40";
-            string resourceGroupName = "examplerg";
-            string partnerTopicName = "examplePartnerTopic1";
-            ResourceIdentifier partnerTopicResourceId = PartnerTopicResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, partnerTopicName);
-            PartnerTopicResource partnerTopic = client.GetPartnerTopicResource(partnerTopicResourceId);
-
-            // get the collection of this PartnerTopicEventSubscriptionResource
-            PartnerTopicEventSubscriptionCollection collection = partnerTopic.GetPartnerTopicEventSubscriptions();
-
-            // invoke the operation and iterate over the result
-            await foreach (PartnerTopicEventSubscriptionResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                EventGridSubscriptionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -1,14 +1,9 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
+## 1.0.2 (2025-01-20)
 
 ### Other Changes
+- Add NOT_VALIDATED to the list of terminal states for the file validation poller.
 
 ## 1.0.1 (2023-03-11)
 

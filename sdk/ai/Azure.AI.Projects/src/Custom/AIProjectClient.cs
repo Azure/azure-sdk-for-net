@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Linq;
 using Azure.AI.Inference;
 using Azure.Core;
 
@@ -12,7 +13,7 @@ namespace Azure.AI.Projects
     public partial class AIProjectClient
     {
         /// <summary> Initializes a new instance of AzureAIClient. </summary>
-        /// <param name="connectionString">The Azure AI Studio project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
+        /// <param name="connectionString">The Azure AI Foundry project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="connectionString"/> </exception>
@@ -23,7 +24,7 @@ namespace Azure.AI.Projects
         /// <summary>
         /// Initializes a new instance of AzureAIClient.
         /// </summary>
-        /// <param name="connectionString">The Azure AI Studio project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
+        /// <param name="connectionString">The Azure AI Foundry project connection string, in the form `endpoint;subscription_id;resource_group_name;project_name`.</param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="connectionString"/> is null. </exception>
@@ -65,9 +66,9 @@ namespace Azure.AI.Projects
             bool useServerlessConnection = Environment.GetEnvironmentVariable("USE_SERVERLESS_CONNECTION") == "true";
             ConnectionType connectionType = useServerlessConnection ? ConnectionType.Serverless : ConnectionType.AzureAIServices;
 
-            GetConnectionResponse connectionSecret = connectionsClient.GetDefaultConnection(connectionType, true);
+            ConnectionResponse connection = connectionsClient.GetDefaultConnection(connectionType, true);
 
-            if (connectionSecret.Properties is InternalConnectionPropertiesApiKeyAuth apiKeyAuthProperties)
+            if (connection.Properties is ConnectionPropertiesApiKeyAuth apiKeyAuthProperties)
             {
                 if (string.IsNullOrWhiteSpace(apiKeyAuthProperties.Target))
                 {
@@ -80,6 +81,14 @@ namespace Azure.AI.Projects
                 }
 
                 var credential = new AzureKeyCredential(apiKeyAuthProperties.Credentials.Key);
+                if (!useServerlessConnection)
+                {
+                    // Be sure to use the Azure resource name here, not the connection name. Connection name is something that
+                    // admins can pick when they manually create a new connection (or use bicep). Get the Azure resource name
+                    // from the end of the connection id.
+                    var azureResourceName = connection.Id.Split('/').Last();
+                    endpoint = new Uri($"https://{azureResourceName}.services.ai.azure.com/models");
+                }
                 return clientFactory(endpoint, credential);
             }
             else

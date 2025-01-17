@@ -27,22 +27,18 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpSimplifiedSolutionResource
             string scope = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpSimplifiedSolutionCollection collection = client.GetSelfHelpSimplifiedSolutions(scopeId);
+            SelfHelpSimplifiedSolutionCollection collection = client.GetSelfHelpSimplifiedSolutions(new ResourceIdentifier(scope));
 
             // invoke the operation
             string simplifiedSolutionsResourceName = "simplifiedSolutionsResourceName1";
-            SelfHelpSimplifiedSolutionData data = new SelfHelpSimplifiedSolutionData()
+            SelfHelpSimplifiedSolutionData data = new SelfHelpSimplifiedSolutionData
             {
                 SolutionId = "sampleSolutionId",
                 Parameters =
 {
-["resourceUri"] = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp",
+["resourceUri"] = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp"
 },
             };
             ArmOperation<SelfHelpSimplifiedSolutionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, simplifiedSolutionsResourceName, data);
@@ -67,13 +63,9 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpSimplifiedSolutionResource
             string scope = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpSimplifiedSolutionCollection collection = client.GetSelfHelpSimplifiedSolutions(scopeId);
+            SelfHelpSimplifiedSolutionCollection collection = client.GetSelfHelpSimplifiedSolutions(new ResourceIdentifier(scope));
 
             // invoke the operation
             string simplifiedSolutionsResourceName = "simplifiedSolutionsResourceName1";
@@ -98,13 +90,9 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpSimplifiedSolutionResource
             string scope = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpSimplifiedSolutionCollection collection = client.GetSelfHelpSimplifiedSolutions(scopeId);
+            SelfHelpSimplifiedSolutionCollection collection = client.GetSelfHelpSimplifiedSolutions(new ResourceIdentifier(scope));
 
             // invoke the operation
             string simplifiedSolutionsResourceName = "simplifiedSolutionsResourceName1";
@@ -125,13 +113,9 @@ namespace Azure.ResourceManager.SelfHelp.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this SelfHelpSimplifiedSolutionResource
             string scope = "subscriptions/mySubscription/resourcegroups/myresourceGroup/providers/Microsoft.KeyVault/vaults/test-keyvault-rp";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", scope));
-            SelfHelpSimplifiedSolutionCollection collection = client.GetSelfHelpSimplifiedSolutions(scopeId);
+            SelfHelpSimplifiedSolutionCollection collection = client.GetSelfHelpSimplifiedSolutions(new ResourceIdentifier(scope));
 
             // invoke the operation
             string simplifiedSolutionsResourceName = "simplifiedSolutionsResourceName1";

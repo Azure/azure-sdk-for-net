@@ -49,7 +49,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="ListConnectionsResponse"/>. </summary>
         /// <param name="value"> A list of connection list secrets. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal ListConnectionsResponse(IEnumerable<GetConnectionResponse> value)
+        internal ListConnectionsResponse(IEnumerable<ConnectionResponse> value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -59,7 +59,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="ListConnectionsResponse"/>. </summary>
         /// <param name="value"> A list of connection list secrets. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ListConnectionsResponse(IReadOnlyList<GetConnectionResponse> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListConnectionsResponse(IReadOnlyList<ConnectionResponse> value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -71,6 +71,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> A list of connection list secrets. </summary>
-        public IReadOnlyList<GetConnectionResponse> Value { get; }
+        public IReadOnlyList<ConnectionResponse> Value { get; }
     }
 }

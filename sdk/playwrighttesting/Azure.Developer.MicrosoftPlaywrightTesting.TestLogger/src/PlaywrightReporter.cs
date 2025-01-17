@@ -86,7 +86,7 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             if (string.IsNullOrEmpty(runId?.ToString()))
                 _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, ReporterUtils.GetRunId(cIInfo));
             else
-                _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, runId!.ToString());
+                _environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId, runId!.ToString()!); // runId is checked above
         }
         else
         {
@@ -121,14 +121,23 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             return;
         }
         // setup entra rotation handlers
-        _playwrightService = new PlaywrightService(null, playwrightServiceSettings!.RunId, null, playwrightServiceSettings.ServiceAuth, null, entraLifecycle: null, jsonWebTokenHandler: _jsonWebTokenHandler, credential: playwrightServiceSettings.AzureTokenCredential);
+        IFrameworkLogger frameworkLogger = new VSTestFrameworkLogger(_logger);
+        try
+        {
+            _playwrightService = new PlaywrightService(null, playwrightServiceSettings!.RunId, null, playwrightServiceSettings.ServiceAuth, null, entraLifecycle: null, jsonWebTokenHandler: _jsonWebTokenHandler, credential: playwrightServiceSettings.AzureTokenCredential, frameworkLogger: frameworkLogger);
 #pragma warning disable AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
-        _playwrightService.InitializeAsync().GetAwaiter().GetResult();
+            _playwrightService.InitializeAsync().GetAwaiter().GetResult();
 #pragma warning restore AZC0102 // Do not use GetAwaiter().GetResult(). Use the TaskExtensions.EnsureCompleted() extension method instead.
+        }
+        catch (Exception ex)
+        {
+            // We have checks for access token and base url in the next block, so we can ignore the exception here.
+            _logger.Error("Failed to initialize PlaywrightService: " + ex);
+        }
 
         var cloudRunId = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceRunId);
-        string baseUrl = _environment.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_REPORTING_URL);
-        string accessToken = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken);
+        string? baseUrl = _environment.GetEnvironmentVariable(ReporterConstants.s_pLAYWRIGHT_SERVICE_REPORTING_URL);
+        string? accessToken = _environment.GetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceAccessToken);
         if (string.IsNullOrEmpty(baseUrl))
         {
             _consoleWriter.WriteError(Constants.s_no_service_endpoint_error_message);
@@ -141,16 +150,26 @@ internal class PlaywrightReporter : ITestLoggerWithParameters
             _environment.Exit(1);
             return;
         }
-
+        if (cloudRunId?.Length > 200)
+        {
+            _consoleWriter.WriteError(Constants.s_playwright_service_runId_length_exceeded_error_message);
+            _environment.Exit(1);
+            return;
+        }
         var baseUri = new Uri(baseUrl);
         var reporterUtils = new ReporterUtils();
         TokenDetails tokenDetails = reporterUtils.ParseWorkspaceIdFromAccessToken(jsonWebTokenHandler: _jsonWebTokenHandler, accessToken: accessToken);
         var workspaceId = tokenDetails.aid;
-
+        var runNameString = runName?.ToString();
+        if (runNameString?.Length > 200)
+        {
+            runNameString = runNameString.Substring(0, 200);
+            _consoleWriter.WriteLine(Constants.s_playwright_service_runName_truncated_warning);
+        }
         var cloudRunMetadata = new CloudRunMetadata
         {
             RunId = cloudRunId,
-            RunName = runName?.ToString(),
+            RunName = runNameString,
             WorkspaceId = workspaceId,
             BaseUri = baseUri,
             EnableResultPublish = _enableResultPublish,

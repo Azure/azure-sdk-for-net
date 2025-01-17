@@ -96,16 +96,13 @@ namespace Azure.ResourceManager.Media.Samples
             ContentKeyPolicyResource contentKeyPolicy = client.GetContentKeyPolicyResource(contentKeyPolicyResourceId);
 
             // invoke the operation
-            ContentKeyPolicyData data = new ContentKeyPolicyData()
+            ContentKeyPolicyData data = new ContentKeyPolicyData
             {
                 Description = "Updated Policy",
-                Options =
-{
-new ContentKeyPolicyOption(new ContentKeyPolicyClearKeyConfiguration(),new ContentKeyPolicyOpenRestriction())
+                Options = {new ContentKeyPolicyOption(new ContentKeyPolicyClearKeyConfiguration(), new ContentKeyPolicyOpenRestriction())
 {
 Name = "ClearKeyOption",
-}
-},
+}},
             };
             ContentKeyPolicyResource result = await contentKeyPolicy.UpdateAsync(data);
 

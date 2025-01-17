@@ -49,4 +49,3 @@ namespace Azure.AI.OpenAI.Chat
         public override string ToString() => _value;
     }
 }
-

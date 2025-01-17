@@ -13,7 +13,7 @@ namespace Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation
             Environment.Exit(exitCode);
         }
 
-        public string GetEnvironmentVariable(string variable)
+        public string? GetEnvironmentVariable(string variable)
         {
             return Environment.GetEnvironmentVariable(variable);
         }

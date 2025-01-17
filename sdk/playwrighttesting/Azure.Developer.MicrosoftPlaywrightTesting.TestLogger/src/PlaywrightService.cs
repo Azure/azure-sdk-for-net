@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 using Azure.Core;
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Implementation;
+using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Interface;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Model;
 using Azure.Developer.MicrosoftPlaywrightTesting.TestLogger.Utility;
 using Microsoft.IdentityModel.JsonWebTokens;
@@ -62,7 +64,7 @@ public class PlaywrightService
             if (_useCloudHostedBrowsers != null)
                 return (bool)_useCloudHostedBrowsers;
             if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable)))
-                return !bool.Parse(Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable));
+                return !bool.Parse(Environment.GetEnvironmentVariable(Constants.s_playwright_service_disable_scalable_execution_environment_variable)!); // this is checked in the line above
             return true;
         }
         set
@@ -136,19 +138,23 @@ public class PlaywrightService
 
     private readonly EntraLifecycle? _entraLifecycle;
     private readonly JsonWebTokenHandler? _jsonWebTokenHandler;
+    private IFrameworkLogger? _frameworkLogger;
+    private IConsoleWriter? _consoleWriter;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="PlaywrightService"/> class.
     /// </summary>
     /// <param name="playwrightServiceOptions"></param>
     /// <param name="credential"></param>
-    public PlaywrightService(PlaywrightServiceOptions playwrightServiceOptions, TokenCredential? credential = null) : this(
+    /// <param name="frameworkLogger"></param>
+    public PlaywrightService(PlaywrightServiceOptions playwrightServiceOptions, TokenCredential? credential = null, IFrameworkLogger? frameworkLogger = null) : this(
         os: playwrightServiceOptions.Os,
         runId: playwrightServiceOptions.RunId,
         exposeNetwork: playwrightServiceOptions.ExposeNetwork,
         serviceAuth: playwrightServiceOptions.ServiceAuth,
         useCloudHostedBrowsers: playwrightServiceOptions.UseCloudHostedBrowsers,
-        credential: credential ?? playwrightServiceOptions.AzureTokenCredential
+        credential: credential ?? playwrightServiceOptions.AzureTokenCredential,
+        frameworkLogger: frameworkLogger
     )
     {
         // No-op
@@ -163,21 +169,27 @@ public class PlaywrightService
     /// <param name="serviceAuth">The service authentication mechanism.</param>
     /// <param name="useCloudHostedBrowsers">Whether to use cloud-hosted browsers.</param>
     /// <param name="credential">The token credential.</param>
-    public PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = null, TokenCredential? credential = null)
+    /// <param name="frameworkLogger">Logger</param>
+    public PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = null, TokenCredential? credential = null, IFrameworkLogger? frameworkLogger = null)
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
             return;
-        _entraLifecycle = new EntraLifecycle(tokenCredential: credential);
+        _frameworkLogger = frameworkLogger;
+        _entraLifecycle = new EntraLifecycle(tokenCredential: credential, frameworkLogger: _frameworkLogger);
         _jsonWebTokenHandler = new JsonWebTokenHandler();
+        _consoleWriter = new ConsoleWriter();
         InitializePlaywrightServiceEnvironmentVariables(GetServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
     }
 
-    internal PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? credential = null)
+    internal PlaywrightService(OSPlatform? os = null, string? runId = null, string? exposeNetwork = null, string? serviceAuth = null, bool? useCloudHostedBrowsers = null, EntraLifecycle? entraLifecycle = null, JsonWebTokenHandler? jsonWebTokenHandler = null, TokenCredential? credential = null, IFrameworkLogger? frameworkLogger = null, IConsoleWriter? consoleWriter = null)
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
             return;
+        _frameworkLogger = frameworkLogger;
         _jsonWebTokenHandler = jsonWebTokenHandler ?? new JsonWebTokenHandler();
-        _entraLifecycle = entraLifecycle ?? new EntraLifecycle(credential, _jsonWebTokenHandler);
+        _entraLifecycle = entraLifecycle ?? new EntraLifecycle(credential, _jsonWebTokenHandler, _frameworkLogger);
+        _frameworkLogger = frameworkLogger;
+        _consoleWriter = consoleWriter ?? new ConsoleWriter();
         InitializePlaywrightServiceEnvironmentVariables(GetServiceCompatibleOs(os), runId, exposeNetwork, serviceAuth, useCloudHostedBrowsers);
     }
 
@@ -211,6 +223,7 @@ public class PlaywrightService
         }
         if (string.IsNullOrEmpty(GetAuthToken()))
         {
+            _frameworkLogger?.Error("Access token not found when trying to call GetConnectOptionsAsync.");
             throw new Exception(Constants.s_no_auth_error);
         }
 
@@ -236,20 +249,27 @@ public class PlaywrightService
     public async Task InitializeAsync(CancellationToken cancellationToken = default)
     {
         if (string.IsNullOrEmpty(ServiceEndpoint))
+        {
+            _frameworkLogger?.Info("Exiting initialization as service endpoint is not set.");
             return;
+        }
         if (!UseCloudHostedBrowsers)
         {
             // Since playwright-dotnet checks PLAYWRIGHT_SERVICE_ACCESS_TOKEN and PLAYWRIGHT_SERVICE_URL to be set, remove PLAYWRIGHT_SERVICE_URL so that tests are run locally.
             // If customers use GetConnectOptionsAsync, after setting disableScalableExecution, an error will be thrown.
+            _frameworkLogger?.Info("Disabling scalable execution since UseCloudHostedBrowsers is set to false.");
             Environment.SetEnvironmentVariable(ServiceEnvironmentVariable.PlaywrightServiceUri, null);
             return;
         }
+        PerformOneTimeOperation();
         // If default auth mechanism is Access token and token is available in the environment variable, no need to setup rotation handler
         if (ServiceAuth == ServiceAuthType.AccessToken)
         {
+            _frameworkLogger?.Info("Auth mechanism is Access Token.");
             ValidateMptPAT();
             return;
         }
+        _frameworkLogger?.Info("Auth mechanism is Entra Id.");
         await _entraLifecycle!.FetchEntraIdAccessTokenAsync(cancellationToken).ConfigureAwait(false);
         RotationTimer = new Timer(RotationHandlerAsync, null, TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes), TimeSpan.FromMinutes(Constants.s_entra_access_token_rotation_interval_period_in_minutes));
     }
@@ -259,13 +279,29 @@ public class PlaywrightService
     /// </summary>
     public void Cleanup()
     {
+        _frameworkLogger?.Info("Cleaning up Playwright service resources.");
         RotationTimer?.Dispose();
+    }
+    internal void PerformOneTimeOperation()
+    {
+        var oneTimeOperationFlag = Environment.GetEnvironmentVariable(Constants.s_playwright_service_one_time_operation_flag_environment_variable) == "true";
+
+        if (oneTimeOperationFlag)
+            return;
+
+        Environment.SetEnvironmentVariable(Constants.s_playwright_service_one_time_operation_flag_environment_variable, "true");
+
+        if (ServiceAuth == ServiceAuthType.AccessToken)
+        {
+            WarnIfAccessTokenCloseToExpiry();
+        }
     }
 
     internal async void RotationHandlerAsync(object? _)
     {
         if (_entraLifecycle!.DoesEntraIdAccessTokenRequireRotation())
         {
+            _frameworkLogger?.Info("Rotating Entra Id access token.");
             await _entraLifecycle.FetchEntraIdAccessTokenAsync().ConfigureAwait(false);
         }
     }
@@ -327,6 +363,29 @@ public class PlaywrightService
         }
         SetReportingUrlAndWorkspaceId();
     }
+    internal virtual void WarnIfAccessTokenCloseToExpiry()
+    {
+        string accessToken =  GetAuthToken()!;
+        JsonWebToken jsonWebToken = _jsonWebTokenHandler!.ReadJsonWebToken(accessToken) ?? throw new Exception(Constants.s_invalid_mpt_pat_error);
+        long currentTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        long exp = new DateTimeOffset(jsonWebToken.ValidTo).ToUnixTimeMilliseconds();
+        if (PlaywrightService.IsTokenExpiringSoon(exp, currentTime))
+        {
+            WarnAboutTokenExpiry(exp, currentTime);
+        }
+    }
+    internal static bool IsTokenExpiringSoon(long expirationTime, long currentTime)
+    {
+        return expirationTime - currentTime <= Constants.s_sevenDaysInMs;
+    }
+
+    internal virtual void WarnAboutTokenExpiry(long expirationTime, long currentTime)
+    {
+        int daysToExpiration = (int)Math.Ceiling((expirationTime - currentTime) / (double)Constants.s_oneDayInMs);
+        string expirationDate = DateTimeOffset.FromUnixTimeMilliseconds(expirationTime).UtcDateTime.ToString("d");
+        string expirationWarning = string.Format(Constants.s_token_expiry_warning_template, daysToExpiration, expirationDate);
+        _consoleWriter?.WriteLine(expirationWarning);
+    }
 
     internal static string GetDefaultRunId()
     {
@@ -341,6 +400,10 @@ public class PlaywrightService
 
     internal static void SetReportingUrlAndWorkspaceId()
     {
+        if (ServiceEndpoint == null)
+        {
+            throw new ArgumentNullException(nameof(ServiceEndpoint));
+        }
         Match match = Regex.Match(ServiceEndpoint, @"wss://(?<region>[\w-]+)\.api\.(?<domain>playwright(?:-test|-int)?\.io|playwright\.microsoft\.com)/accounts/(?<workspaceId>[\w-]+)/");
         if (!match.Success)
             return;
@@ -360,20 +423,32 @@ public class PlaywrightService
 
     private void ValidateMptPAT()
     {
-        string authToken = GetAuthToken()!;
-        if (string.IsNullOrEmpty(authToken))
-            throw new Exception(Constants.s_no_auth_error);
-        JsonWebToken jsonWebToken = _jsonWebTokenHandler!.ReadJsonWebToken(authToken) ?? throw new Exception(Constants.s_invalid_mpt_pat_error);
-        var tokenWorkspaceId = jsonWebToken.Claims.FirstOrDefault(c => c.Type == "aid")?.Value;
-        Match match = Regex.Match(ServiceEndpoint, @"wss://(?<region>[\w-]+)\.api\.(?<domain>playwright(?:-test|-int)?\.io|playwright\.microsoft\.com)/accounts/(?<workspaceId>[\w-]+)/");
-        if (!match.Success)
-            throw new Exception(Constants.s_invalid_service_endpoint_error_message);
-        var serviceEndpointWorkspaceId = match.Groups["workspaceId"].Value;
-        if (tokenWorkspaceId != serviceEndpointWorkspaceId)
-            throw new Exception(Constants.s_workspace_mismatch_error);
-        var expiry = (long)(jsonWebToken.ValidTo - new DateTime(1970, 1, 1)).TotalSeconds;
-        if (expiry <= DateTimeOffset.UtcNow.ToUnixTimeSeconds())
-            throw new Exception(Constants.s_expired_mpt_pat_error);
+        if (ServiceEndpoint == null)
+        {
+            throw new ArgumentNullException(nameof(ServiceEndpoint));
+        }
+        try
+        {
+            string authToken = GetAuthToken()!;
+            if (string.IsNullOrEmpty(authToken))
+                throw new Exception(Constants.s_no_auth_error);
+            JsonWebToken jsonWebToken = _jsonWebTokenHandler!.ReadJsonWebToken(authToken) ?? throw new Exception(Constants.s_invalid_mpt_pat_error);
+            var tokenWorkspaceId = jsonWebToken.Claims.FirstOrDefault(c => c.Type == "aid")?.Value;
+            Match match = Regex.Match(ServiceEndpoint, @"wss://(?<region>[\w-]+)\.api\.(?<domain>playwright(?:-test|-int)?\.io|playwright\.microsoft\.com)/accounts/(?<workspaceId>[\w-]+)/");
+            if (!match.Success)
+                throw new Exception(Constants.s_invalid_service_endpoint_error_message);
+            var serviceEndpointWorkspaceId = match.Groups["workspaceId"].Value;
+            if (tokenWorkspaceId != serviceEndpointWorkspaceId)
+                throw new Exception(Constants.s_workspace_mismatch_error);
+            var expiry = (long)(jsonWebToken.ValidTo - new DateTime(1970, 1, 1)).TotalSeconds;
+            if (expiry <= DateTimeOffset.UtcNow.ToUnixTimeSeconds())
+                throw new Exception(Constants.s_expired_mpt_pat_error);
+        }
+        catch (Exception ex)
+        {
+            _frameworkLogger?.Error(ex.ToString());
+            throw;
+        }
     }
 
     internal static string? GetServiceCompatibleOs(OSPlatform? oSPlatform)

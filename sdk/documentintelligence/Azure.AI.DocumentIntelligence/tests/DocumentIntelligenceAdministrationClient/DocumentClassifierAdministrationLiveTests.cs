@@ -20,7 +20,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
         #region Build
 
         [RecordedTest]
-        public async Task BuildClassifierWithAzureBlobContentSource()
+        public async Task BuildClassifierWithBlobContentSource()
         {
             var client = CreateDocumentIntelligenceAdministrationClient();
             var classifierId = Recording.GenerateId();
@@ -28,17 +28,17 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var startTime = Recording.UtcNow;
 
             var containerUrl = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
-            var sourceA = new AzureBlobContentSource(containerUrl) { Prefix = "IRS-1040-A/train" };
-            var sourceB = new AzureBlobContentSource(containerUrl) { Prefix = "IRS-1040-B/train" };
-            var docTypeA = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceA };
-            var docTypeB = new ClassifierDocumentTypeDetails() { AzureBlobSource = sourceB };
+            var sourceA = new BlobContentSource(containerUrl) { Prefix = "IRS-1040-A/train" };
+            var sourceB = new BlobContentSource(containerUrl) { Prefix = "IRS-1040-B/train" };
+            var docTypeA = new ClassifierDocumentTypeDetails(sourceA);
+            var docTypeB = new ClassifierDocumentTypeDetails(sourceB);
             var docTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
                 { "IRS-1040-A", docTypeA },
                 { "IRS-1040-B", docTypeB }
             };
 
-            var content = new BuildDocumentClassifierContent(classifierId, docTypes)
+            var options = new BuildClassifierOptions(classifierId, docTypes)
             {
                 Description = description
             };
@@ -47,7 +47,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             try
             {
-                operation = await client.BuildClassifierAsync(WaitUntil.Completed, content);
+                operation = await client.BuildClassifierAsync(WaitUntil.Completed, options);
             }
             finally
             {
@@ -69,16 +69,16 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(classifier.CreatedOn, Is.GreaterThan(startTime));
             Assert.That(classifier.ExpiresOn, Is.GreaterThan(classifier.CreatedOn));
 
-            DocumentAssert.AreEquivalent(docTypes, classifier.DocTypes);
+            DocumentAssert.AreEquivalent(docTypes, classifier.DocumentTypes);
 
-            foreach (var docType in classifier.DocTypes.Values)
+            foreach (var docType in classifier.DocumentTypes.Values)
             {
                 Assert.That(docType.SourceKind, Is.Null);
             }
         }
 
         [RecordedTest]
-        public async Task BuildClassifierWithAzureBlobFileListContentSource()
+        public async Task BuildClassifierWithBlobFileListContentSource()
         {
             var client = CreateDocumentIntelligenceAdministrationClient();
             var classifierId = Recording.GenerateId();
@@ -86,17 +86,17 @@ namespace Azure.AI.DocumentIntelligence.Tests
             var startTime = Recording.UtcNow;
 
             var containerUrl = new Uri(TestEnvironment.ClassifierTrainingSasUrl);
-            var sourceA = new AzureBlobFileListContentSource(containerUrl, "IRS-1040-A.jsonl");
-            var sourceB = new AzureBlobFileListContentSource(containerUrl, "IRS-1040-B.jsonl");
-            var docTypeA = new ClassifierDocumentTypeDetails() { AzureBlobFileListSource = sourceA };
-            var docTypeB = new ClassifierDocumentTypeDetails() { AzureBlobFileListSource = sourceB };
+            var sourceA = new BlobFileListContentSource(containerUrl, "IRS-1040-A.jsonl");
+            var sourceB = new BlobFileListContentSource(containerUrl, "IRS-1040-B.jsonl");
+            var docTypeA = new ClassifierDocumentTypeDetails(sourceA);
+            var docTypeB = new ClassifierDocumentTypeDetails(sourceB);
             var docTypes = new Dictionary<string, ClassifierDocumentTypeDetails>()
             {
                 { "IRS-1040-A", docTypeA },
                 { "IRS-1040-B", docTypeB }
             };
 
-            var content = new BuildDocumentClassifierContent(classifierId, docTypes)
+            var options = new BuildClassifierOptions(classifierId, docTypes)
             {
                 Description = description
             };
@@ -105,7 +105,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             try
             {
-                operation = await client.BuildClassifierAsync(WaitUntil.Completed, content);
+                operation = await client.BuildClassifierAsync(WaitUntil.Completed, options);
             }
             finally
             {
@@ -127,9 +127,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(classifier.CreatedOn, Is.GreaterThan(startTime));
             Assert.That(classifier.ExpiresOn, Is.GreaterThan(classifier.CreatedOn));
 
-            DocumentAssert.AreEquivalent(docTypes, classifier.DocTypes);
+            DocumentAssert.AreEquivalent(docTypes, classifier.DocumentTypes);
 
-            foreach (var docType in classifier.DocTypes.Values)
+            foreach (var docType in classifier.DocumentTypes.Values)
             {
                 Assert.That(docType.SourceKind, Is.Null);
             }
@@ -150,17 +150,17 @@ namespace Azure.AI.DocumentIntelligence.Tests
 
             await using var disposableClassifier = await BuildDisposableDocumentClassifierAsync(description);
 
-            var authorizeCopyContent = new AuthorizeClassifierCopyContent(classifierId)
+            var authorizeCopyOptions = new AuthorizeClassifierCopyOptions(classifierId)
             {
                 Description = description
             };
 
             foreach (var tag in tags)
             {
-                authorizeCopyContent.Tags.Add(tag);
+                authorizeCopyOptions.Tags.Add(tag);
             }
 
-            ClassifierCopyAuthorization copyAuthorization = await client.AuthorizeClassifierCopyAsync(authorizeCopyContent);
+            ClassifierCopyAuthorization copyAuthorization = await client.AuthorizeClassifierCopyAsync(authorizeCopyOptions);
 
             Operation<DocumentClassifierDetails> operation = null;
 
@@ -191,9 +191,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(classifier.CreatedOn, Is.GreaterThan(startTime - TimeSpan.FromHours(4)));
             Assert.That(classifier.ExpiresOn, Is.GreaterThan(classifier.CreatedOn));
 
-            DocumentAssert.AreEquivalent(sourceClassifier.DocTypes, classifier.DocTypes);
+            DocumentAssert.AreEquivalent(sourceClassifier.DocumentTypes, classifier.DocumentTypes);
 
-            foreach (var docType in classifier.DocTypes.Values)
+            foreach (var docType in classifier.DocumentTypes.Values)
             {
                 Assert.That(docType.SourceKind, Is.Null);
             }
@@ -307,9 +307,9 @@ namespace Azure.AI.DocumentIntelligence.Tests
         {
             var client = CreateDocumentIntelligenceAdministrationClient();
             var classifierId = Recording.GenerateId();
-            var content = new AuthorizeClassifierCopyContent(classifierId);
+            var options = new AuthorizeClassifierCopyOptions(classifierId);
 
-            ClassifierCopyAuthorization copyAuthorization = await client.AuthorizeClassifierCopyAsync(content);
+            ClassifierCopyAuthorization copyAuthorization = await client.AuthorizeClassifierCopyAsync(options);
 
             Assert.That(copyAuthorization.TargetClassifierId, Is.EqualTo(classifierId));
             Assert.That(copyAuthorization.TargetClassifierLocation.AbsoluteUri, Does.StartWith(TestEnvironment.Endpoint));
@@ -317,7 +317,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(copyAuthorization.TargetResourceRegion, Is.EqualTo(TestEnvironment.ResourceRegion));
             Assert.That(copyAuthorization.AccessToken, Is.Not.Null);
             Assert.That(copyAuthorization.AccessToken, Is.Not.Empty);
-            Assert.That(copyAuthorization.ExpirationDateTime, Is.GreaterThan(Recording.UtcNow));
+            Assert.That(copyAuthorization.ExpiresOn, Is.GreaterThan(Recording.UtcNow));
         }
     }
 }

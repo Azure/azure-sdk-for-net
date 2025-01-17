@@ -48,7 +48,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             var directoryPath = Path.GetTempPath();
 
-            var options = addTransferOptions ? new DataTransferOptions() : (DataTransferOptions)null;
+            var options = addTransferOptions ? new TransferOptions() : (TransferOptions)null;
 
             var assertionComplete = false;
 
@@ -66,7 +66,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             if (addTransferOptions)
             {
-                await client.StartUploadDirectoryAsync(directoryPath, new BlobContainerClientTransferOptions
+                await client.UploadDirectoryAsync(WaitUntil.Started, directoryPath, new BlobContainerClientTransferOptions
                 {
                     BlobContainerOptions = new() { BlobDirectoryPrefix = blobDirectoryPrefix },
                     TransferOptions = options
@@ -74,7 +74,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
             else
             {
-                await client.StartUploadDirectoryAsync(directoryPath, blobDirectoryPrefix);
+                await client.UploadDirectoryAsync(WaitUntil.Started, directoryPath, blobDirectoryPrefix);
             }
 
             Assert.IsTrue(assertionComplete);
@@ -93,7 +93,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             var directoryPath = Path.GetTempPath();
 
-            var options = addTransferOptions ? new DataTransferOptions() : (DataTransferOptions)null;
+            var options = addTransferOptions ? new TransferOptions() : (TransferOptions)null;
 
             var expSourceResourceType = addBlobDirectoryPath ? typeof(BlobStorageResourceContainer) : typeof(BlobStorageResourceContainer);
 
@@ -113,7 +113,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             if (addTransferOptions)
             {
-                await client.StartDownloadToDirectoryAsync(directoryPath, new BlobContainerClientTransferOptions
+                await client.DownloadToDirectoryAsync(WaitUntil.Started, directoryPath, new BlobContainerClientTransferOptions
                 {
                     BlobContainerOptions = new() { BlobDirectoryPrefix = blobDirectoryPrefix },
                     TransferOptions = options
@@ -121,7 +121,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             }
             else
             {
-                await client.StartDownloadToDirectoryAsync(directoryPath, blobDirectoryPrefix);
+                await client.DownloadToDirectoryAsync(WaitUntil.Started, directoryPath, blobDirectoryPrefix);
             }
 
             Assert.IsTrue(assertionComplete);
@@ -135,16 +135,16 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         {
             public MockTransferManager() { }
 
-            public Action<StorageResource, StorageResource, DataTransferOptions> OnStartTransferContainerAsync { get; set; }
+            public Action<StorageResource, StorageResource, TransferOptions> OnStartTransferContainerAsync { get; set; }
 
-            public override Task<DataTransfer> StartTransferAsync(StorageResource sourceResource, StorageResource destinationResource, DataTransferOptions transferOptions = null, CancellationToken cancellationToken = default)
+            public override Task<TransferOperation> StartTransferAsync(StorageResource sourceResource, StorageResource destinationResource, TransferOptions transferOptions = null, CancellationToken cancellationToken = default)
             {
                 if (OnStartTransferContainerAsync != null)
                 {
                     OnStartTransferContainerAsync(sourceResource, destinationResource, transferOptions);
                 }
 
-                return Task.FromResult<DataTransfer>(null);
+                return Task.FromResult<TransferOperation>(null);
             }
         }
     }
