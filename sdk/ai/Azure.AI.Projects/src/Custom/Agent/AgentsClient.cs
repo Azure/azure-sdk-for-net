@@ -232,8 +232,14 @@ namespace Azure.AI.Projects
         /// <param name="runId"> Identifier of the run. </param>
         /// <param name="content"> Serialized json contents. </param>
         /// <param name="context"> Options that can be used to control the request. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response SubmitToolOutputsToRun(string threadId, string runId, RequestContent content, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(content, nameof(content));
+
             return SubmitToolOutputsInternal(threadId, runId, false, content, context);
         }
 
@@ -242,8 +248,14 @@ namespace Azure.AI.Projects
         /// <param name="runId"> Identifier of the run. </param>
         /// <param name="content"> Serialized json contents. </param>
         /// <param name="context"> Options that can be used to control the request. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="threadId"/>, <paramref name="runId"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="threadId"/> or <paramref name="runId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response> SubmitToolOutputsToRunAsync(string threadId, string runId, RequestContent content, RequestContext context = null)
         {
+            Argument.AssertNotNullOrEmpty(threadId, nameof(threadId));
+            Argument.AssertNotNullOrEmpty(runId, nameof(runId));
+            Argument.AssertNotNull(content, nameof(content));
+
             return await SubmitToolOutputsInternalAsync(threadId, runId, false, content, context).ConfigureAwait(false);
         }
 
