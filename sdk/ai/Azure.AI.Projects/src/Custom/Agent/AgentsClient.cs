@@ -253,7 +253,7 @@ namespace Azure.AI.Projects
         /// <param name="stream">If true, the run should return stream</param>
         /// <param name="content"> Serialized json contents. </param>
         /// <param name="context"> Options that can be used to control the request. </param>
-        public virtual Response SubmitToolOutputsInternal(string threadId, string runId, bool stream, RequestContent content, RequestContext context = null)
+        internal virtual Response SubmitToolOutputsInternal(string threadId, string runId, bool stream, RequestContent content, RequestContext context = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentsClient.SubmitToolOutputsInternal");
             scope.Start();
