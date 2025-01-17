@@ -181,14 +181,24 @@ public partial class AgentsClient
 
         SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), true, null);
         RequestContext context = FromCancellationToken(cancellationToken);
-        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentsClient.SubmitToolOutputsToStream");
+        Response sendRequest() => SubmitToolOutputsToRunRequestInternal(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context);
+        return new StreamingUpdateCollection(sendRequest, cancellationToken);
+    }
+
+    /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
+    /// <param name="threadId"> Identifier of the thread. </param>
+    /// <param name="runId"> Identifier of the run. </param>
+    /// <param name="content"> Serialized json contents. </param>
+    /// <param name="context"> Options that can be used to control the request. </param>
+    internal Response SubmitToolOutputsToRunRequestInternal(string threadId, string runId, RequestContent content, RequestContext context = null)
+    {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentsClient.SubmitToolOutputsToRunRequestInternal");
         scope.Start();
         try
         {
-            HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context);
+            using HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, content, context);
             message.BufferResponse = false;
-            Response sendRequest() => _pipeline.ProcessMessage(message, context, CancellationToken.None);
-            return new StreamingUpdateCollection(sendRequest, cancellationToken);
+            return _pipeline.ProcessMessage(message, context, CancellationToken.None);
         }
         catch (Exception e)
         {
@@ -214,14 +224,24 @@ public partial class AgentsClient
 
         SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), true, null);
         RequestContext context = FromCancellationToken(cancellationToken);
-        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentsClient.SubmitToolOutputsToStreamAsync");
+        async Task<Response> sendRequestAsync() => await SubmitToolOutputsToRunRequestInternalAsync(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
+        return new AsyncStreamingUpdateCollection(sendRequestAsync, cancellationToken);
+    }
+
+    /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
+    /// <param name="threadId"> Identifier of the thread. </param>
+    /// <param name="runId"> Identifier of the run. </param>
+    /// <param name="content"> Serialized json contents. </param>
+    /// <param name="context"> Options that can be used to control the request. </param>
+    internal async Task<Response> SubmitToolOutputsToRunRequestInternalAsync(string threadId, string runId, RequestContent content, RequestContext context = null)
+    {
+        using DiagnosticScope scope = ClientDiagnostics.CreateScope("AgentsClient.SubmitToolOutputsToRunRequestInternalAsync");
         scope.Start();
         try
         {
-            HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, submitToolOutputsToRunRequest.ToRequestContent(), context);
+            using HttpMessage message = CreateSubmitToolOutputsToRunRequest(threadId, runId, content, context);
             message.BufferResponse = false;
-            async Task<Response> sendRequestAsync() => await _pipeline.ProcessMessageAsync(message, context, CancellationToken.None).ConfigureAwait(false);
-            return new AsyncStreamingUpdateCollection(sendRequestAsync, cancellationToken);
+            return await _pipeline.ProcessMessageAsync(message, context, CancellationToken.None).ConfigureAwait(false);
         }
         catch (Exception e)
         {
