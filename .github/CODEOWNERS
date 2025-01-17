@@ -674,9 +674,6 @@
 # ServiceLabel: %Monitor - LiveMetrics
 # ServiceOwners:                                                   @rajkumar-rangaraj @TimothyMothra @xiang17
 
-# PRLabel: %Monitor - Monitor
-/sdk/monitor/Azure.ResourceManager.Monitor/                        @thomasp98296 @ritwik8119
-
 # ServiceLabel: %Monitor - Monitor
 # ServiceOwners:                                                   @thomasp98296 @ritwik8119
 
@@ -914,6 +911,9 @@
 # ServiceLabel: %Tables
 # AzureSdkOwners:                                                  @christothes @JonathanCrd
 # ServiceOwners:                                                   @sakash279 @sivethe @ThomasWeiss @PaulCheng
+
+# PRLabel: %Monitor
+/sdk/monitor/Azure.ResourceManager.Monitor/                        @thomasp98296 @ritwik8119
 
 # PRLabel: %TimeSeriesInsights
 /sdk/timeseriesinsights/                                           @yeskarthik @rasidhan @dmdenmsft
