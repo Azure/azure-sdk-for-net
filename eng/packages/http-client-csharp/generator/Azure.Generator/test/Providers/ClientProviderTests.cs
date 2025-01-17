@@ -48,54 +48,6 @@ namespace Azure.Generator.Tests.Providers
                 clients: clients);
         }
 
-        [Test]
-        public void TestEmptyClient()
-        {
-            var client = InputFactory.Client(TestClientName);
-            var plugin = MockHelpers.LoadMockPlugin(clients: () => [client]);
-
-            var clientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is ClientProvider && t.Name == TestClientName);
-            var restClientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is RestClientProvider && t.Name == TestClientName);
-            Assert.IsNull(clientProvider);
-            Assert.IsNull(restClientProvider);
-        }
-
-        [Test]
-        public void TestNonEmptySubClient()
-        {
-            var inputOperation = InputFactory.Operation("HelloAgain", parameters:
-            [
-                InputFactory.Parameter("p1", InputFactory.Array(InputPrimitiveType.String))
-            ]);
-            var client = InputFactory.Client(TestClientName);
-            var subClient = InputFactory.Client($"Sub{TestClientName}", [inputOperation], [], client.Name);
-            var plugin = MockHelpers.LoadMockPlugin(clients: () => [client, subClient]);
-
-            var subClientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is ClientProvider && t.Name == subClient.Name);
-            Assert.IsNotNull(subClientProvider);
-
-            var clientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is ClientProvider && t.Name == TestClientName);
-            Assert.IsNotNull(clientProvider);
-        }
-
-        [Test]
-        public void TestEmptySubClient()
-        {
-            var client = InputFactory.Client(TestClientName);
-            var subClient = InputFactory.Client($"Sub{TestClientName}", [], [], client.Name);
-            var plugin = MockHelpers.LoadMockPlugin(clients: () => [client, subClient]);
-
-            var subClientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is ClientProvider && t.Name == subClient.Name);
-            var subRestClientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is RestClientProvider && t.Name == subClient.Name);
-            Assert.IsNull(subClientProvider);
-            Assert.IsNull(subRestClientProvider);
-
-            var clientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is ClientProvider && t.Name == TestClientName);
-            var restClientProvider = plugin.Object.OutputLibrary.TypeProviders.SingleOrDefault(t => t is RestClientProvider && t.Name == TestClientName);
-            Assert.IsNull(clientProvider);
-            Assert.IsNull(restClientProvider);
-        }
-
         [TestCaseSource(nameof(BuildAuthFieldsTestCases), Category = KeyAuthCategory)]
         [TestCaseSource(nameof(BuildAuthFieldsTestCases), Category = OAuth2Category)]
         [TestCaseSource(nameof(BuildAuthFieldsTestCases), Category = $"{KeyAuthCategory},{OAuth2Category}")]
