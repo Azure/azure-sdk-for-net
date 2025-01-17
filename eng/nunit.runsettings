@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿﻿<?xml version="1.0" encoding="utf-8"?>
 <RunSettings>
 	<NUnit>
 		<ConsoleOut>0</ConsoleOut>
@@ -19,7 +19,7 @@
 		<!-- <Parameter name="DisableAutoRecording" value="true" /> -->
 
 		<!-- Change the test mode -->
-		<Parameter name="TestMode" value="Live" />
+		<!-- <Parameter name="TestMode" value="Record" /> -->
 
 		<!-- Enable running Fiddler -->
 		<!-- <Parameter name="EnableFiddler" value="true" /> -->
