@@ -45,6 +45,17 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 ### Authenticate the client
 The Azure.Storage.DataMovement.Blobs library uses clients from the Azure.Storage.Blobs package to communicate with the Azure Blob Storage service. For more information see the Azure.Storage.Blobs [authentication documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Blobs#authenticate-the-client).
 
+### Permissions
+
+The authenticated blob storage resource needs the following permissions to perform a transfer:
+
+1. Read
+2. List (for container transfers)
+3. Write
+4. Add (specific to append blobs)
+5. Delete (for cleanup of a failed transfer item)
+6. Create
+
 ## Key concepts
 
 The Azure Storage Common client library contains shared infrastructure like
@@ -239,14 +250,14 @@ BlobContainerClient container = service.GetBlobContainerClient(containerName);
 
 Upload a local directory to the root of the container
 ```C# Snippet:ExtensionMethodSimpleUploadToRoot
-TransferOperation transfer = await container.StartUploadDirectoryAsync(localPath);
+TransferOperation transfer = await container.UploadDirectoryAsync(WaitUntil.Started, localPath);
 
 await transfer.WaitForCompletionAsync();
 ```
 
 Upload a local directory to a virtual directory in the container by specifying a directory prefix
 ```C# Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
-TransferOperation transfer = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix);
+TransferOperation transfer = await container.UploadDirectoryAsync(WaitUntil.Started, localPath, blobDirectoryPrefix);
 
 await transfer.WaitForCompletionAsync();
 ```
@@ -261,25 +272,25 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     },
     TransferOptions = new TransferOptions()
     {
-        CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
+        CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
     }
 };
 
-TransferOperation transfer = await container.StartUploadDirectoryAsync(localPath, options);
+TransferOperation transfer = await container.UploadDirectoryAsync(WaitUntil.Started, localPath, options);
 
 await transfer.WaitForCompletionAsync();
 ```
 
 Download the entire container to a local directory
 ```C# Snippet:ExtensionMethodSimpleDownloadContainer
-TransferOperation transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath);
+TransferOperation transfer = await container.DownloadToDirectoryAsync(WaitUntil.Started, localDirectoryPath);
 
 await transfer.WaitForCompletionAsync();
 ```
 
 Download a directory in the container by specifying a directory prefix
 ```C# Snippet:ExtensionMethodSimpleDownloadContainerDirectory
-TransferOperation transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
+TransferOperation transfer = await container.DownloadToDirectoryAsync(WaitUntil.Started, localDirectoryPath2, blobDirectoryPrefix);
 
 await transfer.WaitForCompletionAsync();
 ```
@@ -294,11 +305,11 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     },
     TransferOptions = new TransferOptions()
     {
-        CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
+        CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
     }
 };
 
-TransferOperation transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
+TransferOperation transfer = await container.DownloadToDirectoryAsync(WaitUntil.Started, localDirectoryPath2, options);
 
 await transfer.WaitForCompletionAsync();
 ```
