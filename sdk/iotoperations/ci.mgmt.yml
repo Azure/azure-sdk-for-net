@@ -11,7 +11,7 @@ pr:
   paths:
     include:
     - sdk/iotoperations/ci.mgmt.yml
-    - sdk/iotoperations/Azure.ResourceManager.IoTOperations/
+    - sdk/iotoperations/Azure.ResourceManager.IotOperations/
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -20,5 +20,5 @@ extends:
     ArtifactName: packages
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.IoTOperations
-      safeName: AzureResourceManagerIoTOperations
+    - name: Azure.ResourceManager.IotOperations
+      safeName: AzureResourceManagerIotOperations
