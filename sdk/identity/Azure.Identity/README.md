@@ -272,7 +272,11 @@ Not all credentials require this configuration. Credentials that authenticate th
 
 [`DefaultAzureCredential`][ref_DefaultAzureCredential] and [`EnvironmentCredential`][ref_EnvironmentCredential] can be configured with environment variables. Each type of authentication requires values for specific variables.
 
-### Service principal with secret
+### EnvironmentCredential
+
+Configuration is attempted in the order in which these environment variables are listed. For example, if values for a client secret and certificate are both present, the client secret is used by `EnvironmentCredential`.
+
+#### Service principal with secret
 
 |Variable name|Value
 |-|-
@@ -280,7 +284,7 @@ Not all credentials require this configuration. Credentials that authenticate th
 |`AZURE_TENANT_ID`|ID of the application's Microsoft Entra tenant
 |`AZURE_CLIENT_SECRET`|one of the application's client secrets
 
-### Service principal with certificate
+#### Service principal with certificate
 
 |Variable name|Value
 |-|-
@@ -290,7 +294,7 @@ Not all credentials require this configuration. Credentials that authenticate th
 |`AZURE_CLIENT_CERTIFICATE_PASSWORD`|(optional) the password protecting the certificate file (currently only supported for PFX (PKCS12) certificates)
 |`AZURE_CLIENT_SEND_CERTIFICATE_CHAIN`|(optional) send certificate chain in x5c header to support subject name / issuer based authentication
 
-### Username and password
+#### Username and password
 
 |Variable name|Value
 |-|-
@@ -299,13 +303,21 @@ Not all credentials require this configuration. Credentials that authenticate th
 |`AZURE_USERNAME`|a username (usually an email address)
 |`AZURE_PASSWORD`|that user's password
 
-### Managed identity (`DefaultAzureCredential`)
+### DefaultAzureCredential
 
-|Variable name|Value
+When the following environment variables are set, `DefaultAzureCredentialOptions` uses them as default values for the corresponding properties.
+
+#### Managed identity
+
+|Variable name|Value|Property
 |-|-
-|`AZURE_CLIENT_ID`|The client ID for the user-assigned managed identity. If defined, used as the default value for `ManagedIdentityClientId` in `DefaultAzureCredentialOptions`
+|`AZURE_CLIENT_ID`|The client ID for the user-assigned managed identity.|`ManagedIdentityClientId`
 
-Configuration is attempted in the order in which these environment variables are listed. For example, if values for a client secret and certificate are both present, the client secret is used.
+#### Workload identity
+
+|Variable name|Value|Property
+|-|-
+|`AZURE_CLIENT_ID`|The client ID of the application the workload identity will authenticate.|`WorkloadIdentityClientId`
 
 ## Continuous Access Evaluation
 
