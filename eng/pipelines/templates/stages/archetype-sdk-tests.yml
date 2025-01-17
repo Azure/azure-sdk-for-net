@@ -57,8 +57,6 @@ parameters:
       # Canary regions are currently not supported in TME so disabling for now
       # Canary:
       #   Location: 'eastus2euap'
-      UsGov:
-      China:
   - name: MatrixConfigs
     type: object
     default:
