@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Properties.DisplayName, assetCreateOrUpdateResponse.Value.Data.Name);
             Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Properties.Description, assetData.Properties.Description);
             Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Properties.Version, 1);
-            Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Properties.Enabled, true);
+            Assert.AreEqual(assetCreateOrUpdateResponse.Value.Data.Properties.IsEnabled, true);
 
             // Read DeviceRegistry Asset
             var assetReadResponse = await assetsCollection.GetAsync(assetName, CancellationToken.None);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(assetReadResponse.Value.Data.Properties.AssetEndpointProfileRef, assetData.Properties.AssetEndpointProfileRef);
             Assert.AreEqual(assetReadResponse.Value.Data.Properties.DisplayName, assetReadResponse.Value.Data.Name);
             Assert.AreEqual(assetReadResponse.Value.Data.Properties.Version, 1);
-            Assert.AreEqual(assetReadResponse.Value.Data.Properties.Enabled, true);
+            Assert.AreEqual(assetReadResponse.Value.Data.Properties.IsEnabled, true);
 
             // List DeviceRegistry Asset by Resource Group
             var assetResourcesListByResourceGroup = new List<DeviceRegistryAssetResource>();
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
             Assert.AreEqual(assetUpdateResponse.Value.Data.Properties.DisplayName, assetUpdateResponse.Value.Data.Name);
             Assert.AreEqual(assetUpdateResponse.Value.Data.Properties.Description, assetPatchData.Properties.Description);
             Assert.AreEqual(assetUpdateResponse.Value.Data.Properties.Version, 2);
-            Assert.AreEqual(assetUpdateResponse.Value.Data.Properties.Enabled, true);
+            Assert.AreEqual(assetUpdateResponse.Value.Data.Properties.IsEnabled, true);
 
             // Delete DeviceRegistry Asset
             await asset.DeleteAsync(WaitUntil.Completed, CancellationToken.None);

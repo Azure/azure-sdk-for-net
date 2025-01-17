@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="events"> Array of events that are part of the asset. Each event can have per-event configuration. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryDiscoveredAssetProperties(string assetEndpointProfileRef, string discoveryId, long version, string manufacturer, string manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, string documentationUri, string serialNumber, string defaultDatasetsConfiguration, string defaultEventsConfiguration, DeviceRegistryMqttTopic defaultTopic, IList<DiscoveredDataset> datasets, IList<DiscoveredEvent> events, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeviceRegistryDiscoveredAssetProperties(string assetEndpointProfileRef, string discoveryId, long version, string manufacturer, Uri manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, Uri documentationUri, string serialNumber, string defaultDatasetsConfiguration, string defaultEventsConfiguration, DeviceRegistryMqttTopic defaultTopic, IList<DiscoveredDataset> datasets, IList<DiscoveredEvent> events, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssetEndpointProfileRef = assetEndpointProfileRef;
             DiscoveryId = discoveryId;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Asset manufacturer name. </summary>
         public string Manufacturer { get; set; }
         /// <summary> Asset manufacturer URI. </summary>
-        public string ManufacturerUri { get; set; }
+        public Uri ManufacturerUri { get; set; }
         /// <summary> Asset model name. </summary>
         public string Model { get; set; }
         /// <summary> Asset product code. </summary>
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Revision number of the software. </summary>
         public string SoftwareRevision { get; set; }
         /// <summary> Reference to the documentation. </summary>
-        public string DocumentationUri { get; set; }
+        public Uri DocumentationUri { get; set; }
         /// <summary> Asset serial number. </summary>
         public string SerialNumber { get; set; }
         /// <summary> Stringified JSON that contains connector-specific default configuration for all datasets. Each dataset can have its own configuration that overrides the default settings here. </summary>

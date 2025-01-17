@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Tests.Scenario
                     Namespace = schemaRegistryNamespace,
                     Description = "This is a Schema Registry instance.",
                     DisplayName = "Schema Registry SDK test",
-                    StorageAccountContainerUri = "https://schemaregistrysdktest.blob.core.windows.net/schemaregistrysdkcontainertest"
+                    StorageAccountContainerUri = new Uri("https://schemaregistrysdktest.blob.core.windows.net/schemaregistrysdkcontainertest")
                 },
                 Identity = new(ManagedServiceIdentityType.SystemAssigned)
             };

@@ -39,10 +39,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (Optional.IsDefined(Enabled))
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(Enabled.Value);
+                writer.WriteBooleanValue(IsEnabled.Value);
             }
             if (Optional.IsDefined(ExternalAssetId))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             if (Optional.IsDefined(ManufacturerUri))
             {
                 writer.WritePropertyName("manufacturerUri"u8);
-                writer.WriteStringValue(ManufacturerUri);
+                writer.WriteStringValue(ManufacturerUri.AbsoluteUri);
             }
             if (Optional.IsDefined(Model))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             if (Optional.IsDefined(DocumentationUri))
             {
                 writer.WritePropertyName("documentationUri"u8);
-                writer.WriteStringValue(DocumentationUri);
+                writer.WriteStringValue(DocumentationUri.AbsoluteUri);
             }
             if (Optional.IsDefined(SerialNumber))
             {
@@ -229,12 +229,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             string assetEndpointProfileRef = default;
             long? version = default;
             string manufacturer = default;
-            string manufacturerUri = default;
+            Uri manufacturerUri = default;
             string model = default;
             string productCode = default;
             string hardwareRevision = default;
             string softwareRevision = default;
-            string documentationUri = default;
+            Uri documentationUri = default;
             string serialNumber = default;
             IDictionary<string, BinaryData> attributes = default;
             IList<string> discoveredAssetRefs = default;
@@ -299,7 +299,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 if (property.NameEquals("manufacturerUri"u8))
                 {
-                    manufacturerUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    manufacturerUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("model"u8))
@@ -324,7 +328,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 if (property.NameEquals("documentationUri"u8))
                 {
-                    documentationUri = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    documentationUri = new Uri(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("serialNumber"u8))

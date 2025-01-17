@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Initializes a new instance of <see cref="AssetProperties"/>. </summary>
         /// <param name="uuid"> Globally unique, immutable, non-reusable id. </param>
-        /// <param name="enabled"> Enabled/Disabled status of the asset. </param>
+        /// <param name="isEnabled"> Enabled/Disabled status of the asset. </param>
         /// <param name="externalAssetId"> Asset id provided by the customer. </param>
         /// <param name="displayName"> Human-readable display name. </param>
         /// <param name="description"> Human-readable description of the asset. </param>
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="status"> Read only object to reflect changes that have occurred on the Edge. Similar to Kubernetes status property for custom resources. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssetProperties(string uuid, bool? enabled, string externalAssetId, string displayName, string description, string assetEndpointProfileRef, long? version, string manufacturer, string manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, string documentationUri, string serialNumber, IDictionary<string, BinaryData> attributes, IList<string> discoveredAssetRefs, string defaultDatasetsConfiguration, string defaultEventsConfiguration, DeviceRegistryMqttTopic defaultTopic, IList<DeviceRegistryDataset> datasets, IList<DeviceRegistryEvent> events, DeviceRegistryAssetStatus status, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssetProperties(string uuid, bool? isEnabled, string externalAssetId, string displayName, string description, string assetEndpointProfileRef, long? version, string manufacturer, Uri manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, Uri documentationUri, string serialNumber, IDictionary<string, BinaryData> attributes, IList<string> discoveredAssetRefs, string defaultDatasetsConfiguration, string defaultEventsConfiguration, DeviceRegistryMqttTopic defaultTopic, IList<DeviceRegistryDataset> datasets, IList<DeviceRegistryEvent> events, DeviceRegistryAssetStatus status, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uuid = uuid;
-            Enabled = enabled;
+            IsEnabled = isEnabled;
             ExternalAssetId = externalAssetId;
             DisplayName = displayName;
             Description = description;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Globally unique, immutable, non-reusable id. </summary>
         public string Uuid { get; }
         /// <summary> Enabled/Disabled status of the asset. </summary>
-        public bool? Enabled { get; set; }
+        public bool? IsEnabled { get; set; }
         /// <summary> Asset id provided by the customer. </summary>
         public string ExternalAssetId { get; set; }
         /// <summary> Human-readable display name. </summary>
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Asset manufacturer name. </summary>
         public string Manufacturer { get; set; }
         /// <summary> Asset manufacturer URI. </summary>
-        public string ManufacturerUri { get; set; }
+        public Uri ManufacturerUri { get; set; }
         /// <summary> Asset model name. </summary>
         public string Model { get; set; }
         /// <summary> Asset product code. </summary>
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Revision number of the software. </summary>
         public string SoftwareRevision { get; set; }
         /// <summary> Reference to the documentation. </summary>
-        public string DocumentationUri { get; set; }
+        public Uri DocumentationUri { get; set; }
         /// <summary> Asset serial number. </summary>
         public string SerialNumber { get; set; }
         /// <summary>

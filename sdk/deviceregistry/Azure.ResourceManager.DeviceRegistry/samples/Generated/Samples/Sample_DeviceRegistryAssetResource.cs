@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             {
                 Properties = new AssetUpdateProperties
                 {
-                    Enabled = false,
+                    IsEnabled = false,
                     DisplayName = "NewAssetDisplayName",
                 },
             };

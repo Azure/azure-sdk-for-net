@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             {
                 Properties = new AssetProperties("myAssetEndpointProfile")
                 {
-                    Enabled = true,
+                    IsEnabled = true,
                     ExternalAssetId = "8ZBA6LRHU0A458969",
                     DisplayName = "AssetDisplayName",
                     Description = "This is a sample Asset",
                     Manufacturer = "Contoso",
-                    ManufacturerUri = "https://www.contoso.com/manufacturerUri",
+                    ManufacturerUri = new Uri("https://www.contoso.com/manufacturerUri"),
                     Model = "ContosoModel",
                     ProductCode = "SA34VDG",
                     HardwareRevision = "1.0",
                     SoftwareRevision = "2.0",
-                    DocumentationUri = "https://www.example.com/manual",
+                    DocumentationUri = new Uri("https://www.example.com/manual"),
                     SerialNumber = "64-103816-519918-8",
                     DiscoveredAssetRefs = { "discoveredAsset1", "discoveredAsset2" },
                     DefaultDatasetsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
@@ -138,17 +138,17 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
             {
                 Properties = new AssetProperties("myAssetEndpointProfile")
                 {
-                    Enabled = true,
+                    IsEnabled = true,
                     ExternalAssetId = "8ZBA6LRHU0A458969",
                     DisplayName = "AssetDisplayName",
                     Description = "This is a sample Asset",
                     Manufacturer = "Contoso",
-                    ManufacturerUri = "https://www.contoso.com/manufacturerUri",
+                    ManufacturerUri = new Uri("https://www.contoso.com/manufacturerUri"),
                     Model = "ContosoModel",
                     ProductCode = "SA34VDG",
                     HardwareRevision = "1.0",
                     SoftwareRevision = "2.0",
-                    DocumentationUri = "https://www.example.com/manual",
+                    DocumentationUri = new Uri("https://www.example.com/manual"),
                     SerialNumber = "64-103816-519918-8",
                     DefaultDatasetsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
                     DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
@@ -230,16 +230,16 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
             {
                 Properties = new AssetProperties("myAssetEndpointProfile")
                 {
-                    Enabled = true,
+                    IsEnabled = true,
                     ExternalAssetId = "8ZBA6LRHU0A458969",
                     Description = "This is a sample Asset",
                     Manufacturer = "Contoso",
-                    ManufacturerUri = "https://www.contoso.com/manufacturerUri",
+                    ManufacturerUri = new Uri("https://www.contoso.com/manufacturerUri"),
                     Model = "ContosoModel",
                     ProductCode = "SA34VDG",
                     HardwareRevision = "1.0",
                     SoftwareRevision = "2.0",
-                    DocumentationUri = "https://www.example.com/manual",
+                    DocumentationUri = new Uri("https://www.example.com/manual"),
                     SerialNumber = "64-103816-519918-8",
                     DefaultDatasetsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
                     DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
@@ -321,16 +321,16 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
             {
                 Properties = new AssetProperties("myAssetEndpointProfile")
                 {
-                    Enabled = true,
+                    IsEnabled = true,
                     DisplayName = "AssetDisplayName",
                     Description = "This is a sample Asset",
                     Manufacturer = "Contoso",
-                    ManufacturerUri = "https://www.contoso.com/manufacturerUri",
+                    ManufacturerUri = new Uri("https://www.contoso.com/manufacturerUri"),
                     Model = "ContosoModel",
                     ProductCode = "SA34VDG",
                     HardwareRevision = "1.0",
                     SoftwareRevision = "2.0",
-                    DocumentationUri = "https://www.example.com/manual",
+                    DocumentationUri = new Uri("https://www.example.com/manual"),
                     SerialNumber = "64-103816-519918-8",
                     DefaultDatasetsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
                     DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",

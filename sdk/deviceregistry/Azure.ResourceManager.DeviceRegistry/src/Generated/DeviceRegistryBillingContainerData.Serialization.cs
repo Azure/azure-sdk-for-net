@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DeviceRegistry
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
         }
 
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DeviceRegistry
                 return null;
             }
             BillingContainerProperties properties = default;
-            string etag = default;
+            ETag? etag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -90,7 +90,11 @@ namespace Azure.ResourceManager.DeviceRegistry
                 }
                 if (property.NameEquals("etag"u8))
                 {
-                    etag = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    etag = new ETag(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("id"u8))
