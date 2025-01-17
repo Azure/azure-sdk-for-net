@@ -4,19 +4,14 @@
 #nullable enable
 
 using System;
-using System.Threading;
-using Azure.Security.KeyVault.Secrets;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using Azure.CloudMachine.OpenAI;
-using Azure.CloudMachine.KeyVault;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Primitives;
 using NUnit.Framework;
 using OpenAI.Chat;
-using Microsoft.Extensions.Configuration;
-using System.Collections.Generic;
-using Microsoft.Extensions.Primitives;
-using System.Linq;
-using System.IO;
-using System.Text.Json;
-using Azure.Storage.Blobs;
 
 namespace Azure.CloudMachine.Tests;
 
@@ -35,7 +30,8 @@ public partial class CloudMachineTests
         ];
 
         CloudMachineClient cm = new(new MockConfiguration("cmec4615e3fdfa44e"), default);
-        var chat = cm.GetOpenAIChatClient();
+        ChatClient chat = cm.GetOpenAIChatClient();
+
         var embeddings = cm.GetOpenAIEmbeddingsClient();
 
         // helpers
