@@ -1140,6 +1140,7 @@ namespace Azure.Storage.DataMovement.Tests
             if (transfer.Status.State == TransferState.Completed)
             {
                 Assert.IsTrue(transfer.HasCompleted);
+                await testEventsRaised.AssertTransferCompleted();
                 // Verify transfer
                 await AssertDirectorySourceAndDestinationAsync(
                     transferType: transferType,
@@ -1167,7 +1168,7 @@ namespace Azure.Storage.DataMovement.Tests
             await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
 
             // Assert
-            await testEventRaised2.AssertTransferCompleted();
+            await testEventRaised2.AssertContainerCompleted(partCount - completedBeforePause);
             Assert.AreEqual(TransferState.Completed, resumeTransfer.Status.State);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 
@@ -1242,6 +1243,7 @@ namespace Azure.Storage.DataMovement.Tests
             if (transfer.Status.State == TransferState.Completed)
             {
                 Assert.IsTrue(transfer.HasCompleted);
+                await testEventsRaised.AssertTransferCompleted();
                 // Verify transfer
                 await AssertDirectorySourceAndDestinationAsync(
                     transferType: transferType,
@@ -1269,7 +1271,7 @@ namespace Azure.Storage.DataMovement.Tests
             await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
 
             // Assert
-            await testEventsRaised2.AssertTransferCompleted();
+            await testEventsRaised2.AssertContainerCompleted(partCount - completedBeforePause);
             Assert.AreEqual(TransferState.Completed, resumeTransfer.Status.State);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 

@@ -244,6 +244,14 @@ namespace Azure.Storage.DataMovement.Tests
                 StatusEvents.Select(e => e.TransferStatus).ToArray());
         }
 
+        public async Task AssertContainerCompleted(int transferCount)
+        {
+            await WaitForStatusEventsAsync().ConfigureAwait(false);
+            Assert.IsEmpty(SkippedEvents);
+            Assert.AreEqual(transferCount, SingleCompletedEvents.Count);
+            Assert.AreEqual(TransferState.Completed, StatusEvents.Last().TransferStatus.State);
+        }
+
         /// <summary>
         /// This asserts that the expected events occurred during a container transfer that is expected
         /// to have a <see cref="TransferState.CompletedWithFailure"/> at the end without any skips.
