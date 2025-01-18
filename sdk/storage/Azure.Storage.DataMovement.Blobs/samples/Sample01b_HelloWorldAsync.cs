@@ -1168,8 +1168,12 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     TransferOptions transferOptions = new()
                     {
-                        // optionally include the below if progress updates on bytes transferred are desired
-                        ProgressHandlerOptions = new(progress, trackBytesTransferred: true)
+                        ProgressHandlerOptions = new()
+                        {
+                            ProgressHandler = progress,
+                            // optionally include the below if progress updates on bytes transferred are desired
+                            TrackBytesTransferred = true,
+                        }
                     };
                     return await transferManager.StartTransferAsync(
                         source,

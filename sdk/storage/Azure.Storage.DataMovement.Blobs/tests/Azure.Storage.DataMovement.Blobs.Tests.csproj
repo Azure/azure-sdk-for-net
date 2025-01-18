@@ -54,6 +54,7 @@
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)DataMovementTestBase.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)TransferDirection.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)TransferValidator.Local.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)TestProgressHandler.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\**">
