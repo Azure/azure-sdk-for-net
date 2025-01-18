@@ -6,11 +6,14 @@
 - Updated the Computeschedule RP api-version from `2024-08-15-preview` to the first stable version `2024-10-01`.
 
 ### Breaking Changes
+- N/A
 
 ### Bugs Fixed
-- Changed the errorDetails in ResourceOperation from dateTime to string.
+- Changed the errorDetails in OperationErrorDetails from dateTime to string.
+- Added AzureOperationId in results returned when calling `GetOperationErrors` endpoint.
 
 ### Other Changes
+- N/A
 
 ## 1.0.0-beta.1 (2024-09-27)
 
