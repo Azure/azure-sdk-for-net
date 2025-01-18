@@ -1,12 +1,16 @@
 # Release History
 
-## 1.0.0-beta.3 (Unreleased)
+## 1.0.0-beta.3 (2024-12-21)
 
 ### Features Added
 
 ### Breaking Changes
 
 ### Bugs Fixed
+
+* Fixed the bug preventing addition of a single Azure blob URI to the VectorStore.
+* Fixed deserialization of Run Step when the file search is used [issue](https://github.com/Azure/azure-sdk-for-net/issues/47836).
+* Fixed the issue preventing using streaming with function tools [issue](https://github.com/Azure/azure-sdk-for-net/issues/47797).
 
 ### Other Changes
 
