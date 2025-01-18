@@ -507,6 +507,7 @@ namespace Azure.Storage.DataMovement.Tests
             if (transfer.Status.State == TransferState.Completed)
             {
                 Assert.IsTrue(transfer.HasCompleted);
+                await testEventsRaised.AssertTransferCompleted();
                 // Verify transfer
                 await AssertDirectorySourceAndDestinationAsync(
                     transferType: transferType,
@@ -601,6 +602,7 @@ namespace Azure.Storage.DataMovement.Tests
             if (transfer.Status.State == TransferState.Completed)
             {
                 Assert.IsTrue(transfer.HasCompleted);
+                await testEventsRaised.AssertTransferCompleted();
                 // Verify transfer
                 await AssertDirectorySourceAndDestinationAsync(
                     transferType: transferType,
