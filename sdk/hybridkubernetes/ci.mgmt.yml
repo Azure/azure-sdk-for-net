@@ -1,7 +1,20 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
 
 trigger: none
+
 pr:
+  branches:
+    include:
+    - main
+    - feature/*
+    - hotfix/*
+    - release/*
+  paths:
+    include:
+    - sdk/hybridkubernetes/ci.mgmt.yml
+    - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes/
+
+
   branches:
     include:
     - main
