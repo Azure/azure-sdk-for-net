@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </summary>
         /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<IngressGatewayAsset>> GetIngressGatewayCredentialsAsync(long? expiresin = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IngressGatewayAsset>> GetIngressGatewayCredentialsAsync(long? expiresin, CancellationToken cancellationToken)
         {
             using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetIngressGatewayCredentials");
             scope.Start();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridConnectivity
         /// </summary>
         /// <param name="expiresin"> The is how long the endpoint access token is valid (in seconds). </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<IngressGatewayAsset> GetIngressGatewayCredentials(long? expiresin = null, CancellationToken cancellationToken = default)
+        public virtual Response<IngressGatewayAsset> GetIngressGatewayCredentials(long? expiresin, CancellationToken cancellationToken)
         {
             using var scope = _hybridConnectivityEndpointEndpointResourcesClientDiagnostics.CreateScope("HybridConnectivityEndpointResource.GetIngressGatewayCredentials");
             scope.Start();
