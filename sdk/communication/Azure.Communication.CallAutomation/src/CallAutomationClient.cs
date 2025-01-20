@@ -242,11 +242,13 @@ namespace Azure.Communication.CallAutomation
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name
             string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
-            if (cognitiveServicesEndpoint != null)
+            string backupCognitiveServicesEndpoint = options.CallIntelligenceOptions?.BackupCognitiveServicesEndpoint?.AbsoluteUri;
+            if (cognitiveServicesEndpoint != null || backupCognitiveServicesEndpoint != null)
             {
                 request.CallIntelligenceOptions = new()
                 {
-                    CognitiveServicesEndpoint = cognitiveServicesEndpoint
+                    CognitiveServicesEndpoint = cognitiveServicesEndpoint,
+                    BackupCognitiveServicesEndpoint = backupCognitiveServicesEndpoint
                 };
             }
 
@@ -715,11 +717,13 @@ namespace Azure.Communication.CallAutomation
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name
             string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
-            if (cognitiveServicesEndpoint != null)
+            string backupCognitiveServicesEndpoint = options.CallIntelligenceOptions?.BackupCognitiveServicesEndpoint?.AbsoluteUri;
+            if (cognitiveServicesEndpoint != null || backupCognitiveServicesEndpoint != null)
             {
                 request.CallIntelligenceOptions = new()
                 {
-                    CognitiveServicesEndpoint = cognitiveServicesEndpoint
+                    CognitiveServicesEndpoint = cognitiveServicesEndpoint,
+                    BackupCognitiveServicesEndpoint = backupCognitiveServicesEndpoint
                 };
             }
 
@@ -745,11 +749,13 @@ namespace Azure.Communication.CallAutomation
 
             // Add CallIntelligenceOptions such as custom cognitive service domain name
             string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
-            if (cognitiveServicesEndpoint != null)
+            string backupCognitiveServicesEndpoint = options.CallIntelligenceOptions?.BackupCognitiveServicesEndpoint?.AbsoluteUri;
+            if (cognitiveServicesEndpoint != null || backupCognitiveServicesEndpoint != null)
             {
                 request.CallIntelligenceOptions = new()
                 {
-                    CognitiveServicesEndpoint = cognitiveServicesEndpoint
+                    CognitiveServicesEndpoint = cognitiveServicesEndpoint,
+                    BackupCognitiveServicesEndpoint = backupCognitiveServicesEndpoint
                 };
             }
 
@@ -768,13 +774,16 @@ namespace Azure.Communication.CallAutomation
             connectRequest.MediaStreamingConfiguration = CreateMediaStreamingOptionsInternal(options.MediaStreamingOptions);
             connectRequest.TranscriptionConfiguration = CreateTranscriptionOptionsInternal(options.TranscriptionOptions);
 
-            if (options.CallIntelligenceOptions != null && options.CallIntelligenceOptions.CognitiveServicesEndpoint != null)
+            // Add CallIntelligenceOptions such as custom cognitive service domain name
+            string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
+            string backupCognitiveServicesEndpoint = options.CallIntelligenceOptions?.BackupCognitiveServicesEndpoint?.AbsoluteUri;
+            if (cognitiveServicesEndpoint != null || backupCognitiveServicesEndpoint != null)
             {
-                CallIntelligenceOptionsInternal callIntelligenceOptionsInternal = new CallIntelligenceOptionsInternal
+                connectRequest.CallIntelligenceOptions = new()
                 {
-                    CognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri
+                    CognitiveServicesEndpoint = cognitiveServicesEndpoint,
+                    BackupCognitiveServicesEndpoint = backupCognitiveServicesEndpoint
                 };
-                connectRequest.CallIntelligenceOptions = callIntelligenceOptionsInternal;
             }
 
             return connectRequest;
