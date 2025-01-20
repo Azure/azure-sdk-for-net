@@ -101,40 +101,37 @@ namespace Azure.Generator.Providers
                 _clientDiagonosticsField.Assign(New.Instance(typeof(ClientDiagnostics),  _clientDiagonosticsField, Literal(Namespace), _resourcetypeField.AsVariableExpression.Invoke(nameof(ResourceType.Namespace)), This.Invoke("Diagnostics"))).Terminate(),
                 TryGetApiVersion(out var apiVersion).Terminate(),
                 _restClientField.Assign(New.Instance(_clientProvider.Type, _clientDiagonosticsField, This.Invoke("Pipeline"), This.Invoke("Diagnostics").Invoke(nameof(DiagnosticsOptions.ApplicationId)), This.Invoke("Endpoint"), apiVersion)).Terminate(),
-                new IfElsePreprocessorStatement
-                (
-                "NET6_0_OR_GREATER",
-                    writer.WriteRawValue(value),
-                    new UsingScopeStatement(typeof(JsonDocument), "document", JsonDocumentSnippets.Parse(value), out var jsonDocumentVar)
-                    {
-                        JsonSerializerSnippets.Serialize(writer, jsonDocumentVar.As<JsonDocument>().RootElement()).Terminate()
-                    }
-                )
-        };
+                new IfElsePreprocessorStatement("DEBUG", This.Invoke(ValidateResourceIdMethodName).Terminate(), null)
+            };
 
             return new ConstructorProvider(signature, bodyStatements, this);
         }
 
+        private const string ValidateResourceIdMethodName = "ValidateResourceId";
         private MethodProvider BuildValidateResourceIdMethod()
         {
+            var idParameter = new ParameterProvider("id", $"", typeof(ResourceIdentifier));
             var signature = new MethodSignature(
-                "ValidateResourceId",
+                ValidateResourceIdMethodName,
                 null,
                 MethodSignatureModifiers.Internal | MethodSignatureModifiers.Static,
                 typeof(void),
                 null,
                 [
-                    new("id", $"", typeof(ResourceIdentifier))
+                    idParameter
                 ]);
-            var bodyStatements = 
-            return new MethodProvider(signature)
+            var bodyStatements = new IfStatement(idParameter.NotEqual(This.Invoke("ResourceType")))
+            {
+                Throw(New.ArgumentException(idParameter, StringSnippets.Format(Literal("Invalid resource type {0} expected {1}"), idParameter.Invoke("Resourcetype"), This.Invoke("ResourceType")), false))
+            };
+            return new MethodProvider(signature, bodyStatements, this);
         }
 
         protected override CSharpType[] BuildImplements() => [typeof(ArmResource)];
 
         protected override MethodProvider[] BuildMethods()
         {
-            return base.BuildMethods();
+            return [BuildValidateResourceIdMethod()];
         }
 
         public ScopedApi<bool> TryGetApiVersion(out ScopedApi<string> apiVersion)

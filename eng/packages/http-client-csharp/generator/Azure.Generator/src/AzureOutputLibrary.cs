@@ -5,8 +5,11 @@ using Azure.Generator.Mgmt.Models;
 using Azure.Generator.Providers;
 using Azure.Generator.Utilities;
 using Microsoft.Generator.CSharp.ClientModel;
+using Microsoft.Generator.CSharp.ClientModel.Providers;
+using Microsoft.Generator.CSharp.Input;
 using Microsoft.Generator.CSharp.Providers;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator
 {
@@ -34,11 +37,19 @@ namespace Azure.Generator
                     var resourceDataProvider = (ResourceDataProvider)AzureClientPlugin.Instance.TypeFactory.CreateModel(model)!;
 
                     // TODO: set resource type
-                    var resource = new ResourceProvider(model.Name, resourceDataProvider, null!, "");
+                    var operationSet = _specNameToOperationSetsMap[model.Name].First();
+                    var client = GetCorrespondingClientForResource(model);
+                    var resource = new ResourceProvider(model.Name, resourceDataProvider, client, "");
                     result.Add(resource);
                 }
             }
             return result;
+        }
+
+        private ClientProvider GetCorrespondingClientForResource(InputModelType inputModel)
+        {
+            var inputClient = AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients.Single(client => client.Name.Contains(inputModel.Name));
+            return AzureClientPlugin.Instance.TypeFactory.CreateClient(inputClient);
         }
 
         private Dictionary<string, HashSet<OperationSet>> EnsureOperationsetMap()
