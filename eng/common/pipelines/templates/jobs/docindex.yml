@@ -15,20 +15,18 @@ jobs:
         workingDirectory: $(Build.BinariesDirectory)
         displayName: Download and Extract DocFX
 
-      - task: AzurePowerShell@5
+      - task: AzureCLI@2
         displayName: 'Generate Doc Index'
         inputs:
           azureSubscription: 'Azure SDK Artifacts'
-          azurePowerShellVersion: latestVersion
-          pwsh: true
-          ScriptType: 'FilePath'
-          ScriptPath: $(Build.SourcesDirectory)/eng/common/docgeneration/Generate-DocIndex.ps1 
-          ScriptArguments: >
-            -Docfx $(docfxPath)
-            -RepoRoot $(Build.SourcesDirectory)
-            -DocGenDir "$(Build.SourcesDirectory)/eng/common/docgeneration"
-            -DocOutDir "$(Build.ArtifactStagingDirectory)/docfx_project"
-            -verbose
+          scriptType: pscore
+          inlineScript: >
+            $(Build.SourcesDirectory)/eng/common/docgeneration/Generate-DocIndex.ps1
+              -Docfx $(docfxPath)
+              -RepoRoot $(Build.SourcesDirectory)
+              -DocGenDir "$(Build.SourcesDirectory)/eng/common/docgeneration"
+              -DocOutDir "$(Build.ArtifactStagingDirectory)/docfx_project"
+              -verbose
 
       - template: /eng/common/pipelines/templates/steps/mashup-doc-index.yml
         parameters:
