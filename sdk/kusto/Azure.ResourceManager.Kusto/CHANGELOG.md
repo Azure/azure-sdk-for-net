@@ -1,9 +1,10 @@
 # Release History
 
-## 1.6.0 (2025-01-16)
+## 1.6.0 (2025-01-20)
 
 ### Features Added
 
+- Upgraded to Azure API version 2024-04-13.
 - Introduced callout policy functionality.
 - Introduced a new cluster principal role called `AllDatabasesMonitor`.
 - Introduced the ability to specify a baseImageName for SandboxCustomImages. Now, either languageVersion or baseImageName is required.
@@ -11,7 +12,6 @@
 
 ### Other Changes
 
-- Upgraded to Azure API version 2024-04-13.
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
