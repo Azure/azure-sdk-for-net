@@ -74,7 +74,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Optional. For transferring metadata from the source to the destination storage resource.
         ///
-        /// By default preserves the metadata from the source.
+        /// By default preserves the metadata from the source. If explicitly set to null, the metadata will not be preserved and set to null.
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
@@ -92,7 +92,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Optional. Sets the Cache Control header which
         /// specifies directives for caching mechanisms.
         ///
-        /// By default preserves the Cache Control from the source.
+        /// By default preserves the Cache Control from the source. If explicitly set to null, the Cache Control will not be preserved and set to null.
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
@@ -114,7 +114,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// should not display the response, but instead show a Save As dialog
         /// with a filename other than the blob name specified.
         ///
-        /// By default preserves the Content Disposition from the source.
+        /// By default preserves the Content Disposition from the source. If explicitly set to null, the Content Disposition will not be preserved and set to null.
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
@@ -135,7 +135,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// is performed on the blob resource. The client can use this value
         /// when returned to decode the blob content.
         ///
-        /// By default preserves the Content Encoding from the source.
+        /// By default preserves the Content Encoding from the source. If explicitly set to null, the Content Encoding will not be preserved and set to null.
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
@@ -153,7 +153,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Optional. Sets the Content Language header which
         /// specifies the natural languages used by this resource.
         ///
-        /// By default preserves the Content Language from the source.
+        /// By default preserves the Content Language from the source. If explicitly set to null, the Content Language will not be preserved and set to null.
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
@@ -171,7 +171,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Optional. Sets the Content Type header which
         /// specifies the MIME content type of the blob.
         ///
-        /// By default preserves the Content Type from the source.
+        /// By default preserves the Content Type from the source. If explicitly set to null, the Content Type will not be preserved and set to null.
         ///
         /// Applies to upload and copy transfers.
         /// </summary>

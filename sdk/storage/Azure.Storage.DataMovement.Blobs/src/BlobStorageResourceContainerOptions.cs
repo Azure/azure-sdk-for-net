@@ -16,7 +16,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// Optional. The <see cref="Storage.Blobs.Models.BlobType"/> that will be used when uploading blobs to the destination.
         ///
-        /// Defaults to preserving the blob type if the source is also a blob. If the source is not a blob, will default to Block Blob.
+        /// Defaults to preserving the blob type if the source is also a blob. If the source is not a blob, will default to Block Blob. If explicitly set to null, the source blob type will not be preserved, and be transferred as a Block Blob.
         /// </summary>
         public BlobType? BlobType
         {

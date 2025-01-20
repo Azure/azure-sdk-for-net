@@ -66,7 +66,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// Optional. Sets the Cache Control header which
         /// specifies directives for caching mechanisms.
         ///
-        /// By default preserves the Cache Control from the source.
+        /// By default preserves the Cache Control from the source. If explicitly set to null, the Cache Control will not be preserved and set to null.
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
@@ -88,7 +88,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// should not display the response, but instead show a Save As dialog
         /// with a filename other than the blob name specified.
         ///
-        /// By default preserves the Content Disposition from the source.
+        /// By default preserves the Content Disposition from the source. If explicitly set to null, the Content Disposition will not be preserved and set to null.
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
@@ -109,7 +109,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// is performed on the blob resource. The client can use this value
         /// when returned to decode the blob content.
         ///
-        /// By default preserves the Content Encoding from the source.
+        /// By default preserves the Content Encoding from the source. If explicitly set to null, the Content Encoding will not be preserved and set to null.
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
@@ -127,7 +127,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// Optional. Sets the Content Language header which
         /// specifies the natural languages used by this resource.
         ///
-        /// By default preserves the Content Language from the source.
+        /// By default preserves the Content Language from the source. If explicitly set to null, the Content Language will not be preserved and set to null.
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
@@ -145,7 +145,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// Optional. Sets the Content Type header which
         /// specifies the MIME content type of the blob.
         ///
-        /// By default preserves the Content Type from the source.
+        /// By default preserves the Content Type from the source. If explicitly set to null, the Content Type will not be preserved and set to null.
         ///
         /// Applies to upload and copy transfers.
         /// </summary>
@@ -162,7 +162,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <summary>
         /// The file system attributes for this file.
         ///
-        /// By default preserves the File Attributes from the source.
+        /// By default preserves the File Attributes from the source. If explicitly set to null, the File Attributes will not be preserved and set to null.
         /// </summary>
         public NtfsFileAttributes? FileAttributes
         {
@@ -180,7 +180,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// This requires a <see href="https://learn.microsoft.com/en-us/rest/api/storageservices/create-permission">Create Share Permissions</see> operation,
         /// which is a operation called on the Destination Share, which requires Share level permissions.
         ///
-        /// By default the permission key will not be preserved from the source Share to the destination Share.
+        /// By default the permission key will not be preserved from the source Share to the destination Share. If explicitly set to null, the File Permissions will not be preserved.
         /// Applies only to copy transfers.
         /// </summary>
         public bool? FilePermissions { get; set; }
@@ -188,7 +188,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <summary>
         /// The creation time of the file.
         ///
-        /// By default preserves the File Created On Time from the source.
+        /// By default preserves the File Created On Time from the source. If explicitly set to null, the File Created On Time will not be preserved and set to `now`.
         /// </summary>
         public DateTimeOffset? FileCreatedOn
         {
@@ -203,7 +203,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <summary>
         /// The last write time of the file.
         ///
-        /// By default preserves the File Last Written On Time from the source.
+        /// By default preserves the File Last Written On Time from the source. If explicitly set to null, the File Last Written On Time will not be preserved and set to `now`.
         /// </summary>
         public DateTimeOffset? FileLastWrittenOn
         {
@@ -218,7 +218,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <summary>
         /// The change time of the file.
         ///
-        /// By default preserves the File Changed On Time from the source.
+        /// By default preserves the File Changed On Time from the source. If explicitly set to null, the File Changed On Time will not be preserved and set to `now`.
         /// </summary>
         public DateTimeOffset? FileChangedOn
         {
@@ -235,7 +235,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         ///
         /// Applies to upload and copy transfers.
         ///
-        /// Preserves Metadata from the source by default.
+        /// Preserves Metadata from the source by default. If explicitly set to null, the Metadata will not be preserved and set to null.
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be readonly
         public Metadata DirectoryMetadata
@@ -254,7 +254,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         ///
         /// Applies to upload and copy transfers.
         ///
-        /// Preserves Metdata from the source by default.
+        /// Preserves Metadata from the source by default. If explicitly set to null, the Metadata will not be preserved and set to null.
         /// </summary>
 #pragma warning disable CA2227 // Collection properties should be readonly
         public Metadata FileMetadata
