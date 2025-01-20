@@ -183,7 +183,7 @@ function RegisterMgmtSDKToMgmtCoreClient () {
     param(
         [string]$packagesPath
     )
-    $track2MgmtDirs = Get-ChildItem -Path "$packagesPath" -Directory -Recurse -Depth 1 | Where-Object { $_.Name -match "(Azure.ResourceManager.)" -and $(Test-Path("$($_.FullName)/src")) }
+    $track2MgmtDirs = Get-ChildItem -Path "$packagesPath" -Directory -Recurse -Depth 1 | Where-Object { $_.Name -match "(Azure.ResourceManager.)" -and $(Test-Path("$($_.FullName)/src")) } | Sort-Object -Property { (Split-Path $_.FullName -Parent) }
     Write-Host "Updating mgmt core client ci.mgmt.yml"
     #add path for each mgmt library into Azure.ResourceManager
     $armCiFile = "$packagesPath/resourcemanager/ci.mgmt.yml"

@@ -275,7 +275,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
         }
 
         protected override async Task VerifyPropertiesCopyAsync(
-            DataTransfer transfer,
+            TransferOperation transfer,
             TransferPropertiesTestType transferPropertiesTestType,
             TestEventsRaised testEventsRaised,
             ShareFileClient sourceClient,
@@ -285,7 +285,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             // Verify completion
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
             // Verify Copy - using original source File and Copying the destination
             await testEventsRaised.AssertSingleCompletedCheck();
             using Stream sourceStream = await sourceClient.OpenReadAsync();

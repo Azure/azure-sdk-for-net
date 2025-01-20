@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Quota.Models
         /// </list>
         /// </para>
         /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="GroupQuotaDetails"/>. </summary>
         public GroupQuotaDetails()
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Quota.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="GroupQuotaDetails"/>. </summary>
-        /// <param name="region"> Location/Azure region for the quota requested for resource. </param>
+        /// <param name="resourceName"> The resource name, such as SKU name. </param>
         /// <param name="limit"> The current Group Quota Limit at the parentId level. </param>
         /// <param name="comment"> Any comment related to quota request. </param>
         /// <param name="unit"> The usages units, such as Count and Bytes. When requesting quota, use the **unit** value returned in the GET response in the request body of your PUT operation. </param>
@@ -60,9 +60,9 @@ namespace Azure.ResourceManager.Quota.Models
         /// <param name="value"> Resource name. </param>
         /// <param name="localizedValue"> Resource display name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GroupQuotaDetails(string region, long? limit, string comment, string unit, long? availableLimit, AllocatedQuotaToSubscriptionList allocatedToSubscriptions, string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GroupQuotaDetails(string resourceName, long? limit, string comment, string unit, long? availableLimit, AllocatedQuotaToSubscriptionList allocatedToSubscriptions, string value, string localizedValue, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Region = region;
+            ResourceName = resourceName;
             Limit = limit;
             Comment = comment;
             Unit = unit;
@@ -73,9 +73,9 @@ namespace Azure.ResourceManager.Quota.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Location/Azure region for the quota requested for resource. </summary>
-        [WirePath("region")]
-        public string Region { get; set; }
+        /// <summary> The resource name, such as SKU name. </summary>
+        [WirePath("resourceName")]
+        public string ResourceName { get; set; }
         /// <summary> The current Group Quota Limit at the parentId level. </summary>
         [WirePath("limit")]
         public long? Limit { get; set; }

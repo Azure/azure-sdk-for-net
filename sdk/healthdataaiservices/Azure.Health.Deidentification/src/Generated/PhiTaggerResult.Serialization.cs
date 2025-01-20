@@ -41,16 +41,6 @@ namespace Azure.Health.Deidentification
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(Path))
-            {
-                writer.WritePropertyName("path"u8);
-                writer.WriteStringValue(Path);
-            }
-            if (Optional.IsDefined(Etag))
-            {
-                writer.WritePropertyName("etag"u8);
-                writer.WriteStringValue(Etag.Value.ToString());
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,8 +79,6 @@ namespace Azure.Health.Deidentification
                 return null;
             }
             IReadOnlyList<PhiEntity> entities = default;
-            string path = default;
-            ETag? etag = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,27 +93,13 @@ namespace Azure.Health.Deidentification
                     entities = array;
                     continue;
                 }
-                if (property.NameEquals("path"u8))
-                {
-                    path = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("etag"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    etag = new ETag(property.Value.GetString());
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new PhiTaggerResult(entities, path, etag, serializedAdditionalRawData);
+            return new PhiTaggerResult(entities, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PhiTaggerResult>.Write(ModelReaderWriterOptions options)

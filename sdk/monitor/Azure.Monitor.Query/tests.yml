@@ -4,6 +4,5 @@ extends:
     template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
     parameters:
       ServiceDirectory: monitor
-      SupportedClouds: 'Public,UsGov,China'
       Project: Azure.Monitor.Query
       TimeoutInMinutes: 120
