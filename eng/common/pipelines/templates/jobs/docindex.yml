@@ -23,11 +23,11 @@ jobs:
           scriptLocation: inlineScript
           inlineScript: >
             $(Build.SourcesDirectory)/eng/common/docgeneration/Generate-DocIndex.ps1
-              -Docfx $(docfxPath)
-              -RepoRoot $(Build.SourcesDirectory)
-              -DocGenDir "$(Build.SourcesDirectory)/eng/common/docgeneration"
-              -DocOutDir "$(Build.ArtifactStagingDirectory)/docfx_project"
-              -verbose
+            -Docfx $(docfxPath)
+            -RepoRoot $(Build.SourcesDirectory)
+            -DocGenDir "$(Build.SourcesDirectory)/eng/common/docgeneration"
+            -DocOutDir "$(Build.ArtifactStagingDirectory)/docfx_project"
+            -verbose
 
       - template: /eng/common/pipelines/templates/steps/mashup-doc-index.yml
         parameters:
