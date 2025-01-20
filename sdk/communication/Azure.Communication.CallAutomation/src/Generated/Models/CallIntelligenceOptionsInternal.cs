@@ -17,12 +17,16 @@ namespace Azure.Communication.CallAutomation
 
         /// <summary> Initializes a new instance of <see cref="CallIntelligenceOptionsInternal"/>. </summary>
         /// <param name="cognitiveServicesEndpoint"> The identifier of the Cognitive Service resource assigned to this call. </param>
-        internal CallIntelligenceOptionsInternal(string cognitiveServicesEndpoint)
+        /// <param name="backupCognitiveServicesEndpoint"> A backup identifier of the Cognitive Service resource assigned to this call. </param>
+        internal CallIntelligenceOptionsInternal(string cognitiveServicesEndpoint, string backupCognitiveServicesEndpoint)
         {
             CognitiveServicesEndpoint = cognitiveServicesEndpoint;
+            BackupCognitiveServicesEndpoint = backupCognitiveServicesEndpoint;
         }
 
         /// <summary> The identifier of the Cognitive Service resource assigned to this call. </summary>
         public string CognitiveServicesEndpoint { get; set; }
+        /// <summary> A backup identifier of the Cognitive Service resource assigned to this call. </summary>
+        public string BackupCognitiveServicesEndpoint { get; set; }
     }
 }

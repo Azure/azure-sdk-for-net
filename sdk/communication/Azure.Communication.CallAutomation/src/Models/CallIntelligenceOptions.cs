@@ -14,5 +14,10 @@ namespace Azure.Communication.CallAutomation
         /// The endpoint URL of the Azure Cognitive Services resource attached
         /// </summary>
         public Uri CognitiveServicesEndpoint { get; set; }
+
+        /// <summary>
+        /// The backup endpoint URL of the Azure Cognitive Services resource attached
+        /// </summary>
+        public Uri BackupCognitiveServicesEndpoint { get; set; }
     }
 }
