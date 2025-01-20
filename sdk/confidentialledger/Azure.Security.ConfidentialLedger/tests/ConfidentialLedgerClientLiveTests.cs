@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
+using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -211,6 +212,33 @@ namespace Azure.Security.ConfidentialLedger.Tests
             await Client.DeleteUserAsync(userId);
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
+        [RecordedTest]
+        public async Task GetUsers()
+        {
+            // Create a user, test that it shows up in the users list
+            var userId = Recording.Random.NewGuid().ToString();
+            var result = await Client.CreateOrUpdateUserAsync(
+                userId,
+                RequestContent.Create(new { assignedRole = "Reader" }));
+            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
+
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            Assert.That(stringResult, Does.Contain(userId));
+
+            HashSet<string> users = [];
+            await foreach (BinaryData page in Client.GetUsersAsync())
+            {
+                JsonElement pageResult = JsonDocument.Parse(page.ToStream()).RootElement;
+                if (pageResult.GetProperty("assignedRole").GetString() == "Reader")
+                {
+                    users.Add(pageResult.GetProperty("userId").GetString());
+                }
+            }
+
+            Assert.IsTrue(users.Contains(userId), "GetUsers endpoint does not contain expected reader");
+            await Client.DeleteUserAsync(userId);
         }
 
         [RecordedTest]
