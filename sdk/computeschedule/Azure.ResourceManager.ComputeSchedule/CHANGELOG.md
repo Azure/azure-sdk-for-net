@@ -1,20 +1,15 @@
 # Release History
 
 ## 1.0.0 (2025-01-24)
-- Updated the Computeschedule RP api-version from `2024-08-15-preview` to the first stable version `2024-10-01`.
 
 ### Features Added
-- N/A
 
-### Breaking Changes
-- N/A
+- Updated the Computeschedule RP api-version from `2024-08-15-preview` to the first stable version `2024-10-01`.
 
 ### Bugs Fixed
+
 - Changed the errorDetails in OperationErrorDetails from dateTime to string.
 - Added AzureOperationName in results returned when calling `GetOperationErrors` endpoint.
-
-### Other Changes
-- N/A
 
 ## 1.0.0-beta.1 (2024-09-27)
 
