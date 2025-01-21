@@ -1080,7 +1080,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOptions transferOptions = new TransferOptions()
             {
                 InitialTransferSize = Constants.KB,
-                MaximumTransferChunkSize = Constants.KB
+                MaximumTransferChunkSize = Constants.KB / 2
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
             long size = Constants.KB * 4;
@@ -1175,7 +1175,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOptions transferOptions = new TransferOptions()
             {
                 InitialTransferSize = Constants.KB,
-                MaximumTransferChunkSize = Constants.KB
+                MaximumTransferChunkSize = Constants.KB / 2
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
             long size = Constants.KB * 4;
