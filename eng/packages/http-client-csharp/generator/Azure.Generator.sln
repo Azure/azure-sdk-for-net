@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjects.Local.Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Generator.StubLibrary", "Azure.Generator.StubLibrary\src\Azure.Generator.StubLibrary.csproj", "{CC2E7459-398A-60FA-5138-282707944E43}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProjects.CadlRanch.Tests", "TestProjects\CadlRanch.Tests\TestProjects.CadlRanch.Tests.csproj", "{FD729CC8-FAAC-B384-0328-6F590DCAA5AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{CC2E7459-398A-60FA-5138-282707944E43}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC2E7459-398A-60FA-5138-282707944E43}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC2E7459-398A-60FA-5138-282707944E43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD729CC8-FAAC-B384-0328-6F590DCAA5AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD729CC8-FAAC-B384-0328-6F590DCAA5AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD729CC8-FAAC-B384-0328-6F590DCAA5AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD729CC8-FAAC-B384-0328-6F590DCAA5AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

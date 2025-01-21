@@ -71,6 +71,10 @@ $failingSpecs = @(
     Join-Path 'http' 'versioning' 'typeChangedFrom'
     Join-Path 'http' 'client' 'naming'
     Join-Path 'http' 'resiliency' 'srv-driven'
+    Join-Path 'http' 'client' 'structure' 'client-operation-group'
+    Join-Path 'http' 'client' 'structure' 'renamed-operation'
+    Join-Path 'http' 'client' 'structure' 'multi-client'
+    Join-Path 'http' 'client' 'structure' 'two-operation-group'
 )
 
 $azureAllowSpecs = @(

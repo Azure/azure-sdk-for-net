@@ -16,7 +16,6 @@ namespace Azure.Generator.StubLibrary
     internal class AzureStubVisitor : ScmLibraryVisitor
     {
         private readonly ValueExpression _throwNull = ThrowExpression(Null);
-        private readonly XmlDocProvider _emptyDocs = new();
 
         protected override TypeProvider? Visit(TypeProvider type)
         {
@@ -25,7 +24,6 @@ namespace Azure.Generator.StubLibrary
                 !type.Name.Equals("MultiPartFormDataBinaryContent", StringComparison.Ordinal))
                 return null;
 
-            type.Update(xmlDocs: _emptyDocs);
             return type;
         }
 
@@ -52,8 +50,7 @@ namespace Azure.Generator.StubLibrary
 
             constructor.Update(
                 bodyStatements: null,
-                bodyExpression: _throwNull,
-                xmlDocs: _emptyDocs);
+                bodyExpression: _throwNull);
 
             return constructor;
         }
@@ -82,8 +79,7 @@ namespace Azure.Generator.StubLibrary
 
             method.Update(
                 bodyStatements: null,
-                bodyExpression: _throwNull,
-                xmlDocProvider: _emptyDocs);
+                bodyExpression: _throwNull);
 
             return method;
         }
@@ -96,8 +92,7 @@ namespace Azure.Generator.StubLibrary
             var propertyBody = new ExpressionPropertyBody(_throwNull, property.Body.HasSetter ? _throwNull : null);
 
             property.Update(
-                body: propertyBody,
-                xmlDocs: _emptyDocs);
+                body: propertyBody);
 
             return property;
         }

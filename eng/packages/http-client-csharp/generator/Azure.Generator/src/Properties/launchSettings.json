@@ -25,28 +25,8 @@
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
-    "http-client-structure-client-operation-group": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll $(SolutionDir)/TestProjects/CadlRanch/http/client/structure/client-operation-group -p AzureStubPlugin",
-      "commandName": "Executable",
-      "executablePath": "dotnet"
-    },
     "http-client-structure-default": {
       "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll $(SolutionDir)/TestProjects/CadlRanch/http/client/structure/default -p AzureStubPlugin",
-      "commandName": "Executable",
-      "executablePath": "dotnet"
-    },
-    "http-client-structure-multi-client": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll $(SolutionDir)/TestProjects/CadlRanch/http/client/structure/multi-client -p AzureStubPlugin",
-      "commandName": "Executable",
-      "executablePath": "dotnet"
-    },
-    "http-client-structure-renamed-operation": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll $(SolutionDir)/TestProjects/CadlRanch/http/client/structure/renamed-operation -p AzureStubPlugin",
-      "commandName": "Executable",
-      "executablePath": "dotnet"
-    },
-    "http-client-structure-two-operation-group": {
-      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll $(SolutionDir)/TestProjects/CadlRanch/http/client/structure/two-operation-group -p AzureStubPlugin",
       "commandName": "Executable",
       "executablePath": "dotnet"
     },
