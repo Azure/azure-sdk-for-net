@@ -9,7 +9,7 @@ namespace Azure.Generator.InputTransformation
 {
     internal static class InputClientTransformer
     {
-        public static InputClient TransformInputClient(InputClient client)
+        public static InputClient? TransformInputClient(InputClient client)
         {
             var operationsToKeep = new List<InputOperation>();
             foreach (var operation in client.Operations)
@@ -21,6 +21,11 @@ namespace Azure.Generator.InputTransformation
                     operationsToKeep.Add(transformedOperation);
                 }
             }
+
+            // We removed the list operation above, we should skip the empty client afterwards
+            // There is no need to check sub-clients or custom code since it is specific to handle the above removing
+            if (operationsToKeep.Count == 0) return null;
+
             return new InputClient(client.Name, client.Summary, client.Doc, operationsToKeep, client.Parameters, client.Parent);
         }
 

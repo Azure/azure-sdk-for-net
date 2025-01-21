@@ -51,7 +51,7 @@ namespace Azure.Generator.Tests.Providers.Abstractions
         {
             var client = InputFactory.Client("TestClient", [InputFactory.Operation("foo")]);
             MockHelpers.LoadMockPlugin(clientResponseApi: AzureClientResponseProvider.Instance);
-            var clientProvider = AzureClientPlugin.Instance.TypeFactory.CreateClient(client);
+            var clientProvider = AzureClientPlugin.Instance.TypeFactory.CreateClient(client)!;
             return clientProvider;
         }
     }
