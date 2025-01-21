@@ -17,8 +17,8 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Initializes a new instance of <see cref="OperatorDetails"/>. </summary>
         /// <param name="name"> Name of the phone operator. </param>
-        /// <param name="mobileNetworkCode"> ISO 2 Mobile Network Code. </param>
-        /// <param name="mobileCountryCode"> ISO 2 Mobile Country Code. </param>
+        /// <param name="mobileNetworkCode"> Mobile Network Code, 2 or 3 decimal digits that identify mobile networks within a country. </param>
+        /// <param name="mobileCountryCode"> Mobile Country Code, 3 decimal digits that identify a country. </param>
         internal OperatorDetails(string name, string mobileNetworkCode, string mobileCountryCode)
         {
             Name = name;
@@ -28,9 +28,9 @@ namespace Azure.Communication.PhoneNumbers
 
         /// <summary> Name of the phone operator. </summary>
         public string Name { get; }
-        /// <summary> ISO 2 Mobile Network Code. </summary>
+        /// <summary> Mobile Network Code, 2 or 3 decimal digits that identify mobile networks within a country. </summary>
         public string MobileNetworkCode { get; }
-        /// <summary> ISO 2 Mobile Country Code. </summary>
+        /// <summary> Mobile Country Code, 3 decimal digits that identify a country. </summary>
         public string MobileCountryCode { get; }
     }
 }
