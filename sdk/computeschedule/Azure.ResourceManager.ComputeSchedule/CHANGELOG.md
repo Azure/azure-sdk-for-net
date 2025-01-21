@@ -1,20 +1,32 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0 (2025-01-24)
 
 ### Features Added
 
-### Breaking Changes
+- Updated the Computeschedule RP api-version from `2024-08-15-preview` to the first stable version `2024-10-01`.
 
 ### Bugs Fixed
 
-### Other Changes
+- Changed the errorDetails in OperationErrorDetails from dateTime to string.
+- Added AzureOperationName in results returned when calling `GetOperationErrors` endpoint.
 
 ## 1.0.0-beta.1 (2024-09-27)
 
 ### Features Added
-- Updated the Computeschedule RP api-version from `2024-08-15-preview` to the first stable version `2024-10-01`.
-- Updated properties to for response values retrned to customers
+
+New endpoints were added for the following to be available in public preview
+- VirtualMachinesSubmitStart
+- VirtualMachinesSubmitDeallocate
+- VirtualMachinesSubmitHibernate
+- VirtualMachinesExecuteStart
+- VirtualMachinesExecuteDeallocate
+- VirtualMachinesExecuteHibernate
+- VirtualMachinesGetOperationStatus
+- VirtualMachinesCancelOperations
+- VirtualMachinesGetOperationErrors
+
+The endpoint was also changed from `2024-06-01-preview` to the most recent `2024-08-15-preview` version that includes the `VirtualMachinesGetOperationErrors` endpoint
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 

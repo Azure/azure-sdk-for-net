@@ -8,19 +8,8 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Options associated with transfer progress tracking.
     /// </summary>
-    public class ProgressHandlerOptions
+    public class TransferProgressHandlerOptions
     {
-        /// <summary>
-        /// Constructor for ProgressHandlerOptions.
-        /// </summary>
-        /// <param name="progressHandler"></param>
-        /// <param name="trackBytesTransferred"></param>
-        public ProgressHandlerOptions(IProgress<TransferProgress> progressHandler, bool trackBytesTransferred = false)
-        {
-            ProgressHandler = progressHandler;
-            TrackBytesTransferred = trackBytesTransferred;
-        }
-
         /// <summary>
         /// Optional. An <see cref="IProgress{StorageTransferProgress}"/> for tracking progress of the transfer.
         /// See <see cref="TransferProgress"/> for details on what is tracked.

@@ -16,6 +16,8 @@
     - `DataTransferState` -> `TransferState`
     - `DataTransferStatus` -> `TransferStatus`
     - `DataTransferErrorMode` -> `TransferErrorMode`
+    - `ProgressHandlerOptions` -> `TransferProgressHandlerOptions`
+        - Also removed the constructor since properties are settable.
     - `StorageResourceCheckpointData` -> `StorageResourceCheckpointDetails`
     - `StorageResource.GetDestinationCheckpointData` -> `StorageResource.GetDestinationCheckpointDetails`
     - `StorageResource.GetSourceCheckpointData` -> `StorageResource.GetSourceCheckpointDetails`

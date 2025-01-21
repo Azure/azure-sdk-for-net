@@ -1006,7 +1006,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     // upload files to the root of the container
                     #region Snippet:ExtensionMethodSimpleUploadToRoot
-                    TransferOperation transfer = await container.StartUploadDirectoryAsync(localPath);
+                    TransferOperation transfer = await container.UploadDirectoryAsync(WaitUntil.Started, localPath);
 
                     await transfer.WaitForCompletionAsync();
                     #endregion
@@ -1014,7 +1014,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     // upload files with to a specific directory prefix
                     #region Snippet:ExtensionMethodSimpleUploadToDirectoryPrefix
-                    TransferOperation transfer = await container.StartUploadDirectoryAsync(localPath, blobDirectoryPrefix);
+                    TransferOperation transfer = await container.UploadDirectoryAsync(WaitUntil.Started, localPath, blobDirectoryPrefix);
 
                     await transfer.WaitForCompletionAsync();
                     #endregion
@@ -1033,7 +1033,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         }
                     };
 
-                    TransferOperation transfer = await container.StartUploadDirectoryAsync(localPath, options);
+                    TransferOperation transfer = await container.UploadDirectoryAsync(WaitUntil.Started, localPath, options);
 
                     await transfer.WaitForCompletionAsync();
                     #endregion
@@ -1076,7 +1076,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     // download the entire container to the local directory
                     #region Snippet:ExtensionMethodSimpleDownloadContainer
-                    TransferOperation transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath);
+                    TransferOperation transfer = await container.DownloadToDirectoryAsync(WaitUntil.Started, localDirectoryPath);
 
                     await transfer.WaitForCompletionAsync();
                     #endregion
@@ -1084,7 +1084,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     // download a virtual directory, with a specific prefix, within the container
                     #region Snippet:ExtensionMethodSimpleDownloadContainerDirectory
-                    TransferOperation transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, blobDirectoryPrefix);
+                    TransferOperation transfer = await container.DownloadToDirectoryAsync(WaitUntil.Started, localDirectoryPath2, blobDirectoryPrefix);
 
                     await transfer.WaitForCompletionAsync();
                     #endregion
@@ -1103,7 +1103,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         }
                     };
 
-                    TransferOperation transfer = await container.StartDownloadToDirectoryAsync(localDirectoryPath2, options);
+                    TransferOperation transfer = await container.DownloadToDirectoryAsync(WaitUntil.Started, localDirectoryPath2, options);
 
                     await transfer.WaitForCompletionAsync();
                     #endregion
@@ -1168,8 +1168,12 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     TransferOptions transferOptions = new()
                     {
-                        // optionally include the below if progress updates on bytes transferred are desired
-                        ProgressHandlerOptions = new(progress, trackBytesTransferred: true)
+                        ProgressHandlerOptions = new()
+                        {
+                            ProgressHandler = progress,
+                            // optionally include the below if progress updates on bytes transferred are desired
+                            TrackBytesTransferred = true,
+                        }
                     };
                     return await transferManager.StartTransferAsync(
                         source,

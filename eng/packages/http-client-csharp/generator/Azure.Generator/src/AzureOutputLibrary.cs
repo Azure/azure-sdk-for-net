@@ -29,7 +29,7 @@ namespace Azure.Generator
             var result = new Dictionary<string, HashSet<OperationSet>>();
             foreach (var operationSet in _pathToOperationSetMap.Values)
             {
-                if (operationSet.TryGetResourceDataSchema(out var resourceSpecName, out var resourceSchema))
+                if (AzureClientPlugin.Instance.ResourceDetection.TryGetResourceDataSchema(operationSet, out var resourceSpecName, out var resourceSchema))
                 {
                     // if this operation set corresponds to a SDK resource, we add it to the map
                     if (!result.TryGetValue(resourceSpecName!, out HashSet<OperationSet>? value))
