@@ -3,6 +3,7 @@
 ## 1.14.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added a `Subscription` property to `AzureCliCredentialOptions` to allow specifying the Azure subscription ID or name to use when authenticating with the Azure CLI.
 
 ### Breaking Changes
 
