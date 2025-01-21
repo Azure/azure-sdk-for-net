@@ -1,16 +1,17 @@
 # Release History
 
-## 2.0.0-beta.2 (Unreleased)
+## 2.0.0-beta.2 (2025-01-13)
 
 ### Features Added
 
 - Exposed `JsonModelWriteCore` for model serialization procedure.
-
-### Breaking Changes
-
-### Bugs Fixed
+- Added support for analyze-conversation API Versions
+  - 2024-11-01
+  - 2024-11-15-preview
 
 ### Other Changes
+- Removed support for analyze-conversation API Versions
+  - 2023-11-15-preview
 
 ## 2.0.0-beta.1 (2024-08-01)
 

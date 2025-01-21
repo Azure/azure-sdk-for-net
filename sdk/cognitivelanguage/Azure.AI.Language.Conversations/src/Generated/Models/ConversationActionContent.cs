@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Input parameters necessary for a Conversation task. </summary>
-    public partial class ConversationLanguageUnderstandingActionContent
+    public partial class ConversationActionContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,11 +45,11 @@ namespace Azure.AI.Language.Conversations.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ConversationLanguageUnderstandingActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConversationActionContent"/>. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the deployment to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="deploymentName"/> is null. </exception>
-        public ConversationLanguageUnderstandingActionContent(string projectName, string deploymentName)
+        public ConversationActionContent(string projectName, string deploymentName)
         {
             Argument.AssertNotNull(projectName, nameof(projectName));
             Argument.AssertNotNull(deploymentName, nameof(deploymentName));
@@ -59,7 +59,7 @@ namespace Azure.AI.Language.Conversations.Models
             TargetProjectParameters = new ChangeTrackingDictionary<string, AnalysisConfig>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationLanguageUnderstandingActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConversationActionContent"/>. </summary>
         /// <param name="projectName"> The name of the project to use. </param>
         /// <param name="deploymentName"> The name of the deployment to use. </param>
         /// <param name="verbose"> If true, the service will return more detailed information in the response. </param>
@@ -72,7 +72,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// The available derived classes include <see cref="ConversationConfig"/>, <see cref="LuisConfig"/> and <see cref="QuestionAnsweringConfig"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ConversationLanguageUnderstandingActionContent(string projectName, string deploymentName, bool? verbose, bool? isLoggingEnabled, StringIndexType? stringIndexType, string directTarget, IDictionary<string, AnalysisConfig> targetProjectParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationActionContent(string projectName, string deploymentName, bool? verbose, bool? isLoggingEnabled, StringIndexType? stringIndexType, string directTarget, IDictionary<string, AnalysisConfig> targetProjectParameters, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProjectName = projectName;
             DeploymentName = deploymentName;
@@ -84,8 +84,8 @@ namespace Azure.AI.Language.Conversations.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConversationLanguageUnderstandingActionContent"/> for deserialization. </summary>
-        internal ConversationLanguageUnderstandingActionContent()
+        /// <summary> Initializes a new instance of <see cref="ConversationActionContent"/> for deserialization. </summary>
+        internal ConversationActionContent()
         {
         }
 
