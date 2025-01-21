@@ -299,7 +299,7 @@ namespace Azure.Storage.DataMovement.Tests
                     localProvider: localProvider);
 
                 // Act
-                await Task.Delay(5);
+                await Task.Delay(1);
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
                 await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
@@ -359,7 +359,7 @@ namespace Azure.Storage.DataMovement.Tests
                     localProvider: localProvider);
 
                 // Act
-                await Task.Delay(5);
+                await Task.Delay(1);
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
                 await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
@@ -435,7 +435,7 @@ namespace Azure.Storage.DataMovement.Tests
                     localProvider: localProvider);
 
                 // Act
-                await Task.Delay(5);
+                await Task.Delay(1);
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
                 await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
@@ -501,7 +501,7 @@ namespace Azure.Storage.DataMovement.Tests
                     transferOptions: transferOptions);
 
                 // Act
-                await Task.Delay(5);
+                await Task.Delay(1);
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
                 await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
@@ -587,7 +587,7 @@ namespace Azure.Storage.DataMovement.Tests
                     transferOptions: transferOptions);
 
                 // Act
-                await Task.Delay(5);
+                await Task.Delay(1);
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
                 await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
@@ -671,7 +671,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transfer = await transferManager.StartTransferAsync(source, destination);
 
                 // Act
-                await Task.Delay(5);
+                await Task.Delay(1);
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
                 await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
@@ -920,7 +920,7 @@ namespace Azure.Storage.DataMovement.Tests
                     localProvider: localProvider);
 
                 // Act
-                await Task.Delay(5);
+                await Task.Delay(1);
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
                 await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
@@ -978,7 +978,7 @@ namespace Azure.Storage.DataMovement.Tests
                     localProvider: localProvider);
 
                 // Act
-                await Task.Delay(5);
+                await Task.Delay(1);
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
                 await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
@@ -1036,7 +1036,7 @@ namespace Azure.Storage.DataMovement.Tests
                     localProvider: localProvider);
 
                 // Act
-                await Task.Delay(5);
+                await Task.Delay(1);
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
                 await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
@@ -1110,7 +1110,7 @@ namespace Azure.Storage.DataMovement.Tests
                     transferOptions: transferOptions);
 
                 // Act
-                await Task.Delay(5);
+                await Task.Delay(1);
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
                 await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
@@ -1205,7 +1205,7 @@ namespace Azure.Storage.DataMovement.Tests
                     transferOptions: transferOptions);
 
                 // Act
-                await Task.Delay(5);
+                await Task.Delay(1);
                 CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
                 await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
