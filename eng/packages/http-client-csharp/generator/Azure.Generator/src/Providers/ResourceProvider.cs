@@ -3,7 +3,6 @@
 
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.Generator.Models;
 using Azure.ResourceManager;
 using Microsoft.Generator.CSharp.ClientModel.Providers;
 using Microsoft.Generator.CSharp.Expressions;
@@ -11,11 +10,9 @@ using Microsoft.Generator.CSharp.Primitives;
 using Microsoft.Generator.CSharp.Providers;
 using Microsoft.Generator.CSharp.Snippets;
 using Microsoft.Generator.CSharp.Statements;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
 using static Microsoft.Generator.CSharp.Snippets.Snippet;
 
 namespace Azure.Generator.Providers

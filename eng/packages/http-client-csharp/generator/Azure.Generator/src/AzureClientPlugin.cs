@@ -30,6 +30,9 @@ public class AzureClientPlugin : ClientModelPlugin
     /// <inheritdoc/>
     public override AzureOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
 
+    /// <inheritdoc/>
+    public override Lazy<PostProcessor> PostProcessor => new(() => new MgmtPostProcessor());
+
     /// <summary>
     /// The Azure client plugin to generate the Azure client SDK.
     /// </summary>

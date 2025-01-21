@@ -49,7 +49,7 @@ namespace Azure.Generator
         private ClientProvider GetCorrespondingClientForResource(InputModelType inputModel)
         {
             var inputClient = AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients.Single(client => client.Name.Contains(inputModel.Name));
-            return AzureClientPlugin.Instance.TypeFactory.CreateClient(inputClient);
+            return AzureClientPlugin.Instance.TypeFactory.CreateClient(inputClient)!;
         }
 
         private Dictionary<string, HashSet<OperationSet>> EnsureOperationsetMap()
