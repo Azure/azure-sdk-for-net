@@ -118,19 +118,24 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             TransferManagerOptions transferManagerOptions = default,
             TransferOptions transferOptions = default,
             bool trackBytes = true,
-            StorageResourceCreationPreference createMode = StorageResourceCreationPreference.OverwriteIfExists,
+            StorageResourceCreationMode createMode = StorageResourceCreationMode.OverwriteIfExists,
             int waitTime = 30)
         {
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure
+                ErrorMode = TransferErrorMode.ContinueOnFailure
             };
 
             TransferManager transferManager = new TransferManager(transferManagerOptions);
 
             TestProgressHandler progressHandler = new TestProgressHandler();
             transferOptions ??= new TransferOptions();
-            transferOptions.ProgressHandlerOptions = new ProgressHandlerOptions(progressHandler, trackBytes);
+            transferOptions.ProgressHandlerOptions = new()
+            {
+                ProgressHandler = progressHandler,
+                TrackBytesTransferred = trackBytes
+            }
+                ;
             transferOptions.CreationPreference = createMode;
 
             TransferOperation transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
@@ -209,9 +214,9 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         }
 
         [Test]
-        [TestCase(StorageResourceCreationPreference.SkipIfExists)]
-        [TestCase(StorageResourceCreationPreference.FailIfExists)]
-        public async Task ProgressHandler_Conflict(StorageResourceCreationPreference createMode)
+        [TestCase(StorageResourceCreationMode.SkipIfExists)]
+        [TestCase(StorageResourceCreationMode.FailIfExists)]
+        public async Task ProgressHandler_Conflict(StorageResourceCreationMode createMode)
         {
             // Arrange
             using DisposingLocalDirectory source = DisposingLocalDirectory.GetTestDirectory();
@@ -234,8 +239,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 destinationResource,
                 _expectedBytesTransferred.Take(_expectedBytesTransferred.Length - 2).ToArray(),
                 fileCount: 5,
-                skippedCount: createMode == StorageResourceCreationPreference.SkipIfExists ? 2 : 0,
-                failedCount: createMode == StorageResourceCreationPreference.FailIfExists ? 2 : 0,
+                skippedCount: createMode == StorageResourceCreationMode.SkipIfExists ? 2 : 0,
+                failedCount: createMode == StorageResourceCreationMode.FailIfExists ? 2 : 0,
                 createMode: createMode);
         }
 
@@ -279,7 +284,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             TransferManagerOptions transferManagerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = TransferErrorMode.StopOnAnyFailure,
+                ErrorMode = TransferErrorMode.StopOnAnyFailure,
                 MaximumConcurrency = 3
             };
             TransferOptions transferOptions = new TransferOptions()
@@ -296,7 +301,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 10 /* fileCount */,
                 transferManagerOptions: transferManagerOptions,
                 transferOptions: transferOptions,
-                waitTime: 30);
+                waitTime: 90);
         }
 
         [LiveOnly]
@@ -323,7 +328,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             TestProgressHandler progressHandler = new();
             TransferOptions transferOptions = new()
             {
-                ProgressHandlerOptions = new ProgressHandlerOptions(progressHandler, true)
+                ProgressHandlerOptions = new()
+                {
+                    ProgressHandler = progressHandler,
+                    TrackBytesTransferred = true
+                }
             };
             TestEventsRaised testEventsRaised = new(transferOptions);
 
@@ -339,7 +348,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Pause transfer
             CancellationTokenSource tokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
-            await transferManager.PauseTransferIfRunningAsync(transfer.Id, tokenSource.Token);
+            await transferManager.PauseTransferAsync(transfer.Id, tokenSource.Token);
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             // Record the current number of progress updates to use during assertions

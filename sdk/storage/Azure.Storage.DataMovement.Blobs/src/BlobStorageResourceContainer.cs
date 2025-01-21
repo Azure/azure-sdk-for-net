@@ -68,14 +68,14 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override StorageResourceItem GetStorageResourceReference(string path, string resourceId)
         {
             BlobType type = BlobType.Block;
-            if (_options?.BlobType?.Preserve ?? true)
+            if (_options == default || !_options._isBlobTypeSet)
             {
                 type = ToBlobType(resourceId);
             }
             else
             {
                 // If the user has set the blob type in the options, use that instead of the resourceId
-                type = _options?.BlobType?.Value ?? BlobType.Block;
+                type = _options?.BlobType ?? BlobType.Block;
             }
             return GetBlobAsStorageResource(ApplyOptionalPrefix(path), type: type);
         }
@@ -212,23 +212,14 @@ namespace Azure.Storage.DataMovement.Blobs
             }
         }
 
-        protected override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
             // Source blob type does not matter for container
-            return new BlobSourceCheckpointData();
+            return new BlobSourceCheckpointDetails();
         }
 
-        protected override StorageResourceCheckpointData GetDestinationCheckpointData()
-            => new BlobDestinationCheckpointData(
-                blobType: _options?.BlobType,
-                contentType: _options?.BlobOptions?.ContentType,
-                contentEncoding: _options?.BlobOptions?.ContentEncoding,
-                contentLanguage: _options?.BlobOptions?.ContentLanguage,
-                contentDisposition: _options?.BlobOptions?.ContentDisposition,
-                cacheControl: _options?.BlobOptions?.CacheControl,
-                accessTier: _options?.BlobOptions?.AccessTier,
-                metadata: _options?.BlobOptions?.Metadata,
-                tags: default);
+        protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
+            => new BlobDestinationCheckpointDetails(_options);
 
         private string ApplyOptionalPrefix(string path)
             => IsDirectory

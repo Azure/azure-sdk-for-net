@@ -202,42 +202,35 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             {
                 options = new ShareFileStorageResourceOptions()
                 {
-                    ContentType = new(_defaultContentType),
-                    ContentLanguage = new(_defaultContentLanguageFile),
-                    ContentDisposition = new(_defaultContentDisposition),
-                    CacheControl = new(_defaultCacheControl),
-                    FileMetadata = new(_defaultMetadata),
-                    FileCreatedOn = new(_defaultFileCreatedOn),
-                    FileLastWrittenOn = new(_defaultFileLastWrittenOn),
-                    FileChangedOn = new(_defaultFileChangedOn)
+                    ContentType = _defaultContentType,
+                    ContentLanguage = _defaultContentLanguageFile,
+                    ContentDisposition = _defaultContentDisposition,
+                    CacheControl = _defaultCacheControl,
+                    FileMetadata = _defaultMetadata,
+                    FileCreatedOn = _defaultFileCreatedOn,
+                    FileLastWrittenOn = _defaultFileLastWrittenOn,
+                    FileChangedOn = _defaultFileChangedOn
                 };
             }
             else if (type == TransferPropertiesTestType.Preserve)
             {
                 options = new ShareFileStorageResourceOptions()
                 {
-                    ContentType = new(true),
-                    ContentLanguage = new(true),
-                    ContentDisposition = new(true),
-                    CacheControl = new(true),
-                    FileMetadata = new(true),
-                    FileCreatedOn = new(true),
-                    FileLastWrittenOn = new(true),
-                    FileChangedOn = new(true)
+                    FilePermissions = true,
                 };
             }
             else if (type == TransferPropertiesTestType.NoPreserve)
             {
                 options = new ShareFileStorageResourceOptions()
                 {
-                    ContentType = new(false),
-                    ContentLanguage = new(false),
-                    ContentDisposition = new(false),
-                    CacheControl = new(false),
-                    FileMetadata = new(false),
-                    FileCreatedOn = new(false),
-                    FileLastWrittenOn = new(false),
-                    FileChangedOn = new(false)
+                    ContentType = default,
+                    ContentLanguage = default,
+                    ContentDisposition = default,
+                    CacheControl = default,
+                    FileMetadata = default,
+                    FileCreatedOn = default,
+                    FileLastWrittenOn = default,
+                    FileChangedOn = default
                 };
             }
             return new ShareFileStorageResource(objectClient, options);
