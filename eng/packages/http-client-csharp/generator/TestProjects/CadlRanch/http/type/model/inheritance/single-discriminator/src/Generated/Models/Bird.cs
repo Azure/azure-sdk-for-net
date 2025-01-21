@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator.Models
 {
+    /// <summary> This is base model for polymorphic single level inheritance with a discriminator. </summary>
     public abstract partial class Bird
     {
         private protected Bird(string kind, int wingspan) => throw null;
@@ -19,6 +20,7 @@ namespace _Type.Model.Inheritance.SingleDiscriminator.Models
             set => throw null;
         }
 
+        /// <summary> Gets or sets the Wingspan. </summary>
         public int Wingspan
         {
             get => throw null;

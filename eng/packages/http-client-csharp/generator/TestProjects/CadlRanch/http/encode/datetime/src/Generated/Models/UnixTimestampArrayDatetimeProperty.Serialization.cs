@@ -9,28 +9,38 @@ using System.Text.Json;
 
 namespace Encode.Datetime.Models
 {
+    /// <summary></summary>
     public partial class UnixTimestampArrayDatetimeProperty : IJsonModel<UnixTimestampArrayDatetimeProperty>
     {
         void IJsonModel<UnixTimestampArrayDatetimeProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         UnixTimestampArrayDatetimeProperty IJsonModel<UnixTimestampArrayDatetimeProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual UnixTimestampArrayDatetimeProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<UnixTimestampArrayDatetimeProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         UnixTimestampArrayDatetimeProperty IPersistableModel<UnixTimestampArrayDatetimeProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual UnixTimestampArrayDatetimeProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<UnixTimestampArrayDatetimeProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="unixTimestampArrayDatetimeProperty"> The <see cref="UnixTimestampArrayDatetimeProperty"/> to serialize into <see cref="BinaryContent"/>. </param>
         public static implicit operator BinaryContent(UnixTimestampArrayDatetimeProperty unixTimestampArrayDatetimeProperty) => throw null;
 
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="UnixTimestampArrayDatetimeProperty"/> from. </param>
         public static explicit operator UnixTimestampArrayDatetimeProperty(ClientResult result) => throw null;
     }
 }

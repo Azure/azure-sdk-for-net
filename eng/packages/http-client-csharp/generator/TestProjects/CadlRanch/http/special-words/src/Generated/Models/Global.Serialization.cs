@@ -9,28 +9,38 @@ using System.Text.Json;
 
 namespace SpecialWords.Models
 {
+    /// <summary></summary>
     public partial class Global : IJsonModel<Global>
     {
         void IJsonModel<Global>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         Global IJsonModel<Global>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Global JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Global>.Write(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Global IPersistableModel<Global>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Global PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Global>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="global"> The <see cref="Global"/> to serialize into <see cref="BinaryContent"/>. </param>
         public static implicit operator BinaryContent(Global @global) => throw null;
 
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="Global"/> from. </param>
         public static explicit operator Global(ClientResult result) => throw null;
     }
 }

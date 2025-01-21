@@ -6,10 +6,14 @@ using System;
 
 namespace Encode.Duration.Models
 {
+    /// <summary> The DefaultDurationProperty. </summary>
     public partial class DefaultDurationProperty
     {
+        /// <summary> Initializes a new instance of <see cref="DefaultDurationProperty"/>. </summary>
+        /// <param name="value"></param>
         public DefaultDurationProperty(TimeSpan value) => throw null;
 
+        /// <summary> Gets or sets the Value. </summary>
         public TimeSpan Value
         {
             get => throw null;

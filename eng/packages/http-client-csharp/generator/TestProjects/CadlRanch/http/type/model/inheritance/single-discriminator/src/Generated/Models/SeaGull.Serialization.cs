@@ -9,28 +9,38 @@ using System.Text.Json;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator.Models
 {
+    /// <summary></summary>
     public partial class SeaGull : IJsonModel<SeaGull>
     {
         void IJsonModel<SeaGull>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         SeaGull IJsonModel<SeaGull>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override Bird JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<SeaGull>.Write(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         SeaGull IPersistableModel<SeaGull>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override Bird PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<SeaGull>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="seaGull"> The <see cref="SeaGull"/> to serialize into <see cref="BinaryContent"/>. </param>
         public static implicit operator BinaryContent(SeaGull seaGull) => throw null;
 
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="SeaGull"/> from. </param>
         public static explicit operator SeaGull(ClientResult result) => throw null;
     }
 }

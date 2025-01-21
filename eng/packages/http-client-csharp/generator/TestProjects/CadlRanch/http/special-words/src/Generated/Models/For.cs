@@ -2,12 +2,19 @@
 
 #nullable disable
 
+using System;
+
 namespace SpecialWords.Models
 {
+    /// <summary> The For. </summary>
     public partial class For
     {
+        /// <summary> Initializes a new instance of <see cref="For"/>. </summary>
+        /// <param name="name"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public For(string name) => throw null;
 
+        /// <summary> Gets the Name. </summary>
         public string Name => throw null;
     }
 }

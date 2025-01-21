@@ -2,18 +2,27 @@
 
 #nullable disable
 
+using System;
+
 namespace _Type.Property.Nullable.Models
 {
+    /// <summary> Template type for testing models with nullable property. Pass in the type of the property you are looking for. </summary>
     public partial class StringProperty
     {
+        /// <summary> Initializes a new instance of <see cref="StringProperty"/>. </summary>
+        /// <param name="requiredProperty"> Required property. </param>
+        /// <param name="nullableProperty"> Property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requiredProperty"/> is null. </exception>
         public StringProperty(string requiredProperty, string nullableProperty) => throw null;
 
+        /// <summary> Required property. </summary>
         public string RequiredProperty
         {
             get => throw null;
             set => throw null;
         }
 
+        /// <summary> Property. </summary>
         public string NullableProperty
         {
             get => throw null;

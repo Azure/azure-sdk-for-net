@@ -4,74 +4,177 @@
 
 namespace SpecialWords.Models
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class SpecialWordsModelFactory
     {
+        /// <summary> The SameAsModel. </summary>
+        /// <param name="sameAsModelProperty"></param>
+        /// <returns> A new <see cref="Models.SameAsModel"/> instance for mocking. </returns>
         public static SameAsModel SameAsModel(string sameAsModelProperty = default) => throw null;
 
+        /// <summary> The And. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.And"/> instance for mocking. </returns>
         public static And And(string name = default) => throw null;
 
+        /// <summary> The As. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.As"/> instance for mocking. </returns>
         public static As As(string name = default) => throw null;
 
+        /// <summary> The Assert. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Assert"/> instance for mocking. </returns>
         public static Assert Assert(string name = default) => throw null;
 
+        /// <summary> The Async. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Async"/> instance for mocking. </returns>
         public static Async Async(string name = default) => throw null;
 
+        /// <summary> The Await. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Await"/> instance for mocking. </returns>
         public static Await Await(string name = default) => throw null;
 
+        /// <summary> The Break. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Break"/> instance for mocking. </returns>
         public static Break Break(string name = default) => throw null;
 
+        /// <summary> The Class. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Class"/> instance for mocking. </returns>
         public static Class Class(string name = default) => throw null;
 
+        /// <summary> The Constructor. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Constructor"/> instance for mocking. </returns>
         public static Constructor Constructor(string name = default) => throw null;
 
+        /// <summary> The Continue. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Continue"/> instance for mocking. </returns>
         public static Continue Continue(string name = default) => throw null;
 
+        /// <summary> The Def. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Def"/> instance for mocking. </returns>
         public static Def Def(string name = default) => throw null;
 
+        /// <summary> The Del. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Del"/> instance for mocking. </returns>
         public static Del Del(string name = default) => throw null;
 
+        /// <summary> The Elif. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Elif"/> instance for mocking. </returns>
         public static Elif Elif(string name = default) => throw null;
 
+        /// <summary> The Else. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Else"/> instance for mocking. </returns>
         public static Else Else(string name = default) => throw null;
 
+        /// <summary> The Except. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Except"/> instance for mocking. </returns>
         public static Except Except(string name = default) => throw null;
 
+        /// <summary> The Exec. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Exec"/> instance for mocking. </returns>
         public static Exec Exec(string name = default) => throw null;
 
+        /// <summary> The Finally. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Finally"/> instance for mocking. </returns>
         public static Finally Finally(string name = default) => throw null;
 
+        /// <summary> The For. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.For"/> instance for mocking. </returns>
         public static For For(string name = default) => throw null;
 
+        /// <summary> The From. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.From"/> instance for mocking. </returns>
         public static From From(string name = default) => throw null;
 
+        /// <summary> The Global. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Global"/> instance for mocking. </returns>
         public static Global Global(string name = default) => throw null;
 
+        /// <summary> The If. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.If"/> instance for mocking. </returns>
         public static If If(string name = default) => throw null;
 
+        /// <summary> The Import. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Import"/> instance for mocking. </returns>
         public static Import Import(string name = default) => throw null;
 
+        /// <summary> The In. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.In"/> instance for mocking. </returns>
         public static In In(string name = default) => throw null;
 
+        /// <summary> The Is. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Is"/> instance for mocking. </returns>
         public static Is Is(string name = default) => throw null;
 
+        /// <summary> The Lambda. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Lambda"/> instance for mocking. </returns>
         public static Lambda Lambda(string name = default) => throw null;
 
+        /// <summary> The Not. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Not"/> instance for mocking. </returns>
         public static Not Not(string name = default) => throw null;
 
+        /// <summary> The Or. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Or"/> instance for mocking. </returns>
         public static Or Or(string name = default) => throw null;
 
+        /// <summary> The Pass. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Pass"/> instance for mocking. </returns>
         public static Pass Pass(string name = default) => throw null;
 
+        /// <summary> The Raise. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Raise"/> instance for mocking. </returns>
         public static Raise Raise(string name = default) => throw null;
 
+        /// <summary> The Return. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Return"/> instance for mocking. </returns>
         public static Return Return(string name = default) => throw null;
 
+        /// <summary> The Try. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Try"/> instance for mocking. </returns>
         public static Try Try(string name = default) => throw null;
 
+        /// <summary> The While. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.While"/> instance for mocking. </returns>
         public static While While(string name = default) => throw null;
 
+        /// <summary> The With. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.With"/> instance for mocking. </returns>
         public static With With(string name = default) => throw null;
 
+        /// <summary> The Yield. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Yield"/> instance for mocking. </returns>
         public static Yield Yield(string name = default) => throw null;
     }
 }

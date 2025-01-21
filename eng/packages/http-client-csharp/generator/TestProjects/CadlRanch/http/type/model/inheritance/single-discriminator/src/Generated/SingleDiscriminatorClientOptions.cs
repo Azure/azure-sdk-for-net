@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
+    /// <summary> Client options for <see cref="SingleDiscriminatorClient"/>. </summary>
     public partial class SingleDiscriminatorClientOptions : ClientPipelineOptions
     {
     }

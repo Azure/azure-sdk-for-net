@@ -2,12 +2,19 @@
 
 #nullable disable
 
+using System;
+
 namespace SpecialWords.Models
 {
+    /// <summary> The And. </summary>
     public partial class And
     {
+        /// <summary> Initializes a new instance of <see cref="And"/>. </summary>
+        /// <param name="name"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public And(string name) => throw null;
 
+        /// <summary> Gets the Name. </summary>
         public string Name => throw null;
     }
 }

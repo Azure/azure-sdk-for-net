@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Scalar
 {
+    /// <summary> Client options for <see cref="ScalarClient"/>. </summary>
     public partial class ScalarClientOptions : ClientPipelineOptions
     {
     }

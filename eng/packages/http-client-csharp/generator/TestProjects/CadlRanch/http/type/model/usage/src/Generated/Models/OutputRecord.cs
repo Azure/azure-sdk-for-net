@@ -4,8 +4,10 @@
 
 namespace _Type.Model.Usage.Models
 {
+    /// <summary> Record used in operation return type. </summary>
     public partial class OutputRecord
     {
+        /// <summary> Gets the RequiredProp. </summary>
         public string RequiredProp => throw null;
     }
 }

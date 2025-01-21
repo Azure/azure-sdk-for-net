@@ -9,28 +9,38 @@ using System.Text.Json;
 
 namespace Encode.Datetime.Models
 {
+    /// <summary></summary>
     public partial class Rfc3339DatetimeProperty : IJsonModel<Rfc3339DatetimeProperty>
     {
         void IJsonModel<Rfc3339DatetimeProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         Rfc3339DatetimeProperty IJsonModel<Rfc3339DatetimeProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Rfc3339DatetimeProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Rfc3339DatetimeProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Rfc3339DatetimeProperty IPersistableModel<Rfc3339DatetimeProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Rfc3339DatetimeProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Rfc3339DatetimeProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="rfc3339DatetimeProperty"> The <see cref="Rfc3339DatetimeProperty"/> to serialize into <see cref="BinaryContent"/>. </param>
         public static implicit operator BinaryContent(Rfc3339DatetimeProperty rfc3339DatetimeProperty) => throw null;
 
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="Rfc3339DatetimeProperty"/> from. </param>
         public static explicit operator Rfc3339DatetimeProperty(ClientResult result) => throw null;
     }
 }

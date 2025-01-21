@@ -9,28 +9,38 @@ using System.Text.Json;
 
 namespace _Type.Model.Empty.Models
 {
+    /// <summary></summary>
     public partial class EmptyInput : IJsonModel<EmptyInput>
     {
         void IJsonModel<EmptyInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         EmptyInput IJsonModel<EmptyInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EmptyInput JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<EmptyInput>.Write(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         EmptyInput IPersistableModel<EmptyInput>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual EmptyInput PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<EmptyInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="emptyInput"> The <see cref="EmptyInput"/> to serialize into <see cref="BinaryContent"/>. </param>
         public static implicit operator BinaryContent(EmptyInput emptyInput) => throw null;
 
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="EmptyInput"/> from. </param>
         public static explicit operator EmptyInput(ClientResult result) => throw null;
     }
 }

@@ -10,26 +10,64 @@ using System.Threading.Tasks;
 
 namespace Routes
 {
+    /// <summary></summary>
     public partial class RoutesClient
     {
+        /// <summary> Initializes a new instance of RoutesClient. </summary>
         public RoutesClient() : this(new Uri("http://localhost:3000"), new RoutesClientOptions()) => throw null;
 
+        /// <summary> Initializes a new instance of RoutesClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public RoutesClient(Uri endpoint, RoutesClientOptions options) => throw null;
 
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline => throw null;
 
+        /// <summary>
+        /// [Protocol Method] fixed
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Fixed(RequestOptions options) => throw null;
 
+        /// <summary>
+        /// [Protocol Method] fixed
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual Task<ClientResult> FixedAsync(RequestOptions options) => throw null;
 
+        /// <summary> fixed. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual ClientResult Fixed(CancellationToken cancellationToken = default) => throw null;
 
+        /// <summary> fixed. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual Task<ClientResult> FixedAsync(CancellationToken cancellationToken = default) => throw null;
 
+        /// <summary> Initializes a new instance of PathParameters. </summary>
         public virtual PathParameters GetPathParametersClient() => throw null;
 
+        /// <summary> Initializes a new instance of QueryParameters. </summary>
         public virtual QueryParameters GetQueryParametersClient() => throw null;
 
+        /// <summary> Initializes a new instance of InInterface. </summary>
         public virtual InInterface GetInInterfaceClient() => throw null;
     }
 }

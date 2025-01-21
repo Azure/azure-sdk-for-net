@@ -9,28 +9,38 @@ using System.Text.Json;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator.Models
 {
+    /// <summary></summary>
     public partial class Shark : IJsonModel<Shark>
     {
         void IJsonModel<Shark>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         Shark IJsonModel<Shark>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override Fish JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Shark>.Write(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Shark IPersistableModel<Shark>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override Fish PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Shark>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="shark"> The <see cref="Shark"/> to serialize into <see cref="BinaryContent"/>. </param>
         public static implicit operator BinaryContent(Shark shark) => throw null;
 
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="Shark"/> from. </param>
         public static explicit operator Shark(ClientResult result) => throw null;
     }
 }

@@ -7,22 +7,34 @@ using System.ClientModel.Primitives;
 
 namespace Encode.Bytes
 {
+    /// <summary></summary>
     public partial class BytesClient
     {
+        /// <summary> Initializes a new instance of BytesClient. </summary>
         public BytesClient() : this(new Uri("http://localhost:3000"), new BytesClientOptions()) => throw null;
 
+        /// <summary> Initializes a new instance of BytesClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public BytesClient(Uri endpoint, BytesClientOptions options) => throw null;
 
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline => throw null;
 
+        /// <summary> Initializes a new instance of Query. </summary>
         public virtual Query GetQueryClient() => throw null;
 
+        /// <summary> Initializes a new instance of Property. </summary>
         public virtual Property GetPropertyClient() => throw null;
 
+        /// <summary> Initializes a new instance of Header. </summary>
         public virtual Header GetHeaderClient() => throw null;
 
+        /// <summary> Initializes a new instance of RequestBody. </summary>
         public virtual RequestBody GetRequestBodyClient() => throw null;
 
+        /// <summary> Initializes a new instance of ResponseBody. </summary>
         public virtual ResponseBody GetResponseBodyClient() => throw null;
     }
 }

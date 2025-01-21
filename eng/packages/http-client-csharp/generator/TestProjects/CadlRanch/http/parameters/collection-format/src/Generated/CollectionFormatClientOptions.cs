@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 
 namespace Parameters.CollectionFormat
 {
+    /// <summary> Client options for <see cref="CollectionFormatClient"/>. </summary>
     public partial class CollectionFormatClientOptions : ClientPipelineOptions
     {
     }

@@ -2,12 +2,19 @@
 
 #nullable disable
 
+using System;
+
 namespace SpecialWords.Models
 {
+    /// <summary> The Finally. </summary>
     public partial class Finally
     {
+        /// <summary> Initializes a new instance of <see cref="Finally"/>. </summary>
+        /// <param name="name"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public Finally(string name) => throw null;
 
+        /// <summary> Gets the Name. </summary>
         public string Name => throw null;
     }
 }

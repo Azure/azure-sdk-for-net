@@ -6,12 +6,16 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Visibility.Models
 {
+    /// <summary> RoundTrip model with readonly optional properties. </summary>
     public partial class ReadOnlyModel
     {
+        /// <summary> Initializes a new instance of <see cref="ReadOnlyModel"/>. </summary>
         public ReadOnlyModel() => throw null;
 
+        /// <summary> Optional readonly nullable int list. </summary>
         public IReadOnlyList<int> OptionalNullableIntList => throw null;
 
+        /// <summary> Optional readonly string dictionary. </summary>
         public IReadOnlyDictionary<string, string> OptionalStringRecord => throw null;
     }
 }

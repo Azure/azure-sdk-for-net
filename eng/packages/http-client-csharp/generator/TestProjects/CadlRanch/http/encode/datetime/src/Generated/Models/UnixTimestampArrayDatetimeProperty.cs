@@ -7,10 +7,15 @@ using System.Collections.Generic;
 
 namespace Encode.Datetime.Models
 {
+    /// <summary> The UnixTimestampArrayDatetimeProperty. </summary>
     public partial class UnixTimestampArrayDatetimeProperty
     {
+        /// <summary> Initializes a new instance of <see cref="UnixTimestampArrayDatetimeProperty"/>. </summary>
+        /// <param name="value"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public UnixTimestampArrayDatetimeProperty(IEnumerable<DateTimeOffset> value) => throw null;
 
+        /// <summary> Gets the Value. </summary>
         public IList<DateTimeOffset> Value => throw null;
     }
 }

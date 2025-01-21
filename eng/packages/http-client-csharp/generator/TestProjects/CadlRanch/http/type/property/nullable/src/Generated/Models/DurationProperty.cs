@@ -6,16 +6,23 @@ using System;
 
 namespace _Type.Property.Nullable.Models
 {
+    /// <summary> Model with a duration property. </summary>
     public partial class DurationProperty
     {
+        /// <summary> Initializes a new instance of <see cref="DurationProperty"/>. </summary>
+        /// <param name="requiredProperty"> Required property. </param>
+        /// <param name="nullableProperty"> Property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="requiredProperty"/> is null. </exception>
         public DurationProperty(string requiredProperty, TimeSpan? nullableProperty) => throw null;
 
+        /// <summary> Required property. </summary>
         public string RequiredProperty
         {
             get => throw null;
             set => throw null;
         }
 
+        /// <summary> Property. </summary>
         public TimeSpan? NullableProperty
         {
             get => throw null;

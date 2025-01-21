@@ -6,10 +6,25 @@ using System.Collections.Generic;
 
 namespace Payload.JsonMergePatch.Models
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class PayloadJsonMergePatchModelFactory
     {
+        /// <summary> Details about a resource. </summary>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <param name="map"></param>
+        /// <param name="array"></param>
+        /// <param name="intValue"></param>
+        /// <param name="floatValue"></param>
+        /// <param name="innerModel"></param>
+        /// <param name="intArray"></param>
+        /// <returns> A new <see cref="Models.Resource"/> instance for mocking. </returns>
         public static Resource Resource(string name = default, string description = default, IDictionary<string, InnerModel> map = default, IEnumerable<InnerModel> array = default, int? intValue = default, float? floatValue = default, InnerModel innerModel = default, IEnumerable<int> intArray = default) => throw null;
 
+        /// <summary> It is the model used by Resource model. </summary>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
+        /// <returns> A new <see cref="Models.InnerModel"/> instance for mocking. </returns>
         public static InnerModel InnerModel(string name = default, string description = default) => throw null;
     }
 }

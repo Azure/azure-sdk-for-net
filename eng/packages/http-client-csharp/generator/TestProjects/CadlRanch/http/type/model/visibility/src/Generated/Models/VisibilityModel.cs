@@ -2,26 +2,39 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace _Type.Model.Visibility.Models
 {
+    /// <summary> Output model with visibility properties. </summary>
     public partial class VisibilityModel
     {
+        /// <summary> Initializes a new instance of <see cref="VisibilityModel"/>. </summary>
+        /// <param name="queryProp"> Required int32, illustrating a query property. </param>
+        /// <param name="createProp"> Required string[], illustrating a create property. </param>
+        /// <param name="updateProp"> Required int32[], illustrating a update property. </param>
+        /// <param name="deleteProp"> Required bool, illustrating a delete property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="createProp"/> or <paramref name="updateProp"/> is null. </exception>
         public VisibilityModel(int queryProp, IEnumerable<string> createProp, IEnumerable<int> updateProp, bool deleteProp) => throw null;
 
+        /// <summary> Required string, illustrating a readonly property. </summary>
         public string ReadProp => throw null;
 
+        /// <summary> Required int32, illustrating a query property. </summary>
         public int QueryProp
         {
             get => throw null;
             set => throw null;
         }
 
+        /// <summary> Required string[], illustrating a create property. </summary>
         public IList<string> CreateProp => throw null;
 
+        /// <summary> Required int32[], illustrating a update property. </summary>
         public IList<int> UpdateProp => throw null;
 
+        /// <summary> Required bool, illustrating a delete property. </summary>
         public bool DeleteProp
         {
             get => throw null;

@@ -2,12 +2,19 @@
 
 #nullable disable
 
+using System;
+
 namespace SpecialWords.Models
 {
+    /// <summary> The Del. </summary>
     public partial class Del
     {
+        /// <summary> Initializes a new instance of <see cref="Del"/>. </summary>
+        /// <param name="name"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public Del(string name) => throw null;
 
+        /// <summary> Gets the Name. </summary>
         public string Name => throw null;
     }
 }

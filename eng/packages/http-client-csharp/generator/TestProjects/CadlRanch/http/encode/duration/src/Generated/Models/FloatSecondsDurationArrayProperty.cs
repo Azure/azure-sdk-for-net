@@ -7,10 +7,15 @@ using System.Collections.Generic;
 
 namespace Encode.Duration.Models
 {
+    /// <summary> The FloatSecondsDurationArrayProperty. </summary>
     public partial class FloatSecondsDurationArrayProperty
     {
+        /// <summary> Initializes a new instance of <see cref="FloatSecondsDurationArrayProperty"/>. </summary>
+        /// <param name="value"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public FloatSecondsDurationArrayProperty(IEnumerable<TimeSpan> value) => throw null;
 
+        /// <summary> Gets the Value. </summary>
         public IList<TimeSpan> Value => throw null;
     }
 }

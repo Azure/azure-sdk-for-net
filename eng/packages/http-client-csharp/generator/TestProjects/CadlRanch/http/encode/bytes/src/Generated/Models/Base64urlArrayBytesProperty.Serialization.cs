@@ -9,28 +9,38 @@ using System.Text.Json;
 
 namespace Encode.Bytes.Models
 {
+    /// <summary></summary>
     public partial class Base64urlArrayBytesProperty : IJsonModel<Base64urlArrayBytesProperty>
     {
         void IJsonModel<Base64urlArrayBytesProperty>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         Base64urlArrayBytesProperty IJsonModel<Base64urlArrayBytesProperty>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Base64urlArrayBytesProperty JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Base64urlArrayBytesProperty>.Write(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Base64urlArrayBytesProperty IPersistableModel<Base64urlArrayBytesProperty>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Base64urlArrayBytesProperty PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Base64urlArrayBytesProperty>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="base64urlArrayBytesProperty"> The <see cref="Base64urlArrayBytesProperty"/> to serialize into <see cref="BinaryContent"/>. </param>
         public static implicit operator BinaryContent(Base64urlArrayBytesProperty base64urlArrayBytesProperty) => throw null;
 
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="Base64urlArrayBytesProperty"/> from. </param>
         public static explicit operator Base64urlArrayBytesProperty(ClientResult result) => throw null;
     }
 }

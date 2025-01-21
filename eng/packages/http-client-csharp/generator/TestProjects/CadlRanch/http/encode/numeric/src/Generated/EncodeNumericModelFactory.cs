@@ -4,12 +4,22 @@
 
 namespace Encode.Numeric.Models
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class EncodeNumericModelFactory
     {
+        /// <summary> The SafeintAsStringProperty. </summary>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="Models.SafeintAsStringProperty"/> instance for mocking. </returns>
         public static SafeintAsStringProperty SafeintAsStringProperty(long value = default) => throw null;
 
+        /// <summary> The Uint32AsStringProperty. </summary>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="Models.Uint32AsStringProperty"/> instance for mocking. </returns>
         public static Uint32AsStringProperty Uint32AsStringProperty(object value = default) => throw null;
 
+        /// <summary> The Uint8AsStringProperty. </summary>
+        /// <param name="value"></param>
+        /// <returns> A new <see cref="Models.Uint8AsStringProperty"/> instance for mocking. </returns>
         public static Uint8AsStringProperty Uint8AsStringProperty(byte value = default) => throw null;
     }
 }

@@ -7,14 +7,22 @@ using System.ClientModel.Primitives;
 
 namespace _Type._Enum.Fixed
 {
+    /// <summary></summary>
     public partial class FixedClient
     {
+        /// <summary> Initializes a new instance of FixedClient. </summary>
         public FixedClient() : this(new Uri("http://localhost:3000"), new FixedClientOptions()) => throw null;
 
+        /// <summary> Initializes a new instance of FixedClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public FixedClient(Uri endpoint, FixedClientOptions options) => throw null;
 
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline => throw null;
 
+        /// <summary> Initializes a new instance of String. </summary>
         public virtual String GetStringClient() => throw null;
     }
 }

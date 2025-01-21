@@ -7,26 +7,40 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Property.Nullable
 {
+    /// <summary></summary>
     public partial class NullableClient
     {
+        /// <summary> Initializes a new instance of NullableClient. </summary>
         public NullableClient() : this(new Uri("http://localhost:3000"), new NullableClientOptions()) => throw null;
 
+        /// <summary> Initializes a new instance of NullableClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public NullableClient(Uri endpoint, NullableClientOptions options) => throw null;
 
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline => throw null;
 
+        /// <summary> Initializes a new instance of String. </summary>
         public virtual String GetStringClient() => throw null;
 
+        /// <summary> Initializes a new instance of Bytes. </summary>
         public virtual Bytes GetBytesClient() => throw null;
 
+        /// <summary> Initializes a new instance of Datetime. </summary>
         public virtual Datetime GetDatetimeClient() => throw null;
 
+        /// <summary> Initializes a new instance of Duration. </summary>
         public virtual Duration GetDurationClient() => throw null;
 
+        /// <summary> Initializes a new instance of CollectionsByte. </summary>
         public virtual CollectionsByte GetCollectionsByteClient() => throw null;
 
+        /// <summary> Initializes a new instance of CollectionsModel. </summary>
         public virtual CollectionsModel GetCollectionsModelClient() => throw null;
 
+        /// <summary> Initializes a new instance of CollectionsString. </summary>
         public virtual CollectionsString GetCollectionsStringClient() => throw null;
     }
 }

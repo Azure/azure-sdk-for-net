@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 
 namespace Payload.JsonMergePatch
 {
+    /// <summary> Client options for <see cref="JsonMergePatchClient"/>. </summary>
     public partial class JsonMergePatchClientOptions : ClientPipelineOptions
     {
     }

@@ -6,14 +6,19 @@ using System.ClientModel.Primitives;
 
 namespace Routes
 {
+    /// <summary></summary>
     public partial class PathParametersSimpleExpansion
     {
+        /// <summary> Initializes a new instance of PathParametersSimpleExpansion for mocking. </summary>
         protected PathParametersSimpleExpansion() => throw null;
 
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline => throw null;
 
+        /// <summary> Initializes a new instance of PathParametersSimpleExpansionStandard. </summary>
         public virtual PathParametersSimpleExpansionStandard GetPathParametersSimpleExpansionStandardClient() => throw null;
 
+        /// <summary> Initializes a new instance of PathParametersSimpleExpansionExplode. </summary>
         public virtual PathParametersSimpleExpansionExplode GetPathParametersSimpleExpansionExplodeClient() => throw null;
     }
 }

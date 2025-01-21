@@ -6,10 +6,14 @@ using System;
 
 namespace Encode.Duration.Models
 {
+    /// <summary> The ISO8601DurationProperty. </summary>
     public partial class ISO8601DurationProperty
     {
+        /// <summary> Initializes a new instance of <see cref="ISO8601DurationProperty"/>. </summary>
+        /// <param name="value"></param>
         public ISO8601DurationProperty(TimeSpan value) => throw null;
 
+        /// <summary> Gets or sets the Value. </summary>
         public TimeSpan Value
         {
             get => throw null;

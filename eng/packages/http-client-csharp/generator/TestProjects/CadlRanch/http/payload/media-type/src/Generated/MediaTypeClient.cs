@@ -7,14 +7,22 @@ using System.ClientModel.Primitives;
 
 namespace Payload.MediaType
 {
+    /// <summary></summary>
     public partial class MediaTypeClient
     {
+        /// <summary> Initializes a new instance of MediaTypeClient. </summary>
         public MediaTypeClient() : this(new Uri("http://localhost:3000"), new MediaTypeClientOptions()) => throw null;
 
+        /// <summary> Initializes a new instance of MediaTypeClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public MediaTypeClient(Uri endpoint, MediaTypeClientOptions options) => throw null;
 
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline => throw null;
 
+        /// <summary> Initializes a new instance of StringBody. </summary>
         public virtual StringBody GetStringBodyClient() => throw null;
     }
 }

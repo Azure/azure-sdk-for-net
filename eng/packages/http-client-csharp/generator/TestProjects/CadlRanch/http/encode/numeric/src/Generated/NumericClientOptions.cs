@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 
 namespace Encode.Numeric
 {
+    /// <summary> Client options for <see cref="NumericClient"/>. </summary>
     public partial class NumericClientOptions : ClientPipelineOptions
     {
     }

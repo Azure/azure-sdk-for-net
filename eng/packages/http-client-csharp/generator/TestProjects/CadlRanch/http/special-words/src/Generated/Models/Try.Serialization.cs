@@ -9,28 +9,38 @@ using System.Text.Json;
 
 namespace SpecialWords.Models
 {
+    /// <summary></summary>
     public partial class Try : IJsonModel<Try>
     {
         void IJsonModel<Try>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         Try IJsonModel<Try>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Try JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Try>.Write(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Try IPersistableModel<Try>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Try PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Try>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="try"> The <see cref="Try"/> to serialize into <see cref="BinaryContent"/>. </param>
         public static implicit operator BinaryContent(Try @try) => throw null;
 
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="Try"/> from. </param>
         public static explicit operator Try(ClientResult result) => throw null;
     }
 }

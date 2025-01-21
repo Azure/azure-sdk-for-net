@@ -9,28 +9,38 @@ using System.Text.Json;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator.Models
 {
+    /// <summary></summary>
     public partial class Goose : IJsonModel<Goose>
     {
         void IJsonModel<Goose>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         Goose IJsonModel<Goose>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override Bird JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Goose>.Write(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Goose IPersistableModel<Goose>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override Bird PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Goose>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="goose"> The <see cref="Goose"/> to serialize into <see cref="BinaryContent"/>. </param>
         public static implicit operator BinaryContent(Goose goose) => throw null;
 
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="Goose"/> from. </param>
         public static explicit operator Goose(ClientResult result) => throw null;
     }
 }

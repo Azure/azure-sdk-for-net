@@ -2,48 +2,61 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Payload.JsonMergePatch.Models
 {
+    /// <summary> Details about a resource. </summary>
     public partial class Resource
     {
+        /// <summary> Initializes a new instance of <see cref="Resource"/>. </summary>
+        /// <param name="name"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public Resource(string name) => throw null;
 
+        /// <summary> Gets or sets the Name. </summary>
         public string Name
         {
             get => throw null;
             set => throw null;
         }
 
+        /// <summary> Gets or sets the Description. </summary>
         public string Description
         {
             get => throw null;
             set => throw null;
         }
 
+        /// <summary> Gets the Map. </summary>
         public IDictionary<string, InnerModel> Map => throw null;
 
+        /// <summary> Gets the Array. </summary>
         public IList<InnerModel> Array => throw null;
 
+        /// <summary> Gets or sets the IntValue. </summary>
         public int? IntValue
         {
             get => throw null;
             set => throw null;
         }
 
+        /// <summary> Gets or sets the FloatValue. </summary>
         public float? FloatValue
         {
             get => throw null;
             set => throw null;
         }
 
+        /// <summary> Gets or sets the InnerModel. </summary>
         public InnerModel InnerModel
         {
             get => throw null;
             set => throw null;
         }
 
+        /// <summary> Gets the IntArray. </summary>
         public IList<int> IntArray => throw null;
     }
 }

@@ -7,12 +7,19 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.NotDiscriminated.Models
 {
+    /// <summary> The third level model in the normal multiple levels inheritance. </summary>
     public partial class Siamese : Cat
     {
+        /// <summary> Initializes a new instance of <see cref="Siamese"/>. </summary>
+        /// <param name="name"></param>
+        /// <param name="age"></param>
+        /// <param name="smart"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public Siamese(string name, int age, bool smart) : base(name, age) => throw null;
 
         internal Siamese(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties, int age, bool smart) : base(name, additionalBinaryDataProperties, age) => throw null;
 
+        /// <summary> Gets or sets the Smart. </summary>
         public bool Smart
         {
             get => throw null;

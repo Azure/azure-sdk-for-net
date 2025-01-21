@@ -7,18 +7,28 @@ using System.ClientModel.Primitives;
 
 namespace Encode.Duration
 {
+    /// <summary></summary>
     public partial class DurationClient
     {
+        /// <summary> Initializes a new instance of DurationClient. </summary>
         public DurationClient() : this(new Uri("http://localhost:3000"), new DurationClientOptions()) => throw null;
 
+        /// <summary> Initializes a new instance of DurationClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public DurationClient(Uri endpoint, DurationClientOptions options) => throw null;
 
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline => throw null;
 
+        /// <summary> Initializes a new instance of Query. </summary>
         public virtual Query GetQueryClient() => throw null;
 
+        /// <summary> Initializes a new instance of Property. </summary>
         public virtual Property GetPropertyClient() => throw null;
 
+        /// <summary> Initializes a new instance of Header. </summary>
         public virtual Header GetHeaderClient() => throw null;
     }
 }

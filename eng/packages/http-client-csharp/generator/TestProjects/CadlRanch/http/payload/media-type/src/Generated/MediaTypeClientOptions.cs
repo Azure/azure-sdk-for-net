@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 
 namespace Payload.MediaType
 {
+    /// <summary> Client options for <see cref="MediaTypeClient"/>. </summary>
     public partial class MediaTypeClientOptions : ClientPipelineOptions
     {
     }

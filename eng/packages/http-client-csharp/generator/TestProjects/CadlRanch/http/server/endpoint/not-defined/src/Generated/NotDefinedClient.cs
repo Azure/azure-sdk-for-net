@@ -10,22 +10,60 @@ using System.Threading.Tasks;
 
 namespace Server.Endpoint.NotDefined
 {
+    /// <summary></summary>
     public partial class NotDefinedClient
     {
+        /// <summary> Initializes a new instance of NotDefinedClient for mocking. </summary>
         protected NotDefinedClient() => throw null;
 
+        /// <summary> Initializes a new instance of NotDefinedClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public NotDefinedClient(Uri endpoint) : this(endpoint, new NotDefinedClientOptions()) => throw null;
 
+        /// <summary> Initializes a new instance of NotDefinedClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public NotDefinedClient(Uri endpoint, NotDefinedClientOptions options) => throw null;
 
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline => throw null;
 
+        /// <summary>
+        /// [Protocol Method] valid
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Valid(RequestOptions options) => throw null;
 
+        /// <summary>
+        /// [Protocol Method] valid
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual Task<ClientResult> ValidAsync(RequestOptions options) => throw null;
 
+        /// <summary> valid. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual ClientResult Valid(CancellationToken cancellationToken = default) => throw null;
 
+        /// <summary> valid. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual Task<ClientResult> ValidAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

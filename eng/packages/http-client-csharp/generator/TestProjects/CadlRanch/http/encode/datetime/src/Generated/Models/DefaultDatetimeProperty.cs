@@ -6,10 +6,14 @@ using System;
 
 namespace Encode.Datetime.Models
 {
+    /// <summary> The DefaultDatetimeProperty. </summary>
     public partial class DefaultDatetimeProperty
     {
+        /// <summary> Initializes a new instance of <see cref="DefaultDatetimeProperty"/>. </summary>
+        /// <param name="value"></param>
         public DefaultDatetimeProperty(DateTimeOffset value) => throw null;
 
+        /// <summary> Gets or sets the Value. </summary>
         public DateTimeOffset Value
         {
             get => throw null;

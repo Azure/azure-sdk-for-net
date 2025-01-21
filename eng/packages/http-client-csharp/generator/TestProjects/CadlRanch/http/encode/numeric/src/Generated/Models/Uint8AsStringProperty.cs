@@ -4,10 +4,14 @@
 
 namespace Encode.Numeric.Models
 {
+    /// <summary> The Uint8AsStringProperty. </summary>
     public partial class Uint8AsStringProperty
     {
+        /// <summary> Initializes a new instance of <see cref="Uint8AsStringProperty"/>. </summary>
+        /// <param name="value"></param>
         public Uint8AsStringProperty(byte value) => throw null;
 
+        /// <summary> Gets or sets the Value. </summary>
         public byte Value
         {
             get => throw null;

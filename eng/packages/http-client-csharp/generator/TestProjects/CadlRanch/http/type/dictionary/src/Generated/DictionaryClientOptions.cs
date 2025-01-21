@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Dictionary
 {
+    /// <summary> Client options for <see cref="DictionaryClient"/>. </summary>
     public partial class DictionaryClientOptions : ClientPipelineOptions
     {
     }

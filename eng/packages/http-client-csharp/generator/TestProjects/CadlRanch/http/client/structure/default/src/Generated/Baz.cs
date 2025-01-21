@@ -6,12 +6,16 @@ using System.ClientModel.Primitives;
 
 namespace Client.Structure.Service
 {
+    /// <summary></summary>
     public partial class Baz
     {
+        /// <summary> Initializes a new instance of Baz for mocking. </summary>
         protected Baz() => throw null;
 
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline => throw null;
 
+        /// <summary> Initializes a new instance of BazFoo. </summary>
         public virtual BazFoo GetBazFooClient() => throw null;
     }
 }

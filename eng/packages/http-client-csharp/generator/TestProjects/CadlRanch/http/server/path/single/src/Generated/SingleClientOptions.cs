@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 
 namespace Server.Path.Single
 {
+    /// <summary> Client options for <see cref="SingleClient"/>. </summary>
     public partial class SingleClientOptions : ClientPipelineOptions
     {
     }

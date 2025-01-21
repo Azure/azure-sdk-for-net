@@ -7,8 +7,13 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator.Models
 {
+    /// <summary> The second level model in polymorphic multiple levels inheritance and it defines a new discriminator. </summary>
     public partial class Shark : Fish
     {
+        /// <summary> Initializes a new instance of <see cref="Shark"/>. </summary>
+        /// <param name="age"></param>
+        /// <param name="sharktype"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sharktype"/> is null. </exception>
         public Shark(int age, string sharktype) : base("shark", age) => throw null;
 
         internal Shark(string kind, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties, string sharktype) : base(kind, age, additionalBinaryDataProperties) => throw null;

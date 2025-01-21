@@ -4,16 +4,20 @@
 
 namespace Payload.JsonMergePatch.Models
 {
+    /// <summary> It is the model used by Resource model. </summary>
     public partial class InnerModel
     {
+        /// <summary> Initializes a new instance of <see cref="InnerModel"/>. </summary>
         public InnerModel() => throw null;
 
+        /// <summary> Gets or sets the Name. </summary>
         public string Name
         {
             get => throw null;
             set => throw null;
         }
 
+        /// <summary> Gets or sets the Description. </summary>
         public string Description
         {
             get => throw null;

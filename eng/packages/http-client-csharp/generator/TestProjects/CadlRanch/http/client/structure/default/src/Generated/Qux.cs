@@ -9,20 +9,52 @@ using System.Threading.Tasks;
 
 namespace Client.Structure.Service
 {
+    /// <summary></summary>
     public partial class Qux
     {
+        /// <summary> Initializes a new instance of Qux for mocking. </summary>
         protected Qux() => throw null;
 
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline => throw null;
 
+        /// <summary>
+        /// [Protocol Method] eight
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual ClientResult Eight(RequestOptions options) => throw null;
 
+        /// <summary>
+        /// [Protocol Method] eight
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual Task<ClientResult> EightAsync(RequestOptions options) => throw null;
 
+        /// <summary> eight. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual ClientResult Eight(CancellationToken cancellationToken = default) => throw null;
 
+        /// <summary> eight. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual Task<ClientResult> EightAsync(CancellationToken cancellationToken = default) => throw null;
 
+        /// <summary> Initializes a new instance of QuxBar. </summary>
         public virtual QuxBar GetQuxBarClient() => throw null;
     }
 }

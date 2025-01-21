@@ -4,6 +4,7 @@
 
 namespace _Type._Enum.Fixed.Models
 {
+    /// <summary> Days of the week. </summary>
     public enum DaysOfWeekEnum
     {
         /// <summary> Monday. </summary>

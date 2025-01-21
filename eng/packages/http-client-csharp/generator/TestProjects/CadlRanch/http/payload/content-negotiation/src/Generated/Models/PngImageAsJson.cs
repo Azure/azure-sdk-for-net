@@ -6,8 +6,25 @@ using System;
 
 namespace Payload.ContentNegotiation.Models
 {
+    /// <summary> The PngImageAsJson. </summary>
     public partial class PngImageAsJson
     {
+        /// <summary>
+        /// Gets the Content.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public BinaryData Content => throw null;
     }
 }

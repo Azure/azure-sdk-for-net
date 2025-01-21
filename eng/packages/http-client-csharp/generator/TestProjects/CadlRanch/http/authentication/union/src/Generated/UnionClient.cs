@@ -10,30 +10,97 @@ using System.Threading.Tasks;
 
 namespace Authentication.Union
 {
+    /// <summary></summary>
     public partial class UnionClient
     {
+        /// <summary> Initializes a new instance of UnionClient for mocking. </summary>
         protected UnionClient() => throw null;
 
+        /// <summary> Initializes a new instance of UnionClient. </summary>
+        /// <param name="keyCredential"> A credential used to authenticate to the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keyCredential"/> is null. </exception>
         public UnionClient(ApiKeyCredential keyCredential) : this(new Uri("http://localhost:3000"), keyCredential, new UnionClientOptions()) => throw null;
 
+        /// <summary> Initializes a new instance of UnionClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="keyCredential"> A credential used to authenticate to the service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="keyCredential"/> is null. </exception>
         public UnionClient(Uri endpoint, ApiKeyCredential keyCredential, UnionClientOptions options) => throw null;
 
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline => throw null;
 
+        /// <summary>
+        /// [Protocol Method] Check whether client is authenticated
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual ClientResult ValidKey(RequestOptions options) => throw null;
 
+        /// <summary>
+        /// [Protocol Method] Check whether client is authenticated
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual Task<ClientResult> ValidKeyAsync(RequestOptions options) => throw null;
 
+        /// <summary> Check whether client is authenticated. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual ClientResult ValidKey(CancellationToken cancellationToken = default) => throw null;
 
+        /// <summary> Check whether client is authenticated. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual Task<ClientResult> ValidKeyAsync(CancellationToken cancellationToken = default) => throw null;
 
+        /// <summary>
+        /// [Protocol Method] Check whether client is authenticated
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual ClientResult ValidToken(RequestOptions options) => throw null;
 
+        /// <summary>
+        /// [Protocol Method] Check whether client is authenticated
+        /// <list type="bullet">
+        /// <item>
+        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
         public virtual Task<ClientResult> ValidTokenAsync(RequestOptions options) => throw null;
 
+        /// <summary> Check whether client is authenticated. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual ClientResult ValidToken(CancellationToken cancellationToken = default) => throw null;
 
+        /// <summary> Check whether client is authenticated. </summary>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         public virtual Task<ClientResult> ValidTokenAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

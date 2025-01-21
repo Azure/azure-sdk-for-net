@@ -2,12 +2,19 @@
 
 #nullable disable
 
+using System;
+
 namespace SpecialWords.Models
 {
+    /// <summary> The SameAsModel. </summary>
     public partial class SameAsModel
     {
+        /// <summary> Initializes a new instance of <see cref="SameAsModel"/>. </summary>
+        /// <param name="sameAsModelProperty"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="sameAsModelProperty"/> is null. </exception>
         public SameAsModel(string sameAsModelProperty) => throw null;
 
+        /// <summary> Gets the SameAsModelProperty. </summary>
         public string SameAsModelProperty => throw null;
     }
 }

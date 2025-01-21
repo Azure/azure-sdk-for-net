@@ -9,28 +9,38 @@ using System.Text.Json;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator.Models
 {
+    /// <summary></summary>
     public partial class Eagle : IJsonModel<Eagle>
     {
         void IJsonModel<Eagle>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         Eagle IJsonModel<Eagle>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override Bird JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Eagle>.Write(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Eagle IPersistableModel<Eagle>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected override Bird PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Eagle>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="eagle"> The <see cref="Eagle"/> to serialize into <see cref="BinaryContent"/>. </param>
         public static implicit operator BinaryContent(Eagle eagle) => throw null;
 
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="Eagle"/> from. </param>
         public static explicit operator Eagle(ClientResult result) => throw null;
     }
 }

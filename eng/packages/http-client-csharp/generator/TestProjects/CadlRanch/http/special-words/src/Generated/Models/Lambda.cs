@@ -2,12 +2,19 @@
 
 #nullable disable
 
+using System;
+
 namespace SpecialWords.Models
 {
+    /// <summary> The Lambda. </summary>
     public partial class Lambda
     {
+        /// <summary> Initializes a new instance of <see cref="Lambda"/>. </summary>
+        /// <param name="name"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public Lambda(string name) => throw null;
 
+        /// <summary> Gets the Name. </summary>
         public string Name => throw null;
     }
 }

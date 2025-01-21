@@ -9,28 +9,38 @@ using System.Text.Json;
 
 namespace SpecialWords.Models
 {
+    /// <summary></summary>
     public partial class Return : IJsonModel<Return>
     {
         void IJsonModel<Return>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         Return IJsonModel<Return>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Return JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Return>.Write(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Return IPersistableModel<Return>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Return PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Return>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="return"> The <see cref="Return"/> to serialize into <see cref="BinaryContent"/>. </param>
         public static implicit operator BinaryContent(Return @return) => throw null;
 
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="Return"/> from. </param>
         public static explicit operator Return(ClientResult result) => throw null;
     }
 }

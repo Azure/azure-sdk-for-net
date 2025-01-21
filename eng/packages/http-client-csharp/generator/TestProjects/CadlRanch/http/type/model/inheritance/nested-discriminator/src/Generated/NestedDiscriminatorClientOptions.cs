@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator
 {
+    /// <summary> Client options for <see cref="NestedDiscriminatorClient"/>. </summary>
     public partial class NestedDiscriminatorClientOptions : ClientPipelineOptions
     {
     }

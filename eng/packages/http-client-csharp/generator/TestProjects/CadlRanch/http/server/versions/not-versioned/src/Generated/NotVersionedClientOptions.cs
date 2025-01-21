@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 
 namespace Server.Versions.NotVersioned
 {
+    /// <summary> Client options for <see cref="NotVersionedClient"/>. </summary>
     public partial class NotVersionedClientOptions : ClientPipelineOptions
     {
     }

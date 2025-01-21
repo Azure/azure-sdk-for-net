@@ -2,20 +2,27 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace _Type.Dictionary.Models
 {
+    /// <summary> Dictionary inner model. </summary>
     public partial class InnerModel
     {
+        /// <summary> Initializes a new instance of <see cref="InnerModel"/>. </summary>
+        /// <param name="property"> Required string property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="property"/> is null. </exception>
         public InnerModel(string @property) => throw null;
 
+        /// <summary> Required string property. </summary>
         public string Property
         {
             get => throw null;
             set => throw null;
         }
 
+        /// <summary> Gets the Children. </summary>
         public IDictionary<string, InnerModel> Children => throw null;
     }
 }

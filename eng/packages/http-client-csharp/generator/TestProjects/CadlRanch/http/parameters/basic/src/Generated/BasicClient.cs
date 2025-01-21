@@ -7,16 +7,25 @@ using System.ClientModel.Primitives;
 
 namespace Parameters.Basic
 {
+    /// <summary></summary>
     public partial class BasicClient
     {
+        /// <summary> Initializes a new instance of BasicClient. </summary>
         public BasicClient() : this(new Uri("http://localhost:3000"), new BasicClientOptions()) => throw null;
 
+        /// <summary> Initializes a new instance of BasicClient. </summary>
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public BasicClient(Uri endpoint, BasicClientOptions options) => throw null;
 
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public ClientPipeline Pipeline => throw null;
 
+        /// <summary> Initializes a new instance of ExplicitBody. </summary>
         public virtual ExplicitBody GetExplicitBodyClient() => throw null;
 
+        /// <summary> Initializes a new instance of ImplicitBody. </summary>
         public virtual ImplicitBody GetImplicitBodyClient() => throw null;
     }
 }

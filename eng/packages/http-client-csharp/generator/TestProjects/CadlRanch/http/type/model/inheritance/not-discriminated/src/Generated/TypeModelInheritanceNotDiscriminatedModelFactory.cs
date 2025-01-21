@@ -4,12 +4,25 @@
 
 namespace _Type.Model.Inheritance.NotDiscriminated.Models
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class TypeModelInheritanceNotDiscriminatedModelFactory
     {
+        /// <summary> The third level model in the normal multiple levels inheritance. </summary>
+        /// <param name="name"></param>
+        /// <param name="age"></param>
+        /// <param name="smart"></param>
+        /// <returns> A new <see cref="Models.Siamese"/> instance for mocking. </returns>
         public static Siamese Siamese(string name = default, int age = default, bool smart = default) => throw null;
 
+        /// <summary> The second level model in the normal multiple levels inheritance. </summary>
+        /// <param name="name"></param>
+        /// <param name="age"></param>
+        /// <returns> A new <see cref="Models.Cat"/> instance for mocking. </returns>
         public static Cat Cat(string name = default, int age = default) => throw null;
 
+        /// <summary> This is base model for not-discriminated normal multiple levels inheritance. </summary>
+        /// <param name="name"></param>
+        /// <returns> A new <see cref="Models.Pet"/> instance for mocking. </returns>
         public static Pet Pet(string name = default) => throw null;
     }
 }

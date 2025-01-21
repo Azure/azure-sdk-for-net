@@ -4,8 +4,10 @@
 
 namespace _Type.Model.Empty.Models
 {
+    /// <summary> Empty model used in operation parameters. </summary>
     public partial class EmptyInput
     {
+        /// <summary> Initializes a new instance of <see cref="EmptyInput"/>. </summary>
         public EmptyInput() => throw null;
     }
 }

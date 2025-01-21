@@ -4,12 +4,22 @@
 
 namespace _Type.Model.Usage.Models
 {
+    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class TypeModelUsageModelFactory
     {
+        /// <summary> Record used in operation parameters. </summary>
+        /// <param name="requiredProp"></param>
+        /// <returns> A new <see cref="Models.InputRecord"/> instance for mocking. </returns>
         public static InputRecord InputRecord(string requiredProp = default) => throw null;
 
+        /// <summary> Record used in operation return type. </summary>
+        /// <param name="requiredProp"></param>
+        /// <returns> A new <see cref="Models.OutputRecord"/> instance for mocking. </returns>
         public static OutputRecord OutputRecord(string requiredProp = default) => throw null;
 
+        /// <summary> Record used both as operation parameter and return type. </summary>
+        /// <param name="requiredProp"></param>
+        /// <returns> A new <see cref="Models.InputOutputRecord"/> instance for mocking. </returns>
         public static InputOutputRecord InputOutputRecord(string requiredProp = default) => throw null;
     }
 }

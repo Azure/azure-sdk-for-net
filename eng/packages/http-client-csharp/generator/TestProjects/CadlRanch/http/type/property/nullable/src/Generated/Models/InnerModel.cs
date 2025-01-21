@@ -2,12 +2,19 @@
 
 #nullable disable
 
+using System;
+
 namespace _Type.Property.Nullable.Models
 {
+    /// <summary> Inner model used in collections model property. </summary>
     public partial class InnerModel
     {
+        /// <summary> Initializes a new instance of <see cref="InnerModel"/>. </summary>
+        /// <param name="property"> Inner model property. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="property"/> is null. </exception>
         public InnerModel(string @property) => throw null;
 
+        /// <summary> Inner model property. </summary>
         public string Property
         {
             get => throw null;

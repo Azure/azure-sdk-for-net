@@ -9,28 +9,38 @@ using System.Text.Json;
 
 namespace SpecialWords.Models
 {
+    /// <summary></summary>
     public partial class Continue : IJsonModel<Continue>
     {
         void IJsonModel<Continue>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         Continue IJsonModel<Continue>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Continue JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Continue>.Write(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Continue IPersistableModel<Continue>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Continue PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Continue>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
 
+        /// <param name="continue"> The <see cref="Continue"/> to serialize into <see cref="BinaryContent"/>. </param>
         public static implicit operator BinaryContent(Continue @continue) => throw null;
 
+        /// <param name="result"> The <see cref="ClientResult"/> to deserialize the <see cref="Continue"/> from. </param>
         public static explicit operator Continue(ClientResult result) => throw null;
     }
 }

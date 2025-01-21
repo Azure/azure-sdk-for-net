@@ -7,10 +7,30 @@ using System.Collections.Generic;
 
 namespace Encode.Bytes.Models
 {
+    /// <summary> The Base64urlArrayBytesProperty. </summary>
     public partial class Base64urlArrayBytesProperty
     {
+        /// <summary> Initializes a new instance of <see cref="Base64urlArrayBytesProperty"/>. </summary>
+        /// <param name="value"></param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public Base64urlArrayBytesProperty(IEnumerable<BinaryData> value) => throw null;
 
+        /// <summary>
+        /// Gets the Value.
+        /// <para>
+        /// To assign a byte[] to the element of this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term> BinaryData.FromBytes(new byte[] { 1, 2, 3 }). </term>
+        /// <description> Creates a payload of "AQID". </description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
         public IList<BinaryData> Value => throw null;
     }
 }

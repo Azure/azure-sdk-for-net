@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 
 namespace Parameters.Spread
 {
+    /// <summary> Client options for <see cref="SpreadClient"/>. </summary>
     public partial class SpreadClientOptions : ClientPipelineOptions
     {
     }

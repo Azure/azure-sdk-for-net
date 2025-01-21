@@ -6,6 +6,7 @@ using System.ClientModel.Primitives;
 
 namespace SpecialWords
 {
+    /// <summary> Client options for <see cref="SpecialWordsClient"/>. </summary>
     public partial class SpecialWordsClientOptions : ClientPipelineOptions
     {
     }

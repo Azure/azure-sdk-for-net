@@ -6,10 +6,14 @@ using System;
 
 namespace Encode.Duration.Models
 {
+    /// <summary> The FloatSecondsDurationProperty. </summary>
     public partial class FloatSecondsDurationProperty
     {
+        /// <summary> Initializes a new instance of <see cref="FloatSecondsDurationProperty"/>. </summary>
+        /// <param name="value"></param>
         public FloatSecondsDurationProperty(TimeSpan value) => throw null;
 
+        /// <summary> Gets or sets the Value. </summary>
         public TimeSpan Value
         {
             get => throw null;

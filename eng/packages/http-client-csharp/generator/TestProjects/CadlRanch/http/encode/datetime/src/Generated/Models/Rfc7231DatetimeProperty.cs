@@ -6,10 +6,14 @@ using System;
 
 namespace Encode.Datetime.Models
 {
+    /// <summary> The Rfc7231DatetimeProperty. </summary>
     public partial class Rfc7231DatetimeProperty
     {
+        /// <summary> Initializes a new instance of <see cref="Rfc7231DatetimeProperty"/>. </summary>
+        /// <param name="value"></param>
         public Rfc7231DatetimeProperty(DateTimeOffset value) => throw null;
 
+        /// <summary> Gets or sets the Value. </summary>
         public DateTimeOffset Value
         {
             get => throw null;

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator.Models
 {
+    /// <summary> Define a base class in the legacy way. Discriminator property is not explicitly defined in the model. </summary>
     public abstract partial class Dinosaur
     {
         private protected Dinosaur(string kind, int size) => throw null;
@@ -19,6 +20,7 @@ namespace _Type.Model.Inheritance.SingleDiscriminator.Models
             set => throw null;
         }
 
+        /// <summary> Gets the Size. </summary>
         public int Size => throw null;
     }
 }

@@ -7,8 +7,11 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator.Models
 {
+    /// <summary> The second level model in polymorphic single level inheritance. </summary>
     public partial class Sparrow : Bird
     {
+        /// <summary> Initializes a new instance of <see cref="Sparrow"/>. </summary>
+        /// <param name="wingspan"></param>
         public Sparrow(int wingspan) : base("sparrow", wingspan) => throw null;
 
         internal Sparrow(string kind, int wingspan, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(kind, wingspan, additionalBinaryDataProperties) => throw null;
