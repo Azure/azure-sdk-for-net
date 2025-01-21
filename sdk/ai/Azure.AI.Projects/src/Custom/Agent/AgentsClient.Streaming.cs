@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using Azure.Core;
+using Azure.Core.Pipeline;
+using System.IO;
 
 namespace Azure.AI.Projects;
 
@@ -163,6 +165,41 @@ public partial class AgentsClient
         Response sendRequest() => CreateRunStreaming(threadId, createRunRequest.ToRequestContent(), context);
         return new StreamingUpdateCollection(sendRequest, cancellationToken);
     }
+    /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
+    /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>
+    /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
+    /// <param name="cancellationToken"> The cancellation token to use. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="run"/> or <paramref name="toolOutputs"/> is null. </exception>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+    public virtual CollectionResult<StreamingUpdate> SubmitToolOutputsToStream(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
+    {
+        Argument.AssertNotNull(run, nameof(run));
+        Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
+
+        SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), true, null);
+        RequestContext context = FromCancellationToken(cancellationToken);
+        Response sendRequest() => SubmitToolOutputsInternal(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest.ToRequestContent(), context);
+        return new StreamingUpdateCollection(sendRequest, cancellationToken);
+    }
+
+    /// <summary> Submits outputs from tools as requested by tool calls in a stream. Stream updates that need submitted tool outputs will have a status of 'RunStatus.RequiresAction'. </summary>
+    /// <param name="run"> The <see cref="ThreadRun"/> that the tool outputs should be submitted to. </param>
+    /// <param name="toolOutputs"> A list of tools for which the outputs are being submitted. </param>
+    /// <param name="cancellationToken"> The cancellation token to use. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="run"/> or <paramref name="toolOutputs"/> is null. </exception>
+#pragma warning disable AZC0015 // Unexpected client method return type.
+    public virtual AsyncCollectionResult<StreamingUpdate> SubmitToolOutputsToStreamAsync(ThreadRun run, IEnumerable<ToolOutput> toolOutputs, CancellationToken cancellationToken = default)
+#pragma warning restore AZC0015 // Unexpected client method return type.
+    {
+        Argument.AssertNotNull(run, nameof(run));
+        Argument.AssertNotNull(toolOutputs, nameof(toolOutputs));
+
+        SubmitToolOutputsToRunRequest submitToolOutputsToRunRequest = new(toolOutputs.ToList(), true, null);
+        RequestContext context = FromCancellationToken(cancellationToken);
+        async Task<Response> sendRequestAsync() => await SubmitToolOutputsInternalAsync(run.ThreadId, run.Id, true, submitToolOutputsToRunRequest.ToRequestContent(), context).ConfigureAwait(false);
+        return new AsyncStreamingUpdateCollection(sendRequestAsync, cancellationToken);
+    }
 
     internal async Task<Response> CreateRunStreamingAsync(string threadId, RequestContent content, RequestContext context = null)
     {
@@ -173,7 +210,7 @@ public partial class AgentsClient
         scope.Start();
         try
         {
-            using HttpMessage message = CreateCreateRunRequest(threadId, content, context);
+            using HttpMessage message = CreateCreateRunRequest(threadId, content, null, context);
             message.BufferResponse = false;
             return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
@@ -193,7 +230,7 @@ public partial class AgentsClient
         scope.Start();
         try
         {
-            using HttpMessage message = CreateCreateRunRequest(threadId, content, context);
+            using HttpMessage message = CreateCreateRunRequest(threadId, content, null, context);
             message.BufferResponse = false;
             return _pipeline.ProcessMessage(message, context);
         }

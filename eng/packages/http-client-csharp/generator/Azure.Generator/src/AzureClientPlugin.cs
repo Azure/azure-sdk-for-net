@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.ResourceManager;
+using Azure.Generator.Utilities;
 using Microsoft.CodeAnalysis;
 using Microsoft.Generator.CSharp;
 using Microsoft.Generator.CSharp.ClientModel;
@@ -29,6 +30,8 @@ public class AzureClientPlugin : ClientModelPlugin
     private AzureOutputLibrary? _azureOutputLibrary;
     /// <inheritdoc/>
     public override AzureOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
+
+    internal ResourceDetection ResourceDetection { get; } = new();
 
     /// <inheritdoc/>
     public override Lazy<PostProcessor> PostProcessor => new(() => new MgmtPostProcessor());
