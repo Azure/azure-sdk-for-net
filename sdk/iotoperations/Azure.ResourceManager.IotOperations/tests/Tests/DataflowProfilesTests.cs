@@ -38,15 +38,13 @@ namespace Azure.ResourceManager.IotOperations.Tests
             Assert.AreEqual(dataflowProfileResource.Data.Name, DataflowEndpointsName);
 
             // Create new DataflowProfile
-            string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");
-
             DataflowProfileResourceData dataflowProfileResourceData =
                 CreateDataflowProfileResourceData(dataflowProfileResource);
 
             ArmOperation<DataflowProfileResource> resp =
                 await dataflowProfileResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
-                    "sdk-test" + utcTime.Substring(utcTime.Length - 4),
+                    "sdk-test-dataflowprofile",
                     dataflowProfileResourceData
                 );
             DataflowProfileResource createdDataflowProfile = resp.Value;
@@ -54,6 +52,14 @@ namespace Azure.ResourceManager.IotOperations.Tests
             Assert.IsNotNull(createdDataflowProfile);
             Assert.IsNotNull(createdDataflowProfile.Data);
             Assert.IsNotNull(createdDataflowProfile.Data.Properties);
+
+            // delete dataflow profile
+            await createdDataflowProfile.DeleteAsync(WaitUntil.Completed);
+
+            // Verify DataflowProfile is deleted
+            Assert.ThrowsAsync<RequestFailedException>(
+                async () => await createdDataflowProfile.GetAsync()
+            );
         }
 
         private DataflowProfileResourceData CreateDataflowProfileResourceData(

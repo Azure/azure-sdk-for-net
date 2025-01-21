@@ -38,7 +38,6 @@ namespace Azure.ResourceManager.IotOperations.Tests
             Assert.AreEqual(dataflowEndpointsResource.Data.Name, DataflowEndpointsName);
 
             // Create new DataflowEndpoint
-            string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");
 
             DataflowEndpointResourceData dataflowEndpointsResourceData =
                 CreateDataflowEndpointResourceData(dataflowEndpointsResource);
@@ -46,7 +45,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
             ArmOperation<DataflowEndpointResource> resp =
                 await dataflowEndpointsResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
-                    "sdk-test-" + utcTime.Substring(utcTime.Length - 4),
+                    "sdk-test-dataflowendpoints",
                     dataflowEndpointsResourceData
                 );
             DataflowEndpointResource createdDataflowEndpoint = resp.Value;

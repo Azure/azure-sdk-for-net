@@ -10,7 +10,7 @@ Azure IoT Operations is a unified data plane for the edge. It's a collection of 
 Install the Microsoft Azure IoT Operations management library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.IotOperations --prerelease
+dotnet add package Azure.ResourceManager.IotOperations
 ```
 
 ### Prerequisites

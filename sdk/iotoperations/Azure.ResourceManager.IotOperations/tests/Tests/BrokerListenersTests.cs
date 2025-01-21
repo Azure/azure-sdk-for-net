@@ -39,15 +39,13 @@ namespace Azure.ResourceManager.IotOperations.Tests
             Assert.AreEqual(brokerListenerResource.Data.Name, BrokersListenersName);
 
             // Create new BrokerListener
-            string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");
-
             BrokerListenerResourceData brokerListenerResourceData =
                 CreateBrokerListenerResourceData(brokerListenerResource);
 
             ArmOperation<BrokerListenerResource> resp =
                 await brokerListenerResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
-                    "sdk-test-" + utcTime.Substring(utcTime.Length - 4),
+                    "sdk-test-brokerlistener",
                     brokerListenerResourceData
                 );
 

@@ -38,15 +38,13 @@ namespace Azure.ResourceManager.IotOperations.Tests
             Assert.AreEqual(brokerAuthenticationResource.Data.Name, BrokersAuthenticationsName);
 
             // Create BrokerAuthentication
-            string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");
-
             BrokerAuthenticationResourceData brokerAuthenticationResourceData =
                 CreateBrokerAuthenticationResourceData(brokerAuthenticationResource);
 
             ArmOperation<BrokerAuthenticationResource> resp =
                 await brokerAuthenticationResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
-                    "sdk-test-" + utcTime.Substring(utcTime.Length - 4),
+                    "sdk-test-brokerauthentication",
                     brokerAuthenticationResourceData
                 );
             BrokerAuthenticationResource createdBrokerAuthentication = resp.Value;

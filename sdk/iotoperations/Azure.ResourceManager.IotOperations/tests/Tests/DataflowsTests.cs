@@ -33,13 +33,12 @@ namespace Azure.ResourceManager.IotOperations.Tests
 
             // None are created in a fresh AIO deployment
             // Create Dataflow
-            string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");
             DataflowResourceData dataflowResourceData = CreateDataflowResourceData();
 
             ArmOperation<DataflowResource> resp =
                 await dataflowResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
-                    "sdk-test-" + utcTime.Substring(utcTime.Length - 4),
+                    "sdk-test-dataflows",
                     dataflowResourceData
                 );
             DataflowResource createdDataflow = resp.Value;

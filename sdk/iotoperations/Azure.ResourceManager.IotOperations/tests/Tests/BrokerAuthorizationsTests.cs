@@ -33,15 +33,13 @@ namespace Azure.ResourceManager.IotOperations.Tests
 
             // None are created in a fresh AIO deployment
             // Create BrokerAuthorization
-            string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");
-
             BrokerAuthorizationResourceData brokerAuthorizationResourceData =
                 CreateBrokerAuthorizationResourceData();
 
             ArmOperation<BrokerAuthorizationResource> resp =
                 await brokerAuthorizationResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
-                    "sdk-test-" + utcTime.Substring(utcTime.Length - 4),
+                    "sdk-test-brokerauthorization",
                     brokerAuthorizationResourceData
                 );
             BrokerAuthorizationResource createdBrokerAuthorization = resp.Value;

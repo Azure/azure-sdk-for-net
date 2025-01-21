@@ -41,27 +41,5 @@ namespace Azure.ResourceManager.IotOperations.Tests
 
             // Cant update Broker
         }
-
-        private BrokerResourceData CreateBrokerResourceData(
-            BrokerResource brokerResource,
-            string memoryProfile
-        )
-        {
-            return new BrokerResourceData(brokerResource.Data.ExtendedLocation)
-            {
-                Properties = new BrokerProperties()
-                {
-                    Advanced = brokerResource.Data.Properties.Advanced,
-                    Cardinality = brokerResource.Data.Properties.Cardinality,
-                    Diagnostics = brokerResource.Data.Properties.Diagnostics,
-                    DiskBackedMessageBuffer = brokerResource
-                        .Data
-                        .Properties
-                        .DiskBackedMessageBuffer,
-                    GenerateResourceLimits = brokerResource.Data.Properties.GenerateResourceLimits,
-                    MemoryProfile = new BrokerMemoryProfile(memoryProfile),
-                },
-            };
-        }
     }
 }
