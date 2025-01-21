@@ -1,4 +1,4 @@
-# Azure.ResourceManager.IotOperations client library for .NET
+# Microsoft Azure IoT Operations management client library for .NET
 
 Azure.ResourceManager.IotOperations is a managed service that helps developers get secret simply and securely.
 
