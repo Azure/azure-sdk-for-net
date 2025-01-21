@@ -4,7 +4,7 @@ Azure Maps is a Microsoft-managed service providing maps service that is...
 
 The Azure.Maps.Common library provides infrastructure shared across other Azure Maps client libraries.
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Common/src) | [API reference documentation](https://docs.microsoft.com/rest/api/maps/) | [Product documentation](https://docs.microsoft.com/azure/azure-maps)
+[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/maps/Azure.Maps.Common/src) | [API reference documentation](https://learn.microsoft.com/rest/api/maps/) | [Product documentation](https://learn.microsoft.com/azure/azure-maps)
 
 ## Getting started
 
@@ -21,7 +21,7 @@ dotnet add package Azure.Maps.Geolocation --prerelease
 
 ### Prerequisites
 
-> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure Maps account](https://docs.microsoft.com/azure/azure-maps/quick-demo-map-app#create-an-azure-maps-account).
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure Maps account](https://learn.microsoft.com/azure/azure-maps/quick-demo-map-app#create-an-azure-maps-account).
 
 To create a new Azure Maps account, you can use the Azure Portal, Azure PowerShell, or the Azure CLI. Here's an example using the Azure CLI:
 
