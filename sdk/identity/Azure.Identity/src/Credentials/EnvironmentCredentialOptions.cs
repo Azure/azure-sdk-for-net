@@ -69,7 +69,7 @@ namespace Azure.Identity
         /// If no value is specified for <see cref="TenantId"/>, this option will have no effect on that authentication method, and the credential will acquire tokens for any requested tenant when using that method.
         /// </summary>
         /// <remarks>
-        /// Defaults to the value of environment variable <c>AZURE_ADDITIONALLY_ALLOWED_TENANTS</c>.
+        /// Defaults to the value of environment variable <c>AZURE_ADDITIONALLY_ALLOWED_TENANTS</c>. Values can be a semi-colon delimited list of tenant IDs , or '*' to denote any tenant ID.
         /// </remarks>
         public IList<string> AdditionallyAllowedTenants { get; internal set; } = EnvironmentVariables.AdditionallyAllowedTenants;
     }
