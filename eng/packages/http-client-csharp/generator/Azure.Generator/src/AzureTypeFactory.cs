@@ -109,8 +109,16 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
-        protected override ClientProvider CreateClientCore(InputClient inputClient)
-            => AzureClientPlugin.Instance.IsAzureArm.Value ? base.CreateClientCore(InputClientTransformer.TransformInputClient(inputClient)) : base.CreateClientCore(inputClient);
+        protected override ClientProvider? CreateClientCore(InputClient inputClient)
+        {
+            if (!AzureClientPlugin.Instance.IsAzureArm.Value)
+            {
+                return base.CreateClientCore(inputClient);
+            }
+
+            var transformedClient = InputClientTransformer.TransformInputClient(inputClient);
+            return transformedClient is null ? null : base.CreateClientCore(transformedClient);
+        }
 
         /// <inheritdoc/>
         protected override IReadOnlyList<TypeProvider> CreateSerializationsCore(InputType inputType, TypeProvider typeProvider)
