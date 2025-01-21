@@ -73,8 +73,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         /// <summary>
         /// ServiceBus string
         /// </summary>
-        public string ServiceBusConnectionString => GetRecordedOptionalVariable(servicebusString,
-            options => options.HasSecretConnectionStringParameter("SharedAccessKey", SanitizedValue.Base64).HasSecretConnectionStringParameter("SharedAccessKeyName"));
+        public string ServiceBusNamespace => GetRecordedOptionalVariable(servicebusString, options => options.IsSecret("Sanitized"));
 
         /// <summary>
         /// The callback url of the application where notification would be received.

@@ -162,6 +162,14 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     $allPackageProperties = Get-AllPkgProperties
     $diff = Get-Content $InputDiffJson | ConvertFrom-Json
     $targetedFiles = $diff.ChangedFiles
+    # The exclude paths and the targeted files paths aren't full OS paths, they're
+    # GitHub paths meaning they're relative to the repo root and slashes are forward
+    # slashes "/". The ExcludePaths need to have a trailing slash added in order
+    # correctly test for string matches without overmatching. For example, if a pr
+    # had files sdk/foo/file1 and sdk/foobar/file2 with the exclude of anything in
+    # sdk/foo, it should only exclude things under sdk/foo. The TrimEnd is just in
+    # case one of the paths ends with a slash, it doesn't add a second one.
+    $excludePaths = $diff.ExcludePaths | ForEach-Object { $_.TrimEnd("/") + "/" }
 
     $additionalValidationPackages = @()
     $lookup = @{}
@@ -172,8 +180,18 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         $lookup[$lookupKey] = $pkg
 
         foreach ($file in $targetedFiles) {
+            $shouldExclude = $false
+            foreach ($exclude in $excludePaths) {
+                if ($file.StartsWith($exclude,'CurrentCultureIgnoreCase')) {
+                    $shouldExclude = $true
+                    break
+                }
+            }
+            if ($shouldExclude) {
+                continue
+            }
             $filePath = (Join-Path $RepoRoot $file)
-            $shouldInclude = $filePath -like "$pkgDirectory*"
+            $shouldInclude = $filePath -like (Join-Path "$pkgDirectory" "*")
             if ($shouldInclude) {
                 $packagesWithChanges += $pkg
 
@@ -187,12 +205,17 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
         }
     }
 
+    $existingPackageNames = @($packagesWithChanges | ForEach-Object { $_.Name })
     foreach ($addition in $additionalValidationPackages) {
         $key = $addition.Replace($RepoRoot, "").TrimStart('\/')
 
         if ($lookup[$key]) {
-            $lookup[$key].IncludedForValidation = $true
-            $packagesWithChanges += $lookup[$key]
+            $pkg = $lookup[$key]
+
+            if ($pkg.Name -notin $existingPackageNames) {
+                $pkg.IncludedForValidation = $true
+                $packagesWithChanges += $pkg
+            }
         }
     }
 

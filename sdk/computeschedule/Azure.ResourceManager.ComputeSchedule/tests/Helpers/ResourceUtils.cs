@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Helpers
         public static VirtualMachineData GetBasicWindowsVirtualMachineData(AzureLocation location, string computerName, ResourceIdentifier nicID,
             string adminUsername = "adminuser")
         {
-            return new VirtualMachineData(location)
+            var vmData = new VirtualMachineData(location)
             {
                 AdditionalCapabilities = new()
                 {
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Helpers
                         IsAutomaticUpdatesEnabled = true,
                         PatchSettings = new()
                         {
-                            PatchMode = WindowsVmGuestPatchMode.AutomaticByOS,
+                            PatchMode = WindowsVmGuestPatchMode.AutomaticByPlatform,
                             AssessmentMode = WindowsPatchAssessmentMode.ImageDefault
                         }
                     }
@@ -71,6 +71,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Helpers
                     }
                 }
             };
+
+            return vmData;
         }
     }
 }

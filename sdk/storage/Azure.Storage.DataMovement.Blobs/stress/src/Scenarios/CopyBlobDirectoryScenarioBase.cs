@@ -26,12 +26,12 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             int? blobSize,
             int? blobCount,
             TransferManagerOptions transferManagerOptions,
-            DataTransferOptions dataTransferOptions,
+            TransferOptions transferOptions,
             TokenCredential sourceTokenCredential,
             TokenCredential destinationTokenCredential,
             Metrics metrics,
             string testRunId)
-            : base(destinationBlobUri, blobSize, transferManagerOptions, dataTransferOptions, destinationTokenCredential, metrics, testRunId)
+            : base(destinationBlobUri, blobSize, transferManagerOptions, transferOptions, destinationTokenCredential, metrics, testRunId)
         {
             _sourceServiceClient = new BlobServiceClient(sourceBlobUri, sourceTokenCredential);
             _blobCount = blobCount ?? DataMovementBlobStressConstants.DefaultObjectCount;
@@ -70,7 +70,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                         new()
                         {
                             BlobDirectoryPrefix = pathPrefix,
-                            BlobType = new(blobType)
+                            BlobType = blobType
                         });
 
                     // Start Transfer
@@ -83,7 +83,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                         TransferValidator.GetBlobLister(sourceContainerClient, pathPrefix),
                         TransferValidator.GetBlobLister(destinationContainerClient, pathPrefix),
                         _blobCount,
-                        _dataTransferOptions,
+                        _transferOptions,
                         cancellationToken);
                 }
                 catch (TaskCanceledException)

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure;
 using Azure.Core;
 
@@ -14,30 +15,24 @@ namespace MgmtTypeSpec
     public partial class Foos
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
-        private static ResponseClassifier _pipelineMessageClassifier201;
-        private static ResponseClassifier _pipelineMessageClassifier202;
-        private static ResponseClassifier _pipelineMessageClassifier204;
-        private static Classifier2xxAnd4xx _pipelineMessageClassifier2xxAnd4xx;
+        private static ResponseClassifier _pipelineMessageClassifier200201;
+        private static ResponseClassifier _pipelineMessageClassifier202204;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 = new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        private static ResponseClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 = new StatusCodeClassifier(stackalloc ushort[] { 201 });
+        private static ResponseClassifier PipelineMessageClassifier200201 => _pipelineMessageClassifier200201 = new StatusCodeClassifier(stackalloc ushort[] { 200, 201 });
 
-        private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 = new StatusCodeClassifier(stackalloc ushort[] { 202 });
+        private static ResponseClassifier PipelineMessageClassifier202204 => _pipelineMessageClassifier202204 = new StatusCodeClassifier(stackalloc ushort[] { 202, 204 });
 
-        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 = new StatusCodeClassifier(stackalloc ushort[] { 204 });
-
-        private static Classifier2xxAnd4xx PipelineMessageClassifier2xxAnd4xx => _pipelineMessageClassifier2xxAnd4xx ??= new Classifier2xxAnd4xx();
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceGroupName, string fooName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string fooName, RequestContent content, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200201);
             Request request = message.Request;
             request.Method = RequestMethod.Put;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(_subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
@@ -50,7 +45,7 @@ namespace MgmtTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string resourceGroupName, string fooName, RequestContext context)
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -58,7 +53,7 @@ namespace MgmtTypeSpec
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(_subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
@@ -69,15 +64,15 @@ namespace MgmtTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateDeleteRequest(string resourceGroupName, string fooName, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string fooName, RequestContext context)
         {
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202204);
             Request request = message.Request;
             request.Method = RequestMethod.Delete;
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(_subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/foos/", false);
@@ -88,7 +83,7 @@ namespace MgmtTypeSpec
             return message;
         }
 
-        internal HttpMessage CreateListRequest(string resourceGroupName, RequestContext context)
+        internal HttpMessage CreateListRequest(Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
             Request request = message.Request;
@@ -96,7 +91,7 @@ namespace MgmtTypeSpec
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(_subscriptionId.ToString(), true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/MgmtTypeSpec/foos", false);
@@ -104,10 +99,6 @@ namespace MgmtTypeSpec
             request.Uri = uri;
             request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        private class Classifier2xxAnd4xx : ResponseClassifier
-        {
         }
     }
 }

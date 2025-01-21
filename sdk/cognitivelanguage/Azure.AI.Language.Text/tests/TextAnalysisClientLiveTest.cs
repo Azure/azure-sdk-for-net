@@ -188,7 +188,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             Assert.IsNotNull(entitiesTaskResult);
             Assert.IsNotNull(entitiesTaskResult.Results);
             Assert.IsNotNull(entitiesTaskResult.Results.Documents);
-            foreach (EntitiesDocumentResultWithMetadataDetectedLanguage nerResult in entitiesTaskResult.Results.Documents)
+            foreach (EntityActionResult nerResult in entitiesTaskResult.Results.Documents)
             {
                 Assert.IsNotNull(nerResult);
                 Assert.IsNotNull(nerResult.Id);
@@ -236,7 +236,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
             {
                 Assert.IsNotNull(piiResult.Id);
                 Assert.IsNotNull(piiResult.Entities);
-                foreach (NamedEntity entity in piiResult.Entities)
+                foreach (PiiEntity entity in piiResult.Entities)
                 {
                     Assert.IsNotNull(entity);
                     Assert.IsNotNull(entity.Text);
@@ -429,7 +429,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests
                     Assert.IsNotNull(customClassificationResult.Results);
                     Assert.IsNotNull(customClassificationResult.Results.Documents);
 
-                    foreach (EntityActionResult entitiesDocument in customClassificationResult.Results.Documents)
+                    foreach (CustomEntityActionResult entitiesDocument in customClassificationResult.Results.Documents)
                     {
                         Assert.IsNotNull(entitiesDocument.Id);
                         Assert.IsNotNull(entitiesDocument.Entities);

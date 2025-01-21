@@ -88,28 +88,17 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             {
                 options = new BlockBlobStorageResourceOptions
                 {
-                    ContentDisposition = new(false),
-                    ContentLanguage = new(false),
-                    CacheControl = new(false),
-                    ContentType = new(false),
-                    Metadata = new(false)
-                };
-            }
-            else if (propertiesTestType == TransferPropertiesTestType.Preserve)
-            {
-                options = new BlockBlobStorageResourceOptions
-                {
-                    ContentDisposition = new(true),
-                    ContentLanguage = new(true),
-                    CacheControl = new(true),
-                    ContentType = new(true),
-                    Metadata = new(true)
+                    ContentDisposition = default,
+                    ContentLanguage = default,
+                    CacheControl = default,
+                    ContentType = default,
+                    Metadata = default
                 };
             }
             return new BlobStorageResourceContainer(sourceContainerClient, new BlobStorageResourceContainerOptions()
             {
                 BlobDirectoryPrefix = directoryPath,
-                BlobType = new(BlobType.Page),
+                BlobType = BlobType.Page,
                 BlobOptions = options
             });
         }

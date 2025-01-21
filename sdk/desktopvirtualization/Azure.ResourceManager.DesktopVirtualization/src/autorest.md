@@ -26,6 +26,9 @@ enable-bicep-serialization: true
 #mgmt-debug:
 #  show-serialized-names: true
 
+models-to-treat-empty-string-as-null:
+  - SessionHostData
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'

@@ -77,7 +77,7 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                     EntityRecognitionOperationResult entityRecognitionLROResult = (EntityRecognitionOperationResult)analyzeTextLROResult;
 
                     // View the classifications recognized in the input documents.
-                    foreach (EntitiesDocumentResultWithMetadataDetectedLanguage nerResult in entityRecognitionLROResult.Results.Documents)
+                    foreach (EntityActionResultWithMetadata nerResult in entityRecognitionLROResult.Results.Documents)
                     {
                         Console.WriteLine($"Result for document with Id = \"{nerResult.Id}\":");
 
@@ -89,9 +89,13 @@ namespace Azure.AI.Language.TextAnalytics.Tests.Samples
                             Console.WriteLine($"    Offset: {entity.Offset}");
                             Console.WriteLine($"    Length: {entity.Length}");
                             Console.WriteLine($"    Category: {entity.Category}");
-                            if (!string.IsNullOrEmpty(entity.Subcategory))
-                                Console.WriteLine($"    SubCategory: {entity.Subcategory}");
-                            Console.WriteLine($"    Confidence score: {entity.ConfidenceScore}");
+                            Console.WriteLine($"    Type: {entity.Type}");
+                            Console.WriteLine($"    Tags:");
+                            foreach (EntityTag tag in entity.Tags)
+                            {
+                                Console.WriteLine($"            TagName: {tag.Name}");
+                                Console.WriteLine($"            TagConfidenceScore: {tag.ConfidenceScore}");
+                            }
                             Console.WriteLine();
                         }
                         Console.WriteLine();
