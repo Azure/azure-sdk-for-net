@@ -1,0 +1,25 @@
+parameters:
+  - name: ServiceDirectory
+    type: string
+    default: ''
+  - name: ServiceDirectories
+    type: string
+    default: ''
+  - name: ScriptDirectory
+    type: string
+    default: eng/common/scripts
+
+steps:
+  - pwsh: |
+      # Take whichever parameter has been set. If set, ServiceDirectory will be a single path or
+      # ServiceDirectories will be a comma separated list.
+      $ServiceDirectories = '${{ coalesce(parameters.ServiceDirectory, parameters.ServiceDirectories) }}'
+      $ScanPaths = @()
+      foreach ($ServiceDirectory in $ServiceDirectories.Split(',')) {
+        $ScanPath = [System.IO.Path]::Combine('$(Build.SourcesDirectory)', 'sdk', $ServiceDirectory)
+        Write-Host "Adding $ScanPath to the scanned paths"
+        $ScanPaths += $ScanPath
+      }
+      Get-ChildItem $ScanPaths -Filter *.md -Recurse | ${{ parameters.ScriptDirectory }}/Test-SampleMetadata.ps1 -AllowParentProducts
+    displayName: Verify sample metadata
+    workingDirectory: $(Build.SourcesDirectory)
