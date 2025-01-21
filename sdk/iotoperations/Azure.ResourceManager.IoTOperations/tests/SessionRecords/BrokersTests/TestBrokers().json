@@ -1,0 +1,261 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd?api-version=2022-12-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-9be7c73f6b6d8fac4fa2e714699d098f-21bdbe60d3b91568-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.0 (.NET 8.0.12; Ubuntu 22.04.3 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "473",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Jan 2025 18:38:40 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "44bc1d47-00d0-4bf1-b120-de23300a0ff0",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "44bc1d47-00d0-4bf1-b120-de23300a0ff0",
+        "x-ms-routing-request-id": "WESTUS2:20250117T183840Z:44bc1d47-00d0-4bf1-b120-de23300a0ff0",
+        "X-MSEdge-Ref": "Ref A: 32EE8544813A47368BC816BD67DA80C4 Ref B: CO6AA3150219039 Ref C: 2025-01-17T18:38:40Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd",
+        "authorizationSource": "RoleBased",
+        "managedByTenants": [],
+        "tags": {
+          "C-AI-MG-Placement-Subscription-Level": "2023-08-31"
+        },
+        "subscriptionId": "d4ccd08b-0809-446d-a8b7-7af8a90109cd",
+        "tenantId": "00000000-0000-0000-0000-000000000000",
+        "displayName": "CommonInfra-AIO-OnDemandClusters",
+        "state": "Enabled",
+        "subscriptionPolicies": {
+          "locationPlacementId": "Internal_2014-09-01",
+          "quotaId": "Internal_2014-09-01",
+          "spendingLimit": "Off"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourcegroups/aio-validation-112727342?api-version=2022-09-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-e9d12e76ac5fca40531da0b67699637b-ce5b24f862641e74-00",
+        "User-Agent": "azsdk-net-ResourceManager/1.13.0 (.NET 8.0.12; Ubuntu 22.04.3 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "420",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Jan 2025 18:38:40 GMT",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-correlation-request-id": "b24e4a8a-cef0-4769-b048-8ec018362e5b",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "b24e4a8a-cef0-4769-b048-8ec018362e5b",
+        "x-ms-routing-request-id": "WESTUS2:20250117T183841Z:b24e4a8a-cef0-4769-b048-8ec018362e5b",
+        "X-MSEdge-Ref": "Ref A: 7419DC2FF876442ABC9955216809E56C Ref B: CO6AA3150219039 Ref C: 2025-01-17T18:38:40Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/aio-validation-112727342",
+        "name": "aio-validation-112727342",
+        "type": "Microsoft.Resources/resourceGroups",
+        "location": "eastus2",
+        "tags": {
+          "x-iot-environment": "atlas-on-demand",
+          "x-iot-owner": "henrymorales@microsoft.com",
+          "x-iot-do-not-delete": "false",
+          "x-iot-create-time": "1737072903",
+          "PREDEPLOYED": "true"
+        },
+        "properties": {
+          "provisioningState": "Succeeded"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/aio-validation-112727342/providers/Microsoft.IoTOperations/instances/aio-112727342?api-version=2024-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-5f4ccbc9db27f39b8d0eaa886a45779f-9a7e9a32df4dc4a4-00",
+        "User-Agent": "azsdk-net-ResourceManager.IoTOperations/1.0.0-alpha.20250117.1 (.NET 8.0.12; Ubuntu 22.04.3 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1011",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Jan 2025 18:38:40 GMT",
+        "ETag": "\"9402fb40-0000-0200-0000-6789ad4a0000\"",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-correlation-request-id": "26fdec21-7758-4110-8723-137a88358eb5",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16498",
+        "x-ms-ratelimit-remaining-subscription-reads": "1098",
+        "x-ms-request-id": "d750e67a-c9a5-431d-8428-18a176513211",
+        "x-ms-routing-request-id": "WESTUS2:20250117T183841Z:26fdec21-7758-4110-8723-137a88358eb5",
+        "X-MSEdge-Ref": "Ref A: 5D0E0FD5C71A449AA729569FF503D8B3 Ref B: CO6AA3150219039 Ref C: 2025-01-17T18:38:41Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/aio-validation-112727342/providers/Microsoft.IoTOperations/instances/aio-112727342",
+        "name": "aio-112727342",
+        "type": "microsoft.iotoperations/instances",
+        "location": "eastus2",
+        "extendedLocation": {
+          "name": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/aio-validation-112727342/providers/Microsoft.ExtendedLocation/customLocations/location-112727342",
+          "type": "CustomLocation"
+        },
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "Application",
+          "createdAt": "2025-01-17T01:05:55.1172172Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2025-01-17T01:07:22.8150085Z"
+        },
+        "identity": {
+          "type": "None"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "description": "An AIO instance.",
+          "schemaRegistryRef": {
+            "resourceId": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/aio-validation-112727342/providers/Microsoft.DeviceRegistry/schemaRegistries/aio-sr-ff1fc34aed"
+          },
+          "version": "1.0.9"
+        }
+      }
+    },
+    {
+      "RequestUri": "https://management.azure.com/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/aio-validation-112727342/providers/Microsoft.IoTOperations/instances/aio-112727342/brokers/default?api-version=2024-11-01",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Authorization": "Sanitized",
+        "traceparent": "00-dc11ce54d58099a2638e6d8a1b1c4fa9-7b071c890dc8bb36-00",
+        "User-Agent": "azsdk-net-ResourceManager.IoTOperations/1.0.0-alpha.20250117.1 (.NET 8.0.12; Ubuntu 22.04.3 LTS)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Cache-Control": "no-cache",
+        "Content-Length": "1246",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Fri, 17 Jan 2025 18:38:40 GMT",
+        "ETag": "\"490488f0-0000-0200-0000-6789b1140000\"",
+        "Expires": "-1",
+        "Pragma": "no-cache",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
+        "X-Cache": "CONFIG_NOCACHE",
+        "X-Content-Type-Options": "nosniff",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-correlation-request-id": "4a60e046-c07a-408c-a7e0-cdb0bb73bda1",
+        "x-ms-providerhub-traffic": "True",
+        "x-ms-ratelimit-remaining-subscription-global-reads": "16499",
+        "x-ms-ratelimit-remaining-subscription-reads": "1099",
+        "x-ms-request-id": "29224cb7-6411-4074-b91f-0ba48101a8fc",
+        "x-ms-routing-request-id": "WESTUS2:20250117T183841Z:4a60e046-c07a-408c-a7e0-cdb0bb73bda1",
+        "X-MSEdge-Ref": "Ref A: E377B5C46B0F46B3889F7994E23EBB74 Ref B: CO6AA3150219039 Ref C: 2025-01-17T18:38:41Z"
+      },
+      "ResponseBody": {
+        "id": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/aio-validation-112727342/providers/Microsoft.IoTOperations/instances/aio-112727342/brokers/default",
+        "name": "default",
+        "type": "microsoft.iotoperations/instances/brokers",
+        "extendedLocation": {
+          "name": "/subscriptions/d4ccd08b-0809-446d-a8b7-7af8a90109cd/resourceGroups/aio-validation-112727342/providers/Microsoft.ExtendedLocation/customLocations/location-112727342",
+          "type": "CustomLocation"
+        },
+        "systemData": {
+          "createdBy": "Sanitized",
+          "createdByType": "Application",
+          "createdAt": "2025-01-17T01:07:30.2599062Z",
+          "lastModifiedBy": "Sanitized",
+          "lastModifiedByType": "Application",
+          "lastModifiedAt": "2025-01-17T01:23:32.2756136Z"
+        },
+        "properties": {
+          "provisioningState": "Succeeded",
+          "memoryProfile": "Medium",
+          "generateResourceLimits": {
+            "cpu": "Disabled"
+          },
+          "cardinality": {
+            "backendChain": {
+              "partitions": 2,
+              "workers": 2,
+              "redundancyFactor": 2
+            },
+            "frontend": {
+              "replicas": 2,
+              "workers": 2
+            }
+          },
+          "advanced": {
+            "encryptInternalTraffic": "Enabled"
+          },
+          "diagnostics": {
+            "logs": {
+              "level": "info"
+            },
+            "metrics": {
+              "prometheusPort": 9600
+            },
+            "selfCheck": {
+              "intervalSeconds": 30,
+              "mode": "Enabled",
+              "timeoutSeconds": 15
+            },
+            "traces": {
+              "cacheSizeMegabytes": 16,
+              "mode": "Enabled",
+              "selfTracing": {
+                "intervalSeconds": 30,
+                "mode": "Enabled"
+              },
+              "spanChannelCapacity": 1000
+            }
+          }
+        }
+      }
+    }
+  ],
+  "Variables": {
+    "RandomSeed": "668778459",
+    "RESOURCE_MANAGER_URL": null,
+    "SUBSCRIPTION_ID": "d4ccd08b-0809-446d-a8b7-7af8a90109cd"
+  }
+}
