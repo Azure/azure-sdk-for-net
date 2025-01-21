@@ -912,9 +912,6 @@
 # AzureSdkOwners:                                                  @christothes @JonathanCrd
 # ServiceOwners:                                                   @sakash279 @sivethe @ThomasWeiss @PaulCheng
 
-# PRLabel: %Monitor
-/sdk/monitor/Azure.ResourceManager.Monitor/                        @thomasp98296 @ritwik8119
-
 # PRLabel: %TimeSeriesInsights
 /sdk/timeseriesinsights/                                           @yeskarthik @rasidhan @dmdenmsft
 
@@ -1008,6 +1005,9 @@
 
 # ServiceLabel: %Large Instance %Mgmt
 # ServiceOwners:                                                   @8Gitbrix
+
+# PRLabel: %Monitor
+/sdk/monitor/Azure.ResourceManager.Monitor/                        @thomasp98296 @ritwik8119
 
 # PRLabel: %Neon Postgres
 /sdk/neonpostgres/Azure.ResourceManager.*/                         @archerzz @ArcturusZhang @ArthurMa1978
