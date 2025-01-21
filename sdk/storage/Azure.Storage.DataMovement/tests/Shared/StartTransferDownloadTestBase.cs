@@ -195,7 +195,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists
+                CreationPreference = StorageResourceCreationMode.FailIfExists
             };
             TestEventsRaised testEventRaised = new TestEventsRaised(options);
 
@@ -234,7 +234,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create transfer options with Skipping available
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.SkipIfExists
+                CreationPreference = StorageResourceCreationMode.SkipIfExists
             };
             TestEventsRaised testEventRaised = new TestEventsRaised(options);
 
@@ -324,7 +324,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             transferManagerOptions ??= new TransferManagerOptions()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure
+                ErrorMode = TransferErrorMode.ContinueOnFailure
             };
 
             List<VerifyDownloadObjectContentInfo> downloadedObjectInfo = new List<VerifyDownloadObjectContentInfo>(objectCount);
@@ -429,7 +429,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to overwrite any existing destination.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
+                CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
             };
             List<TransferOptions> optionsList = new List<TransferOptions> { options };
             await DownloadObjectsAndVerify(
@@ -451,7 +451,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to overwrite any existing destination.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.OverwriteIfExists,
+                CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
             };
             List<TransferOptions> optionsList = new List<TransferOptions> { options };
             await DownloadObjectsAndVerify(
@@ -487,12 +487,12 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to overwrite any existing destination.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.SkipIfExists,
+                CreationPreference = StorageResourceCreationMode.SkipIfExists,
             };
             options.ItemTransferSkipped += (TransferItemSkippedEventArgs args) =>
             {
-                if (args.SourceResource != null &&
-                    args.DestinationResource != null &&
+                if (args.Source != null &&
+                    args.Destination != null &&
                     args.TransferId != null)
                 {
                     skippedSeen = true;
@@ -548,7 +548,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create options bag to fail and keep track of the failure.
             TransferOptions options = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationPreference.FailIfExists,
+                CreationPreference = StorageResourceCreationMode.FailIfExists,
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             StorageResourceItem sourceResource = GetStorageResourceItem(sourceClient);
@@ -680,7 +680,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 
@@ -713,7 +713,7 @@ namespace Azure.Storage.DataMovement.Tests
         {
             TransferManagerOptions managerOptions = new TransferManagerOptions()
             {
-                ErrorHandling = TransferErrorMode.ContinueOnFailure,
+                ErrorMode = TransferErrorMode.ContinueOnFailure,
                 MaximumConcurrency = concurrency,
             };
 

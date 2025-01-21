@@ -266,11 +266,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Act
             StorageResourceWriteToOffsetOptions copyFromStreamOptions = new()
             {
-                SourceProperties = new StorageResourceItemProperties(
-                    resourceLength: length,
-                    eTag: new("ETag"),
-                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
-                    default)
+                SourceProperties = new StorageResourceItemProperties()
+                {
+                    ResourceLength = length,
+                    ETag = new("ETag"),
+                    LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
+                }
             };
             await storageResource.CopyFromStreamInternalAsync(
                 stream: stream,
@@ -627,11 +628,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             };
             StorageResourceCopyFromUriOptions copyFromUriOptions = new()
             {
-                SourceProperties = new StorageResourceItemProperties(
-                    resourceLength: length,
-                    eTag: new("ETag"),
-                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
-                    properties: sourceProperties)
+                SourceProperties = new StorageResourceItemProperties()
+                {
+                    ResourceLength = length,
+                    ETag = new("ETag"),
+                    LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
+                    RawProperties = sourceProperties
+                }
             };
             await destinationResource.CopyFromUriInternalAsync(
                 sourceResource: sourceResource,
@@ -951,11 +954,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Act
             StorageResourceCopyFromUriOptions copyFromUriOptions = new()
             {
-                SourceProperties = new StorageResourceItemProperties(
-                    resourceLength: length,
-                    eTag: new("ETag"),
-                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
-                    properties: default)
+                SourceProperties = new StorageResourceItemProperties()
+                {
+                    ResourceLength = length,
+                    ETag = new("ETag"),
+                    LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1)
+                }
             };
             await destinationResource.CopyFromUriInternalAsync(
                 sourceResource: sourceResource,
@@ -1312,11 +1316,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             BlockBlobStorageResource storageResource = new BlockBlobStorageResource(
                 mock.Object,
-                new StorageResourceItemProperties(
-                    length,
-                    eTag,
-                    lastModified,
-                    rawProperties));
+                new StorageResourceItemProperties()
+                {
+                    ResourceLength = length,
+                    ETag = eTag,
+                    LastModifiedTime = lastModified,
+                    RawProperties = rawProperties
+                });
 
             // Act
             StorageResourceItemProperties result = await storageResource.GetPropertiesInternalAsync();
@@ -1433,18 +1439,15 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 { DataMovementConstants.ResourceProperties.Metadata, sourceMetdata },
             };
-            StorageResourceItemProperties sourceProperties = new(
-                length,
-                new ETag("etag"),
-                DateTimeOffset.UtcNow.AddHours(-1),
-                rawProperties);
             StorageResourceCopyFromUriOptions copyFromUriOptions = new()
             {
-                SourceProperties = new StorageResourceItemProperties(
-                    resourceLength: length,
-                    eTag: new("ETag"),
-                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
-                    properties: rawProperties)
+                SourceProperties = new StorageResourceItemProperties()
+                {
+                    ResourceLength = length,
+                    ETag = new("ETag"),
+                    LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
+                    RawProperties = rawProperties
+                }
             };
             await destinationResource.CopyFromUriInternalAsync(
                 sourceResource,
@@ -1524,11 +1527,13 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 { DataMovementConstants.ResourceProperties.CacheControl, DefaultCacheControl },
                 { DataMovementConstants.ResourceProperties.Metadata, metadata }
             };
-            StorageResourceItemProperties sourceProperties = new(
-                completeLength,
-                new ETag("etag"),
-                DateTimeOffset.UtcNow.AddHours(-1),
-                rawProperties);
+            StorageResourceItemProperties sourceProperties = new()
+            {
+                ResourceLength = completeLength,
+                ETag = new("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
+                RawProperties = rawProperties
+            };
             await destinationResource.CompleteTransferAsync(
                 overwrite: false,
                 completeTransferOptions: new() { SourceProperties = sourceProperties });

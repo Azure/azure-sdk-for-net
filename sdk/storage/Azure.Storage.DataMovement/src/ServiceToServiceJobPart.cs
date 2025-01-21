@@ -91,7 +91,7 @@ namespace Azure.Storage.DataMovement
             TransferStatus jobPartStatus,
             long initialTransferSize,
             long transferChunkSize,
-            StorageResourceCreationPreference createPreference)
+            StorageResourceCreationMode createPreference)
             : base(transferOperation: job._transferOperation,
                   partNumber: partNumber,
                   sourceResource: sourceResource,
@@ -166,7 +166,7 @@ namespace Azure.Storage.DataMovement
             TransferStatus jobPartStatus,
             long initialTransferSize,
             long transferChunkSize,
-            StorageResourceCreationPreference createPreference)
+            StorageResourceCreationMode createPreference)
         {
             return new ServiceToServiceJobPart(
                 job: job,
@@ -270,7 +270,7 @@ namespace Azure.Storage.DataMovement
 
                 await _destinationResource.CopyFromUriAsync(
                     sourceResource: _sourceResource,
-                    overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                    overwrite: _createMode == StorageResourceCreationMode.OverwriteIfExists,
                     completeLength: completeLength,
                     options: options,
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
@@ -279,13 +279,13 @@ namespace Azure.Storage.DataMovement
                 await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
             }
             catch (RequestFailedException exception)
-                when (_createMode == StorageResourceCreationPreference.SkipIfExists
+                when (_createMode == StorageResourceCreationMode.SkipIfExists
                  && exception.ErrorCode == "BlobAlreadyExists")
             {
                 await InvokeSkippedArgAsync().ConfigureAwait(false);
             }
             catch (InvalidOperationException ex)
-            when (_createMode == StorageResourceCreationPreference.SkipIfExists
+            when (_createMode == StorageResourceCreationMode.SkipIfExists
                 && ex.Message.Contains("Cannot overwrite file."))
             {
                 await InvokeSkippedArgAsync().ConfigureAwait(false);
@@ -309,7 +309,7 @@ namespace Azure.Storage.DataMovement
                     await GetCopyFromUriOptionsAsync(_cancellationToken).ConfigureAwait(false);
                 await _destinationResource.CopyBlockFromUriAsync(
                     sourceResource: _sourceResource,
-                    overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                    overwrite: _createMode == StorageResourceCreationMode.OverwriteIfExists,
                     range: new HttpRange(0, blockSize),
                     completeLength: length,
                     options: options,
@@ -326,7 +326,7 @@ namespace Azure.Storage.DataMovement
                 return true;
             }
             catch (RequestFailedException exception)
-                when (_createMode == StorageResourceCreationPreference.SkipIfExists
+                when (_createMode == StorageResourceCreationMode.SkipIfExists
                  && exception.ErrorCode == "BlobAlreadyExists")
             {
                 await InvokeSkippedArgAsync().ConfigureAwait(false);
@@ -361,7 +361,7 @@ namespace Azure.Storage.DataMovement
             {
                 // Apply necessary transfer completions on the destination.
                 await _destinationResource.CompleteTransferAsync(
-                    overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                    overwrite: _createMode == StorageResourceCreationMode.OverwriteIfExists,
                     completeTransferOptions: new() { SourceProperties = sourceProperties },
                     cancellationToken: _cancellationToken).ConfigureAwait(false);
 
@@ -433,7 +433,7 @@ namespace Azure.Storage.DataMovement
                     await GetCopyFromUriOptionsAsync(_cancellationToken).ConfigureAwait(false);
                 await _destinationResource.CopyBlockFromUriAsync(
                     sourceResource: _sourceResource,
-                    overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                    overwrite: _createMode == StorageResourceCreationMode.OverwriteIfExists,
                     range: new HttpRange(offset, blockLength),
                     completeLength: expectedLength,
                     options: options,
@@ -449,12 +449,12 @@ namespace Azure.Storage.DataMovement
                 }
             }
             catch (RequestFailedException ex)
-            when (_createMode == StorageResourceCreationPreference.OverwriteIfExists
+            when (_createMode == StorageResourceCreationMode.OverwriteIfExists
                     && ex.ErrorCode == "BlobAlreadyExists")
             {
                 // For Block Blobs this is a one off case because we don't create the blob
                 // before uploading to it.
-                if (_createMode == StorageResourceCreationPreference.FailIfExists)
+                if (_createMode == StorageResourceCreationMode.FailIfExists)
                 {
                     await InvokeFailedArgAsync(ex).ConfigureAwait(false);
                 }

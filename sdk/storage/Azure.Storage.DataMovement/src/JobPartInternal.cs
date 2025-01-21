@@ -60,7 +60,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Determines how files are created and overwrite behavior for files that already exists.
         /// </summary>
-        internal StorageResourceCreationPreference _createMode;
+        internal StorageResourceCreationMode _createMode;
 
         /// <summary>
         /// If a failure occurred during a job, this defines the type of failure.
@@ -146,7 +146,7 @@ namespace Azure.Storage.DataMovement
             long? transferChunkSize,
             long? initialTransferSize,
             TransferErrorMode errorHandling,
-            StorageResourceCreationPreference createMode,
+            StorageResourceCreationMode createMode,
             ITransferCheckpointer checkpointer,
             TransferProgressTracker progressTracker,
             ArrayPool<byte> arrayPool,
@@ -190,8 +190,8 @@ namespace Azure.Storage.DataMovement
                 transferChunkSize ?? DataMovementConstants.DefaultChunkSize,
                 _destinationResource.MaxSupportedChunkSize);
             // Set the default create mode
-            _createMode = createMode == StorageResourceCreationPreference.Default ?
-                StorageResourceCreationPreference.FailIfExists : createMode;
+            _createMode = createMode == StorageResourceCreationMode.Default ?
+                StorageResourceCreationMode.FailIfExists : createMode;
 
             Length = length;
             _currentChunkCount = 0;

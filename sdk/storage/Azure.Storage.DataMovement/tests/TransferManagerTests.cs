@@ -618,11 +618,10 @@ internal static partial class MockExtensions
             .Returns((CancellationToken cancellationToken) =>
             {
                 CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-                return Task.FromResult(new StorageResourceItemProperties(
-                    resourceLength: itemSize,
-                    default,
-                    default,
-                    default));
+                return Task.FromResult(new StorageResourceItemProperties()
+                {
+                    ResourceLength = itemSize
+                });
             });
 
         items.Source.Setup(r => r.ReadStreamAsync(It.IsAny<long>(), It.IsAny<long?>(), It.IsAny<CancellationToken>()))
@@ -632,7 +631,7 @@ internal static partial class MockExtensions
                 return Task.FromResult(new StorageResourceReadStreamResult(
                     new Mock<Stream>().Object,
                     new HttpRange(position, length),
-                    new(itemSize, default, default, new())));
+                    new() { ResourceLength = itemSize }));
             });
 
         items.Source.Setup(r => r.IsContainer).Returns(false);
