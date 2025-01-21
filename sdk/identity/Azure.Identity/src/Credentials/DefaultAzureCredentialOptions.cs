@@ -81,12 +81,10 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// The tenant ID of the user to authenticate, in the case the <see cref="DefaultAzureCredential"/> authenticates through, the
+        /// The tenant id of the user to authenticate, in the case the <see cref="DefaultAzureCredential"/> authenticates through, the
         /// <see cref="InteractiveBrowserCredential"/>. The default is null and will authenticate users to their default tenant.
+        /// The value can also be set by setting the environment variable AZURE_TENANT_ID.
         /// </summary>
-        /// <remarks>
-        /// This value can alternatively be set via environment variable <c>AZURE_TENANT_ID</c>.
-        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string InteractiveBrowserTenantId
         {
@@ -126,12 +124,10 @@ namespace Azure.Identity
         }
 
         /// <summary>
-        /// The tenant ID of the user to authenticate, in the case the <see cref="DefaultAzureCredential"/> authenticates through, the
+        /// The tenant id of the user to authenticate, in the case the <see cref="DefaultAzureCredential"/> authenticates through, the
         /// <see cref="VisualStudioCredential"/>. The default is null and will authenticate users to their default tenant.
+        /// The value can also be set by setting the environment variable AZURE_TENANT_ID.
         /// </summary>
-        /// <remarks>
-        /// This value can alternatively be set via environment variable <c>AZURE_TENANT_ID</c>.
-        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string VisualStudioTenantId
         {
@@ -150,10 +146,8 @@ namespace Azure.Identity
         /// <summary>
         /// The tenant ID of the user to authenticate, in the case the <see cref="DefaultAzureCredential"/> authenticates through, the
         /// <see cref="VisualStudioCodeCredential"/>. The default is null and will authenticate users to their default tenant.
+        /// The value can also be set by setting the environment variable AZURE_TENANT_ID.
         /// </summary>
-        /// <remarks>
-        /// This value can alternatively be set via environment variable <c>AZURE_TENANT_ID</c>.
-        /// </remarks>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string VisualStudioCodeTenantId
         {
