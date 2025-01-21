@@ -48,6 +48,9 @@ namespace Azure.Identity
         /// <summary>
         /// The ID of the tenant to which the credential will authenticate by default. If not specified, the credential will authenticate to any requested tenant, and will default to the tenant to which the chosen authentication method was originally authenticated.
         /// </summary>
+        /// <remarks>
+        /// This value can alternatively be set via environment variable <c>AZURE_TENANT_ID</c>.
+        /// </remarks>
         public string TenantId
         {
             get => _tenantId.Value;
