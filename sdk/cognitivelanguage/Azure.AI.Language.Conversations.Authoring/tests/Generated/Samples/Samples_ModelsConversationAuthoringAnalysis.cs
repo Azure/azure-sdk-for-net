@@ -358,7 +358,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("rawValue").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("f1").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("precision").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("recall").ToString());
@@ -372,7 +373,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroF1").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroPrecision").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroRecall").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("rawValue").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("f1").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("precision").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("recall").ToString());
@@ -399,7 +401,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("rawValue").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("f1").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("precision").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("recall").ToString());
@@ -413,7 +416,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroF1").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroPrecision").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroRecall").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("rawValue").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("f1").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("precision").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("recall").ToString());
@@ -462,7 +466,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("rawValue").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("f1").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("precision").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("recall").ToString());
@@ -476,7 +481,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroF1").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroPrecision").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroRecall").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("rawValue").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("f1").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("precision").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("recall").ToString());
@@ -506,7 +512,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
+            Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("rawValue").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("f1").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("precision").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("entities").GetProperty("<key>").GetProperty("recall").ToString());
@@ -520,7 +527,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroF1").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroPrecision").ToString());
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("macroRecall").ToString());
-            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
+            Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("rawValue").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("f1").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("precision").ToString());
             Console.WriteLine(result.GetProperty("intentsEvaluation").GetProperty("intents").GetProperty("<key>").GetProperty("recall").ToString());

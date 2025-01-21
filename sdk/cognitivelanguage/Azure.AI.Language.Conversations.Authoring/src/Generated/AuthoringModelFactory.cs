@@ -237,8 +237,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <returns> A new <see cref="Models.EntitiesEvaluationSummary"/> instance for mocking. </returns>
-        public static EntitiesEvaluationSummary EntitiesEvaluationSummary(AnalyzeConversationConfusionMatrix confusionMatrix = null, IReadOnlyDictionary<string, EntityEvaluationSummary> entities = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
+        public static EntitiesEvaluationSummary EntitiesEvaluationSummary(IReadOnlyDictionary<string, IDictionary<string, AnalyzeConversationConfusionMatrixCell>> confusionMatrix = null, IReadOnlyDictionary<string, EntityEvaluationSummary> entities = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
+            confusionMatrix ??= new Dictionary<string, IDictionary<string, AnalyzeConversationConfusionMatrixCell>>();
             entities ??= new Dictionary<string, EntityEvaluationSummary>();
 
             return new EntitiesEvaluationSummary(
@@ -251,26 +252,6 @@ namespace Azure.AI.Language.Conversations.Authoring
                 macroPrecision,
                 macroRecall,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeConversationConfusionMatrix"/>. </summary>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.AnalyzeConversationConfusionMatrix"/> instance for mocking. </returns>
-        public static AnalyzeConversationConfusionMatrix AnalyzeConversationConfusionMatrix(IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
-        {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-
-            return new AnalyzeConversationConfusionMatrix(additionalProperties);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AnalyzeConversationConfusionMatrixRow"/>. </summary>
-        /// <param name="additionalProperties"> Additional Properties. </param>
-        /// <returns> A new <see cref="Models.AnalyzeConversationConfusionMatrixRow"/> instance for mocking. </returns>
-        public static AnalyzeConversationConfusionMatrixRow AnalyzeConversationConfusionMatrixRow(IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
-        {
-            additionalProperties ??= new Dictionary<string, BinaryData>();
-
-            return new AnalyzeConversationConfusionMatrixRow(additionalProperties);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AnalyzeConversationConfusionMatrixCell"/>. </summary>
@@ -314,8 +295,9 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="macroPrecision"> Represents the macro precision. Expected value is a float between 0 and 1 inclusive. </param>
         /// <param name="macroRecall"> Represents the macro recall. Expected value is a float between 0 and 1 inclusive. </param>
         /// <returns> A new <see cref="Models.IntentsEvaluationSummary"/> instance for mocking. </returns>
-        public static IntentsEvaluationSummary IntentsEvaluationSummary(AnalyzeConversationConfusionMatrix confusionMatrix = null, IReadOnlyDictionary<string, IntentEvaluationSummary> intents = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
+        public static IntentsEvaluationSummary IntentsEvaluationSummary(IReadOnlyDictionary<string, IDictionary<string, AnalyzeConversationConfusionMatrixCell>> confusionMatrix = null, IReadOnlyDictionary<string, IntentEvaluationSummary> intents = null, float microF1 = default, float microPrecision = default, float microRecall = default, float macroF1 = default, float macroPrecision = default, float macroRecall = default)
         {
+            confusionMatrix ??= new Dictionary<string, IDictionary<string, AnalyzeConversationConfusionMatrixCell>>();
             intents ??= new Dictionary<string, IntentEvaluationSummary>();
 
             return new IntentsEvaluationSummary(
