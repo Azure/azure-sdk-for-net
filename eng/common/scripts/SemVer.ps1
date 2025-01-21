@@ -394,32 +394,35 @@ class AzureEngSemanticVersion : IComparable {
       Write-Host "Error: Python beta string did not correctly increment"
     }
 
-    $versionString = "0.1.2"
-    $version = [AzureEngSemanticVersion]::ParseVersionString($versionString)
+    $version = [AzureEngSemanticVersion]::ParseVersionString("0.1.2")
     $version.IncrementAndSetToPrerelease()
     $expected = "0.2.0"
     if ($expected -ne $version.ToString()) {
       Write-Host "Error: version string did not correctly increment. Expected: $expected, Actual: $version"
     }
 
+    $version = [AzureEngSemanticVersion]::ParseVersionString("0.1.2")
     $version.IncrementAndSetToPrerelease("patch")
-    $expected = "0.2.1"
+    $expected = "0.1.3"
     if ($expected -ne $version.ToString()) {
       Write-Host "Error: version string did not correctly increment. Expected: $expected, Actual: $version"
     }
 
+    $version = [AzureEngSemanticVersion]::ParseVersionString("0.1.2")
     $version.IncrementAndSetToPrerelease("minor")
-    $expected = "0.3.0"
+    $expected = "0.2.0"
     if ($expected -ne $version.ToString()) {
       Write-Host "Error: version string did not correctly increment. Expected: $expected, Actual: $version"
     }
 
+    $version = [AzureEngSemanticVersion]::ParseVersionString("0.1.2")
     $version.IncrementAndSetToPrerelease("major")
     $expected = "1.0.0-beta.1"
     if ($expected -ne $version.ToString()) {
       Write-Host "Error: version string did not correctly increment. Expected: $expected, Actual: $version"
     }
 
+    $version = [AzureEngSemanticVersion]::ParseVersionString("1.0.0-beta.1")
     $version.IncrementAndSetToPrerelease()
     $expected = "1.0.0-beta.2"
     if ($expected -ne $version.ToString()) {
