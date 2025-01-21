@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.IotOperations.Tests
             Assert.AreEqual(instanceResource.Data.Name, InstanceName);
 
             // Update Instance
-            string utcTime = DateTime.UtcNow.ToString("yyyyMMddTHHmmss");
+            Random random = new Random();
             InstanceResourceData instanceResourceData = CreateInstanceResourceData(
-                utcTime,
+                random.ToString(),
                 instanceResource
             );
 
@@ -62,12 +62,12 @@ namespace Azure.ResourceManager.IotOperations.Tests
             Assert.IsNotNull(updatedInstance.Data.Properties.Description);
             Assert.AreEqual(
                 updatedInstance.Data.Properties.Description,
-                "Updated Description: " + utcTime
+                "Updated Description: " + random.ToString()
             );
         }
 
         private InstanceResourceData CreateInstanceResourceData(
-            string utcTime,
+            string value,
             InstanceResource instanceResource
         )
         {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
                     instanceResource.Data.Properties.SchemaRegistryRef
                 )
                 {
-                    Description = "Updated Description: " + utcTime,
+                    Description = "Updated Description: " + value,
                 },
             };
         }
