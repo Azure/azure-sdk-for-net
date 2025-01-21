@@ -5,21 +5,91 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class RoleDefinitionListResult
+    internal partial class RoleDefinitionListResult : IUtf8JsonSerializable, IJsonModel<RoleDefinitionListResult>
     {
-        internal static RoleDefinitionListResult DeserializeRoleDefinitionListResult(JsonElement element)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<RoleDefinitionListResult>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+
+        void IJsonModel<RoleDefinitionListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleDefinitionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoleDefinitionListResult)} does not support writing '{format}' format.");
+            }
+
+            if (Optional.IsCollectionDefined(Value))
+            {
+                writer.WritePropertyName("value"u8);
+                writer.WriteStartArray();
+                foreach (var item in Value)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+        }
+
+        RoleDefinitionListResult IJsonModel<RoleDefinitionListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleDefinitionListResult>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(RoleDefinitionListResult)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeRoleDefinitionListResult(document.RootElement, options);
+        }
+
+        internal static RoleDefinitionListResult DeserializeRoleDefinitionListResult(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= ModelSerializationExtensions.WireOptions;
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             IReadOnlyList<KeyVaultRoleDefinition> value = default;
             string nextLink = default;
+            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -31,7 +101,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                     List<KeyVaultRoleDefinition> array = new List<KeyVaultRoleDefinition>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(item));
+                        array.Add(KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(item, options));
                     }
                     value = array;
                     continue;
@@ -41,9 +111,45 @@ namespace Azure.Security.KeyVault.Administration.Models
                     nextLink = property.Value.GetString();
                     continue;
                 }
+                if (options.Format != "W")
+                {
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                }
             }
-            return new RoleDefinitionListResult(value ?? new ChangeTrackingList<KeyVaultRoleDefinition>(), nextLink);
+            serializedAdditionalRawData = rawDataDictionary;
+            return new RoleDefinitionListResult(value ?? new ChangeTrackingList<KeyVaultRoleDefinition>(), nextLink, serializedAdditionalRawData);
         }
+
+        BinaryData IPersistableModel<RoleDefinitionListResult>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleDefinitionListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(RoleDefinitionListResult)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        RoleDefinitionListResult IPersistableModel<RoleDefinitionListResult>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<RoleDefinitionListResult>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeRoleDefinitionListResult(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(RoleDefinitionListResult)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<RoleDefinitionListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
@@ -51,6 +157,14 @@ namespace Azure.Security.KeyVault.Administration.Models
         {
             using var document = JsonDocument.Parse(response.Content);
             return DeserializeRoleDefinitionListResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            return content;
         }
     }
 }

@@ -6,42 +6,527 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal partial class RoleAssignmentsRestClient
+    // Data plane generated client.
+    /// <summary> The RoleAssignmentsRest service client. </summary>
+    public partial class RoleAssignmentsRestClient
     {
+        private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
+        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of RoleAssignmentsRestClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public RoleAssignmentsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.5")
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary> Initializes a new instance of RoleAssignmentsRestClient for mocking. </summary>
+        protected RoleAssignmentsRestClient()
         {
-            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateDeleteRequest(string vaultBaseUrl, string scope, string roleAssignmentName)
+        /// <summary> Initializes a new instance of RoleAssignmentsRestClient. </summary>
+        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public RoleAssignmentsRestClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureSecurityKeyVaultAdministrationClientOptions())
         {
-            var message = _pipeline.CreateMessage();
+        }
+
+        /// <summary> Initializes a new instance of RoleAssignmentsRestClient. </summary>
+        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public RoleAssignmentsRestClient(Uri endpoint, TokenCredential credential, AzureSecurityKeyVaultAdministrationClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new AzureSecurityKeyVaultAdministrationClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
+        /// <summary> Deletes a role assignment. </summary>
+        /// <param name="scope"> The scope of the role assignment to delete. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/RoleAssignmentsRestClient.xml" path="doc/members/member[@name='DeleteAsync(string,string,CancellationToken)']/*" />
+        public virtual async Task<Response<Models.KeyVaultRoleAssignment>> DeleteAsync(string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await DeleteAsync(scope, roleAssignmentName, context).ConfigureAwait(false);
+            return Response.FromValue(Models.KeyVaultRoleAssignment.FromResponse(response), response);
+        }
+
+        /// <summary> Deletes a role assignment. </summary>
+        /// <param name="scope"> The scope of the role assignment to delete. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/RoleAssignmentsRestClient.xml" path="doc/members/member[@name='Delete(string,string,CancellationToken)']/*" />
+        public virtual Response<Models.KeyVaultRoleAssignment> Delete(string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = Delete(scope, roleAssignmentName, context);
+            return Response.FromValue(Models.KeyVaultRoleAssignment.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a role assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeleteAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope of the role assignment to delete. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment to delete. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleAssignmentsRestClient.xml" path="doc/members/member[@name='DeleteAsync(string,string,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteAsync(string scope, string roleAssignmentName, RequestContext context)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+
+            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsRestClient.Delete");
+            scope0.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(scope, roleAssignmentName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a role assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="Delete(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope of the role assignment to delete. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment to delete. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleAssignmentsRestClient.xml" path="doc/members/member[@name='Delete(string,string,RequestContext)']/*" />
+        public virtual Response Delete(string scope, string roleAssignmentName, RequestContext context)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+
+            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsRestClient.Delete");
+            scope0.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(scope, roleAssignmentName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates a role assignment. </summary>
+        /// <param name="scope"> The scope of the role assignment to create. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment to create. It can be any valid GUID. </param>
+        /// <param name="parameters"> Parameters for the role assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleAssignmentName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/RoleAssignmentsRestClient.xml" path="doc/members/member[@name='CreateAsync(string,string,RoleAssignmentCreateParameters,CancellationToken)']/*" />
+        public virtual async Task<Response<Models.KeyVaultRoleAssignment>> CreateAsync(string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            using RequestContent content = parameters.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CreateAsync(scope, roleAssignmentName, content, context).ConfigureAwait(false);
+            return Response.FromValue(Models.KeyVaultRoleAssignment.FromResponse(response), response);
+        }
+
+        /// <summary> Creates a role assignment. </summary>
+        /// <param name="scope"> The scope of the role assignment to create. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment to create. It can be any valid GUID. </param>
+        /// <param name="parameters"> Parameters for the role assignment. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleAssignmentName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/RoleAssignmentsRestClient.xml" path="doc/members/member[@name='Create(string,string,RoleAssignmentCreateParameters,CancellationToken)']/*" />
+        public virtual Response<Models.KeyVaultRoleAssignment> Create(string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            using RequestContent content = parameters.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = Create(scope, roleAssignmentName, content, context);
+            return Response.FromValue(Models.KeyVaultRoleAssignment.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a role assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateAsync(string,string,RoleAssignmentCreateParameters,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope of the role assignment to create. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment to create. It can be any valid GUID. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleAssignmentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleAssignmentsRestClient.xml" path="doc/members/member[@name='CreateAsync(string,string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateAsync(string scope, string roleAssignmentName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsRestClient.Create");
+            scope0.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateRequest(scope, roleAssignmentName, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates a role assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="Create(string,string,RoleAssignmentCreateParameters,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope of the role assignment to create. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment to create. It can be any valid GUID. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleAssignmentName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleAssignmentsRestClient.xml" path="doc/members/member[@name='Create(string,string,RequestContent,RequestContext)']/*" />
+        public virtual Response Create(string scope, string roleAssignmentName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsRestClient.Create");
+            scope0.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateRequest(scope, roleAssignmentName, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get the specified role assignment. </summary>
+        /// <param name="scope"> The scope of the role assignment. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/RoleAssignmentsRestClient.xml" path="doc/members/member[@name='GetRoleAssignmentsRestClientAsync(string,string,CancellationToken)']/*" />
+        public virtual async Task<Response<Models.KeyVaultRoleAssignment>> GetRoleAssignmentsRestClientAsync(string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetRoleAssignmentsRestClientAsync(scope, roleAssignmentName, context).ConfigureAwait(false);
+            return Response.FromValue(Models.KeyVaultRoleAssignment.FromResponse(response), response);
+        }
+
+        /// <summary> Get the specified role assignment. </summary>
+        /// <param name="scope"> The scope of the role assignment. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/RoleAssignmentsRestClient.xml" path="doc/members/member[@name='GetRoleAssignmentsRestClient(string,string,CancellationToken)']/*" />
+        public virtual Response<Models.KeyVaultRoleAssignment> GetRoleAssignmentsRestClient(string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetRoleAssignmentsRestClient(scope, roleAssignmentName, context);
+            return Response.FromValue(Models.KeyVaultRoleAssignment.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the specified role assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRoleAssignmentsRestClientAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope of the role assignment. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleAssignmentsRestClient.xml" path="doc/members/member[@name='GetRoleAssignmentsRestClientAsync(string,string,RequestContext)']/*" />
+        public virtual async Task<Response> GetRoleAssignmentsRestClientAsync(string scope, string roleAssignmentName, RequestContext context)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+
+            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsRestClient.GetRoleAssignmentsRestClient");
+            scope0.Start();
+            try
+            {
+                using HttpMessage message = CreateGetRoleAssignmentsRestClientRequest(scope, roleAssignmentName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the specified role assignment.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRoleAssignmentsRestClient(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope of the role assignment. </param>
+        /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleAssignmentName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleAssignmentsRestClient.xml" path="doc/members/member[@name='GetRoleAssignmentsRestClient(string,string,RequestContext)']/*" />
+        public virtual Response GetRoleAssignmentsRestClient(string scope, string roleAssignmentName, RequestContext context)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleAssignmentName, nameof(roleAssignmentName));
+
+            using var scope0 = ClientDiagnostics.CreateScope("RoleAssignmentsRestClient.GetRoleAssignmentsRestClient");
+            scope0.Start();
+            try
+            {
+                using HttpMessage message = CreateGetRoleAssignmentsRestClientRequest(scope, roleAssignmentName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Gets role assignments for a scope. </summary>
+        /// <param name="scope"> The scope of the role assignments. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <include file="Docs/RoleAssignmentsRestClient.xml" path="doc/members/member[@name='GetForScopesAsync(string,string,CancellationToken)']/*" />
+        public virtual AsyncPageable<Models.KeyVaultRoleAssignment> GetForScopesAsync(string scope, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetForScopesRequest(scope, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetForScopesNextPageRequest(nextLink, scope, filter, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => Models.KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(e), ClientDiagnostics, _pipeline, "RoleAssignmentsRestClient.GetForScopes", "value", "nextLink", context);
+        }
+
+        /// <summary> Gets role assignments for a scope. </summary>
+        /// <param name="scope"> The scope of the role assignments. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <include file="Docs/RoleAssignmentsRestClient.xml" path="doc/members/member[@name='GetForScopes(string,string,CancellationToken)']/*" />
+        public virtual Pageable<Models.KeyVaultRoleAssignment> GetForScopes(string scope, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetForScopesRequest(scope, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetForScopesNextPageRequest(nextLink, scope, filter, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => Models.KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(e), ClientDiagnostics, _pipeline, "RoleAssignmentsRestClient.GetForScopes", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets role assignments for a scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetForScopesAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope of the role assignments. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/RoleAssignmentsRestClient.xml" path="doc/members/member[@name='GetForScopesAsync(string,string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetForScopesAsync(string scope, string filter, RequestContext context)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetForScopesRequest(scope, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetForScopesNextPageRequest(nextLink, scope, filter, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "RoleAssignmentsRestClient.GetForScopes", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Gets role assignments for a scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetForScopes(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope of the role assignments. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/RoleAssignmentsRestClient.xml" path="doc/members/member[@name='GetForScopes(string,string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetForScopes(string scope, string filter, RequestContext context)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetForScopesRequest(scope, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetForScopesNextPageRequest(nextLink, scope, filter, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "RoleAssignmentsRestClient.GetForScopes", "value", "nextLink", context);
+        }
+
+        internal HttpMessage CreateDeleteRequest(string scope, string roleAssignmentName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/roleAssignments/", false);
@@ -52,79 +537,13 @@ namespace Azure.Security.KeyVault.Administration
             return message;
         }
 
-        /// <summary> Deletes a role assignment. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role assignment to delete. </param>
-        /// <param name="roleAssignmentName"> The name of the role assignment to delete. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/> or <paramref name="roleAssignmentName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string vaultBaseUrl, string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateRequest(string scope, string roleAssignmentName, RequestContent content, RequestContext context)
         {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (roleAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentName));
-            }
-
-            using var message = CreateDeleteRequest(vaultBaseUrl, scope, roleAssignmentName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 404:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a role assignment. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role assignment to delete. </param>
-        /// <param name="roleAssignmentName"> The name of the role assignment to delete. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/> or <paramref name="roleAssignmentName"/> is null. </exception>
-        public Response Delete(string vaultBaseUrl, string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (roleAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentName));
-            }
-
-            using var message = CreateDeleteRequest(vaultBaseUrl, scope, roleAssignmentName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 404:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateCreateRequest(string vaultBaseUrl, string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters)
-        {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/roleAssignments/", false);
@@ -133,103 +552,17 @@ namespace Azure.Security.KeyVault.Administration
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Creates a role assignment. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role assignment to create. </param>
-        /// <param name="roleAssignmentName"> The name of the role assignment to create. It can be any valid GUID. </param>
-        /// <param name="parameters"> Parameters for the role assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, <paramref name="roleAssignmentName"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<KeyVaultRoleAssignment>> CreateAsync(string vaultBaseUrl, string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetRoleAssignmentsRestClientRequest(string scope, string roleAssignmentName, RequestContext context)
         {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (roleAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var message = CreateCreateRequest(vaultBaseUrl, scope, roleAssignmentName, parameters);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    {
-                        KeyVaultRoleAssignment value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Creates a role assignment. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role assignment to create. </param>
-        /// <param name="roleAssignmentName"> The name of the role assignment to create. It can be any valid GUID. </param>
-        /// <param name="parameters"> Parameters for the role assignment. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, <paramref name="roleAssignmentName"/> or <paramref name="parameters"/> is null. </exception>
-        public Response<KeyVaultRoleAssignment> Create(string vaultBaseUrl, string scope, string roleAssignmentName, RoleAssignmentCreateParameters parameters, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (roleAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var message = CreateCreateRequest(vaultBaseUrl, scope, roleAssignmentName, parameters);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    {
-                        KeyVaultRoleAssignment value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetRequest(string vaultBaseUrl, string scope, string roleAssignmentName)
-        {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/roleAssignments/", false);
@@ -240,253 +573,53 @@ namespace Azure.Security.KeyVault.Administration
             return message;
         }
 
-        /// <summary> Get the specified role assignment. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role assignment. </param>
-        /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/> or <paramref name="roleAssignmentName"/> is null. </exception>
-        public async Task<Response<KeyVaultRoleAssignment>> GetAsync(string vaultBaseUrl, string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetForScopesRequest(string scope, string filter, RequestContext context)
         {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (roleAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentName));
-            }
-
-            using var message = CreateGetRequest(vaultBaseUrl, scope, roleAssignmentName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        KeyVaultRoleAssignment value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get the specified role assignment. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role assignment. </param>
-        /// <param name="roleAssignmentName"> The name of the role assignment to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/> or <paramref name="roleAssignmentName"/> is null. </exception>
-        public Response<KeyVaultRoleAssignment> Get(string vaultBaseUrl, string scope, string roleAssignmentName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (roleAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(roleAssignmentName));
-            }
-
-            using var message = CreateGetRequest(vaultBaseUrl, scope, roleAssignmentName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        KeyVaultRoleAssignment value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListForScopeRequest(string vaultBaseUrl, string scope, string filter)
-        {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/roleAssignments", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets role assignments for a scope. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role assignments. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="scope"/> is null. </exception>
-        public async Task<Response<RoleAssignmentListResult>> ListForScopeAsync(string vaultBaseUrl, string scope, string filter = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetForScopesNextPageRequest(string nextLink, string scope, string filter, RequestContext context)
         {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-
-            using var message = CreateListForScopeRequest(vaultBaseUrl, scope, filter);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RoleAssignmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoleAssignmentListResult.DeserializeRoleAssignmentListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets role assignments for a scope. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role assignments. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="scope"/> is null. </exception>
-        public Response<RoleAssignmentListResult> ListForScope(string vaultBaseUrl, string scope, string filter = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-
-            using var message = CreateListForScopeRequest(vaultBaseUrl, scope, filter);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RoleAssignmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoleAssignmentListResult.DeserializeRoleAssignmentListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListForScopeNextPageRequest(string nextLink, string vaultBaseUrl, string scope, string filter)
-        {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets role assignments for a scope. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role assignments. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="vaultBaseUrl"/> or <paramref name="scope"/> is null. </exception>
-        public async Task<Response<RoleAssignmentListResult>> ListForScopeNextPageAsync(string nextLink, string vaultBaseUrl, string scope, string filter = null, CancellationToken cancellationToken = default)
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
+            if (!cancellationToken.CanBeCanceled)
             {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
+                return DefaultRequestContext;
             }
 
-            using var message = CreateListForScopeNextPageRequest(nextLink, vaultBaseUrl, scope, filter);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RoleAssignmentListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoleAssignmentListResult.DeserializeRoleAssignmentListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
-        /// <summary> Gets role assignments for a scope. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role assignments. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use $filter=atScope() to return all role assignments at or above the scope. Use $filter=principalId eq {id} to return all role assignments at, above or below the scope for the specified principal. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="vaultBaseUrl"/> or <paramref name="scope"/> is null. </exception>
-        public Response<RoleAssignmentListResult> ListForScopeNextPage(string nextLink, string vaultBaseUrl, string scope, string filter = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-
-            using var message = CreateListForScopeNextPageRequest(nextLink, vaultBaseUrl, scope, filter);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RoleAssignmentListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoleAssignmentListResult.DeserializeRoleAssignmentListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier201;
+        private static ResponseClassifier ResponseClassifier201 => _responseClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
     }
 }

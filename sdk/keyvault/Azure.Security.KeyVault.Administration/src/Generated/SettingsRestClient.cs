@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -15,129 +14,355 @@ using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal partial class SettingsRestClient
+    // Data plane generated client.
+    /// <summary> The SettingsRest service client. </summary>
+    public partial class SettingsRestClient
     {
+        private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
+        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of SettingsRestClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public SettingsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.5")
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary> Initializes a new instance of SettingsRestClient for mocking. </summary>
+        protected SettingsRestClient()
         {
-            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateUpdateSettingRequest(string vaultBaseUrl, string settingName, string value)
+        /// <summary> Initializes a new instance of SettingsRestClient. </summary>
+        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public SettingsRestClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureSecurityKeyVaultAdministrationClientOptions())
         {
-            var message = _pipeline.CreateMessage();
+        }
+
+        /// <summary> Initializes a new instance of SettingsRestClient. </summary>
+        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public SettingsRestClient(Uri endpoint, TokenCredential credential, AzureSecurityKeyVaultAdministrationClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new AzureSecurityKeyVaultAdministrationClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates key vault account setting, stores it, then returns the setting name and value to the client.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/SettingsRestClient.xml" path="doc/members/member[@name='UpdateSettingAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> UpdateSettingAsync(string settingName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("SettingsRestClient.UpdateSetting");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateSettingRequest(settingName, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Updates key vault account setting, stores it, then returns the setting name and value to the client.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/SettingsRestClient.xml" path="doc/members/member[@name='UpdateSetting(string,RequestContent,RequestContext)']/*" />
+        public virtual Response UpdateSetting(string settingName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope = ClientDiagnostics.CreateScope("SettingsRestClient.UpdateSetting");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateUpdateSettingRequest(settingName, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get specified account setting object. </summary>
+        /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Retrieves the setting object of a specified setting name. </remarks>
+        /// <include file="Docs/SettingsRestClient.xml" path="doc/members/member[@name='GetSettingAsync(string,CancellationToken)']/*" />
+        public virtual async Task<Response<Models.KeyVaultSetting>> GetSettingAsync(string settingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetSettingAsync(settingName, context).ConfigureAwait(false);
+            return Response.FromValue(Models.KeyVaultSetting.FromResponse(response), response);
+        }
+
+        /// <summary> Get specified account setting object. </summary>
+        /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <remarks> Retrieves the setting object of a specified setting name. </remarks>
+        /// <include file="Docs/SettingsRestClient.xml" path="doc/members/member[@name='GetSetting(string,CancellationToken)']/*" />
+        public virtual Response<Models.KeyVaultSetting> GetSetting(string settingName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetSetting(settingName, context);
+            return Response.FromValue(Models.KeyVaultSetting.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get specified account setting object.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSettingAsync(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/SettingsRestClient.xml" path="doc/members/member[@name='GetSettingAsync(string,RequestContext)']/*" />
+        public virtual async Task<Response> GetSettingAsync(string settingName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+
+            using var scope = ClientDiagnostics.CreateScope("SettingsRestClient.GetSetting");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSettingRequest(settingName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get specified account setting object.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSetting(string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="settingName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="settingName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/SettingsRestClient.xml" path="doc/members/member[@name='GetSetting(string,RequestContext)']/*" />
+        public virtual Response GetSetting(string settingName, RequestContext context)
+        {
+            Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
+
+            using var scope = ClientDiagnostics.CreateScope("SettingsRestClient.GetSetting");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSettingRequest(settingName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> List account settings. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves a list of all the available account settings that can be configured. </remarks>
+        /// <include file="Docs/SettingsRestClient.xml" path="doc/members/member[@name='GetSettingsAsync(CancellationToken)']/*" />
+        public virtual async Task<Response<Models.GetSettingsResult>> GetSettingsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetSettingsAsync(context).ConfigureAwait(false);
+            return Response.FromValue(Models.GetSettingsResult.FromResponse(response), response);
+        }
+
+        /// <summary> List account settings. </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <remarks> Retrieves a list of all the available account settings that can be configured. </remarks>
+        /// <include file="Docs/SettingsRestClient.xml" path="doc/members/member[@name='GetSettings(CancellationToken)']/*" />
+        public virtual Response<Models.GetSettingsResult> GetSettings(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetSettings(context);
+            return Response.FromValue(Models.GetSettingsResult.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] List account settings.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSettingsAsync(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/SettingsRestClient.xml" path="doc/members/member[@name='GetSettingsAsync(RequestContext)']/*" />
+        public virtual async Task<Response> GetSettingsAsync(RequestContext context)
+        {
+            using var scope = ClientDiagnostics.CreateScope("SettingsRestClient.GetSettings");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSettingsRequest(context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] List account settings.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetSettings(CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/SettingsRestClient.xml" path="doc/members/member[@name='GetSettings(RequestContext)']/*" />
+        public virtual Response GetSettings(RequestContext context)
+        {
+            using var scope = ClientDiagnostics.CreateScope("SettingsRestClient.GetSettings");
+            scope.Start();
+            try
+            {
+                using HttpMessage message = CreateGetSettingsRequest(context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        internal HttpMessage CreateUpdateSettingRequest(string settingName, RequestContent content, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/settings/", false);
             uri.AppendPath(settingName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var model = new UpdateSettingRequest(value);
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Updates key vault account setting, stores it, then returns the setting name and value to the client. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
-        /// <param name="value"> The value of the pool setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="settingName"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Description of the pool setting to be updated. </remarks>
-        public async Task<Response<KeyVaultSetting>> UpdateSettingAsync(string vaultBaseUrl, string settingName, string value, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetSettingRequest(string settingName, RequestContext context)
         {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (settingName == null)
-            {
-                throw new ArgumentNullException(nameof(settingName));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            using var message = CreateUpdateSettingRequest(vaultBaseUrl, settingName, value);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        KeyVaultSetting value0 = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value0 = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Updates key vault account setting, stores it, then returns the setting name and value to the client. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
-        /// <param name="value"> The value of the pool setting. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="settingName"/> or <paramref name="value"/> is null. </exception>
-        /// <remarks> Description of the pool setting to be updated. </remarks>
-        public Response<KeyVaultSetting> UpdateSetting(string vaultBaseUrl, string settingName, string value, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (settingName == null)
-            {
-                throw new ArgumentNullException(nameof(settingName));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
-
-            using var message = CreateUpdateSettingRequest(vaultBaseUrl, settingName, value);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        KeyVaultSetting value0 = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value0 = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement);
-                        return Response.FromValue(value0, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetSettingRequest(string vaultBaseUrl, string settingName)
-        {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/settings/", false);
             uri.AppendPath(settingName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
@@ -146,79 +371,13 @@ namespace Azure.Security.KeyVault.Administration
             return message;
         }
 
-        /// <summary> Get specified account setting object. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="settingName"/> is null. </exception>
-        /// <remarks> Retrieves the setting object of a specified setting name. </remarks>
-        public async Task<Response<KeyVaultSetting>> GetSettingAsync(string vaultBaseUrl, string settingName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetSettingsRequest(RequestContext context)
         {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (settingName == null)
-            {
-                throw new ArgumentNullException(nameof(settingName));
-            }
-
-            using var message = CreateGetSettingRequest(vaultBaseUrl, settingName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        KeyVaultSetting value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get specified account setting object. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="settingName"> The name of the account setting. Must be a valid settings option. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="settingName"/> is null. </exception>
-        /// <remarks> Retrieves the setting object of a specified setting name. </remarks>
-        public Response<KeyVaultSetting> GetSetting(string vaultBaseUrl, string settingName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (settingName == null)
-            {
-                throw new ArgumentNullException(nameof(settingName));
-            }
-
-            using var message = CreateGetSettingRequest(vaultBaseUrl, settingName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        KeyVaultSetting value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyVaultSetting.DeserializeKeyVaultSetting(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetSettingsRequest(string vaultBaseUrl)
-        {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/settings", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
@@ -226,60 +385,18 @@ namespace Azure.Security.KeyVault.Administration
             return message;
         }
 
-        /// <summary> List account settings. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> is null. </exception>
-        /// <remarks> Retrieves a list of all the available account settings that can be configured. </remarks>
-        public async Task<Response<GetSettingsResult>> GetSettingsAsync(string vaultBaseUrl, CancellationToken cancellationToken = default)
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
         {
-            if (vaultBaseUrl == null)
+            if (!cancellationToken.CanBeCanceled)
             {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
+                return DefaultRequestContext;
             }
 
-            using var message = CreateGetSettingsRequest(vaultBaseUrl);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GetSettingsResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = GetSettingsResult.DeserializeGetSettingsResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
-        /// <summary> List account settings. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> is null. </exception>
-        /// <remarks> Retrieves a list of all the available account settings that can be configured. </remarks>
-        public Response<GetSettingsResult> GetSettings(string vaultBaseUrl, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-
-            using var message = CreateGetSettingsRequest(vaultBaseUrl);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        GetSettingsResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = GetSettingsResult.DeserializeGetSettingsResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
     }
 }

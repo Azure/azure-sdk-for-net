@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Security.KeyVault.Administration
+namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> The type specifier of the value. </summary>
     public readonly partial struct KeyVaultSettingType : IEquatable<KeyVaultSettingType>
@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Administration
 
         private const string BooleanValue = "boolean";
 
-        /// <summary> boolean. </summary>
+        /// <summary> A boolean setting value. </summary>
         public static KeyVaultSettingType Boolean { get; } = new KeyVaultSettingType(BooleanValue);
         /// <summary> Determines if two <see cref="KeyVaultSettingType"/> values are the same. </summary>
         public static bool operator ==(KeyVaultSettingType left, KeyVaultSettingType right) => left.Equals(right);

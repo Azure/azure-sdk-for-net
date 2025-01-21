@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="DeleteAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call DeleteAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleAssignmentsRestClient client = new RoleAssignmentsRestClient(endpoint, credential);
+
+Response<Models.KeyVaultRoleAssignment> response = await client.DeleteAsync("keys", "roleAssignmentName");
+]]></code></example>
+    </member>
+    <member name="Delete(string,string,CancellationToken)">
+      <example>
+This sample shows how to call Delete.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleAssignmentsRestClient client = new RoleAssignmentsRestClient(endpoint, credential);
+
+Response<Models.KeyVaultRoleAssignment> response = client.Delete("keys", "roleAssignmentName");
+]]></code></example>
+    </member>
+    <member name="DeleteAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call DeleteAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleAssignmentsRestClient client = new RoleAssignmentsRestClient(endpoint, credential);
+
+Response response = await client.DeleteAsync("keys", "roleAssignmentName", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="Delete(string,string,RequestContext)">
+      <example>
+This sample shows how to call Delete and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleAssignmentsRestClient client = new RoleAssignmentsRestClient(endpoint, credential);
+
+Response response = client.Delete("keys", "roleAssignmentName", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="CreateAsync(string,string,RoleAssignmentCreateParameters,CancellationToken)">
+      <example>
+This sample shows how to call CreateAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleAssignmentsRestClient client = new RoleAssignmentsRestClient(endpoint, credential);
+
+RoleAssignmentCreateParameters parameters = new RoleAssignmentCreateParameters(new KeyVaultRoleAssignmentPropertiesInternal("/keys/providers/Microsoft.Authorization/roleDefinitions/roleDefinitionId", "principalId"));
+Response<Models.KeyVaultRoleAssignment> response = await client.CreateAsync("keys", "roleAssignmentName", parameters);
+]]></code></example>
+    </member>
+    <member name="Create(string,string,RoleAssignmentCreateParameters,CancellationToken)">
+      <example>
+This sample shows how to call Create.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleAssignmentsRestClient client = new RoleAssignmentsRestClient(endpoint, credential);
+
+RoleAssignmentCreateParameters parameters = new RoleAssignmentCreateParameters(new KeyVaultRoleAssignmentPropertiesInternal("/keys/providers/Microsoft.Authorization/roleDefinitions/roleDefinitionId", "principalId"));
+Response<Models.KeyVaultRoleAssignment> response = client.Create("keys", "roleAssignmentName", parameters);
+]]></code></example>
+    </member>
+    <member name="CreateAsync(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CreateAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleAssignmentsRestClient client = new RoleAssignmentsRestClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        roleDefinitionId = "/keys/providers/Microsoft.Authorization/roleDefinitions/roleDefinitionId",
+        principalId = "principalId",
+    },
+});
+Response response = await client.CreateAsync("keys", "roleAssignmentName", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="Create(string,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call Create and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleAssignmentsRestClient client = new RoleAssignmentsRestClient(endpoint, credential);
+
+using RequestContent content = RequestContent.Create(new
+{
+    properties = new
+    {
+        roleDefinitionId = "/keys/providers/Microsoft.Authorization/roleDefinitions/roleDefinitionId",
+        principalId = "principalId",
+    },
+});
+Response response = client.Create("keys", "roleAssignmentName", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetRoleAssignmentsRestClientAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetRoleAssignmentsRestClientAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleAssignmentsRestClient client = new RoleAssignmentsRestClient(endpoint, credential);
+
+Response<Models.KeyVaultRoleAssignment> response = await client.GetRoleAssignmentsRestClientAsync("keys", "roleAssignmentName");
+]]></code></example>
+    </member>
+    <member name="GetRoleAssignmentsRestClient(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetRoleAssignmentsRestClient.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleAssignmentsRestClient client = new RoleAssignmentsRestClient(endpoint, credential);
+
+Response<Models.KeyVaultRoleAssignment> response = client.GetRoleAssignmentsRestClient("keys", "roleAssignmentName");
+]]></code></example>
+    </member>
+    <member name="GetRoleAssignmentsRestClientAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetRoleAssignmentsRestClientAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleAssignmentsRestClient client = new RoleAssignmentsRestClient(endpoint, credential);
+
+Response response = await client.GetRoleAssignmentsRestClientAsync("keys", "roleAssignmentName", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetRoleAssignmentsRestClient(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetRoleAssignmentsRestClient and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleAssignmentsRestClient client = new RoleAssignmentsRestClient(endpoint, credential);
+
+Response response = client.GetRoleAssignmentsRestClient("keys", "roleAssignmentName", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.ToString());
+]]></code></example>
+    </member>
+    <member name="GetForScopesAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetForScopesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleAssignmentsRestClient client = new RoleAssignmentsRestClient(endpoint, credential);
+
+await foreach (Models.KeyVaultRoleAssignment item in client.GetForScopesAsync("keys"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetForScopes(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetForScopes.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleAssignmentsRestClient client = new RoleAssignmentsRestClient(endpoint, credential);
+
+foreach (Models.KeyVaultRoleAssignment item in client.GetForScopes("keys"))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetForScopesAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetForScopesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleAssignmentsRestClient client = new RoleAssignmentsRestClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetForScopesAsync("keys", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetForScopes(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetForScopes and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+TokenCredential credential = new DefaultAzureCredential();
+RoleAssignmentsRestClient client = new RoleAssignmentsRestClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetForScopes("keys", null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

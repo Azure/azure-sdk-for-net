@@ -6,14 +6,47 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    /// <summary> The RestoreOperationParameters. </summary>
+    /// <summary> The authentication method and location for the restore operation. </summary>
     internal partial class RestoreOperationParameters
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="RestoreOperationParameters"/>. </summary>
-        /// <param name="sasTokenParameters"></param>
+        /// <param name="sasTokenParameters"> A user-provided SAS token to an Azure blob storage container. </param>
         /// <param name="folderToRestore"> The Folder name of the blob where the previous successful full backup was stored. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="sasTokenParameters"/> or <paramref name="folderToRestore"/> is null. </exception>
         public RestoreOperationParameters(SASTokenParameter sasTokenParameters, string folderToRestore)
@@ -25,7 +58,23 @@ namespace Azure.Security.KeyVault.Administration.Models
             FolderToRestore = folderToRestore;
         }
 
-        /// <summary> Gets the sas token parameters. </summary>
+        /// <summary> Initializes a new instance of <see cref="RestoreOperationParameters"/>. </summary>
+        /// <param name="sasTokenParameters"> A user-provided SAS token to an Azure blob storage container. </param>
+        /// <param name="folderToRestore"> The Folder name of the blob where the previous successful full backup was stored. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal RestoreOperationParameters(SASTokenParameter sasTokenParameters, string folderToRestore, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SasTokenParameters = sasTokenParameters;
+            FolderToRestore = folderToRestore;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="RestoreOperationParameters"/> for deserialization. </summary>
+        internal RestoreOperationParameters()
+        {
+        }
+
+        /// <summary> A user-provided SAS token to an Azure blob storage container. </summary>
         public SASTokenParameter SasTokenParameters { get; }
         /// <summary> The Folder name of the blob where the previous successful full backup was stored. </summary>
         public string FolderToRestore { get; }

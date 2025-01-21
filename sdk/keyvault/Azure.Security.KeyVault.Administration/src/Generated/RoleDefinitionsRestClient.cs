@@ -6,42 +6,527 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    internal partial class RoleDefinitionsRestClient
+    // Data plane generated client.
+    /// <summary> The RoleDefinitionsRest service client. </summary>
+    public partial class RoleDefinitionsRestClient
     {
+        private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
+        private readonly TokenCredential _tokenCredential;
         private readonly HttpPipeline _pipeline;
+        private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of RoleDefinitionsRestClient. </summary>
-        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
-        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public RoleDefinitionsRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string apiVersion = "7.5")
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline => _pipeline;
+
+        /// <summary> Initializes a new instance of RoleDefinitionsRestClient for mocking. </summary>
+        protected RoleDefinitionsRestClient()
         {
-            ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _apiVersion = apiVersion ?? throw new ArgumentNullException(nameof(apiVersion));
         }
 
-        internal HttpMessage CreateDeleteRequest(string vaultBaseUrl, string scope, string roleDefinitionName)
+        /// <summary> Initializes a new instance of RoleDefinitionsRestClient. </summary>
+        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public RoleDefinitionsRestClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureSecurityKeyVaultAdministrationClientOptions())
         {
-            var message = _pipeline.CreateMessage();
+        }
+
+        /// <summary> Initializes a new instance of RoleDefinitionsRestClient. </summary>
+        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
+        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
+        /// <param name="options"> The options for configuring the client. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
+        public RoleDefinitionsRestClient(Uri endpoint, TokenCredential credential, AzureSecurityKeyVaultAdministrationClientOptions options)
+        {
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
+            options ??= new AzureSecurityKeyVaultAdministrationClientOptions();
+
+            ClientDiagnostics = new ClientDiagnostics(options, true);
+            _tokenCredential = credential;
+            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            _endpoint = endpoint;
+            _apiVersion = options.Version;
+        }
+
+        /// <summary> Deletes a custom role definition. </summary>
+        /// <param name="scope"> The scope of the role definition to delete. Managed HSM only supports '/'. </param>
+        /// <param name="roleDefinitionName"> The name (GUID) of the role definition to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='DeleteAsync(string,string,CancellationToken)']/*" />
+        public virtual async Task<Response<KeyVaultRoleDefinition>> DeleteAsync(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await DeleteAsync(scope, roleDefinitionName, context).ConfigureAwait(false);
+            return Response.FromValue(KeyVaultRoleDefinition.FromResponse(response), response);
+        }
+
+        /// <summary> Deletes a custom role definition. </summary>
+        /// <param name="scope"> The scope of the role definition to delete. Managed HSM only supports '/'. </param>
+        /// <param name="roleDefinitionName"> The name (GUID) of the role definition to delete. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='Delete(string,string,CancellationToken)']/*" />
+        public virtual Response<KeyVaultRoleDefinition> Delete(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = Delete(scope, roleDefinitionName, context);
+            return Response.FromValue(KeyVaultRoleDefinition.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a custom role definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="DeleteAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope of the role definition to delete. Managed HSM only supports '/'. </param>
+        /// <param name="roleDefinitionName"> The name (GUID) of the role definition to delete. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='DeleteAsync(string,string,RequestContext)']/*" />
+        public virtual async Task<Response> DeleteAsync(string scope, string roleDefinitionName, RequestContext context)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
+
+            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsRestClient.Delete");
+            scope0.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(scope, roleDefinitionName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Deletes a custom role definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="Delete(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope of the role definition to delete. Managed HSM only supports '/'. </param>
+        /// <param name="roleDefinitionName"> The name (GUID) of the role definition to delete. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='Delete(string,string,RequestContext)']/*" />
+        public virtual Response Delete(string scope, string roleDefinitionName, RequestContext context)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
+
+            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsRestClient.Delete");
+            scope0.Start();
+            try
+            {
+                using HttpMessage message = CreateDeleteRequest(scope, roleDefinitionName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Creates or updates a custom role definition. </summary>
+        /// <param name="scope"> The scope of the role definition to create or update. Managed HSM only supports '/'. </param>
+        /// <param name="roleDefinitionName"> The name of the role definition to create or update. It can be any valid GUID. </param>
+        /// <param name="parameters"> Parameters for the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RoleDefinitionCreateParameters,CancellationToken)']/*" />
+        public virtual async Task<Response<KeyVaultRoleDefinition>> CreateOrUpdateAsync(string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            using RequestContent content = parameters.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await CreateOrUpdateAsync(scope, roleDefinitionName, content, context).ConfigureAwait(false);
+            return Response.FromValue(KeyVaultRoleDefinition.FromResponse(response), response);
+        }
+
+        /// <summary> Creates or updates a custom role definition. </summary>
+        /// <param name="scope"> The scope of the role definition to create or update. Managed HSM only supports '/'. </param>
+        /// <param name="roleDefinitionName"> The name of the role definition to create or update. It can be any valid GUID. </param>
+        /// <param name="parameters"> Parameters for the role definition. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RoleDefinitionCreateParameters,CancellationToken)']/*" />
+        public virtual Response<KeyVaultRoleDefinition> CreateOrUpdate(string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            using RequestContent content = parameters.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = CreateOrUpdate(scope, roleDefinitionName, content, context);
+            return Response.FromValue(KeyVaultRoleDefinition.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or updates a custom role definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateOrUpdateAsync(string,string,RoleDefinitionCreateParameters,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope of the role definition to create or update. Managed HSM only supports '/'. </param>
+        /// <param name="roleDefinitionName"> The name of the role definition to create or update. It can be any valid GUID. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleDefinitionName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> CreateOrUpdateAsync(string scope, string roleDefinitionName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsRestClient.CreateOrUpdate");
+            scope0.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateRequest(scope, roleDefinitionName, content, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Creates or updates a custom role definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="CreateOrUpdate(string,string,RoleDefinitionCreateParameters,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope of the role definition to create or update. Managed HSM only supports '/'. </param>
+        /// <param name="roleDefinitionName"> The name of the role definition to create or update. It can be any valid GUID. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleDefinitionName"/> or <paramref name="content"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
+        public virtual Response CreateOrUpdate(string scope, string roleDefinitionName, RequestContent content, RequestContext context = null)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
+            Argument.AssertNotNull(content, nameof(content));
+
+            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsRestClient.CreateOrUpdate");
+            scope0.Start();
+            try
+            {
+                using HttpMessage message = CreateCreateOrUpdateRequest(scope, roleDefinitionName, content, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get the specified role definition. </summary>
+        /// <param name="scope"> The scope of the role definition to get. Managed HSM only supports '/'. </param>
+        /// <param name="roleDefinitionName"> The name of the role definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='GetRoleDefinitionsRestClientAsync(string,string,CancellationToken)']/*" />
+        public virtual async Task<Response<KeyVaultRoleDefinition>> GetRoleDefinitionsRestClientAsync(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await GetRoleDefinitionsRestClientAsync(scope, roleDefinitionName, context).ConfigureAwait(false);
+            return Response.FromValue(KeyVaultRoleDefinition.FromResponse(response), response);
+        }
+
+        /// <summary> Get the specified role definition. </summary>
+        /// <param name="scope"> The scope of the role definition to get. Managed HSM only supports '/'. </param>
+        /// <param name="roleDefinitionName"> The name of the role definition to get. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='GetRoleDefinitionsRestClient(string,string,CancellationToken)']/*" />
+        public virtual Response<KeyVaultRoleDefinition> GetRoleDefinitionsRestClient(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = GetRoleDefinitionsRestClient(scope, roleDefinitionName, context);
+            return Response.FromValue(KeyVaultRoleDefinition.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the specified role definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRoleDefinitionsRestClientAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope of the role definition to get. Managed HSM only supports '/'. </param>
+        /// <param name="roleDefinitionName"> The name of the role definition to get. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='GetRoleDefinitionsRestClientAsync(string,string,RequestContext)']/*" />
+        public virtual async Task<Response> GetRoleDefinitionsRestClientAsync(string scope, string roleDefinitionName, RequestContext context)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
+
+            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsRestClient.GetRoleDefinitionsRestClient");
+            scope0.Start();
+            try
+            {
+                using HttpMessage message = CreateGetRoleDefinitionsRestClientRequest(scope, roleDefinitionName, context);
+                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get the specified role definition.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRoleDefinitionsRestClient(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope of the role definition to get. Managed HSM only supports '/'. </param>
+        /// <param name="roleDefinitionName"> The name of the role definition to get. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The response returned from the service. </returns>
+        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='GetRoleDefinitionsRestClient(string,string,RequestContext)']/*" />
+        public virtual Response GetRoleDefinitionsRestClient(string scope, string roleDefinitionName, RequestContext context)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
+
+            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsRestClient.GetRoleDefinitionsRestClient");
+            scope0.Start();
+            try
+            {
+                using HttpMessage message = CreateGetRoleDefinitionsRestClientRequest(scope, roleDefinitionName, context);
+                return _pipeline.ProcessMessage(message, context);
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary> Get all role definitions that are applicable at scope and above. </summary>
+        /// <param name="scope"> The scope of the role definition. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='GetRoleDefinitionsRestClientsAsync(string,string,CancellationToken)']/*" />
+        public virtual AsyncPageable<KeyVaultRoleDefinition> GetRoleDefinitionsRestClientsAsync(string scope, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRoleDefinitionsRestClientsRequest(scope, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRoleDefinitionsRestClientsNextPageRequest(nextLink, scope, filter, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(e), ClientDiagnostics, _pipeline, "RoleDefinitionsRestClient.GetRoleDefinitionsRestClients", "value", "nextLink", context);
+        }
+
+        /// <summary> Get all role definitions that are applicable at scope and above. </summary>
+        /// <param name="scope"> The scope of the role definition. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='GetRoleDefinitionsRestClients(string,string,CancellationToken)']/*" />
+        public virtual Pageable<KeyVaultRoleDefinition> GetRoleDefinitionsRestClients(string scope, string filter = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRoleDefinitionsRestClientsRequest(scope, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRoleDefinitionsRestClientsNextPageRequest(nextLink, scope, filter, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(e), ClientDiagnostics, _pipeline, "RoleDefinitionsRestClient.GetRoleDefinitionsRestClients", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get all role definitions that are applicable at scope and above.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRoleDefinitionsRestClientsAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope of the role definition. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='GetRoleDefinitionsRestClientsAsync(string,string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetRoleDefinitionsRestClientsAsync(string scope, string filter, RequestContext context)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRoleDefinitionsRestClientsRequest(scope, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRoleDefinitionsRestClientsNextPageRequest(nextLink, scope, filter, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "RoleDefinitionsRestClient.GetRoleDefinitionsRestClients", "value", "nextLink", context);
+        }
+
+        /// <summary>
+        /// [Protocol Method] Get all role definitions that are applicable at scope and above.
+        /// <list type="bullet">
+        /// <item>
+        /// <description>
+        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
+        /// </description>
+        /// </item>
+        /// <item>
+        /// <description>
+        /// Please try the simpler <see cref="GetRoleDefinitionsRestClients(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope of the role definition. </param>
+        /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
+        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='GetRoleDefinitionsRestClients(string,string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetRoleDefinitionsRestClients(string scope, string filter, RequestContext context)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRoleDefinitionsRestClientsRequest(scope, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRoleDefinitionsRestClientsNextPageRequest(nextLink, scope, filter, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "RoleDefinitionsRestClient.GetRoleDefinitionsRestClients", "value", "nextLink", context);
+        }
+
+        internal HttpMessage CreateDeleteRequest(string scope, string roleDefinitionName, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Delete;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions/", false);
@@ -52,79 +537,13 @@ namespace Azure.Security.KeyVault.Administration
             return message;
         }
 
-        /// <summary> Deletes a custom role definition. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role definition to delete. Managed HSM only supports '/'. </param>
-        /// <param name="roleDefinitionName"> The name (GUID) of the role definition to delete. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
-        public async Task<Response> DeleteAsync(string vaultBaseUrl, string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateOrUpdateRequest(string scope, string roleDefinitionName, RequestContent content, RequestContext context)
         {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (roleDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionName));
-            }
-
-            using var message = CreateDeleteRequest(vaultBaseUrl, scope, roleDefinitionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 404:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deletes a custom role definition. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role definition to delete. Managed HSM only supports '/'. </param>
-        /// <param name="roleDefinitionName"> The name (GUID) of the role definition to delete. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
-        public Response Delete(string vaultBaseUrl, string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (roleDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionName));
-            }
-
-            using var message = CreateDeleteRequest(vaultBaseUrl, scope, roleDefinitionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 404:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string vaultBaseUrl, string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters)
-        {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier201);
             var request = message.Request;
             request.Method = RequestMethod.Put;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions/", false);
@@ -133,103 +552,17 @@ namespace Azure.Security.KeyVault.Administration
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(parameters);
             request.Content = content;
             return message;
         }
 
-        /// <summary> Creates or updates a custom role definition. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role definition to create or update. Managed HSM only supports '/'. </param>
-        /// <param name="roleDefinitionName"> The name of the role definition to create or update. It can be any valid GUID. </param>
-        /// <param name="parameters"> Parameters for the role definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, <paramref name="roleDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public async Task<Response<KeyVaultRoleDefinition>> CreateOrUpdateAsync(string vaultBaseUrl, string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetRoleDefinitionsRestClientRequest(string scope, string roleDefinitionName, RequestContext context)
         {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (roleDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var message = CreateCreateOrUpdateRequest(vaultBaseUrl, scope, roleDefinitionName, parameters);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    {
-                        KeyVaultRoleDefinition value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Creates or updates a custom role definition. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role definition to create or update. Managed HSM only supports '/'. </param>
-        /// <param name="roleDefinitionName"> The name of the role definition to create or update. It can be any valid GUID. </param>
-        /// <param name="parameters"> Parameters for the role definition. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/>, <paramref name="roleDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
-        public Response<KeyVaultRoleDefinition> CreateOrUpdate(string vaultBaseUrl, string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (roleDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionName));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
-
-            using var message = CreateCreateOrUpdateRequest(vaultBaseUrl, scope, roleDefinitionName, parameters);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 201:
-                    {
-                        KeyVaultRoleDefinition value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateGetRequest(string vaultBaseUrl, string scope, string roleDefinitionName)
-        {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions/", false);
@@ -240,253 +573,53 @@ namespace Azure.Security.KeyVault.Administration
             return message;
         }
 
-        /// <summary> Get the specified role definition. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role definition to get. Managed HSM only supports '/'. </param>
-        /// <param name="roleDefinitionName"> The name of the role definition to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
-        public async Task<Response<KeyVaultRoleDefinition>> GetAsync(string vaultBaseUrl, string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetRoleDefinitionsRestClientsRequest(string scope, string filter, RequestContext context)
         {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (roleDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionName));
-            }
-
-            using var message = CreateGetRequest(vaultBaseUrl, scope, roleDefinitionName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        KeyVaultRoleDefinition value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get the specified role definition. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role definition to get. Managed HSM only supports '/'. </param>
-        /// <param name="roleDefinitionName"> The name of the role definition to get. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/>, <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
-        public Response<KeyVaultRoleDefinition> Get(string vaultBaseUrl, string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (roleDefinitionName == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionName));
-            }
-
-            using var message = CreateGetRequest(vaultBaseUrl, scope, roleDefinitionName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        KeyVaultRoleDefinition value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListRequest(string vaultBaseUrl, string scope, string filter)
-        {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.Reset(_endpoint);
             uri.AppendPath("/", false);
             uri.AppendPath(scope, false);
             uri.AppendPath("/providers/Microsoft.Authorization/roleDefinitions", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
             if (filter != null)
             {
                 uri.AppendQuery("$filter", filter, true);
             }
-            uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get all role definitions that are applicable at scope and above. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role definition. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="scope"/> is null. </exception>
-        public async Task<Response<RoleDefinitionListResult>> ListAsync(string vaultBaseUrl, string scope, string filter = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetRoleDefinitionsRestClientsNextPageRequest(string nextLink, string scope, string filter, RequestContext context)
         {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-
-            using var message = CreateListRequest(vaultBaseUrl, scope, filter);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RoleDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoleDefinitionListResult.DeserializeRoleDefinitionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get all role definitions that are applicable at scope and above. </summary>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role definition. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vaultBaseUrl"/> or <paramref name="scope"/> is null. </exception>
-        public Response<RoleDefinitionListResult> List(string vaultBaseUrl, string scope, string filter = null, CancellationToken cancellationToken = default)
-        {
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-
-            using var message = CreateListRequest(vaultBaseUrl, scope, filter);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RoleDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoleDefinitionListResult.DeserializeRoleDefinitionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal HttpMessage CreateListNextPageRequest(string nextLink, string vaultBaseUrl, string scope, string filter)
-        {
-            var message = _pipeline.CreateMessage();
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
-            uri.AppendRaw(vaultBaseUrl, false);
+            uri.Reset(_endpoint);
             uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get all role definitions that are applicable at scope and above. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role definition. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="vaultBaseUrl"/> or <paramref name="scope"/> is null. </exception>
-        public async Task<Response<RoleDefinitionListResult>> ListNextPageAsync(string nextLink, string vaultBaseUrl, string scope, string filter = null, CancellationToken cancellationToken = default)
+        private static RequestContext DefaultRequestContext = new RequestContext();
+        internal static RequestContext FromCancellationToken(CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
+            if (!cancellationToken.CanBeCanceled)
             {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
+                return DefaultRequestContext;
             }
 
-            using var message = CreateListNextPageRequest(nextLink, vaultBaseUrl, scope, filter);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RoleDefinitionListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = RoleDefinitionListResult.DeserializeRoleDefinitionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
+            return new RequestContext() { CancellationToken = cancellationToken };
         }
 
-        /// <summary> Get all role definitions that are applicable at scope and above. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="vaultBaseUrl"> The vault name, for example https://myvault.vault.azure.net. </param>
-        /// <param name="scope"> The scope of the role definition. </param>
-        /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="vaultBaseUrl"/> or <paramref name="scope"/> is null. </exception>
-        public Response<RoleDefinitionListResult> ListNextPage(string nextLink, string vaultBaseUrl, string scope, string filter = null, CancellationToken cancellationToken = default)
-        {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (vaultBaseUrl == null)
-            {
-                throw new ArgumentNullException(nameof(vaultBaseUrl));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-
-            using var message = CreateListNextPageRequest(nextLink, vaultBaseUrl, scope, filter);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        RoleDefinitionListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = RoleDefinitionListResult.DeserializeRoleDefinitionListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
+        private static ResponseClassifier _responseClassifier200;
+        private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
+        private static ResponseClassifier _responseClassifier201;
+        private static ResponseClassifier ResponseClassifier201 => _responseClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
     }
 }

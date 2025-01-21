@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Security.KeyVault.Administration
+namespace Azure.Security.KeyVault.Administration.Models
 {
     /// <summary> The role definition type. </summary>
     public readonly partial struct KeyVaultRoleDefinitionType : IEquatable<KeyVaultRoleDefinitionType>
@@ -24,7 +24,7 @@ namespace Azure.Security.KeyVault.Administration
 
         private const string MicrosoftAuthorizationRoleDefinitionsValue = "Microsoft.Authorization/roleDefinitions";
 
-        /// <summary> Microsoft.Authorization/roleDefinitions. </summary>
+        /// <summary> Microsoft-defined role definitions. </summary>
         public static KeyVaultRoleDefinitionType MicrosoftAuthorizationRoleDefinitions { get; } = new KeyVaultRoleDefinitionType(MicrosoftAuthorizationRoleDefinitionsValue);
         /// <summary> Determines if two <see cref="KeyVaultRoleDefinitionType"/> values are the same. </summary>
         public static bool operator ==(KeyVaultRoleDefinitionType left, KeyVaultRoleDefinitionType right) => left.Equals(right);
