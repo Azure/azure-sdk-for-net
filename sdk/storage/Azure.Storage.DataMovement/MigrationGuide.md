@@ -146,6 +146,76 @@ TODO
 
 ## Migration Samples
 
+This section contains side-by-side samples of legacy vs modern library usage of various features.
+These samples are not meant to be exhaustive, but demonstrate a wide variety of uses that may need migration.
+
+### Upload
+
+#### Upload single file to blob storage
+
+**Legacy:**
+```csharp
+// these values provided by your code
+string filePath, containerName, blobName;
+CloudBlobClient client;
+```
+```csharp
+// upload blob
+await TransferManager.UploadAsync(
+    filePath,
+    client.GetContainerReference(containerName).GetBlockBlobReference(blobName));
+```
+**Modern:**
+```csharp
+// these values provided by your code
+string filePath, blobUri;
+LocalFilesStorageResourceProvider files;
+BlobsStorageResourceProvider blobs;
+TransferManager transferManager;
+```
+
+```csharp
+// upload blob
+TranferOperation operation = await transferManager.StartTransferAsync(
+    files.FromFile(filePath),
+    blobs.FromBlob(blobUri));
+await operation.WaitForCompletionAsync();
+```
+
+#### Upload directory to blob storage
+
+**Legacy:**
+```csharp
+// these values provided by your code
+string directoryPath, containerName, blobDirectoryPath;
+CloudBlobClient client;
+```
+```csharp
+// upload blob
+Task<TransferStatus> task = await TransferManager.UploadDirectoryAsync(
+    directoryPath,
+    client.GetContainerReference(containerName).GetDirectoryReference(blobDirectoryPath));
+```
+**Modern:**
+```csharp
+// these values provided by your code
+string directoryPath, containerUri, blobDirectoryPath;
+LocalFilesStorageResourceProvider files;
+BlobsStorageResourceProvider blobs;
+TransferManager transferManager;
+```
+
+```csharp
+// upload blob
+TranferOperation operation = await transferManager.StartTransferAsync(
+    files.FromDirectory(directoryPath),
+    blobs.FromContainer(containerUri, BlobStorageResourceContainerOptions()
+    {
+        BlobDirectoryPrefix = blobDirectoryPath,
+    }));
+await operation.WaitForCompletionAsync();
+```
+
 TODO
 - Upload
 - Download
