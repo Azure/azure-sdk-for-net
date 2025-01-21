@@ -1,23 +1,5 @@
 namespace Azure.Storage.DataMovement
 {
-    public partial class DataTransferProperty
-    {
-        public DataTransferProperty() { }
-        public DataTransferProperty(bool preserve) { }
-        public virtual bool Preserve { get { throw null; } }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override bool Equals(object? obj) { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override int GetHashCode() { throw null; }
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-        public override string? ToString() { throw null; }
-    }
-    public partial class DataTransferProperty<T> : Azure.Storage.DataMovement.DataTransferProperty where T : notnull
-    {
-        public DataTransferProperty(bool preserve) { }
-        public DataTransferProperty(T value) { }
-        public virtual T? Value { get { throw null; } }
-    }
     public partial class LocalFilesStorageResourceProvider : Azure.Storage.DataMovement.StorageResourceProvider
     {
         public LocalFilesStorageResourceProvider() { }
