@@ -258,6 +258,39 @@ function Add-GitHubIssueComment {
           -MaximumRetryCount 3
 }
 
+# Will delete label from the issue if it exists
+function Remove-GitHubIssueLabel {
+  param (
+    [Parameter(Mandatory = $true)]
+    $RepoOwner,
+    [Parameter(Mandatory = $true)]
+    $RepoName,
+    [Parameter(Mandatory = $true)]
+    $IssueNumber,
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $LabelName,
+    [ValidateNotNullOrEmpty()]
+    [Parameter(Mandatory = $true)]
+    $AuthToken
+  )
+
+  if ($LabelName.Trim().Length -eq 0)
+  {
+    throw " The 'LabelName' parameter should not not be whitespace."
+  }
+  # Encode the label name
+  $encodedLabelName = [System.Web.HttpUtility]::UrlEncode($LabelName)
+
+  $uri = "$GithubAPIBaseURI/$RepoOwner/$RepoName/issues/$IssueNumber/labels/$encodedLabelName"
+
+  return Invoke-RestMethod `
+          -Method DELETE `
+          -Uri $uri `
+          -Headers (Get-GitHubApiHeaders -token $AuthToken) `
+          -MaximumRetryCount 3
+}
+
 # Will add labels to existing labels on the issue
 function Add-GitHubIssueLabels {
   param (
