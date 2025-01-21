@@ -1012,27 +1012,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <summary>
-        /// Initializes a new instance of DataProtectionBackupInstanceProperties.
-        /// </summary>
-        /// <param name="friendlyName"></param>
-        /// <param name="dataSourceInfo"></param>
-        /// <param name="dataSourceSetInfo"></param>
-        /// <param name="policyInfo"></param>
-        /// <param name="protectionStatus"></param>
-        /// <param name="currentProtectionState"></param>
-        /// <param name="protectionErrorDetails"></param>
-        /// <param name="provisioningState"></param>
-        /// <param name="dataSourceAuthCredentials"></param>
-        /// <param name="validationType"></param>
-        /// <param name="objectType"></param>
-        /// <returns></returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DataProtectionBackupInstanceProperties DataProtectionBackupInstanceProperties(string friendlyName, DataSourceInfo dataSourceInfo, DataSourceSetInfo dataSourceSetInfo, BackupInstancePolicyInfo policyInfo, BackupInstanceProtectionStatusDetails protectionStatus, CurrentProtectionState? currentProtectionState, ResponseError protectionErrorDetails, string provisioningState, DataProtectionBackupAuthCredentials dataSourceAuthCredentials, BackupValidationType? validationType, string objectType)
-        {
-            return DataProtectionBackupInstanceProperties(friendlyName: friendlyName, dataSourceInfo: dataSourceInfo, dataSourceSetInfo: dataSourceSetInfo, policyInfo: policyInfo, resourceGuardOperationRequests: default, protectionStatus: protectionStatus, currentProtectionState: currentProtectionState, protectionErrorDetails: protectionErrorDetails, provisioningState: provisioningState, dataSourceAuthCredentials: dataSourceAuthCredentials, validationType: validationType, identityDetails: default, objectType: objectType);
-        }
-
-        /// <summary>
         /// Initializes a new instance of DataProtectionBackupJobProperties.
         /// </summary>
         /// <param name="activityId"></param>
