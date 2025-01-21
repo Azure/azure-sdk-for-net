@@ -27,12 +27,6 @@ namespace Azure.Storage.DataMovement
         public Azure.Storage.DataMovement.StorageResourceItem FromFile(string filePath) { throw null; }
         protected internal override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromSourceAsync(Azure.Storage.DataMovement.TransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
-    public partial class ProgressHandlerOptions
-    {
-        public ProgressHandlerOptions(System.IProgress<Azure.Storage.DataMovement.TransferProgress> progressHandler, bool trackBytesTransferred = false) { }
-        public System.IProgress<Azure.Storage.DataMovement.TransferProgress> ProgressHandler { get { throw null; } set { } }
-        public bool TrackBytesTransferred { get { throw null; } set { } }
-    }
     public abstract partial class StorageResource
     {
         protected StorageResource() { }
@@ -201,7 +195,7 @@ namespace Azure.Storage.DataMovement
         public Azure.Storage.DataMovement.StorageResourceCreationMode CreationPreference { get { throw null; } set { } }
         public long? InitialTransferSize { get { throw null; } set { } }
         public long? MaximumTransferChunkSize { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.ProgressHandlerOptions ProgressHandlerOptions { get { throw null; } set { } }
+        public Azure.Storage.DataMovement.TransferProgressHandlerOptions ProgressHandlerOptions { get { throw null; } set { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.TransferItemCompletedEventArgs> ItemTransferCompleted { add { } remove { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.TransferItemFailedEventArgs> ItemTransferFailed { add { } remove { } }
         public event Azure.Core.SyncAsyncEventHandler<Azure.Storage.DataMovement.TransferItemSkippedEventArgs> ItemTransferSkipped { add { } remove { } }
@@ -231,6 +225,12 @@ namespace Azure.Storage.DataMovement
         public long InProgressCount { get { throw null; } }
         public long QueuedCount { get { throw null; } }
         public long SkippedCount { get { throw null; } }
+    }
+    public partial class TransferProgressHandlerOptions
+    {
+        public TransferProgressHandlerOptions() { }
+        public System.IProgress<Azure.Storage.DataMovement.TransferProgress> ProgressHandler { get { throw null; } set { } }
+        public bool TrackBytesTransferred { get { throw null; } set { } }
     }
     public partial class TransferProperties
     {

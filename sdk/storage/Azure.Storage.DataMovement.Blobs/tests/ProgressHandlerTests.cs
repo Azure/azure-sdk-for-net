@@ -130,7 +130,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             TestProgressHandler progressHandler = new TestProgressHandler();
             transferOptions ??= new TransferOptions();
-            transferOptions.ProgressHandlerOptions = new ProgressHandlerOptions(progressHandler, trackBytes);
+            transferOptions.ProgressHandlerOptions = new()
+            {
+                ProgressHandler = progressHandler,
+                TrackBytesTransferred = trackBytes
+            }
+                ;
             transferOptions.CreationPreference = createMode;
 
             TransferOperation transfer = await transferManager.StartTransferAsync(source, destination, transferOptions);
@@ -323,7 +328,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             TestProgressHandler progressHandler = new();
             TransferOptions transferOptions = new()
             {
-                ProgressHandlerOptions = new ProgressHandlerOptions(progressHandler, true)
+                ProgressHandlerOptions = new()
+                {
+                    ProgressHandler = progressHandler,
+                    TrackBytesTransferred = true
+                }
             };
             TestEventsRaised testEventsRaised = new(transferOptions);
 
