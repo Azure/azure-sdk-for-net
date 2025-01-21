@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
                 WaitUntil.Completed,
                 Recording.GenerateAssetName("resource"),
                 testFirmware);
-            response.Value.Data.Name.Should().Equals(testFirmware.Name);
+            response.Value.Data.Name.Should().BeSameAs(testFirmware.Name);
         }
 
         [TestCase]
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
                 Recording.GenerateAssetName("resource"),
                 testFirmware);
             var response = await workspace.GetIotFirmwareAsync(_.Value.Data.Name);
-            response.Value.Data.Name.Should().Equals(testFirmware.Name);
+            response.Value.Data.Name.Should().BeSameAs(testFirmware.Name);
         }
 
         [TestCase]
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
                 WaitUntil.Completed,
                 name,
                 updatedFirmware);
-            response.Value.Data.Description.Should().Equals(updatedFirmware.Description);
+            response.Value.Data.Description.Should().BeSameAs(updatedFirmware.Description);
         }
 
         [TestCase]

@@ -39,8 +39,19 @@ namespace Azure.Identity.Tests
             };
 
             var certificatePath = TestEnvironment.ServicePrincipalCertificatePfxPath;
+
 #if NET9_0_OR_GREATER
-            var cert = X509CertificateLoader.LoadCertificateFromFile(certificatePath);
+            var certType = X509Certificate2.GetCertContentType(certificatePath);
+            X509Certificate2 cert;
+            switch (certType)
+            {
+                case X509ContentType.Cert:
+                    cert = X509CertificateLoader.LoadCertificateFromFile(certificatePath);
+                    break;
+                default:
+                    cert = X509CertificateLoader.LoadPkcs12FromFile(certificatePath, null);
+                    break;
+            }
 #else
             var cert = new X509Certificate2(certificatePath);
 #endif

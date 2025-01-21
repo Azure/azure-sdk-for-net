@@ -1094,8 +1094,19 @@ namespace Azure.Identity.Tests
             var assertionAudience = assertionAudienceBuilder.ToString();
             var assertionCertPath = Path.Combine(TestContext.CurrentContext.TestDirectory, "Data", "cert.pfx");
             string tokenFilePath = Path.Combine(Path.GetTempPath(), Path.GetTempFileName());
+
 #if NET9_0_OR_GREATER
-            var assertionCert = X509CertificateLoader.LoadCertificateFromFile(assertionCertPath);
+            var certType = X509Certificate2.GetCertContentType(assertionCertPath);
+            X509Certificate2 assertionCert;
+            switch (certType)
+            {
+                case X509ContentType.Cert:
+                    assertionCert = X509CertificateLoader.LoadCertificateFromFile(assertionCertPath);
+                    break;
+                default:
+                    assertionCert = X509CertificateLoader.LoadPkcs12FromFile(assertionCertPath, null);
+                    break;
+            }
 #else
             var assertionCert = new X509Certificate2(assertionCertPath);
 #endif
