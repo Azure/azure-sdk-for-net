@@ -149,6 +149,16 @@ TODO
 This section contains side-by-side samples of legacy vs modern library usage of various features.
 These samples are not meant to be exhaustive, but demonstrate a wide variety of uses that may need migration.
 
+- Upload
+  - Upload single file to blob storage
+  - Upload directory to blob storage
+- Download
+  - Download single blob
+  - Download blob directory
+- Service to service copy
+  - Copy blob to blob
+  - Copy share file to blob
+
 ### Upload
 
 #### Upload single file to blob storage
