@@ -46,7 +46,7 @@ steps:
     condition: ne(variables['ProjectNames'], '')
 
   - pwsh: |
-      if ("$(ProjectNames)" -like "*,Azure.Storage.*") {
+      if ("$(ProjectNames)" -like "*storage*") {
         &"$(Build.SourcesDirectory)/eng/scripts/install_azurite.ps1" -AzuriteLocation "$(AzuriteLocation)" -AzuriteVersion "$(AzuriteVersion)"
       }
     displayName: Install Azurite If Necessary
