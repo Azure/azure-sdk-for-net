@@ -79,6 +79,11 @@ function Compare-Paths {
     $normalizedPath1 = $path1 -replace '/', '\'
     $normalizedPath2 = $path2 -replace '/', '\'
 
+    # Strip off http from the beginning of path2 if it exists
+    if ($normalizedPath2.StartsWith("http\")) {
+        $normalizedPath2 = $normalizedPath2.Substring(5)
+    }
+
     # Compare the normalized paths
     return $normalizedPath1.Contains($normalizedPath2)
 }

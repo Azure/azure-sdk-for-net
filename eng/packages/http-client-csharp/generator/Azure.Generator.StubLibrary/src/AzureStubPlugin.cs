@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using Microsoft.Generator.CSharp;
-using Microsoft.Generator.CSharp.ClientModel;
 using System.ComponentModel.Composition;
 
 namespace Azure.Generator.StubLibrary
@@ -12,7 +11,7 @@ namespace Azure.Generator.StubLibrary
     /// </summary>
     [Export(typeof(CodeModelPlugin))]
     [ExportMetadata("PluginName", nameof(AzureStubPlugin))]
-    public class AzureStubPlugin : ClientModelPlugin
+    public class AzureStubPlugin : AzureClientPlugin
     {
         /// <summary>
         /// The stub library plugin to generate the stub library.

@@ -1,8 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0</TargetFrameworks>
+    <RequiredTargetFrameworks>net8.0</RequiredTargetFrameworks>
+  </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.ClientModel" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
   </ItemGroup>
   
   <ItemGroup>

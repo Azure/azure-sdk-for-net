@@ -34,7 +34,7 @@ foreach ($directory in $directories) {
     if (-not (Compare-Paths $subPath $filter)) {
         continue
     }
-    
+
     $testPath = Join-Path "$cadlRanchRoot.Tests" "Http"
     $testFilter = "TestProjects.CadlRanch.Tests.Http"
     foreach ($folder in $folders) {
