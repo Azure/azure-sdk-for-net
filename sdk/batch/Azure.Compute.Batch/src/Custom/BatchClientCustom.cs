@@ -18,6 +18,16 @@ namespace Azure.Compute.Batch
     {
         private readonly AzureNamedKeyCredential _namedKeyCredential;
 
+        private BatchTaskUtilities _taskUtilities;
+
+        /// <summary>
+        /// Helper utilities for working with tasks in the Azure Batch service.
+        /// </summary>
+        public BatchTaskUtilities TaskUtilities { get {
+                return _taskUtilities ??= new BatchTaskUtilities(this);
+            }
+        }
+
         /// <summary> Initializes a new instance of BatchClient. </summary>
         /// <param name="endpoint"> Batch account endpoint (for example: https://batchaccount.eastus2.batch.azure.com). </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>

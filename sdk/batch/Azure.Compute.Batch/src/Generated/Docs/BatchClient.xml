@@ -2517,7 +2517,10 @@ BatchJobCreateContent job = new BatchJobCreateContent("jobId", new BatchPoolInfo
                 {
                     EnableAutomaticUpdates = false,
                 },
-                NodePlacementConfiguration = new BatchNodePlacementConfiguration(),
+                NodePlacementConfiguration = new BatchNodePlacementConfiguration
+                {
+                    Policy = BatchNodePlacementPolicyType.Zonal,
+                },
             },
             TaskSlotsPerNode = 2,
             TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
@@ -2640,7 +2643,10 @@ BatchJobCreateContent job = new BatchJobCreateContent("jobId", new BatchPoolInfo
                 {
                     EnableAutomaticUpdates = false,
                 },
-                NodePlacementConfiguration = new BatchNodePlacementConfiguration(),
+                NodePlacementConfiguration = new BatchNodePlacementConfiguration
+                {
+                    Policy = BatchNodePlacementPolicyType.Zonal,
+                },
             },
             TaskSlotsPerNode = 2,
             TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
@@ -2823,7 +2829,10 @@ using RequestContent content = RequestContent.Create(new
                     {
                         enableAutomaticUpdates = false,
                     },
-                    nodePlacementConfiguration = new object(),
+                    nodePlacementConfiguration = new
+                    {
+                        policy = "zonal",
+                    },
                 },
                 resizeTimeout = "PT15M",
                 targetDedicatedNodes = 3,
@@ -2993,7 +3002,10 @@ using RequestContent content = RequestContent.Create(new
                     {
                         enableAutomaticUpdates = false,
                     },
-                    nodePlacementConfiguration = new object(),
+                    nodePlacementConfiguration = new
+                    {
+                        policy = "zonal",
+                    },
                 },
                 resizeTimeout = "PT15M",
                 targetDedicatedNodes = 3,
@@ -3527,7 +3539,10 @@ BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("j
                 {
                     EnableAutomaticUpdates = false,
                 },
-                NodePlacementConfiguration = new BatchNodePlacementConfiguration(),
+                NodePlacementConfiguration = new BatchNodePlacementConfiguration
+                {
+                    Policy = BatchNodePlacementPolicyType.Zonal,
+                },
             },
             TaskSlotsPerNode = 2,
             TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
@@ -3658,7 +3673,10 @@ BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("j
                 {
                     EnableAutomaticUpdates = false,
                 },
-                NodePlacementConfiguration = new BatchNodePlacementConfiguration(),
+                NodePlacementConfiguration = new BatchNodePlacementConfiguration
+                {
+                    Policy = BatchNodePlacementPolicyType.Zonal,
+                },
             },
             TaskSlotsPerNode = 2,
             TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
@@ -3858,7 +3876,10 @@ using RequestContent content = RequestContent.Create(new
                         {
                             enableAutomaticUpdates = false,
                         },
-                        nodePlacementConfiguration = new object(),
+                        nodePlacementConfiguration = new
+                        {
+                            policy = "zonal",
+                        },
                     },
                     resizeTimeout = "PT15M",
                     targetDedicatedNodes = 3,
@@ -4044,7 +4065,10 @@ using RequestContent content = RequestContent.Create(new
                         {
                             enableAutomaticUpdates = false,
                         },
-                        nodePlacementConfiguration = new object(),
+                        nodePlacementConfiguration = new
+                        {
+                            policy = "zonal",
+                        },
                     },
                     resizeTimeout = "PT15M",
                     targetDedicatedNodes = 3,
@@ -4159,6 +4183,7 @@ BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'ech
     {
         ContainerHostBatchBindMounts = {new ContainerHostBatchBindMountEntry
         {
+            Source = ContainerHostDataPath.Task,
             IsReadOnly = true,
         }},
     },
@@ -4185,9 +4210,11 @@ BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'ech
     {
         ContainerHostBatchBindMounts = {new ContainerHostBatchBindMountEntry
         {
+            Source = ContainerHostDataPath.Task,
             IsReadOnly = true,
         }, new ContainerHostBatchBindMountEntry
         {
+            Source = ContainerHostDataPath.Task,
             IsReadOnly = true,
         }},
     },
@@ -4287,6 +4314,7 @@ BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'ech
     {
         ContainerHostBatchBindMounts = {new ContainerHostBatchBindMountEntry
         {
+            Source = ContainerHostDataPath.Task,
             IsReadOnly = true,
         }},
     },
@@ -4313,9 +4341,11 @@ BatchTaskCreateContent task = new BatchTaskCreateContent("taskId", "bash -c 'ech
     {
         ContainerHostBatchBindMounts = {new ContainerHostBatchBindMountEntry
         {
+            Source = ContainerHostDataPath.Task,
             IsReadOnly = true,
         }, new ContainerHostBatchBindMountEntry
         {
+            Source = ContainerHostDataPath.Task,
             IsReadOnly = true,
         }},
     },
@@ -4431,6 +4461,7 @@ using RequestContent content = RequestContent.Create(new
         {
             new
             {
+                source = "Task",
                 isReadOnly = true,
             }
         },
@@ -4465,10 +4496,12 @@ using RequestContent content = RequestContent.Create(new
         {
             new
             {
+                source = "Task",
                 isReadOnly = true,
             },
             new
             {
+                source = "Task",
                 isReadOnly = true,
             }
         },
@@ -4603,6 +4636,7 @@ using RequestContent content = RequestContent.Create(new
         {
             new
             {
+                source = "Task",
                 isReadOnly = true,
             }
         },
@@ -4637,10 +4671,12 @@ using RequestContent content = RequestContent.Create(new
         {
             new
             {
+                source = "Task",
                 isReadOnly = true,
             },
             new
             {
+                source = "Task",
                 isReadOnly = true,
             }
         },

@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -207,6 +208,75 @@ namespace Azure.Compute.Batch.Tests.Integration
         }
 
         [RecordedTest]
+        public async Task PoolCreatedOsDiskSecurityProfile()
+        {
+            var client = CreateBatchClient();
+            WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "SecurityProfilePool", IsPlayBack());
+            var poolID = iaasWindowsPoolFixture.PoolId;
+            TimeSpan evalInterval = TimeSpan.FromMinutes(6);
+            var VMSize = "STANDARD_D2S_V3";
+            var targetDedicatedNodes = 1;
+
+            try
+            {
+                // create a new pool
+                ImageReference imageReference = new ImageReference()
+                {
+                    Publisher = "canonical",
+                    Offer = "0001-com-ubuntu-server-jammy",
+                    Sku = "22_04-lts",
+                    Version = "latest"
+                };
+
+                VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.ubuntu 22.04")
+                {
+                    SecurityProfile = new SecurityProfile()
+                    {
+                        SecurityType = SecurityTypes.ConfidentialVM,
+                        EncryptionAtHost = true,
+                        UefiSettings = new UefiSettings()
+                        {
+                            SecureBootEnabled = true,
+                            VTpmEnabled = true,
+                        }
+                    },
+                    OsDisk = new OSDisk()
+                    {
+                        Caching = CachingType.ReadWrite,
+                        ManagedDisk = new ManagedDisk()
+                        {
+                            SecurityProfile = new VMDiskSecurityProfile()
+                            {
+                                SecurityEncryptionType = SecurityEncryptionTypes.VMGuestStateOnly,
+                            }
+                        }
+                    }
+                };
+
+                BatchPoolCreateContent batchPoolCreateOptions = new BatchPoolCreateContent(poolID, VMSize)
+                {
+                    VirtualMachineConfiguration = virtualMachineConfiguration,
+                    TargetDedicatedNodes = targetDedicatedNodes,
+                };
+
+                Response response = await client.CreatePoolAsync(batchPoolCreateOptions);
+                Assert.AreEqual(201, response.Status);
+
+                BatchPool pool = await client.GetPoolAsync(poolID);
+                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.SecurityType, SecurityTypes.ConfidentialVM);
+                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.EncryptionAtHost, true);
+                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.SecureBootEnabled, true);
+                Assert.AreEqual(pool.VirtualMachineConfiguration.SecurityProfile.UefiSettings.VTpmEnabled, true);
+                Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.Caching, CachingType.ReadWrite);
+                Assert.AreEqual(pool.VirtualMachineConfiguration.OsDisk.ManagedDisk.SecurityProfile.SecurityEncryptionType, SecurityEncryptionTypes.VMGuestStateOnly);
+            }
+            finally
+            {
+                await client.DeletePoolAsync(poolID);
+            }
+        }
+
+        [RecordedTest]
         public async Task ResizePool()
         {
             var client = CreateBatchClient();
@@ -279,9 +349,11 @@ namespace Azure.Compute.Batch.Tests.Integration
         public async Task PatchPool()
         {
             var client = CreateBatchClient();
+            var startTaskCommandLine = "cmd /c echo hello";
+            var displayName = "newDisplayName";
             WindowsPoolFixture iaasWindowsPoolFixture = new WindowsPoolFixture(client, "PatchPool", IsPlayBack());
             var poolID = iaasWindowsPoolFixture.PoolId;
-
+            var nodeUserPassword = "Password1234!";
             try
             {
                 // create a pool to verify we have something to query for
@@ -296,17 +368,57 @@ namespace Azure.Compute.Batch.Tests.Integration
                     Version = "1"
                 });
 
-                //updateContent.StartTask
-                updateContent.DisplayName = "newDisplayName";
+                updateContent.StartTask = new BatchStartTask(startTaskCommandLine);
+                updateContent.DisplayName = displayName;
                 updateContent.VirtualMachineConfiguration = orginalPool.VirtualMachineConfiguration;
                 updateContent.VirtualMachineConfiguration.NodePlacementConfiguration = new BatchNodePlacementConfiguration()
                 {
-                    Policy = BatchNodePlacementPolicyType.JobPrep
+                    Policy = BatchNodePlacementPolicyType.Zonal
                 };
+                updateContent.UpgradePolicy = new UpgradePolicy(UpgradeMode.Automatic)
+                {
+                    AutomaticOsUpgradePolicy = new AutomaticOsUpgradePolicy()
+                    {
+                        DisableAutomaticRollback = true,
+                        EnableAutomaticOsUpgrade = true,
+                        UseRollingUpgradePolicy = true,
+                        OsRollingUpgradeDeferral = true
+                    },
+                    RollingUpgradePolicy = new RollingUpgradePolicy()
+                    {
+                        EnableCrossZoneUpgrade = true,
+                        MaxBatchInstancePercent = 20,
+                        MaxUnhealthyInstancePercent = 20,
+                        MaxUnhealthyUpgradedInstancePercent = 20,
+                        PauseTimeBetweenBatches = TimeSpan.FromSeconds(5),
+                        PrioritizeUnhealthyInstances = false,
+                        RollbackFailedInstancesOnPolicyBreach = false
+                    }
+                };
+
+                updateContent.ResourceTags.Add("tag1", "value1");
+                updateContent.ResourceTags.Add("tag2", "value2");
+
+                updateContent.TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Pack);
+
+                updateContent.UserAccounts.Add(new UserAccount("test1", nodeUserPassword));
+                updateContent.UserAccounts.Add(new UserAccount("test2", nodeUserPassword) { ElevationLevel = ElevationLevel.NonAdmin });
+                updateContent.UserAccounts.Add(new UserAccount("test3", nodeUserPassword) { ElevationLevel = ElevationLevel.Admin });
+                updateContent.UserAccounts.Add(new UserAccount("test4", nodeUserPassword) { LinuxUserConfiguration = new LinuxUserConfiguration() { SshPrivateKey = "AAAA==" } });
 
                 Response response = await client.UpdatePoolAsync(poolID, updateContent);
                 BatchPool patchPool = await client.GetPoolAsync(poolID);
                 Assert.AreEqual(patchPool.Metadata.First().Value, "value");
+
+                Assert.AreEqual(startTaskCommandLine, patchPool.StartTask.CommandLine);
+                Assert.AreEqual(updateContent.Metadata.Single().Name , patchPool.Metadata.Single().Name);
+                Assert.AreEqual(updateContent.Metadata.Single().Value, patchPool.Metadata.Single().Value);
+                Assert.AreEqual(displayName, patchPool.DisplayName);
+                Assert.AreEqual(2, patchPool.ResourceTags.Count);
+                Assert.AreEqual("value1", patchPool.ResourceTags["tag1"]);
+                Assert.AreEqual(20, patchPool.UpgradePolicy.RollingUpgradePolicy.MaxBatchInstancePercent);
+                Assert.AreEqual(BatchNodeFillType.Pack, patchPool.TaskSchedulingPolicy.NodeFillType);
+                Assert.AreEqual(4, patchPool.UserAccounts.Count);
             }
             finally
             {

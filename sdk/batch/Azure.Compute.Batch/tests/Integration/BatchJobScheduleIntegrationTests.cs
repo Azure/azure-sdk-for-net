@@ -165,7 +165,7 @@ namespace Azure.Compute.Batch.Tests.Integration
             }
             finally
             {
-                await client.DeleteJobScheduleAsync(jobScheduleId);
+                await client.DeleteJobScheduleAsync(jobScheduleId,force:true);
             }
         }
 

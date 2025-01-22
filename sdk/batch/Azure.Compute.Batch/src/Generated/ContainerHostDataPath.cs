@@ -22,13 +22,25 @@ namespace Azure.Compute.Batch
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string RegionalValue = "regional";
-        private const string ZonalValue = "zonal";
+        private const string SharedValue = "Shared";
+        private const string StartupValue = "Startup";
+        private const string VfsMountsValue = "VfsMounts";
+        private const string TaskValue = "Task";
+        private const string JobPrepValue = "JobPrep";
+        private const string ApplicationsValue = "Applications";
 
-        /// <summary> All nodes in the pool will be allocated in the same region. </summary>
-        public static ContainerHostDataPath Regional { get; } = new ContainerHostDataPath(RegionalValue);
-        /// <summary> Nodes in the pool will be spread across different availability zones with best effort balancing. </summary>
-        public static ContainerHostDataPath Zonal { get; } = new ContainerHostDataPath(ZonalValue);
+        /// <summary> The path for multi-instances task to shared their files. </summary>
+        public static ContainerHostDataPath Shared { get; } = new ContainerHostDataPath(SharedValue);
+        /// <summary> The path for start task. </summary>
+        public static ContainerHostDataPath Startup { get; } = new ContainerHostDataPath(StartupValue);
+        /// <summary> The path contains all virtual file systems are mounted on this node. </summary>
+        public static ContainerHostDataPath VfsMounts { get; } = new ContainerHostDataPath(VfsMountsValue);
+        /// <summary> The task path. </summary>
+        public static ContainerHostDataPath Task { get; } = new ContainerHostDataPath(TaskValue);
+        /// <summary> The job-prep task path. </summary>
+        public static ContainerHostDataPath JobPrep { get; } = new ContainerHostDataPath(JobPrepValue);
+        /// <summary> The applications path. </summary>
+        public static ContainerHostDataPath Applications { get; } = new ContainerHostDataPath(ApplicationsValue);
         /// <summary> Determines if two <see cref="ContainerHostDataPath"/> values are the same. </summary>
         public static bool operator ==(ContainerHostDataPath left, ContainerHostDataPath right) => left.Equals(right);
         /// <summary> Determines if two <see cref="ContainerHostDataPath"/> values are not the same. </summary>

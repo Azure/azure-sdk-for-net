@@ -2811,7 +2811,10 @@ value = "myvalue",
                                 {
                                     enableAutomaticUpdates = false,
                                 },
-                                nodePlacementConfiguration = new object(),
+                                nodePlacementConfiguration = new
+                                {
+                                    policy = "zonal",
+                                },
                             },
                             resizeTimeout = "PT15M",
                             targetDedicatedNodes = 3,
@@ -2962,7 +2965,10 @@ value = "myvalue",
                                 {
                                     enableAutomaticUpdates = false,
                                 },
-                                nodePlacementConfiguration = new object(),
+                                nodePlacementConfiguration = new
+                                {
+                                    policy = "zonal",
+                                },
                             },
                             resizeTimeout = "PT15M",
                             targetDedicatedNodes = 3,
@@ -3057,7 +3063,10 @@ value = "myvalue",
                             {
                                 EnableAutomaticUpdates = false,
                             },
-                            NodePlacementConfiguration = new BatchNodePlacementConfiguration(),
+                            NodePlacementConfiguration = new BatchNodePlacementConfiguration
+                            {
+                                Policy = BatchNodePlacementPolicyType.Zonal,
+                            },
                         },
                         TaskSlotsPerNode = 2,
                         TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
@@ -3165,7 +3174,10 @@ Value = "myvalue",
                             {
                                 EnableAutomaticUpdates = false,
                             },
-                            NodePlacementConfiguration = new BatchNodePlacementConfiguration(),
+                            NodePlacementConfiguration = new BatchNodePlacementConfiguration
+                            {
+                                Policy = BatchNodePlacementPolicyType.Zonal,
+                            },
                         },
                         TaskSlotsPerNode = 2,
                         TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
@@ -3848,7 +3860,10 @@ value = "myvalue",
                                     {
                                         enableAutomaticUpdates = false,
                                     },
-                                    nodePlacementConfiguration = new object(),
+                                    nodePlacementConfiguration = new
+                                    {
+                                        policy = "zonal",
+                                    },
                                 },
                                 resizeTimeout = "PT15M",
                                 targetDedicatedNodes = 3,
@@ -4009,7 +4024,10 @@ value = "myvalue",
                                     {
                                         enableAutomaticUpdates = false,
                                     },
-                                    nodePlacementConfiguration = new object(),
+                                    nodePlacementConfiguration = new
+                                    {
+                                        policy = "zonal",
+                                    },
                                 },
                                 resizeTimeout = "PT15M",
                                 targetDedicatedNodes = 3,
@@ -4111,7 +4129,10 @@ value = "myvalue",
                             {
                                 EnableAutomaticUpdates = false,
                             },
-                            NodePlacementConfiguration = new BatchNodePlacementConfiguration(),
+                            NodePlacementConfiguration = new BatchNodePlacementConfiguration
+                            {
+                                Policy = BatchNodePlacementPolicyType.Zonal,
+                            },
                         },
                         TaskSlotsPerNode = 2,
                         TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
@@ -4227,7 +4248,10 @@ Value = "myvalue",
                             {
                                 EnableAutomaticUpdates = false,
                             },
-                            NodePlacementConfiguration = new BatchNodePlacementConfiguration(),
+                            NodePlacementConfiguration = new BatchNodePlacementConfiguration
+                            {
+                                Policy = BatchNodePlacementPolicyType.Zonal,
+                            },
                         },
                         TaskSlotsPerNode = 2,
                         TaskSchedulingPolicy = new BatchTaskSchedulingPolicy(BatchNodeFillType.Spread),
@@ -4503,6 +4527,7 @@ Value = "myvalue",
             {
 new
 {
+source = "Task",
 isReadOnly = true,
 }
             },
@@ -4540,6 +4565,7 @@ isReadOnly = true,
             {
 new
 {
+source = "Task",
 isReadOnly = true,
 }
             },
@@ -4572,6 +4598,7 @@ isReadOnly = true,
                 {
                     ContainerHostBatchBindMounts = {new ContainerHostBatchBindMountEntry
 {
+Source = ContainerHostDataPath.Task,
 IsReadOnly = true,
 }},
                 },
@@ -4601,6 +4628,7 @@ IsReadOnly = true,
                 {
                     ContainerHostBatchBindMounts = {new ContainerHostBatchBindMountEntry
 {
+Source = ContainerHostDataPath.Task,
 IsReadOnly = true,
 }},
                 },
@@ -4635,10 +4663,12 @@ IsReadOnly = true,
             {
 new
 {
+source = "Task",
 isReadOnly = true,
 },
 new
 {
+source = "Task",
 isReadOnly = true,
 }
             },
@@ -4676,10 +4706,12 @@ isReadOnly = true,
             {
 new
 {
+source = "Task",
 isReadOnly = true,
 },
 new
 {
+source = "Task",
 isReadOnly = true,
 }
             },
@@ -4712,9 +4744,11 @@ isReadOnly = true,
                 {
                     ContainerHostBatchBindMounts = {new ContainerHostBatchBindMountEntry
 {
+Source = ContainerHostDataPath.Task,
 IsReadOnly = true,
 }, new ContainerHostBatchBindMountEntry
 {
+Source = ContainerHostDataPath.Task,
 IsReadOnly = true,
 }},
                 },
@@ -4744,9 +4778,11 @@ IsReadOnly = true,
                 {
                     ContainerHostBatchBindMounts = {new ContainerHostBatchBindMountEntry
 {
+Source = ContainerHostDataPath.Task,
 IsReadOnly = true,
 }, new ContainerHostBatchBindMountEntry
 {
+Source = ContainerHostDataPath.Task,
 IsReadOnly = true,
 }},
                 },
