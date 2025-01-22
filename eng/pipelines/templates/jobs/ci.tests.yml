@@ -146,8 +146,6 @@ jobs:
           $(AdditionalTestArguments)
           $(DiagnosticArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
-        env:
-          AZURE_ENABLE_TEST_PROXY_DEBUG_LOGS: true
 
 
       - task: PublishTestResults@2
