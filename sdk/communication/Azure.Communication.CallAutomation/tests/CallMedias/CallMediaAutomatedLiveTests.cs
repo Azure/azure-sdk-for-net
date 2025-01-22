@@ -2736,8 +2736,9 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                     };
 
                     PlayOptions options = new PlayOptions(playFileSources, new List<CommunicationUserIdentifier>() { target })
-                    { OperationContext = "context",
-                     InterruptHoldAudio = true
+                    {
+                        OperationContext = "context",
+                        InterruptHoldAudio = true
                     };
 
                     // Assert the Play with multiple File Sources
