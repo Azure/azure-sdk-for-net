@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    public partial class DeviceRegistryUserAuthentication : IUtf8JsonSerializable, IJsonModel<DeviceRegistryUserAuthentication>
+    public partial class DeviceRegistryAuthentication : IUtf8JsonSerializable, IJsonModel<DeviceRegistryAuthentication>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceRegistryUserAuthentication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceRegistryAuthentication>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DeviceRegistryUserAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeviceRegistryAuthentication>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryUserAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceRegistryUserAuthentication)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceRegistryAuthentication)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("method"u8);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
         }
 
-        DeviceRegistryUserAuthentication IJsonModel<DeviceRegistryUserAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeviceRegistryAuthentication IJsonModel<DeviceRegistryAuthentication>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryUserAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceRegistryUserAuthentication)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceRegistryAuthentication)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeviceRegistryUserAuthentication(document.RootElement, options);
+            return DeserializeDeviceRegistryAuthentication(document.RootElement, options);
         }
 
-        internal static DeviceRegistryUserAuthentication DeserializeDeviceRegistryUserAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DeviceRegistryAuthentication DeserializeDeviceRegistryAuthentication(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -119,38 +119,38 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeviceRegistryUserAuthentication(method, usernamePasswordCredentials, x509Credentials, serializedAdditionalRawData);
+            return new DeviceRegistryAuthentication(method, usernamePasswordCredentials, x509Credentials, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DeviceRegistryUserAuthentication>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeviceRegistryAuthentication>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryUserAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryAuthentication>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceRegistryUserAuthentication)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceRegistryAuthentication)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DeviceRegistryUserAuthentication IPersistableModel<DeviceRegistryUserAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DeviceRegistryAuthentication IPersistableModel<DeviceRegistryAuthentication>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryUserAuthentication>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryAuthentication>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDeviceRegistryUserAuthentication(document.RootElement, options);
+                        return DeserializeDeviceRegistryAuthentication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceRegistryUserAuthentication)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceRegistryAuthentication)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DeviceRegistryUserAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeviceRegistryAuthentication>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

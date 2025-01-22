@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
-    public partial class DeviceRegistryMqttTopic : IUtf8JsonSerializable, IJsonModel<DeviceRegistryMqttTopic>
+    public partial class DeviceRegistryTopic : IUtf8JsonSerializable, IJsonModel<DeviceRegistryTopic>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceRegistryMqttTopic>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeviceRegistryTopic>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DeviceRegistryMqttTopic>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeviceRegistryTopic>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryMqttTopic>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryTopic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceRegistryMqttTopic)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceRegistryTopic)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("path"u8);
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
         }
 
-        DeviceRegistryMqttTopic IJsonModel<DeviceRegistryMqttTopic>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeviceRegistryTopic IJsonModel<DeviceRegistryTopic>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryMqttTopic>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryTopic>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceRegistryMqttTopic)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceRegistryTopic)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeviceRegistryMqttTopic(document.RootElement, options);
+            return DeserializeDeviceRegistryTopic(document.RootElement, options);
         }
 
-        internal static DeviceRegistryMqttTopic DeserializeDeviceRegistryMqttTopic(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DeviceRegistryTopic DeserializeDeviceRegistryTopic(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -104,38 +104,38 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeviceRegistryMqttTopic(path, retain, serializedAdditionalRawData);
+            return new DeviceRegistryTopic(path, retain, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DeviceRegistryMqttTopic>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeviceRegistryTopic>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryMqttTopic>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryTopic>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceRegistryMqttTopic)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceRegistryTopic)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DeviceRegistryMqttTopic IPersistableModel<DeviceRegistryMqttTopic>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DeviceRegistryTopic IPersistableModel<DeviceRegistryTopic>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryMqttTopic>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeviceRegistryTopic>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDeviceRegistryMqttTopic(document.RootElement, options);
+                        return DeserializeDeviceRegistryTopic(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceRegistryMqttTopic)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceRegistryTopic)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DeviceRegistryMqttTopic>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeviceRegistryTopic>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

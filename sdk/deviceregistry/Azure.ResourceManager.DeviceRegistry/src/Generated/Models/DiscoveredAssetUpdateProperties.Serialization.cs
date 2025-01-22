@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             string serialNumber = default;
             string defaultDatasetsConfiguration = default;
             string defaultEventsConfiguration = default;
-            DeviceRegistryMqttTopic defaultTopic = default;
+            DeviceRegistryTopic defaultTopic = default;
             IList<DiscoveredDataset> datasets = default;
             IList<DiscoveredEvent> events = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    defaultTopic = DeviceRegistryMqttTopic.DeserializeDeviceRegistryMqttTopic(property.Value, options);
+                    defaultTopic = DeviceRegistryTopic.DeserializeDeviceRegistryTopic(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datasets"u8))

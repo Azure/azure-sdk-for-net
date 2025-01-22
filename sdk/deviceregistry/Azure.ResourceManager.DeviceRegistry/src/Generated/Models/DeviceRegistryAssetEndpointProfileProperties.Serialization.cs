@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             string uuid = default;
             Uri targetAddress = default;
             string endpointProfileType = default;
-            DeviceRegistryUserAuthentication authentication = default;
+            DeviceRegistryAuthentication authentication = default;
             string additionalConfiguration = default;
             string discoveredAssetEndpointProfileRef = default;
             AssetEndpointProfileStatus status = default;
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    authentication = DeviceRegistryUserAuthentication.DeserializeDeviceRegistryUserAuthentication(property.Value, options);
+                    authentication = DeviceRegistryAuthentication.DeserializeDeviceRegistryAuthentication(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("additionalConfiguration"u8))

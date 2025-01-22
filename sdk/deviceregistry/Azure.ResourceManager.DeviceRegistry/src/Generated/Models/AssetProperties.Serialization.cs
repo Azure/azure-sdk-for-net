@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             IList<string> discoveredAssetRefs = default;
             string defaultDatasetsConfiguration = default;
             string defaultEventsConfiguration = default;
-            DeviceRegistryMqttTopic defaultTopic = default;
+            DeviceRegistryTopic defaultTopic = default;
             IList<DeviceRegistryDataset> datasets = default;
             IList<DeviceRegistryEvent> events = default;
             DeviceRegistryAssetStatus status = default;
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    defaultTopic = DeviceRegistryMqttTopic.DeserializeDeviceRegistryMqttTopic(property.Value, options);
+                    defaultTopic = DeviceRegistryTopic.DeserializeDeviceRegistryTopic(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("datasets"u8))

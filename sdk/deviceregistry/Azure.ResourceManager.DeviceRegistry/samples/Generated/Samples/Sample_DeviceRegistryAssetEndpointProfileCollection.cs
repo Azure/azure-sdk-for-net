@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             {
                 Properties = new DeviceRegistryAssetEndpointProfileProperties(new Uri("https://www.example.com/myTargetAddress"), "myEndpointProfileType")
                 {
-                    Authentication = new DeviceRegistryUserAuthentication(AuthenticationMethod.Anonymous),
+                    Authentication = new DeviceRegistryAuthentication(AuthenticationMethod.Anonymous),
                 },
                 Tags =
 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
             {
                 Properties = new DeviceRegistryAssetEndpointProfileProperties(new Uri("https://www.example.com/myTargetAddress"), "myEndpointProfileType")
                 {
-                    Authentication = new DeviceRegistryUserAuthentication(AuthenticationMethod.Anonymous),
+                    Authentication = new DeviceRegistryAuthentication(AuthenticationMethod.Anonymous),
                     DiscoveredAssetEndpointProfileRef = "discoveredAssetEndpointProfile1",
                 },
                 Tags =

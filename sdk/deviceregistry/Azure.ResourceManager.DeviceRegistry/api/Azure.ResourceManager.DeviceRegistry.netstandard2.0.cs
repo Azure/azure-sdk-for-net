@@ -508,10 +508,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     public static partial class ArmDeviceRegistryModelFactory
     {
         public static Azure.ResourceManager.DeviceRegistry.Models.AssetEndpointProfileStatusError AssetEndpointProfileStatusError(int? code = default(int?), string message = null) { throw null; }
-        public static Azure.ResourceManager.DeviceRegistry.Models.AssetProperties AssetProperties(string uuid = null, bool? isEnabled = default(bool?), string externalAssetId = null, string displayName = null, string description = null, string assetEndpointProfileRef = null, long? version = default(long?), string manufacturer = null, System.Uri manufacturerUri = null, string model = null, string productCode = null, string hardwareRevision = null, string softwareRevision = null, System.Uri documentationUri = null, string serialNumber = null, System.Collections.Generic.IDictionary<string, System.BinaryData> attributes = null, System.Collections.Generic.IEnumerable<string> discoveredAssetRefs = null, string defaultDatasetsConfiguration = null, string defaultEventsConfiguration = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic defaultTopic = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDataset> datasets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryEvent> events = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetStatus status = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.DeviceRegistry.Models.AssetProperties AssetProperties(string uuid = null, bool? isEnabled = default(bool?), string externalAssetId = null, string displayName = null, string description = null, string assetEndpointProfileRef = null, long? version = default(long?), string manufacturer = null, System.Uri manufacturerUri = null, string model = null, string productCode = null, string hardwareRevision = null, string softwareRevision = null, System.Uri documentationUri = null, string serialNumber = null, System.Collections.Generic.IDictionary<string, System.BinaryData> attributes = null, System.Collections.Generic.IEnumerable<string> discoveredAssetRefs = null, string defaultDatasetsConfiguration = null, string defaultEventsConfiguration = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic defaultTopic = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDataset> datasets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryEvent> events = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetStatus status = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.DeviceRegistryAssetData DeviceRegistryAssetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DeviceRegistry.Models.AssetProperties properties = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.DeviceRegistryAssetEndpointProfileData DeviceRegistryAssetEndpointProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetEndpointProfileProperties properties = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryExtendedLocation extendedLocation = null) { throw null; }
-        public static Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetEndpointProfileProperties DeviceRegistryAssetEndpointProfileProperties(string uuid = null, System.Uri targetAddress = null, string endpointProfileType = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryUserAuthentication authentication = null, string additionalConfiguration = null, string discoveredAssetEndpointProfileRef = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.AssetEndpointProfileStatusError> statusErrors = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetEndpointProfileProperties DeviceRegistryAssetEndpointProfileProperties(string uuid = null, System.Uri targetAddress = null, string endpointProfileType = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAuthentication authentication = null, string additionalConfiguration = null, string discoveredAssetEndpointProfileRef = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.AssetEndpointProfileStatusError> statusErrors = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetStatus DeviceRegistryAssetStatus(System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetStatusError> errors = null, long? version = default(long?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetStatusDataset> datasets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetStatusEvent> events = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetStatusDataset DeviceRegistryAssetStatusDataset(string name = null, Azure.ResourceManager.DeviceRegistry.Models.MessageSchemaReference messageSchemaReference = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetStatusError DeviceRegistryAssetStatusError(int? code = default(int?), string message = null) { throw null; }
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public static Azure.ResourceManager.DeviceRegistry.DeviceRegistryBillingContainerData DeviceRegistryBillingContainerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState? billingContainerProvisioningState = default(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState?), Azure.ETag? etag = default(Azure.ETag?)) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.DeviceRegistryDiscoveredAssetData DeviceRegistryDiscoveredAssetData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDiscoveredAssetProperties properties = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.DeviceRegistryDiscoveredAssetEndpointProfileData DeviceRegistryDiscoveredAssetEndpointProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DeviceRegistry.Models.DiscoveredAssetEndpointProfileProperties properties = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryExtendedLocation extendedLocation = null) { throw null; }
-        public static Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDiscoveredAssetProperties DeviceRegistryDiscoveredAssetProperties(string assetEndpointProfileRef = null, string discoveryId = null, long version = (long)0, string manufacturer = null, System.Uri manufacturerUri = null, string model = null, string productCode = null, string hardwareRevision = null, string softwareRevision = null, System.Uri documentationUri = null, string serialNumber = null, string defaultDatasetsConfiguration = null, string defaultEventsConfiguration = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic defaultTopic = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.DiscoveredDataset> datasets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.DiscoveredEvent> events = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDiscoveredAssetProperties DeviceRegistryDiscoveredAssetProperties(string assetEndpointProfileRef = null, string discoveryId = null, long version = (long)0, string manufacturer = null, System.Uri manufacturerUri = null, string model = null, string productCode = null, string hardwareRevision = null, string softwareRevision = null, System.Uri documentationUri = null, string serialNumber = null, string defaultDatasetsConfiguration = null, string defaultEventsConfiguration = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic defaultTopic = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.DiscoveredDataset> datasets = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.DeviceRegistry.Models.DiscoveredEvent> events = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.DeviceRegistrySchemaData DeviceRegistrySchemaData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistrySchemaProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistrySchemaProperties DeviceRegistrySchemaProperties(string uuid = null, string displayName = null, string description = null, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistrySchemaFormat format = default(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistrySchemaFormat), Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistrySchemaType schemaType = default(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistrySchemaType), Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState? provisioningState = default(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState?), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.DeviceRegistry.DeviceRegistrySchemaRegistryData DeviceRegistrySchemaRegistryData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistrySchemaRegistryProperties properties = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     {
         public AssetEndpointProfileUpdateProperties() { }
         public string AdditionalConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryUserAuthentication Authentication { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAuthentication Authentication { get { throw null; } set { } }
         public string EndpointProfileType { get { throw null; } set { } }
         public System.Uri TargetAddress { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDataset> Datasets { get { throw null; } }
         public string DefaultDatasetsConfiguration { get { throw null; } set { } }
         public string DefaultEventsConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic DefaultTopic { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic DefaultTopic { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public System.Collections.Generic.IList<string> DiscoveredAssetRefs { get { throw null; } }
         public string DisplayName { get { throw null; } set { } }
@@ -596,7 +596,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDataset> Datasets { get { throw null; } }
         public string DefaultDatasetsConfiguration { get { throw null; } set { } }
         public string DefaultEventsConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic DefaultTopic { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic DefaultTopic { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public System.Uri DocumentationUri { get { throw null; } set { } }
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     {
         public DeviceRegistryAssetEndpointProfileProperties(System.Uri targetAddress, string endpointProfileType) { }
         public string AdditionalConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryUserAuthentication Authentication { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAuthentication Authentication { get { throw null; } set { } }
         public string DiscoveredAssetEndpointProfileRef { get { throw null; } set { } }
         public string EndpointProfileType { get { throw null; } set { } }
         public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState? ProvisioningState { get { throw null; } }
@@ -748,6 +748,19 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetStatusEvent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAssetStatusEvent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DeviceRegistryAuthentication : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAuthentication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAuthentication>
+    {
+        public DeviceRegistryAuthentication(Azure.ResourceManager.DeviceRegistry.Models.AuthenticationMethod method) { }
+        public Azure.ResourceManager.DeviceRegistry.Models.AuthenticationMethod Method { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryUsernamePasswordCredentials UsernamePasswordCredentials { get { throw null; } set { } }
+        public string X509CredentialsCertificateSecretName { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAuthentication System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAuthentication>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAuthentication>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAuthentication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAuthentication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAuthentication>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryAuthentication>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DeviceRegistryDataPoint : Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDataPointBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDataPoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDataPoint>
     {
         public DeviceRegistryDataPoint(string name, string dataSource) : base (default(string), default(string)) { }
@@ -778,7 +791,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDataPoint> DataPoints { get { throw null; } }
         public string DatasetConfiguration { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic Topic { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic Topic { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDataset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDataset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryDataset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -817,7 +830,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceRegistry.Models.DiscoveredDataset> Datasets { get { throw null; } }
         public string DefaultDatasetsConfiguration { get { throw null; } set { } }
         public string DefaultEventsConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic DefaultTopic { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic DefaultTopic { get { throw null; } set { } }
         public string DiscoveryId { get { throw null; } set { } }
         public System.Uri DocumentationUri { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceRegistry.Models.DiscoveredEvent> Events { get { throw null; } }
@@ -854,7 +867,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public string EventConfiguration { get { throw null; } set { } }
         public string EventNotifier { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic Topic { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic Topic { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryEventBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryEventBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryEventBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -873,18 +886,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryExtendedLocation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryExtendedLocation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryExtendedLocation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryExtendedLocation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class DeviceRegistryMqttTopic : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic>
-    {
-        public DeviceRegistryMqttTopic(string path) { }
-        public string Path { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopicRetainType? Retain { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DeviceRegistryProvisioningState : System.IEquatable<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryProvisioningState>
@@ -1003,6 +1004,18 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistrySchemaVersionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistrySchemaVersionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class DeviceRegistryTopic : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic>
+    {
+        public DeviceRegistryTopic(string path) { }
+        public string Path { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopicRetainType? Retain { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct DeviceRegistryTopicRetainType : System.IEquatable<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopicRetainType>
     {
@@ -1020,19 +1033,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public static implicit operator Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopicRetainType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopicRetainType left, Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopicRetainType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class DeviceRegistryUserAuthentication : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryUserAuthentication>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryUserAuthentication>
-    {
-        public DeviceRegistryUserAuthentication(Azure.ResourceManager.DeviceRegistry.Models.AuthenticationMethod method) { }
-        public Azure.ResourceManager.DeviceRegistry.Models.AuthenticationMethod Method { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryUsernamePasswordCredentials UsernamePasswordCredentials { get { throw null; } set { } }
-        public string X509CredentialsCertificateSecretName { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryUserAuthentication System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryUserAuthentication>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryUserAuthentication>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryUserAuthentication System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryUserAuthentication>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryUserAuthentication>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryUserAuthentication>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class DeviceRegistryUsernamePasswordCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryUsernamePasswordCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryUsernamePasswordCredentials>
     {
@@ -1085,7 +1085,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceRegistry.Models.DiscoveredDataset> Datasets { get { throw null; } }
         public string DefaultDatasetsConfiguration { get { throw null; } set { } }
         public string DefaultEventsConfiguration { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic DefaultTopic { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic DefaultTopic { get { throw null; } set { } }
         public string DiscoveryId { get { throw null; } set { } }
         public System.Uri DocumentationUri { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceRegistry.Models.DiscoveredEvent> Events { get { throw null; } }
@@ -1124,7 +1124,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public System.Collections.Generic.IList<Azure.ResourceManager.DeviceRegistry.Models.DiscoveredDataPoint> DataPoints { get { throw null; } }
         public string DatasetConfiguration { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic Topic { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic Topic { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceRegistry.Models.DiscoveredDataset System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DiscoveredDataset>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DiscoveredDataset>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1139,7 +1139,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public string EventNotifier { get { throw null; } set { } }
         public System.DateTimeOffset? LastUpdatedOn { get { throw null; } set { } }
         public string Name { get { throw null; } set { } }
-        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryMqttTopic Topic { get { throw null; } set { } }
+        public Azure.ResourceManager.DeviceRegistry.Models.DeviceRegistryTopic Topic { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.DeviceRegistry.Models.DiscoveredEvent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DiscoveredEvent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DeviceRegistry.Models.DiscoveredEvent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

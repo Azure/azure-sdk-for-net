@@ -60,14 +60,14 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
                     DiscoveredAssetRefs = { "discoveredAsset1", "discoveredAsset2" },
                     DefaultDatasetsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
                     DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
-                    DefaultTopic = new DeviceRegistryMqttTopic("/path/defaultTopic")
+                    DefaultTopic = new DeviceRegistryTopic("/path/defaultTopic")
                     {
                         Retain = DeviceRegistryTopicRetainType.Keep,
                     },
                     Datasets = {new DeviceRegistryDataset("dataset1")
 {
 DatasetConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
-Topic = new DeviceRegistryMqttTopic("/path/dataset1")
+Topic = new DeviceRegistryTopic("/path/dataset1")
 {
 Retain = DeviceRegistryTopicRetainType.Keep,
 },
@@ -85,7 +85,7 @@ DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"que
 {
 ObservabilityMode = EventObservabilityMode.None,
 EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
-Topic = new DeviceRegistryMqttTopic("/path/event1")
+Topic = new DeviceRegistryTopic("/path/event1")
 {
 Retain = DeviceRegistryTopicRetainType.Keep,
 },
@@ -152,14 +152,14 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
                     SerialNumber = "64-103816-519918-8",
                     DefaultDatasetsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
                     DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
-                    DefaultTopic = new DeviceRegistryMqttTopic("/path/defaultTopic")
+                    DefaultTopic = new DeviceRegistryTopic("/path/defaultTopic")
                     {
                         Retain = DeviceRegistryTopicRetainType.Keep,
                     },
                     Datasets = {new DeviceRegistryDataset("dataset1")
 {
 DatasetConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
-Topic = new DeviceRegistryMqttTopic("/path/dataset1")
+Topic = new DeviceRegistryTopic("/path/dataset1")
 {
 Retain = DeviceRegistryTopicRetainType.Keep,
 },
@@ -177,7 +177,7 @@ DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"que
 {
 ObservabilityMode = EventObservabilityMode.None,
 EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
-Topic = new DeviceRegistryMqttTopic("/path/event1")
+Topic = new DeviceRegistryTopic("/path/event1")
 {
 Retain = DeviceRegistryTopicRetainType.Keep,
 },
@@ -243,14 +243,14 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
                     SerialNumber = "64-103816-519918-8",
                     DefaultDatasetsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
                     DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
-                    DefaultTopic = new DeviceRegistryMqttTopic("/path/defaultTopic")
+                    DefaultTopic = new DeviceRegistryTopic("/path/defaultTopic")
                     {
                         Retain = DeviceRegistryTopicRetainType.Keep,
                     },
                     Datasets = {new DeviceRegistryDataset("dataset1")
 {
 DatasetConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
-Topic = new DeviceRegistryMqttTopic("/path/dataset1")
+Topic = new DeviceRegistryTopic("/path/dataset1")
 {
 Retain = DeviceRegistryTopicRetainType.Keep,
 },
@@ -268,7 +268,7 @@ DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"que
 {
 ObservabilityMode = EventObservabilityMode.None,
 EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
-Topic = new DeviceRegistryMqttTopic("/path/event1")
+Topic = new DeviceRegistryTopic("/path/event1")
 {
 Retain = DeviceRegistryTopicRetainType.Keep,
 },
@@ -334,14 +334,14 @@ EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":8,\"queueSi
                     SerialNumber = "64-103816-519918-8",
                     DefaultDatasetsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
                     DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
-                    DefaultTopic = new DeviceRegistryMqttTopic("/path/defaultTopic")
+                    DefaultTopic = new DeviceRegistryTopic("/path/defaultTopic")
                     {
                         Retain = DeviceRegistryTopicRetainType.Keep,
                     },
                     Datasets = {new DeviceRegistryDataset("dataset1")
 {
 DatasetConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
-Topic = new DeviceRegistryMqttTopic("/path/dataset1")
+Topic = new DeviceRegistryTopic("/path/dataset1")
 {
 Retain = DeviceRegistryTopicRetainType.Keep,
 },
@@ -359,7 +359,7 @@ DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"que
 {
 ObservabilityMode = EventObservabilityMode.None,
 EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
-Topic = new DeviceRegistryMqttTopic("/path/event1")
+Topic = new DeviceRegistryTopic("/path/event1")
 {
 Retain = DeviceRegistryTopicRetainType.Keep,
 },

@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="topic"> Object that describes the topic information for the specific dataset. </param>
         /// <param name="dataPoints"> Array of data points that are part of the dataset. Each data point can have per-data point configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryDataset(string name, string datasetConfiguration, DeviceRegistryMqttTopic topic, IList<DeviceRegistryDataPoint> dataPoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeviceRegistryDataset(string name, string datasetConfiguration, DeviceRegistryTopic topic, IList<DeviceRegistryDataPoint> dataPoints, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             DatasetConfiguration = datasetConfiguration;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Stringified JSON that contains connector-specific JSON string that describes configuration for the specific dataset. </summary>
         public string DatasetConfiguration { get; set; }
         /// <summary> Object that describes the topic information for the specific dataset. </summary>
-        public DeviceRegistryMqttTopic Topic { get; set; }
+        public DeviceRegistryTopic Topic { get; set; }
         /// <summary> Array of data points that are part of the dataset. Each data point can have per-data point configuration. </summary>
         public IList<DeviceRegistryDataPoint> DataPoints { get; }
     }

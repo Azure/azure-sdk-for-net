@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             string name = default;
             string eventNotifier = default;
             string eventConfiguration = default;
-            DeviceRegistryMqttTopic topic = default;
+            DeviceRegistryTopic topic = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    topic = DeviceRegistryMqttTopic.DeserializeDeviceRegistryMqttTopic(property.Value, options);
+                    topic = DeviceRegistryTopic.DeserializeDeviceRegistryTopic(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

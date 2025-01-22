@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             }
             Uri targetAddress = default;
             string endpointProfileType = default;
-            DeviceRegistryUserAuthentication authentication = default;
+            DeviceRegistryAuthentication authentication = default;
             string additionalConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    authentication = DeviceRegistryUserAuthentication.DeserializeDeviceRegistryUserAuthentication(property.Value, options);
+                    authentication = DeviceRegistryAuthentication.DeserializeDeviceRegistryAuthentication(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("additionalConfiguration"u8))

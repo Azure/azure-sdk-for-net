@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="topic"> Object that describes the topic information for the specific event. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="observabilityMode"> An indication of how the event should be mapped to OpenTelemetry. </param>
-        internal DeviceRegistryEvent(string name, string eventNotifier, string eventConfiguration, DeviceRegistryMqttTopic topic, IDictionary<string, BinaryData> serializedAdditionalRawData, EventObservabilityMode? observabilityMode) : base(name, eventNotifier, eventConfiguration, topic, serializedAdditionalRawData)
+        internal DeviceRegistryEvent(string name, string eventNotifier, string eventConfiguration, DeviceRegistryTopic topic, IDictionary<string, BinaryData> serializedAdditionalRawData, EventObservabilityMode? observabilityMode) : base(name, eventNotifier, eventConfiguration, topic, serializedAdditionalRawData)
         {
             ObservabilityMode = observabilityMode;
         }

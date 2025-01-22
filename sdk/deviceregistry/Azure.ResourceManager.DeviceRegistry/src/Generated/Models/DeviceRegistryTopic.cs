@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> Object that describes the topic information. </summary>
-    public partial class DeviceRegistryMqttTopic
+    public partial class DeviceRegistryTopic
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,29 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistryMqttTopic"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryTopic"/>. </summary>
         /// <param name="path"> The topic path for messages published to an MQTT broker. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="path"/> is null. </exception>
-        public DeviceRegistryMqttTopic(string path)
+        public DeviceRegistryTopic(string path)
         {
             Argument.AssertNotNull(path, nameof(path));
 
             Path = path;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistryMqttTopic"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryTopic"/>. </summary>
         /// <param name="path"> The topic path for messages published to an MQTT broker. </param>
         /// <param name="retain"> When set to 'Keep', messages published to an MQTT broker will have the retain flag set. Default: 'Never'. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryMqttTopic(string path, DeviceRegistryTopicRetainType? retain, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeviceRegistryTopic(string path, DeviceRegistryTopicRetainType? retain, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Path = path;
             Retain = retain;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistryMqttTopic"/> for deserialization. </summary>
-        internal DeviceRegistryMqttTopic()
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryTopic"/> for deserialization. </summary>
+        internal DeviceRegistryTopic()
         {
         }
 

@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="topic"> Object that describes the topic information for the specific event. </param>
         /// <param name="lastUpdatedOn"> UTC timestamp indicating when the event was added or modified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DiscoveredEvent(string name, string eventNotifier, string eventConfiguration, DeviceRegistryMqttTopic topic, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DiscoveredEvent(string name, string eventNotifier, string eventConfiguration, DeviceRegistryTopic topic, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             EventNotifier = eventNotifier;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Stringified JSON that contains connector-specific configuration for the event. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </summary>
         public string EventConfiguration { get; set; }
         /// <summary> Object that describes the topic information for the specific event. </summary>
-        public DeviceRegistryMqttTopic Topic { get; set; }
+        public DeviceRegistryTopic Topic { get; set; }
         /// <summary> UTC timestamp indicating when the event was added or modified. </summary>
         public DateTimeOffset? LastUpdatedOn { get; set; }
     }

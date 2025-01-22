@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
                 Properties = new DiscoveredAssetUpdateProperties
                 {
                     DocumentationUri = new Uri("https://www.example.com/manual-2"),
-                    DefaultTopic = new DeviceRegistryMqttTopic("/path/defaultTopic")
+                    DefaultTopic = new DeviceRegistryTopic("/path/defaultTopic")
                     {
                         Retain = DeviceRegistryTopicRetainType.Never,
                     },

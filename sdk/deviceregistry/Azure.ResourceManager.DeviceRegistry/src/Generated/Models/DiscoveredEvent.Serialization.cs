@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             string name = default;
             string eventNotifier = default;
             string eventConfiguration = default;
-            DeviceRegistryMqttTopic topic = default;
+            DeviceRegistryTopic topic = default;
             DateTimeOffset? lastUpdatedOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     {
                         continue;
                     }
-                    topic = DeviceRegistryMqttTopic.DeserializeDeviceRegistryMqttTopic(property.Value, options);
+                    topic = DeviceRegistryTopic.DeserializeDeviceRegistryTopic(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastUpdatedOn"u8))

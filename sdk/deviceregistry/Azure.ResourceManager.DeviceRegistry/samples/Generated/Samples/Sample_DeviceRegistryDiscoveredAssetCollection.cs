@@ -55,14 +55,14 @@ namespace Azure.ResourceManager.DeviceRegistry.Samples
                     SerialNumber = "64-103816-519918-8",
                     DefaultDatasetsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
                     DefaultEventsConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
-                    DefaultTopic = new DeviceRegistryMqttTopic("/path/defaultTopic")
+                    DefaultTopic = new DeviceRegistryTopic("/path/defaultTopic")
                     {
                         Retain = DeviceRegistryTopicRetainType.Keep,
                     },
                     Datasets = {new DiscoveredDataset("dataset1")
 {
 DatasetConfiguration = "{\"publishingInterval\":10,\"samplingInterval\":15,\"queueSize\":20}",
-Topic = new DeviceRegistryMqttTopic("/path/dataset1")
+Topic = new DeviceRegistryTopic("/path/dataset1")
 {
 Retain = DeviceRegistryTopicRetainType.Keep,
 },
@@ -77,7 +77,7 @@ DataPointConfiguration = "{\"publishingInterval\":4,\"samplingInterval\":4,\"que
                     Events = {new DiscoveredEvent("event1", "nsu=http://microsoft.com/Opc/OpcPlc/;s=FastUInt3")
 {
 EventConfiguration = "{\"publishingInterval\":7,\"samplingInterval\":1,\"queueSize\":8}",
-Topic = new DeviceRegistryMqttTopic("/path/event1")
+Topic = new DeviceRegistryTopic("/path/event1")
 {
 Retain = DeviceRegistryTopicRetainType.Keep,
 },

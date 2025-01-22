@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> Definition of the client authentication mechanism to the server. </summary>
-    public partial class DeviceRegistryUserAuthentication
+    public partial class DeviceRegistryAuthentication
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistryUserAuthentication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryAuthentication"/>. </summary>
         /// <param name="method"> Defines the method to authenticate the user of the client at the server. </param>
-        public DeviceRegistryUserAuthentication(AuthenticationMethod method)
+        public DeviceRegistryAuthentication(AuthenticationMethod method)
         {
             Method = method;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistryUserAuthentication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryAuthentication"/>. </summary>
         /// <param name="method"> Defines the method to authenticate the user of the client at the server. </param>
         /// <param name="usernamePasswordCredentials"> Defines the username and password references when UsernamePassword user authentication mode is selected. </param>
         /// <param name="x509Credentials"> Defines the certificate reference when Certificate user authentication mode is selected. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryUserAuthentication(AuthenticationMethod method, DeviceRegistryUsernamePasswordCredentials usernamePasswordCredentials, DeviceRegistryX509Credentials x509Credentials, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeviceRegistryAuthentication(AuthenticationMethod method, DeviceRegistryUsernamePasswordCredentials usernamePasswordCredentials, DeviceRegistryX509Credentials x509Credentials, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Method = method;
             UsernamePasswordCredentials = usernamePasswordCredentials;
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="DeviceRegistryUserAuthentication"/> for deserialization. </summary>
-        internal DeviceRegistryUserAuthentication()
+        /// <summary> Initializes a new instance of <see cref="DeviceRegistryAuthentication"/> for deserialization. </summary>
+        internal DeviceRegistryAuthentication()
         {
         }
 

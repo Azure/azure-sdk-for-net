@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="events"> Array of events that are part of the asset. Each event can have per-event configuration. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryDiscoveredAssetProperties(string assetEndpointProfileRef, string discoveryId, long version, string manufacturer, Uri manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, Uri documentationUri, string serialNumber, string defaultDatasetsConfiguration, string defaultEventsConfiguration, DeviceRegistryMqttTopic defaultTopic, IList<DiscoveredDataset> datasets, IList<DiscoveredEvent> events, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeviceRegistryDiscoveredAssetProperties(string assetEndpointProfileRef, string discoveryId, long version, string manufacturer, Uri manufacturerUri, string model, string productCode, string hardwareRevision, string softwareRevision, Uri documentationUri, string serialNumber, string defaultDatasetsConfiguration, string defaultEventsConfiguration, DeviceRegistryTopic defaultTopic, IList<DiscoveredDataset> datasets, IList<DiscoveredEvent> events, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AssetEndpointProfileRef = assetEndpointProfileRef;
             DiscoveryId = discoveryId;
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Stringified JSON that contains connector-specific default configuration for all events. Each event can have its own configuration that overrides the default settings here. </summary>
         public string DefaultEventsConfiguration { get; set; }
         /// <summary> Object that describes the default topic information for the asset. </summary>
-        public DeviceRegistryMqttTopic DefaultTopic { get; set; }
+        public DeviceRegistryTopic DefaultTopic { get; set; }
         /// <summary> Array of datasets that are part of the asset. Each dataset spec describes the data points that make up the set. </summary>
         public IList<DiscoveredDataset> Datasets { get; }
         /// <summary> Array of events that are part of the asset. Each event can have per-event configuration. </summary>

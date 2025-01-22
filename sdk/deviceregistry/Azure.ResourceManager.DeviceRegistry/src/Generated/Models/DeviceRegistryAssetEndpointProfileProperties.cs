@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="status"> Read only object to reflect changes that have occurred on the Edge. Similar to Kubernetes status property for custom resources. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryAssetEndpointProfileProperties(string uuid, Uri targetAddress, string endpointProfileType, DeviceRegistryUserAuthentication authentication, string additionalConfiguration, string discoveredAssetEndpointProfileRef, AssetEndpointProfileStatus status, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeviceRegistryAssetEndpointProfileProperties(string uuid, Uri targetAddress, string endpointProfileType, DeviceRegistryAuthentication authentication, string additionalConfiguration, string discoveredAssetEndpointProfileRef, AssetEndpointProfileStatus status, DeviceRegistryProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Uuid = uuid;
             TargetAddress = targetAddress;
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Defines the configuration for the connector type that is being used with the endpoint profile. </summary>
         public string EndpointProfileType { get; set; }
         /// <summary> Defines the client authentication mechanism to the server. </summary>
-        public DeviceRegistryUserAuthentication Authentication { get; set; }
+        public DeviceRegistryAuthentication Authentication { get; set; }
         /// <summary> Stringified JSON that contains connectivity type specific further configuration (e.g. OPC UA, Modbus, ONVIF). </summary>
         public string AdditionalConfiguration { get; set; }
         /// <summary> Reference to a discovered asset endpoint profile. Populated only if the asset endpoint profile has been created from discovery flow. Discovered asset endpoint profile name must be provided. </summary>

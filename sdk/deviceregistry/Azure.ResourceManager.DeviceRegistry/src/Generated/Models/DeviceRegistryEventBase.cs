@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="eventConfiguration"> Stringified JSON that contains connector-specific configuration for the event. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </param>
         /// <param name="topic"> Object that describes the topic information for the specific event. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryEventBase(string name, string eventNotifier, string eventConfiguration, DeviceRegistryMqttTopic topic, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeviceRegistryEventBase(string name, string eventNotifier, string eventConfiguration, DeviceRegistryTopic topic, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             EventNotifier = eventNotifier;
@@ -85,6 +85,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> Stringified JSON that contains connector-specific configuration for the event. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </summary>
         public string EventConfiguration { get; set; }
         /// <summary> Object that describes the topic information for the specific event. </summary>
-        public DeviceRegistryMqttTopic Topic { get; set; }
+        public DeviceRegistryTopic Topic { get; set; }
     }
 }
