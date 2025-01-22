@@ -53,94 +53,94 @@ namespace Azure.ResourceManager.IotOperations.Tests
         }
 
         // Get Instances
-        protected async Task<InstanceResourceCollection> GetInstanceResourceCollectionAsync(
+        protected async Task<IotOperationsInstanceCollection> GetInstanceCollectionAsync(
             string resourceGroupName
         )
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
-            return rg.GetInstanceResources();
+            return rg.GetIotOperationsInstances();
         }
 
         // Get Brokers
-        protected async Task<BrokerResourceCollection> GetBrokerResourceCollectionAsync(
+        protected async Task<IotOperationsBrokerCollection> GetBrokerCollectionAsync(
             string resourceGroupName
         )
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
-            InstanceResourceCollection instances = rg.GetInstanceResources();
-            InstanceResource instance = await instances.GetAsync(InstanceName);
-            return instance.GetBrokerResources();
+            IotOperationsInstanceCollection instances = rg.GetIotOperationsInstances();
+            IotOperationsInstanceResource instance = await instances.GetAsync(InstanceName);
+            return instance.GetIotOperationsBrokers();
         }
 
         // Get BrokerAuthentications
-        protected async Task<BrokerAuthenticationResourceCollection> GetBrokerAuthenticationResourceCollectionAsync(
+        protected async Task<IotOperationsBrokerAuthenticationCollection> GetBrokerAuthenticationCollectionAsync(
             string resourceGroupName
         )
         {
-            BrokerResourceCollection brokers = await GetBrokerResourceCollectionAsync(
+            IotOperationsBrokerCollection brokers = await GetBrokerCollectionAsync(
                 resourceGroupName
             );
-            BrokerResource broker = await brokers.GetAsync(BrokersName);
-            return broker.GetBrokerAuthenticationResources();
+            IotOperationsBrokerResource broker = await brokers.GetAsync(BrokersName);
+            return broker.GetIotOperationsBrokerAuthentications();
         }
 
         // Get BrokerAuthorizations
-        protected async Task<BrokerAuthorizationResourceCollection> GetBrokerAuthorizationResourceCollectionAsync(
+        protected async Task<IotOperationsBrokerAuthorizationCollection> GetBrokerAuthorizationCollectionAsync(
             string resourceGroupName
         )
         {
-            BrokerResourceCollection brokers = await GetBrokerResourceCollectionAsync(
+            IotOperationsBrokerCollection brokers = await GetBrokerCollectionAsync(
                 resourceGroupName
             );
-            BrokerResource broker = await brokers.GetAsync(BrokersName);
-            return broker.GetBrokerAuthorizationResources();
+            IotOperationsBrokerResource broker = await brokers.GetAsync(BrokersName);
+            return broker.GetIotOperationsBrokerAuthorizations();
         }
 
         // Get BrokerListeners
-        protected async Task<BrokerListenerResourceCollection> GetBrokerListenerResourceCollectionAsync(
+        protected async Task<IotOperationsBrokerListenerCollection> GetBrokerListenerCollectionAsync(
             string resourceGroupName
         )
         {
-            BrokerResourceCollection brokers = await GetBrokerResourceCollectionAsync(
+            IotOperationsBrokerCollection brokers = await GetBrokerCollectionAsync(
                 resourceGroupName
             );
-            BrokerResource broker = await brokers.GetAsync(BrokersName);
-            return broker.GetBrokerListenerResources();
+            IotOperationsBrokerResource broker = await brokers.GetAsync(BrokersName);
+            return broker.GetIotOperationsBrokerListeners();
         }
 
         // Get DataflowProfiles
-        protected async Task<DataflowProfileResourceCollection> GetDataflowProfileResourceCollectionAsync(
+        protected async Task<IotOperationsDataflowProfileCollection> GetDataflowProfileCollectionAsync(
             string resourceGroupName
         )
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
-            InstanceResourceCollection instances = rg.GetInstanceResources();
-            InstanceResource instance = await instances.GetAsync(InstanceName);
-            return instance.GetDataflowProfileResources();
+            IotOperationsInstanceCollection instances = rg.GetIotOperationsInstances();
+            IotOperationsInstanceResource instance = await instances.GetAsync(InstanceName);
+            return instance.GetIotOperationsDataflowProfiles();
         }
 
         // Get Dataflows
-        protected async Task<DataflowResourceCollection> GetDataflowResourceCollectionAsync(
+        protected async Task<IotOperationsDataflowCollection> GetDataflowCollectionAsync(
             string resourceGroupName
         )
         {
-            DataflowProfileResourceCollection dataflowProfiles =
-                await GetDataflowProfileResourceCollectionAsync(resourceGroupName);
-            DataflowProfileResource dataflowProfile = await dataflowProfiles.GetAsync(
+            IotOperationsDataflowProfileCollection dataflowProfiles =
+                await GetDataflowProfileCollectionAsync(resourceGroupName);
+            IotOperationsDataflowProfileResource dataflowProfile = await dataflowProfiles.GetAsync(
                 DataflowProfilesName
             );
-            return dataflowProfile.GetDataflowResources();
+            return dataflowProfile.GetIotOperationsDataflows();
         }
 
         // Get DataflowEndpoints
-        protected async Task<DataflowEndpointResourceCollection> GetDataflowEndpointResourceCollectionAsync(
+        protected async Task<IotOperationsDataflowEndpointCollection> GetDataflowEndpointCollectionAsync(
             string resourceGroupName
         )
         {
             ResourceGroupResource rg = await GetResourceGroupAsync(resourceGroupName);
-            InstanceResourceCollection instances = rg.GetInstanceResources();
-            InstanceResource instance = await instances.GetAsync(InstanceName);
-            return instance.GetDataflowEndpointResources();
+            IotOperationsInstanceCollection instances = rg.GetIotOperationsInstances();
+            IotOperationsInstanceResource instance = await instances.GetAsync(InstanceName);
+            return instance.GetIotOperationsDataflowEndpoints();
         }
     }
 }

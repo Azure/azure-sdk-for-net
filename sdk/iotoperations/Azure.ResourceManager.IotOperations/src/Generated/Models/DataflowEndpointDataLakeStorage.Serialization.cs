@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             DataflowEndpointDataLakeStorageAuthentication authentication = default;
             string host = default;
-            BatchingConfiguration batching = default;
+            IotOperationsBatchingConfig batching = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    batching = BatchingConfiguration.DeserializeBatchingConfiguration(property.Value, options);
+                    batching = IotOperationsBatchingConfig.DeserializeIotOperationsBatchingConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

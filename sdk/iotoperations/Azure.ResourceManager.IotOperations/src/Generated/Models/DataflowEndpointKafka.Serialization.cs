@@ -119,11 +119,11 @@ namespace Azure.ResourceManager.IotOperations.Models
             string consumerGroupId = default;
             string host = default;
             DataflowEndpointKafkaBatching batching = default;
-            OperationalMode? copyMqttProperties = default;
+            IotOperationsOperationalMode? copyMqttProperties = default;
             DataflowEndpointKafkaCompression? compression = default;
             DataflowEndpointKafkaAck? kafkaAcks = default;
             DataflowEndpointKafkaPartitionStrategy? partitionStrategy = default;
-            TlsProperties tls = default;
+            IotOperationsTlsProperties tls = default;
             CloudEventAttributeType? cloudEventAttributes = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    copyMqttProperties = new OperationalMode(property.Value.GetString());
+                    copyMqttProperties = new IotOperationsOperationalMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("compression"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    tls = TlsProperties.DeserializeTlsProperties(property.Value, options);
+                    tls = IotOperationsTlsProperties.DeserializeIotOperationsTlsProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("cloudEventAttributes"u8))

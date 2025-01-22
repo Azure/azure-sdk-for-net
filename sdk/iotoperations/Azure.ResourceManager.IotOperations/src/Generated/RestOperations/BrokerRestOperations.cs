@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="brokerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="brokerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<BrokerResourceData>> GetAsync(string subscriptionId, string resourceGroupName, string instanceName, string brokerName, CancellationToken cancellationToken = default)
+        public async Task<Response<IotOperationsBrokerData>> GetAsync(string subscriptionId, string resourceGroupName, string instanceName, string brokerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -95,13 +95,13 @@ namespace Azure.ResourceManager.IotOperations
             {
                 case 200:
                     {
-                        BrokerResourceData value = default;
+                        IotOperationsBrokerData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = BrokerResourceData.DeserializeBrokerResourceData(document.RootElement);
+                        value = IotOperationsBrokerData.DeserializeIotOperationsBrokerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BrokerResourceData)null, message.Response);
+                    return Response.FromValue((IotOperationsBrokerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="brokerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="brokerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<BrokerResourceData> Get(string subscriptionId, string resourceGroupName, string instanceName, string brokerName, CancellationToken cancellationToken = default)
+        public Response<IotOperationsBrokerData> Get(string subscriptionId, string resourceGroupName, string instanceName, string brokerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -128,19 +128,19 @@ namespace Azure.ResourceManager.IotOperations
             {
                 case 200:
                     {
-                        BrokerResourceData value = default;
+                        IotOperationsBrokerData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = BrokerResourceData.DeserializeBrokerResourceData(document.RootElement);
+                        value = IotOperationsBrokerData.DeserializeIotOperationsBrokerData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((BrokerResourceData)null, message.Response);
+                    return Response.FromValue((IotOperationsBrokerData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string instanceName, string brokerName, BrokerResourceData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string instanceName, string brokerName, IotOperationsBrokerData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.IotOperations
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string instanceName, string brokerName, BrokerResourceData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string instanceName, string brokerName, IotOperationsBrokerData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/>, <paramref name="brokerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="brokerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string instanceName, string brokerName, BrokerResourceData data, CancellationToken cancellationToken = default)
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string instanceName, string brokerName, IotOperationsBrokerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.IotOperations
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/>, <paramref name="brokerName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="instanceName"/> or <paramref name="brokerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string instanceName, string brokerName, BrokerResourceData data, CancellationToken cancellationToken = default)
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string instanceName, string brokerName, IotOperationsBrokerData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));

@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.IotOperations.Tests
         public async Task TestBrokerListeners()
         {
             // Get BrokerListeners
-            BrokerListenerResourceCollection brokerListenerResourceCollection =
-                await GetBrokerListenerResourceCollectionAsync(ResourceGroup);
+            IotOperationsBrokerListenerCollection brokerListenerResourceCollection =
+                await GetBrokerListenerCollectionAsync(ResourceGroup);
 
-            BrokerListenerResource brokerListenerResource =
+            IotOperationsBrokerListenerResource brokerListenerResource =
                 await brokerListenerResourceCollection.GetAsync(BrokersListenersName);
 
             Assert.IsNotNull(brokerListenerResource);
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.IotOperations.Tests
             Assert.AreEqual(brokerListenerResource.Data.Name, BrokersListenersName);
 
             // Create new BrokerListener
-            BrokerListenerResourceData brokerListenerResourceData =
-                CreateBrokerListenerResourceData(brokerListenerResource);
+            IotOperationsBrokerListenerData brokerListenerResourceData =
+                CreateBrokerListenerData(brokerListenerResource);
 
-            ArmOperation<BrokerListenerResource> resp =
+            ArmOperation<IotOperationsBrokerListenerResource> resp =
                 await brokerListenerResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
                     "sdk-test-brokerlistener",
                     brokerListenerResourceData
                 );
 
-            BrokerListenerResource createdBrokerListener = resp.Value;
+            IotOperationsBrokerListenerResource createdBrokerListener = resp.Value;
             Assert.IsNotNull(createdBrokerListener);
             Assert.IsNotNull(createdBrokerListener.Data);
             Assert.IsNotNull(createdBrokerListener.Data.Properties);
@@ -63,16 +63,16 @@ namespace Azure.ResourceManager.IotOperations.Tests
             );
         }
 
-        private BrokerListenerResourceData CreateBrokerListenerResourceData(
-            BrokerListenerResource brokerListenerResource
+        private IotOperationsBrokerListenerData CreateBrokerListenerData(
+            IotOperationsBrokerListenerResource brokerListenerResource
         )
         {
-            return new BrokerListenerResourceData(brokerListenerResource.Data.ExtendedLocation)
+            return new IotOperationsBrokerListenerData(brokerListenerResource.Data.ExtendedLocation)
             {
-                Properties = new BrokerListenerProperties(
+                Properties = new IotOperationsBrokerListenerProperties(
                     [
-                        new ListenerPort(1883) { Protocol = "Mqtt" },
-                        new ListenerPort(9883)
+                        new BrokerListenerPort(1883) { Protocol = "Mqtt" },
+                        new BrokerListenerPort(9883)
                         {
                             Protocol = "Mqtt",
                             AuthenticationRef = "default",

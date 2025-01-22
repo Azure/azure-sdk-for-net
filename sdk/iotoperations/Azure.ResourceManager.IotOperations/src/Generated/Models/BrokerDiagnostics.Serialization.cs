@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.IotOperations.Models
                 return null;
             }
             DiagnosticsLogs logs = default;
-            Metrics metrics = default;
-            SelfCheck selfCheck = default;
-            Traces traces = default;
+            IotOperationsMetrics metrics = default;
+            BrokerDiagnosticSelfCheck selfCheck = default;
+            BrokerDiagnosticTraces traces = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    metrics = Metrics.DeserializeMetrics(property.Value, options);
+                    metrics = IotOperationsMetrics.DeserializeIotOperationsMetrics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("selfCheck"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    selfCheck = SelfCheck.DeserializeSelfCheck(property.Value, options);
+                    selfCheck = BrokerDiagnosticSelfCheck.DeserializeBrokerDiagnosticSelfCheck(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("traces"u8))
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    traces = Traces.DeserializeTraces(property.Value, options);
+                    traces = BrokerDiagnosticTraces.DeserializeBrokerDiagnosticTraces(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

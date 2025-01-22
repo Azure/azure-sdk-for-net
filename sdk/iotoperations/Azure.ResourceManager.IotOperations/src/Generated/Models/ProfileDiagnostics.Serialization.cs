@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 return null;
             }
             DiagnosticsLogs logs = default;
-            Metrics metrics = default;
+            IotOperationsMetrics metrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    metrics = Metrics.DeserializeMetrics(property.Value, options);
+                    metrics = IotOperationsMetrics.DeserializeIotOperationsMetrics(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

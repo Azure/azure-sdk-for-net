@@ -53,13 +53,13 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Initializes a new instance of <see cref="GenerateResourceLimits"/>. </summary>
         /// <param name="cpu"> The toggle to enable/disable cpu resource limits. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal GenerateResourceLimits(OperationalMode? cpu, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal GenerateResourceLimits(IotOperationsOperationalMode? cpu, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Cpu = cpu;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The toggle to enable/disable cpu resource limits. </summary>
-        public OperationalMode? Cpu { get; set; }
+        public IotOperationsOperationalMode? Cpu { get; set; }
     }
 }

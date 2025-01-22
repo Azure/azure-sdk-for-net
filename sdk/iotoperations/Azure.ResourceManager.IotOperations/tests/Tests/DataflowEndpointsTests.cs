@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.IotOperations.Tests
         public async Task TestDataflowEndpoints()
         {
             // Get DataflowEndpoints
-            DataflowEndpointResourceCollection dataflowEndpointsResourceCollection =
-                await GetDataflowEndpointResourceCollectionAsync(ResourceGroup);
+            IotOperationsDataflowEndpointCollection dataflowEndpointsResourceCollection =
+                await GetDataflowEndpointCollectionAsync(ResourceGroup);
 
-            DataflowEndpointResource dataflowEndpointsResource =
+            IotOperationsDataflowEndpointResource dataflowEndpointsResource =
                 await dataflowEndpointsResourceCollection.GetAsync(DataflowEndpointsName);
 
             Assert.IsNotNull(dataflowEndpointsResource);
@@ -39,16 +39,16 @@ namespace Azure.ResourceManager.IotOperations.Tests
 
             // Create new DataflowEndpoint
 
-            DataflowEndpointResourceData dataflowEndpointsResourceData =
-                CreateDataflowEndpointResourceData(dataflowEndpointsResource);
+            IotOperationsDataflowEndpointData dataflowEndpointsResourceData =
+                CreateDataflowEndpointData(dataflowEndpointsResource);
 
-            ArmOperation<DataflowEndpointResource> resp =
+            ArmOperation<IotOperationsDataflowEndpointResource> resp =
                 await dataflowEndpointsResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
                     "sdk-test-dataflowendpoints",
                     dataflowEndpointsResourceData
                 );
-            DataflowEndpointResource createdDataflowEndpoint = resp.Value;
+            IotOperationsDataflowEndpointResource createdDataflowEndpoint = resp.Value;
 
             Assert.IsNotNull(createdDataflowEndpoint);
             Assert.IsNotNull(createdDataflowEndpoint.Data);
@@ -63,11 +63,11 @@ namespace Azure.ResourceManager.IotOperations.Tests
             );
         }
 
-        private DataflowEndpointResourceData CreateDataflowEndpointResourceData(
-            DataflowEndpointResource dataflowEndpointsResource
+        private IotOperationsDataflowEndpointData CreateDataflowEndpointData(
+            IotOperationsDataflowEndpointResource dataflowEndpointsResource
         )
         {
-            return new DataflowEndpointResourceData(dataflowEndpointsResource.Data.ExtendedLocation)
+            return new IotOperationsDataflowEndpointData(dataflowEndpointsResource.Data.ExtendedLocation)
             {
                 Properties = dataflowEndpointsResource.Data.Properties
             };

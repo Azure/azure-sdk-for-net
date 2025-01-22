@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.IotOperations.Tests
         public async Task TestBrokerAuthorizations()
         {
             // Get BrokerAuthorizations
-            BrokerAuthorizationResourceCollection brokerAuthorizationResourceCollection =
-                await GetBrokerAuthorizationResourceCollectionAsync(ResourceGroup);
+            IotOperationsBrokerAuthorizationCollection brokerAuthorizationResourceCollection =
+                await GetBrokerAuthorizationCollectionAsync(ResourceGroup);
 
             // None are created in a fresh AIO deployment
             // Create BrokerAuthorization
-            BrokerAuthorizationResourceData brokerAuthorizationResourceData =
-                CreateBrokerAuthorizationResourceData();
+            IotOperationsBrokerAuthorizationData brokerAuthorizationResourceData =
+                CreateBrokerAuthorizationData();
 
-            ArmOperation<BrokerAuthorizationResource> resp =
+            ArmOperation<IotOperationsBrokerAuthorizationResource> resp =
                 await brokerAuthorizationResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
                     "sdk-test-brokerauthorization",
                     brokerAuthorizationResourceData
                 );
-            BrokerAuthorizationResource createdBrokerAuthorization = resp.Value;
+            IotOperationsBrokerAuthorizationResource createdBrokerAuthorization = resp.Value;
 
             Assert.IsNotNull(createdBrokerAuthorization);
             Assert.IsNotNull(createdBrokerAuthorization.Data);
@@ -57,20 +57,20 @@ namespace Azure.ResourceManager.IotOperations.Tests
             );
         }
 
-        private BrokerAuthorizationResourceData CreateBrokerAuthorizationResourceData()
+        private IotOperationsBrokerAuthorizationData CreateBrokerAuthorizationData()
         {
-            return new BrokerAuthorizationResourceData(
+            return new IotOperationsBrokerAuthorizationData(
                 // Can normally use the CL from already deployed resource in other RTs but since we are creating new ones in this test we need to construct the CL.
-                new ExtendedLocation(ExtendedLocation, ExtendedLocationType.CustomLocation)
+                new IotOperationsExtendedLocation(ExtendedLocation, IotOperationsExtendedLocationType.CustomLocation)
             )
             {
-                Properties = new BrokerAuthorizationProperties(
-                    new AuthorizationConfig
+                Properties = new IotOperationsBrokerAuthorizationProperties(
+                    new BrokerAuthorizationConfig
                     {
-                        Cache = OperationalMode.Enabled,
+                        Cache = IotOperationsOperationalMode.Enabled,
                         Rules =
                         {
-                            new AuthorizationRule(
+                            new BrokerAuthorizationRule(
                                 new BrokerResourceRule[]
                                 {
                                     new BrokerResourceRule(BrokerResourceDefinitionMethod.Connect)

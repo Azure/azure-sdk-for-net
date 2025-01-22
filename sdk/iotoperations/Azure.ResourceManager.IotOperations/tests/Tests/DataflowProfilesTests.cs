@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.IotOperations.Tests
         public async Task TestDataflowProfiles()
         {
             // Get DataflowProfiles
-            DataflowProfileResourceCollection dataflowProfileResourceCollection =
-                await GetDataflowProfileResourceCollectionAsync(ResourceGroup);
+            IotOperationsDataflowProfileCollection dataflowProfileResourceCollection =
+                await GetDataflowProfileCollectionAsync(ResourceGroup);
 
-            DataflowProfileResource dataflowProfileResource =
+            IotOperationsDataflowProfileResource dataflowProfileResource =
                 await dataflowProfileResourceCollection.GetAsync(DataflowEndpointsName);
 
             Assert.IsNotNull(dataflowProfileResource);
@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.IotOperations.Tests
             Assert.AreEqual(dataflowProfileResource.Data.Name, DataflowEndpointsName);
 
             // Create new DataflowProfile
-            DataflowProfileResourceData dataflowProfileResourceData =
-                CreateDataflowProfileResourceData(dataflowProfileResource);
+            IotOperationsDataflowProfileData dataflowProfileResourceData =
+                CreateDataflowProfileData(dataflowProfileResource);
 
-            ArmOperation<DataflowProfileResource> resp =
+            ArmOperation<IotOperationsDataflowProfileResource> resp =
                 await dataflowProfileResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
                     "sdk-test-dataflowprofile",
                     dataflowProfileResourceData
                 );
-            DataflowProfileResource createdDataflowProfile = resp.Value;
+            IotOperationsDataflowProfileResource createdDataflowProfile = resp.Value;
 
             Assert.IsNotNull(createdDataflowProfile);
             Assert.IsNotNull(createdDataflowProfile.Data);
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.IotOperations.Tests
             );
         }
 
-        private DataflowProfileResourceData CreateDataflowProfileResourceData(
-            DataflowProfileResource dataflowProfileResource
+        private IotOperationsDataflowProfileData CreateDataflowProfileData(
+            IotOperationsDataflowProfileResource dataflowProfileResource
         )
         {
-            return new DataflowProfileResourceData(dataflowProfileResource.Data.ExtendedLocation)
+            return new IotOperationsDataflowProfileData(dataflowProfileResource.Data.ExtendedLocation)
             {
                 Properties = dataflowProfileResource.Data.Properties
             };

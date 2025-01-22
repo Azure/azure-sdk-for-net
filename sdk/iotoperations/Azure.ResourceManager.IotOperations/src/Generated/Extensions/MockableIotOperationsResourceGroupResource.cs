@@ -33,11 +33,11 @@ namespace Azure.ResourceManager.IotOperations.Mocking
             return apiVersion;
         }
 
-        /// <summary> Gets a collection of InstanceResources in the ResourceGroupResource. </summary>
-        /// <returns> An object representing collection of InstanceResources and their operations over a InstanceResource. </returns>
-        public virtual InstanceResourceCollection GetInstanceResources()
+        /// <summary> Gets a collection of IotOperationsInstanceResources in the ResourceGroupResource. </summary>
+        /// <returns> An object representing collection of IotOperationsInstanceResources and their operations over a IotOperationsInstanceResource. </returns>
+        public virtual IotOperationsInstanceCollection GetIotOperationsInstances()
         {
-            return GetCachedClient(client => new InstanceResourceCollection(client, Id));
+            return GetCachedClient(client => new IotOperationsInstanceCollection(client, Id));
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="IotOperationsInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<InstanceResource>> GetInstanceResourceAsync(string instanceName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IotOperationsInstanceResource>> GetIotOperationsInstanceAsync(string instanceName, CancellationToken cancellationToken = default)
         {
-            return await GetInstanceResources().GetAsync(instanceName, cancellationToken).ConfigureAwait(false);
+            return await GetIotOperationsInstances().GetAsync(instanceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="IotOperationsInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="instanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<InstanceResource> GetInstanceResource(string instanceName, CancellationToken cancellationToken = default)
+        public virtual Response<IotOperationsInstanceResource> GetIotOperationsInstance(string instanceName, CancellationToken cancellationToken = default)
         {
-            return GetInstanceResources().Get(instanceName, cancellationToken);
+            return GetIotOperationsInstances().Get(instanceName, cancellationToken);
         }
     }
 }

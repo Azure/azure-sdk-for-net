@@ -27,10 +27,10 @@ namespace Azure.ResourceManager.IotOperations.Tests
         public async Task TestBrokerAuthentications()
         {
             // Get BrokerAuthentications
-            BrokerAuthenticationResourceCollection brokerAuthenticationResourceCollection =
-                await GetBrokerAuthenticationResourceCollectionAsync(ResourceGroup);
+            IotOperationsBrokerAuthenticationCollection brokerAuthenticationResourceCollection =
+                await GetBrokerAuthenticationCollectionAsync(ResourceGroup);
 
-            BrokerAuthenticationResource brokerAuthenticationResource =
+            IotOperationsBrokerAuthenticationResource brokerAuthenticationResource =
                 await brokerAuthenticationResourceCollection.GetAsync(BrokersAuthenticationsName);
 
             Assert.IsNotNull(brokerAuthenticationResource);
@@ -38,16 +38,16 @@ namespace Azure.ResourceManager.IotOperations.Tests
             Assert.AreEqual(brokerAuthenticationResource.Data.Name, BrokersAuthenticationsName);
 
             // Create BrokerAuthentication
-            BrokerAuthenticationResourceData brokerAuthenticationResourceData =
+            IotOperationsBrokerAuthenticationData brokerAuthenticationResourceData =
                 CreateBrokerAuthenticationResourceData(brokerAuthenticationResource);
 
-            ArmOperation<BrokerAuthenticationResource> resp =
+            ArmOperation<IotOperationsBrokerAuthenticationResource> resp =
                 await brokerAuthenticationResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
                     "sdk-test-brokerauthentication",
                     brokerAuthenticationResourceData
                 );
-            BrokerAuthenticationResource createdBrokerAuthentication = resp.Value;
+            IotOperationsBrokerAuthenticationResource createdBrokerAuthentication = resp.Value;
 
             Assert.IsNotNull(createdBrokerAuthentication);
             Assert.IsNotNull(createdBrokerAuthentication.Data);
@@ -62,11 +62,11 @@ namespace Azure.ResourceManager.IotOperations.Tests
             );
         }
 
-        private BrokerAuthenticationResourceData CreateBrokerAuthenticationResourceData(
-            BrokerAuthenticationResource brokerAuthenticationResource
+        private IotOperationsBrokerAuthenticationData CreateBrokerAuthenticationResourceData(
+            IotOperationsBrokerAuthenticationResource brokerAuthenticationResource
         )
         {
-            return new BrokerAuthenticationResourceData(
+            return new IotOperationsBrokerAuthenticationData(
                 brokerAuthenticationResource.Data.ExtendedLocation
             )
             {

@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="tls"> TLS configuration. </param>
         /// <param name="cloudEventAttributes"> Cloud event mapping config. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowEndpointKafka(DataflowEndpointKafkaAuthentication authentication, string consumerGroupId, string host, DataflowEndpointKafkaBatching batching, OperationalMode? copyMqttProperties, DataflowEndpointKafkaCompression? compression, DataflowEndpointKafkaAck? kafkaAcks, DataflowEndpointKafkaPartitionStrategy? partitionStrategy, TlsProperties tls, CloudEventAttributeType? cloudEventAttributes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataflowEndpointKafka(DataflowEndpointKafkaAuthentication authentication, string consumerGroupId, string host, DataflowEndpointKafkaBatching batching, IotOperationsOperationalMode? copyMqttProperties, DataflowEndpointKafkaCompression? compression, DataflowEndpointKafkaAck? kafkaAcks, DataflowEndpointKafkaPartitionStrategy? partitionStrategy, IotOperationsTlsProperties tls, CloudEventAttributeType? cloudEventAttributes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Authentication = authentication;
             ConsumerGroupId = consumerGroupId;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Batching configuration. </summary>
         public DataflowEndpointKafkaBatching Batching { get; set; }
         /// <summary> Copy Broker properties. No effect if the endpoint is used as a source or if the dataflow doesn't have an Broker source. </summary>
-        public OperationalMode? CopyMqttProperties { get; set; }
+        public IotOperationsOperationalMode? CopyMqttProperties { get; set; }
         /// <summary> Compression. Can be none, gzip, lz4, or snappy. No effect if the endpoint is used as a source. </summary>
         public DataflowEndpointKafkaCompression? Compression { get; set; }
         /// <summary> Kafka acks. Can be all, one, or zero. No effect if the endpoint is used as a source. </summary>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Partition handling strategy. Can be default or static. No effect if the endpoint is used as a source. </summary>
         public DataflowEndpointKafkaPartitionStrategy? PartitionStrategy { get; set; }
         /// <summary> TLS configuration. </summary>
-        public TlsProperties Tls { get; set; }
+        public IotOperationsTlsProperties Tls { get; set; }
         /// <summary> Cloud event mapping config. </summary>
         public CloudEventAttributeType? CloudEventAttributes { get; set; }
     }

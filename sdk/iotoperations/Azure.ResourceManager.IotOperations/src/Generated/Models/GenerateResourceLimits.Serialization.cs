@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 return null;
             }
-            OperationalMode? cpu = default;
+            IotOperationsOperationalMode? cpu = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    cpu = new OperationalMode(property.Value.GetString());
+                    cpu = new IotOperationsOperationalMode(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

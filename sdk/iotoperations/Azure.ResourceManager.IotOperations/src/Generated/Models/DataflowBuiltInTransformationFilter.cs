@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="inputs"> List of fields for filtering in JSON path expression. </param>
         /// <param name="expression"> Condition to filter data. Can reference input fields with {n} where n is the index of the input field starting from 1. Example: $1 &lt; 0 || $1 &gt; $2 (Assuming inputs section $1 and $2 are provided). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowBuiltInTransformationFilter(FilterType? type, string description, IList<string> inputs, string expression, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataflowBuiltInTransformationFilter(DataflowFilterType? type, string description, IList<string> inputs, string expression, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Type = type;
             Description = description;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         }
 
         /// <summary> The type of dataflow operation. </summary>
-        public FilterType? Type { get; set; }
+        public DataflowFilterType? Type { get; set; }
         /// <summary> A user provided optional description of the filter. </summary>
         public string Description { get; set; }
         /// <summary> List of fields for filtering in JSON path expression. </summary>

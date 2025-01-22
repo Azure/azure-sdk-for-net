@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="key"> key is the label key that the selector applies to. </param>
         /// <param name="operator"> operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public VolumeClaimSpecSelectorMatchExpressions(string key, OperatorValue @operator)
+        public VolumeClaimSpecSelectorMatchExpressions(string key, BrokerOperatorValue @operator)
         {
             Argument.AssertNotNull(key, nameof(key));
 
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="operator"> operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist. </param>
         /// <param name="values"> values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VolumeClaimSpecSelectorMatchExpressions(string key, OperatorValue @operator, IList<string> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VolumeClaimSpecSelectorMatchExpressions(string key, BrokerOperatorValue @operator, IList<string> values, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             Operator = @operator;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> key is the label key that the selector applies to. </summary>
         public string Key { get; set; }
         /// <summary> operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist. </summary>
-        public OperatorValue Operator { get; set; }
+        public BrokerOperatorValue Operator { get; set; }
         /// <summary> values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch. </summary>
         public IList<string> Values { get; }
     }

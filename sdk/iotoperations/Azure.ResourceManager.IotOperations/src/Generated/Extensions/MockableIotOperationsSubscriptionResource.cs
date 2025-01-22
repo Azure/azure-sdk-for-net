@@ -15,8 +15,8 @@ namespace Azure.ResourceManager.IotOperations.Mocking
     /// <summary> A class to add extension methods to SubscriptionResource. </summary>
     public partial class MockableIotOperationsSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _instanceResourceInstanceClientDiagnostics;
-        private InstanceRestOperations _instanceResourceInstanceRestClient;
+        private ClientDiagnostics _iotOperationsInstanceInstanceClientDiagnostics;
+        private InstanceRestOperations _iotOperationsInstanceInstanceRestClient;
 
         /// <summary> Initializes a new instance of the <see cref="MockableIotOperationsSubscriptionResource"/> class for mocking. </summary>
         protected MockableIotOperationsSubscriptionResource()
@@ -30,8 +30,8 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         {
         }
 
-        private ClientDiagnostics InstanceResourceInstanceClientDiagnostics => _instanceResourceInstanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotOperations", InstanceResource.ResourceType.Namespace, Diagnostics);
-        private InstanceRestOperations InstanceResourceInstanceRestClient => _instanceResourceInstanceRestClient ??= new InstanceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(InstanceResource.ResourceType));
+        private ClientDiagnostics IotOperationsInstanceInstanceClientDiagnostics => _iotOperationsInstanceInstanceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.IotOperations", IotOperationsInstanceResource.ResourceType.Namespace, Diagnostics);
+        private InstanceRestOperations IotOperationsInstanceInstanceRestClient => _iotOperationsInstanceInstanceRestClient ??= new InstanceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(IotOperationsInstanceResource.ResourceType));
 
         private string GetApiVersionOrNull(ResourceType resourceType)
         {
@@ -56,17 +56,17 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="IotOperationsInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="InstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<InstanceResource> GetInstanceResourcesAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IotOperationsInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<IotOperationsInstanceResource> GetIotOperationsInstancesAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => InstanceResourceInstanceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InstanceResourceInstanceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new InstanceResource(Client, InstanceResourceData.DeserializeInstanceResourceData(e)), InstanceResourceInstanceClientDiagnostics, Pipeline, "MockableIotOperationsSubscriptionResource.GetInstanceResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IotOperationsInstanceInstanceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotOperationsInstanceInstanceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new IotOperationsInstanceResource(Client, IotOperationsInstanceData.DeserializeIotOperationsInstanceData(e)), IotOperationsInstanceInstanceClientDiagnostics, Pipeline, "MockableIotOperationsSubscriptionResource.GetIotOperationsInstances", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -86,17 +86,17 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="IotOperationsInstanceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="InstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<InstanceResource> GetInstanceResources(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IotOperationsInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<IotOperationsInstanceResource> GetIotOperationsInstances(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => InstanceResourceInstanceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => InstanceResourceInstanceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new InstanceResource(Client, InstanceResourceData.DeserializeInstanceResourceData(e)), InstanceResourceInstanceClientDiagnostics, Pipeline, "MockableIotOperationsSubscriptionResource.GetInstanceResources", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => IotOperationsInstanceInstanceRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => IotOperationsInstanceInstanceRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new IotOperationsInstanceResource(Client, IotOperationsInstanceData.DeserializeIotOperationsInstanceData(e)), IotOperationsInstanceInstanceClientDiagnostics, Pipeline, "MockableIotOperationsSubscriptionResource.GetIotOperationsInstances", "value", "nextLink", cancellationToken);
         }
     }
 }

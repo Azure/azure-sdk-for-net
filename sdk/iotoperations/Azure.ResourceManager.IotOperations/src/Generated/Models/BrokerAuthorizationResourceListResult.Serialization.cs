@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 return null;
             }
-            IReadOnlyList<BrokerAuthorizationResourceData> value = default;
+            IReadOnlyList<IotOperationsBrokerAuthorizationData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<BrokerAuthorizationResourceData> array = new List<BrokerAuthorizationResourceData>();
+                    List<IotOperationsBrokerAuthorizationData> array = new List<IotOperationsBrokerAuthorizationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BrokerAuthorizationResourceData.DeserializeBrokerAuthorizationResourceData(item, options));
+                        array.Add(IotOperationsBrokerAuthorizationData.DeserializeIotOperationsBrokerAuthorizationData(item, options));
                     }
                     value = array;
                     continue;

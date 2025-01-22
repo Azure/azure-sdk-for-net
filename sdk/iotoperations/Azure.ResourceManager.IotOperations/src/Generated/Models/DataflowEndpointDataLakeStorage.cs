@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="host"> Host of the Azure Data Lake in the form of &lt;account&gt;.blob.core.windows.net . </param>
         /// <param name="batching"> Azure Data Lake endpoint batching configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowEndpointDataLakeStorage(DataflowEndpointDataLakeStorageAuthentication authentication, string host, BatchingConfiguration batching, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataflowEndpointDataLakeStorage(DataflowEndpointDataLakeStorageAuthentication authentication, string host, IotOperationsBatchingConfig batching, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Authentication = authentication;
             Host = host;
@@ -81,6 +81,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Host of the Azure Data Lake in the form of &lt;account&gt;.blob.core.windows.net . </summary>
         public string Host { get; set; }
         /// <summary> Azure Data Lake endpoint batching configuration. </summary>
-        public BatchingConfiguration Batching { get; set; }
+        public IotOperationsBatchingConfig Batching { get; set; }
     }
 }

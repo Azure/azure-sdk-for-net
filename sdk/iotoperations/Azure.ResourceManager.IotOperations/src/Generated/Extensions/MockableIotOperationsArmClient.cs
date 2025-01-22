@@ -35,99 +35,99 @@ namespace Azure.ResourceManager.IotOperations.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="InstanceResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InstanceResource.CreateResourceIdentifier" /> to create an <see cref="InstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="IotOperationsInstanceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsInstanceResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsInstanceResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InstanceResource"/> object. </returns>
-        public virtual InstanceResource GetInstanceResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsInstanceResource"/> object. </returns>
+        public virtual IotOperationsInstanceResource GetIotOperationsInstanceResource(ResourceIdentifier id)
         {
-            InstanceResource.ValidateResourceId(id);
-            return new InstanceResource(Client, id);
+            IotOperationsInstanceResource.ValidateResourceId(id);
+            return new IotOperationsInstanceResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BrokerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BrokerResource.CreateResourceIdentifier" /> to create a <see cref="BrokerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="IotOperationsBrokerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsBrokerResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsBrokerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BrokerResource"/> object. </returns>
-        public virtual BrokerResource GetBrokerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsBrokerResource"/> object. </returns>
+        public virtual IotOperationsBrokerResource GetIotOperationsBrokerResource(ResourceIdentifier id)
         {
-            BrokerResource.ValidateResourceId(id);
-            return new BrokerResource(Client, id);
+            IotOperationsBrokerResource.ValidateResourceId(id);
+            return new IotOperationsBrokerResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BrokerListenerResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BrokerListenerResource.CreateResourceIdentifier" /> to create a <see cref="BrokerListenerResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="IotOperationsBrokerListenerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsBrokerListenerResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsBrokerListenerResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BrokerListenerResource"/> object. </returns>
-        public virtual BrokerListenerResource GetBrokerListenerResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsBrokerListenerResource"/> object. </returns>
+        public virtual IotOperationsBrokerListenerResource GetIotOperationsBrokerListenerResource(ResourceIdentifier id)
         {
-            BrokerListenerResource.ValidateResourceId(id);
-            return new BrokerListenerResource(Client, id);
+            IotOperationsBrokerListenerResource.ValidateResourceId(id);
+            return new IotOperationsBrokerListenerResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BrokerAuthenticationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BrokerAuthenticationResource.CreateResourceIdentifier" /> to create a <see cref="BrokerAuthenticationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="IotOperationsBrokerAuthenticationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsBrokerAuthenticationResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsBrokerAuthenticationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BrokerAuthenticationResource"/> object. </returns>
-        public virtual BrokerAuthenticationResource GetBrokerAuthenticationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsBrokerAuthenticationResource"/> object. </returns>
+        public virtual IotOperationsBrokerAuthenticationResource GetIotOperationsBrokerAuthenticationResource(ResourceIdentifier id)
         {
-            BrokerAuthenticationResource.ValidateResourceId(id);
-            return new BrokerAuthenticationResource(Client, id);
+            IotOperationsBrokerAuthenticationResource.ValidateResourceId(id);
+            return new IotOperationsBrokerAuthenticationResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BrokerAuthorizationResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BrokerAuthorizationResource.CreateResourceIdentifier" /> to create a <see cref="BrokerAuthorizationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="IotOperationsBrokerAuthorizationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsBrokerAuthorizationResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsBrokerAuthorizationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="BrokerAuthorizationResource"/> object. </returns>
-        public virtual BrokerAuthorizationResource GetBrokerAuthorizationResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsBrokerAuthorizationResource"/> object. </returns>
+        public virtual IotOperationsBrokerAuthorizationResource GetIotOperationsBrokerAuthorizationResource(ResourceIdentifier id)
         {
-            BrokerAuthorizationResource.ValidateResourceId(id);
-            return new BrokerAuthorizationResource(Client, id);
+            IotOperationsBrokerAuthorizationResource.ValidateResourceId(id);
+            return new IotOperationsBrokerAuthorizationResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataflowProfileResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataflowProfileResource.CreateResourceIdentifier" /> to create a <see cref="DataflowProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="IotOperationsDataflowProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsDataflowProfileResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsDataflowProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataflowProfileResource"/> object. </returns>
-        public virtual DataflowProfileResource GetDataflowProfileResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsDataflowProfileResource"/> object. </returns>
+        public virtual IotOperationsDataflowProfileResource GetIotOperationsDataflowProfileResource(ResourceIdentifier id)
         {
-            DataflowProfileResource.ValidateResourceId(id);
-            return new DataflowProfileResource(Client, id);
+            IotOperationsDataflowProfileResource.ValidateResourceId(id);
+            return new IotOperationsDataflowProfileResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataflowResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataflowResource.CreateResourceIdentifier" /> to create a <see cref="DataflowResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="IotOperationsDataflowResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsDataflowResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsDataflowResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataflowResource"/> object. </returns>
-        public virtual DataflowResource GetDataflowResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsDataflowResource"/> object. </returns>
+        public virtual IotOperationsDataflowResource GetIotOperationsDataflowResource(ResourceIdentifier id)
         {
-            DataflowResource.ValidateResourceId(id);
-            return new DataflowResource(Client, id);
+            IotOperationsDataflowResource.ValidateResourceId(id);
+            return new IotOperationsDataflowResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataflowEndpointResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataflowEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DataflowEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="IotOperationsDataflowEndpointResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsDataflowEndpointResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsDataflowEndpointResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="DataflowEndpointResource"/> object. </returns>
-        public virtual DataflowEndpointResource GetDataflowEndpointResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsDataflowEndpointResource"/> object. </returns>
+        public virtual IotOperationsDataflowEndpointResource GetIotOperationsDataflowEndpointResource(ResourceIdentifier id)
         {
-            DataflowEndpointResource.ValidateResourceId(id);
-            return new DataflowEndpointResource(Client, id);
+            IotOperationsDataflowEndpointResource.ValidateResourceId(id);
+            return new IotOperationsDataflowEndpointResource(Client, id);
         }
     }
 }

@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="host"> Host of the Azure Data Explorer in the form of &lt;cluster&gt;.&lt;region&gt;.kusto.windows.net . </param>
         /// <param name="batching"> Azure Data Explorer endpoint batching configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowEndpointDataExplorer(DataflowEndpointDataExplorerAuthentication authentication, string database, string host, BatchingConfiguration batching, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataflowEndpointDataExplorer(DataflowEndpointDataExplorerAuthentication authentication, string database, string host, IotOperationsBatchingConfig batching, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Authentication = authentication;
             Database = database;
@@ -88,6 +88,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Host of the Azure Data Explorer in the form of &lt;cluster&gt;.&lt;region&gt;.kusto.windows.net . </summary>
         public string Host { get; set; }
         /// <summary> Azure Data Explorer endpoint batching configuration. </summary>
-        public BatchingConfiguration Batching { get; set; }
+        public IotOperationsBatchingConfig Batching { get; set; }
     }
 }

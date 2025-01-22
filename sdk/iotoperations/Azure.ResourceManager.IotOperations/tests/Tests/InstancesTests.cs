@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.IotOperations.Tests
         public async Task TestInstance()
         {
             // Get Instances
-            InstanceResourceCollection instanceResourceCollection =
-                await GetInstanceResourceCollectionAsync(ResourceGroup);
+            IotOperationsInstanceCollection instanceResourceCollection =
+                await GetInstanceCollectionAsync(ResourceGroup);
 
-            InstanceResource instanceResource = await instanceResourceCollection.GetAsync(
+            IotOperationsInstanceResource instanceResource = await instanceResourceCollection.GetAsync(
                 InstanceName
             );
 
@@ -43,18 +43,18 @@ namespace Azure.ResourceManager.IotOperations.Tests
 
             // Update Instance
             Random random = new Random();
-            InstanceResourceData instanceResourceData = CreateInstanceResourceData(
+            IotOperationsInstanceData instanceResourceData = CreateInstanceData(
                 random.ToString(),
                 instanceResource
             );
 
-            ArmOperation<InstanceResource> resp =
+            ArmOperation<IotOperationsInstanceResource> resp =
                 await instanceResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
                     InstanceName,
                     instanceResourceData
                 );
-            InstanceResource updatedInstance = resp.Value;
+            IotOperationsInstanceResource updatedInstance = resp.Value;
 
             Assert.IsNotNull(updatedInstance);
             Assert.IsNotNull(updatedInstance.Data);
@@ -66,17 +66,17 @@ namespace Azure.ResourceManager.IotOperations.Tests
             );
         }
 
-        private InstanceResourceData CreateInstanceResourceData(
+        private IotOperationsInstanceData CreateInstanceData(
             string value,
-            InstanceResource instanceResource
+            IotOperationsInstanceResource instanceResource
         )
         {
-            return new InstanceResourceData(
+            return new IotOperationsInstanceData(
                 new AzureLocation(DefaultResourceLocation),
                 instanceResource.Data.ExtendedLocation
             )
             {
-                Properties = new InstanceProperties(
+                Properties = new IotOperationsInstanceProperties(
                     instanceResource.Data.Properties.SchemaRegistryRef
                 )
                 {

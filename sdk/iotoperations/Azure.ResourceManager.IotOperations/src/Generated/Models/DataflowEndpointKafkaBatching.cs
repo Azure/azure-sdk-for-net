@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="maxBytes"> Maximum number of bytes in a batch. </param>
         /// <param name="maxMessages"> Maximum number of messages in a batch. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowEndpointKafkaBatching(OperationalMode? mode, int? latencyMs, int? maxBytes, int? maxMessages, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataflowEndpointKafkaBatching(IotOperationsOperationalMode? mode, int? latencyMs, int? maxBytes, int? maxMessages, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
             LatencyMs = latencyMs;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         }
 
         /// <summary> Mode for batching. </summary>
-        public OperationalMode? Mode { get; set; }
+        public IotOperationsOperationalMode? Mode { get; set; }
         /// <summary> Batching latency in milliseconds. </summary>
         public int? LatencyMs { get; set; }
         /// <summary> Maximum number of bytes in a batch. </summary>

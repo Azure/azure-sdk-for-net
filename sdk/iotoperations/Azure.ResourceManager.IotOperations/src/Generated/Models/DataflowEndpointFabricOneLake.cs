@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="host"> Host of the Microsoft Fabric in the form of https://&lt;host&gt;.fabric.microsoft.com. </param>
         /// <param name="batching"> Batching configuration. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowEndpointFabricOneLake(DataflowEndpointFabricOneLakeAuthentication authentication, DataflowEndpointFabricOneLakeNames names, DataflowEndpointFabricPathType oneLakePathType, string host, BatchingConfiguration batching, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataflowEndpointFabricOneLake(DataflowEndpointFabricOneLakeAuthentication authentication, DataflowEndpointFabricOneLakeNames names, DataflowEndpointFabricPathType oneLakePathType, string host, IotOperationsBatchingConfig batching, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Authentication = authentication;
             Names = names;
@@ -94,6 +94,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Host of the Microsoft Fabric in the form of https://&lt;host&gt;.fabric.microsoft.com. </summary>
         public string Host { get; set; }
         /// <summary> Batching configuration. </summary>
-        public BatchingConfiguration Batching { get; set; }
+        public IotOperationsBatchingConfig Batching { get; set; }
     }
 }

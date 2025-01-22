@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="selfCheck"> The self check properties. </param>
         /// <param name="traces"> The trace properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BrokerDiagnostics(DiagnosticsLogs logs, Metrics metrics, SelfCheck selfCheck, Traces traces, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BrokerDiagnostics(DiagnosticsLogs logs, IotOperationsMetrics metrics, BrokerDiagnosticSelfCheck selfCheck, BrokerDiagnosticTraces traces, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Logs = logs;
             Metrics = metrics;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         }
 
         /// <summary> The metrics settings for the resource. </summary>
-        internal Metrics Metrics { get; set; }
+        internal IotOperationsMetrics Metrics { get; set; }
         /// <summary> The prometheus port to expose the metrics. </summary>
         public int? MetricsPrometheusPort
         {
@@ -88,14 +88,14 @@ namespace Azure.ResourceManager.IotOperations.Models
             set
             {
                 if (Metrics is null)
-                    Metrics = new Metrics();
+                    Metrics = new IotOperationsMetrics();
                 Metrics.PrometheusPort = value;
             }
         }
 
         /// <summary> The self check properties. </summary>
-        public SelfCheck SelfCheck { get; set; }
+        public BrokerDiagnosticSelfCheck SelfCheck { get; set; }
         /// <summary> The trace properties. </summary>
-        public Traces Traces { get; set; }
+        public BrokerDiagnosticTraces Traces { get; set; }
     }
 }

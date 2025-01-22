@@ -28,20 +28,20 @@ namespace Azure.ResourceManager.IotOperations.Tests
         public async Task TestDataflows()
         {
             // Get Dataflows
-            DataflowResourceCollection dataflowResourceCollection =
-                await GetDataflowResourceCollectionAsync(ResourceGroup);
+            IotOperationsDataflowCollection dataflowResourceCollection =
+                await GetDataflowCollectionAsync(ResourceGroup);
 
             // None are created in a fresh AIO deployment
             // Create Dataflow
-            DataflowResourceData dataflowResourceData = CreateDataflowResourceData();
+            IotOperationsDataflowData dataflowResourceData = CreateDataflowData();
 
-            ArmOperation<DataflowResource> resp =
+            ArmOperation<IotOperationsDataflowResource> resp =
                 await dataflowResourceCollection.CreateOrUpdateAsync(
                     WaitUntil.Completed,
                     "sdk-test-dataflows",
                     dataflowResourceData
                 );
-            DataflowResource createdDataflow = resp.Value;
+            IotOperationsDataflowResource createdDataflow = resp.Value;
 
             Assert.IsNotNull(createdDataflow);
             Assert.IsNotNull(createdDataflow.Data);
@@ -56,16 +56,16 @@ namespace Azure.ResourceManager.IotOperations.Tests
             );
         }
 
-        private DataflowResourceData CreateDataflowResourceData()
+        private IotOperationsDataflowData CreateDataflowData()
         {
-            return new DataflowResourceData(
+            return new IotOperationsDataflowData(
                 // Can normally use the CL from already deployed resource in other RTs but since we are creating new ones in this test we need to construct the CL.
-                new ExtendedLocation(ExtendedLocation, ExtendedLocationType.CustomLocation)
+                new IotOperationsExtendedLocation(ExtendedLocation, IotOperationsExtendedLocationType.CustomLocation)
             )
             {
-                Properties = new DataflowProperties(
+                Properties = new IotOperationsDataflowProperties(
                     [
-                        new DataflowAction(OperationType.Source)
+                        new DataflowOperationProperties(DataflowOperationType.Source)
                         {
                             Name = "source1",
                             SourceSettings = new DataflowSourceOperationSettings(
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
                                 ["thermostats/+/telemetry/temperature/#"]
                             ),
                         },
-                        new DataflowAction(OperationType.Destination)
+                        new DataflowOperationProperties(DataflowOperationType.Destination)
                         {
                             Name = "destination1",
                             DestinationSettings = new DataflowDestinationOperationSettings(
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
                     ]
                 )
                 {
-                    Mode = OperationalMode.Enabled,
+                    Mode = IotOperationsOperationalMode.Enabled,
                 },
             };
         }

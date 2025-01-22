@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="schemaRef"> Schema CR reference. Data will be deserialized according to the schema, and dropped if it doesn't match. </param>
         /// <param name="dataSources"> List of source locations. Can be Broker or Kafka topics. Supports wildcards # and +. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowSourceOperationSettings(string endpointRef, string assetRef, SourceSerializationFormat? serializationFormat, string schemaRef, IList<string> dataSources, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataflowSourceOperationSettings(string endpointRef, string assetRef, DataflowSourceSerializationFormat? serializationFormat, string schemaRef, IList<string> dataSources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EndpointRef = endpointRef;
             AssetRef = assetRef;
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Reference to the resource in Azure Device Registry where the data in the endpoint originates from. </summary>
         public string AssetRef { get; set; }
         /// <summary> Content is a JSON Schema. Allowed: JSON Schema/draft-7. </summary>
-        public SourceSerializationFormat? SerializationFormat { get; set; }
+        public DataflowSourceSerializationFormat? SerializationFormat { get; set; }
         /// <summary> Schema CR reference. Data will be deserialized according to the schema, and dropped if it doesn't match. </summary>
         public string SchemaRef { get; set; }
         /// <summary> List of source locations. Can be Broker or Kafka topics. Supports wildcards # and +. </summary>

@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetInstanceResources_InstanceListBySubscription()
+        public async Task GetIotOperationsInstances_InstanceListBySubscription()
         {
             // Generated from example definition: 2024-11-01/Instance_ListBySubscription_MaximumSet_Gen.json
             // this example is just showing the usage of "InstanceResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
@@ -35,11 +35,11 @@ namespace Azure.ResourceManager.IotOperations.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (InstanceResource item in subscriptionResource.GetInstanceResourcesAsync())
+            await foreach (IotOperationsInstanceResource item in subscriptionResource.GetIotOperationsInstancesAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                InstanceResourceData resourceData = item.Data;
+                IotOperationsInstanceData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }

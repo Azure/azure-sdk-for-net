@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.IotOperations.Tests
         public async Task TestBrokers()
         {
             // Get Brokers
-            BrokerResourceCollection brokerResourceCollection =
-                await GetBrokerResourceCollectionAsync(ResourceGroup);
+            IotOperationsBrokerCollection brokerResourceCollection =
+                await GetBrokerCollectionAsync(ResourceGroup);
 
-            BrokerResource brokerResource = await brokerResourceCollection.GetAsync(BrokersName);
+            IotOperationsBrokerResource brokerResource = await brokerResourceCollection.GetAsync(BrokersName);
 
             Assert.IsNotNull(brokerResource);
             Assert.IsNotNull(brokerResource.Data);

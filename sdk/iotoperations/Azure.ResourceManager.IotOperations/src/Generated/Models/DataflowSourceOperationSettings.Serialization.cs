@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
             string endpointRef = default;
             string assetRef = default;
-            SourceSerializationFormat? serializationFormat = default;
+            DataflowSourceSerializationFormat? serializationFormat = default;
             string schemaRef = default;
             IList<string> dataSources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    serializationFormat = new SourceSerializationFormat(property.Value.GetString());
+                    serializationFormat = new DataflowSourceSerializationFormat(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("schemaRef"u8))

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 return null;
             }
-            IReadOnlyList<DataflowEndpointResourceData> value = default;
+            IReadOnlyList<IotOperationsDataflowEndpointData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<DataflowEndpointResourceData> array = new List<DataflowEndpointResourceData>();
+                    List<IotOperationsDataflowEndpointData> array = new List<IotOperationsDataflowEndpointData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataflowEndpointResourceData.DeserializeDataflowEndpointResourceData(item, options));
+                        array.Add(IotOperationsDataflowEndpointData.DeserializeIotOperationsDataflowEndpointData(item, options));
                     }
                     value = array;
                     continue;

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="logs"> Diagnostic log settings for the resource. </param>
         /// <param name="metrics"> The metrics settings for the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProfileDiagnostics(DiagnosticsLogs logs, Metrics metrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ProfileDiagnostics(DiagnosticsLogs logs, IotOperationsMetrics metrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Logs = logs;
             Metrics = metrics;
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         }
 
         /// <summary> The metrics settings for the resource. </summary>
-        internal Metrics Metrics { get; set; }
+        internal IotOperationsMetrics Metrics { get; set; }
         /// <summary> The prometheus port to expose the metrics. </summary>
         public int? MetricsPrometheusPort
         {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             set
             {
                 if (Metrics is null)
-                    Metrics = new Metrics();
+                    Metrics = new IotOperationsMetrics();
                 Metrics.PrometheusPort = value;
             }
         }

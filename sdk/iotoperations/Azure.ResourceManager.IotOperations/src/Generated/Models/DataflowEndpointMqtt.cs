@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="tls"> TLS configuration. </param>
         /// <param name="cloudEventAttributes"> Cloud event mapping config. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataflowEndpointMqtt(DataflowEndpointMqttAuthentication authentication, string clientIdPrefix, string host, BrokerProtocolType? protocol, int? keepAliveSeconds, MqttRetainType? retain, int? maxInflightMessages, int? qos, int? sessionExpirySeconds, TlsProperties tls, CloudEventAttributeType? cloudEventAttributes, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataflowEndpointMqtt(DataflowEndpointMqttAuthentication authentication, string clientIdPrefix, string host, BrokerProtocolType? protocol, int? keepAliveSeconds, MqttRetainType? retain, int? maxInflightMessages, int? qos, int? sessionExpirySeconds, IotOperationsTlsProperties tls, CloudEventAttributeType? cloudEventAttributes, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Authentication = authentication;
             ClientIdPrefix = clientIdPrefix;
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Session expiry in seconds. </summary>
         public int? SessionExpirySeconds { get; set; }
         /// <summary> TLS configuration. </summary>
-        public TlsProperties Tls { get; set; }
+        public IotOperationsTlsProperties Tls { get; set; }
         /// <summary> Cloud event mapping config. </summary>
         public CloudEventAttributeType? CloudEventAttributes { get; set; }
     }

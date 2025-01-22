@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 return null;
             }
-            FilterType? type = default;
+            DataflowFilterType? type = default;
             string description = default;
             IList<string> inputs = default;
             string expression = default;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    type = new FilterType(property.Value.GetString());
+                    type = new DataflowFilterType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("description"u8))

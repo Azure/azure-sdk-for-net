@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 return null;
             }
-            OperationalMode? mode = default;
+            IotOperationsOperationalMode? mode = default;
             int? latencyMs = default;
             int? maxBytes = default;
             int? maxMessages = default;
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    mode = new OperationalMode(property.Value.GetString());
+                    mode = new IotOperationsOperationalMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("latencyMs"u8))

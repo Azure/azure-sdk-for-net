@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 return null;
             }
             string key = default;
-            OperatorValue @operator = default;
+            BrokerOperatorValue @operator = default;
             IList<string> values = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
                 if (property.NameEquals("operator"u8))
                 {
-                    @operator = new OperatorValue(property.Value.GetString());
+                    @operator = new BrokerOperatorValue(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("values"u8))

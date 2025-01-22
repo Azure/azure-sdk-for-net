@@ -33,172 +33,172 @@ namespace Azure.ResourceManager.IotOperations
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="InstanceResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="InstanceResource.CreateResourceIdentifier" /> to create an <see cref="InstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotOperationsInstanceResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsInstanceResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsInstanceResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetInstanceResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetIotOperationsInstanceResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="InstanceResource"/> object. </returns>
-        public static InstanceResource GetInstanceResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsInstanceResource"/> object. </returns>
+        public static IotOperationsInstanceResource GetIotOperationsInstanceResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableIotOperationsArmClient(client).GetInstanceResource(id);
+            return GetMockableIotOperationsArmClient(client).GetIotOperationsInstanceResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BrokerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BrokerResource.CreateResourceIdentifier" /> to create a <see cref="BrokerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotOperationsBrokerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsBrokerResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsBrokerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetBrokerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetIotOperationsBrokerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BrokerResource"/> object. </returns>
-        public static BrokerResource GetBrokerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsBrokerResource"/> object. </returns>
+        public static IotOperationsBrokerResource GetIotOperationsBrokerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableIotOperationsArmClient(client).GetBrokerResource(id);
+            return GetMockableIotOperationsArmClient(client).GetIotOperationsBrokerResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BrokerListenerResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BrokerListenerResource.CreateResourceIdentifier" /> to create a <see cref="BrokerListenerResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotOperationsBrokerListenerResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsBrokerListenerResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsBrokerListenerResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetBrokerListenerResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetIotOperationsBrokerListenerResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BrokerListenerResource"/> object. </returns>
-        public static BrokerListenerResource GetBrokerListenerResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsBrokerListenerResource"/> object. </returns>
+        public static IotOperationsBrokerListenerResource GetIotOperationsBrokerListenerResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableIotOperationsArmClient(client).GetBrokerListenerResource(id);
+            return GetMockableIotOperationsArmClient(client).GetIotOperationsBrokerListenerResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BrokerAuthenticationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BrokerAuthenticationResource.CreateResourceIdentifier" /> to create a <see cref="BrokerAuthenticationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotOperationsBrokerAuthenticationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsBrokerAuthenticationResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsBrokerAuthenticationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetBrokerAuthenticationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetIotOperationsBrokerAuthenticationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BrokerAuthenticationResource"/> object. </returns>
-        public static BrokerAuthenticationResource GetBrokerAuthenticationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsBrokerAuthenticationResource"/> object. </returns>
+        public static IotOperationsBrokerAuthenticationResource GetIotOperationsBrokerAuthenticationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableIotOperationsArmClient(client).GetBrokerAuthenticationResource(id);
+            return GetMockableIotOperationsArmClient(client).GetIotOperationsBrokerAuthenticationResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="BrokerAuthorizationResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="BrokerAuthorizationResource.CreateResourceIdentifier" /> to create a <see cref="BrokerAuthorizationResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotOperationsBrokerAuthorizationResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsBrokerAuthorizationResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsBrokerAuthorizationResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetBrokerAuthorizationResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetIotOperationsBrokerAuthorizationResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="BrokerAuthorizationResource"/> object. </returns>
-        public static BrokerAuthorizationResource GetBrokerAuthorizationResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsBrokerAuthorizationResource"/> object. </returns>
+        public static IotOperationsBrokerAuthorizationResource GetIotOperationsBrokerAuthorizationResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableIotOperationsArmClient(client).GetBrokerAuthorizationResource(id);
+            return GetMockableIotOperationsArmClient(client).GetIotOperationsBrokerAuthorizationResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataflowProfileResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataflowProfileResource.CreateResourceIdentifier" /> to create a <see cref="DataflowProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotOperationsDataflowProfileResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsDataflowProfileResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsDataflowProfileResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetDataflowProfileResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetIotOperationsDataflowProfileResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataflowProfileResource"/> object. </returns>
-        public static DataflowProfileResource GetDataflowProfileResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsDataflowProfileResource"/> object. </returns>
+        public static IotOperationsDataflowProfileResource GetIotOperationsDataflowProfileResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableIotOperationsArmClient(client).GetDataflowProfileResource(id);
+            return GetMockableIotOperationsArmClient(client).GetIotOperationsDataflowProfileResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataflowResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataflowResource.CreateResourceIdentifier" /> to create a <see cref="DataflowResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotOperationsDataflowResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsDataflowResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsDataflowResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetDataflowResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetIotOperationsDataflowResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataflowResource"/> object. </returns>
-        public static DataflowResource GetDataflowResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsDataflowResource"/> object. </returns>
+        public static IotOperationsDataflowResource GetIotOperationsDataflowResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableIotOperationsArmClient(client).GetDataflowResource(id);
+            return GetMockableIotOperationsArmClient(client).GetIotOperationsDataflowResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="DataflowEndpointResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="DataflowEndpointResource.CreateResourceIdentifier" /> to create a <see cref="DataflowEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="IotOperationsDataflowEndpointResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="IotOperationsDataflowEndpointResource.CreateResourceIdentifier" /> to create an <see cref="IotOperationsDataflowEndpointResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetDataflowEndpointResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsArmClient.GetIotOperationsDataflowEndpointResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="DataflowEndpointResource"/> object. </returns>
-        public static DataflowEndpointResource GetDataflowEndpointResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="IotOperationsDataflowEndpointResource"/> object. </returns>
+        public static IotOperationsDataflowEndpointResource GetIotOperationsDataflowEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableIotOperationsArmClient(client).GetDataflowEndpointResource(id);
+            return GetMockableIotOperationsArmClient(client).GetIotOperationsDataflowEndpointResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of InstanceResources in the ResourceGroupResource.
+        /// Gets a collection of IotOperationsInstanceResources in the ResourceGroupResource.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotOperationsResourceGroupResource.GetInstanceResources()"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsResourceGroupResource.GetIotOperationsInstances()"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of InstanceResources and their operations over a InstanceResource. </returns>
-        public static InstanceResourceCollection GetInstanceResources(this ResourceGroupResource resourceGroupResource)
+        /// <returns> An object representing collection of IotOperationsInstanceResources and their operations over a IotOperationsInstanceResource. </returns>
+        public static IotOperationsInstanceCollection GetIotOperationsInstances(this ResourceGroupResource resourceGroupResource)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableIotOperationsResourceGroupResource(resourceGroupResource).GetInstanceResources();
+            return GetMockableIotOperationsResourceGroupResource(resourceGroupResource).GetIotOperationsInstances();
         }
 
         /// <summary>
@@ -218,12 +218,12 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="IotOperationsInstanceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotOperationsResourceGroupResource.GetInstanceResourceAsync(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsResourceGroupResource.GetIotOperationsInstanceAsync(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -232,11 +232,11 @@ namespace Azure.ResourceManager.IotOperations
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="instanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<InstanceResource>> GetInstanceResourceAsync(this ResourceGroupResource resourceGroupResource, string instanceName, CancellationToken cancellationToken = default)
+        public static async Task<Response<IotOperationsInstanceResource>> GetIotOperationsInstanceAsync(this ResourceGroupResource resourceGroupResource, string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableIotOperationsResourceGroupResource(resourceGroupResource).GetInstanceResourceAsync(instanceName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableIotOperationsResourceGroupResource(resourceGroupResource).GetIotOperationsInstanceAsync(instanceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -256,12 +256,12 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="IotOperationsInstanceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotOperationsResourceGroupResource.GetInstanceResource(string,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsResourceGroupResource.GetIotOperationsInstance(string,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource" /> instance the method will execute against. </param>
@@ -270,11 +270,11 @@ namespace Azure.ResourceManager.IotOperations
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> or <paramref name="instanceName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="instanceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public static Response<InstanceResource> GetInstanceResource(this ResourceGroupResource resourceGroupResource, string instanceName, CancellationToken cancellationToken = default)
+        public static Response<IotOperationsInstanceResource> GetIotOperationsInstance(this ResourceGroupResource resourceGroupResource, string instanceName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableIotOperationsResourceGroupResource(resourceGroupResource).GetInstanceResource(instanceName, cancellationToken);
+            return GetMockableIotOperationsResourceGroupResource(resourceGroupResource).GetIotOperationsInstance(instanceName, cancellationToken);
         }
 
         /// <summary>
@@ -294,23 +294,23 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="IotOperationsInstanceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotOperationsSubscriptionResource.GetInstanceResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsSubscriptionResource.GetIotOperationsInstances(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> An async collection of <see cref="InstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<InstanceResource> GetInstanceResourcesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="IotOperationsInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IotOperationsInstanceResource> GetIotOperationsInstancesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableIotOperationsSubscriptionResource(subscriptionResource).GetInstanceResourcesAsync(cancellationToken);
+            return GetMockableIotOperationsSubscriptionResource(subscriptionResource).GetIotOperationsInstancesAsync(cancellationToken);
         }
 
         /// <summary>
@@ -330,23 +330,23 @@ namespace Azure.ResourceManager.IotOperations
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="InstanceResource"/></description>
+        /// <description><see cref="IotOperationsInstanceResource"/></description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableIotOperationsSubscriptionResource.GetInstanceResources(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableIotOperationsSubscriptionResource.GetIotOperationsInstances(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="InstanceResource"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<InstanceResource> GetInstanceResources(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="IotOperationsInstanceResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IotOperationsInstanceResource> GetIotOperationsInstances(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableIotOperationsSubscriptionResource(subscriptionResource).GetInstanceResources(cancellationToken);
+            return GetMockableIotOperationsSubscriptionResource(subscriptionResource).GetIotOperationsInstances(cancellationToken);
         }
     }
 }
