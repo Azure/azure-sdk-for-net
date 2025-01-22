@@ -476,7 +476,7 @@ namespace Azure.Storage.DataMovement.Tests
             await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
 
             // Assert
-            await testEventRaised2.AssertTransferCompleted();
+            await testEventRaised2.AssertSingleCompletedCheck();
             Assert.AreEqual(TransferState.Completed, resumeTransfer.Status.State);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 
@@ -552,7 +552,7 @@ namespace Azure.Storage.DataMovement.Tests
             await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
 
             // Assert
-            await testEventRaised2.AssertTransferCompleted();
+            await testEventRaised2.AssertSingleCompletedCheck();
             Assert.AreEqual(TransferState.Completed, resumeTransfer.Status.State);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 
@@ -1026,7 +1026,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions: transferOptions);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(100));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
@@ -1048,7 +1048,7 @@ namespace Azure.Storage.DataMovement.Tests
             await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
 
             // Assert
-            await testEventRaised2.AssertContainerCompleted(partCount - completedBeforePause);
+            await testEventRaised2.AssertContainerCompletedCheck(partCount - completedBeforePause);
             Assert.AreEqual(TransferState.Completed, resumeTransfer.Status.State);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 
@@ -1114,7 +1114,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions: transferOptions);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(100));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
@@ -1136,7 +1136,7 @@ namespace Azure.Storage.DataMovement.Tests
             await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
 
             // Assert
-            await testEventsRaised2.AssertContainerCompleted(partCount - completedBeforePause);
+            await testEventsRaised2.AssertContainerCompletedCheck(partCount - completedBeforePause);
             Assert.AreEqual(TransferState.Completed, resumeTransfer.Status.State);
             Assert.IsTrue(resumeTransfer.HasCompleted);
 
