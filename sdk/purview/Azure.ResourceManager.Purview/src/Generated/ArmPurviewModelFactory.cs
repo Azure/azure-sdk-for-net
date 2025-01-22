@@ -123,15 +123,6 @@ namespace Azure.ResourceManager.Purview.Models
             return new PurviewAccountStatus(accountProvisioningState, errorDetails, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PurviewAccountEndpoint"/>. </summary>
-        /// <param name="catalog"> Gets the catalog endpoint. </param>
-        /// <param name="scan"> Gets the scan endpoint. </param>
-        /// <returns> A new <see cref="Models.PurviewAccountEndpoint"/> instance for mocking. </returns>
-        public static PurviewAccountEndpoint PurviewAccountEndpoint(string catalog = null, string scan = null)
-        {
-            return new PurviewAccountEndpoint(catalog, scan, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.PurviewIngestionStorage"/>. </summary>
         /// <param name="id"> Gets or sets the Id. </param>
         /// <param name="primaryEndpoint"> Gets or sets the primary endpoint. </param>

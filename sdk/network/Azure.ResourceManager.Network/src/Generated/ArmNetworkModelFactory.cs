@@ -263,34 +263,6 @@ namespace Azure.ResourceManager.Network.Models
                 provisioningState);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayFrontendIPConfiguration"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="privateIPAddress"> PrivateIPAddress of the network interface IP Configuration. </param>
-        /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
-        /// <param name="subnetId"> Reference to the subnet resource. </param>
-        /// <param name="publicIPAddressId"> Reference to the PublicIP resource. </param>
-        /// <param name="privateLinkConfigurationId"> Reference to the application gateway private link configuration. </param>
-        /// <param name="provisioningState"> The provisioning state of the frontend IP configuration resource. </param>
-        /// <returns> A new <see cref="Models.ApplicationGatewayFrontendIPConfiguration"/> instance for mocking. </returns>
-        public static ApplicationGatewayFrontendIPConfiguration ApplicationGatewayFrontendIPConfiguration(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, ETag? etag = null, string privateIPAddress = null, NetworkIPAllocationMethod? privateIPAllocationMethod = null, ResourceIdentifier subnetId = null, ResourceIdentifier publicIPAddressId = null, ResourceIdentifier privateLinkConfigurationId = null, NetworkProvisioningState? provisioningState = null)
-        {
-            return new ApplicationGatewayFrontendIPConfiguration(
-                id,
-                name,
-                resourceType,
-                serializedAdditionalRawData: null,
-                etag,
-                privateIPAddress,
-                privateIPAllocationMethod,
-                subnetId != null ? ResourceManagerModelFactory.WritableSubResource(subnetId) : null,
-                publicIPAddressId != null ? ResourceManagerModelFactory.WritableSubResource(publicIPAddressId) : null,
-                privateLinkConfigurationId != null ? ResourceManagerModelFactory.WritableSubResource(privateLinkConfigurationId) : null,
-                provisioningState);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.ApplicationGatewayFrontendPort"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>

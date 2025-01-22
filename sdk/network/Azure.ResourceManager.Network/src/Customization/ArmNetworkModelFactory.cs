@@ -21,6 +21,22 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNetworkModelFactory
     {
+        /// <summary> Initializes a new instance of ApplicationGatewayFrontendIPConfiguration. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="privateIPAddress"> PrivateIPAddress of the network interface IP Configuration. </param>
+        /// <param name="privateIPAllocationMethod"> The private IP address allocation method. </param>
+        /// <param name="subnetId"> Reference to the subnet resource. </param>
+        /// <param name="publicIPAddressId"> Reference to the PublicIP resource. </param>
+        /// <param name="privateLinkConfigurationId"> Reference to the application gateway private link configuration. </param>
+        /// <param name="provisioningState"> The provisioning state of the frontend IP configuration resource. </param>
+        /// <returns> A new <see cref="Models.ApplicationGatewayFrontendIPConfiguration"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ApplicationGatewayFrontendIPConfiguration ApplicationGatewayFrontendIPConfiguration(ResourceIdentifier id, string name, ResourceType? resourceType, ETag? etag, string privateIPAddress, NetworkIPAllocationMethod? privateIPAllocationMethod, ResourceIdentifier subnetId, ResourceIdentifier publicIPAddressId, ResourceIdentifier privateLinkConfigurationId, NetworkProvisioningState? provisioningState)
+            => ApplicationGatewayFrontendIPConfiguration(id, name, resourceType, etag, privateIPAddress, privateIPAllocationMethod, subnetId, publicIPAddressId, privateLinkConfigurationId, provisioningState);
+
         /// <summary> Initializes a new instance of VirtualNetworkGatewayData. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
