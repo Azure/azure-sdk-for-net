@@ -13,30 +13,22 @@ using Azure.Core;
 
 namespace SpecialWords.Models
 {
-    /// <summary></summary>
     public partial class If : IJsonModel<If>
     {
         void IJsonModel<If>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         If IJsonModel<If>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual If JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<If>.Write(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         If IPersistableModel<If>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual If PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<If>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
@@ -44,7 +36,6 @@ namespace SpecialWords.Models
         /// <param name="if"> The <see cref="If"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(If @if) => throw null;
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="If"/> from. </param>
         public static explicit operator If(Response result) => throw null;
     }
 }

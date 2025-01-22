@@ -7,7 +7,6 @@
 
 namespace _Type.Model.Empty.Models
 {
-    /// <summary> Empty model used in operation return type. </summary>
     public partial class EmptyOutput
     {
     }

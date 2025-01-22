@@ -13,30 +13,22 @@ using Azure.Core;
 
 namespace SpecialWords.Models
 {
-    /// <summary></summary>
     public partial class Import : IJsonModel<Import>
     {
         void IJsonModel<Import>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         Import IJsonModel<Import>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Import JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Import>.Write(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Import IPersistableModel<Import>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Import PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Import>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
@@ -44,7 +36,6 @@ namespace SpecialWords.Models
         /// <param name="import"> The <see cref="Import"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Import import) => throw null;
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="Import"/> from. </param>
         public static explicit operator Import(Response result) => throw null;
     }
 }

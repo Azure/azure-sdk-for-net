@@ -13,30 +13,22 @@ using Azure.Core;
 
 namespace SpecialWords.Models
 {
-    /// <summary></summary>
     public partial class In : IJsonModel<In>
     {
         void IJsonModel<In>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         In IJsonModel<In>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual In JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<In>.Write(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         In IPersistableModel<In>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual In PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<In>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
@@ -44,7 +36,6 @@ namespace SpecialWords.Models
         /// <param name="in"> The <see cref="In"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(In @in) => throw null;
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="In"/> from. </param>
         public static explicit operator In(Response result) => throw null;
     }
 }

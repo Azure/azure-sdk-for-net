@@ -13,30 +13,22 @@ using Azure.Core;
 
 namespace SpecialWords.Models
 {
-    /// <summary></summary>
     public partial class Or : IJsonModel<Or>
     {
         void IJsonModel<Or>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         Or IJsonModel<Or>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Or JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Or>.Write(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Or IPersistableModel<Or>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Or PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Or>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
@@ -44,7 +36,6 @@ namespace SpecialWords.Models
         /// <param name="or"> The <see cref="Or"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Or @or) => throw null;
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="Or"/> from. </param>
         public static explicit operator Or(Response result) => throw null;
     }
 }

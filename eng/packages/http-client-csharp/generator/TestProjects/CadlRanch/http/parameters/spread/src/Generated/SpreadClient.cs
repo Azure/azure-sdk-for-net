@@ -10,25 +10,16 @@ using Azure.Core.Pipeline;
 
 namespace Parameters.Spread
 {
-    /// <summary></summary>
     public partial class SpreadClient
     {
-        /// <summary> Initializes a new instance of SpreadClient. </summary>
         public SpreadClient() : this(new Uri("http://localhost:3000"), new SpreadClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of SpreadClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public SpreadClient(Uri endpoint, SpreadClientOptions options) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public HttpPipeline Pipeline => throw null;
 
-        /// <summary> Initializes a new instance of Model. </summary>
         public virtual Model GetModelClient() => throw null;
 
-        /// <summary> Initializes a new instance of Alias. </summary>
         public virtual Alias GetAliasClient() => throw null;
     }
 }

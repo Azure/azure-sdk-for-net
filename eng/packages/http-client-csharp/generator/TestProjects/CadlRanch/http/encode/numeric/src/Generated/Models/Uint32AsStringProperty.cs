@@ -7,13 +7,10 @@
 
 namespace Encode.Numeric.Models
 {
-    /// <summary> The Uint32AsStringProperty. </summary>
     public partial class Uint32AsStringProperty
     {
-        /// <summary> Initializes a new instance of <see cref="Uint32AsStringProperty"/>. </summary>
         public Uint32AsStringProperty() => throw null;
 
-        /// <summary> Gets or sets the Value. </summary>
         public object Value
         {
             get => throw null;

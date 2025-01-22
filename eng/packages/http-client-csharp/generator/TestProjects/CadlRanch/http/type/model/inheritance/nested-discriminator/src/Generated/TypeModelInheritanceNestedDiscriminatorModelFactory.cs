@@ -9,36 +9,16 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator.Models
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class TypeModelInheritanceNestedDiscriminatorModelFactory
     {
-        /// <summary> This is base model for polymorphic multiple levels inheritance with a discriminator. </summary>
-        /// <param name="kind"> Discriminator property for Fish. </param>
-        /// <param name="age"></param>
-        /// <returns> A new <see cref="Models.Fish"/> instance for mocking. </returns>
         public static Fish Fish(string kind = default, int age = default) => throw null;
 
-        /// <summary> The second level model in polymorphic multiple levels inheritance and it defines a new discriminator. </summary>
-        /// <param name="age"></param>
-        /// <returns> A new <see cref="Models.Shark"/> instance for mocking. </returns>
         public static Shark Shark(int age = default) => throw null;
 
-        /// <summary> The third level model SawShark in polymorphic multiple levels inheritance. </summary>
-        /// <param name="age"></param>
-        /// <returns> A new <see cref="Models.SawShark"/> instance for mocking. </returns>
         public static SawShark SawShark(int age = default) => throw null;
 
-        /// <summary> The third level model GoblinShark in polymorphic multiple levels inheritance. </summary>
-        /// <param name="age"></param>
-        /// <returns> A new <see cref="Models.GoblinShark"/> instance for mocking. </returns>
         public static GoblinShark GoblinShark(int age = default) => throw null;
 
-        /// <summary> The second level model in polymorphic multiple levels inheritance which contains references to other polymorphic instances. </summary>
-        /// <param name="age"></param>
-        /// <param name="friends"></param>
-        /// <param name="hate"></param>
-        /// <param name="partner"></param>
-        /// <returns> A new <see cref="Models.Salmon"/> instance for mocking. </returns>
         public static Salmon Salmon(int age = default, IEnumerable<Fish> friends = default, IDictionary<string, Fish> hate = default, Fish partner = default) => throw null;
     }
 }

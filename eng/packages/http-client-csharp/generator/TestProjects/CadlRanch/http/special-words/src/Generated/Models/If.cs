@@ -5,19 +5,12 @@
 
 #nullable disable
 
-using System;
-
 namespace SpecialWords.Models
 {
-    /// <summary> The If. </summary>
     public partial class If
     {
-        /// <summary> Initializes a new instance of <see cref="If"/>. </summary>
-        /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public If(string name) => throw null;
 
-        /// <summary> Gets the Name. </summary>
         public string Name => throw null;
     }
 }

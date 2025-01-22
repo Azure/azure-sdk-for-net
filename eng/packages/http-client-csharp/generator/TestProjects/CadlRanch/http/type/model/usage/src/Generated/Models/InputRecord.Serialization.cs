@@ -13,30 +13,22 @@ using Azure.Core;
 
 namespace _Type.Model.Usage.Models
 {
-    /// <summary></summary>
     public partial class InputRecord : IJsonModel<InputRecord>
     {
         void IJsonModel<InputRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         InputRecord IJsonModel<InputRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InputRecord JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<InputRecord>.Write(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         InputRecord IPersistableModel<InputRecord>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual InputRecord PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<InputRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
@@ -44,7 +36,6 @@ namespace _Type.Model.Usage.Models
         /// <param name="inputRecord"> The <see cref="InputRecord"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(InputRecord inputRecord) => throw null;
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="InputRecord"/> from. </param>
         public static explicit operator InputRecord(Response result) => throw null;
     }
 }

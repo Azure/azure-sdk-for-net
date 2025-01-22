@@ -7,14 +7,10 @@
 
 namespace Serialization.EncodedName.Json.Models
 {
-    /// <summary> The JsonEncodedNameModel. </summary>
     public partial class JsonEncodedNameModel
     {
-        /// <summary> Initializes a new instance of <see cref="JsonEncodedNameModel"/>. </summary>
-        /// <param name="defaultName"> Pass in true. </param>
         public JsonEncodedNameModel(bool defaultName) => throw null;
 
-        /// <summary> Pass in true. </summary>
         public bool DefaultName
         {
             get => throw null;

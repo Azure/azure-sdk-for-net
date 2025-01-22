@@ -5,19 +5,12 @@
 
 #nullable disable
 
-using System;
-
 namespace SpecialWords.Models
 {
-    /// <summary> The With. </summary>
     public partial class With
     {
-        /// <summary> Initializes a new instance of <see cref="With"/>. </summary>
-        /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public With(string name) => throw null;
 
-        /// <summary> Gets the Name. </summary>
         public string Name => throw null;
     }
 }

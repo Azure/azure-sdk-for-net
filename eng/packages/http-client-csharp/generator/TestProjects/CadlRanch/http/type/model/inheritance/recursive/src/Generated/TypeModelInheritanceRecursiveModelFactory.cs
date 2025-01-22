@@ -9,18 +9,10 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.Recursive.Models
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class TypeModelInheritanceRecursiveModelFactory
     {
-        /// <summary> extension. </summary>
-        /// <param name="extension"></param>
-        /// <param name="level"></param>
-        /// <returns> A new <see cref="Models.Extension"/> instance for mocking. </returns>
         public static Extension Extension(IEnumerable<Extension> extension = default, sbyte level = default) => throw null;
 
-        /// <summary> element. </summary>
-        /// <param name="extension"></param>
-        /// <returns> A new <see cref="Models.Element"/> instance for mocking. </returns>
         public static Element Element(IEnumerable<Extension> extension = default) => throw null;
     }
 }

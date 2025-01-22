@@ -13,30 +13,22 @@ using Azure.Core;
 
 namespace Parameters.BodyOptionality.Models
 {
-    /// <summary></summary>
     public partial class BodyModel : IJsonModel<BodyModel>
     {
         void IJsonModel<BodyModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         BodyModel IJsonModel<BodyModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BodyModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<BodyModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         BodyModel IPersistableModel<BodyModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BodyModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<BodyModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
@@ -44,7 +36,6 @@ namespace Parameters.BodyOptionality.Models
         /// <param name="bodyModel"> The <see cref="BodyModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(BodyModel bodyModel) => throw null;
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="BodyModel"/> from. </param>
         public static explicit operator BodyModel(Response result) => throw null;
     }
 }

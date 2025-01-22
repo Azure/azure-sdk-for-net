@@ -5,19 +5,12 @@
 
 #nullable disable
 
-using System;
-
 namespace Parameters.BodyOptionality.Models
 {
-    /// <summary> The BodyModel. </summary>
     public partial class BodyModel
     {
-        /// <summary> Initializes a new instance of <see cref="BodyModel"/>. </summary>
-        /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public BodyModel(string name) => throw null;
 
-        /// <summary> Gets the Name. </summary>
         public string Name => throw null;
     }
 }

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator.Models
 {
-    /// <summary> This is base model for polymorphic multiple levels inheritance with a discriminator. </summary>
     public abstract partial class Fish
     {
         private protected Fish(string kind, int age) => throw null;
@@ -23,7 +22,6 @@ namespace _Type.Model.Inheritance.NestedDiscriminator.Models
             set => throw null;
         }
 
-        /// <summary> Gets or sets the Age. </summary>
         public int Age
         {
             get => throw null;

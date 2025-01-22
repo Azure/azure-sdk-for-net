@@ -14,97 +14,30 @@ using Azure.Core.Pipeline;
 
 namespace Authentication.OAuth2
 {
-    /// <summary></summary>
     public partial class OAuth2Client
     {
-        /// <summary> Initializes a new instance of OAuth2Client for mocking. </summary>
         protected OAuth2Client() => throw null;
 
-        /// <summary> Initializes a new instance of OAuth2Client. </summary>
-        /// <param name="tokenCredential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tokenCredential"/> is null. </exception>
         public OAuth2Client(TokenCredential tokenCredential) : this(new Uri("http://localhost:3000"), tokenCredential, new OAuth2ClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of OAuth2Client. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="tokenCredential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null. </exception>
         public OAuth2Client(Uri endpoint, TokenCredential tokenCredential, OAuth2ClientOptions options) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public HttpPipeline Pipeline => throw null;
 
-        /// <summary>
-        /// [Protocol Method] Check whether client is authenticated
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response Valid(RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] Check whether client is authenticated
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Task<Response> ValidAsync(RequestContext context) => throw null;
 
-        /// <summary> Check whether client is authenticated. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response Valid(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> Check whether client is authenticated. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Task<Response> ValidAsync(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] Check whether client is authenticated. Will return an invalid bearer error.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response Invalid(RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] Check whether client is authenticated. Will return an invalid bearer error.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Task<Response> InvalidAsync(RequestContext context) => throw null;
 
-        /// <summary> Check whether client is authenticated. Will return an invalid bearer error. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response Invalid(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> Check whether client is authenticated. Will return an invalid bearer error. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Task<Response> InvalidAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

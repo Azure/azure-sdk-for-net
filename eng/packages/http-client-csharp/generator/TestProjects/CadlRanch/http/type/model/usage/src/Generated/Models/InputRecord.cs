@@ -5,19 +5,12 @@
 
 #nullable disable
 
-using System;
-
 namespace _Type.Model.Usage.Models
 {
-    /// <summary> Record used in operation parameters. </summary>
     public partial class InputRecord
     {
-        /// <summary> Initializes a new instance of <see cref="InputRecord"/>. </summary>
-        /// <param name="requiredProp"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requiredProp"/> is null. </exception>
         public InputRecord(string requiredProp) => throw null;
 
-        /// <summary> Gets the RequiredProp. </summary>
         public string RequiredProp => throw null;
     }
 }

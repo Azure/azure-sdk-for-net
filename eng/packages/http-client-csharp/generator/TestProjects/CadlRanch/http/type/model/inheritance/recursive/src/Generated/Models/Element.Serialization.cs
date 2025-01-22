@@ -13,30 +13,22 @@ using Azure.Core;
 
 namespace _Type.Model.Inheritance.Recursive.Models
 {
-    /// <summary></summary>
     public partial class Element : IJsonModel<Element>
     {
         void IJsonModel<Element>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         Element IJsonModel<Element>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Element JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Element>.Write(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Element IPersistableModel<Element>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Element PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Element>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
@@ -44,7 +36,6 @@ namespace _Type.Model.Inheritance.Recursive.Models
         /// <param name="element"> The <see cref="Element"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Element element) => throw null;
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="Element"/> from. </param>
         public static explicit operator Element(Response result) => throw null;
     }
 }

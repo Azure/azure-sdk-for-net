@@ -5,19 +5,12 @@
 
 #nullable disable
 
-using System;
-
 namespace Parameters.Basic.Models
 {
-    /// <summary> This is a simple model. </summary>
     public partial class User
     {
-        /// <summary> Initializes a new instance of <see cref="User"/>. </summary>
-        /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public User(string name) => throw null;
 
-        /// <summary> Gets the Name. </summary>
         public string Name => throw null;
     }
 }

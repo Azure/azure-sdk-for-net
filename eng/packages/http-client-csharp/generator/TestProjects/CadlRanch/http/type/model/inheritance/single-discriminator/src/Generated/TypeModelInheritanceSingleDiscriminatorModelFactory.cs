@@ -9,47 +9,20 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator.Models
 {
-    /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class TypeModelInheritanceSingleDiscriminatorModelFactory
     {
-        /// <summary> This is base model for polymorphic single level inheritance with a discriminator. </summary>
-        /// <param name="kind"></param>
-        /// <param name="wingspan"></param>
-        /// <returns> A new <see cref="Models.Bird"/> instance for mocking. </returns>
         public static Bird Bird(string kind = default, int wingspan = default) => throw null;
 
-        /// <summary> The second level model in polymorphic single level inheritance. </summary>
-        /// <param name="wingspan"></param>
-        /// <returns> A new <see cref="Models.SeaGull"/> instance for mocking. </returns>
         public static SeaGull SeaGull(int wingspan = default) => throw null;
 
-        /// <summary> The second level model in polymorphic single level inheritance. </summary>
-        /// <param name="wingspan"></param>
-        /// <returns> A new <see cref="Models.Sparrow"/> instance for mocking. </returns>
         public static Sparrow Sparrow(int wingspan = default) => throw null;
 
-        /// <summary> The second level model in polymorphic single level inheritance. </summary>
-        /// <param name="wingspan"></param>
-        /// <returns> A new <see cref="Models.Goose"/> instance for mocking. </returns>
         public static Goose Goose(int wingspan = default) => throw null;
 
-        /// <summary> The second level model in polymorphic single levels inheritance which contains references to other polymorphic instances. </summary>
-        /// <param name="wingspan"></param>
-        /// <param name="friends"></param>
-        /// <param name="hate"></param>
-        /// <param name="partner"></param>
-        /// <returns> A new <see cref="Models.Eagle"/> instance for mocking. </returns>
         public static Eagle Eagle(int wingspan = default, IEnumerable<Bird> friends = default, IDictionary<string, Bird> hate = default, Bird partner = default) => throw null;
 
-        /// <summary> Define a base class in the legacy way. Discriminator property is not explicitly defined in the model. </summary>
-        /// <param name="kind"> Discriminator property for Dinosaur. </param>
-        /// <param name="size"></param>
-        /// <returns> A new <see cref="Models.Dinosaur"/> instance for mocking. </returns>
         public static Dinosaur Dinosaur(string kind = default, int size = default) => throw null;
 
-        /// <summary> The second level legacy model in polymorphic single level inheritance. </summary>
-        /// <param name="size"></param>
-        /// <returns> A new <see cref="Models.TRex"/> instance for mocking. </returns>
         public static TRex TRex(int size = default) => throw null;
     }
 }

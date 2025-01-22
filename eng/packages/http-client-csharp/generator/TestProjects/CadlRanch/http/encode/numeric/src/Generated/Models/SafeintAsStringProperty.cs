@@ -7,14 +7,10 @@
 
 namespace Encode.Numeric.Models
 {
-    /// <summary> The SafeintAsStringProperty. </summary>
     public partial class SafeintAsStringProperty
     {
-        /// <summary> Initializes a new instance of <see cref="SafeintAsStringProperty"/>. </summary>
-        /// <param name="value"></param>
         public SafeintAsStringProperty(long value) => throw null;
 
-        /// <summary> Gets or sets the Value. </summary>
         public long Value
         {
             get => throw null;

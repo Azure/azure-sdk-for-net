@@ -13,30 +13,22 @@ using Azure.Core;
 
 namespace Serialization.EncodedName.Json.Models
 {
-    /// <summary></summary>
     public partial class JsonEncodedNameModel : IJsonModel<JsonEncodedNameModel>
     {
         void IJsonModel<JsonEncodedNameModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         JsonEncodedNameModel IJsonModel<JsonEncodedNameModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual JsonEncodedNameModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<JsonEncodedNameModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         JsonEncodedNameModel IPersistableModel<JsonEncodedNameModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual JsonEncodedNameModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<JsonEncodedNameModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
@@ -44,7 +36,6 @@ namespace Serialization.EncodedName.Json.Models
         /// <param name="jsonEncodedNameModel"> The <see cref="JsonEncodedNameModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(JsonEncodedNameModel jsonEncodedNameModel) => throw null;
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="JsonEncodedNameModel"/> from. </param>
         public static explicit operator JsonEncodedNameModel(Response result) => throw null;
     }
 }

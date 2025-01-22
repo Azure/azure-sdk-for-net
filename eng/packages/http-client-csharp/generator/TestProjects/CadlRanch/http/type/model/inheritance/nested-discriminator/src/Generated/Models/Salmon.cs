@@ -10,22 +10,16 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.NestedDiscriminator.Models
 {
-    /// <summary> The second level model in polymorphic multiple levels inheritance which contains references to other polymorphic instances. </summary>
     public partial class Salmon : Fish
     {
-        /// <summary> Initializes a new instance of <see cref="Salmon"/>. </summary>
-        /// <param name="age"></param>
         public Salmon(int age) : base("salmon", age) => throw null;
 
         internal Salmon(string kind, int age, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<Fish> friends, IDictionary<string, Fish> hate, Fish partner) : base(kind, age, additionalBinaryDataProperties) => throw null;
 
-        /// <summary> Gets the Friends. </summary>
         public IList<Fish> Friends => throw null;
 
-        /// <summary> Gets the Hate. </summary>
         public IDictionary<string, Fish> Hate => throw null;
 
-        /// <summary> Gets or sets the Partner. </summary>
         public Fish Partner
         {
             get => throw null;

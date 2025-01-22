@@ -10,22 +10,14 @@ using Azure.Core.Pipeline;
 
 namespace Encode.Numeric
 {
-    /// <summary></summary>
     public partial class NumericClient
     {
-        /// <summary> Initializes a new instance of NumericClient. </summary>
         public NumericClient() : this(new Uri("http://localhost:3000"), new NumericClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of NumericClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public NumericClient(Uri endpoint, NumericClientOptions options) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public HttpPipeline Pipeline => throw null;
 
-        /// <summary> Initializes a new instance of Property. </summary>
         public virtual Property GetPropertyClient() => throw null;
     }
 }

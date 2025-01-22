@@ -13,30 +13,22 @@ using Azure.Core;
 
 namespace SpecialWords.Models
 {
-    /// <summary></summary>
     public partial class Async : IJsonModel<Async>
     {
         void IJsonModel<Async>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         Async IJsonModel<Async>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Async JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<Async>.Write(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         Async IPersistableModel<Async>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual Async PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<Async>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
@@ -44,7 +36,6 @@ namespace SpecialWords.Models
         /// <param name="async"> The <see cref="Async"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(Async @async) => throw null;
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="Async"/> from. </param>
         public static explicit operator Async(Response result) => throw null;
     }
 }

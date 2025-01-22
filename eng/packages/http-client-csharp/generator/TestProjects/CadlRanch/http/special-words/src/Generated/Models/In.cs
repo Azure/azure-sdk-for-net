@@ -5,19 +5,12 @@
 
 #nullable disable
 
-using System;
-
 namespace SpecialWords.Models
 {
-    /// <summary> The In. </summary>
     public partial class In
     {
-        /// <summary> Initializes a new instance of <see cref="In"/>. </summary>
-        /// <param name="name"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public In(string name) => throw null;
 
-        /// <summary> Gets the Name. </summary>
         public string Name => throw null;
     }
 }

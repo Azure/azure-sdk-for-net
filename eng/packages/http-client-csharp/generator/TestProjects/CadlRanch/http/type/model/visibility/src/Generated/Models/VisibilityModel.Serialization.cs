@@ -13,30 +13,22 @@ using Azure.Core;
 
 namespace _Type.Model.Visibility.Models
 {
-    /// <summary></summary>
     public partial class VisibilityModel : IJsonModel<VisibilityModel>
     {
         void IJsonModel<VisibilityModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options) => throw null;
 
         VisibilityModel IJsonModel<VisibilityModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="reader"> The JSON reader. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VisibilityModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => throw null;
 
         BinaryData IPersistableModel<VisibilityModel>.Write(ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options) => throw null;
 
         VisibilityModel IPersistableModel<VisibilityModel>.Create(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
-        /// <param name="data"> The data to parse. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual VisibilityModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options) => throw null;
 
         string IPersistableModel<VisibilityModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => throw null;
@@ -44,7 +36,6 @@ namespace _Type.Model.Visibility.Models
         /// <param name="visibilityModel"> The <see cref="VisibilityModel"/> to serialize into <see cref="RequestContent"/>. </param>
         public static implicit operator RequestContent(VisibilityModel visibilityModel) => throw null;
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="VisibilityModel"/> from. </param>
         public static explicit operator VisibilityModel(Response result) => throw null;
     }
 }

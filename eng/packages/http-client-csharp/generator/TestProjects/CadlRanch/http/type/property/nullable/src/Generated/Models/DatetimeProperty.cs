@@ -9,23 +9,16 @@ using System;
 
 namespace _Type.Property.Nullable.Models
 {
-    /// <summary> Model with a datetime property. </summary>
     public partial class DatetimeProperty
     {
-        /// <summary> Initializes a new instance of <see cref="DatetimeProperty"/>. </summary>
-        /// <param name="requiredProperty"> Required property. </param>
-        /// <param name="nullableProperty"> Property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requiredProperty"/> is null. </exception>
         public DatetimeProperty(string requiredProperty, DateTimeOffset? nullableProperty) => throw null;
 
-        /// <summary> Required property. </summary>
         public string RequiredProperty
         {
             get => throw null;
             set => throw null;
         }
 
-        /// <summary> Property. </summary>
         public DateTimeOffset? NullableProperty
         {
             get => throw null;

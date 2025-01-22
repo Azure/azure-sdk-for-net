@@ -10,22 +10,16 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator.Models
 {
-    /// <summary> The second level model in polymorphic single levels inheritance which contains references to other polymorphic instances. </summary>
     public partial class Eagle : Bird
     {
-        /// <summary> Initializes a new instance of <see cref="Eagle"/>. </summary>
-        /// <param name="wingspan"></param>
         public Eagle(int wingspan) : base("eagle", wingspan) => throw null;
 
         internal Eagle(string kind, int wingspan, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<Bird> friends, IDictionary<string, Bird> hate, Bird partner) : base(kind, wingspan, additionalBinaryDataProperties) => throw null;
 
-        /// <summary> Gets the Friends. </summary>
         public IList<Bird> Friends => throw null;
 
-        /// <summary> Gets the Hate. </summary>
         public IDictionary<string, Bird> Hate => throw null;
 
-        /// <summary> Gets or sets the Partner. </summary>
         public Bird Partner
         {
             get => throw null;

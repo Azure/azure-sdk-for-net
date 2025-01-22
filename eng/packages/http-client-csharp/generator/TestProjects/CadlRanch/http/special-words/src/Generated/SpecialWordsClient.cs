@@ -10,31 +10,20 @@ using Azure.Core.Pipeline;
 
 namespace SpecialWords
 {
-    /// <summary></summary>
     public partial class SpecialWordsClient
     {
-        /// <summary> Initializes a new instance of SpecialWordsClient. </summary>
         public SpecialWordsClient() : this(new Uri("http://localhost:3000"), new SpecialWordsClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of SpecialWordsClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public SpecialWordsClient(Uri endpoint, SpecialWordsClientOptions options) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public HttpPipeline Pipeline => throw null;
 
-        /// <summary> Initializes a new instance of ModelsOps. </summary>
         public virtual ModelsOps GetModelsOpsClient() => throw null;
 
-        /// <summary> Initializes a new instance of ModelProperties. </summary>
         public virtual ModelProperties GetModelPropertiesClient() => throw null;
 
-        /// <summary> Initializes a new instance of Operations. </summary>
         public virtual Operations GetOperationsClient() => throw null;
 
-        /// <summary> Initializes a new instance of Parameters. </summary>
         public virtual Parameters GetParametersClient() => throw null;
     }
 }

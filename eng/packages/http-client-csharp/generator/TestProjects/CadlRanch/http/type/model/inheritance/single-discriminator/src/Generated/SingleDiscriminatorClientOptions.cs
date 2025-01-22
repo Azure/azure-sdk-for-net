@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator
 {
-    /// <summary> Client options for <see cref="SingleDiscriminatorClient"/>. </summary>
     public partial class SingleDiscriminatorClientOptions : ClientOptions
     {
     }

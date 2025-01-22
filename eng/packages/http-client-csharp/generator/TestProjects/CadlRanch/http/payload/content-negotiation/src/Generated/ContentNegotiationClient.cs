@@ -10,25 +10,16 @@ using Azure.Core.Pipeline;
 
 namespace Payload.ContentNegotiation
 {
-    /// <summary></summary>
     public partial class ContentNegotiationClient
     {
-        /// <summary> Initializes a new instance of ContentNegotiationClient. </summary>
         public ContentNegotiationClient() : this(new Uri("http://localhost:3000"), new ContentNegotiationClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of ContentNegotiationClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public ContentNegotiationClient(Uri endpoint, ContentNegotiationClientOptions options) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public HttpPipeline Pipeline => throw null;
 
-        /// <summary> Initializes a new instance of SameBody. </summary>
         public virtual SameBody GetSameBodyClient() => throw null;
 
-        /// <summary> Initializes a new instance of DifferentBody. </summary>
         public virtual DifferentBody GetDifferentBodyClient() => throw null;
     }
 }

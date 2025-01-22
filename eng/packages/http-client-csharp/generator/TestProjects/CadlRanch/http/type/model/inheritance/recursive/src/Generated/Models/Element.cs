@@ -10,15 +10,12 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.Recursive.Models
 {
-    /// <summary> element. </summary>
     public partial class Element
     {
-        /// <summary> Initializes a new instance of <see cref="Element"/>. </summary>
         public Element() => throw null;
 
         internal Element(IList<Extension> extension, IDictionary<string, BinaryData> additionalBinaryDataProperties) => throw null;
 
-        /// <summary> Gets the Extension. </summary>
         public IList<Extension> Extension => throw null;
     }
 }

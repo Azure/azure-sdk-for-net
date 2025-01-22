@@ -5,28 +5,20 @@
 
 #nullable disable
 
-using System;
 using System.Collections.Generic;
 
 namespace _Type.Property.Nullable.Models
 {
-    /// <summary> Model with collection string properties. </summary>
     public partial class CollectionsStringProperty
     {
-        /// <summary> Initializes a new instance of <see cref="CollectionsStringProperty"/>. </summary>
-        /// <param name="requiredProperty"> Required property. </param>
-        /// <param name="nullableProperty"> Property. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="requiredProperty"/> is null. </exception>
         public CollectionsStringProperty(string requiredProperty, IEnumerable<string> nullableProperty) => throw null;
 
-        /// <summary> Required property. </summary>
         public string RequiredProperty
         {
             get => throw null;
             set => throw null;
         }
 
-        /// <summary> Property. </summary>
         public IList<string> NullableProperty
         {
             get => throw null;

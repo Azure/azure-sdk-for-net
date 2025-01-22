@@ -9,7 +9,6 @@ using Azure.Core;
 
 namespace Serialization.EncodedName.Json
 {
-    /// <summary> Client options for <see cref="JsonClient"/>. </summary>
     public partial class JsonClientOptions : ClientOptions
     {
     }

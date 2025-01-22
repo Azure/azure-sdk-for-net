@@ -10,22 +10,14 @@ using Azure.Core.Pipeline;
 
 namespace Serialization.EncodedName.Json
 {
-    /// <summary></summary>
     public partial class JsonClient
     {
-        /// <summary> Initializes a new instance of JsonClient. </summary>
         public JsonClient() : this(new Uri("http://localhost:3000"), new JsonClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of JsonClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public JsonClient(Uri endpoint, JsonClientOptions options) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public HttpPipeline Pipeline => throw null;
 
-        /// <summary> Initializes a new instance of Property. </summary>
         public virtual Property GetPropertyClient() => throw null;
     }
 }

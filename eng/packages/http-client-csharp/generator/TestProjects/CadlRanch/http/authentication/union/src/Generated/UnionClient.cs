@@ -14,109 +14,34 @@ using Azure.Core.Pipeline;
 
 namespace Authentication.Union
 {
-    /// <summary></summary>
     public partial class UnionClient
     {
-        /// <summary> Initializes a new instance of UnionClient for mocking. </summary>
         protected UnionClient() => throw null;
 
-        /// <summary> Initializes a new instance of UnionClient. </summary>
-        /// <param name="keyCredential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyCredential"/> is null. </exception>
         public UnionClient(AzureKeyCredential keyCredential) : this(new Uri("http://localhost:3000"), keyCredential, new UnionClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of UnionClient. </summary>
-        /// <param name="tokenCredential"> A credential used to authenticate to the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tokenCredential"/> is null. </exception>
         public UnionClient(TokenCredential tokenCredential) : this(new Uri("http://localhost:3000"), tokenCredential, new UnionClientOptions()) => throw null;
 
-        /// <summary> Initializes a new instance of UnionClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="keyCredential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="keyCredential"/> is null. </exception>
         public UnionClient(Uri endpoint, AzureKeyCredential keyCredential, UnionClientOptions options) => throw null;
 
-        /// <summary> Initializes a new instance of UnionClient. </summary>
-        /// <param name="endpoint"> Service endpoint. </param>
-        /// <param name="tokenCredential"> A credential used to authenticate to the service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="tokenCredential"/> is null. </exception>
         public UnionClient(Uri endpoint, TokenCredential tokenCredential, UnionClientOptions options) => throw null;
 
-        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public HttpPipeline Pipeline => throw null;
 
-        /// <summary>
-        /// [Protocol Method] Check whether client is authenticated
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response ValidKey(RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] Check whether client is authenticated
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Task<Response> ValidKeyAsync(RequestContext context) => throw null;
 
-        /// <summary> Check whether client is authenticated. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response ValidKey(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> Check whether client is authenticated. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Task<Response> ValidKeyAsync(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] Check whether client is authenticated
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Response ValidToken(RequestContext context) => throw null;
 
-        /// <summary>
-        /// [Protocol Method] Check whether client is authenticated
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
         public virtual Task<Response> ValidTokenAsync(RequestContext context) => throw null;
 
-        /// <summary> Check whether client is authenticated. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Response ValidToken(CancellationToken cancellationToken = default) => throw null;
 
-        /// <summary> Check whether client is authenticated. </summary>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         public virtual Task<Response> ValidTokenAsync(CancellationToken cancellationToken = default) => throw null;
     }
 }

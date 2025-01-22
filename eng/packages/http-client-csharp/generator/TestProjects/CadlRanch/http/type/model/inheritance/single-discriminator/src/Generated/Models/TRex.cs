@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace _Type.Model.Inheritance.SingleDiscriminator.Models
 {
-    /// <summary> The second level legacy model in polymorphic single level inheritance. </summary>
     public partial class TRex : Dinosaur
     {
         internal TRex(int size) : base("t-rex", size) => throw null;
