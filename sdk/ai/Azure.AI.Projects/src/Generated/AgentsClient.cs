@@ -4042,16 +4042,16 @@ namespace Azure.AI.Projects
         /// <summary> Create a vector store file by attaching a file to a vector store. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="fileId"> Identifier of the file. </param>
-        /// <param name="dataSources"> Azure asset ID. </param>
+        /// <param name="dataSource"> Azure asset ID. </param>
         /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<VectorStoreFile>> CreateVectorStoreFileAsync(string vectorStoreId, string fileId = null, IEnumerable<VectorStoreDataSource> dataSources = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VectorStoreFile>> CreateVectorStoreFileAsync(string vectorStoreId, string fileId = null, VectorStoreDataSource dataSource = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            CreateVectorStoreFileRequest createVectorStoreFileRequest = new CreateVectorStoreFileRequest(fileId, dataSources?.ToList() as IReadOnlyList<VectorStoreDataSource> ?? new ChangeTrackingList<VectorStoreDataSource>(), chunkingStrategy, null);
+            CreateVectorStoreFileRequest createVectorStoreFileRequest = new CreateVectorStoreFileRequest(fileId, dataSource, chunkingStrategy, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CreateVectorStoreFileAsync(vectorStoreId, createVectorStoreFileRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(VectorStoreFile.FromResponse(response), response);
@@ -4060,16 +4060,16 @@ namespace Azure.AI.Projects
         /// <summary> Create a vector store file by attaching a file to a vector store. </summary>
         /// <param name="vectorStoreId"> Identifier of the vector store. </param>
         /// <param name="fileId"> Identifier of the file. </param>
-        /// <param name="dataSources"> Azure asset ID. </param>
+        /// <param name="dataSource"> Azure asset ID. </param>
         /// <param name="chunkingStrategy"> The chunking strategy used to chunk the file(s). If not set, will use the auto strategy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vectorStoreId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vectorStoreId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<VectorStoreFile> CreateVectorStoreFile(string vectorStoreId, string fileId = null, IEnumerable<VectorStoreDataSource> dataSources = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
+        public virtual Response<VectorStoreFile> CreateVectorStoreFile(string vectorStoreId, string fileId = null, VectorStoreDataSource dataSource = null, VectorStoreChunkingStrategyRequest chunkingStrategy = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vectorStoreId, nameof(vectorStoreId));
 
-            CreateVectorStoreFileRequest createVectorStoreFileRequest = new CreateVectorStoreFileRequest(fileId, dataSources?.ToList() as IReadOnlyList<VectorStoreDataSource> ?? new ChangeTrackingList<VectorStoreDataSource>(), chunkingStrategy, null);
+            CreateVectorStoreFileRequest createVectorStoreFileRequest = new CreateVectorStoreFileRequest(fileId, dataSource, chunkingStrategy, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CreateVectorStoreFile(vectorStoreId, createVectorStoreFileRequest.ToRequestContent(), context);
             return Response.FromValue(VectorStoreFile.FromResponse(response), response);
@@ -4085,7 +4085,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateVectorStoreFileAsync(string,string,IEnumerable{VectorStoreDataSource},VectorStoreChunkingStrategyRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateVectorStoreFileAsync(string,string,VectorStoreDataSource,VectorStoreChunkingStrategyRequest,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -4126,7 +4126,7 @@ namespace Azure.AI.Projects
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CreateVectorStoreFile(string,string,IEnumerable{VectorStoreDataSource},VectorStoreChunkingStrategyRequest,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CreateVectorStoreFile(string,string,VectorStoreDataSource,VectorStoreChunkingStrategyRequest,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
