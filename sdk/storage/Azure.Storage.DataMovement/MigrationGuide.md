@@ -209,10 +209,77 @@ TransferManager transferManager;
 // upload blob
 TranferOperation operation = await transferManager.StartTransferAsync(
     files.FromDirectory(directoryPath),
-    blobs.FromContainer(containerUri, BlobStorageResourceContainerOptions()
+    blobs.FromContainer(containerUri, new BlobStorageResourceContainerOptions()
     {
         BlobDirectoryPrefix = blobDirectoryPath,
     }));
+await operation.WaitForCompletionAsync();
+```
+
+### Download
+
+#### Download single blob
+
+**Legacy:**
+```csharp
+// these values provided by your code
+string filePath, containerName, blobName;
+CloudBlobClient client;
+```
+```csharp
+// download blob
+await TransferManager.DownloadAsync(
+    client.GetContainerReference(containerName).GetBlockBlobReference(blobName),
+    filePath);
+```
+**Modern:**
+```csharp
+// these values provided by your code
+string filePath, blobUri;
+LocalFilesStorageResourceProvider files;
+BlobsStorageResourceProvider blobs;
+TransferManager transferManager;
+```
+```csharp
+// download blob
+TranferOperation operation = await transferManager.StartTransferAsync(
+    blobs.FromBlob(blobUri),
+    files.FromFile(filePath));
+await operation.WaitForCompletionAsync();
+```
+
+#### Download blob directory
+
+**Legacy:**
+```csharp
+// these values provided by your code
+string directoryPath, containerName, blobDirectoryPath;
+CloudBlobClient client;
+```
+```csharp
+// download blob directory
+await TransferManager.DownloadDirectoryAsync(
+    client.GetContainerReference(containerName).GetDirectoryReference(blobDirectoryPath),
+    filePath,
+    options: null,
+    context: null);
+```
+**Modern:**
+```csharp
+// these values provided by your code
+string directoryPath, containerUri, blobDirectoryPath;
+LocalFilesStorageResourceProvider files;
+BlobsStorageResourceProvider blobs;
+TransferManager transferManager;
+```
+```csharp
+// download blob directory
+TranferOperation operation = await transferManager.StartTransferAsync(
+    blobs.FromContainer(containerUri, new BlobStorageResourceContainerOptions()
+    {
+        BlobDirectoryPrefix = blobDirectoryPath,
+    }),
+    files.FromDirectory(directoryPath));
 await operation.WaitForCompletionAsync();
 ```
 
