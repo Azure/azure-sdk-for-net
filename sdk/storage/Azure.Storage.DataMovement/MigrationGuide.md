@@ -291,6 +291,74 @@ TODO
 - Error reporting
 - Pause/Resume
 
+### Copy
+
+#### Copy blob to blob
+
+Note: The modern data movement library only supports service side sync copy.
+
+**Legacy:**
+```csharp
+// these values provided by your code
+string srcContainerName, srcBlobName, dstContainerName, dstBlobName;
+CloudBlobClient client;
+```
+```csharp
+// copy blob
+await TransferManager.DownloadAsync(
+    client.GetContainerReference(srcContainerName).GetBlockBlobReference(srcBlobName),
+    client.GetContainerReference(dstContainerName).GetBlockBlobReference(dstBlobName),
+    CopyMethod.ServiceSideSyncCopy);
+```
+**Modern:**
+```csharp
+// these values provided by your code
+string srcBlobUri, dstBlobUri;
+BlobsStorageResourceProvider blobs;
+TransferManager transferManager;
+```
+```csharp
+// copy blob
+TranferOperation operation = await transferManager.StartTransferAsync(
+    blobs.FromBlob(srcBlobUri),
+    blobs.FromBlob(dstBlobUri));
+await operation.WaitForCompletionAsync();
+```
+
+#### Copy share file to blob
+
+Note: File shares requires the Azure.Storage.DataMovement.Files.Shares package.
+
+**Legacy:**
+```csharp
+// these values provided by your code
+string containerName, blobName, shareName, filePath;
+CloudBlobClient blobClient;
+CloudFileClient fileClient;
+```
+```csharp
+// copy file
+await TransferManager.DownloadAsync(
+    blobClient.GetContainerReference(srcContainerName).GetBlockBlobReference(srcBlobName),
+    fileClient.GetShareReference(dstContainerName).GetRootDirectoryReference().GetBlockBlobReference(dstBlobName),
+    CopyMethod.ServiceSideSyncCopy);
+```
+**Modern:**
+```csharp
+// these values provided by your code
+string blobUri, fileUri;
+BlobsStorageResourceProvider blobs;
+ShareFilesStorageResourceProvider files;
+TransferManager transferManager;
+```
+```csharp
+// copy file
+TranferOperation operation = await transferManager.StartTransferAsync(
+    blobs.FromBlob(blobUri),
+    files.FromFile(fileUri));
+await operation.WaitForCompletionAsync();
+```
+
 ## Additional information
 
 ### Links and references
