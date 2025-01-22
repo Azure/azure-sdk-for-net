@@ -44,3 +44,10 @@ steps:
         -OutputPath $(Build.SourcesDirectory)/projlist
     displayName: Resolve Service and Project List
     condition: ne(variables['ProjectNames'], '')
+
+  - pwsh: |
+      if ("$(ProjectNames)" -like "*,Azure.Storage.*") {
+        &"$(Build.SourcesDirectory)/sdk/storage/install_azurite.ps1" -AzuriteLocation "$(AzuriteLocation)" -AzuriteVersion "$(AzuriteVersion)"
+      }
+    displayName: Install Azurite If Necessary
+    condition: ne(variables['ProjectNames'], '')

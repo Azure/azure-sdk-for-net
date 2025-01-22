@@ -103,6 +103,7 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/verify-agent-os.yml
         parameters:
           AgentImage: ${{ parameters.OSName }}
+
       - ${{ each step in parameters.TestSetupSteps }}:
         - ${{ each pair in step }}:
             ${{ pair.key }}: ${{ pair.value }}
@@ -111,19 +112,23 @@ jobs:
           Get-ChildItem -Path $(Build.SourcesDirectory) | ForEach-Object { Write-Host $_.FullName }
         displayName: Dump Visible Files
 
-      - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
-        parameters:
-          PackageInfo: '$(Build.SourcesDirectory)/PackageInfo'
+      ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
+        - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
+          parameters:
+            PackageInfo: '$(Build.SourcesDirectory)/PackageInfo'
 
       - template: /eng/pipelines/templates/steps/install-dotnet.yml
         parameters:
           NuGetCacheKey: Test
+
       - pwsh: |
           Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)\sdk\$(ServiceDirectory)\**\coverage.cobertura.xml"
         displayName: Set variable for the project list file and coverage directory
+
       - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
+
       - script: >-
           dotnet test eng/service.proj
           --filter "(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"
