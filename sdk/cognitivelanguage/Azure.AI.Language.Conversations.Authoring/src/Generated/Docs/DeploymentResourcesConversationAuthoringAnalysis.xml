@@ -7,7 +7,7 @@ This sample shows how to call GetAssignDeploymentResourcesStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<DeploymentResourcesJobState> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
 ]]></code>
@@ -15,7 +15,7 @@ This sample shows how to call GetAssignDeploymentResourcesStatusAsync with all p
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<DeploymentResourcesJobState> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
@@ -26,7 +26,7 @@ This sample shows how to call GetAssignDeploymentResourcesStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<DeploymentResourcesJobState> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
 ]]></code>
@@ -34,7 +34,7 @@ This sample shows how to call GetAssignDeploymentResourcesStatus with all parame
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<DeploymentResourcesJobState> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
 ]]></code></example>
@@ -45,7 +45,7 @@ This sample shows how to call GetAssignDeploymentResourcesStatusAsync and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
 
@@ -59,7 +59,7 @@ This sample shows how to call GetAssignDeploymentResourcesStatusAsync with all p
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
 
@@ -87,7 +87,7 @@ This sample shows how to call GetAssignDeploymentResourcesStatus and parse the r
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
 
@@ -101,7 +101,7 @@ This sample shows how to call GetAssignDeploymentResourcesStatus with all parame
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
 
@@ -129,7 +129,7 @@ This sample shows how to call GetUnassignDeploymentResourcesStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<DeploymentResourcesJobState> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
 ]]></code>
@@ -137,7 +137,7 @@ This sample shows how to call GetUnassignDeploymentResourcesStatusAsync with all
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<DeploymentResourcesJobState> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
@@ -148,7 +148,7 @@ This sample shows how to call GetUnassignDeploymentResourcesStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<DeploymentResourcesJobState> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
 ]]></code>
@@ -156,7 +156,7 @@ This sample shows how to call GetUnassignDeploymentResourcesStatus with all para
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<DeploymentResourcesJobState> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
 ]]></code></example>
@@ -167,7 +167,7 @@ This sample shows how to call GetUnassignDeploymentResourcesStatusAsync and pars
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
 
@@ -181,7 +181,7 @@ This sample shows how to call GetUnassignDeploymentResourcesStatusAsync with all
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
 
@@ -209,7 +209,7 @@ This sample shows how to call GetUnassignDeploymentResourcesStatus and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
 
@@ -223,7 +223,7 @@ This sample shows how to call GetUnassignDeploymentResourcesStatus with all para
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
 
@@ -251,7 +251,7 @@ This sample shows how to call GetAssignedResourceDeploymentsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<AssignedResourceDeploymentsMetadata> response = await client.GetAssignedResourceDeploymentsAsync();
 ]]></code>
@@ -259,7 +259,7 @@ This sample shows how to call GetAssignedResourceDeploymentsAsync with all param
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<AssignedResourceDeploymentsMetadata> response = await client.GetAssignedResourceDeploymentsAsync(top: 1234, skip: 1234, maxpagesize: 1234);
 ]]></code></example>
@@ -270,7 +270,7 @@ This sample shows how to call GetAssignedResourceDeployments.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<AssignedResourceDeploymentsMetadata> response = client.GetAssignedResourceDeployments();
 ]]></code>
@@ -278,7 +278,7 @@ This sample shows how to call GetAssignedResourceDeployments with all parameters
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<AssignedResourceDeploymentsMetadata> response = client.GetAssignedResourceDeployments(top: 1234, skip: 1234, maxpagesize: 1234);
 ]]></code></example>
@@ -289,7 +289,7 @@ This sample shows how to call GetAssignedResourceDeploymentsAsync and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetAssignedResourceDeploymentsAsync(null, null, null, null);
 
@@ -303,7 +303,7 @@ This sample shows how to call GetAssignedResourceDeploymentsAsync with all param
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetAssignedResourceDeploymentsAsync(1234, 1234, 1234, null);
 
@@ -321,7 +321,7 @@ This sample shows how to call GetAssignedResourceDeployments and parse the resul
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetAssignedResourceDeployments(null, null, null, null);
 
@@ -335,7 +335,7 @@ This sample shows how to call GetAssignedResourceDeployments with all parameters
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetAssignedResourceDeployments(1234, 1234, 1234, null);
 
@@ -353,7 +353,7 @@ This sample shows how to call GetDeploymentResourcesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 await foreach (AssignedDeploymentResource item in client.GetDeploymentResourcesAsync("<projectName>"))
 {
@@ -363,7 +363,7 @@ This sample shows how to call GetDeploymentResourcesAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 await foreach (AssignedDeploymentResource item in client.GetDeploymentResourcesAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
@@ -376,7 +376,7 @@ This sample shows how to call GetDeploymentResources.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 foreach (AssignedDeploymentResource item in client.GetDeploymentResources("<projectName>"))
 {
@@ -386,7 +386,7 @@ This sample shows how to call GetDeploymentResources with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 foreach (AssignedDeploymentResource item in client.GetDeploymentResources("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
@@ -399,7 +399,7 @@ This sample shows how to call GetDeploymentResourcesAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 await foreach (BinaryData item in client.GetDeploymentResourcesAsync("<projectName>", null, null, null, null))
 {
@@ -412,7 +412,7 @@ This sample shows how to call GetDeploymentResourcesAsync with all parameters an
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 await foreach (BinaryData item in client.GetDeploymentResourcesAsync("<projectName>", 1234, 1234, 1234, null))
 {
@@ -428,7 +428,7 @@ This sample shows how to call GetDeploymentResources and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 foreach (BinaryData item in client.GetDeploymentResources("<projectName>", null, null, null, null))
 {
@@ -441,7 +441,7 @@ This sample shows how to call GetDeploymentResources with all parameters and par
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 foreach (BinaryData item in client.GetDeploymentResources("<projectName>", 1234, 1234, 1234, null))
 {
@@ -457,7 +457,7 @@ This sample shows how to call AssignDeploymentResourcesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
 {
@@ -469,7 +469,7 @@ This sample shows how to call AssignDeploymentResourcesAsync with all parameters
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
 {
@@ -484,7 +484,7 @@ This sample shows how to call AssignDeploymentResources.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
 {
@@ -496,7 +496,7 @@ This sample shows how to call AssignDeploymentResources with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
 {
@@ -511,7 +511,7 @@ This sample shows how to call AssignDeploymentResourcesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -531,7 +531,7 @@ This sample shows how to call AssignDeploymentResourcesAsync with all parameters
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -554,7 +554,7 @@ This sample shows how to call AssignDeploymentResources.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -574,7 +574,7 @@ This sample shows how to call AssignDeploymentResources with all parameters and 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -597,7 +597,7 @@ This sample shows how to call UnassignDeploymentResourcesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
 Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
@@ -606,7 +606,7 @@ This sample shows how to call UnassignDeploymentResourcesAsync with all paramete
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
 Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
@@ -618,7 +618,7 @@ This sample shows how to call UnassignDeploymentResources.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
 Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
@@ -627,7 +627,7 @@ This sample shows how to call UnassignDeploymentResources with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
 Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
@@ -639,7 +639,7 @@ This sample shows how to call UnassignDeploymentResourcesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -654,7 +654,7 @@ This sample shows how to call UnassignDeploymentResourcesAsync with all paramete
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -672,7 +672,7 @@ This sample shows how to call UnassignDeploymentResources.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -687,7 +687,7 @@ This sample shows how to call UnassignDeploymentResources with all parameters an
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+DeploymentResourcesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {

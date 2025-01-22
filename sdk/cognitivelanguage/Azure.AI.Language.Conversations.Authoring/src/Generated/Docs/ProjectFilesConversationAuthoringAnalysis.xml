@@ -7,7 +7,7 @@ This sample shows how to call GetExportStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<ExportProjectJobState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
 ]]></code>
@@ -15,7 +15,7 @@ This sample shows how to call GetExportStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<ExportProjectJobState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
@@ -26,7 +26,7 @@ This sample shows how to call GetExportStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<ExportProjectJobState> response = client.GetExportStatus("<projectName>", "<jobId>");
 ]]></code>
@@ -34,7 +34,7 @@ This sample shows how to call GetExportStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<ExportProjectJobState> response = client.GetExportStatus("<projectName>", "<jobId>");
 ]]></code></example>
@@ -45,7 +45,7 @@ This sample shows how to call GetExportStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", null);
 
@@ -59,7 +59,7 @@ This sample shows how to call GetExportStatusAsync with all parameters and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", null);
 
@@ -88,7 +88,7 @@ This sample shows how to call GetExportStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetExportStatus("<projectName>", "<jobId>", null);
 
@@ -102,7 +102,7 @@ This sample shows how to call GetExportStatus with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetExportStatus("<projectName>", "<jobId>", null);
 
@@ -131,7 +131,7 @@ This sample shows how to call GetImportStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<ImportProjectJobState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
 ]]></code>
@@ -139,7 +139,7 @@ This sample shows how to call GetImportStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<ImportProjectJobState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
@@ -150,7 +150,7 @@ This sample shows how to call GetImportStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<ImportProjectJobState> response = client.GetImportStatus("<projectName>", "<jobId>");
 ]]></code>
@@ -158,7 +158,7 @@ This sample shows how to call GetImportStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response<ImportProjectJobState> response = client.GetImportStatus("<projectName>", "<jobId>");
 ]]></code></example>
@@ -169,7 +169,7 @@ This sample shows how to call GetImportStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", null);
 
@@ -183,7 +183,7 @@ This sample shows how to call GetImportStatusAsync with all parameters and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", null);
 
@@ -211,7 +211,7 @@ This sample shows how to call GetImportStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetImportStatus("<projectName>", "<jobId>", null);
 
@@ -225,7 +225,7 @@ This sample shows how to call GetImportStatus with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetImportStatus("<projectName>", "<jobId>", null);
 
@@ -253,7 +253,7 @@ This sample shows how to call ExportAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit);
 ]]></code>
@@ -261,7 +261,7 @@ This sample shows how to call ExportAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit, exportedProjectFormat: AnalyzeConversationExportedProjectFormat.Conversation, assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
 ]]></code></example>
@@ -272,7 +272,7 @@ This sample shows how to call Export.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Operation operation = client.Export(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit);
 ]]></code>
@@ -280,7 +280,7 @@ This sample shows how to call Export with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Operation operation = client.Export(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit, exportedProjectFormat: AnalyzeConversationExportedProjectFormat.Conversation, assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
 ]]></code></example>
@@ -291,7 +291,7 @@ This sample shows how to call ExportAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit");
 ]]></code>
@@ -299,7 +299,7 @@ This sample shows how to call ExportAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit", exportedProjectFormat: "Conversation", assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
 ]]></code></example>
@@ -310,7 +310,7 @@ This sample shows how to call Export.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Operation operation = client.Export(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit");
 ]]></code>
@@ -318,7 +318,7 @@ This sample shows how to call Export with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 Operation operation = client.Export(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit", exportedProjectFormat: "Conversation", assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
 ]]></code></example>
@@ -329,7 +329,7 @@ This sample shows how to call ImportAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationProjectKind.Conversation, "<projectName>", "<language>"));
 Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", body);
@@ -338,7 +338,7 @@ This sample shows how to call ImportAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationProjectKind.Conversation, "<projectName>", "<language>")
 {
@@ -395,7 +395,7 @@ This sample shows how to call Import.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationProjectKind.Conversation, "<projectName>", "<language>"));
 Operation operation = client.Import(WaitUntil.Completed, "<projectName>", body);
@@ -404,7 +404,7 @@ This sample shows how to call Import with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationProjectKind.Conversation, "<projectName>", "<language>")
 {
@@ -461,7 +461,7 @@ This sample shows how to call ImportAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -480,7 +480,7 @@ This sample shows how to call ImportAsync with all parameters and request conten
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -591,7 +591,7 @@ This sample shows how to call Import.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -610,7 +610,7 @@ This sample shows how to call Import with all parameters and request content.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
+ProjectFilesConversationAuthoringAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetProjectFilesConversationAuthoringAnalysisClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {

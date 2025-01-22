@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
-    /// <summary> Client options for AnalyzeConversationClient. </summary>
-    public partial class AnalyzeConversationClientOptions : ClientOptions
+    /// <summary> Client options for AnalyzeConversationAuthoringClient. </summary>
+    public partial class AnalyzeConversationAuthoringClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_11_15_Preview;
 
@@ -28,8 +28,8 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of AnalyzeConversationClientOptions. </summary>
-        public AnalyzeConversationClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of AnalyzeConversationAuthoringClientOptions. </summary>
+        public AnalyzeConversationAuthoringClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

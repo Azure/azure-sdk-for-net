@@ -11,20 +11,20 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     [CodeGenClient("AuthoringClient")]
-    public partial class AnalyzeConversationClient
+    public partial class AnalyzeConversationAuthoringClient
     {
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of AnalyzeConversationClient. </summary>
+        /// <summary> Initializes a new instance of AnalyzeConversationAuthoringClient. </summary>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AnalyzeConversationClient(Uri endpoint, AzureKeyCredential credential, AnalyzeConversationClientOptions options)
+        public AnalyzeConversationAuthoringClient(Uri endpoint, AzureKeyCredential credential, AnalyzeConversationAuthoringClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AnalyzeConversationClientOptions();
+            options ??= new AnalyzeConversationAuthoringClientOptions();
 
             _apiVersion = options.Version; // Store version from options
             ClientDiagnostics = new ClientDiagnostics(options, true);
