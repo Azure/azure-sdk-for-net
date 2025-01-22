@@ -115,7 +115,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             DateTimeOffset lastModifiedOn = default;
             DateTimeOffset? lastTrainedOn = default;
             DateTimeOffset? lastDeployedOn = default;
-            AnalyzeConversationProjectKind projectKind = default;
+            AnalyzeConversationAuthoringProjectKind projectKind = default;
             ProjectSettings settings = default;
             string storageInputContainerName = default;
             string projectName = default;
@@ -156,7 +156,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
                 if (property.NameEquals("projectKind"u8))
                 {
-                    projectKind = new AnalyzeConversationProjectKind(property.Value.GetString());
+                    projectKind = new AnalyzeConversationAuthoringProjectKind(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("settings"u8))

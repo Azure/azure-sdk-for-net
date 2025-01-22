@@ -49,7 +49,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
         /// <param name="status"> The job status. </param>
-        internal LoadSnapshotJobState(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, AnalyzeConversationJobStatus status)
+        internal LoadSnapshotJobState(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, AnalyzeConversationAuthoringJobStatus status)
         {
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadSnapshotJobState(string jobId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DateTimeOffset? expiresOn, AnalyzeConversationJobStatus status, IReadOnlyList<AuthoringConversationsWarning> warnings, IReadOnlyList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal LoadSnapshotJobState(string jobId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DateTimeOffset? expiresOn, AnalyzeConversationAuthoringJobStatus status, IReadOnlyList<AuthoringConversationsWarning> warnings, IReadOnlyList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobId = jobId;
             CreatedOn = createdOn;
@@ -93,7 +93,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> The expiration date time of the job. </summary>
         public DateTimeOffset? ExpiresOn { get; }
         /// <summary> The job status. </summary>
-        public AnalyzeConversationJobStatus Status { get; }
+        public AnalyzeConversationAuthoringJobStatus Status { get; }
         /// <summary> The warnings that were encountered while executing the job. </summary>
         public IReadOnlyList<AuthoringConversationsWarning> Warnings { get; }
         /// <summary> The errors encountered while executing the job. </summary>

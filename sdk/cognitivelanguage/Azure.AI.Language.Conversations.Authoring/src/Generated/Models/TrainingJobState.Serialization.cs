@@ -113,7 +113,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             DateTimeOffset createdOn = default;
             DateTimeOffset lastUpdatedOn = default;
             DateTimeOffset? expiresOn = default;
-            AnalyzeConversationJobStatus status = default;
+            AnalyzeConversationAuthoringJobStatus status = default;
             IReadOnlyList<AuthoringConversationsWarning> warnings = default;
             IReadOnlyList<ResponseError> errors = default;
             TrainingJobResult result = default;
@@ -147,7 +147,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new AnalyzeConversationJobStatus(property.Value.GetString());
+                    status = new AnalyzeConversationAuthoringJobStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("warnings"u8))

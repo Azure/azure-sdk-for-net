@@ -48,7 +48,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> Initializes a new instance of <see cref="SubTrainingJobState"/>. </summary>
         /// <param name="percentComplete"> Represents progress percentage. </param>
         /// <param name="status"> Represents the status of the sub-operation. </param>
-        internal SubTrainingJobState(int percentComplete, AnalyzeConversationJobStatus status)
+        internal SubTrainingJobState(int percentComplete, AnalyzeConversationAuthoringJobStatus status)
         {
             PercentComplete = percentComplete;
             Status = status;
@@ -60,7 +60,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="endedOn"> Represents the end date time. </param>
         /// <param name="status"> Represents the status of the sub-operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubTrainingJobState(int percentComplete, DateTimeOffset? startedOn, DateTimeOffset? endedOn, AnalyzeConversationJobStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SubTrainingJobState(int percentComplete, DateTimeOffset? startedOn, DateTimeOffset? endedOn, AnalyzeConversationAuthoringJobStatus status, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             PercentComplete = percentComplete;
             StartedOn = startedOn;
@@ -81,6 +81,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> Represents the end date time. </summary>
         public DateTimeOffset? EndedOn { get; }
         /// <summary> Represents the status of the sub-operation. </summary>
-        public AnalyzeConversationJobStatus Status { get; }
+        public AnalyzeConversationAuthoringJobStatus Status { get; }
     }
 }

@@ -16,7 +16,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> Initializes a new instance of <see cref="ConversationExportedProjectAsset"/>. </summary>
         public ConversationExportedProjectAsset()
         {
-            ProjectKind = AnalyzeConversationProjectKind.Conversation;
+            ProjectKind = AnalyzeConversationAuthoringProjectKind.Conversation;
             Intents = new ChangeTrackingList<ConversationExportedIntent>();
             Entities = new ChangeTrackingList<ConversationExportedEntity>();
             Utterances = new ChangeTrackingList<ConversationExportedUtterance>();
@@ -28,7 +28,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="intents"> The intents defined in the project. </param>
         /// <param name="entities"> The entities defined in the project. </param>
         /// <param name="utterances"> The utterances defined in the project. </param>
-        internal ConversationExportedProjectAsset(AnalyzeConversationProjectKind projectKind, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ConversationExportedIntent> intents, IList<ConversationExportedEntity> entities, IList<ConversationExportedUtterance> utterances) : base(projectKind, serializedAdditionalRawData)
+        internal ConversationExportedProjectAsset(AnalyzeConversationAuthoringProjectKind projectKind, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<ConversationExportedIntent> intents, IList<ConversationExportedEntity> entities, IList<ConversationExportedUtterance> utterances) : base(projectKind, serializedAdditionalRawData)
         {
             Intents = intents;
             Entities = entities;

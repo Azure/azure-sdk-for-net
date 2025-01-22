@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             int percentComplete = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
-            AnalyzeConversationJobStatus status = default;
+            AnalyzeConversationAuthoringJobStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new AnalyzeConversationJobStatus(property.Value.GetString());
+                    status = new AnalyzeConversationAuthoringJobStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

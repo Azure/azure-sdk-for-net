@@ -16,7 +16,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> Initializes a new instance of <see cref="UnknownExportedProjectAsset"/>. </summary>
         /// <param name="projectKind"> The type of project containing the assets. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownExportedProjectAsset(AnalyzeConversationProjectKind projectKind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(projectKind, serializedAdditionalRawData)
+        internal UnknownExportedProjectAsset(AnalyzeConversationAuthoringProjectKind projectKind, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(projectKind, serializedAdditionalRawData)
         {
         }
 

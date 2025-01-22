@@ -109,7 +109,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 return null;
             }
             string category = default;
-            AnalyzeConversationCompositionMode? compositionMode = default;
+            AnalyzeConversationAuthoringCompositionMode? compositionMode = default;
             ExportedEntityList entities = default;
             IList<ExportedPrebuiltEntity> prebuilts = default;
             ExportedEntityRegex regex = default;
@@ -129,7 +129,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     {
                         continue;
                     }
-                    compositionMode = new AnalyzeConversationCompositionMode(property.Value.GetString());
+                    compositionMode = new AnalyzeConversationAuthoringCompositionMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("entities"u8))

@@ -94,7 +94,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
             string modelLabel = default;
             string trainingConfigVersion = default;
-            AnalyzeConversationTrainingMode? trainingMode = default;
+            AnalyzeConversationAuthoringTrainingMode? trainingMode = default;
             SubTrainingJobState trainingStatus = default;
             SubTrainingJobState evaluationStatus = default;
             DateTimeOffset? estimatedEndOn = default;
@@ -118,7 +118,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     {
                         continue;
                     }
-                    trainingMode = new AnalyzeConversationTrainingMode(property.Value.GetString());
+                    trainingMode = new AnalyzeConversationAuthoringTrainingMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("trainingStatus"u8))
