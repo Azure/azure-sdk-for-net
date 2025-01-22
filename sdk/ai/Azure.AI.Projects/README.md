@@ -391,7 +391,7 @@ With the functions defined in their appropriate tools, an agent can be now creat
 ```C# Snippet:FunctionsCreateAgentWithFunctionTools
 // note: parallel function calling is only supported with newer models like gpt-4-1106-preview
 Response<Agent> agentResponse = await client.CreateAgentAsync(
-    model: "gpt-4-1106-preview",
+    model: modelName,
     name: "SDK Test Agent - Functions",
         instructions: "You are a weather bot. Use the provided functions to help answer questions. "
             + "Customize your responses to the user's preferences as much as possible and use friendly "
@@ -458,6 +458,85 @@ do
 }
 while (runResponse.Value.Status == RunStatus.Queued
     || runResponse.Value.Status == RunStatus.InProgress);
+```
+
+Calling function with streaming requires small modification of the code above. Streaming updates contain one ToolOutput per update and now the GetResolvedToolOutput function will look like it is shown on the code snippet below:
+
+```C# Snippet:FunctionsWithStreamingUpdateHandling
+ToolOutput GetResolvedToolOutput(string functionName, string toolCallId, string functionArguments)
+{
+    if (functionName == getUserFavoriteCityTool.Name)
+    {
+        return new ToolOutput(toolCallId, GetUserFavoriteCity());
+    }
+    using JsonDocument argumentsJson = JsonDocument.Parse(functionArguments);
+    if (functionName == getCityNicknameTool.Name)
+    {
+        string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
+        return new ToolOutput(toolCallId, GetCityNickname(locationArgument));
+    }
+    if (functionName == getCurrentWeatherAtLocationTool.Name)
+    {
+        string locationArgument = argumentsJson.RootElement.GetProperty("location").GetString();
+        if (argumentsJson.RootElement.TryGetProperty("unit", out JsonElement unitElement))
+        {
+            string unitArgument = unitElement.GetString();
+            return new ToolOutput(toolCallId, GetWeatherAtLocation(locationArgument, unitArgument));
+        }
+        return new ToolOutput(toolCallId, GetWeatherAtLocation(locationArgument));
+    }
+    return null;
+}
+```
+
+We parse streaming updates in two cycles. One iterates over the streaming run outputs and when we are getting update, requiring the action, we are starting the second cycle, which iterates over the outputs of the same run, after submission of the local functions calls results.
+
+```C# Snippet:FunctionsWithStreamingUpdateCycle
+List<ToolOutput> toolOutputs = new();
+ThreadRun streamRun = null;
+await foreach (StreamingUpdate streamingUpdate in client.CreateRunStreamingAsync(thread.Id, agent.Id))
+{
+    if (streamingUpdate.UpdateKind == StreamingUpdateReason.RunCreated)
+    {
+        Console.WriteLine("--- Run started! ---");
+    }
+    else if (streamingUpdate is RequiredActionUpdate submitToolOutputsUpdate)
+    {
+        streamRun = submitToolOutputsUpdate.Value;
+        RequiredActionUpdate newActionUpdate = submitToolOutputsUpdate;
+        while (streamRun.Status == RunStatus.RequiresAction) {
+            toolOutputs.Add(
+                GetResolvedToolOutput(
+                    newActionUpdate.FunctionName,
+                    newActionUpdate.ToolCallId,
+                    newActionUpdate.FunctionArguments
+            ));
+            await foreach (StreamingUpdate actionUpdate in client.SubmitToolOutputsToStreamAsync(streamRun, toolOutputs))
+            {
+                if (actionUpdate is MessageContentUpdate contentUpdate)
+                {
+                    Console.Write(contentUpdate.Text);
+                }
+                else if (actionUpdate is RequiredActionUpdate newAction)
+                {
+                    newActionUpdate = newAction;
+                }
+                else if (actionUpdate.UpdateKind == StreamingUpdateReason.RunCompleted)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("--- Run completed! ---");
+                }
+            }
+            streamRun = client.GetRun(thread.Id, streamRun.Id);
+            toolOutputs.Clear();
+        }
+        break;
+    }
+    else if (streamingUpdate is MessageContentUpdate contentUpdate)
+    {
+        Console.Write(contentUpdate.Text);
+    }
+}
 ```
 
 #### Azure function call
