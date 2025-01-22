@@ -129,6 +129,8 @@ jobs:
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
 
+      - template: /eng/common/testproxy/test-proxy-tool.yml
+
       - script: >-
           dotnet test eng/service.proj
           --filter "(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"
