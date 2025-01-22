@@ -78,7 +78,7 @@ jobs:
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
-            ${{ if eq(parameters.ProjectListOverrideFilePropertyName, '') }}:
+            ${{ if ne(parameters.ServiceDirectory, 'auto') }}:
               Paths:
                 - "/*"
                 - "!SessionRecords"
