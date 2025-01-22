@@ -40,7 +40,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Optional. Options for changing behavior of the ProgressHandler.
         /// </summary>
-        public ProgressHandlerOptions ProgressHandlerOptions { get; set; }
+        public TransferProgressHandlerOptions ProgressHandlerOptions { get; set; }
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
@@ -93,14 +93,14 @@ namespace Azure.Storage.DataMovement
         /// Configures the behavior when a transfer encounters a resource that
         /// already exists.
         /// <para/>
-        /// Will default to <see cref="StorageResourceCreationPreference.Default"/>
-        /// which will be <see cref="StorageResourceCreationPreference.FailIfExists"/> when
+        /// Will default to <see cref="StorageResourceCreationMode.Default"/>
+        /// which will be <see cref="StorageResourceCreationMode.FailIfExists"/> when
         /// starting a new transfer.
         /// When resuming a transfer, the value will default to the value used when first starting
         /// the transfer for all resources that were successfully enumerated and the regular default
         /// for any remaining resources.
         /// </summary>
-        public StorageResourceCreationPreference CreationPreference { get; set; }
+        public StorageResourceCreationMode CreationPreference { get; set; }
 
         /// <summary>
         /// If the transfer status of the job changes then the event will get added to this handler.

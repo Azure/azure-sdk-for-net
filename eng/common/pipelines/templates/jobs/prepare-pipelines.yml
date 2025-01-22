@@ -27,7 +27,7 @@ jobs:
     GenerateUnifiedWeekly: ''
     TestVariableGroups: ''
     TestServiceConnections: ''
-    
+
     # Standard set of variable groups for the Azure SDK repositories
     AzureSDK_Maven_Release_Pipeline_Secrets: 1
     AzureSDK_Nuget_Release_Pipeline_Secrets: 13
@@ -53,7 +53,7 @@ jobs:
     - template: /eng/common/pipelines/templates/steps/install-pipeline-generation.yml
     - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
 
-    - pwsh: | 
+    - pwsh: |
         Write-Host "Setting up pipeline variables"
         if ("${{ parameters.Repository }}" -match "Azure/azure-sdk-for-(?<prefix>[^-]*)(?<pr>-pr)?") {
           $prefix = $matches['prefix']
@@ -70,13 +70,13 @@ jobs:
         }
         else {
           Write-Error "Repository name '${{ parameters.Repository }}' is not in the expected format."
-          exit 1  
+          exit 1
         }
 
         $generatePublicCIPipeline = 'true'
         $generateUnifiedWeekly = 'false'
 
-        $testServiceConnections = '"Azure" "azure-sdk-tests" "azure-sdk-tests-china" "azure-sdk-tests-preview" "azure-sdk-tests-public" "azure-sdk-tests-usgov" "Azure SDK Test Resources - LiveTestSecrets"'
+        $testServiceConnections = '"Azure" "azure-sdk-tests" "azure-sdk-tests-preview" "azure-sdk-tests-public" "Azure SDK Test Resources - LiveTestSecrets"'
         $internalServiceConnections = '"Azure" "Azure SDK Artifacts" "Azure SDK Engineering System" "opensource-api-connection" "AzureSDKEngKeyVault Secrets"'
 
         # Map the language prefix to the appropriate variable groups
@@ -126,7 +126,7 @@ jobs:
         Write-Host "InternalServiceConnections = $internalServiceConnections"
         Write-Host "GeneratePublicCIPipeline = $generatePublicCIPipeline"
         Write-Host "GenerateUnifiedWeekly = $generateUnifiedWeekly"
-        
+
         Write-Host "##vso[task.setvariable variable=InternalVariableGroups]$internalVariableGroups"
         Write-Host "##vso[task.setvariable variable=TestVariableGroups]$testVariableGroups"
         Write-Host "##vso[task.setvariable variable=TestServiceConnections]$testServiceConnections"

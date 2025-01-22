@@ -36,13 +36,7 @@ namespace Azure.AI.Projects
 
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("file_search"u8);
-            writer.WriteStartObject();
-            foreach (var item in FileSearch)
-            {
-                writer.WritePropertyName(item.Key);
-                writer.WriteStringValue(item.Value);
-            }
-            writer.WriteEndObject();
+            writer.WriteObjectValue(FileSearch, options);
         }
 
         RunStepFileSearchToolCall IJsonModel<RunStepFileSearchToolCall>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -65,7 +59,7 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            IReadOnlyDictionary<string, string> fileSearch = default;
+            RunStepFileSearchToolCallResults fileSearch = default;
             string type = default;
             string id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -74,12 +68,7 @@ namespace Azure.AI.Projects
             {
                 if (property.NameEquals("file_search"u8))
                 {
-                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
-                    }
-                    fileSearch = dictionary;
+                    fileSearch = RunStepFileSearchToolCallResults.DeserializeRunStepFileSearchToolCallResults(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
