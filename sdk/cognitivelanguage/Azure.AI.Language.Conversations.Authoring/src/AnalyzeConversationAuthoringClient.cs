@@ -33,103 +33,103 @@ namespace Azure.AI.Language.Conversations.Authoring
             _endpoint = endpoint;
         }
 
-        /// <summary> Initializes a new instance of CopyProjectConversationAuthoringAnalysis. </summary>
+        /// <summary> Initializes a new instance of CopyProjectAuthoringConversationAnalysis. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual CopyProjectConversationAuthoringAnalysis GetCopyProjectConversationAuthoringAnalysisClient(string apiVersion = null)
+        public virtual CopyProjectAuthoringConversationAnalysis GetCopyProjectAuthoringConversationAnalysisClient(string apiVersion = null)
         {
             var resolvedApiVersion = apiVersion ?? _apiVersion ?? "2024-11-15-preview"; // Use the provided, stored, or default version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new CopyProjectConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
+            return new CopyProjectAuthoringConversationAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
         }
 
-        /// <summary> Initializes a new instance of DeploymentResourcesConversationAuthoringAnalysis. </summary>
+        /// <summary> Initializes a new instance of DeploymentResourcesAuthoringConversationAnalysis. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual DeploymentResourcesConversationAuthoringAnalysis GetDeploymentResourcesConversationAuthoringAnalysisClient(string apiVersion = null)
+        public virtual DeploymentResourcesAuthoringConversationAnalysis GetDeploymentResourcesAuthoringConversationAnalysisClient(string apiVersion = null)
         {
             var resolvedApiVersion = apiVersion ?? _apiVersion ?? "2024-11-15-preview"; // Use the provided, stored, or default version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new DeploymentResourcesConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
+            return new DeploymentResourcesAuthoringConversationAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
         }
 
-        /// <summary> Initializes a new instance of DeploymentsConversationAuthoringAnalysis. </summary>
+        /// <summary> Initializes a new instance of DeploymentsAuthoringConversationAnalysis. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual DeploymentsConversationAuthoringAnalysis GetDeploymentsConversationAuthoringAnalysisClient(string apiVersion = null)
+        public virtual DeploymentsAuthoringConversationAnalysis GetDeploymentsAuthoringConversationAnalysisClient(string apiVersion = null)
         {
             var resolvedApiVersion = apiVersion ?? _apiVersion ?? "2024-11-15-preview"; // Use the provided, stored, or default version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new DeploymentsConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
+            return new DeploymentsAuthoringConversationAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
         }
 
-        /// <summary> Initializes a new instance of ProjectsConversationAuthoringAnalysis. </summary>
+        /// <summary> Initializes a new instance of ProjectsAuthoringConversationAnalysis. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual ProjectsConversationAuthoringAnalysis GetProjectsConversationAuthoringAnalysisClient(string apiVersion = null)
+        public virtual ProjectsAuthoringConversationAnalysis GetProjectsAuthoringConversationAnalysisClient(string apiVersion = null)
         {
             var resolvedApiVersion = apiVersion ?? _apiVersion ?? "2024-11-15-preview"; // Use the provided, stored, or default version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new ProjectsConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
+            return new ProjectsAuthoringConversationAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
         }
 
-        /// <summary> Initializes a new instance of ProjectFilesConversationAuthoringAnalysis. </summary>
+        /// <summary> Initializes a new instance of ProjectFilesAuthoringConversationAnalysis. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual ProjectFilesConversationAuthoringAnalysis GetProjectFilesConversationAuthoringAnalysisClient(string apiVersion = null)
+        public virtual ProjectFilesAuthoringConversationAnalysis GetProjectFilesAuthoringConversationAnalysisClient(string apiVersion = null)
         {
             var resolvedApiVersion = apiVersion ?? _apiVersion ?? "2024-11-15-preview"; // Use the provided, stored, or default version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new ProjectFilesConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
+            return new ProjectFilesAuthoringConversationAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
         }
 
-        /// <summary> Initializes a new instance of TrainingConversationAuthoringAnalysis. </summary>
+        /// <summary> Initializes a new instance of TrainingAuthoringConversationAnalysis. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual TrainingConversationAuthoringAnalysis GetTrainingConversationAuthoringAnalysisClient(string apiVersion = null)
+        public virtual TrainingAuthoringConversationAnalysis GetTrainingAuthoringConversationAnalysisClient(string apiVersion = null)
         {
             var resolvedApiVersion = apiVersion ?? _apiVersion ?? "2024-11-15-preview"; // Use the provided, stored, or default version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new TrainingConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
+            return new TrainingAuthoringConversationAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
         }
 
-        /// <summary> Initializes a new instance of ModelsConversationAuthoringAnalysis. </summary>
+        /// <summary> Initializes a new instance of ModelsAuthoringConversationAnalysis. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual ModelsConversationAuthoringAnalysis GetModelsConversationAuthoringAnalysisClient(string apiVersion = null)
+        public virtual ModelsAuthoringConversationAnalysis GetModelsAuthoringConversationAnalysisClient(string apiVersion = null)
         {
             var resolvedApiVersion = apiVersion ?? _apiVersion ?? "2024-11-15-preview"; // Use the provided, stored, or default version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new ModelsConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
+            return new ModelsAuthoringConversationAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
         }
 
-        /// <summary> Initializes a new instance of PrebuiltsConversationAuthoringAnalysis. </summary>
+        /// <summary> Initializes a new instance of PrebuiltsAuthoringConversationAnalysis. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual PrebuiltsConversationAuthoringAnalysis GetPrebuiltsConversationAuthoringAnalysisClient(string apiVersion = null)
+        public virtual PrebuiltsAuthoringConversationAnalysis GetPrebuiltsAuthoringConversationAnalysisClient(string apiVersion = null)
         {
             var resolvedApiVersion = apiVersion ?? _apiVersion ?? "2024-11-15-preview"; // Use the provided, stored, or default version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new PrebuiltsConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
+            return new PrebuiltsAuthoringConversationAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
         }
 
-        /// <summary> Initializes a new instance of ExportedModelsConversationAuthoringAnalysis. </summary>
+        /// <summary> Initializes a new instance of ExportedModelsAuthoringConversationAnalysis. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual ExportedModelsConversationAuthoringAnalysis GetExportedModelsConversationAuthoringAnalysisClient(string apiVersion = null)
+        public virtual ExportedModelsAuthoringConversationAnalysis GetExportedModelsAuthoringConversationAnalysisClient(string apiVersion = null)
         {
             var resolvedApiVersion = apiVersion ?? _apiVersion ?? "2024-11-15-preview"; // Use the provided, stored, or default version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new ExportedModelsConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
+            return new ExportedModelsAuthoringConversationAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
         }
     }
 }
