@@ -29,17 +29,6 @@ namespace Azure.Storage.DataMovement.Blobs
         public delegate StorageSharedKeyCredential GetStorageSharedKeyCredential(Uri uri, bool readOnly);
 
         /// <summary>
-        /// Delegate for fetching a token credential for a given URI.
-        /// </summary>
-        /// <param name="uri">
-        /// URI of resource to fetch credential for.
-        /// </param>
-        /// <param name="readOnly">
-        /// Whether the permission can be read-only.
-        /// </param>
-        public delegate TokenCredential GetTokenCredential(Uri uri, bool readOnly);
-
-        /// <summary>
         /// Delegate for fetching a SAS credential for a given URI.
         /// </summary>
         /// <param name="uri">
@@ -72,8 +61,8 @@ namespace Azure.Storage.DataMovement.Blobs
 
         private readonly CredentialType _credentialType;
         private readonly GetStorageSharedKeyCredential _getStorageSharedKeyCredential;
-        private readonly GetTokenCredential _getTokenCredential;
         private readonly GetAzureSasCredential _getAzureSasCredential;
+        private readonly TokenCredential _tokenCredential;
 
         /// <summary>
         /// Default constructor.
@@ -124,7 +113,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobsStorageResourceProvider(TokenCredential credential)
         {
             _credentialType = CredentialType.Token;
-            _getTokenCredential = (_, _) => credential;
+            _tokenCredential = credential;
         }
 
         /// <summary>
@@ -180,29 +169,6 @@ namespace Azure.Storage.DataMovement.Blobs
         /// Storage <see cref="StorageResource"/>.
         /// </para>
         /// <para>
-        /// This instance will use the given <see cref="GetTokenCredential"/> to fetch a credential
-        /// when constructing the underlying Azure.Storage.Blobs client, e.g.
-        /// <see cref="BlockBlobClient(Uri, TokenCredential, BlobClientOptions)"/>.
-        /// The delegate will only be used when the provider needs to construct a client in the first place. It will
-        /// not be used when creating a <see cref="StorageResource"/> from a pre-existing client, e.g.
-        /// <see cref="FromClient(BlockBlobClient, BlockBlobStorageResourceOptions)"/>.
-        /// </para>
-        /// </summary>
-        /// <param name="getTokenCredentialAsync">
-        /// Delegate for acquiring a credential.
-        /// </param>
-        public BlobsStorageResourceProvider(GetTokenCredential getTokenCredentialAsync)
-        {
-            _credentialType = CredentialType.SharedKey;
-            _getTokenCredential = getTokenCredentialAsync;
-        }
-
-        /// <summary>
-        /// <para>
-        /// Constructs this provider to use the given delegate for acquiring a credential when making a new Blob
-        /// Storage <see cref="StorageResource"/>.
-        /// </para>
-        /// <para>
         /// This instance will use the given <see cref="GetAzureSasCredential"/> to fetch a credential
         /// when constructing the underlying Azure.Storage.Blobs client, e.g.
         /// <see cref="BlockBlobClient(Uri, AzureSasCredential, BlobClientOptions)"/>.
@@ -218,7 +184,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// </param>
         public BlobsStorageResourceProvider(GetAzureSasCredential getAzureSasCredentialAsync)
         {
-            _credentialType = CredentialType.SharedKey;
+            _credentialType = CredentialType.Sas;
             _getAzureSasCredential = getAzureSasCredentialAsync;
         }
 
@@ -267,7 +233,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     properties,
                     checkpointDetails as BlobDestinationCheckpointDetails,
                     getSource,
-                    _getTokenCredential(uri, getSource),
+                    _tokenCredential,
                     cancellationToken),
                 CredentialType.Sas => rehydrator.Rehydrate(
                     properties,
@@ -317,7 +283,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 CredentialType.None => new BlobContainerClient(containerUri),
                 CredentialType.SharedKey => new BlobContainerClient(containerUri, _getStorageSharedKeyCredential(containerUri, false)),
-                CredentialType.Token => new BlobContainerClient(containerUri, _getTokenCredential(containerUri, false)),
+                CredentialType.Token => new BlobContainerClient(containerUri, _tokenCredential),
                 CredentialType.Sas => new BlobContainerClient(containerUri, _getAzureSasCredential(containerUri, false)),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
@@ -355,7 +321,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 {
                     CredentialType.None => new BlockBlobClient(blobUri),
                     CredentialType.SharedKey => new BlockBlobClient(blobUri, _getStorageSharedKeyCredential(blobUri, false)),
-                    CredentialType.Token => new BlockBlobClient(blobUri, _getTokenCredential(blobUri, false)),
+                    CredentialType.Token => new BlockBlobClient(blobUri, _tokenCredential),
                     CredentialType.Sas => new BlockBlobClient(blobUri, _getAzureSasCredential(blobUri, false)),
                     _ => throw BadCredentialTypeException(_credentialType),
                 };
@@ -367,7 +333,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 {
                     CredentialType.None => new PageBlobClient(blobUri),
                     CredentialType.SharedKey => new PageBlobClient(blobUri, _getStorageSharedKeyCredential(blobUri, false)),
-                    CredentialType.Token => new PageBlobClient(blobUri, _getTokenCredential(blobUri, false)),
+                    CredentialType.Token => new PageBlobClient(blobUri, _tokenCredential),
                     CredentialType.Sas => new PageBlobClient(blobUri, _getAzureSasCredential(blobUri, false)),
                     _ => throw BadCredentialTypeException(_credentialType),
                 };
@@ -379,7 +345,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 {
                     CredentialType.None => new AppendBlobClient(blobUri),
                     CredentialType.SharedKey => new AppendBlobClient(blobUri, _getStorageSharedKeyCredential(blobUri, false)),
-                    CredentialType.Token => new AppendBlobClient(blobUri, _getTokenCredential(blobUri, false)),
+                    CredentialType.Token => new AppendBlobClient(blobUri, _tokenCredential),
                     CredentialType.Sas => new AppendBlobClient(blobUri, _getAzureSasCredential(blobUri, false)),
                     _ => throw BadCredentialTypeException(_credentialType),
                 };
@@ -389,7 +355,7 @@ namespace Azure.Storage.DataMovement.Blobs
             {
                 CredentialType.None => new BlockBlobClient(blobUri),
                 CredentialType.SharedKey => new BlockBlobClient(blobUri, _getStorageSharedKeyCredential(blobUri, false)),
-                CredentialType.Token => new BlockBlobClient(blobUri, _getTokenCredential(blobUri, false)),
+                CredentialType.Token => new BlockBlobClient(blobUri, _tokenCredential),
                 CredentialType.Sas => new BlockBlobClient(blobUri, _getAzureSasCredential(blobUri, false)),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
