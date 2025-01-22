@@ -62,15 +62,15 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                     await destinationContainerClient.CreateIfNotExistsAsync();
 
                     // Create Source Blob Container Storage Resource
-                    StorageResource sourceResource = BlobsStorageResourceProvider.FromClient(sourceContainerClient, new() { BlobDirectoryPrefix = pathPrefix });
+                    StorageResource sourceResource = BlobsStorageResourceProvider.FromClient(sourceContainerClient, new() { BlobPrefix = pathPrefix });
 
                     // Create Destination Blob Container Storage Resource
                     StorageResource destinationResource = BlobsStorageResourceProvider.FromClient(
                         destinationContainerClient,
                         new()
                         {
-                            BlobDirectoryPrefix = pathPrefix,
-                            BlobType = new(blobType)
+                            BlobPrefix = pathPrefix,
+                            BlobType = blobType
                         });
 
                     // Start Transfer
