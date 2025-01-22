@@ -95,7 +95,7 @@
     <StressProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\stress\**\*.csproj" Exclude="@(MgmtExcludePaths)"/>
     <IntegrationTestProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\integration\**\*.csproj" Exclude="@(MgmtExcludePaths)"/>
     <SampleApplications Include="..\samples\**\*.csproj" Exclude="@(MgmtExcludePaths)"/>
-    <SharedProjects Include="..\shared\**\*.csproj" Exclude="@(MgmtExcludePaths)"/>
+    <SharedProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\shared\**\*.csproj" Exclude="@(MgmtExcludePaths)"/>
     <SrcProjects Include="..\sdk\$(ServiceDirectory)\$(Project)\src\**\*.csproj" Exclude="@(TestProjects);@(SamplesProjects);@(PerfProjects);@(StressProjects)" />
     <ProjectReference Remove="@(TestProjects)" Condition="'$(IncludeTests)' == 'false'" />
     <ProjectReference Remove="@(SamplesProjects)" Condition="'$(IncludeSamples)' == 'false'" />
