@@ -165,8 +165,6 @@ foreach ($directory in $directories) {
     if ($LASTEXITCODE -ne 0) {
         exit $LASTEXITCODE
     }
-
-    # TODO need to build but depends on https://github.com/Azure/autorest.csharp/issues/4463
 }
 
 # only write new launch settings if no filter was passed in
