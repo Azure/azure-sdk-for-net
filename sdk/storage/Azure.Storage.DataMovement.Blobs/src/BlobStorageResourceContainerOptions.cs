@@ -10,12 +10,23 @@ namespace Azure.Storage.DataMovement.Blobs
     /// </summary>
     public class BlobStorageResourceContainerOptions
     {
+        private BlobType? _blobType = default;
+        internal bool _isBlobTypeSet = false;
+
         /// <summary>
         /// Optional. The <see cref="Storage.Blobs.Models.BlobType"/> that will be used when uploading blobs to the destination.
         ///
-        /// Defaults to preserving the blob type if the source is also a blob. If the source is not a blob, will default to Block Blob.
+        /// Defaults to preserving the blob type if the source is also a blob. If the source is not a blob, will default to Block Blob. If explicitly set to null, the source blob type will not be preserved, and be transferred as a Block Blob.
         /// </summary>
-        public DataTransferProperty<BlobType?> BlobType { get; set; }
+        public BlobType? BlobType
+        {
+            get => _blobType;
+            set
+            {
+                _blobType = value;
+                _isBlobTypeSet = true;
+            }
+        }
 
         /// <summary>
         /// Optional. The directory prefix within the Blob Storage Container to use in the transfer.

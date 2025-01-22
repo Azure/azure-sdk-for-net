@@ -5,6 +5,7 @@
 ### Features Added
 
 ### Breaking Changes
+- Removed `DataTransferProperty` and `DataTransferProperty<T>`
 - Renamed the following types/properties:
     - `DataTransfer` -> `TransferOperation`
         - Addtionally renamed the `TransferStatus` property to `Status`
@@ -16,6 +17,8 @@
     - `DataTransferState` -> `TransferState`
     - `DataTransferStatus` -> `TransferStatus`
     - `DataTransferErrorMode` -> `TransferErrorMode`
+    - `ProgressHandlerOptions` -> `TransferProgressHandlerOptions`
+        - Also removed the constructor since properties are settable.
     - `StorageResourceCheckpointData` -> `StorageResourceCheckpointDetails`
     - `StorageResource.GetDestinationCheckpointData` -> `StorageResource.GetDestinationCheckpointDetails`
     - `StorageResource.GetSourceCheckpointData` -> `StorageResource.GetSourceCheckpointDetails`

@@ -246,17 +246,28 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileStorageResourceOptions options = new()
             {
                 FileAttributes = checkpointDetails.FileAttributes,
-                FilePermissions = new(checkpointDetails.PreserveFilePermission),
+                _isFileAttributesSet = checkpointDetails.IsFileAttributesSet,
+                FilePermissions = checkpointDetails.FilePermission,
                 CacheControl = checkpointDetails.CacheControl,
+                _isCacheControlSet = checkpointDetails.IsCacheControlSet,
                 ContentDisposition = checkpointDetails.ContentDisposition,
+                _isContentDispositionSet = checkpointDetails.IsContentDispositionSet,
                 ContentEncoding = checkpointDetails.ContentEncoding,
+                _isContentEncodingSet = checkpointDetails.IsContentEncodingSet,
                 ContentLanguage = checkpointDetails.ContentLanguage,
+                _isContentLanguageSet = checkpointDetails.IsContentLanguageSet,
                 ContentType = checkpointDetails.ContentType,
+                _isContentTypeSet = checkpointDetails.IsContentTypeSet,
                 FileCreatedOn = checkpointDetails.FileCreatedOn,
+                _isFileCreatedOnSet = checkpointDetails.IsFileCreatedOnSet,
                 FileLastWrittenOn = checkpointDetails.FileLastWrittenOn,
+                _isFileLastWrittenOnSet = checkpointDetails.IsFileLastWrittenOnSet,
                 FileChangedOn = checkpointDetails.FileChangedOn,
+                _isFileChangedOnSet = checkpointDetails.IsFileChangedOnSet,
                 DirectoryMetadata = checkpointDetails.DirectoryMetadata,
+                _isDirectoryMetadataSet = checkpointDetails.IsDirectoryMetadataSet,
                 FileMetadata = checkpointDetails.FileMetadata,
+                _isFileMetadataSet = checkpointDetails.IsFileMetadataSet,
             };
             return Task.FromResult(properties.IsContainer
                 ? FromDirectory(properties.DestinationUri, options)

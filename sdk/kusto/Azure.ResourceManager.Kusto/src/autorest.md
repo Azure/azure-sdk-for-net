@@ -8,7 +8,7 @@ azure-arm: true
 csharp: true
 library-name: Kusto
 namespace: Azure.ResourceManager.Kusto
-require: https://github.com/Azure/azure-rest-api-specs/blob/c280892951a9e45c059132c05aace25a9c752d48/specification/azure-kusto/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/edc6e6a8b4de49a78397162e7eb55b9c696c2d71/specification/azure-kusto/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -230,6 +230,16 @@ rename-mapping:
   ResourceSkuCapabilities: KustoResourceSkuCapabilities
   ResourceSkuZoneDetails: KustoResourceSkuZoneDetails
   SkuDescriptionList: kustoSkuDescriptionList
+  OutboundAccess: KustoCalloutPolicyOutboundAccess
+  ZoneStatus: KustoClusterZoneStatus
+  ScriptLevel: KustoScriptLevel
+  FollowerDatabaseDefinitionGet: KustoFollowerDatabase
+  FollowerDatabaseDefinitionGet.properties.clusterResourceId: -|arm-id
+  CalloutPolicy: KustoCalloutPolicy
+  CalloutType: KustoCalloutPolicyCalloutType
+
+
+
 
 
 format-by-name-rules:

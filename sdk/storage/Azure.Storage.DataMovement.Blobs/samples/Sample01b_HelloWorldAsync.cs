@@ -148,11 +148,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #region Snippet:ResourceConstruction_Blobs_WithOptions_BlockBlob
                 BlockBlobStorageResourceOptions resourceOptions = new()
                 {
-                    Metadata = new DataTransferProperty<IDictionary<string, string>> (
-                        new Dictionary<string, string>
+                    Metadata = new Dictionary<string, string>
                         {
                             { "key", "value" }
-                        })
+                        }
                 };
                 StorageResource leasedBlockBlobResource = blobs.FromClient(
                     blockBlobClient,
@@ -382,7 +381,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         new BlobStorageResourceContainerOptions()
                         {
                             // Block blobs are the default if not specified
-                            BlobType = new(BlobType.Block),
+                            BlobType = BlobType.Block,
                             BlobDirectoryPrefix = optionalDestinationPrefix,
                         }));
                 #endregion
@@ -841,7 +840,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                     {
                         // all source blobs will be copied as a single type of destination blob
                         // defaults to block blobs if unspecified
-                        BlobType = new(BlobType.Block),
+                        BlobType = BlobType.Block,
                         BlobDirectoryPrefix = downloadPath
                     }));
                 await transferOperation.WaitForCompletionAsync();
@@ -1168,8 +1167,12 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     TransferOptions transferOptions = new()
                     {
-                        // optionally include the below if progress updates on bytes transferred are desired
-                        ProgressHandlerOptions = new(progress, trackBytesTransferred: true)
+                        ProgressHandlerOptions = new()
+                        {
+                            ProgressHandler = progress,
+                            // optionally include the below if progress updates on bytes transferred are desired
+                            TrackBytesTransferred = true,
+                        }
                     };
                     return await transferManager.StartTransferAsync(
                         source,
