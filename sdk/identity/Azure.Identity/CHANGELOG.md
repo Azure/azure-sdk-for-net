@@ -8,6 +8,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Null or empty responses from IMDS probe attempts will now fall through to the next credential in the chain ([#47844](https://github.com/Azure/azure-sdk-for-net/issues/47844))
 
 ### Other Changes
 
