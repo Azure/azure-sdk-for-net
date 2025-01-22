@@ -66,7 +66,7 @@ namespace Azure.Core.TestFramework
         {
             bool.TryParse(Environment.GetEnvironmentVariable("PROXY_DEBUG_MODE"), out bool environmentDebugMode);
 
-            debugMode |= true;
+            debugMode |= environmentDebugMode;
 
             ProcessStartInfo testProxyProcessInfo = new ProcessStartInfo(
                 s_dotNetExe,

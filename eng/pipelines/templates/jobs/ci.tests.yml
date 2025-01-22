@@ -129,8 +129,6 @@ jobs:
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/test.binlog
 
-      - template: /eng/common/testproxy/test-proxy-tool.yml
-
       - script: >-
           dotnet test eng/service.proj
           --filter "(TestCategory!=Manually) & (TestCategory!=Live) & ($(AdditionalTestFilters))"
@@ -149,7 +147,7 @@ jobs:
           $(DiagnosticArguments)
         displayName: "Build & Test ($(TestTargetFramework))"
         env:
-          AZURE_ENABLE_TEST_PROXY_DEBUG_LOGS: 1
+          AZURE_ENABLE_TEST_PROXY_DEBUG_LOGS: true
 
 
       - task: PublishTestResults@2
