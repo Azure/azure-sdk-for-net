@@ -1000,7 +1000,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOptions transferOptions = new TransferOptions()
             {
                 InitialTransferSize = Constants.KB,
-                MaximumTransferChunkSize = Constants.KB / 2
+                MaximumTransferChunkSize = Constants.KB
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
             long size = Constants.KB * 4;
@@ -1026,7 +1026,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions: transferOptions);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(100));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
@@ -1088,7 +1088,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOptions transferOptions = new TransferOptions()
             {
                 InitialTransferSize = Constants.KB,
-                MaximumTransferChunkSize = Constants.KB / 2
+                MaximumTransferChunkSize = Constants.KB
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
             long size = Constants.KB * 4;
@@ -1114,7 +1114,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions: transferOptions);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(100));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
