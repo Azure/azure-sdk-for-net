@@ -300,7 +300,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ExportAsync(WaitUntil,string,StringIndexType,AnalyzeConversationExportedProjectFormat?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ExportAsync(WaitUntil,string,AnalyzeConversationExportedProjectFormat?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -346,7 +346,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Export(WaitUntil,string,StringIndexType,AnalyzeConversationExportedProjectFormat?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Export(WaitUntil,string,AnalyzeConversationExportedProjectFormat?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
