@@ -299,8 +299,8 @@ namespace Azure.Storage.DataMovement
                     try
                     {
                         // Single resource transfer, we can skip to chunking the job.
-                        part = await _createJobPartSingleAsync(this, partNumber).ConfigureAwait(false);
                         await OnAllResourcesEnumeratedAsync().ConfigureAwait(false);
+                        part = await _createJobPartSingleAsync(this, partNumber).ConfigureAwait(false);
                     }
                     catch (Exception ex)
                     {
