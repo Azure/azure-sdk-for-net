@@ -244,10 +244,16 @@ try {
                 $context = Get-AzContext
             }
         } else {
-            if ($currentSubcriptionId -ne 'faa080af-c1d8-40ad-9cce-e1a450ca5b57') {
+            if ($context.Tenant.Name -like '*TME*') {
+                if ($currentSubscriptionId -ne '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4') {
+                    Log "Attempting to select subscription 'Azure SDK Test Resources - TME (4d042dc6-fe17-4698-a23f-ec6a8d1e98f4)'"
+                    $null = Select-AzSubscription -Subscription '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4' -ErrorAction Ignore
+                    # Update the context.
+                    $context = Get-AzContext
+                }
+            } elseif ($currentSubcriptionId -ne 'faa080af-c1d8-40ad-9cce-e1a450ca5b57') {
                 Log "Attempting to select subscription 'Azure SDK Developer Playground (faa080af-c1d8-40ad-9cce-e1a450ca5b57)'"
                 $null = Select-AzSubscription -Subscription 'faa080af-c1d8-40ad-9cce-e1a450ca5b57' -ErrorAction Ignore
-
                 # Update the context.
                 $context = Get-AzContext
             }
@@ -261,6 +267,7 @@ try {
             'faa080af-c1d8-40ad-9cce-e1a450ca5b57' = 'Azure SDK Developer Playground'
             'a18897a6-7e44-457d-9260-f2854c0aca42' = 'Azure SDK Engineering System'
             '2cd617ea-1866-46b1-90e3-fffb087ebf9b' = 'Azure SDK Test Resources'
+            '4d042dc6-fe17-4698-a23f-ec6a8d1e98f4' = 'Azure SDK Test Resources - TME '
         }
 
         # Print which subscription is currently selected.
@@ -313,7 +320,8 @@ try {
     # Make sure the provisioner OID is set so we can pass it through to the deployment.
     if (!$ProvisionerApplicationId -and !$ProvisionerApplicationOid) {
         if ($context.Account.Type -eq 'User') {
-            $user = Get-AzADUser -UserPrincipalName $context.Account.Id
+            # Use -Mail as the lookup works in both corp and TME tenants
+            $user = Get-AzADUser -Mail $context.Account.Id
             $ProvisionerApplicationOid = $user.Id
         } elseif ($context.Account.Type -eq 'ServicePrincipal') {
             $sp = Get-AzADServicePrincipal -ApplicationId $context.Account.Id
@@ -383,7 +391,8 @@ try {
             Write-Warning "The specified TestApplicationId '$TestApplicationId' will be ignored when -ServicePrincipalAutth is not set."
         }
 
-        $userAccount = (Get-AzADUser -UserPrincipalName (Get-AzContext).Account)
+        # Use -Mail as the lookup works in both corp and TME tenants
+        $userAccount = (Get-AzADUser -Mail (Get-AzContext).Account.Id)
         $TestApplicationOid = $userAccount.Id
         $TestApplicationId = $testApplicationOid
         $userAccountName = $userAccount.UserPrincipalName

@@ -22,7 +22,7 @@ namespace Azure.Generator
             // TODO: uncomment this once resources are generated
             //if (type is RestClientProvider)
             //{
-            //    type.Update(modifiers: TransfromModifiers(type), relativeFilePath: TransformRelativeFilePathForRestClient(type));
+            //    type.Update(modifiers: TransfromPublicModifiersToInternal(type), relativeFilePath: TransformRelativeFilePathForRestClient(type));
             //}
             return type;
         }

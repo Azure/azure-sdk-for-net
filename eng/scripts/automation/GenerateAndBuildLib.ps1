@@ -220,10 +220,10 @@ function RegisterMgmtSDKToMgmtCoreClient () {
 <#
 .SYNOPSIS
 Prepare the SDK pacakge for data-plane.
-If it does not exist, create SDK package via dotnet template, or update the autorest.md if it already exists.
+Update the autorest.md.
 
 #>
-function New-DataPlanePackageFolder() {
+function Update-DataPlanePackageFolder() {
   param(
       [string]$service,
       [string]$namespace,
@@ -263,61 +263,9 @@ function New-DataPlanePackageFolder() {
     CreateOrUpdateAutorestConfigFile -autorestFilePath $file -namespace $namespace -inputfile "$inputfile" -readme "$readme" -autorestConfigYaml "$autorestConfigYaml"
     Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
   } else {
-    Write-Host "Path doesn't exist. create template."
-    if ($inputfile -eq "" -And $readme -eq "") {
-        Throw "[ERROR] Input file should not be empty. Please provide a valid input file or readme file."
-    }
-    dotnet new -i $sdkPath/sdk/template
-    Write-Host "Create project folder $projectFolder"
-    if (Test-Path -Path $projectFolder) {
-        Remove-Item -Path $projectFolder -ItemType Directory
-    }
-
-    Push-Location $serviceFolder
-    $namespaceArray = $namespace.Split(".")
-    if ( $namespaceArray.Count -lt 3) {
-        Throw "[ERROR] Invalid namespace name provided: $namespace. Please provide valid namespace."
-    }
-
-    $endIndex = $namespaceArray.Count - 2
-    $clientName = $namespaceArray[-1]
-    $groupName = $namespaceArray[1..$endIndex] -join "."
-    $dotnetNewCmd = "dotnet new azsdkdpg --name $namespace --clientName $clientName --groupName $groupName --serviceDirectory $service --force"
-    if ($inputfile -ne "") {
-        $dotnetNewCmd = $dotnetNewCmd + " --swagger '$inputfile'"
-    }
-    if ($securityScope -ne "") {
-        $dotnetNewCmd = $dotnetNewCmd + " --securityScopes $securityScope";
-    }
-
-    if ($securityHeaderName -ne "") {
-        $dotnetNewCmd = $dotnetNewCmd + " --securityHeaderName $securityHeaderName";
-    }
-
-    if (Test-Path -Path $ciymlFilePath) {
-        Write-Host "ci.yml already exists. update it to include the new serviceDirectory."
-        Update-CIYmlFile -ciFilePath $ciymlFilePath -artifact $namespace
-
-        $dotnetNewCmd = $dotnetNewCmd + " --includeCI false"
-    }
-    # dotnet new azsdkdpg --name $namespace --clientName $clientName --groupName $groupName --serviceDirectory $service --swagger $inputfile --securityScopes $securityScope --securityHeaderName $securityHeaderName --includeCI true --force
-    Write-Host "Invoke dotnet new command: $dotnetNewCmd"
-    Invoke-Expression $dotnetNewCmd
-
-    $file = (Join-Path $projectFolder "src" $AUTOREST_CONFIG_FILE)
-    Write-Host "Updating configuration file: $file"
-    CreateOrUpdateAutorestConfigFile -autorestFilePath $file -namespace $namespace -readme "$readme" -autorestConfigYaml "$autorestConfigYaml"
-    Pop-Location
-
-    $projFile = (Join-Path $projectFolder "src" "$namespace.csproj")
-    (Get-Content $projFile) -replace "<Version>*.*.*-*.*</Version>", "<Version>1.0.0-beta.1</Version>" | Set-Content $projFile
-    # dotnet sln
-    Push-Location $projectFolder
-    dotnet sln remove src/$namespace.csproj
-    dotnet sln add src/$namespace.csproj
-    dotnet sln remove tests/$namespace.Tests.csproj
-    dotnet sln add tests/$namespace.Tests.csproj
-    Pop-Location
+    Write-Error "Project directory doesn't exist. It is a new .NET SDK."
+    Write-Error "We will not support onboard a new SDK from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+    exit 1
   }
 
   Push-Location $sdkPath
@@ -338,10 +286,10 @@ function New-DataPlanePackageFolder() {
 <#
 .SYNOPSIS
 Prepare the SDK pacakge for mangement-plane.
-If it does not exist, create SDK package via dotnet template, or update the autorest.md if it already exists.
+Update the autorest.md.
 
 #>
-function New-MgmtPackageFolder() {
+function Update-MgmtPackageFolder() {
     param(
         [string]$service = "",
         [string]$packageName = "",
@@ -364,19 +312,9 @@ function New-MgmtPackageFolder() {
       $mgmtPackageName = $folderinfo.Name
       $projectFolder = "$sdkPath/sdk/$packageName/$mgmtPackageName"
     } else {
-      Write-Host "Path doesn't exist. create template."
-      dotnet new -i $sdkPath/eng/templates/Azure.ResourceManager.Template
-      $CaptizedPackageName = [System.Globalization.CultureInfo]::InvariantCulture.TextInfo.ToTitleCase($packageName)
-      $mgmtPackageName = "Azure.ResourceManager.$CaptizedPackageName"
-      $projectFolder="$sdkPath/sdk/$packageName/Azure.ResourceManager.$CaptizedPackageName"
-      Write-Host "Create project folder $projectFolder"
-      New-Item -Path $projectFolder -ItemType Directory
-      Push-Location $projectFolder
-      dotnet new azuremgmt --provider $packageName --includeCI true --force
-      Pop-Location
-
-      $packagesPath = Join-Path $sdkPath "sdk"
-      RegisterMgmtSDKToMgmtCoreClient -packagesPath $packagesPath
+      Write-Error "Project directory doesn't exist. It is a new .NET SDK."
+      Write-Error "We will not support onboard a new service SDK from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+      exit 1
     }
 
     # update the readme path.
@@ -635,17 +573,24 @@ function Invoke-GenerateAndBuildSDK () {
         if ($packageNameHash[$service] -ne "") {
             $package = $packageNameHash[$service]
         }
-        New-MgmtPackageFolder -service $service -packageName $package -sdkPath $sdkRootPath -commitid $commitid -readme $readmeFile -outputJsonFile $newpackageoutput
-        if ( !$?) {
-            Write-Host "[ERROR] Failed to create sdk project folder.service:$service,package:$package,"
-            Write-Host "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile.exit code: $?."
-            Write-Host "[ERROR] Please review the detail errors for potential fixes."
-            Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+        $projectFolder = (Join-Path $sdkRootPath "sdk" $package "Azure.ResourceManager.*")
+        if (Test-Path -Path $projectFolder) {
+            Update-MgmtPackageFolder -service $service -packageName $package -sdkPath $sdkRootPath -commitid $commitid -readme $readmeFile -outputJsonFile $newpackageoutput
+            if ( !$?) {
+                Write-Host "[ERROR] Failed to create sdk project folder.service:$service,package:$package,"
+                Write-Host "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile.exit code: $?."
+                Write-Host "[ERROR] Please review the detail errors for potential fixes."
+                Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                exit 1
+            }
+            $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
+            $packagesToGen = $packagesToGen + @($newPackageOutputJson)
+            Remove-Item $newPackageOutput
+        } else {
+            Write-Host "Path doesn't exist. create template."
+            Write-Error "[ERROR] The service $service is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
             exit 1
         }
-        $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
-        $packagesToGen = $packagesToGen + @($newPackageOutputJson)
-        Remove-Item $newPackageOutput
     } else {
         Write-Host "Generate data-plane SDK client library."
         $namespace = ""
@@ -668,17 +613,25 @@ function Invoke-GenerateAndBuildSDK () {
                 $namespace = $directories[-1];
             }
 
-            New-DataPlanePackageFolder -service $service -namespace $namespace -sdkPath $sdkRootPath -readme $readmeFile -autorestConfigYaml "$autorestConfigYaml" -outputJsonFile $newpackageoutput
-            if ( !$? ) {
-                Write-Host "[ERROR] Failed to create sdk project folder.service:$service,namespace:$namespace,"
-                Write-Host "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile,autorestConfigYaml:$autorestConfigYaml.exit code: $?."
-                Write-Host "[ERROR] Please review the detail errors for potential fixes."
-                Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+            $projectFolder=(Join-Path $sdkRootPath "sdk" $service $namespace)
+            if (Test-Path -Path $projectFolder) {
+                Write-Host "Path exists!"
+                Update-DataPlanePackageFolder -service $service -namespace $namespace -sdkPath $sdkRootPath -readme $readmeFile -autorestConfigYaml "$autorestConfigYaml" -outputJsonFile $newpackageoutput
+                if ( !$? ) {
+                    Write-Host "[ERROR] Failed to create sdk project folder.service:$service,namespace:$namespace,"
+                    Write-Host "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile,autorestConfigYaml:$autorestConfigYaml.exit code: $?."
+                    Write-Host "[ERROR] Please review the detail errors for potential fixes."
+                    Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                    exit 1
+                }
+                $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
+                $packagesToGen = $packagesToGen + @($newPackageOutputJson)
+                Remove-Item $newPackageOutput
+            } else {
+                Write-Host "SDK project folder doesn't exist."
+                Write-Error "[ERROR] The service $service is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                 exit 1
             }
-            $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
-            $packagesToGen = $packagesToGen + @($newPackageOutputJson)
-            Remove-Item $newPackageOutput
         } else {
             # handle scenaro: multiple SDK packages one md file.
             # npx autorest --version=3.8.4 --csharp $readmeFile --csharp-sdks-folder=$sdkRootPath --skip-csproj --clear-output-folder=true
@@ -697,17 +650,25 @@ function Invoke-GenerateAndBuildSDK () {
                 if (Test-Path -Path $autorestFilePath) {
                     $fileContent = Get-Content $autorestFilePath -Raw
                     if ($fileContent -match $regexForMatch) {
-                        New-DataPlanePackageFolder -service $service -namespace $folder -sdkPath $sdkRootPath -readme $readmeFile -outputJsonFile $newpackageoutput
-                        if ( !$? ) {
-                            Write-Host "[ERROR] Failed to create sdk project folder.service:$service,namespace:$folder,"
-                            Write-Host "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile. exit code: $?."
-                            Write-Host "[ERROR] Please review the detail errors for potential fixes."
-                            Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                        $projectFolder=(Join-Path $sdkRootPath "sdk" $service $folder)
+                        if (Test-Path -Path $projectFolder) {
+                            Write-Host "Path exists!"
+                            New-DataPlanePackageFolder -service $service -namespace $folder -sdkPath $sdkRootPath -readme $readmeFile -outputJsonFile $newpackageoutput
+                            if ( !$? ) {
+                                Write-Host "[ERROR] Failed to create sdk project folder.service:$service,namespace:$folder,"
+                                Write-Host "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile. exit code: $?."
+                                Write-Host "[ERROR] Please review the detail errors for potential fixes."
+                                Write-Host "[ERROR] If the issue persists, contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
+                                exit 1
+                            }
+                            $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
+                            $packagesToGen = $packagesToGen + @($newPackageOutputJson)
+                            Remove-Item $newPackageOutput
+                        } else {
+                            Write-Host "SDK project folder doesn't exist."
+                            Write-Error "[ERROR] The service $service is not onboarded yet. We will not support onboard a new service from swagger. Please contact the DotNet language support channel at $DotNetSupportChannelLink and include this spec pull request."
                             exit 1
                         }
-                        $newPackageOutputJson = Get-Content $newPackageOutput | Out-String | ConvertFrom-Json
-                        $packagesToGen = $packagesToGen + @($newPackageOutputJson)
-                        Remove-Item $newPackageOutput
                     }
                 }
             }
@@ -912,10 +873,10 @@ function GeneratePackage()
         language=".Net";
         changelog=$changelog;
     }
-    
+
     if ($null -ne $installInstructions) {
         $packageDetails['installInstructions'] = $installInstructions
-    }    
+    }
     $generatedSDKPackages.Add($packageDetails)
 }
 function UpdateExistingSDKByInputFiles()
