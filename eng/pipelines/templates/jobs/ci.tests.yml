@@ -144,7 +144,7 @@ jobs:
           testResultsFormat: "VSTest"
           mergeTestResults: true
       - template: /eng/pipelines/templates/steps/upload-dumps.yml
-      - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@4
+      - task: Palmmedia.reportgenerator.reportgenerator-build-release-task.reportgenerator@5
         condition: and(succeededOrFailed(), eq(variables['CollectCoverage'], 'true'), eq(variables['coverage.collected'], 'true'))
         displayName: Generate Code Coverage Reports
         inputs:
@@ -158,4 +158,3 @@ jobs:
         displayName: Publish Code Coverage Reports
         inputs:
           summaryFileLocation: $(Build.ArtifactStagingDirectory)\coverage\Cobertura.xml
-
