@@ -65,5 +65,15 @@ namespace Azure.AI.Language.Conversations.Authoring
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
         }
+
+        /// <summary> Initializes a new instance of DeploymentResourcesConversationAuthoringAnalysis. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual DeploymentResourcesConversationAuthoringAnalysis GetDeploymentResourcesConversationAuthoringAnalysisClient(string apiVersion = "2024-11-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new DeploymentResourcesConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
     }
 }
