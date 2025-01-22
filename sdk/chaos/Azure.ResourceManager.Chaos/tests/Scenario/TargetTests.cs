@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Chaos.Tests
             var createUpdateTargetResponse = await targetCollection.CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 TestConstants.VmssTargetName,
-                new ChaosTargetData(new Dictionary<string, BinaryData>()));
+                new ChaosTargetData());
             Assert.AreEqual(200, createUpdateTargetResponse.GetRawResponse().Status);
         }
 

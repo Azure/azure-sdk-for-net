@@ -29,17 +29,17 @@ namespace Azure.ResourceManager.Chaos.Models
         private const string UpdatingValue = "Updating";
         private const string DeletingValue = "Deleting";
 
-        /// <summary> Succeeded. </summary>
+        /// <summary> Resource has been created. </summary>
         public static ChaosProvisioningState Succeeded { get; } = new ChaosProvisioningState(SucceededValue);
-        /// <summary> Failed. </summary>
+        /// <summary> Resource creation failed. </summary>
         public static ChaosProvisioningState Failed { get; } = new ChaosProvisioningState(FailedValue);
-        /// <summary> Canceled. </summary>
+        /// <summary> Resource creation was canceled. </summary>
         public static ChaosProvisioningState Canceled { get; } = new ChaosProvisioningState(CanceledValue);
-        /// <summary> Creating. </summary>
+        /// <summary> Initial creation in progress. </summary>
         public static ChaosProvisioningState Creating { get; } = new ChaosProvisioningState(CreatingValue);
-        /// <summary> Updating. </summary>
+        /// <summary> Update in progress. </summary>
         public static ChaosProvisioningState Updating { get; } = new ChaosProvisioningState(UpdatingValue);
-        /// <summary> Deleting. </summary>
+        /// <summary> Deletion in progress. </summary>
         public static ChaosProvisioningState Deleting { get; } = new ChaosProvisioningState(DeletingValue);
         /// <summary> Determines if two <see cref="ChaosProvisioningState"/> values are the same. </summary>
         public static bool operator ==(ChaosProvisioningState left, ChaosProvisioningState right) => left.Equals(right);
