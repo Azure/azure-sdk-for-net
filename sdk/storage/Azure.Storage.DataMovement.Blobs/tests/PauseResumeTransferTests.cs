@@ -222,7 +222,7 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Inore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -236,12 +236,11 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider, localProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
@@ -274,7 +273,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Inore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -288,12 +287,11 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider, localProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
             };
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
@@ -342,7 +340,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.CatchAsync(async () => await transferManager.PauseTransferAsync("bad transfer Id"));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Inore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -356,12 +354,11 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider, localProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
             };
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
@@ -399,7 +396,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Inore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -414,12 +411,11 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider, localProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
             };
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
@@ -477,7 +473,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Inore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -492,12 +488,11 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider, localProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
             };
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
@@ -551,7 +546,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Inore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [Test]
         [LiveOnly]
         [TestCase(TransferDirection.Upload)]
@@ -565,12 +560,11 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer blobContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider, localProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
             };
             TransferManager transferManager = new TransferManager(options);
 
@@ -785,7 +779,7 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Inore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -800,12 +794,11 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider, localProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
@@ -834,7 +827,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Inore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -850,12 +843,11 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider, localProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
@@ -884,7 +876,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Inore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -900,12 +892,11 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider, localProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions();
@@ -940,7 +931,7 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        //[Inore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -956,12 +947,11 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider, localProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions()
@@ -1026,7 +1016,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        ////[Inore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
@@ -1042,12 +1032,11 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider, localProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
             };
             TransferManager transferManager = new TransferManager(options);
             TransferOptions transferOptions = new TransferOptions()
@@ -1112,7 +1101,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
-        [Ignore("Likely to fail in pipelines and takes a while to run.")]
+        //[Inore("Likely to fail in pipelines and takes a while to run.")]
         [Test, Pairwise]
         [LiveOnly]
         public async Task ResumeTransferAsync_Directory_Large(
@@ -1135,12 +1124,11 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
                 ErrorMode = TransferErrorMode.ContinueOnFailure,
-                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider, localProvider },
+                ProvidersForResuming = new List<StorageResourceProvider>() { blobProvider },
             };
             TransferManager transferManager = new TransferManager(options);
             long size = Constants.MB;

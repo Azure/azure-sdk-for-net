@@ -37,9 +37,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
 
                     TransferManager transferManager = new TransferManager();
 
-                    // Get local filesystem provider
-                    LocalFilesStorageResourceProvider files = new();
-
                     // Get shares provider with credential
                     #region Snippet:MakeProvider_TokenCredential_Shares
                     ShareFilesStorageResourceProvider shares = new(tokenCredential);
@@ -102,7 +99,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
             try
             {
                 ShareFilesStorageResourceProvider shares = new(new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey));
-                LocalFilesStorageResourceProvider files = new();
 
                 // Get a reference to a destination share file/directory
                 Uri destinationFolderUri = share.GetDirectoryClient("sample-directory").Uri;

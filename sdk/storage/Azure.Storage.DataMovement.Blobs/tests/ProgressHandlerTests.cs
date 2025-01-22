@@ -312,11 +312,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             await PopulateTestContainer(source.Container);
 
             BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
-            LocalFilesStorageResourceProvider localProvider = new();
 
             TransferManagerOptions transferManagerOptions = new()
             {
-                ProvidersForResuming = [blobProvider, localProvider]
+                ProvidersForResuming = [blobProvider]
             };
             TransferManager transferManager = new(transferManagerOptions);
 

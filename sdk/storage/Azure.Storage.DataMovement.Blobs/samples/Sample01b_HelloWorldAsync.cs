@@ -40,9 +40,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                     TransferManager transferManager = new TransferManager();
 
-                    // Get local filesystem provider
-                    LocalFilesStorageResourceProvider files = new();
-
                     // Get blobs provider with credential
                     #region Snippet:MakeProvider_TokenCredential
                     BlobsStorageResourceProvider blobs = new(tokenCredential);
@@ -871,11 +868,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create transfer manager
                 #region Snippet:SetupTransferManagerForResume
-                LocalFilesStorageResourceProvider files = new();
                 BlobsStorageResourceProvider blobs = new(tokenCredential);
                 TransferManager transferManager = new(new TransferManagerOptions()
                 {
-                    ProvidersForResuming = new List<StorageResourceProvider>() { files, blobs },
+                    ProvidersForResuming = new List<StorageResourceProvider>() { blobs },
                 });
                 #endregion
 
@@ -936,9 +932,8 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create transfer manager
                 BlobsStorageResourceProvider blobs = new(tokenCredential);
-                LocalFilesStorageResourceProvider files = new();
                 TransferManagerOptions options = new TransferManagerOptions();
-                options.ProvidersForResuming = new List<StorageResourceProvider>() { files, blobs };
+                options.ProvidersForResuming = new List<StorageResourceProvider>() { blobs };
                 TransferManager transferManager = new TransferManager(options);
 
                 // Create source and destination resource
@@ -1116,7 +1111,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             try
             {
                 // Get a reference to a source local file
-                LocalFilesStorageResourceProvider files = new();
                 StorageResource sourceResource = LocalFilesStorageResourceProvider.FromFile(sourceLocalPath);
 
                 // Get a reference to a destination blob

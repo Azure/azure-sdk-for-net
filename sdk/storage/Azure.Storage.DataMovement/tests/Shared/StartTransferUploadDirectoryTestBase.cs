@@ -36,8 +36,6 @@ namespace Azure.Storage.DataMovement.Tests
 
         public ClientBuilder<TServiceClient, TClientOptions> ClientBuilder { get; protected set; }
 
-        public LocalFilesStorageResourceProvider LocalResourceProvider { get; } = new();
-
         public StartTransferUploadDirectoryTestBase(bool async, RecordedTestMode? mode = null, bool isPageBlob = false)
             : base(async, mode)
         {

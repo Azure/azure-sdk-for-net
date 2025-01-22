@@ -281,6 +281,11 @@ namespace Azure.Storage.DataMovement
             cancellationToken = LinkCancellation(cancellationToken);
             bool TryGetStorageResourceProvider(TransferProperties properties, bool getSource, out StorageResourceProvider resourceProvider)
             {
+                if (LocalFilesStorageResourceProvider.InternalProviderId == (getSource ? properties.SourceProviderId : properties.DestinationProviderId))
+                {
+                    resourceProvider = new LocalFilesStorageResourceProvider();
+                    return true;
+                }
                 foreach (StorageResourceProvider provider in _resumeProviders)
                 {
                     if (provider.ProviderId == (getSource ? properties.SourceProviderId : properties.DestinationProviderId))
