@@ -112,7 +112,7 @@ jobs:
           Get-ChildItem -Path $(Build.SourcesDirectory) | ForEach-Object { Write-Host $_.FullName }
         displayName: Dump Visible Files
 
-      ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
+      - ${{ if and(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.ServiceDirectory, 'auto')) }}:
         - template: /eng/pipelines/templates/steps/set-artifact-packages.yml
           parameters:
             PackageInfo: '$(Build.SourcesDirectory)/PackageInfo'
