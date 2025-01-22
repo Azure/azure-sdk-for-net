@@ -231,32 +231,6 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
         }
 
-        public static async Task<T> Retry<T>(int attempts, Func<Task<T>> action)
-        {
-            if (attempts <= 0)
-            {
-                throw new ArgumentException("Attempts must be greater than zero.", nameof(attempts));
-            }
-
-            Exception lastException = null;
-
-            for (int i = 0; i < attempts; i++)
-            {
-                try
-                {
-                    return await action();
-                }
-                catch (Exception ex)
-                {
-                    lastException = ex;
-                    Console.WriteLine($"Attempt {i + 1} failed: {ex.Message}");
-                }
-            }
-
-            // If all attempts fail, throw the last exception
-            throw lastException;
-        }
-
         [Test]
         [LiveOnly]
         [TestCase(TransferDirection.Upload)]
@@ -282,32 +256,26 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
 
-            // In case we Complete the transfer first, keep retrying until we can Pause
-            TransferOperation transfer = await Retry(6, async () =>
-            {
-                // Add long-running job to pause, if the job is not big enough
-                // then the job might finish before we can pause it.
-                transfer = await CreateSingleLongTransferAsync(
-                    manager: transferManager,
-                    transferType: transferType,
-                    localDirectory: localDirectory.DirectoryPath,
-                    sourceContainer: sourceContainer.Container,
-                    destinationContainer: destinationContainer.Container,
-                    size: Constants.KB * 100,
-                    transferOptions: transferOptions,
-                    blobProvider: blobProvider,
-                    localProvider: localProvider);
+            // Add long-running job to pause, if the job is not big enough
+            // then the job might finish before we can pause it.
+            TransferOperation transfer = await CreateSingleLongTransferAsync(
+                manager: transferManager,
+                transferType: transferType,
+                localDirectory: localDirectory.DirectoryPath,
+                sourceContainer: sourceContainer.Container,
+                destinationContainer: destinationContainer.Container,
+                size: Constants.KB * 100,
+                transferOptions: transferOptions,
+                blobProvider: blobProvider,
+                localProvider: localProvider);
 
-                // Act
-                await Task.Delay(1);
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-                await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
-                // Assert
-                await testEventsRaised.AssertPausedCheck();
-                Assert.AreEqual(TransferState.Paused, transfer.Status.State);
-                return transfer;
-            });
+            // Assert
+            await testEventsRaised.AssertPausedCheck();
+            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             // Check if Job Plan File exists in checkpointer path.
             JobPartPlanFileName fileName = new JobPartPlanFileName(
@@ -342,32 +310,26 @@ namespace Azure.Storage.DataMovement.Tests
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
             TransferManager transferManager = new TransferManager(options);
 
-            // In case we Complete the transfer first, keep retrying until we can Pause
-            TransferOperation transfer = await Retry(6, async () =>
-            {
-                // Add long-running job to pause, if the job is not big enough
-                // then the job might finish before we can pause it.
-                transfer = await CreateSingleLongTransferAsync(
-                    manager: transferManager,
-                    transferType: transferType,
-                    localDirectory: localDirectory.DirectoryPath,
-                    sourceContainer: sourceContainer.Container,
-                    destinationContainer: destinationContainer.Container,
-                    size: Constants.KB * 100,
-                    transferOptions: transferOptions,
-                    blobProvider: blobProvider,
-                    localProvider: localProvider);
+            // Add long-running job to pause, if the job is not big enough
+            // then the job might finish before we can pause it.
+            TransferOperation transfer = await CreateSingleLongTransferAsync(
+                manager: transferManager,
+                transferType: transferType,
+                localDirectory: localDirectory.DirectoryPath,
+                sourceContainer: sourceContainer.Container,
+                destinationContainer: destinationContainer.Container,
+                size: Constants.KB * 100,
+                transferOptions: transferOptions,
+                blobProvider: blobProvider,
+                localProvider: localProvider);
 
-                // Act
-                await Task.Delay(1);
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-                await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
-                // Assert
-                await testEventsRaised.AssertPausedCheck();
-                Assert.AreEqual(TransferState.Paused, transfer.Status.State);
-                return transfer;
-            });
+            // Assert
+            await testEventsRaised.AssertPausedCheck();
+            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             // Check if Job Plan File exists in checkpointer path.
             JobPartPlanFileName fileName = new JobPartPlanFileName(
@@ -418,32 +380,26 @@ namespace Azure.Storage.DataMovement.Tests
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
             TransferManager transferManager = new TransferManager(options);
 
-            // In case we Complete the transfer first, keep retrying until we can Pause
-            TransferOperation transfer = await Retry(6, async () =>
-            {
-                // Add long-running job to pause, if the job is not big enough
-                // then the job might finish before we can pause it.
-                transfer = await CreateSingleLongTransferAsync(
-                    manager: transferManager,
-                    transferType: transferType,
-                    localDirectory: localDirectory.DirectoryPath,
-                    sourceContainer: sourceContainer.Container,
-                    destinationContainer: destinationContainer.Container,
-                    size: Constants.KB * 100,
-                    transferOptions: transferOptions,
-                    blobProvider: blobProvider,
-                    localProvider: localProvider);
+            // Add long-running job to pause, if the job is not big enough
+            // then the job might finish before we can pause it.
+            TransferOperation transfer = await CreateSingleLongTransferAsync(
+                manager: transferManager,
+                transferType: transferType,
+                localDirectory: localDirectory.DirectoryPath,
+                sourceContainer: sourceContainer.Container,
+                destinationContainer: destinationContainer.Container,
+                size: Constants.KB * 100,
+                transferOptions: transferOptions,
+                blobProvider: blobProvider,
+                localProvider: localProvider);
 
-                // Act
-                await Task.Delay(1);
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-                await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
-                // Assert
-                await testEventsRaised.AssertPausedCheck();
-                Assert.AreEqual(TransferState.Paused, transfer.Status.State);
-                return transfer;
-            });
+            // Assert
+            await testEventsRaised.AssertPausedCheck();
+            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             // Check if Job Plan File exists in checkpointer path.
             JobPartPlanFileName fileName = new JobPartPlanFileName(
@@ -489,27 +445,21 @@ namespace Azure.Storage.DataMovement.Tests
                 blobProvider: blobProvider,
                 localProvider: localProvider);
 
-            // In case we Complete the transfer first, keep retrying until we can Pause
-            TransferOperation transfer = await Retry(6, async () =>
-            {
-                // Add long-running job to pause, if the job is not big enough
-                // then the job might finish before we can pause it.
-                transfer = await CreateSingleLongTransferAsync(
-                    manager: transferManager,
-                    sourceResource: sResource,
-                    destinationResource: dResource,
-                    transferOptions: transferOptions);
+            // Add long-running job to pause, if the job is not big enough
+            // then the job might finish before we can pause it.
+            TransferOperation transfer = await CreateSingleLongTransferAsync(
+                manager: transferManager,
+                sourceResource: sResource,
+                destinationResource: dResource,
+                transferOptions: transferOptions);
 
-                // Act
-                await Task.Delay(1);
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-                await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
-                // Assert
-                await testEventsRaised.AssertPausedCheck();
-                Assert.AreEqual(TransferState.Paused, transfer.Status.State);
-                return transfer;
-            });
+            // Assert
+            await testEventsRaised.AssertPausedCheck();
+            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             // Act - Resume Job
             TransferOptions resumeOptions = new TransferOptions()
@@ -575,27 +525,21 @@ namespace Azure.Storage.DataMovement.Tests
                 blobProvider: blobProvider,
                 localProvider: localProvider);
 
-            // In case we Complete the transfer first, keep retrying until we can Pause
-            TransferOperation transfer = await Retry(6, async () =>
-            {
-                // Add long-running job to pause, if the job is not big enough
-                // then the job might finish before we can pause it.
-                transfer = await CreateSingleLongTransferAsync(
-                    manager: transferManager,
-                    sourceResource: sResource,
-                    destinationResource: dResource,
-                    transferOptions: transferOptions);
+            // Add long-running job to pause, if the job is not big enough
+            // then the job might finish before we can pause it.
+            TransferOperation transfer = await CreateSingleLongTransferAsync(
+                manager: transferManager,
+                sourceResource: sResource,
+                destinationResource: dResource,
+                transferOptions: transferOptions);
 
-                // Act
-                await Task.Delay(1);
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-                await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
-                // Assert
-                await testEventsRaised.AssertPausedCheck();
-                Assert.AreEqual(TransferState.Paused, transfer.Status.State);
-                return transfer;
-            });
+            // Assert
+            await testEventsRaised.AssertPausedCheck();
+            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             // Act - Resume Job
             TransferOptions resumeOptions = new();
@@ -665,20 +609,14 @@ namespace Azure.Storage.DataMovement.Tests
                 destination = CreateBlobDestinationResource(blobContainer.Container, blobProvider, options: testOptions);
             }
 
-            // In case we Complete the transfer first, keep retrying until we can Pause
-            TransferOperation transfer = await Retry(6, async () =>
-            {
-                transfer = await transferManager.StartTransferAsync(source, destination);
+            TransferOperation transfer = await transferManager.StartTransferAsync(source, destination);
 
-                // Act
-                await Task.Delay(1);
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-                await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
-                // Assert
-                Assert.AreEqual(TransferState.Paused, transfer.Status.State);
-                return transfer;
-            });
+            // Assert
+            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
             await Task.Delay(150);
 
             // Act - Resume Job
@@ -900,35 +838,29 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
 
-            // In case we Complete the transfer first, keep retrying until we can Pause
-            TransferOperation transfer = await Retry(6, async () =>
-            {
-                // Add long-running job to pause, if the job is not big enough
-                // then the job might finish before we can pause it.
-                int partCount = 4;
-                transfer = await CreateDirectoryLongTransferAsync(
-                    manager: transferManager,
-                    transferType: transferType,
-                    sourceDirectory: sourceDirectory.DirectoryPath,
-                    destinationDirectory: destinationDirectory.DirectoryPath,
-                    sourceContainer: sourceContainer.Container,
-                    destinationContainer: destinationContainer.Container,
-                    size: Constants.KB * 4,
-                    transferCount: partCount,
-                    transferOptions: transferOptions,
-                    blobProvider: blobProvider,
-                    localProvider: localProvider);
+            // Add long-running job to pause, if the job is not big enough
+            // then the job might finish before we can pause it.
+            int partCount = 4;
+            TransferOperation transfer = await CreateDirectoryLongTransferAsync(
+                manager: transferManager,
+                transferType: transferType,
+                sourceDirectory: sourceDirectory.DirectoryPath,
+                destinationDirectory: destinationDirectory.DirectoryPath,
+                sourceContainer: sourceContainer.Container,
+                destinationContainer: destinationContainer.Container,
+                size: Constants.KB * 4,
+                transferCount: partCount,
+                transferOptions: transferOptions,
+                blobProvider: blobProvider,
+                localProvider: localProvider);
 
-                // Act
-                await Task.Delay(1);
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-                await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
-                // Assert
-                await testEventsRaised.AssertPausedCheck();
-                Assert.AreEqual(TransferState.Paused, transfer.Status.State);
-                return transfer;
-            });
+            // Assert
+            await testEventsRaised.AssertPausedCheck();
+            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
         }
 
         [Test]
@@ -958,35 +890,29 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
 
-            // In case we Complete the transfer first, keep retrying until we can Pause
-            TransferOperation transfer = await Retry(6, async () =>
-            {
-                // Add long-running job to pause, if the job is not big enough
-                // then the job might finish before we can pause it.
-                int partCount = 10;
-                transfer = await CreateDirectoryLongTransferAsync(
-                    manager: transferManager,
-                    transferType: transferType,
-                    sourceDirectory: sourceDirectory.DirectoryPath,
-                    destinationDirectory: destinationDirectory.DirectoryPath,
-                    sourceContainer: sourceContainer.Container,
-                    destinationContainer: destinationContainer.Container,
-                    size: Constants.KB * 4,
-                    transferCount: partCount,
-                    transferOptions: transferOptions,
-                    blobProvider: blobProvider,
-                    localProvider: localProvider);
+            // Add long-running job to pause, if the job is not big enough
+            // then the job might finish before we can pause it.
+            int partCount = 10;
+            TransferOperation transfer = await CreateDirectoryLongTransferAsync(
+                manager: transferManager,
+                transferType: transferType,
+                sourceDirectory: sourceDirectory.DirectoryPath,
+                destinationDirectory: destinationDirectory.DirectoryPath,
+                sourceContainer: sourceContainer.Container,
+                destinationContainer: destinationContainer.Container,
+                size: Constants.KB * 4,
+                transferCount: partCount,
+                transferOptions: transferOptions,
+                blobProvider: blobProvider,
+                localProvider: localProvider);
 
-                // Act
-                await Task.Delay(1);
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-                await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
-                // Assert
-                await testEventsRaised.AssertPausedCheck();
-                Assert.AreEqual(TransferState.Paused, transfer.Status.State);
-                return transfer;
-            });
+            // Assert
+            await testEventsRaised.AssertPausedCheck();
+            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
         }
 
         [Test]
@@ -1016,35 +942,29 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOptions transferOptions = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
 
-            // In case we Complete the transfer first, keep retrying until we can Pause
-            TransferOperation transfer = await Retry(6, async () =>
-            {
-                // Add long-running job to pause, if the job is not big enough
-                // then the job might finish before we can pause it.
-                int partCount = 4;
-                transfer = await CreateDirectoryLongTransferAsync(
-                    manager: transferManager,
-                    transferType: transferType,
-                    sourceDirectory: sourceDirectory.DirectoryPath,
-                    destinationDirectory: destinationDirectory.DirectoryPath,
-                    sourceContainer: sourceContainer.Container,
-                    destinationContainer: destinationContainer.Container,
-                    size: Constants.KB * 4,
-                    transferCount: partCount,
-                    transferOptions: transferOptions,
-                    blobProvider: blobProvider,
-                    localProvider: localProvider);
+            // Add long-running job to pause, if the job is not big enough
+            // then the job might finish before we can pause it.
+            int partCount = 4;
+            TransferOperation transfer = await CreateDirectoryLongTransferAsync(
+                manager: transferManager,
+                transferType: transferType,
+                sourceDirectory: sourceDirectory.DirectoryPath,
+                destinationDirectory: destinationDirectory.DirectoryPath,
+                sourceContainer: sourceContainer.Container,
+                destinationContainer: destinationContainer.Container,
+                size: Constants.KB * 4,
+                transferCount: partCount,
+                transferOptions: transferOptions,
+                blobProvider: blobProvider,
+                localProvider: localProvider);
 
-                // Act
-                await Task.Delay(1);
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-                await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
-                // Assert
-                await testEventsRaised.AssertPausedCheck();
-                Assert.AreEqual(TransferState.Paused, transfer.Status.State);
-                return transfer;
-            });
+            // Assert
+            await testEventsRaised.AssertPausedCheck();
+            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             CancellationTokenSource cancellationTokenSource2 = new CancellationTokenSource(TimeSpan.FromSeconds(10));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource2.Token);
@@ -1096,29 +1016,22 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container,
                 blobProvider: blobProvider,
                 localProvider: localProvider);
-            TransferOperation transfer = new();
 
-            // In case we Complete the transfer first, keep retrying until we can Pause
-            (transfer, testEventsRaised) = await Retry(6, async () =>
-            {
-                // Add long-running job to pause, if the job is not big enough
-                // then the job might finish before we can pause it.
-                transfer = await CreateDirectoryLongTransferAsync(
-                    manager: transferManager,
-                    sourceResource: sResource,
-                    destinationResource: dResource,
-                    transferOptions: transferOptions);
+            // Add long-running job to pause, if the job is not big enough
+            // then the job might finish before we can pause it.
+            TransferOperation transfer = await CreateDirectoryLongTransferAsync(
+                manager: transferManager,
+                sourceResource: sResource,
+                destinationResource: dResource,
+                transferOptions: transferOptions);
 
-                // Act
-                await Task.Delay(1);
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-                await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
-                // Assert
-                await testEventsRaised.AssertPausedCheck();
-                Assert.AreEqual(TransferState.Paused, transfer.Status.State);
-                return (transfer, testEventsRaised);
-            });
+            // Assert
+            await testEventsRaised.AssertPausedCheck();
+            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
             int completedBeforePause = testEventsRaised.SingleCompletedEvents.Count;
 
             // Act - Resume Job
@@ -1191,29 +1104,22 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container,
                 blobProvider: blobProvider,
                 localProvider: localProvider);
-            TransferOperation transfer = new();
 
-            // In case we Complete the transfer first, keep retrying until we can Pause
-            (transfer, testEventsRaised) = await Retry(6, async () =>
-            {
-                // Add long-running job to pause, if the job is not big enough
-                // then the job might finish before we can pause it.
-                transfer = await CreateDirectoryLongTransferAsync(
-                    manager: transferManager,
-                    sourceResource: sResource,
-                    destinationResource: dResource,
-                    transferOptions: transferOptions);
+            // Add long-running job to pause, if the job is not big enough
+            // then the job might finish before we can pause it.
+            TransferOperation transfer = await CreateDirectoryLongTransferAsync(
+                manager: transferManager,
+                sourceResource: sResource,
+                destinationResource: dResource,
+                transferOptions: transferOptions);
 
-                // Act
-                await Task.Delay(1);
-                CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
-                await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
-                // Assert
-                await testEventsRaised.AssertPausedCheck();
-                Assert.AreEqual(TransferState.Paused, transfer.Status.State);
-                return (transfer, testEventsRaised);
-            });
+            // Assert
+            await testEventsRaised.AssertPausedCheck();
+            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
             int completedBeforePause = testEventsRaised.SingleCompletedEvents.Count;
 
             // Act - Resume Job
