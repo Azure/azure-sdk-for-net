@@ -92,6 +92,7 @@ namespace Azure.Storage.DataMovement
             _chunksProcessor = chunksProcessor;
             _jobBuilder = jobBuilder;
             _resumeProviders = new(resumeProviders ?? new List<StorageResourceProvider>());
+            _resumeProviders.Add(new LocalFilesStorageResourceProvider());
             _checkpointer = checkpointer;
             _generateTransferId = generateTransferId ?? (() => Guid.NewGuid().ToString());
 
@@ -281,11 +282,6 @@ namespace Azure.Storage.DataMovement
             cancellationToken = LinkCancellation(cancellationToken);
             bool TryGetStorageResourceProvider(TransferProperties properties, bool getSource, out StorageResourceProvider resourceProvider)
             {
-                if (LocalFilesStorageResourceProvider.InternalProviderId == (getSource ? properties.SourceProviderId : properties.DestinationProviderId))
-                {
-                    resourceProvider = new LocalFilesStorageResourceProvider();
-                    return true;
-                }
                 foreach (StorageResourceProvider provider in _resumeProviders)
                 {
                     if (provider.ProviderId == (getSource ? properties.SourceProviderId : properties.DestinationProviderId))
