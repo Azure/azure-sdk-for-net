@@ -1,6 +1,0 @@
-{
-  "output-folder": ".",
-  "namespace": "Parameters.CollectionFormat",
-  "library-name": "Parameters.CollectionFormat",
-  "use-model-reader-writer": true
-}

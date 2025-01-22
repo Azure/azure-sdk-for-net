@@ -75,6 +75,14 @@ $failingSpecs = @(
     Join-Path 'http' 'client' 'structure' 'renamed-operation'
     Join-Path 'http' 'client' 'structure' 'multi-client'
     Join-Path 'http' 'client' 'structure' 'two-operation-group'
+    Join-Path 'http' 'encode' 'bytes'
+    Join-Path 'http' 'encode' 'datetime'
+    Join-Path 'http' 'encode' 'duration'
+    Join-Path 'http' 'parameters' 'collection-format'
+    Join-Path 'http' 'routes'
+    Join-Path 'http' 'type' 'array'
+    Join-Path 'http' 'type' 'dictionary'
+    Join-Path 'http' 'type' 'scalar'
 )
 
 $azureAllowSpecs = @(

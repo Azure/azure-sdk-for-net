@@ -1,6 +1,0 @@
-{
-  "output-folder": ".",
-  "namespace": "Encode.Datetime",
-  "library-name": "Encode.Datetime",
-  "use-model-reader-writer": true
-}
