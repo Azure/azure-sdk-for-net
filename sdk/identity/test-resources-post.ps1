@@ -34,6 +34,18 @@ $MIName = $DeploymentOutputs['IDENTITY_USER_DEFINED_IDENTITY_NAME']
 $SaAccountName = 'workload-identity-sa'
 $PodName = $DeploymentOutputs['IDENTITY_AKS_POD_NAME']
 
+$aciName = "azidentity-test"
+az container create -g $rg -n $aciName --image $containerImage `
+  --acr-identity $($DeploymentOutputs['AZIDENTITY_USER_ASSIGNED_IDENTITY']) `
+  --assign-identity [system] $($DeploymentOutputs['AZIDENTITY_USER_ASSIGNED_IDENTITY']) `
+  --role "Storage Blob Data Reader" `
+  --scope $($DeploymentOutputs['AZIDENTITY_STORAGE_ID']) `
+  -e AZIDENTITY_STORAGE_NAME=$($DeploymentOutputs['AZIDENTITY_STORAGE_NAME']) `
+     AZIDENTITY_STORAGE_NAME_USER_ASSIGNED=$($DeploymentOutputs['AZIDENTITY_STORAGE_NAME_USER_ASSIGNED']) `
+     AZIDENTITY_USER_ASSIGNED_IDENTITY=$($DeploymentOutputs['AZIDENTITY_USER_ASSIGNED_IDENTITY']) `
+     FUNCTIONS_CUSTOMHANDLER_PORT=80
+Write-Host "##vso[task.setvariable variable=AZIDENTITY_ACI_NAME;]$aciName"
+
 if ($IsMacOS -eq $true) {
   # Not supported on MacOS agents
   az logout

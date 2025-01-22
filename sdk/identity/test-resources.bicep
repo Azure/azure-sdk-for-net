@@ -285,3 +285,6 @@ output IDENTITY_AKS_POD_NAME string = 'dotnet-test-app'
 output IDENTITY_STORAGE_NAME_1 string = sa.name
 output IDENTITY_STORAGE_NAME_2 string = sa2.name
 output IDENTITY_FUNCTION_NAME string = azfunc.name
+output IDENTITY_USER_ASSIGNED_IDENTITY string = usermgdid.id
+output IDENTITY_USER_ASSIGNED_IDENTITY_CLIENT_ID string = usermgdid.properties.clientId
+output IDENTITY_USER_ASSIGNED_IDENTITY_NAME string = usermgdid.name
