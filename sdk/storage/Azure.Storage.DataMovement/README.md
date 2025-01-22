@@ -112,11 +112,10 @@ The below sample initializes the `TransferManager` such that it's capable of res
 **Important:** Credentials to storage providers are not persisted. Storage access which requires credentials will need its appropriate `StorageResourceProvider` to be configured with those credentials. Below uses an `Azure.Core` token credential with permission to the appropriate resources.
 
 ```C# Snippet:SetupTransferManagerForResume
-LocalFilesStorageResourceProvider files = new();
 BlobsStorageResourceProvider blobs = new(tokenCredential);
 TransferManager transferManager = new(new TransferManagerOptions()
 {
-    ProvidersForResuming = new List<StorageResourceProvider>() { files, blobs },
+    ProvidersForResuming = new List<StorageResourceProvider>() { blobs },
 });
 ```
 

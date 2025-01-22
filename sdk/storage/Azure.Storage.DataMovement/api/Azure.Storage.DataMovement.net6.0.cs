@@ -20,7 +20,7 @@ namespace Azure.Storage.DataMovement
     }
     public partial class LocalFilesStorageResourceProvider : Azure.Storage.DataMovement.StorageResourceProvider
     {
-        public LocalFilesStorageResourceProvider() { }
+        internal LocalFilesStorageResourceProvider() { }
         protected internal override string ProviderId { get { throw null; } }
         protected internal override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromDestinationAsync(Azure.Storage.DataMovement.TransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
         public static Azure.Storage.DataMovement.StorageResourceContainer FromDirectory(string directoryPath) { throw null; }
