@@ -10,6 +10,7 @@ using Azure.AI.Inference;
 using Azure.AI.Projects;
 using Azure.CloudMachine.OpenAI;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Indexes;
 using NUnit.Framework;
 using OpenAI.Chat;
 using OpenAI.Embeddings;
@@ -38,6 +39,8 @@ internal class AIFoundryTests
 
         // Azure AI Search Clients using connections API
         SearchClient searchClient = client.GetSearchClient("myIndex");
+        SearchIndexClient indexClient = client.GetSearchIndexClient();
+        SearchIndexerClient indexerClient = client.GetSearchIndexerClient();
     }
 
     [Test]

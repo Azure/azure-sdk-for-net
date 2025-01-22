@@ -5,6 +5,7 @@ using Azure.AI.Inference;
 using Azure.AI.Projects;
 using Azure.Core;
 using Azure.Search.Documents;
+using Azure.Search.Documents.Indexes;
 
 namespace Azure.CloudMachine;
 
@@ -21,15 +22,13 @@ public static class AzureAIProjectsExensions
     /// <returns></returns>
     public static AgentsClient GetAgentsClient(this ClientWorkspace workspace)
     {
-        AgentsClient agentsClient = workspace.Subclients.Get(() => CreateAgentsClient(workspace));
-        return agentsClient;
-    }
+        AgentsClient agentsClient = workspace.Subclients.Get(() =>
+        {
+            AIProjectClient aiClient = workspace.Subclients.Get(() => CreateAzureAIClient(workspace));
+            return aiClient.GetAgentsClient();
+        });
 
-    private static AgentsClient CreateAgentsClient(this ClientWorkspace workspace)
-    {
-        ClientConnection connection = workspace.GetConnectionOptions(typeof(AgentsClient).FullName);
-        var connectionString = connection.Locator;
-        return new AgentsClient(connectionString, workspace.Credential);
+        return agentsClient;
     }
 
     /// <summary>
@@ -39,17 +38,15 @@ public static class AzureAIProjectsExensions
     /// <returns></returns>
     public static EvaluationsClient GetEvaluationsClient(this ClientWorkspace workspace)
     {
-        EvaluationsClient evaluationsClient = workspace.Subclients.Get(() => CreateEvaluationsClient(workspace));
+        EvaluationsClient evaluationsClient = workspace.Subclients.Get(() =>
+        {
+            AIProjectClient aiClient = workspace.Subclients.Get(() => CreateAzureAIClient(workspace));
+            return aiClient.GetEvaluationsClient();
+        });
+
         return evaluationsClient;
     }
-
-    private static EvaluationsClient CreateEvaluationsClient(this ClientWorkspace workspace)
-    {
-        ClientConnection connection = workspace.GetConnectionOptions(typeof(EvaluationsClient).FullName);
-        var connectionString = connection.Locator;
-        return new EvaluationsClient(connectionString, workspace.Credential);
-    }
-#endregion AIProjects
+    #endregion AIProjects
 
 #region Inference
     /// <summary>
@@ -85,9 +82,9 @@ public static class AzureAIProjectsExensions
         ClientConnection connection = workspace.GetConnectionOptions(typeof(ChatCompletionsClient).FullName);
         return new(connection.ToUri(), new AzureKeyCredential(connection.ApiKeyCredential!));
     }
-    #endregion Inference
+#endregion Inference
 
-    #region Azure AI Search
+#region Azure AI Search
     /// <summary>
     /// Gets the search client.
     /// </summary>
@@ -105,5 +102,46 @@ public static class AzureAIProjectsExensions
         ClientConnection connection = workspace.GetConnectionOptions(typeof(SearchClient).FullName);
         return new(connection.ToUri(), "indexName", new AzureKeyCredential(connection.ApiKeyCredential!));
     }
-    #endregion Inference
+
+    /// <summary>
+    /// Gets the search client.
+    /// </summary>
+    /// <param name="workspace"></param>
+    /// <returns></returns>
+    public static SearchIndexClient GetSearchIndexClient(this ClientWorkspace workspace)
+    {
+        SearchIndexClient searchIndexClient = workspace.Subclients.Get(() => CreateSearchIndexClient(workspace));
+        return searchIndexClient;
+    }
+
+    private static SearchIndexClient CreateSearchIndexClient(this ClientWorkspace workspace)
+    {
+        ClientConnection connection = workspace.GetConnectionOptions(typeof(SearchIndexClient).FullName);
+        return new(connection.ToUri(), new AzureKeyCredential(connection.ApiKeyCredential!));
+    }
+
+    /// <summary>
+    /// Gets the search client.
+    /// </summary>
+    /// <param name="workspace"></param>
+    /// <returns></returns>
+    public static SearchIndexerClient GetSearchIndexerClient(this ClientWorkspace workspace)
+    {
+        SearchIndexerClient searchIndexerClient = workspace.Subclients.Get(() => CreateSearchIndexerClient(workspace));
+        return searchIndexerClient;
+    }
+
+    private static SearchIndexerClient CreateSearchIndexerClient(this ClientWorkspace workspace)
+    {
+        ClientConnection connection = workspace.GetConnectionOptions(typeof(SearchIndexClient).FullName);
+        return new(connection.ToUri(), new AzureKeyCredential(connection.ApiKeyCredential!));
+    }
+#endregion Azure AI Search
+
+    private static AIProjectClient CreateAzureAIClient(this ClientWorkspace workspace)
+    {
+        ClientConnection connection = workspace.GetConnectionOptions(typeof(AIProjectClient).FullName);
+        var connectionString = connection.Locator;
+        return new AIProjectClient(connectionString, workspace.Credential);
+    }
 }

@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.AI.Inference;
 using Azure.AI.OpenAI;
 using Azure.AI.Projects;
@@ -27,8 +28,12 @@ namespace Azure.CloudMachine
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ConnectionCollection Connections { get; } = [];
 
+        private readonly ConnectionsClient _connectionsClient;
+
+        private readonly Dictionary<ConnectionType, ConnectionResponse> _connectionCache = new();
+
         /// <summary>
-        /// Initializes a new instance of the <see cref="AIFoundryClient"/> class for mocking purposes..
+        /// Initializes a new instance of the <see cref="AIFoundryClient"/> class for mocking purposes.
         /// </summary>
         protected AIFoundryClient() : base(BuildCredential(default))
         {
@@ -49,93 +54,9 @@ namespace Azure.CloudMachine
                 throw new ArgumentException("Connection string cannot be null or empty.", nameof(connectionString));
             }
 
-            AddAIProjectsConnections(connectionString);
+            Connections.Add(new ClientConnection(typeof(AIProjectClient).FullName, connectionString));
 
-            // Add connections using AI Projects connections API
-            ConnectionsClient connectionsClient = new ConnectionsClient(connectionString, Credential);
-            AddInferenceConnection(connectionsClient);
-            AddAzureOpenAIConnection(connectionsClient);
-            AddAzureAISearchConnection(connectionsClient);
-        }
-
-        private void AddAIProjectsConnections(string connectionString)
-        {
-            Connections.Add(new ClientConnection(typeof(AgentsClient).FullName, connectionString));
-            Connections.Add(new ClientConnection(typeof(EvaluationsClient).FullName, connectionString));
-        }
-
-        private void AddInferenceConnection(ConnectionsClient connectionsClient)
-        {
-            ConnectionResponse connection = connectionsClient.GetDefaultConnection(ConnectionType.Serverless, true);
-
-            if (connection.Properties is ConnectionPropertiesApiKeyAuth apiKeyAuthProperties)
-            {
-                if (string.IsNullOrWhiteSpace(apiKeyAuthProperties.Target))
-                {
-                    throw new ArgumentException("The API key authentication target URI is missing or invalid.");
-                }
-                if (apiKeyAuthProperties.Credentials == null || string.IsNullOrWhiteSpace(apiKeyAuthProperties.Credentials.Key))
-                {
-                    throw new ArgumentException("The API key is missing or invalid.");
-                }
-
-                Connections.Add(new ClientConnection(typeof(ChatCompletionsClient).FullName, apiKeyAuthProperties.Target, apiKeyAuthProperties.Credentials.Key));
-                Connections.Add(new ClientConnection(typeof(EmbeddingsClient).FullName, apiKeyAuthProperties.Target, apiKeyAuthProperties.Credentials.Key));
-            }
-            else
-            {
-                throw new ArgumentException("Cannot connect with Inference! Ensure valid Api Key authentication.");
-            }
-        }
-
-        private void AddAzureOpenAIConnection(ConnectionsClient connectionsClient)
-        {
-            ConnectionResponse connection = connectionsClient.GetDefaultConnection(ConnectionType.AzureOpenAI, true);
-
-            if (connection.Properties is ConnectionPropertiesApiKeyAuth apiKeyAuthProperties)
-            {
-                if (string.IsNullOrWhiteSpace(apiKeyAuthProperties.Target))
-                {
-                    throw new ArgumentException("The API key authentication target URI is missing or invalid.");
-                }
-                if (apiKeyAuthProperties.Credentials == null || string.IsNullOrWhiteSpace(apiKeyAuthProperties.Credentials.Key))
-                {
-                    throw new ArgumentException("The API key is missing or invalid.");
-                }
-
-                Connections.Add(new ClientConnection(id: typeof(AzureOpenAIClient).FullName, locator: apiKeyAuthProperties.Target, apiKey: apiKeyAuthProperties.Credentials.Key));
-                Connections.Add(new ClientConnection(typeof(ChatClient).FullName, ""));
-                Connections.Add(new ClientConnection(typeof(EmbeddingClient).FullName,""));
-            }
-            else
-            {
-                throw new ArgumentException("Cannot connect with Azure OpenAI! Ensure valid Api Key authentication.");
-            }
-        }
-
-        private void AddAzureAISearchConnection(ConnectionsClient connectionsClient)
-        {
-            ConnectionResponse connection = connectionsClient.GetDefaultConnection(ConnectionType.AzureAISearch, true);
-
-            if (connection.Properties is ConnectionPropertiesApiKeyAuth apiKeyAuthProperties)
-            {
-                if (string.IsNullOrWhiteSpace(apiKeyAuthProperties.Target))
-                {
-                    throw new ArgumentException("The API key authentication target URI is missing or invalid.");
-                }
-                if (apiKeyAuthProperties.Credentials == null || string.IsNullOrWhiteSpace(apiKeyAuthProperties.Credentials.Key))
-                {
-                    throw new ArgumentException("The API key is missing or invalid.");
-                }
-
-                Connections.Add(new ClientConnection(typeof(SearchClient).FullName, apiKeyAuthProperties.Target, apiKeyAuthProperties.Credentials.Key));
-                Connections.Add(new ClientConnection(typeof(SearchIndexClient).FullName, apiKeyAuthProperties.Target, apiKeyAuthProperties.Credentials.Key));
-                Connections.Add(new ClientConnection(typeof(SearchIndexerClient).FullName, apiKeyAuthProperties.Target, apiKeyAuthProperties.Credentials.Key));
-            }
-            else
-            {
-                throw new ArgumentException("Cannot connect with Inference! Ensure valid Api Key authentication.");
-            }
+            _connectionsClient = new ConnectionsClient(connectionString, Credential);
         }
 
         /// <summary>
@@ -145,7 +66,76 @@ namespace Azure.CloudMachine
         /// <returns>The connection options for the specified client type and instance ID.</returns>
         public override ClientConnection GetConnectionOptions(string connectionId)
         {
-            return Connections[connectionId];
+            // Check if the connection already exists
+            if (Connections.Contains(connectionId))
+            {
+                return Connections[connectionId];
+            }
+
+            // Determine the connection type based on the connection ID
+            ConnectionType connectionType = GetConnectionTypeFromId(connectionId);
+
+            // Check if the connection details are already cached
+            if (!_connectionCache.TryGetValue(connectionType, out ConnectionResponse connection))
+            {
+                connection = _connectionsClient.GetDefaultConnection(connectionType, true);
+                _connectionCache[connectionType] = connection;
+            }
+
+            if (connection.Properties is ConnectionPropertiesApiKeyAuth apiKeyAuthProperties)
+            {
+                if (string.IsNullOrWhiteSpace(apiKeyAuthProperties.Target))
+                {
+                    throw new ArgumentException($"The API key authentication target URI is missing or invalid for {connectionId}.");
+                }
+
+                if (apiKeyAuthProperties.Credentials == null || string.IsNullOrWhiteSpace(apiKeyAuthProperties.Credentials.Key))
+                {
+                    throw new ArgumentException($"The API key is missing or invalid {connectionId}.");
+                }
+
+                Connections.Add(new ClientConnection(connectionId, apiKeyAuthProperties.Target, apiKeyAuthProperties.Credentials.Key));
+
+                return Connections[connectionId];
+            }
+            else
+            {
+                throw new ArgumentException($"Cannot connect with {connectionId}! Ensure valid Api Key authentication.");
+            }
+        }
+
+        private ConnectionType GetConnectionTypeFromId(string connectionId)
+        {
+            if (new[]
+            {
+                typeof(AzureOpenAIClient).FullName,
+                typeof(ChatClient).FullName,
+                typeof(EmbeddingClient).FullName
+            }.Contains(connectionId))
+            {
+                return ConnectionType.AzureOpenAI;
+            }
+            else if (new[]
+            {
+                typeof(ChatCompletionsClient).FullName,
+                typeof(EmbeddingsClient).FullName
+            }.Contains(connectionId))
+            {
+                return ConnectionType.Serverless;
+            }
+            else if (new[]
+            {
+                typeof(SearchClient).FullName,
+                typeof(SearchIndexClient).FullName,
+                typeof(SearchIndexerClient).FullName
+            }.Contains(connectionId))
+            {
+                return ConnectionType.AzureAISearch;
+            }
+            else
+            {
+                throw new ArgumentException($"Unknown connection type for ID: {connectionId}");
+            }
         }
 
         /// <summary>
