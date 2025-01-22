@@ -17,8 +17,6 @@ namespace Azure.Storage.DataMovement
         /// <inheritdoc/>
         protected internal override string ProviderId => "local";
 
-        internal static string InternalProviderId => "local";
-
         /// <summary>
         /// Default constructor.
         /// </summary>
