@@ -277,7 +277,7 @@ function Remove-GitHubIssueLabel {
 
   if ($LabelName.Trim().Length -eq 0)
   {
-    throw " The 'LabelName' parameter should not not be whitespace."
+    throw " The 'LabelName' parameter should not be empty or whitespace."
   }
   # Encode the label name
   $encodedLabelName = [System.Web.HttpUtility]::UrlEncode($LabelName)
