@@ -49,8 +49,8 @@ namespace Azure.Storage.DataMovement.Blobs
     public partial class BlobStorageResourceContainerOptions
     {
         public BlobStorageResourceContainerOptions() { }
-        public string BlobDirectoryPrefix { get { throw null; } set { } }
         public Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions BlobOptions { get { throw null; } set { } }
+        public string BlobPrefix { get { throw null; } set { } }
         public Azure.Storage.Blobs.Models.BlobType? BlobType { get { throw null; } set { } }
     }
     public partial class BlobStorageResourceOptions

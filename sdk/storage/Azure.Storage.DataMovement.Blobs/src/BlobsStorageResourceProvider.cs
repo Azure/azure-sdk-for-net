@@ -531,7 +531,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 {
                     return new BlobStorageResourceContainerOptions()
                     {
-                        BlobDirectoryPrefix = GetPrefix(transferProperties, isSource)
+                        BlobPrefix = GetPrefix(transferProperties, isSource)
                     };
                 }
                 else

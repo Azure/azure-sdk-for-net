@@ -689,7 +689,7 @@ namespace Azure.Storage.DataMovement.Tests
                 }
             }
             options ??= new();
-            options.BlobDirectoryPrefix = directoryPath;
+            options.BlobPrefix = directoryPath;
             return provider.FromClient(container, options);
         }
 
@@ -737,7 +737,7 @@ namespace Azure.Storage.DataMovement.Tests
                 Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
                 BlobStorageResourceContainerOptions options = new BlobStorageResourceContainerOptions()
                 {
-                    BlobDirectoryPrefix = GetNewBlobDirectoryName(),
+                    BlobPrefix = GetNewBlobDirectoryName(),
                 };
                 SourceResource ??= await CreateBlobDirectorySourceResourceAsync(
                     size: size,
@@ -760,7 +760,7 @@ namespace Azure.Storage.DataMovement.Tests
 
                 BlobStorageResourceContainerOptions options = new()
                 {
-                    BlobDirectoryPrefix = GetNewBlobDirectoryName()
+                    BlobPrefix = GetNewBlobDirectoryName()
                 };
                 DestinationResource ??= blobProvider.FromClient(destinationContainer, options);
             }
