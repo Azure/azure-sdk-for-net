@@ -66,6 +66,16 @@ namespace Azure.AI.Language.Conversations.Authoring
             _endpoint = endpoint;
         }
 
+        /// <summary> Initializes a new instance of CopyProjectConversationAuthoringAnalysis. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual CopyProjectConversationAuthoringAnalysis GetCopyProjectConversationAuthoringAnalysisClient(string apiVersion = "2024-11-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new CopyProjectConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
+
         /// <summary> Initializes a new instance of DeploymentResourcesConversationAuthoringAnalysis. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
@@ -74,6 +84,76 @@ namespace Azure.AI.Language.Conversations.Authoring
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
             return new DeploymentResourcesConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of DeploymentsConversationAuthoringAnalysis. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual DeploymentsConversationAuthoringAnalysis GetDeploymentsConversationAuthoringAnalysisClient(string apiVersion = "2024-11-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new DeploymentsConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ProjectsConversationAuthoringAnalysis. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual ProjectsConversationAuthoringAnalysis GetProjectsConversationAuthoringAnalysisClient(string apiVersion = "2024-11-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new ProjectsConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ProjectFilesConversationAuthoringAnalysis. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual ProjectFilesConversationAuthoringAnalysis GetProjectFilesConversationAuthoringAnalysisClient(string apiVersion = "2024-11-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new ProjectFilesConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of TrainingConversationAuthoringAnalysis. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual TrainingConversationAuthoringAnalysis GetTrainingConversationAuthoringAnalysisClient(string apiVersion = "2024-11-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new TrainingConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ModelsConversationAuthoringAnalysis. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual ModelsConversationAuthoringAnalysis GetModelsConversationAuthoringAnalysisClient(string apiVersion = "2024-11-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new ModelsConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of PrebuiltsConversationAuthoringAnalysis. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual PrebuiltsConversationAuthoringAnalysis GetPrebuiltsConversationAuthoringAnalysisClient(string apiVersion = "2024-11-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new PrebuiltsConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ExportedModelsConversationAuthoringAnalysis. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual ExportedModelsConversationAuthoringAnalysis GetExportedModelsConversationAuthoringAnalysisClient(string apiVersion = "2024-11-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new ExportedModelsConversationAuthoringAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
         }
     }
 }
