@@ -87,7 +87,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
           /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false
           /p:IncludePerf=false /p:RunApiCompat=false
           /p:InheritDocEnabled=false /p:BuildProjectReferences=false
-          /p:OutputProjectFilePath=`"$outputFilePath`" > $buildOutputPath 2>&1"
+          /p:OutputProjectFilePath=`"$outputFilePath`" $($env:DIAGNOSTICSARGUMENTS)> $buildOutputPath 2>&1"
 
         # calculate the dependent packages
         dotnet build /t:ProjectDependsOn ./eng/service.proj `
@@ -95,7 +95,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
           /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false  `
           /p:IncludePerf=false /p:RunApiCompat=false `
           /p:InheritDocEnabled=false /p:BuildProjectReferences=false `
-          /p:OutputProjectFilePath="$outputFilePath" > $buildOutputPath 2>&1
+          /p:OutputProjectFilePath="$outputFilePath" $($env:DIAGNOSTICSARGUMENTS) > $buildOutputPath 2>&1
 
         if ($LASTEXITCODE -ne 0) {
           Write-Host "Something went wrong calculating dependencies for $($pkgProp.Name). Exit code $LASTEXITCODE."

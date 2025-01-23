@@ -84,6 +84,10 @@ jobs:
         displayName: "Set SkipDevBuildNumber env variable"
       - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
 
+      - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
+        parameters:
+          LogFilePath: $(Build.ArtifactStagingDirectory)/save-package-props.binlog
+
       - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
         parameters:
           ServiceDirectory: ${{ parameters.ServiceDirectory }}
