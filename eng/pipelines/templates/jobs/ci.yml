@@ -59,6 +59,13 @@ jobs:
       Codeql.SkipTaskAutoInjection: false
       SDKType: ${{ parameters.SDKType }}
 
+    templateContext:
+      outputs:
+        - output: pipelineArtifact
+          targetPath: $(Build.ArtifactStagingDirectory)/*.binlog
+          artifactName: binlog_$(Agent.JobName)
+          sbomEnabled: false
+
     steps:
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
@@ -90,9 +97,9 @@ jobs:
           /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false
           /p:IncludePerf=false /p:RunApiCompat=false
           /p:InheritDocEnabled=false /p:BuildProjectReferences=false
-          /p:OutputProjectFilePath="D:\a\_work\1\s\Azure.Core_dependencylist.txt"
-          /binaryLogger:LogFile=D:\a\_work\1\a\save-package-props.binlog
-          > D:\a\_work\1\s\Azure.Core_dependencylistoutput.txt 2>&1
+          /p:OutputProjectFilePath="$(Build.SourcesDirectory)/Azure.Core_dependencylist.txt"
+          /binaryLogger:LogFile=$(Build.ArtifactStagingDirectory)/save-package-props.binlog
+          > $(Build.SourcesDirectory)/Azure.Core_dependencylistoutput.txt 2>&1
 
   - job: BuildLinux
     pool:
@@ -106,6 +113,13 @@ jobs:
       Codeql.SkipTaskAutoInjection: false
       SDKType: ${{ parameters.SDKType }}
 
+    templateContext:
+      outputs:
+        - output: pipelineArtifact
+          targetPath: $(Build.ArtifactStagingDirectory)/*.binlog
+          artifactName: binlog_$(Agent.JobName)
+          sbomEnabled: false
+
     steps:
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
@@ -137,6 +151,6 @@ jobs:
           /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false
           /p:IncludePerf=false /p:RunApiCompat=false
           /p:InheritDocEnabled=false /p:BuildProjectReferences=false
-          /p:OutputProjectFilePath="D:\a\_work\1\s\Azure.Core_dependencylist.txt"
-          /binaryLogger:LogFile=D:\a\_work\1\a\save-package-props.binlog
-          > D:\a\_work\1\s\Azure.Core_dependencylistoutput.txt 2>&1
+          /p:OutputProjectFilePath="$(Build.SourcesDirectory)/Azure.Core_dependencylist.txt"
+          /binaryLogger:LogFile=$(Build.ArtifactStagingDirectory)/save-package-props.binlog
+          > $(Build.SourcesDirectory)/Azure.Core_dependencylistoutput.txt 2>&1
