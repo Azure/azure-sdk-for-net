@@ -546,8 +546,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
-        [Test]
-        [LiveOnly]
+        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
+        [RecordedTest]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Copy)]
         public async Task ResumeTransferAsync_Options(TransferDirection transferType)
