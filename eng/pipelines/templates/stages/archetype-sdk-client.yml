@@ -91,18 +91,3 @@ extends:
                     - BuildConfiguration=Debug/Release
                 - ${{ parameters.MatrixReplace }}
               TestDependsOnDependency: ${{ parameters.TestDependsOnDependency }}
-
-      # The Prerelease and Release stages are conditioned on whether we are building a pull request and the branch.
-      - ${{if and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))}}:
-
-        - template: archetype-net-release.yml
-          parameters:
-            SDKType: ${{ parameters.SDKType }}
-            ServiceDirectory: ${{ parameters.ServiceDirectory }}
-            DependsOn:
-              - Build
-            Artifacts: ${{ parameters.Artifacts }}
-            ${{ if eq(parameters.ServiceDirectory, 'template') }}:
-              TestPipeline: true
-            ArtifactName: packages
-
