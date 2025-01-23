@@ -108,6 +108,7 @@ jobs:
           $versioningProperties = "/p:OfficialBuildId=$(OfficialBuildId) /p:SkipDevBuildNumber=$skipDevBuildNumber";
           echo "##vso[task.setvariable variable=VersioningProperties]$versioningProperties"
         displayName: "Setup .NET specific versioning properties"
+
       - task: UsePythonVersion@0
         displayName: 'Use Python 3.11'
         inputs:
@@ -336,7 +337,6 @@ jobs:
             BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
-    # temporarily comment to figure out the projectlistoverridefile for builds
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
         GenerateJobName: generate_target_service_test_matrix

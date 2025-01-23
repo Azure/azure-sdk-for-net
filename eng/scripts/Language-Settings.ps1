@@ -57,6 +57,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
 
   foreach ($projectOutput in $msbuildOutput)
   {
+    Write-Host $projectOutput
     if (!$projectOutput) {
       Write-Host "Get-AllPackageInfoFromRepo::projectOutput was null or empty, skipping"
       continue
@@ -78,19 +79,20 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
     if ($pkgProp.Name -in $DependencyCalculationPackages) {
       Write-Host "In the additional dependency grabber list, calculating dependencies for $($pkgProp.Name)"
       $outputFilePath = Join-Path $RepoRoot "$($pkgProp.Name)_dependencylist.txt"
+      $buildOutputPath = Join-Path $RepoRoot "$($pkgProp.Name)_dependencylistoutput.txt"
 
       if (!(Test-Path $outputFilePath)) {
         # calculate the dependent packages
-        $output = dotnet build /t:ProjectDependsOn ./eng/service.proj `
+        dotnet build /t:ProjectDependsOn ./eng/service.proj `
           /p:TestDependsOnDependency="$($pkgProp.Name)" `
           /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false  `
           /p:IncludePerf=false /p:RunApiCompat=false `
           /p:InheritDocEnabled=false /p:BuildProjectReferences=false `
-          /p:OutputProjectFilePath="$outputFilePath"
+          /p:OutputProjectFilePath="$outputFilePath" > $buildOutputPath 2>&1
 
         if ($LASTEXITCODE -ne 0) {
           Write-Host "Something went wrong calculating dependencies for $($pkgProp.Name)"
-          Write-Host $output
+          Write-Host (Get-Content $buildOutputPath)
         }
       }
 
