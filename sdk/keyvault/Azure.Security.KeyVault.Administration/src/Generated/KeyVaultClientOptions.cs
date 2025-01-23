@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <summary> Client options for Azure.Security.KeyVault.Administration library clients. </summary>
-    public partial class AzureSecurityKeyVaultAdministrationClientOptions : ClientOptions
+    /// <summary> Client options for KeyVaultClient. </summary>
+    public partial class KeyVaultClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V7_6_Preview_1;
 
@@ -26,8 +26,8 @@ namespace Azure.Security.KeyVault.Administration
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of AzureSecurityKeyVaultAdministrationClientOptions. </summary>
-        public AzureSecurityKeyVaultAdministrationClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of KeyVaultClientOptions. </summary>
+        public KeyVaultClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {

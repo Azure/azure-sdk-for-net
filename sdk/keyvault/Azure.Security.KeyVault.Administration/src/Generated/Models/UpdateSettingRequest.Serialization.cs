@@ -11,13 +11,13 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Security.KeyVault.Administration
+namespace Azure.Security.KeyVault.Administration.Models
 {
-    public partial class KeyVaultSetting : IUtf8JsonSerializable, IJsonModel<KeyVaultSetting>
+    internal partial class UpdateSettingRequest : IUtf8JsonSerializable, IJsonModel<UpdateSettingRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultSetting>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UpdateSettingRequest>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<KeyVaultSetting>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<UpdateSettingRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,21 +28,14 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSetting>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateSettingRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultSetting)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateSettingRequest)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("name"u8);
-            writer.WriteStringValue(Name);
             writer.WritePropertyName("value"u8);
-            writer.WriteStringValue(Content);
-            if (Optional.IsDefined(Type))
-            {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
-            }
+            writer.WriteStringValue(Value);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -60,19 +53,19 @@ namespace Azure.Security.KeyVault.Administration
             }
         }
 
-        KeyVaultSetting IJsonModel<KeyVaultSetting>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        UpdateSettingRequest IJsonModel<UpdateSettingRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSetting>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateSettingRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultSetting)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateSettingRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKeyVaultSetting(document.RootElement, options);
+            return DeserializeUpdateSettingRequest(document.RootElement, options);
         }
 
-        internal static KeyVaultSetting DeserializeKeyVaultSetting(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static UpdateSettingRequest DeserializeUpdateSettingRequest(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -80,30 +73,14 @@ namespace Azure.Security.KeyVault.Administration
             {
                 return null;
             }
-            string name = default;
             string value = default;
-            KeyVaultSettingType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("value"u8))
                 {
                     value = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("type"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    type = new KeyVaultSettingType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,46 +89,46 @@ namespace Azure.Security.KeyVault.Administration
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new KeyVaultSetting(name, value, type, serializedAdditionalRawData);
+            return new UpdateSettingRequest(value, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<KeyVaultSetting>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<UpdateSettingRequest>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSetting>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateSettingRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultSetting)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateSettingRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
-        KeyVaultSetting IPersistableModel<KeyVaultSetting>.Create(BinaryData data, ModelReaderWriterOptions options)
+        UpdateSettingRequest IPersistableModel<UpdateSettingRequest>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultSetting>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<UpdateSettingRequest>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeKeyVaultSetting(document.RootElement, options);
+                        return DeserializeUpdateSettingRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultSetting)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateSettingRequest)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<KeyVaultSetting>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<UpdateSettingRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static KeyVaultSetting FromResponse(Response response)
+        internal static UpdateSettingRequest FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeKeyVaultSetting(document.RootElement);
+            return DeserializeUpdateSettingRequest(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

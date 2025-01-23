@@ -11,59 +11,25 @@ using Azure.Security.KeyVault.Administration;
 
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="RoleAssignmentsRestClient"/>, <see cref="RoleDefinitionsRestClient"/>, <see cref="SettingsRestClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add <see cref="KeyVaultClient"/> to client builder. </summary>
     public static partial class SecurityKeyVaultAdministrationClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="RoleAssignmentsRestClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="KeyVaultClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        public static IAzureClientBuilder<RoleAssignmentsRestClient, AzureSecurityKeyVaultAdministrationClientOptions> AddRoleAssignmentsRestClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<KeyVaultClient, KeyVaultClientOptions> AddKeyVaultClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<RoleAssignmentsRestClient, AzureSecurityKeyVaultAdministrationClientOptions>((options, cred) => new RoleAssignmentsRestClient(endpoint, cred, options));
+            return builder.RegisterClientFactory<KeyVaultClient, KeyVaultClientOptions>((options, cred) => new KeyVaultClient(endpoint, cred, options));
         }
 
-        /// <summary> Registers a <see cref="RoleDefinitionsRestClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        public static IAzureClientBuilder<RoleDefinitionsRestClient, AzureSecurityKeyVaultAdministrationClientOptions> AddRoleDefinitionsRestClient<TBuilder>(this TBuilder builder, Uri endpoint)
-        where TBuilder : IAzureClientFactoryBuilderWithCredential
-        {
-            return builder.RegisterClientFactory<RoleDefinitionsRestClient, AzureSecurityKeyVaultAdministrationClientOptions>((options, cred) => new RoleDefinitionsRestClient(endpoint, cred, options));
-        }
-
-        /// <summary> Registers a <see cref="SettingsRestClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        public static IAzureClientBuilder<SettingsRestClient, AzureSecurityKeyVaultAdministrationClientOptions> AddSettingsRestClient<TBuilder>(this TBuilder builder, Uri endpoint)
-        where TBuilder : IAzureClientFactoryBuilderWithCredential
-        {
-            return builder.RegisterClientFactory<SettingsRestClient, AzureSecurityKeyVaultAdministrationClientOptions>((options, cred) => new SettingsRestClient(endpoint, cred, options));
-        }
-
-        /// <summary> Registers a <see cref="RoleAssignmentsRestClient"/> instance. </summary>
+        /// <summary> Registers a <see cref="KeyVaultClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<RoleAssignmentsRestClient, AzureSecurityKeyVaultAdministrationClientOptions> AddRoleAssignmentsRestClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<KeyVaultClient, KeyVaultClientOptions> AddKeyVaultClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<RoleAssignmentsRestClient, AzureSecurityKeyVaultAdministrationClientOptions>(configuration);
-        }
-        /// <summary> Registers a <see cref="RoleDefinitionsRestClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<RoleDefinitionsRestClient, AzureSecurityKeyVaultAdministrationClientOptions> AddRoleDefinitionsRestClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
-        {
-            return builder.RegisterClientFactory<RoleDefinitionsRestClient, AzureSecurityKeyVaultAdministrationClientOptions>(configuration);
-        }
-        /// <summary> Registers a <see cref="SettingsRestClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<SettingsRestClient, AzureSecurityKeyVaultAdministrationClientOptions> AddSettingsRestClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
-        {
-            return builder.RegisterClientFactory<SettingsRestClient, AzureSecurityKeyVaultAdministrationClientOptions>(configuration);
+            return builder.RegisterClientFactory<KeyVaultClient, KeyVaultClientOptions>(configuration);
         }
     }
 }

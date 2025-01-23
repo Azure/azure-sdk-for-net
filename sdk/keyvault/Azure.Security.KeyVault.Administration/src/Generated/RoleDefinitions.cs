@@ -15,9 +15,9 @@ using Azure.Security.KeyVault.Administration.Models;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    // Data plane generated client.
-    /// <summary> The RoleDefinitionsRest service client. </summary>
-    public partial class RoleDefinitionsRestClient
+    // Data plane generated sub-client.
+    /// <summary> The RoleDefinitions sub-client. </summary>
+    public partial class RoleDefinitions
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -31,35 +31,24 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of RoleDefinitionsRestClient for mocking. </summary>
-        protected RoleDefinitionsRestClient()
+        /// <summary> Initializes a new instance of RoleDefinitions for mocking. </summary>
+        protected RoleDefinitions()
         {
         }
 
-        /// <summary> Initializes a new instance of RoleDefinitionsRestClient. </summary>
+        /// <summary> Initializes a new instance of RoleDefinitions. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public RoleDefinitionsRestClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureSecurityKeyVaultAdministrationClientOptions())
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        internal RoleDefinitions(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
-        }
-
-        /// <summary> Initializes a new instance of RoleDefinitionsRestClient. </summary>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public RoleDefinitionsRestClient(Uri endpoint, TokenCredential credential, AzureSecurityKeyVaultAdministrationClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzureSecurityKeyVaultAdministrationClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _tokenCredential = tokenCredential;
             _endpoint = endpoint;
-            _apiVersion = options.Version;
+            _apiVersion = apiVersion;
         }
 
         /// <summary> Deletes a custom role definition. </summary>
@@ -68,8 +57,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='DeleteAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<KeyVaultRoleDefinition>> DeleteAsync(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<KeyVaultRoleDefinition>> DeleteAsync(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
@@ -85,8 +73,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='Delete(string,string,CancellationToken)']/*" />
-        public virtual Response<KeyVaultRoleDefinition> Delete(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        internal virtual Response<KeyVaultRoleDefinition> Delete(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
@@ -118,13 +105,12 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='DeleteAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> DeleteAsync(string scope, string roleDefinitionName, RequestContext context)
+        internal virtual async Task<Response> DeleteAsync(string scope, string roleDefinitionName, RequestContext context)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
 
-            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsRestClient.Delete");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitions.Delete");
             scope0.Start();
             try
             {
@@ -160,13 +146,12 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='Delete(string,string,RequestContext)']/*" />
-        public virtual Response Delete(string scope, string roleDefinitionName, RequestContext context)
+        internal virtual Response Delete(string scope, string roleDefinitionName, RequestContext context)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
 
-            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsRestClient.Delete");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitions.Delete");
             scope0.Start();
             try
             {
@@ -187,8 +172,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RoleDefinitionCreateParameters,CancellationToken)']/*" />
-        public virtual async Task<Response<KeyVaultRoleDefinition>> CreateOrUpdateAsync(string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<KeyVaultRoleDefinition>> CreateOrUpdateAsync(string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
@@ -207,8 +191,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="roleDefinitionName"/> or <paramref name="parameters"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RoleDefinitionCreateParameters,CancellationToken)']/*" />
-        public virtual Response<KeyVaultRoleDefinition> CreateOrUpdate(string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters, CancellationToken cancellationToken = default)
+        internal virtual Response<KeyVaultRoleDefinition> CreateOrUpdate(string scope, string roleDefinitionName, RoleDefinitionCreateParameters parameters, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
@@ -243,14 +226,13 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='CreateOrUpdateAsync(string,string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateOrUpdateAsync(string scope, string roleDefinitionName, RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> CreateOrUpdateAsync(string scope, string roleDefinitionName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsRestClient.CreateOrUpdate");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitions.CreateOrUpdate");
             scope0.Start();
             try
             {
@@ -287,14 +269,13 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='CreateOrUpdate(string,string,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateOrUpdate(string scope, string roleDefinitionName, RequestContent content, RequestContext context = null)
+        internal virtual Response CreateOrUpdate(string scope, string roleDefinitionName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsRestClient.CreateOrUpdate");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitions.CreateOrUpdate");
             scope0.Start();
             try
             {
@@ -314,14 +295,13 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='GetRoleDefinitionsRestClientAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<KeyVaultRoleDefinition>> GetRoleDefinitionsRestClientAsync(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        internal virtual async Task<Response<KeyVaultRoleDefinition>> GetRoleDefinitionAsync(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetRoleDefinitionsRestClientAsync(scope, roleDefinitionName, context).ConfigureAwait(false);
+            Response response = await GetRoleDefinitionAsync(scope, roleDefinitionName, context).ConfigureAwait(false);
             return Response.FromValue(KeyVaultRoleDefinition.FromResponse(response), response);
         }
 
@@ -331,14 +311,13 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="roleDefinitionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='GetRoleDefinitionsRestClient(string,string,CancellationToken)']/*" />
-        public virtual Response<KeyVaultRoleDefinition> GetRoleDefinitionsRestClient(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
+        internal virtual Response<KeyVaultRoleDefinition> GetRoleDefinition(string scope, string roleDefinitionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetRoleDefinitionsRestClient(scope, roleDefinitionName, context);
+            Response response = GetRoleDefinition(scope, roleDefinitionName, context);
             return Response.FromValue(KeyVaultRoleDefinition.FromResponse(response), response);
         }
 
@@ -352,7 +331,7 @@ namespace Azure.Security.KeyVault.Administration
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetRoleDefinitionsRestClientAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetRoleDefinitionAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -364,17 +343,16 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='GetRoleDefinitionsRestClientAsync(string,string,RequestContext)']/*" />
-        public virtual async Task<Response> GetRoleDefinitionsRestClientAsync(string scope, string roleDefinitionName, RequestContext context)
+        internal virtual async Task<Response> GetRoleDefinitionAsync(string scope, string roleDefinitionName, RequestContext context)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
 
-            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsRestClient.GetRoleDefinitionsRestClient");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitions.GetRoleDefinition");
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateGetRoleDefinitionsRestClientRequest(scope, roleDefinitionName, context);
+                using HttpMessage message = CreateGetRoleDefinitionRequest(scope, roleDefinitionName, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -394,7 +372,7 @@ namespace Azure.Security.KeyVault.Administration
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetRoleDefinitionsRestClient(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetRoleDefinition(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -406,17 +384,16 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentException"> <paramref name="roleDefinitionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='GetRoleDefinitionsRestClient(string,string,RequestContext)']/*" />
-        public virtual Response GetRoleDefinitionsRestClient(string scope, string roleDefinitionName, RequestContext context)
+        internal virtual Response GetRoleDefinition(string scope, string roleDefinitionName, RequestContext context)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(roleDefinitionName, nameof(roleDefinitionName));
 
-            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitionsRestClient.GetRoleDefinitionsRestClient");
+            using var scope0 = ClientDiagnostics.CreateScope("RoleDefinitions.GetRoleDefinition");
             scope0.Start();
             try
             {
-                using HttpMessage message = CreateGetRoleDefinitionsRestClientRequest(scope, roleDefinitionName, context);
+                using HttpMessage message = CreateGetRoleDefinitionRequest(scope, roleDefinitionName, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -431,15 +408,14 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='GetRoleDefinitionsRestClientsAsync(string,string,CancellationToken)']/*" />
-        public virtual AsyncPageable<KeyVaultRoleDefinition> GetRoleDefinitionsRestClientsAsync(string scope, string filter = null, CancellationToken cancellationToken = default)
+        internal virtual AsyncPageable<KeyVaultRoleDefinition> GetRoleDefinitionsAsync(string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRoleDefinitionsRestClientsRequest(scope, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRoleDefinitionsRestClientsNextPageRequest(nextLink, scope, filter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(e), ClientDiagnostics, _pipeline, "RoleDefinitionsRestClient.GetRoleDefinitionsRestClients", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRoleDefinitionsRequest(scope, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRoleDefinitionsNextPageRequest(nextLink, scope, filter, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(e), ClientDiagnostics, _pipeline, "RoleDefinitions.GetRoleDefinitions", "value", "nextLink", context);
         }
 
         /// <summary> Get all role definitions that are applicable at scope and above. </summary>
@@ -447,15 +423,14 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="filter"> The filter to apply on the operation. Use atScopeAndBelow filter to search below the given scope as well. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
-        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='GetRoleDefinitionsRestClients(string,string,CancellationToken)']/*" />
-        public virtual Pageable<KeyVaultRoleDefinition> GetRoleDefinitionsRestClients(string scope, string filter = null, CancellationToken cancellationToken = default)
+        internal virtual Pageable<KeyVaultRoleDefinition> GetRoleDefinitions(string scope, string filter = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRoleDefinitionsRestClientsRequest(scope, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRoleDefinitionsRestClientsNextPageRequest(nextLink, scope, filter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(e), ClientDiagnostics, _pipeline, "RoleDefinitionsRestClient.GetRoleDefinitionsRestClients", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRoleDefinitionsRequest(scope, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRoleDefinitionsNextPageRequest(nextLink, scope, filter, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(e), ClientDiagnostics, _pipeline, "RoleDefinitions.GetRoleDefinitions", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -468,7 +443,7 @@ namespace Azure.Security.KeyVault.Administration
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetRoleDefinitionsRestClientsAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetRoleDefinitionsAsync(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -479,14 +454,13 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='GetRoleDefinitionsRestClientsAsync(string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetRoleDefinitionsRestClientsAsync(string scope, string filter, RequestContext context)
+        internal virtual AsyncPageable<BinaryData> GetRoleDefinitionsAsync(string scope, string filter, RequestContext context)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRoleDefinitionsRestClientsRequest(scope, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRoleDefinitionsRestClientsNextPageRequest(nextLink, scope, filter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "RoleDefinitionsRestClient.GetRoleDefinitionsRestClients", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRoleDefinitionsRequest(scope, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRoleDefinitionsNextPageRequest(nextLink, scope, filter, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "RoleDefinitions.GetRoleDefinitions", "value", "nextLink", context);
         }
 
         /// <summary>
@@ -499,7 +473,7 @@ namespace Azure.Security.KeyVault.Administration
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetRoleDefinitionsRestClients(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetRoleDefinitions(string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -510,14 +484,13 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/RoleDefinitionsRestClient.xml" path="doc/members/member[@name='GetRoleDefinitionsRestClients(string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetRoleDefinitionsRestClients(string scope, string filter, RequestContext context)
+        internal virtual Pageable<BinaryData> GetRoleDefinitions(string scope, string filter, RequestContext context)
         {
             Argument.AssertNotNull(scope, nameof(scope));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRoleDefinitionsRestClientsRequest(scope, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRoleDefinitionsRestClientsNextPageRequest(nextLink, scope, filter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "RoleDefinitionsRestClient.GetRoleDefinitionsRestClients", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRoleDefinitionsRequest(scope, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRoleDefinitionsNextPageRequest(nextLink, scope, filter, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "RoleDefinitions.GetRoleDefinitions", "value", "nextLink", context);
         }
 
         internal HttpMessage CreateDeleteRequest(string scope, string roleDefinitionName, RequestContext context)
@@ -556,7 +529,7 @@ namespace Azure.Security.KeyVault.Administration
             return message;
         }
 
-        internal HttpMessage CreateGetRoleDefinitionsRestClientRequest(string scope, string roleDefinitionName, RequestContext context)
+        internal HttpMessage CreateGetRoleDefinitionRequest(string scope, string roleDefinitionName, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -573,7 +546,7 @@ namespace Azure.Security.KeyVault.Administration
             return message;
         }
 
-        internal HttpMessage CreateGetRoleDefinitionsRestClientsRequest(string scope, string filter, RequestContext context)
+        internal HttpMessage CreateGetRoleDefinitionsRequest(string scope, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -593,7 +566,7 @@ namespace Azure.Security.KeyVault.Administration
             return message;
         }
 
-        internal HttpMessage CreateGetRoleDefinitionsRestClientsNextPageRequest(string nextLink, string scope, string filter, RequestContext context)
+        internal HttpMessage CreateGetRoleDefinitionsNextPageRequest(string nextLink, string scope, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

@@ -8,7 +8,7 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> The type specifier of the value. </summary>
     public readonly partial struct KeyVaultSettingType : IEquatable<KeyVaultSettingType>

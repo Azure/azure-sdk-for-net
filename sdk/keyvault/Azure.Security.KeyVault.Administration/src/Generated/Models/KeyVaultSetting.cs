@@ -8,7 +8,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Security.KeyVault.Administration.Models
+namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> A Key Vault account setting. </summary>
     public partial class KeyVaultSetting
@@ -48,26 +48,13 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> Initializes a new instance of <see cref="KeyVaultSetting"/>. </summary>
         /// <param name="name"> The account setting to be updated. </param>
         /// <param name="content"> The value of the pool setting. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="content"/> is null. </exception>
-        internal KeyVaultSetting(string name, string content)
-        {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(content, nameof(content));
-
-            Name = name;
-            Content = content;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="KeyVaultSetting"/>. </summary>
-        /// <param name="name"> The account setting to be updated. </param>
-        /// <param name="content"> The value of the pool setting. </param>
-        /// <param name="settingType"> The type specifier of the value. </param>
+        /// <param name="type"> The type specifier of the value. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultSetting(string name, string content, KeyVaultSettingType? settingType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal KeyVaultSetting(string name, string content, KeyVaultSettingType? type, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Content = content;
-            SettingType = settingType;
+            Type = type;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -78,9 +65,7 @@ namespace Azure.Security.KeyVault.Administration.Models
 
         /// <summary> The account setting to be updated. </summary>
         public string Name { get; }
-        /// <summary> The value of the pool setting. </summary>
-        public string Content { get; }
         /// <summary> The type specifier of the value. </summary>
-        public KeyVaultSettingType? SettingType { get; }
+        public KeyVaultSettingType? Type { get; }
     }
 }

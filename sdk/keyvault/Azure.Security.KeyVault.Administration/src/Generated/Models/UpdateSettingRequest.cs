@@ -8,10 +8,10 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Security.KeyVault.Administration
+namespace Azure.Security.KeyVault.Administration.Models
 {
-    /// <summary> Role Assignments. </summary>
-    public partial class KeyVaultRoleAssignment
+    /// <summary> The update settings request object. </summary>
+    internal partial class UpdateSettingRequest
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,33 +45,31 @@ namespace Azure.Security.KeyVault.Administration
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleAssignment"/>. </summary>
-        internal KeyVaultRoleAssignment()
+        /// <summary> Initializes a new instance of <see cref="UpdateSettingRequest"/>. </summary>
+        /// <param name="value"> The value of the pool setting. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        public UpdateSettingRequest(string value)
         {
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyVaultRoleAssignment"/>. </summary>
-        /// <param name="id"> The role assignment ID. </param>
-        /// <param name="name"> The role assignment name. </param>
-        /// <param name="type"> The role assignment type. </param>
-        /// <param name="properties"> Role assignment properties. </param>
+        /// <summary> Initializes a new instance of <see cref="UpdateSettingRequest"/>. </summary>
+        /// <param name="value"> The value of the pool setting. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyVaultRoleAssignment(string id, string name, string type, KeyVaultRoleAssignmentProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal UpdateSettingRequest(string value, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Id = id;
-            Name = name;
-            Type = type;
-            Properties = properties;
+            Value = value;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The role assignment ID. </summary>
-        public string Id { get; }
-        /// <summary> The role assignment name. </summary>
-        public string Name { get; }
-        /// <summary> The role assignment type. </summary>
-        public string Type { get; }
-        /// <summary> Role assignment properties. </summary>
-        public KeyVaultRoleAssignmentProperties Properties { get; }
+        /// <summary> Initializes a new instance of <see cref="UpdateSettingRequest"/> for deserialization. </summary>
+        internal UpdateSettingRequest()
+        {
+        }
+
+        /// <summary> The value of the pool setting. </summary>
+        public string Value { get; }
     }
 }
