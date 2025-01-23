@@ -142,8 +142,7 @@ namespace Azure.CloudMachine
                 }
 
                 // Build the new connection object.
-                var newConnection = new ClientConnection(connectionId, apiKeyAuthProperties.Target, apiKeyAuthProperties.Credentials.Key
-                );
+                var newConnection = new ClientConnection(connectionId, apiKeyAuthProperties.Target, apiKeyAuthProperties.Credentials.Key);
 
                 // Now we need to re-check and possibly add to Connections under a write lock.
                 _connectionsLock.EnterUpgradeableReadLock();
