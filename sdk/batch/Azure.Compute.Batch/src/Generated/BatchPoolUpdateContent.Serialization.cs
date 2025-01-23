@@ -34,6 +34,21 @@ namespace Azure.Compute.Batch
                 throw new FormatException($"The model {nameof(BatchPoolUpdateContent)} does not support writing '{format}' format.");
             }
 
+            if (Optional.IsDefined(DisplayName))
+            {
+                writer.WritePropertyName("displayName"u8);
+                writer.WriteStringValue(DisplayName);
+            }
+            if (Optional.IsDefined(VmSize))
+            {
+                writer.WritePropertyName("vmSize"u8);
+                writer.WriteStringValue(VmSize);
+            }
+            if (Optional.IsDefined(EnableInterNodeCommunication))
+            {
+                writer.WritePropertyName("enableInterNodeCommunication"u8);
+                writer.WriteBooleanValue(EnableInterNodeCommunication.Value);
+            }
             if (Optional.IsDefined(StartTask))
             {
                 writer.WritePropertyName("startTask"u8);

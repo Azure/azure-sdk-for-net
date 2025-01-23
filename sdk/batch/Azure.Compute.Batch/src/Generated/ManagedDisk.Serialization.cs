@@ -34,8 +34,16 @@ namespace Azure.Compute.Batch
                 throw new FormatException($"The model {nameof(ManagedDisk)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("storageAccountType"u8);
-            writer.WriteStringValue(StorageAccountType.ToString());
+            if (Optional.IsDefined(StorageAccountType))
+            {
+                writer.WritePropertyName("storageAccountType"u8);
+                writer.WriteStringValue(StorageAccountType.Value.ToString());
+            }
+            if (Optional.IsDefined(SecurityProfile))
+            {
+                writer.WritePropertyName("securityProfile"u8);
+                writer.WriteObjectValue(SecurityProfile, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

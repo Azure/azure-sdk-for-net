@@ -49,7 +49,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool whose metrics are aggregated in this entry. </param>
         /// <param name="startTime"> The start time of the aggregation interval covered by this entry. </param>
         /// <param name="endTime"> The end time of the aggregation interval covered by this entry. </param>
-        /// <param name="vmSize"> The size of virtual machines in the Pool. All VMs in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
+        /// <param name="vmSize"> The size of virtual machines in the Pool. All VMs in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
         /// <param name="totalCoreHours"> The total core hours used in the Pool during this aggregation interval. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="vmSize"/> is null. </exception>
         internal BatchPoolUsageMetrics(string poolId, DateTimeOffset startTime, DateTimeOffset endTime, string vmSize, float totalCoreHours)
@@ -68,7 +68,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool whose metrics are aggregated in this entry. </param>
         /// <param name="startTime"> The start time of the aggregation interval covered by this entry. </param>
         /// <param name="endTime"> The end time of the aggregation interval covered by this entry. </param>
-        /// <param name="vmSize"> The size of virtual machines in the Pool. All VMs in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
+        /// <param name="vmSize"> The size of virtual machines in the Pool. All VMs in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes). </param>
         /// <param name="totalCoreHours"> The total core hours used in the Pool during this aggregation interval. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal BatchPoolUsageMetrics(string poolId, DateTimeOffset startTime, DateTimeOffset endTime, string vmSize, float totalCoreHours, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -92,7 +92,7 @@ namespace Azure.Compute.Batch
         public DateTimeOffset StartTime { get; }
         /// <summary> The end time of the aggregation interval covered by this entry. </summary>
         public DateTimeOffset EndTime { get; }
-        /// <summary> The size of virtual machines in the Pool. All VMs in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://docs.microsoft.com/azure/batch/batch-pool-vm-sizes). </summary>
+        /// <summary> The size of virtual machines in the Pool. All VMs in a Pool are the same size. For information about available sizes of virtual machines in Pools, see Choose a VM size for Compute Nodes in an Azure Batch Pool (https://learn.microsoft.com/azure/batch/batch-pool-vm-sizes). </summary>
         public string VmSize { get; }
         /// <summary> The total core hours used in the Pool during this aggregation interval. </summary>
         public float TotalCoreHours { get; }

@@ -7428,7 +7428,7 @@ namespace Azure.Compute.Batch
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
-        /// <param name="startTime">
+        /// <param name="starttime">
         /// The earliest time from which to include metrics. This must be at least two and
         /// a half hours before the current time. If not specified this defaults to the
         /// start time of the last aggregation interval currently available.
@@ -7440,7 +7440,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-account-usage-metrics.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-account-usage-metrics.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks>
@@ -7452,11 +7452,11 @@ namespace Azure.Compute.Batch
         /// last aggregation interval is returned.
         /// </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolUsageMetricsAsync(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,CancellationToken)']/*" />
-        public virtual AsyncPageable<BatchPoolUsageMetrics> GetPoolUsageMetricsAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, DateTimeOffset? startTime = null, DateTimeOffset? endtime = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<BatchPoolUsageMetrics> GetPoolUsageMetricsAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, DateTimeOffset? starttime = null, DateTimeOffset? endtime = null, string filter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpdate, maxresults, startTime, endtime, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, startTime, endtime, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchPoolUsageMetrics.DeserializeBatchPoolUsageMetrics(e), ClientDiagnostics, _pipeline, "BatchClient.GetPoolUsageMetrics", "value", "odata.nextLink", context);
         }
 
@@ -7474,7 +7474,7 @@ namespace Azure.Compute.Batch
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
-        /// <param name="startTime">
+        /// <param name="starttime">
         /// The earliest time from which to include metrics. This must be at least two and
         /// a half hours before the current time. If not specified this defaults to the
         /// start time of the last aggregation interval currently available.
@@ -7486,7 +7486,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-account-usage-metrics.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-account-usage-metrics.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks>
@@ -7498,11 +7498,11 @@ namespace Azure.Compute.Batch
         /// last aggregation interval is returned.
         /// </remarks>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolUsageMetrics(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,CancellationToken)']/*" />
-        public virtual Pageable<BatchPoolUsageMetrics> GetPoolUsageMetrics(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, DateTimeOffset? startTime = null, DateTimeOffset? endtime = null, string filter = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<BatchPoolUsageMetrics> GetPoolUsageMetrics(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, DateTimeOffset? starttime = null, DateTimeOffset? endtime = null, string filter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpdate, maxresults, startTime, endtime, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, startTime, endtime, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchPoolUsageMetrics.DeserializeBatchPoolUsageMetrics(e), ClientDiagnostics, _pipeline, "BatchClient.GetPoolUsageMetrics", "value", "odata.nextLink", context);
         }
 
@@ -7532,7 +7532,7 @@ namespace Azure.Compute.Batch
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
-        /// <param name="startTime">
+        /// <param name="starttime">
         /// The earliest time from which to include metrics. This must be at least two and
         /// a half hours before the current time. If not specified this defaults to the
         /// start time of the last aggregation interval currently available.
@@ -7544,16 +7544,16 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-account-usage-metrics.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-account-usage-metrics.
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolUsageMetricsAsync(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetPoolUsageMetricsAsync(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, DateTimeOffset? startTime, DateTimeOffset? endtime, string filter, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetPoolUsageMetricsAsync(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpdate, maxresults, startTime, endtime, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, startTime, endtime, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetPoolUsageMetrics", "value", "odata.nextLink", context);
         }
 
@@ -7583,7 +7583,7 @@ namespace Azure.Compute.Batch
         /// The maximum number of items to return in the response. A maximum of 1000
         /// applications can be returned.
         /// </param>
-        /// <param name="startTime">
+        /// <param name="starttime">
         /// The earliest time from which to include metrics. This must be at least two and
         /// a half hours before the current time. If not specified this defaults to the
         /// start time of the last aggregation interval currently available.
@@ -7595,16 +7595,16 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-account-usage-metrics.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-account-usage-metrics.
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolUsageMetrics(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetPoolUsageMetrics(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, DateTimeOffset? startTime, DateTimeOffset? endtime, string filter, RequestContext context)
+        public virtual Pageable<BinaryData> GetPoolUsageMetrics(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpdate, maxresults, startTime, endtime, filter, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, startTime, endtime, filter, context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchClient.GetPoolUsageMetrics", "value", "odata.nextLink", context);
         }
 
@@ -7621,7 +7621,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-pools.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-pools.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -7648,7 +7648,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-pools.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-pools.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -7689,7 +7689,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-pools.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-pools.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -7731,7 +7731,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-pools.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-pools.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -7759,7 +7759,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSupportedImagesAsync(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
@@ -7784,7 +7784,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetSupportedImages(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
@@ -7823,7 +7823,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -7863,7 +7863,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -7893,7 +7893,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolNodeCountsAsync(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
@@ -7922,7 +7922,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/BatchClient.xml" path="doc/members/member[@name='GetPoolNodeCounts(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
@@ -7963,7 +7963,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -8005,7 +8005,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
@@ -8031,7 +8031,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8058,7 +8058,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8099,7 +8099,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8141,7 +8141,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8170,7 +8170,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs-in-a-job-schedule.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs-in-a-job-schedule.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8202,7 +8202,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs-in-a-job-schedule.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs-in-a-job-schedule.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8248,7 +8248,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs-in-a-job-schedule.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs-in-a-job-schedule.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8295,7 +8295,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs-in-a-job-schedule.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-jobs-in-a-job-schedule.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8331,7 +8331,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -8373,7 +8373,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -8427,7 +8427,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -8474,7 +8474,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-preparation-and-release-status.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -8505,7 +8505,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-schedules.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-schedules.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8532,7 +8532,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-schedules.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-schedules.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8573,7 +8573,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-schedules.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-schedules.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8615,7 +8615,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-schedules.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-job-schedules.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8644,7 +8644,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-tasks.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-tasks.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8681,7 +8681,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-tasks.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-tasks.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8732,7 +8732,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-tasks.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-tasks.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8779,7 +8779,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-tasks.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-tasks.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
@@ -8953,7 +8953,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-task-files.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-task-files.
         /// </param>
         /// <param name="recursive">
         /// Whether to list children of the Task directory. This parameter can be used in
@@ -8989,7 +8989,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-task-files.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-task-files.
         /// </param>
         /// <param name="recursive">
         /// Whether to list children of the Task directory. This parameter can be used in
@@ -9039,7 +9039,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-task-files.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-task-files.
         /// </param>
         /// <param name="recursive">
         /// Whether to list children of the Task directory. This parameter can be used in
@@ -9090,7 +9090,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-task-files.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-task-files.
         /// </param>
         /// <param name="recursive">
         /// Whether to list children of the Task directory. This parameter can be used in
@@ -9126,7 +9126,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -9157,7 +9157,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -9202,7 +9202,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -9248,7 +9248,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-nodes-in-a-pool.
         /// </param>
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -9427,7 +9427,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-compute-node-files.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-compute-node-files.
         /// </param>
         /// <param name="recursive"> Whether to list children of a directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -9460,7 +9460,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-compute-node-files.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-compute-node-files.
         /// </param>
         /// <param name="recursive"> Whether to list children of a directory. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -9507,7 +9507,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-compute-node-files.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-compute-node-files.
         /// </param>
         /// <param name="recursive"> Whether to list children of a directory. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -9555,7 +9555,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="filter">
         /// An OData $filter clause. For more information on constructing this filter, see
-        /// https://docs.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-compute-node-files.
+        /// https://learn.microsoft.com/rest/api/batchservice/odata-filters-in-batch#list-compute-node-files.
         /// </param>
         /// <param name="recursive"> Whether to list children of a directory. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
@@ -9627,7 +9627,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetPoolUsageMetricsRequest(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, DateTimeOffset? startTime, DateTimeOffset? endtime, string filter, RequestContext context)
+        internal HttpMessage CreateGetPoolUsageMetricsRequest(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -9644,9 +9644,9 @@ namespace Azure.Compute.Batch
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (startTime != null)
+            if (starttime != null)
             {
-                uri.AppendQuery("startTime", startTime.Value, "O", true);
+                uri.AppendQuery("startTime", starttime.Value, "O", true);
             }
             if (endtime != null)
             {
@@ -11918,7 +11918,7 @@ namespace Azure.Compute.Batch
             return message;
         }
 
-        internal HttpMessage CreateGetPoolUsageMetricsNextPageRequest(string nextLink, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, DateTimeOffset? startTime, DateTimeOffset? endtime, string filter, RequestContext context)
+        internal HttpMessage CreateGetPoolUsageMetricsNextPageRequest(string nextLink, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
