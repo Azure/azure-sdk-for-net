@@ -77,13 +77,13 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Tests
                 WaitUntil.Completed,
                 name,
                 testFirmware);
-            response.Value.Data.Description.Should().BeSameAs(testFirmware.Description);
+            response.Value.Data.Description.Should().Be(testFirmware.Description);
 
             response = await workspace.GetIotFirmwares().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 name,
                 updatedFirmware);
-            response.Value.Data.Description.Should().BeSameAs(updatedFirmware.Description);
+            response.Value.Data.Description.Should().Be(updatedFirmware.Description);
         }
 
         [TestCase]
