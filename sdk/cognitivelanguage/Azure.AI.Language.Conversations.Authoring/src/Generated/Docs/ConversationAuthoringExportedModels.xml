@@ -7,7 +7,7 @@ This sample shows how to call GetExportedModelAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<ExportedTrainedModel> response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>");
 ]]></code>
@@ -15,7 +15,7 @@ This sample shows how to call GetExportedModelAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<ExportedTrainedModel> response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>");
 ]]></code></example>
@@ -26,7 +26,7 @@ This sample shows how to call GetExportedModel.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<ExportedTrainedModel> response = client.GetExportedModel("<projectName>", "<exportedModelName>");
 ]]></code>
@@ -34,7 +34,7 @@ This sample shows how to call GetExportedModel with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<ExportedTrainedModel> response = client.GetExportedModel("<projectName>", "<exportedModelName>");
 ]]></code></example>
@@ -45,7 +45,7 @@ This sample shows how to call GetExportedModelAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>", null);
 
@@ -61,7 +61,7 @@ This sample shows how to call GetExportedModelAsync with all parameters and pars
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>", null);
 
@@ -80,7 +80,7 @@ This sample shows how to call GetExportedModel and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetExportedModel("<projectName>", "<exportedModelName>", null);
 
@@ -96,7 +96,7 @@ This sample shows how to call GetExportedModel with all parameters and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetExportedModel("<projectName>", "<exportedModelName>", null);
 
@@ -115,7 +115,7 @@ This sample shows how to call GetExportedModelJobStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<ExportedModelJobState> response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>");
 ]]></code>
@@ -123,7 +123,7 @@ This sample shows how to call GetExportedModelJobStatusAsync with all parameters
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<ExportedModelJobState> response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>");
 ]]></code></example>
@@ -134,7 +134,7 @@ This sample shows how to call GetExportedModelJobStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<ExportedModelJobState> response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>");
 ]]></code>
@@ -142,7 +142,7 @@ This sample shows how to call GetExportedModelJobStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<ExportedModelJobState> response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>");
 ]]></code></example>
@@ -153,7 +153,7 @@ This sample shows how to call GetExportedModelJobStatusAsync and parse the resul
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>", null);
 
@@ -167,7 +167,7 @@ This sample shows how to call GetExportedModelJobStatusAsync with all parameters
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>", null);
 
@@ -195,7 +195,7 @@ This sample shows how to call GetExportedModelJobStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>", null);
 
@@ -209,7 +209,7 @@ This sample shows how to call GetExportedModelJobStatus with all parameters and 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>", null);
 
@@ -237,7 +237,7 @@ This sample shows how to call GetExportedModelsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 await foreach (ExportedTrainedModel item in client.GetExportedModelsAsync("<projectName>"))
 {
@@ -247,7 +247,7 @@ This sample shows how to call GetExportedModelsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 await foreach (ExportedTrainedModel item in client.GetExportedModelsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
@@ -260,7 +260,7 @@ This sample shows how to call GetExportedModels.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 foreach (ExportedTrainedModel item in client.GetExportedModels("<projectName>"))
 {
@@ -270,7 +270,7 @@ This sample shows how to call GetExportedModels with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 foreach (ExportedTrainedModel item in client.GetExportedModels("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
@@ -283,7 +283,7 @@ This sample shows how to call GetExportedModelsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 await foreach (BinaryData item in client.GetExportedModelsAsync("<projectName>", null, null, null, null))
 {
@@ -300,7 +300,7 @@ This sample shows how to call GetExportedModelsAsync with all parameters and par
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 await foreach (BinaryData item in client.GetExportedModelsAsync("<projectName>", 1234, 1234, 1234, null))
 {
@@ -320,7 +320,7 @@ This sample shows how to call GetExportedModels and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 foreach (BinaryData item in client.GetExportedModels("<projectName>", null, null, null, null))
 {
@@ -337,7 +337,7 @@ This sample shows how to call GetExportedModels with all parameters and parse th
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 foreach (BinaryData item in client.GetExportedModels("<projectName>", 1234, 1234, 1234, null))
 {
@@ -357,7 +357,7 @@ This sample shows how to call DeleteExportedModelAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Operation operation = await client.DeleteExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>");
 ]]></code>
@@ -365,7 +365,7 @@ This sample shows how to call DeleteExportedModelAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Operation operation = await client.DeleteExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>");
 ]]></code></example>
@@ -376,7 +376,7 @@ This sample shows how to call DeleteExportedModel.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Operation operation = client.DeleteExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>");
 ]]></code>
@@ -384,7 +384,7 @@ This sample shows how to call DeleteExportedModel with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 Operation operation = client.DeleteExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>");
 ]]></code></example>
@@ -395,7 +395,7 @@ This sample shows how to call CreateOrUpdateExportedModelAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
 Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
@@ -404,7 +404,7 @@ This sample shows how to call CreateOrUpdateExportedModelAsync with all paramete
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
 Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
@@ -416,7 +416,7 @@ This sample shows how to call CreateOrUpdateExportedModel.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
 Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
@@ -425,7 +425,7 @@ This sample shows how to call CreateOrUpdateExportedModel with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
 Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
@@ -437,7 +437,7 @@ This sample shows how to call CreateOrUpdateExportedModelAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -449,7 +449,7 @@ This sample shows how to call CreateOrUpdateExportedModelAsync with all paramete
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -464,7 +464,7 @@ This sample shows how to call CreateOrUpdateExportedModel.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -476,7 +476,7 @@ This sample shows how to call CreateOrUpdateExportedModel with all parameters an
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {

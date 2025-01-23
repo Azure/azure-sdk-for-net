@@ -7,7 +7,7 @@ This sample shows how to call GetTrainedModelAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<ProjectTrainedModel> response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
 ]]></code>
@@ -15,7 +15,7 @@ This sample shows how to call GetTrainedModelAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<ProjectTrainedModel> response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>");
 ]]></code></example>
@@ -26,7 +26,7 @@ This sample shows how to call GetTrainedModel.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<ProjectTrainedModel> response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
 ]]></code>
@@ -34,7 +34,7 @@ This sample shows how to call GetTrainedModel with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<ProjectTrainedModel> response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>");
 ]]></code></example>
@@ -45,7 +45,7 @@ This sample shows how to call GetTrainedModelAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>", null);
 
@@ -62,7 +62,7 @@ This sample shows how to call GetTrainedModelAsync with all parameters and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>", null);
 
@@ -82,7 +82,7 @@ This sample shows how to call GetTrainedModel and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>", null);
 
@@ -99,7 +99,7 @@ This sample shows how to call GetTrainedModel with all parameters and parse the 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>", null);
 
@@ -119,7 +119,7 @@ This sample shows how to call DeleteTrainedModelAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.DeleteTrainedModelAsync("<projectName>", "<trainedModelLabel>");
 
@@ -129,7 +129,7 @@ This sample shows how to call DeleteTrainedModelAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.DeleteTrainedModelAsync("<projectName>", "<trainedModelLabel>");
 
@@ -142,7 +142,7 @@ This sample shows how to call DeleteTrainedModel.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.DeleteTrainedModel("<projectName>", "<trainedModelLabel>");
 
@@ -152,7 +152,7 @@ This sample shows how to call DeleteTrainedModel with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.DeleteTrainedModel("<projectName>", "<trainedModelLabel>");
 
@@ -165,7 +165,7 @@ This sample shows how to call GetEvaluationStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<EvaluationJobState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code>
@@ -173,7 +173,7 @@ This sample shows how to call GetEvaluationStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<EvaluationJobState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code></example>
@@ -184,7 +184,7 @@ This sample shows how to call GetEvaluationStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<EvaluationJobState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code>
@@ -192,7 +192,7 @@ This sample shows how to call GetEvaluationStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<EvaluationJobState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code></example>
@@ -203,7 +203,7 @@ This sample shows how to call GetEvaluationStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
@@ -221,7 +221,7 @@ This sample shows how to call GetEvaluationStatusAsync with all parameters and p
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
@@ -255,7 +255,7 @@ This sample shows how to call GetEvaluationStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
@@ -273,7 +273,7 @@ This sample shows how to call GetEvaluationStatus with all parameters and parse 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
@@ -307,7 +307,7 @@ This sample shows how to call GetModelEvaluationSummaryAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<EvaluationSummary> response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>");
 ]]></code>
@@ -315,7 +315,7 @@ This sample shows how to call GetModelEvaluationSummaryAsync with all parameters
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<EvaluationSummary> response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>");
 ]]></code></example>
@@ -326,7 +326,7 @@ This sample shows how to call GetModelEvaluationSummary.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<EvaluationSummary> response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>");
 ]]></code>
@@ -334,7 +334,7 @@ This sample shows how to call GetModelEvaluationSummary with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<EvaluationSummary> response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>");
 ]]></code></example>
@@ -345,7 +345,7 @@ This sample shows how to call GetModelEvaluationSummaryAsync and parse the resul
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>", null);
 
@@ -385,7 +385,7 @@ This sample shows how to call GetModelEvaluationSummaryAsync with all parameters
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>", null);
 
@@ -431,7 +431,7 @@ This sample shows how to call GetModelEvaluationSummary and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>", null);
 
@@ -471,7 +471,7 @@ This sample shows how to call GetModelEvaluationSummary with all parameters and 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>", null);
 
@@ -517,7 +517,7 @@ This sample shows how to call GetLoadSnapshotStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<LoadSnapshotJobState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code>
@@ -525,7 +525,7 @@ This sample shows how to call GetLoadSnapshotStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<LoadSnapshotJobState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code></example>
@@ -536,7 +536,7 @@ This sample shows how to call GetLoadSnapshotStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<LoadSnapshotJobState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code>
@@ -544,7 +544,7 @@ This sample shows how to call GetLoadSnapshotStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response<LoadSnapshotJobState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code></example>
@@ -555,7 +555,7 @@ This sample shows how to call GetLoadSnapshotStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
@@ -569,7 +569,7 @@ This sample shows how to call GetLoadSnapshotStatusAsync with all parameters and
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
@@ -597,7 +597,7 @@ This sample shows how to call GetLoadSnapshotStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
@@ -611,7 +611,7 @@ This sample shows how to call GetLoadSnapshotStatus with all parameters and pars
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
 
@@ -639,7 +639,7 @@ This sample shows how to call GetTrainedModelsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 await foreach (ProjectTrainedModel item in client.GetTrainedModelsAsync("<projectName>"))
 {
@@ -649,7 +649,7 @@ This sample shows how to call GetTrainedModelsAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 await foreach (ProjectTrainedModel item in client.GetTrainedModelsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
@@ -662,7 +662,7 @@ This sample shows how to call GetTrainedModels.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 foreach (ProjectTrainedModel item in client.GetTrainedModels("<projectName>"))
 {
@@ -672,7 +672,7 @@ This sample shows how to call GetTrainedModels with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 foreach (ProjectTrainedModel item in client.GetTrainedModels("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
@@ -685,7 +685,7 @@ This sample shows how to call GetTrainedModelsAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 await foreach (BinaryData item in client.GetTrainedModelsAsync("<projectName>", null, null, null, null))
 {
@@ -703,7 +703,7 @@ This sample shows how to call GetTrainedModelsAsync with all parameters and pars
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 await foreach (BinaryData item in client.GetTrainedModelsAsync("<projectName>", 1234, 1234, 1234, null))
 {
@@ -724,7 +724,7 @@ This sample shows how to call GetTrainedModels and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 foreach (BinaryData item in client.GetTrainedModels("<projectName>", null, null, null, null))
 {
@@ -742,7 +742,7 @@ This sample shows how to call GetTrainedModels with all parameters and parse the
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 foreach (BinaryData item in client.GetTrainedModels("<projectName>", 1234, 1234, 1234, null))
 {
@@ -763,7 +763,7 @@ This sample shows how to call GetModelEvaluationResultsAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 await foreach (UtteranceEvaluationResult item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit))
 {
@@ -773,7 +773,7 @@ This sample shows how to call GetModelEvaluationResultsAsync with all parameters
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 await foreach (UtteranceEvaluationResult item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit, maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
@@ -786,7 +786,7 @@ This sample shows how to call GetModelEvaluationResults.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 foreach (UtteranceEvaluationResult item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit))
 {
@@ -796,7 +796,7 @@ This sample shows how to call GetModelEvaluationResults with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 foreach (UtteranceEvaluationResult item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", StringIndexType.Utf16CodeUnit, maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
@@ -809,7 +809,7 @@ This sample shows how to call GetModelEvaluationResultsAsync and parse the resul
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 await foreach (BinaryData item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit"))
 {
@@ -830,7 +830,7 @@ This sample shows how to call GetModelEvaluationResultsAsync with all parameters
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 await foreach (BinaryData item in client.GetModelEvaluationResultsAsync("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
@@ -854,7 +854,7 @@ This sample shows how to call GetModelEvaluationResults and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 foreach (BinaryData item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit"))
 {
@@ -875,7 +875,7 @@ This sample shows how to call GetModelEvaluationResults with all parameters and 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 foreach (BinaryData item in client.GetModelEvaluationResults("<projectName>", "<trainedModelLabel>", "Utf16CodeUnit", maxCount: 1234, skip: 1234, maxpagesize: 1234))
 {
@@ -899,7 +899,7 @@ This sample shows how to call EvaluateModelAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 EvaluationDetails body = new EvaluationDetails();
 Operation<EvaluationJobResult> operation = await client.EvaluateModelAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
@@ -909,7 +909,7 @@ This sample shows how to call EvaluateModelAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 EvaluationDetails body = new EvaluationDetails
 {
@@ -927,7 +927,7 @@ This sample shows how to call EvaluateModel.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 EvaluationDetails body = new EvaluationDetails();
 Operation<EvaluationJobResult> operation = client.EvaluateModel(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
@@ -937,7 +937,7 @@ This sample shows how to call EvaluateModel with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 EvaluationDetails body = new EvaluationDetails
 {
@@ -955,7 +955,7 @@ This sample shows how to call EvaluateModelAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new object());
 Operation<BinaryData> operation = await client.EvaluateModelAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", content);
@@ -971,7 +971,7 @@ This sample shows how to call EvaluateModelAsync with all parameters and request
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -997,7 +997,7 @@ This sample shows how to call EvaluateModel and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new object());
 Operation<BinaryData> operation = client.EvaluateModel(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", content);
@@ -1013,7 +1013,7 @@ This sample shows how to call EvaluateModel with all parameters and request cont
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -1039,7 +1039,7 @@ This sample shows how to call LoadSnapshotAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Operation operation = await client.LoadSnapshotAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
 ]]></code>
@@ -1047,7 +1047,7 @@ This sample shows how to call LoadSnapshotAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Operation operation = await client.LoadSnapshotAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
 ]]></code></example>
@@ -1058,7 +1058,7 @@ This sample shows how to call LoadSnapshot.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Operation operation = client.LoadSnapshot(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
 ]]></code>
@@ -1066,7 +1066,7 @@ This sample shows how to call LoadSnapshot with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
 Operation operation = client.LoadSnapshot(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>");
 ]]></code></example>

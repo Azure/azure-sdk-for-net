@@ -15,8 +15,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     // Data plane generated sub-client.
-    /// <summary> The ProjectFilesAuthoringConversationAnalysis sub-client. </summary>
-    public partial class ProjectFilesAuthoringConversationAnalysis
+    /// <summary> The ConversationAuthoringProjectFiles sub-client. </summary>
+    public partial class ConversationAuthoringProjectFiles
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
@@ -32,19 +32,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ProjectFilesAuthoringConversationAnalysis for mocking. </summary>
-        protected ProjectFilesAuthoringConversationAnalysis()
+        /// <summary> Initializes a new instance of ConversationAuthoringProjectFiles for mocking. </summary>
+        protected ConversationAuthoringProjectFiles()
         {
         }
 
-        /// <summary> Initializes a new instance of ProjectFilesAuthoringConversationAnalysis. </summary>
+        /// <summary> Initializes a new instance of ConversationAuthoringProjectFiles. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal ProjectFilesAuthoringConversationAnalysis(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal ConversationAuthoringProjectFiles(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -60,7 +60,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ProjectFilesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetExportStatusAsync(string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjectFiles.xml" path="doc/members/member[@name='GetExportStatusAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<ExportProjectJobState>> GetExportStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -77,7 +77,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ProjectFilesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetExportStatus(string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjectFiles.xml" path="doc/members/member[@name='GetExportStatus(string,string,CancellationToken)']/*" />
         public virtual Response<ExportProjectJobState> GetExportStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -110,13 +110,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ProjectFilesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetExportStatusAsync(string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjectFiles.xml" path="doc/members/member[@name='GetExportStatusAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetExportStatusAsync(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ProjectFilesAuthoringConversationAnalysis.GetExportStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjectFiles.GetExportStatus");
             scope.Start();
             try
             {
@@ -152,13 +152,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ProjectFilesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetExportStatus(string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjectFiles.xml" path="doc/members/member[@name='GetExportStatus(string,string,RequestContext)']/*" />
         public virtual Response GetExportStatus(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ProjectFilesAuthoringConversationAnalysis.GetExportStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjectFiles.GetExportStatus");
             scope.Start();
             try
             {
@@ -178,7 +178,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ProjectFilesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetImportStatusAsync(string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjectFiles.xml" path="doc/members/member[@name='GetImportStatusAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<ImportProjectJobState>> GetImportStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -195,7 +195,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ProjectFilesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetImportStatus(string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjectFiles.xml" path="doc/members/member[@name='GetImportStatus(string,string,CancellationToken)']/*" />
         public virtual Response<ImportProjectJobState> GetImportStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -228,13 +228,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ProjectFilesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetImportStatusAsync(string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjectFiles.xml" path="doc/members/member[@name='GetImportStatusAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetImportStatusAsync(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ProjectFilesAuthoringConversationAnalysis.GetImportStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjectFiles.GetImportStatus");
             scope.Start();
             try
             {
@@ -270,13 +270,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ProjectFilesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetImportStatus(string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjectFiles.xml" path="doc/members/member[@name='GetImportStatus(string,string,RequestContext)']/*" />
         public virtual Response GetImportStatus(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ProjectFilesAuthoringConversationAnalysis.GetImportStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjectFiles.GetImportStatus");
             scope.Start();
             try
             {
@@ -290,6 +290,44 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
+        /// <summary> Triggers a job to export a project's data. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
+        /// <param name="assetKind"> Kind of asset to export. </param>
+        /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConversationAuthoringProjectFiles.xml" path="doc/members/member[@name='ExportAsync(WaitUntil,string,StringIndexType,AnalyzeConversationAuthoringExportedProjectFormat?,string,string,CancellationToken)']/*" />
+        public virtual async Task<Operation> ExportAsync(WaitUntil waitUntil, string projectName, StringIndexType stringIndexType, AnalyzeConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, string assetKind = null, string trainedModelLabel = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return await ExportAsync(waitUntil, projectName, stringIndexType.ToString(), exportedProjectFormat?.ToString(), assetKind, trainedModelLabel, context).ConfigureAwait(false);
+        }
+
+        /// <summary> Triggers a job to export a project's data. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="projectName"> The name of the project to use. </param>
+        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
+        /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
+        /// <param name="assetKind"> Kind of asset to export. </param>
+        /// <param name="trainedModelLabel"> Trained model label to export. If the trainedModelLabel is null, the default behavior is to export the current working copy. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConversationAuthoringProjectFiles.xml" path="doc/members/member[@name='Export(WaitUntil,string,StringIndexType,AnalyzeConversationAuthoringExportedProjectFormat?,string,string,CancellationToken)']/*" />
+        public virtual Operation Export(WaitUntil waitUntil, string projectName, StringIndexType stringIndexType, AnalyzeConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, string assetKind = null, string trainedModelLabel = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = FromCancellationToken(cancellationToken);
+            return Export(waitUntil, projectName, stringIndexType.ToString(), exportedProjectFormat?.ToString(), assetKind, trainedModelLabel, context);
+        }
+
         /// <summary>
         /// [Protocol Method] Triggers a job to export a project's data.
         /// <list type="bullet">
@@ -300,7 +338,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ExportAsync(WaitUntil,string,AnalyzeConversationAuthoringExportedProjectFormat?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ExportAsync(WaitUntil,string,StringIndexType,AnalyzeConversationAuthoringExportedProjectFormat?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -316,18 +354,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ProjectFilesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='ExportAsync(WaitUntil,string,string,string,string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjectFiles.xml" path="doc/members/member[@name='ExportAsync(WaitUntil,string,string,string,string,string,RequestContext)']/*" />
         public virtual async Task<Operation> ExportAsync(WaitUntil waitUntil, string projectName, string stringIndexType, string exportedProjectFormat = null, string assetKind = null, string trainedModelLabel = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
 
-            using var scope = ClientDiagnostics.CreateScope("ProjectFilesAuthoringConversationAnalysis.Export");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjectFiles.Export");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateExportRequest(projectName, stringIndexType, exportedProjectFormat, assetKind, trainedModelLabel, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ProjectFilesAuthoringConversationAnalysis.Export", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringProjectFiles.Export", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -346,7 +384,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="Export(WaitUntil,string,AnalyzeConversationAuthoringExportedProjectFormat?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="Export(WaitUntil,string,StringIndexType,AnalyzeConversationAuthoringExportedProjectFormat?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -362,18 +400,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ProjectFilesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='Export(WaitUntil,string,string,string,string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjectFiles.xml" path="doc/members/member[@name='Export(WaitUntil,string,string,string,string,string,RequestContext)']/*" />
         public virtual Operation Export(WaitUntil waitUntil, string projectName, string stringIndexType, string exportedProjectFormat = null, string assetKind = null, string trainedModelLabel = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(stringIndexType, nameof(stringIndexType));
 
-            using var scope = ClientDiagnostics.CreateScope("ProjectFilesAuthoringConversationAnalysis.Export");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjectFiles.Export");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateExportRequest(projectName, stringIndexType, exportedProjectFormat, assetKind, trainedModelLabel, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ProjectFilesAuthoringConversationAnalysis.Export", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringProjectFiles.Export", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -390,7 +428,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ProjectFilesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='ImportAsync(WaitUntil,string,ExportedProject,AnalyzeConversationAuthoringExportedProjectFormat?,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjectFiles.xml" path="doc/members/member[@name='ImportAsync(WaitUntil,string,ExportedProject,AnalyzeConversationAuthoringExportedProjectFormat?,CancellationToken)']/*" />
         public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, ExportedProject body, AnalyzeConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -409,7 +447,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ProjectFilesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='Import(WaitUntil,string,ExportedProject,AnalyzeConversationAuthoringExportedProjectFormat?,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjectFiles.xml" path="doc/members/member[@name='Import(WaitUntil,string,ExportedProject,AnalyzeConversationAuthoringExportedProjectFormat?,CancellationToken)']/*" />
         public virtual Operation Import(WaitUntil waitUntil, string projectName, ExportedProject body, AnalyzeConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -444,18 +482,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ProjectFilesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='ImportAsync(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjectFiles.xml" path="doc/members/member[@name='ImportAsync(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
         public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, RequestContent content, string exportedProjectFormat = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ProjectFilesAuthoringConversationAnalysis.Import");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjectFiles.Import");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, exportedProjectFormat, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ProjectFilesAuthoringConversationAnalysis.Import", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringProjectFiles.Import", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -488,18 +526,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ProjectFilesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='Import(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjectFiles.xml" path="doc/members/member[@name='Import(WaitUntil,string,RequestContent,string,RequestContext)']/*" />
         public virtual Operation Import(WaitUntil waitUntil, string projectName, RequestContent content, string exportedProjectFormat = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ProjectFilesAuthoringConversationAnalysis.Import");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjectFiles.Import");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateImportRequest(projectName, content, exportedProjectFormat, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ProjectFilesAuthoringConversationAnalysis.Import", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringProjectFiles.Import", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {

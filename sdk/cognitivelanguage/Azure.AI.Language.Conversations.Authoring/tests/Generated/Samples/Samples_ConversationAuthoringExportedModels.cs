@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Authoring.Samples
 {
-    public partial class Samples_ExportedModelsAuthoringConversationAnalysis
+    public partial class Samples_ConversationAuthoringExportedModels
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Response response = client.GetExportedModel("<projectName>", "<exportedModelName>", null);
 
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Response response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>", null);
 
@@ -61,7 +61,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Response<ExportedTrainedModel> response = client.GetExportedModel("<projectName>", "<exportedModelName>");
         }
@@ -72,7 +72,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Response<ExportedTrainedModel> response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>");
         }
@@ -83,7 +83,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Response response = client.GetExportedModel("<projectName>", "<exportedModelName>", null);
 
@@ -102,7 +102,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Response response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>", null);
 
@@ -121,7 +121,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Response<ExportedTrainedModel> response = client.GetExportedModel("<projectName>", "<exportedModelName>");
         }
@@ -132,7 +132,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Response<ExportedTrainedModel> response = await client.GetExportedModelAsync("<projectName>", "<exportedModelName>");
         }
@@ -143,7 +143,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Response response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>", null);
 
@@ -160,7 +160,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Response response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>", null);
 
@@ -177,7 +177,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Response<ExportedModelJobState> response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>");
         }
@@ -188,7 +188,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Response<ExportedModelJobState> response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>");
         }
@@ -199,7 +199,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Response response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>", null);
 
@@ -227,7 +227,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Response response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>", null);
 
@@ -255,7 +255,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Response<ExportedModelJobState> response = client.GetExportedModelJobStatus("<projectName>", "<exportedModelName>", "<jobId>");
         }
@@ -266,7 +266,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Response<ExportedModelJobState> response = await client.GetExportedModelJobStatusAsync("<projectName>", "<exportedModelName>", "<jobId>");
         }
@@ -277,7 +277,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             foreach (BinaryData item in client.GetExportedModels("<projectName>", null, null, null, null))
             {
@@ -297,7 +297,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             await foreach (BinaryData item in client.GetExportedModelsAsync("<projectName>", null, null, null, null))
             {
@@ -317,7 +317,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             foreach (ExportedTrainedModel item in client.GetExportedModels("<projectName>"))
             {
@@ -330,7 +330,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             await foreach (ExportedTrainedModel item in client.GetExportedModelsAsync("<projectName>"))
             {
@@ -343,7 +343,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             foreach (BinaryData item in client.GetExportedModels("<projectName>", 1234, 1234, 1234, null))
             {
@@ -363,7 +363,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             await foreach (BinaryData item in client.GetExportedModelsAsync("<projectName>", 1234, 1234, 1234, null))
             {
@@ -383,7 +383,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             foreach (ExportedTrainedModel item in client.GetExportedModels("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -396,7 +396,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             await foreach (ExportedTrainedModel item in client.GetExportedModelsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -405,55 +405,55 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ExportedModelsAuthoringConversationAnalysis_DeleteExportedModel_ShortVersion()
+        public void Example_ConversationAuthoringExportedModels_DeleteExportedModel_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Operation operation = client.DeleteExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ExportedModelsAuthoringConversationAnalysis_DeleteExportedModel_ShortVersion_Async()
+        public async Task Example_ConversationAuthoringExportedModels_DeleteExportedModel_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Operation operation = await client.DeleteExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ExportedModelsAuthoringConversationAnalysis_DeleteExportedModel_AllParameters()
+        public void Example_ConversationAuthoringExportedModels_DeleteExportedModel_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Operation operation = client.DeleteExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ExportedModelsAuthoringConversationAnalysis_DeleteExportedModel_AllParameters_Async()
+        public async Task Example_ConversationAuthoringExportedModels_DeleteExportedModel_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             Operation operation = await client.DeleteExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ExportedModelsAuthoringConversationAnalysis_CreateOrUpdateExportedModel_ShortVersion()
+        public void Example_ConversationAuthoringExportedModels_CreateOrUpdateExportedModel_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -464,11 +464,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ExportedModelsAuthoringConversationAnalysis_CreateOrUpdateExportedModel_ShortVersion_Async()
+        public async Task Example_ConversationAuthoringExportedModels_CreateOrUpdateExportedModel_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -479,11 +479,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ExportedModelsAuthoringConversationAnalysis_CreateOrUpdateExportedModel_ShortVersion_Convenience()
+        public void Example_ConversationAuthoringExportedModels_CreateOrUpdateExportedModel_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
             Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
@@ -491,11 +491,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ExportedModelsAuthoringConversationAnalysis_CreateOrUpdateExportedModel_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationAuthoringExportedModels_CreateOrUpdateExportedModel_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
             Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
@@ -503,11 +503,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ExportedModelsAuthoringConversationAnalysis_CreateOrUpdateExportedModel_AllParameters()
+        public void Example_ConversationAuthoringExportedModels_CreateOrUpdateExportedModel_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -518,11 +518,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ExportedModelsAuthoringConversationAnalysis_CreateOrUpdateExportedModel_AllParameters_Async()
+        public async Task Example_ConversationAuthoringExportedModels_CreateOrUpdateExportedModel_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -533,11 +533,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ExportedModelsAuthoringConversationAnalysis_CreateOrUpdateExportedModel_AllParameters_Convenience()
+        public void Example_ConversationAuthoringExportedModels_CreateOrUpdateExportedModel_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
             Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
@@ -545,11 +545,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ExportedModelsAuthoringConversationAnalysis_CreateOrUpdateExportedModel_AllParameters_Convenience_Async()
+        public async Task Example_ConversationAuthoringExportedModels_CreateOrUpdateExportedModel_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ExportedModelsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetExportedModelsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringExportedModels client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
             ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
             Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);

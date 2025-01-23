@@ -14,6 +14,27 @@ namespace Azure.AI.Language.Conversations.Authoring
     [CodeGenSuppress("Export", typeof(WaitUntil), typeof(string), typeof(StringIndexType), typeof(AnalyzeConversationAuthoringExportedProjectFormat?), typeof(string), typeof(string), typeof(CancellationToken))]
     public partial class ProjectFilesAuthoringConversationAnalysis
     {
+        private readonly string _projectName;
+
+        /// <summary> Initializes a new instance of ProjectFilesAuthoringConversationAnalysis. </summary>
+        /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
+        /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
+        /// <param name="keyCredential"> The key credential to copy. </param>
+        /// <param name="tokenCredential"> The token credential to copy. </param>
+        /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <param name="projectName"> The new project name. </param>
+        internal ProjectFilesAuthoringConversationAnalysis(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion, string projectName)
+        {
+            ClientDiagnostics = clientDiagnostics;
+            _pipeline = pipeline;
+            _keyCredential = keyCredential;
+            _tokenCredential = tokenCredential;
+            _endpoint = endpoint;
+            _apiVersion = apiVersion;
+            _projectName = projectName;
+        }
+
         /// <summary> Triggers a job to export a project's data. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>

@@ -15,8 +15,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     // Data plane generated sub-client.
-    /// <summary> The PrebuiltsAuthoringConversationAnalysis sub-client. </summary>
-    public partial class PrebuiltsAuthoringConversationAnalysis
+    /// <summary> The ConversationAuthoringPrebuilts sub-client. </summary>
+    public partial class ConversationAuthoringPrebuilts
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
@@ -32,19 +32,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of PrebuiltsAuthoringConversationAnalysis for mocking. </summary>
-        protected PrebuiltsAuthoringConversationAnalysis()
+        /// <summary> Initializes a new instance of ConversationAuthoringPrebuilts for mocking. </summary>
+        protected ConversationAuthoringPrebuilts()
         {
         }
 
-        /// <summary> Initializes a new instance of PrebuiltsAuthoringConversationAnalysis. </summary>
+        /// <summary> Initializes a new instance of ConversationAuthoringPrebuilts. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal PrebuiltsAuthoringConversationAnalysis(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal ConversationAuthoringPrebuilts(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -61,7 +61,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/PrebuiltsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntitiesAsync(string,string,int?,int?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringPrebuilts.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntitiesAsync(string,string,int?,int?,int?,CancellationToken)']/*" />
         public virtual async Task<Response<PrebuiltEntities>> GetSupportedPrebuiltEntitiesAsync(string language = null, string multilingual = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -76,7 +76,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/PrebuiltsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntities(string,string,int?,int?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringPrebuilts.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntities(string,string,int?,int?,int?,CancellationToken)']/*" />
         public virtual Response<PrebuiltEntities> GetSupportedPrebuiltEntities(string language = null, string multilingual = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -107,10 +107,10 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PrebuiltsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntitiesAsync(string,string,int?,int?,int?,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringPrebuilts.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntitiesAsync(string,string,int?,int?,int?,RequestContext)']/*" />
         public virtual async Task<Response> GetSupportedPrebuiltEntitiesAsync(string language, string multilingual, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("PrebuiltsAuthoringConversationAnalysis.GetSupportedPrebuiltEntities");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringPrebuilts.GetSupportedPrebuiltEntities");
             scope.Start();
             try
             {
@@ -147,10 +147,10 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/PrebuiltsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntities(string,string,int?,int?,int?,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringPrebuilts.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntities(string,string,int?,int?,int?,RequestContext)']/*" />
         public virtual Response GetSupportedPrebuiltEntities(string language, string multilingual, int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("PrebuiltsAuthoringConversationAnalysis.GetSupportedPrebuiltEntities");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringPrebuilts.GetSupportedPrebuiltEntities");
             scope.Start();
             try
             {

@@ -15,7 +15,7 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Authoring.Samples
 {
-    public partial class Samples_DeploymentResourcesAuthoringConversationAnalysis
+    public partial class Samples_ConversationAuthoringDeploymentResources
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
 
@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
 
@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response<DeploymentResourcesJobState> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
         }
@@ -68,7 +68,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response<DeploymentResourcesJobState> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
         }
@@ -79,7 +79,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
 
@@ -107,7 +107,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
 
@@ -135,7 +135,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response<DeploymentResourcesJobState> response = client.GetAssignDeploymentResourcesStatus("<projectName>", "<jobId>");
         }
@@ -146,18 +146,18 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response<DeploymentResourcesJobState> response = await client.GetAssignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeploymentResourcesAuthoringConversationAnalysis_GetUnassignDeploymentResourcesStatus_ShortVersion()
+        public void Example_ConversationAuthoringDeploymentResources_GetUnassignDeploymentResourcesStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
 
@@ -170,11 +170,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeploymentResourcesAuthoringConversationAnalysis_GetUnassignDeploymentResourcesStatus_ShortVersion_Async()
+        public async Task Example_ConversationAuthoringDeploymentResources_GetUnassignDeploymentResourcesStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
 
@@ -187,33 +187,33 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeploymentResourcesAuthoringConversationAnalysis_GetUnassignDeploymentResourcesStatus_ShortVersion_Convenience()
+        public void Example_ConversationAuthoringDeploymentResources_GetUnassignDeploymentResourcesStatus_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response<DeploymentResourcesJobState> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeploymentResourcesAuthoringConversationAnalysis_GetUnassignDeploymentResourcesStatus_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationAuthoringDeploymentResources_GetUnassignDeploymentResourcesStatus_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response<DeploymentResourcesJobState> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeploymentResourcesAuthoringConversationAnalysis_GetUnassignDeploymentResourcesStatus_AllParameters()
+        public void Example_ConversationAuthoringDeploymentResources_GetUnassignDeploymentResourcesStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>", null);
 
@@ -237,11 +237,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeploymentResourcesAuthoringConversationAnalysis_GetUnassignDeploymentResourcesStatus_AllParameters_Async()
+        public async Task Example_ConversationAuthoringDeploymentResources_GetUnassignDeploymentResourcesStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>", null);
 
@@ -265,33 +265,33 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeploymentResourcesAuthoringConversationAnalysis_GetUnassignDeploymentResourcesStatus_AllParameters_Convenience()
+        public void Example_ConversationAuthoringDeploymentResources_GetUnassignDeploymentResourcesStatus_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response<DeploymentResourcesJobState> response = client.GetUnassignDeploymentResourcesStatus("<projectName>", "<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeploymentResourcesAuthoringConversationAnalysis_GetUnassignDeploymentResourcesStatus_AllParameters_Convenience_Async()
+        public async Task Example_ConversationAuthoringDeploymentResources_GetUnassignDeploymentResourcesStatus_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response<DeploymentResourcesJobState> response = await client.GetUnassignDeploymentResourcesStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeploymentResourcesAuthoringConversationAnalysis_GetAssignedResourceDeployments_ShortVersion()
+        public void Example_ConversationAuthoringDeploymentResources_GetAssignedResourceDeployments_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response response = client.GetAssignedResourceDeployments(null, null, null, null);
 
@@ -304,11 +304,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeploymentResourcesAuthoringConversationAnalysis_GetAssignedResourceDeployments_ShortVersion_Async()
+        public async Task Example_ConversationAuthoringDeploymentResources_GetAssignedResourceDeployments_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response response = await client.GetAssignedResourceDeploymentsAsync(null, null, null, null);
 
@@ -321,33 +321,33 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeploymentResourcesAuthoringConversationAnalysis_GetAssignedResourceDeployments_ShortVersion_Convenience()
+        public void Example_ConversationAuthoringDeploymentResources_GetAssignedResourceDeployments_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response<AssignedResourceDeploymentsMetadata> response = client.GetAssignedResourceDeployments();
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeploymentResourcesAuthoringConversationAnalysis_GetAssignedResourceDeployments_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationAuthoringDeploymentResources_GetAssignedResourceDeployments_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response<AssignedResourceDeploymentsMetadata> response = await client.GetAssignedResourceDeploymentsAsync();
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeploymentResourcesAuthoringConversationAnalysis_GetAssignedResourceDeployments_AllParameters()
+        public void Example_ConversationAuthoringDeploymentResources_GetAssignedResourceDeployments_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response response = client.GetAssignedResourceDeployments(1234, 1234, 1234, null);
 
@@ -361,11 +361,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeploymentResourcesAuthoringConversationAnalysis_GetAssignedResourceDeployments_AllParameters_Async()
+        public async Task Example_ConversationAuthoringDeploymentResources_GetAssignedResourceDeployments_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response response = await client.GetAssignedResourceDeploymentsAsync(1234, 1234, 1234, null);
 
@@ -379,22 +379,22 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeploymentResourcesAuthoringConversationAnalysis_GetAssignedResourceDeployments_AllParameters_Convenience()
+        public void Example_ConversationAuthoringDeploymentResources_GetAssignedResourceDeployments_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response<AssignedResourceDeploymentsMetadata> response = client.GetAssignedResourceDeployments(top: 1234, skip: 1234, maxpagesize: 1234);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeploymentResourcesAuthoringConversationAnalysis_GetAssignedResourceDeployments_AllParameters_Convenience_Async()
+        public async Task Example_ConversationAuthoringDeploymentResources_GetAssignedResourceDeployments_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             Response<AssignedResourceDeploymentsMetadata> response = await client.GetAssignedResourceDeploymentsAsync(top: 1234, skip: 1234, maxpagesize: 1234);
         }
@@ -405,7 +405,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             foreach (BinaryData item in client.GetDeploymentResources("<projectName>", null, null, null, null))
             {
@@ -421,7 +421,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             await foreach (BinaryData item in client.GetDeploymentResourcesAsync("<projectName>", null, null, null, null))
             {
@@ -437,7 +437,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             foreach (AssignedDeploymentResource item in client.GetDeploymentResources("<projectName>"))
             {
@@ -450,7 +450,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             await foreach (AssignedDeploymentResource item in client.GetDeploymentResourcesAsync("<projectName>"))
             {
@@ -463,7 +463,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             foreach (BinaryData item in client.GetDeploymentResources("<projectName>", 1234, 1234, 1234, null))
             {
@@ -479,7 +479,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             await foreach (BinaryData item in client.GetDeploymentResourcesAsync("<projectName>", 1234, 1234, 1234, null))
             {
@@ -495,7 +495,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             foreach (AssignedDeploymentResource item in client.GetDeploymentResources("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -508,7 +508,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             await foreach (AssignedDeploymentResource item in client.GetDeploymentResourcesAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
@@ -517,11 +517,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeploymentResourcesAuthoringConversationAnalysis_AssignDeploymentResources_ShortVersion()
+        public void Example_ConversationAuthoringDeploymentResources_AssignDeploymentResources_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -540,11 +540,11 @@ region = "<region>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeploymentResourcesAuthoringConversationAnalysis_AssignDeploymentResources_ShortVersion_Async()
+        public async Task Example_ConversationAuthoringDeploymentResources_AssignDeploymentResources_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -563,11 +563,11 @@ region = "<region>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeploymentResourcesAuthoringConversationAnalysis_AssignDeploymentResources_ShortVersion_Convenience()
+        public void Example_ConversationAuthoringDeploymentResources_AssignDeploymentResources_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
             {
@@ -578,11 +578,11 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeploymentResourcesAuthoringConversationAnalysis_AssignDeploymentResources_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationAuthoringDeploymentResources_AssignDeploymentResources_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
             {
@@ -593,11 +593,11 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeploymentResourcesAuthoringConversationAnalysis_AssignDeploymentResources_AllParameters()
+        public void Example_ConversationAuthoringDeploymentResources_AssignDeploymentResources_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -616,11 +616,11 @@ region = "<region>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeploymentResourcesAuthoringConversationAnalysis_AssignDeploymentResources_AllParameters_Async()
+        public async Task Example_ConversationAuthoringDeploymentResources_AssignDeploymentResources_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -639,11 +639,11 @@ region = "<region>",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeploymentResourcesAuthoringConversationAnalysis_AssignDeploymentResources_AllParameters_Convenience()
+        public void Example_ConversationAuthoringDeploymentResources_AssignDeploymentResources_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
             {
@@ -654,11 +654,11 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeploymentResourcesAuthoringConversationAnalysis_AssignDeploymentResources_AllParameters_Convenience_Async()
+        public async Task Example_ConversationAuthoringDeploymentResources_AssignDeploymentResources_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
             {
@@ -669,11 +669,11 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeploymentResourcesAuthoringConversationAnalysis_UnassignDeploymentResources_ShortVersion()
+        public void Example_ConversationAuthoringDeploymentResources_UnassignDeploymentResources_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -687,11 +687,11 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeploymentResourcesAuthoringConversationAnalysis_UnassignDeploymentResources_ShortVersion_Async()
+        public async Task Example_ConversationAuthoringDeploymentResources_UnassignDeploymentResources_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -705,11 +705,11 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeploymentResourcesAuthoringConversationAnalysis_UnassignDeploymentResources_ShortVersion_Convenience()
+        public void Example_ConversationAuthoringDeploymentResources_UnassignDeploymentResources_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
             Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
@@ -717,11 +717,11 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeploymentResourcesAuthoringConversationAnalysis_UnassignDeploymentResources_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationAuthoringDeploymentResources_UnassignDeploymentResources_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
             Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
@@ -729,11 +729,11 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeploymentResourcesAuthoringConversationAnalysis_UnassignDeploymentResources_AllParameters()
+        public void Example_ConversationAuthoringDeploymentResources_UnassignDeploymentResources_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -747,11 +747,11 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeploymentResourcesAuthoringConversationAnalysis_UnassignDeploymentResources_AllParameters_Async()
+        public async Task Example_ConversationAuthoringDeploymentResources_UnassignDeploymentResources_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -765,11 +765,11 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DeploymentResourcesAuthoringConversationAnalysis_UnassignDeploymentResources_AllParameters_Convenience()
+        public void Example_ConversationAuthoringDeploymentResources_UnassignDeploymentResources_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
             Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
@@ -777,11 +777,11 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DeploymentResourcesAuthoringConversationAnalysis_UnassignDeploymentResources_AllParameters_Convenience_Async()
+        public async Task Example_ConversationAuthoringDeploymentResources_UnassignDeploymentResources_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DeploymentResourcesAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetDeploymentResourcesAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringDeploymentResources client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
             UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
             Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);

@@ -15,15 +15,15 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Authoring.Samples
 {
-    public partial class Samples_CopyProjectAuthoringConversationAnalysis
+    public partial class Samples_ConversationAuthoringCopyProject
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CopyProjectAuthoringConversationAnalysis_CopyProjectAuthorization_ShortVersion()
+        public void Example_ConversationAuthoringCopyProject_CopyProjectAuthorization_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -42,11 +42,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CopyProjectAuthoringConversationAnalysis_CopyProjectAuthorization_ShortVersion_Async()
+        public async Task Example_ConversationAuthoringCopyProject_CopyProjectAuthorization_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -65,33 +65,33 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CopyProjectAuthoringConversationAnalysis_CopyProjectAuthorization_ShortVersion_Convenience()
+        public void Example_ConversationAuthoringCopyProject_CopyProjectAuthorization_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CopyProjectAuthoringConversationAnalysis_CopyProjectAuthorization_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationAuthoringCopyProject_CopyProjectAuthorization_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CopyProjectAuthoringConversationAnalysis_CopyProjectAuthorization_AllParameters()
+        public void Example_ConversationAuthoringCopyProject_CopyProjectAuthorization_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -112,11 +112,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CopyProjectAuthoringConversationAnalysis_CopyProjectAuthorization_AllParameters_Async()
+        public async Task Example_ConversationAuthoringCopyProject_CopyProjectAuthorization_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -137,22 +137,22 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CopyProjectAuthoringConversationAnalysis_CopyProjectAuthorization_AllParameters_Convenience()
+        public void Example_ConversationAuthoringCopyProject_CopyProjectAuthorization_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CopyProjectAuthoringConversationAnalysis_CopyProjectAuthorization_AllParameters_Convenience_Async()
+        public async Task Example_ConversationAuthoringCopyProject_CopyProjectAuthorization_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
         }
@@ -163,7 +163,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             Response response = client.GetCopyProjectStatus("<projectName>", "<jobId>", null);
 
@@ -180,7 +180,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             Response response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>", null);
 
@@ -197,7 +197,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             Response<CopyProjectJobState> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
         }
@@ -208,7 +208,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             Response<CopyProjectJobState> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
         }
@@ -219,7 +219,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             Response response = client.GetCopyProjectStatus("<projectName>", "<jobId>", null);
 
@@ -247,7 +247,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             Response response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>", null);
 
@@ -275,7 +275,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             Response<CopyProjectJobState> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
         }
@@ -286,18 +286,18 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             Response<CopyProjectJobState> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CopyProjectAuthoringConversationAnalysis_CopyProject_ShortVersion()
+        public void Example_ConversationAuthoringCopyProject_CopyProject_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -313,11 +313,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CopyProjectAuthoringConversationAnalysis_CopyProject_ShortVersion_Async()
+        public async Task Example_ConversationAuthoringCopyProject_CopyProject_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -333,11 +333,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CopyProjectAuthoringConversationAnalysis_CopyProject_ShortVersion_Convenience()
+        public void Example_ConversationAuthoringCopyProject_CopyProject_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             CopyProjectDetails body = new CopyProjectDetails(
                 AnalyzeConversationAuthoringProjectKind.Conversation,
@@ -351,11 +351,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CopyProjectAuthoringConversationAnalysis_CopyProject_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationAuthoringCopyProject_CopyProject_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             CopyProjectDetails body = new CopyProjectDetails(
                 AnalyzeConversationAuthoringProjectKind.Conversation,
@@ -369,11 +369,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CopyProjectAuthoringConversationAnalysis_CopyProject_AllParameters()
+        public void Example_ConversationAuthoringCopyProject_CopyProject_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -389,11 +389,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CopyProjectAuthoringConversationAnalysis_CopyProject_AllParameters_Async()
+        public async Task Example_ConversationAuthoringCopyProject_CopyProject_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -409,11 +409,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CopyProjectAuthoringConversationAnalysis_CopyProject_AllParameters_Convenience()
+        public void Example_ConversationAuthoringCopyProject_CopyProject_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             CopyProjectDetails body = new CopyProjectDetails(
                 AnalyzeConversationAuthoringProjectKind.Conversation,
@@ -427,11 +427,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_CopyProjectAuthoringConversationAnalysis_CopyProject_AllParameters_Convenience_Async()
+        public async Task Example_ConversationAuthoringCopyProject_CopyProject_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CopyProjectAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetCopyProjectAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringCopyProject client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
 
             CopyProjectDetails body = new CopyProjectDetails(
                 AnalyzeConversationAuthoringProjectKind.Conversation,

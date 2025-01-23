@@ -78,14 +78,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Initializes a new instance of ProjectFilesAuthoringConversationAnalysis. </summary>
-        /// <param name="apiVersion"> The API version to use for this operation. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual ProjectFilesAuthoringConversationAnalysis GetProjectFilesAuthoringConversationAnalysisClient(string apiVersion = null)
+        /// <param name="projectName"> The project name to use for this subclient. </param>
+        public virtual ProjectFilesAuthoringConversationAnalysis GetProjectFilesAuthoringConversationAnalysisClient(string projectName)
         {
-            var resolvedApiVersion = apiVersion ?? _apiVersion ?? "2024-11-15-preview"; // Use the provided, stored, or default version
+            var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new ProjectFilesAuthoringConversationAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
+            return new ProjectFilesAuthoringConversationAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
         }
 
         /// <summary> Initializes a new instance of TrainingAuthoringConversationAnalysis. </summary>

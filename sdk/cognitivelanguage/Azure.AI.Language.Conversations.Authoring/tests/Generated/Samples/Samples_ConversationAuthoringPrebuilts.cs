@@ -14,15 +14,15 @@ using NUnit.Framework;
 
 namespace Azure.AI.Language.Conversations.Authoring.Samples
 {
-    public partial class Samples_PrebuiltsAuthoringConversationAnalysis
+    public partial class Samples_ConversationAuthoringPrebuilts
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PrebuiltsAuthoringConversationAnalysis_GetSupportedPrebuiltEntities_ShortVersion()
+        public void Example_ConversationAuthoringPrebuilts_GetSupportedPrebuiltEntities_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PrebuiltsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetPrebuiltsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringPrebuilts client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
             Response response = client.GetSupportedPrebuiltEntities(null, null, null, null, null, null);
 
@@ -34,11 +34,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PrebuiltsAuthoringConversationAnalysis_GetSupportedPrebuiltEntities_ShortVersion_Async()
+        public async Task Example_ConversationAuthoringPrebuilts_GetSupportedPrebuiltEntities_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PrebuiltsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetPrebuiltsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringPrebuilts client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
             Response response = await client.GetSupportedPrebuiltEntitiesAsync(null, null, null, null, null, null);
 
@@ -50,33 +50,33 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PrebuiltsAuthoringConversationAnalysis_GetSupportedPrebuiltEntities_ShortVersion_Convenience()
+        public void Example_ConversationAuthoringPrebuilts_GetSupportedPrebuiltEntities_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PrebuiltsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetPrebuiltsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringPrebuilts client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
             Response<PrebuiltEntities> response = client.GetSupportedPrebuiltEntities();
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PrebuiltsAuthoringConversationAnalysis_GetSupportedPrebuiltEntities_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationAuthoringPrebuilts_GetSupportedPrebuiltEntities_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PrebuiltsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetPrebuiltsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringPrebuilts client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
             Response<PrebuiltEntities> response = await client.GetSupportedPrebuiltEntitiesAsync();
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PrebuiltsAuthoringConversationAnalysis_GetSupportedPrebuiltEntities_AllParameters()
+        public void Example_ConversationAuthoringPrebuilts_GetSupportedPrebuiltEntities_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PrebuiltsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetPrebuiltsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringPrebuilts client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
             Response response = client.GetSupportedPrebuiltEntities("<language>", "<multilingual>", 1234, 1234, 1234, null);
 
@@ -89,11 +89,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PrebuiltsAuthoringConversationAnalysis_GetSupportedPrebuiltEntities_AllParameters_Async()
+        public async Task Example_ConversationAuthoringPrebuilts_GetSupportedPrebuiltEntities_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PrebuiltsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetPrebuiltsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringPrebuilts client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
             Response response = await client.GetSupportedPrebuiltEntitiesAsync("<language>", "<multilingual>", 1234, 1234, 1234, null);
 
@@ -106,22 +106,22 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_PrebuiltsAuthoringConversationAnalysis_GetSupportedPrebuiltEntities_AllParameters_Convenience()
+        public void Example_ConversationAuthoringPrebuilts_GetSupportedPrebuiltEntities_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PrebuiltsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetPrebuiltsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringPrebuilts client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
             Response<PrebuiltEntities> response = client.GetSupportedPrebuiltEntities(language: "<language>", multilingual: "<multilingual>", top: 1234, skip: 1234, maxpagesize: 1234);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_PrebuiltsAuthoringConversationAnalysis_GetSupportedPrebuiltEntities_AllParameters_Convenience_Async()
+        public async Task Example_ConversationAuthoringPrebuilts_GetSupportedPrebuiltEntities_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            PrebuiltsAuthoringConversationAnalysis client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetPrebuiltsAuthoringConversationAnalysisClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringPrebuilts client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
             Response<PrebuiltEntities> response = await client.GetSupportedPrebuiltEntitiesAsync(language: "<language>", multilingual: "<multilingual>", top: 1234, skip: 1234, maxpagesize: 1234);
         }

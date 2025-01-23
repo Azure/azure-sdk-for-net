@@ -65,5 +65,95 @@ namespace Azure.AI.Language.Conversations.Authoring
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
             _endpoint = endpoint;
         }
+
+        /// <summary> Initializes a new instance of ConversationAuthoringCopyProject. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual ConversationAuthoringCopyProject GetConversationAuthoringCopyProjectClient(string apiVersion = "2024-11-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new ConversationAuthoringCopyProject(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ConversationAuthoringDeploymentResources. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual ConversationAuthoringDeploymentResources GetConversationAuthoringDeploymentResourcesClient(string apiVersion = "2024-11-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new ConversationAuthoringDeploymentResources(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ConversationAuthoringDeployments. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual ConversationAuthoringDeployments GetConversationAuthoringDeploymentsClient(string apiVersion = "2024-11-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new ConversationAuthoringDeployments(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ConversationAuthoringProjects. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual ConversationAuthoringProjects GetConversationAuthoringProjectsClient(string apiVersion = "2024-11-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new ConversationAuthoringProjects(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ConversationAuthoringProjectFiles. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual ConversationAuthoringProjectFiles GetConversationAuthoringProjectFilesClient(string apiVersion = "2024-11-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new ConversationAuthoringProjectFiles(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ConversationAuthoringTraining. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual ConversationAuthoringTraining GetConversationAuthoringTrainingClient(string apiVersion = "2024-11-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new ConversationAuthoringTraining(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ConversationAuthoringModels. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual ConversationAuthoringModels GetConversationAuthoringModelsClient(string apiVersion = "2024-11-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new ConversationAuthoringModels(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ConversationAuthoringPrebuilts. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual ConversationAuthoringPrebuilts GetConversationAuthoringPrebuiltsClient(string apiVersion = "2024-11-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new ConversationAuthoringPrebuilts(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
+
+        /// <summary> Initializes a new instance of ConversationAuthoringExportedModels. </summary>
+        /// <param name="apiVersion"> The API version to use for this operation. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
+        public virtual ConversationAuthoringExportedModels GetConversationAuthoringExportedModelsClient(string apiVersion = "2024-11-15-preview")
+        {
+            Argument.AssertNotNull(apiVersion, nameof(apiVersion));
+
+            return new ConversationAuthoringExportedModels(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, apiVersion);
+        }
     }
 }

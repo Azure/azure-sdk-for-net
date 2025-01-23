@@ -17,8 +17,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     // Data plane generated sub-client.
-    /// <summary> The ModelsAuthoringConversationAnalysis sub-client. </summary>
-    public partial class ModelsAuthoringConversationAnalysis
+    /// <summary> The ConversationAuthoringModels sub-client. </summary>
+    public partial class ConversationAuthoringModels
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
@@ -34,19 +34,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ModelsAuthoringConversationAnalysis for mocking. </summary>
-        protected ModelsAuthoringConversationAnalysis()
+        /// <summary> Initializes a new instance of ConversationAuthoringModels for mocking. </summary>
+        protected ConversationAuthoringModels()
         {
         }
 
-        /// <summary> Initializes a new instance of ModelsAuthoringConversationAnalysis. </summary>
+        /// <summary> Initializes a new instance of ConversationAuthoringModels. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal ModelsAuthoringConversationAnalysis(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal ConversationAuthoringModels(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -62,7 +62,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetTrainedModelAsync(string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetTrainedModelAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<ProjectTrainedModel>> GetTrainedModelAsync(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -79,7 +79,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetTrainedModel(string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetTrainedModel(string,string,CancellationToken)']/*" />
         public virtual Response<ProjectTrainedModel> GetTrainedModel(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -112,13 +112,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetTrainedModelAsync(string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetTrainedModelAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("ModelsAuthoringConversationAnalysis.GetTrainedModel");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringModels.GetTrainedModel");
             scope.Start();
             try
             {
@@ -154,13 +154,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetTrainedModel(string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetTrainedModel(string,string,RequestContext)']/*" />
         public virtual Response GetTrainedModel(string projectName, string trainedModelLabel, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("ModelsAuthoringConversationAnalysis.GetTrainedModel");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringModels.GetTrainedModel");
             scope.Start();
             try
             {
@@ -192,13 +192,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='DeleteTrainedModelAsync(string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='DeleteTrainedModelAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> DeleteTrainedModelAsync(string projectName, string trainedModelLabel, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("ModelsAuthoringConversationAnalysis.DeleteTrainedModel");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringModels.DeleteTrainedModel");
             scope.Start();
             try
             {
@@ -230,13 +230,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='DeleteTrainedModel(string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='DeleteTrainedModel(string,string,RequestContext)']/*" />
         public virtual Response DeleteTrainedModel(string projectName, string trainedModelLabel, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("ModelsAuthoringConversationAnalysis.DeleteTrainedModel");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringModels.DeleteTrainedModel");
             scope.Start();
             try
             {
@@ -257,7 +257,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetEvaluationStatusAsync(string,string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetEvaluationStatusAsync(string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<EvaluationJobState>> GetEvaluationStatusAsync(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -276,7 +276,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetEvaluationStatus(string,string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetEvaluationStatus(string,string,string,CancellationToken)']/*" />
         public virtual Response<EvaluationJobState> GetEvaluationStatus(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -311,14 +311,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetEvaluationStatusAsync(string,string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetEvaluationStatusAsync(string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetEvaluationStatusAsync(string projectName, string trainedModelLabel, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ModelsAuthoringConversationAnalysis.GetEvaluationStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringModels.GetEvaluationStatus");
             scope.Start();
             try
             {
@@ -355,14 +355,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetEvaluationStatus(string,string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetEvaluationStatus(string,string,string,RequestContext)']/*" />
         public virtual Response GetEvaluationStatus(string projectName, string trainedModelLabel, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ModelsAuthoringConversationAnalysis.GetEvaluationStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringModels.GetEvaluationStatus");
             scope.Start();
             try
             {
@@ -382,7 +382,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetModelEvaluationSummaryAsync(string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetModelEvaluationSummaryAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<EvaluationSummary>> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -399,7 +399,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetModelEvaluationSummary(string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetModelEvaluationSummary(string,string,CancellationToken)']/*" />
         public virtual Response<EvaluationSummary> GetModelEvaluationSummary(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -432,13 +432,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetModelEvaluationSummaryAsync(string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetModelEvaluationSummaryAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("ModelsAuthoringConversationAnalysis.GetModelEvaluationSummary");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringModels.GetModelEvaluationSummary");
             scope.Start();
             try
             {
@@ -474,13 +474,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetModelEvaluationSummary(string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetModelEvaluationSummary(string,string,RequestContext)']/*" />
         public virtual Response GetModelEvaluationSummary(string projectName, string trainedModelLabel, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("ModelsAuthoringConversationAnalysis.GetModelEvaluationSummary");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringModels.GetModelEvaluationSummary");
             scope.Start();
             try
             {
@@ -501,7 +501,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetLoadSnapshotStatusAsync(string,string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetLoadSnapshotStatusAsync(string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<LoadSnapshotJobState>> GetLoadSnapshotStatusAsync(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -520,7 +520,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetLoadSnapshotStatus(string,string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetLoadSnapshotStatus(string,string,string,CancellationToken)']/*" />
         public virtual Response<LoadSnapshotJobState> GetLoadSnapshotStatus(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -555,14 +555,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetLoadSnapshotStatusAsync(string,string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetLoadSnapshotStatusAsync(string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetLoadSnapshotStatusAsync(string projectName, string trainedModelLabel, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ModelsAuthoringConversationAnalysis.GetLoadSnapshotStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringModels.GetLoadSnapshotStatus");
             scope.Start();
             try
             {
@@ -599,14 +599,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetLoadSnapshotStatus(string,string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetLoadSnapshotStatus(string,string,string,RequestContext)']/*" />
         public virtual Response GetLoadSnapshotStatus(string projectName, string trainedModelLabel, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ModelsAuthoringConversationAnalysis.GetLoadSnapshotStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringModels.GetLoadSnapshotStatus");
             scope.Start();
             try
             {
@@ -628,7 +628,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetTrainedModelsAsync(string,int?,int?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetTrainedModelsAsync(string,int?,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<ProjectTrainedModel> GetTrainedModelsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -636,7 +636,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProjectTrainedModel.DeserializeProjectTrainedModel(e), ClientDiagnostics, _pipeline, "ModelsAuthoringConversationAnalysis.GetTrainedModels", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProjectTrainedModel.DeserializeProjectTrainedModel(e), ClientDiagnostics, _pipeline, "ConversationAuthoringModels.GetTrainedModels", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the trained models belonging to a project. </summary>
@@ -647,7 +647,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetTrainedModels(string,int?,int?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetTrainedModels(string,int?,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<ProjectTrainedModel> GetTrainedModels(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -655,7 +655,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProjectTrainedModel.DeserializeProjectTrainedModel(e), ClientDiagnostics, _pipeline, "ModelsAuthoringConversationAnalysis.GetTrainedModels", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProjectTrainedModel.DeserializeProjectTrainedModel(e), ClientDiagnostics, _pipeline, "ConversationAuthoringModels.GetTrainedModels", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -682,14 +682,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetTrainedModelsAsync(string,int?,int?,int?,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetTrainedModelsAsync(string,int?,int?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetTrainedModelsAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ModelsAuthoringConversationAnalysis.GetTrainedModels", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringModels.GetTrainedModels", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -716,14 +716,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetTrainedModels(string,int?,int?,int?,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetTrainedModels(string,int?,int?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetTrainedModels(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ModelsAuthoringConversationAnalysis.GetTrainedModels", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringModels.GetTrainedModels", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process. </summary>
@@ -736,7 +736,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetModelEvaluationResultsAsync(string,string,StringIndexType,int?,int?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetModelEvaluationResultsAsync(string,string,StringIndexType,int?,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<UtteranceEvaluationResult> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, StringIndexType stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -745,7 +745,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => UtteranceEvaluationResult.DeserializeUtteranceEvaluationResult(e), ClientDiagnostics, _pipeline, "ModelsAuthoringConversationAnalysis.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => UtteranceEvaluationResult.DeserializeUtteranceEvaluationResult(e), ClientDiagnostics, _pipeline, "ConversationAuthoringModels.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process. </summary>
@@ -758,7 +758,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetModelEvaluationResults(string,string,StringIndexType,int?,int?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetModelEvaluationResults(string,string,StringIndexType,int?,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<UtteranceEvaluationResult> GetModelEvaluationResults(string projectName, string trainedModelLabel, StringIndexType stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -767,7 +767,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => UtteranceEvaluationResult.DeserializeUtteranceEvaluationResult(e), ClientDiagnostics, _pipeline, "ModelsAuthoringConversationAnalysis.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => UtteranceEvaluationResult.DeserializeUtteranceEvaluationResult(e), ClientDiagnostics, _pipeline, "ConversationAuthoringModels.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -796,7 +796,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetModelEvaluationResultsAsync(string,string,string,int?,int?,int?,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetModelEvaluationResultsAsync(string,string,string,int?,int?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, string stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -805,7 +805,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ModelsAuthoringConversationAnalysis.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringModels.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -834,7 +834,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetModelEvaluationResults(string,string,string,int?,int?,int?,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetModelEvaluationResults(string,string,string,int?,int?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetModelEvaluationResults(string projectName, string trainedModelLabel, string stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -843,7 +843,7 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ModelsAuthoringConversationAnalysis.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringModels.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Triggers evaluation operation on a trained model. </summary>
@@ -854,7 +854,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='EvaluateModelAsync(WaitUntil,string,string,EvaluationDetails,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='EvaluateModelAsync(WaitUntil,string,string,EvaluationDetails,CancellationToken)']/*" />
         public virtual async Task<Operation<EvaluationJobResult>> EvaluateModelAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, EvaluationDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -864,7 +864,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await EvaluateModelAsync(waitUntil, projectName, trainedModelLabel, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchEvaluationJobResultFromEvaluationJobState, ClientDiagnostics, "ModelsAuthoringConversationAnalysis.EvaluateModel");
+            return ProtocolOperationHelpers.Convert(response, FetchEvaluationJobResultFromEvaluationJobState, ClientDiagnostics, "ConversationAuthoringModels.EvaluateModel");
         }
 
         /// <summary> Triggers evaluation operation on a trained model. </summary>
@@ -875,7 +875,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='EvaluateModel(WaitUntil,string,string,EvaluationDetails,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='EvaluateModel(WaitUntil,string,string,EvaluationDetails,CancellationToken)']/*" />
         public virtual Operation<EvaluationJobResult> EvaluateModel(WaitUntil waitUntil, string projectName, string trainedModelLabel, EvaluationDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -885,7 +885,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             using RequestContent content = body.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = EvaluateModel(waitUntil, projectName, trainedModelLabel, content, context);
-            return ProtocolOperationHelpers.Convert(response, FetchEvaluationJobResultFromEvaluationJobState, ClientDiagnostics, "ModelsAuthoringConversationAnalysis.EvaluateModel");
+            return ProtocolOperationHelpers.Convert(response, FetchEvaluationJobResultFromEvaluationJobState, ClientDiagnostics, "ConversationAuthoringModels.EvaluateModel");
         }
 
         /// <summary>
@@ -912,19 +912,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='EvaluateModelAsync(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='EvaluateModelAsync(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> EvaluateModelAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ModelsAuthoringConversationAnalysis.EvaluateModel");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringModels.EvaluateModel");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateEvaluateModelRequest(projectName, trainedModelLabel, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ModelsAuthoringConversationAnalysis.EvaluateModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringModels.EvaluateModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -957,19 +957,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='EvaluateModel(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='EvaluateModel(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> EvaluateModel(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ModelsAuthoringConversationAnalysis.EvaluateModel");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringModels.EvaluateModel");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateEvaluateModelRequest(projectName, trainedModelLabel, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ModelsAuthoringConversationAnalysis.EvaluateModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "ConversationAuthoringModels.EvaluateModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -997,18 +997,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='LoadSnapshotAsync(WaitUntil,string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='LoadSnapshotAsync(WaitUntil,string,string,RequestContext)']/*" />
         public virtual async Task<Operation> LoadSnapshotAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("ModelsAuthoringConversationAnalysis.LoadSnapshot");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringModels.LoadSnapshot");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateLoadSnapshotRequest(projectName, trainedModelLabel, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ModelsAuthoringConversationAnalysis.LoadSnapshot", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringModels.LoadSnapshot", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1036,18 +1036,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='LoadSnapshot(WaitUntil,string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='LoadSnapshot(WaitUntil,string,string,RequestContext)']/*" />
         public virtual Operation LoadSnapshot(WaitUntil waitUntil, string projectName, string trainedModelLabel, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
 
-            using var scope = ClientDiagnostics.CreateScope("ModelsAuthoringConversationAnalysis.LoadSnapshot");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringModels.LoadSnapshot");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateLoadSnapshotRequest(projectName, trainedModelLabel, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ModelsAuthoringConversationAnalysis.LoadSnapshot", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringModels.LoadSnapshot", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {

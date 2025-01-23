@@ -16,8 +16,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     // Data plane generated sub-client.
-    /// <summary> The DeploymentResourcesAuthoringConversationAnalysis sub-client. </summary>
-    public partial class DeploymentResourcesAuthoringConversationAnalysis
+    /// <summary> The ConversationAuthoringDeploymentResources sub-client. </summary>
+    public partial class ConversationAuthoringDeploymentResources
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
@@ -33,19 +33,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of DeploymentResourcesAuthoringConversationAnalysis for mocking. </summary>
-        protected DeploymentResourcesAuthoringConversationAnalysis()
+        /// <summary> Initializes a new instance of ConversationAuthoringDeploymentResources for mocking. </summary>
+        protected ConversationAuthoringDeploymentResources()
         {
         }
 
-        /// <summary> Initializes a new instance of DeploymentResourcesAuthoringConversationAnalysis. </summary>
+        /// <summary> Initializes a new instance of ConversationAuthoringDeploymentResources. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal DeploymentResourcesAuthoringConversationAnalysis(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal ConversationAuthoringDeploymentResources(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -61,7 +61,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetAssignDeploymentResourcesStatusAsync(string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetAssignDeploymentResourcesStatusAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<DeploymentResourcesJobState>> GetAssignDeploymentResourcesStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -78,7 +78,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetAssignDeploymentResourcesStatus(string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetAssignDeploymentResourcesStatus(string,string,CancellationToken)']/*" />
         public virtual Response<DeploymentResourcesJobState> GetAssignDeploymentResourcesStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -111,13 +111,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetAssignDeploymentResourcesStatusAsync(string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetAssignDeploymentResourcesStatusAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetAssignDeploymentResourcesStatusAsync(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeploymentResourcesAuthoringConversationAnalysis.GetAssignDeploymentResourcesStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.GetAssignDeploymentResourcesStatus");
             scope.Start();
             try
             {
@@ -153,13 +153,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetAssignDeploymentResourcesStatus(string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetAssignDeploymentResourcesStatus(string,string,RequestContext)']/*" />
         public virtual Response GetAssignDeploymentResourcesStatus(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeploymentResourcesAuthoringConversationAnalysis.GetAssignDeploymentResourcesStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.GetAssignDeploymentResourcesStatus");
             scope.Start();
             try
             {
@@ -179,7 +179,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetUnassignDeploymentResourcesStatusAsync(string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetUnassignDeploymentResourcesStatusAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<DeploymentResourcesJobState>> GetUnassignDeploymentResourcesStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -196,7 +196,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetUnassignDeploymentResourcesStatus(string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetUnassignDeploymentResourcesStatus(string,string,CancellationToken)']/*" />
         public virtual Response<DeploymentResourcesJobState> GetUnassignDeploymentResourcesStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -229,13 +229,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetUnassignDeploymentResourcesStatusAsync(string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetUnassignDeploymentResourcesStatusAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetUnassignDeploymentResourcesStatusAsync(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeploymentResourcesAuthoringConversationAnalysis.GetUnassignDeploymentResourcesStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.GetUnassignDeploymentResourcesStatus");
             scope.Start();
             try
             {
@@ -271,13 +271,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetUnassignDeploymentResourcesStatus(string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetUnassignDeploymentResourcesStatus(string,string,RequestContext)']/*" />
         public virtual Response GetUnassignDeploymentResourcesStatus(string projectName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("DeploymentResourcesAuthoringConversationAnalysis.GetUnassignDeploymentResourcesStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.GetUnassignDeploymentResourcesStatus");
             scope.Start();
             try
             {
@@ -296,7 +296,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetAssignedResourceDeploymentsAsync(int?,int?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetAssignedResourceDeploymentsAsync(int?,int?,int?,CancellationToken)']/*" />
         public virtual async Task<Response<AssignedResourceDeploymentsMetadata>> GetAssignedResourceDeploymentsAsync(int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -309,7 +309,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetAssignedResourceDeployments(int?,int?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetAssignedResourceDeployments(int?,int?,int?,CancellationToken)']/*" />
         public virtual Response<AssignedResourceDeploymentsMetadata> GetAssignedResourceDeployments(int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -338,10 +338,10 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetAssignedResourceDeploymentsAsync(int?,int?,int?,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetAssignedResourceDeploymentsAsync(int?,int?,int?,RequestContext)']/*" />
         public virtual async Task<Response> GetAssignedResourceDeploymentsAsync(int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("DeploymentResourcesAuthoringConversationAnalysis.GetAssignedResourceDeployments");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.GetAssignedResourceDeployments");
             scope.Start();
             try
             {
@@ -376,10 +376,10 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetAssignedResourceDeployments(int?,int?,int?,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetAssignedResourceDeployments(int?,int?,int?,RequestContext)']/*" />
         public virtual Response GetAssignedResourceDeployments(int? top, int? skip, int? maxpagesize, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("DeploymentResourcesAuthoringConversationAnalysis.GetAssignedResourceDeployments");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.GetAssignedResourceDeployments");
             scope.Start();
             try
             {
@@ -401,7 +401,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetDeploymentResourcesAsync(string,int?,int?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetDeploymentResourcesAsync(string,int?,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<AssignedDeploymentResource> GetDeploymentResourcesAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -409,7 +409,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AssignedDeploymentResource.DeserializeAssignedDeploymentResource(e), ClientDiagnostics, _pipeline, "DeploymentResourcesAuthoringConversationAnalysis.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AssignedDeploymentResource.DeserializeAssignedDeploymentResource(e), ClientDiagnostics, _pipeline, "ConversationAuthoringDeploymentResources.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the deployments resources assigned to the project. </summary>
@@ -420,7 +420,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetDeploymentResources(string,int?,int?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetDeploymentResources(string,int?,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<AssignedDeploymentResource> GetDeploymentResources(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -428,7 +428,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AssignedDeploymentResource.DeserializeAssignedDeploymentResource(e), ClientDiagnostics, _pipeline, "DeploymentResourcesAuthoringConversationAnalysis.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AssignedDeploymentResource.DeserializeAssignedDeploymentResource(e), ClientDiagnostics, _pipeline, "ConversationAuthoringDeploymentResources.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -455,14 +455,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetDeploymentResourcesAsync(string,int?,int?,int?,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetDeploymentResourcesAsync(string,int?,int?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetDeploymentResourcesAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeploymentResourcesAuthoringConversationAnalysis.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringDeploymentResources.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -489,14 +489,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetDeploymentResources(string,int?,int?,int?,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetDeploymentResources(string,int?,int?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetDeploymentResources(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "DeploymentResourcesAuthoringConversationAnalysis.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringDeploymentResources.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Assign new Azure resources to a project to allow deploying new deployments to them. This API is available only via AAD authentication and not supported via subscription key authentication. For more details about AAD authentication, check here: https://learn.microsoft.com/en-us/azure/cognitive-services/authentication?tabs=powershell#authenticate-with-azure-active-directory. </summary>
@@ -506,7 +506,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='AssignDeploymentResourcesAsync(WaitUntil,string,AssignDeploymentResourcesDetails,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='AssignDeploymentResourcesAsync(WaitUntil,string,AssignDeploymentResourcesDetails,CancellationToken)']/*" />
         public virtual async Task<Operation> AssignDeploymentResourcesAsync(WaitUntil waitUntil, string projectName, AssignDeploymentResourcesDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -524,7 +524,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='AssignDeploymentResources(WaitUntil,string,AssignDeploymentResourcesDetails,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='AssignDeploymentResources(WaitUntil,string,AssignDeploymentResourcesDetails,CancellationToken)']/*" />
         public virtual Operation AssignDeploymentResources(WaitUntil waitUntil, string projectName, AssignDeploymentResourcesDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -558,18 +558,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='AssignDeploymentResourcesAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='AssignDeploymentResourcesAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation> AssignDeploymentResourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DeploymentResourcesAuthoringConversationAnalysis.AssignDeploymentResources");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.AssignDeploymentResources");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAssignDeploymentResourcesRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DeploymentResourcesAuthoringConversationAnalysis.AssignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeploymentResources.AssignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -601,18 +601,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='AssignDeploymentResources(WaitUntil,string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='AssignDeploymentResources(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation AssignDeploymentResources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DeploymentResourcesAuthoringConversationAnalysis.AssignDeploymentResources");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.AssignDeploymentResources");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateAssignDeploymentResourcesRequest(projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DeploymentResourcesAuthoringConversationAnalysis.AssignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeploymentResources.AssignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -628,7 +628,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='UnassignDeploymentResourcesAsync(WaitUntil,string,UnassignDeploymentResourcesDetails,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='UnassignDeploymentResourcesAsync(WaitUntil,string,UnassignDeploymentResourcesDetails,CancellationToken)']/*" />
         public virtual async Task<Operation> UnassignDeploymentResourcesAsync(WaitUntil waitUntil, string projectName, UnassignDeploymentResourcesDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -646,7 +646,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='UnassignDeploymentResources(WaitUntil,string,UnassignDeploymentResourcesDetails,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='UnassignDeploymentResources(WaitUntil,string,UnassignDeploymentResourcesDetails,CancellationToken)']/*" />
         public virtual Operation UnassignDeploymentResources(WaitUntil waitUntil, string projectName, UnassignDeploymentResourcesDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -680,18 +680,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='UnassignDeploymentResourcesAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='UnassignDeploymentResourcesAsync(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation> UnassignDeploymentResourcesAsync(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DeploymentResourcesAuthoringConversationAnalysis.UnassignDeploymentResources");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.UnassignDeploymentResources");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUnassignDeploymentResourcesRequest(projectName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "DeploymentResourcesAuthoringConversationAnalysis.UnassignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeploymentResources.UnassignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -723,18 +723,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/DeploymentResourcesAuthoringConversationAnalysis.xml" path="doc/members/member[@name='UnassignDeploymentResources(WaitUntil,string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='UnassignDeploymentResources(WaitUntil,string,RequestContent,RequestContext)']/*" />
         public virtual Operation UnassignDeploymentResources(WaitUntil waitUntil, string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("DeploymentResourcesAuthoringConversationAnalysis.UnassignDeploymentResources");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.UnassignDeploymentResources");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateUnassignDeploymentResourcesRequest(projectName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "DeploymentResourcesAuthoringConversationAnalysis.UnassignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringDeploymentResources.UnassignDeploymentResources", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {

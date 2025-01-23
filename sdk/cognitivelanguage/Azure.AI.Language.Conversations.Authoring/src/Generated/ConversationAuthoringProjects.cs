@@ -16,8 +16,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     // Data plane generated sub-client.
-    /// <summary> The ProjectsAuthoringConversationAnalysis sub-client. </summary>
-    public partial class ProjectsAuthoringConversationAnalysis
+    /// <summary> The ConversationAuthoringProjects sub-client. </summary>
+    public partial class ConversationAuthoringProjects
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
@@ -33,19 +33,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ProjectsAuthoringConversationAnalysis for mocking. </summary>
-        protected ProjectsAuthoringConversationAnalysis()
+        /// <summary> Initializes a new instance of ConversationAuthoringProjects for mocking. </summary>
+        protected ConversationAuthoringProjects()
         {
         }
 
-        /// <summary> Initializes a new instance of ProjectsAuthoringConversationAnalysis. </summary>
+        /// <summary> Initializes a new instance of ConversationAuthoringProjects. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal ProjectsAuthoringConversationAnalysis(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal ConversationAuthoringProjects(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -60,7 +60,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetProjectAsync(string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProjectAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<ProjectMetadata>> GetProjectAsync(string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -75,7 +75,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetProject(string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProject(string,CancellationToken)']/*" />
         public virtual Response<ProjectMetadata> GetProject(string projectName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -106,12 +106,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetProjectAsync(string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProjectAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetProjectAsync(string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("ProjectsAuthoringConversationAnalysis.GetProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjects.GetProject");
             scope.Start();
             try
             {
@@ -146,12 +146,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetProject(string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProject(string,RequestContext)']/*" />
         public virtual Response GetProject(string projectName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("ProjectsAuthoringConversationAnalysis.GetProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjects.GetProject");
             scope.Start();
             try
             {
@@ -182,13 +182,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='CreateProjectAsync(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='CreateProjectAsync(string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Response> CreateProjectAsync(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ProjectsAuthoringConversationAnalysis.CreateProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjects.CreateProject");
             scope.Start();
             try
             {
@@ -219,13 +219,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='CreateProject(string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='CreateProject(string,RequestContent,RequestContext)']/*" />
         public virtual Response CreateProject(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ProjectsAuthoringConversationAnalysis.CreateProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjects.CreateProject");
             scope.Start();
             try
             {
@@ -244,7 +244,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetProjectDeletionStatusAsync(string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProjectDeletionStatusAsync(string,CancellationToken)']/*" />
         public virtual async Task<Response<ProjectDeletionJobState>> GetProjectDeletionStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -259,7 +259,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetProjectDeletionStatus(string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProjectDeletionStatus(string,CancellationToken)']/*" />
         public virtual Response<ProjectDeletionJobState> GetProjectDeletionStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -290,12 +290,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetProjectDeletionStatusAsync(string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProjectDeletionStatusAsync(string,RequestContext)']/*" />
         public virtual async Task<Response> GetProjectDeletionStatusAsync(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ProjectsAuthoringConversationAnalysis.GetProjectDeletionStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjects.GetProjectDeletionStatus");
             scope.Start();
             try
             {
@@ -330,12 +330,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetProjectDeletionStatus(string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProjectDeletionStatus(string,RequestContext)']/*" />
         public virtual Response GetProjectDeletionStatus(string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ProjectsAuthoringConversationAnalysis.GetProjectDeletionStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjects.GetProjectDeletionStatus");
             scope.Start();
             try
             {
@@ -355,7 +355,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetSupportedLanguagesAsync(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetSupportedLanguagesAsync(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)']/*" />
         public virtual async Task<Response<SupportedLanguages>> GetSupportedLanguagesAsync(AnalyzeConversationAuthoringProjectKind projectKind, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -369,7 +369,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
         /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)']/*" />
         public virtual Response<SupportedLanguages> GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind projectKind, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -400,12 +400,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetSupportedLanguagesAsync(string,int?,int?,int?,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetSupportedLanguagesAsync(string,int?,int?,int?,RequestContext)']/*" />
         public virtual async Task<Response> GetSupportedLanguagesAsync(string projectKind, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
-            using var scope = ClientDiagnostics.CreateScope("ProjectsAuthoringConversationAnalysis.GetSupportedLanguages");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjects.GetSupportedLanguages");
             scope.Start();
             try
             {
@@ -442,12 +442,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetSupportedLanguages(string,int?,int?,int?,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetSupportedLanguages(string,int?,int?,int?,RequestContext)']/*" />
         public virtual Response GetSupportedLanguages(string projectKind, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
-            using var scope = ClientDiagnostics.CreateScope("ProjectsAuthoringConversationAnalysis.GetSupportedLanguages");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjects.GetSupportedLanguages");
             scope.Start();
             try
             {
@@ -466,13 +466,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetProjectsAsync(int?,int?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProjectsAsync(int?,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<ProjectMetadata> GetProjectsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProjectMetadata.DeserializeProjectMetadata(e), ClientDiagnostics, _pipeline, "ProjectsAuthoringConversationAnalysis.GetProjects", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProjectMetadata.DeserializeProjectMetadata(e), ClientDiagnostics, _pipeline, "ConversationAuthoringProjects.GetProjects", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the existing projects. </summary>
@@ -480,13 +480,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="skip"> The number of result items to skip. </param>
         /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetProjects(int?,int?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProjects(int?,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<ProjectMetadata> GetProjects(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProjectMetadata.DeserializeProjectMetadata(e), ClientDiagnostics, _pipeline, "ProjectsAuthoringConversationAnalysis.GetProjects", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProjectMetadata.DeserializeProjectMetadata(e), ClientDiagnostics, _pipeline, "ConversationAuthoringProjects.GetProjects", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -510,12 +510,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetProjectsAsync(int?,int?,int?,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProjectsAsync(int?,int?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetProjectsAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ProjectsAuthoringConversationAnalysis.GetProjects", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringProjects.GetProjects", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -539,12 +539,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetProjects(int?,int?,int?,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProjects(int?,int?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetProjects(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ProjectsAuthoringConversationAnalysis.GetProjects", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringProjects.GetProjects", "value", "nextLink", maxpagesize, context);
         }
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
@@ -565,17 +565,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='DeleteProjectAsync(WaitUntil,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='DeleteProjectAsync(WaitUntil,string,RequestContext)']/*" />
         public virtual async Task<Operation> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("ProjectsAuthoringConversationAnalysis.DeleteProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjects.DeleteProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ProjectsAuthoringConversationAnalysis.DeleteProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringProjects.DeleteProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -602,17 +602,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ProjectsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='DeleteProject(WaitUntil,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='DeleteProject(WaitUntil,string,RequestContext)']/*" />
         public virtual Operation DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
-            using var scope = ClientDiagnostics.CreateScope("ProjectsAuthoringConversationAnalysis.DeleteProject");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjects.DeleteProject");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ProjectsAuthoringConversationAnalysis.DeleteProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringProjects.DeleteProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {

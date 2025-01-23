@@ -16,8 +16,8 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     // Data plane generated sub-client.
-    /// <summary> The ExportedModelsAuthoringConversationAnalysis sub-client. </summary>
-    public partial class ExportedModelsAuthoringConversationAnalysis
+    /// <summary> The ConversationAuthoringExportedModels sub-client. </summary>
+    public partial class ConversationAuthoringExportedModels
     {
         private const string AuthorizationHeader = "Ocp-Apim-Subscription-Key";
         private readonly AzureKeyCredential _keyCredential;
@@ -33,19 +33,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of ExportedModelsAuthoringConversationAnalysis for mocking. </summary>
-        protected ExportedModelsAuthoringConversationAnalysis()
+        /// <summary> Initializes a new instance of ConversationAuthoringExportedModels for mocking. </summary>
+        protected ConversationAuthoringExportedModels()
         {
         }
 
-        /// <summary> Initializes a new instance of ExportedModelsAuthoringConversationAnalysis. </summary>
+        /// <summary> Initializes a new instance of ConversationAuthoringExportedModels. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="keyCredential"> The key credential to copy. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Supported Cognitive Services endpoint e.g., https://&lt;resource-name&gt;.api.cognitiveservices.azure.com. </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal ExportedModelsAuthoringConversationAnalysis(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal ConversationAuthoringExportedModels(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, AzureKeyCredential keyCredential, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -61,7 +61,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ExportedModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetExportedModelAsync(string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringExportedModels.xml" path="doc/members/member[@name='GetExportedModelAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<ExportedTrainedModel>> GetExportedModelAsync(string projectName, string exportedModelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -78,7 +78,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ExportedModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetExportedModel(string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringExportedModels.xml" path="doc/members/member[@name='GetExportedModel(string,string,CancellationToken)']/*" />
         public virtual Response<ExportedTrainedModel> GetExportedModel(string projectName, string exportedModelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -111,13 +111,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ExportedModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetExportedModelAsync(string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringExportedModels.xml" path="doc/members/member[@name='GetExportedModelAsync(string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetExportedModelAsync(string projectName, string exportedModelName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
 
-            using var scope = ClientDiagnostics.CreateScope("ExportedModelsAuthoringConversationAnalysis.GetExportedModel");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringExportedModels.GetExportedModel");
             scope.Start();
             try
             {
@@ -153,13 +153,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ExportedModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetExportedModel(string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringExportedModels.xml" path="doc/members/member[@name='GetExportedModel(string,string,RequestContext)']/*" />
         public virtual Response GetExportedModel(string projectName, string exportedModelName, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
 
-            using var scope = ClientDiagnostics.CreateScope("ExportedModelsAuthoringConversationAnalysis.GetExportedModel");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringExportedModels.GetExportedModel");
             scope.Start();
             try
             {
@@ -180,7 +180,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ExportedModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetExportedModelJobStatusAsync(string,string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringExportedModels.xml" path="doc/members/member[@name='GetExportedModelJobStatusAsync(string,string,string,CancellationToken)']/*" />
         public virtual async Task<Response<ExportedModelJobState>> GetExportedModelJobStatusAsync(string projectName, string exportedModelName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -199,7 +199,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ExportedModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetExportedModelJobStatus(string,string,string,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringExportedModels.xml" path="doc/members/member[@name='GetExportedModelJobStatus(string,string,string,CancellationToken)']/*" />
         public virtual Response<ExportedModelJobState> GetExportedModelJobStatus(string projectName, string exportedModelName, string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -234,14 +234,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ExportedModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetExportedModelJobStatusAsync(string,string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringExportedModels.xml" path="doc/members/member[@name='GetExportedModelJobStatusAsync(string,string,string,RequestContext)']/*" />
         public virtual async Task<Response> GetExportedModelJobStatusAsync(string projectName, string exportedModelName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ExportedModelsAuthoringConversationAnalysis.GetExportedModelJobStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringExportedModels.GetExportedModelJobStatus");
             scope.Start();
             try
             {
@@ -278,14 +278,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ExportedModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetExportedModelJobStatus(string,string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringExportedModels.xml" path="doc/members/member[@name='GetExportedModelJobStatus(string,string,string,RequestContext)']/*" />
         public virtual Response GetExportedModelJobStatus(string projectName, string exportedModelName, string jobId, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("ExportedModelsAuthoringConversationAnalysis.GetExportedModelJobStatus");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringExportedModels.GetExportedModelJobStatus");
             scope.Start();
             try
             {
@@ -307,7 +307,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ExportedModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetExportedModelsAsync(string,int?,int?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringExportedModels.xml" path="doc/members/member[@name='GetExportedModelsAsync(string,int?,int?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<ExportedTrainedModel> GetExportedModelsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -315,7 +315,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExportedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExportedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ExportedTrainedModel.DeserializeExportedTrainedModel(e), ClientDiagnostics, _pipeline, "ExportedModelsAuthoringConversationAnalysis.GetExportedModels", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ExportedTrainedModel.DeserializeExportedTrainedModel(e), ClientDiagnostics, _pipeline, "ConversationAuthoringExportedModels.GetExportedModels", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the exported models belonging to a project. </summary>
@@ -326,7 +326,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ExportedModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetExportedModels(string,int?,int?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringExportedModels.xml" path="doc/members/member[@name='GetExportedModels(string,int?,int?,int?,CancellationToken)']/*" />
         public virtual Pageable<ExportedTrainedModel> GetExportedModels(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -334,7 +334,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExportedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExportedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ExportedTrainedModel.DeserializeExportedTrainedModel(e), ClientDiagnostics, _pipeline, "ExportedModelsAuthoringConversationAnalysis.GetExportedModels", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ExportedTrainedModel.DeserializeExportedTrainedModel(e), ClientDiagnostics, _pipeline, "ConversationAuthoringExportedModels.GetExportedModels", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -361,14 +361,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ExportedModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetExportedModelsAsync(string,int?,int?,int?,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringExportedModels.xml" path="doc/members/member[@name='GetExportedModelsAsync(string,int?,int?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetExportedModelsAsync(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExportedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExportedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ExportedModelsAuthoringConversationAnalysis.GetExportedModels", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringExportedModels.GetExportedModels", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -395,14 +395,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/ExportedModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='GetExportedModels(string,int?,int?,int?,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringExportedModels.xml" path="doc/members/member[@name='GetExportedModels(string,int?,int?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetExportedModels(string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetExportedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetExportedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ExportedModelsAuthoringConversationAnalysis.GetExportedModels", "value", "nextLink", maxpagesize, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringExportedModels.GetExportedModels", "value", "nextLink", maxpagesize, context);
         }
 
         // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
@@ -424,18 +424,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ExportedModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='DeleteExportedModelAsync(WaitUntil,string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringExportedModels.xml" path="doc/members/member[@name='DeleteExportedModelAsync(WaitUntil,string,string,RequestContext)']/*" />
         public virtual async Task<Operation> DeleteExportedModelAsync(WaitUntil waitUntil, string projectName, string exportedModelName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
 
-            using var scope = ClientDiagnostics.CreateScope("ExportedModelsAuthoringConversationAnalysis.DeleteExportedModel");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringExportedModels.DeleteExportedModel");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteExportedModelRequest(projectName, exportedModelName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ExportedModelsAuthoringConversationAnalysis.DeleteExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringExportedModels.DeleteExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -463,18 +463,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ExportedModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='DeleteExportedModel(WaitUntil,string,string,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringExportedModels.xml" path="doc/members/member[@name='DeleteExportedModel(WaitUntil,string,string,RequestContext)']/*" />
         public virtual Operation DeleteExportedModel(WaitUntil waitUntil, string projectName, string exportedModelName, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
 
-            using var scope = ClientDiagnostics.CreateScope("ExportedModelsAuthoringConversationAnalysis.DeleteExportedModel");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringExportedModels.DeleteExportedModel");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateDeleteExportedModelRequest(projectName, exportedModelName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ExportedModelsAuthoringConversationAnalysis.DeleteExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringExportedModels.DeleteExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -491,7 +491,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ExportedModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='CreateOrUpdateExportedModelAsync(WaitUntil,string,string,ExportedModelDetails,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringExportedModels.xml" path="doc/members/member[@name='CreateOrUpdateExportedModelAsync(WaitUntil,string,string,ExportedModelDetails,CancellationToken)']/*" />
         public virtual async Task<Operation> CreateOrUpdateExportedModelAsync(WaitUntil waitUntil, string projectName, string exportedModelName, ExportedModelDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -511,7 +511,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="exportedModelName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ExportedModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='CreateOrUpdateExportedModel(WaitUntil,string,string,ExportedModelDetails,CancellationToken)']/*" />
+        /// <include file="Docs/ConversationAuthoringExportedModels.xml" path="doc/members/member[@name='CreateOrUpdateExportedModel(WaitUntil,string,string,ExportedModelDetails,CancellationToken)']/*" />
         public virtual Operation CreateOrUpdateExportedModel(WaitUntil waitUntil, string projectName, string exportedModelName, ExportedModelDetails body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
@@ -547,19 +547,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ExportedModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='CreateOrUpdateExportedModelAsync(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringExportedModels.xml" path="doc/members/member[@name='CreateOrUpdateExportedModelAsync(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation> CreateOrUpdateExportedModelAsync(WaitUntil waitUntil, string projectName, string exportedModelName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ExportedModelsAuthoringConversationAnalysis.CreateOrUpdateExportedModel");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringExportedModels.CreateOrUpdateExportedModel");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateExportedModelRequest(projectName, exportedModelName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ExportedModelsAuthoringConversationAnalysis.CreateOrUpdateExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringExportedModels.CreateOrUpdateExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -592,19 +592,19 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="exportedModelName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ExportedModelsAuthoringConversationAnalysis.xml" path="doc/members/member[@name='CreateOrUpdateExportedModel(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
+        /// <include file="Docs/ConversationAuthoringExportedModels.xml" path="doc/members/member[@name='CreateOrUpdateExportedModel(WaitUntil,string,string,RequestContent,RequestContext)']/*" />
         public virtual Operation CreateOrUpdateExportedModel(WaitUntil waitUntil, string projectName, string exportedModelName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNullOrEmpty(exportedModelName, nameof(exportedModelName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ExportedModelsAuthoringConversationAnalysis.CreateOrUpdateExportedModel");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringExportedModels.CreateOrUpdateExportedModel");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateCreateOrUpdateExportedModelRequest(projectName, exportedModelName, content, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ExportedModelsAuthoringConversationAnalysis.CreateOrUpdateExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringExportedModels.CreateOrUpdateExportedModel", OperationFinalStateVia.OperationLocation, context, waitUntil);
             }
             catch (Exception e)
             {
