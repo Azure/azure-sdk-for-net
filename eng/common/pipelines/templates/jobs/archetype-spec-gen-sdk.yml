@@ -168,6 +168,34 @@ jobs:
         artifactName: $(sdkArtifactName)
         targetPath: "$(System.DefaultWorkingDirectory)/generatedSdkArtifacts"
 
+    - task: PowerShell@2
+      displayName: Add label to the spec PR
+      condition: and(eq(variables['Build.Reason'], 'PullRequest'), ne(variables['BreakingChangeLabel'], ''), eq(variables['BreakingChangeLabelAction'], 'add'))
+      inputs:
+        pwsh: true
+        workingDirectory: $(SdkRepoDirectory)
+        filePath: $(SdkRepoDirectory)/eng/common/scripts/Add-IssueLabels.ps1
+        arguments: >
+          -RepoOwner $(SpecRepoOwner)
+          -RepoName $(SpecRepoName)
+          -IssueNumber "$(System.PullRequest.PullRequestNumber)"
+          -Labels $(BreakingChangeLabel)
+          -AuthToken "$(azuresdk-github-pat)"
+
+    - task: PowerShell@2
+      displayName: Remove label from the spec PR
+      condition: and(eq(variables['Build.Reason'], 'PullRequest'), ne(variables['BreakingChangeLabel'], ''), eq(variables['BreakingChangeLabelAction'], 'remove'))
+      inputs:
+        pwsh: true
+        workingDirectory: $(SdkRepoDirectory)
+        filePath: $(SdkRepoDirectory)/eng/common/scripts/Remove-IssueLabel.ps1
+        arguments: >
+          -RepoOwner $(SpecRepoOwner)
+          -RepoName $(SpecRepoName)
+          -IssueNumber "$(System.PullRequest.PullRequestNumber)"
+          -LabelName $(BreakingChangeLabel)
+          -AuthToken "$(azuresdk-github-pat)"
+
     - ${{ if eq(parameters.SkipPullRequestCreation, false) }}: 
       - template: /eng/common/pipelines/templates/steps/git-push-changes.yml
         parameters:

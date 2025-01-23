@@ -54,7 +54,7 @@ namespace Azure.Storage.Blobs
                 {
                     BlobContainerOptions = new()
                     {
-                        BlobDirectoryPrefix = blobDirectoryPrefix,
+                        BlobPrefix = blobDirectoryPrefix,
                     }
                 },
                 cancellationToken);
@@ -141,7 +141,7 @@ namespace Azure.Storage.Blobs
                 {
                     BlobContainerOptions = new()
                     {
-                        BlobDirectoryPrefix = blobDirectoryPrefix
+                        BlobPrefix = blobDirectoryPrefix
                     },
                 },
                 cancellationToken);

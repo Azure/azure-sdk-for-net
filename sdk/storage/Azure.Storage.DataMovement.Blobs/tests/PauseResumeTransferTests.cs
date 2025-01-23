@@ -596,9 +596,9 @@ namespace Azure.Storage.DataMovement.Tests
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions testOptions = new()
             {
-                Metadata = new(DataProvider.BuildMetadata()),
+                Metadata = DataProvider.BuildMetadata(),
                 AccessTier = AccessTier.Cool,
-                ContentLanguage = new("en-US"),
+                ContentLanguage = "en-US",
             };
 
             long size = Constants.KB;
@@ -635,8 +635,8 @@ namespace Azure.Storage.DataMovement.Tests
             BlockBlobClient blob = blobContainer.Container.GetBlockBlobClient(builder.BlobName);
             BlobProperties props = (await blob.GetPropertiesAsync()).Value;
             Assert.That(props.Metadata, Is.EqualTo(metadata));
-            Assert.AreEqual(testOptions.AccessTier.Value, new AccessTier(props.AccessTier));
-            Assert.AreEqual(testOptions.ContentLanguage.Value, props.ContentLanguage);
+            Assert.AreEqual(testOptions.AccessTier, new AccessTier(props.AccessTier));
+            Assert.AreEqual(testOptions.ContentLanguage, props.ContentLanguage);
         }
 
         private async Task<StorageResource> CreateBlobDirectorySourceResourceAsync(
@@ -689,7 +689,7 @@ namespace Azure.Storage.DataMovement.Tests
                 }
             }
             options ??= new();
-            options.BlobDirectoryPrefix = directoryPath;
+            options.BlobPrefix = directoryPath;
             return provider.FromClient(container, options);
         }
 
@@ -737,7 +737,7 @@ namespace Azure.Storage.DataMovement.Tests
                 Argument.AssertNotNull(destinationContainer, nameof(destinationContainer));
                 BlobStorageResourceContainerOptions options = new BlobStorageResourceContainerOptions()
                 {
-                    BlobDirectoryPrefix = GetNewBlobDirectoryName(),
+                    BlobPrefix = GetNewBlobDirectoryName(),
                 };
                 SourceResource ??= await CreateBlobDirectorySourceResourceAsync(
                     size: size,
@@ -760,7 +760,7 @@ namespace Azure.Storage.DataMovement.Tests
 
                 BlobStorageResourceContainerOptions options = new()
                 {
-                    BlobDirectoryPrefix = GetNewBlobDirectoryName()
+                    BlobPrefix = GetNewBlobDirectoryName()
                 };
                 DestinationResource ??= blobProvider.FromClient(destinationContainer, options);
             }
