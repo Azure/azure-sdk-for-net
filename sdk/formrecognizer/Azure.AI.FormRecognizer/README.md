@@ -15,6 +15,7 @@ Azure AI Document Intelligence is a cloud service that uses machine learning to 
 
 ## Getting started
 
+
 ### Install the package
 Install the Azure Form Recognizer client library for .NET with [NuGet][nuget]:
 
