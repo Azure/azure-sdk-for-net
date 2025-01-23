@@ -15,11 +15,10 @@ using NUnit.Framework;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
-    public class BlobStorageResourceProviderTests
+    public class BlobsStorageResourceProviderTests
     {
         public enum CredType
         {
-            None,
             SharedKey,
             Token,
             Sas
@@ -37,11 +36,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.IsNotNull(clientConfig);
             switch (credType)
             {
-                case CredType.None:
-                    Assert.IsNull(clientConfig.SharedKeyCredential);
-                    Assert.IsNull(clientConfig.TokenCredential);
-                    Assert.IsNull(clientConfig.SasCredential);
-                    break;
                 case CredType.SharedKey:
                     Assert.IsNotNull(clientConfig.SharedKeyCredential);
                     Assert.IsNull(clientConfig.TokenCredential);
@@ -106,7 +100,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [Combinatorial]
         public void FromContainer(
             [Values(true, false)] bool withPrefix,
-            [Values(CredType.None, CredType.SharedKey, CredType.Token, CredType.Sas)] CredType credType)
+            [Values(CredType.SharedKey, CredType.Token, CredType.Sas)] CredType credType)
         {
             const string containerName = "mycontainer";
             const string prefix = "my/prefix";
@@ -115,7 +109,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             BlobsStorageResourceProvider provider = credType switch
             {
-                CredType.None => new(),
                 CredType.SharedKey => new(mockCreds.SharedKey.Object),
                 CredType.Token => new(mockCreds.Token.Object),
                 CredType.Sas => new(mockCreds.Sas.Object),
@@ -133,7 +126,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         [Combinatorial]
         public void FromBlob(
             [Values(BlobType.Unspecified, BlobType.Block, BlobType.Page, BlobType.Append)] BlobType blobType,
-            [Values(CredType.None, CredType.SharedKey, CredType.Token, CredType.Sas)] CredType credType)
+            [Values(CredType.SharedKey, CredType.Token, CredType.Sas)] CredType credType)
         {
             const string containerName = "mycontainer";
             const string blobName = "my/blob.txt";
@@ -142,7 +135,6 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             BlobsStorageResourceProvider provider = credType switch
             {
-                CredType.None => new(),
                 CredType.SharedKey => new(mockCreds.SharedKey.Object),
                 CredType.Token => new(mockCreds.Token.Object),
                 CredType.Sas => new(mockCreds.Sas.Object),
