@@ -92,11 +92,6 @@ namespace Azure.ResourceManager.Advisor
                 writer.WritePropertyName("recommendationTypeId"u8);
                 writer.WriteStringValue(RecommendationTypeId);
             }
-            if (Optional.IsDefined(Risk))
-            {
-                writer.WritePropertyName("risk"u8);
-                writer.WriteStringValue(Risk.Value.ToString());
-            }
             if (Optional.IsDefined(ShortDescription))
             {
                 writer.WritePropertyName("shortDescription"u8);
@@ -261,7 +256,6 @@ namespace Azure.ResourceManager.Advisor
             DateTimeOffset? lastUpdated = default;
             IDictionary<string, BinaryData> metadata = default;
             string recommendationTypeId = default;
-            Risk? risk = default;
             ShortDescription shortDescription = default;
             IList<Guid> suppressionIds = default;
             IDictionary<string, string> extendedProperties = default;
@@ -371,15 +365,6 @@ namespace Azure.ResourceManager.Advisor
                         if (property0.NameEquals("recommendationTypeId"u8))
                         {
                             recommendationTypeId = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("risk"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            risk = new Risk(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("shortDescription"u8))
@@ -544,7 +529,6 @@ namespace Azure.ResourceManager.Advisor
                 lastUpdated,
                 metadata ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 recommendationTypeId,
-                risk,
                 shortDescription,
                 suppressionIds ?? new ChangeTrackingList<Guid>(),
                 extendedProperties ?? new ChangeTrackingDictionary<string, string>(),

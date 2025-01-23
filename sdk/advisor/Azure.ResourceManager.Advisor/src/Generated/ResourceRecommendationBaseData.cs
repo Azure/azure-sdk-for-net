@@ -74,7 +74,6 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="lastUpdated"> The most recent time that Advisor checked the validity of the recommendation. </param>
         /// <param name="metadata"> The recommendation metadata. </param>
         /// <param name="recommendationTypeId"> The recommendation-type GUID. </param>
-        /// <param name="risk"> The potential risk of not implementing the recommendation. </param>
         /// <param name="shortDescription"> A summary of the recommendation. </param>
         /// <param name="suppressionIds"> The list of snoozed and dismissed rules for the recommendation. </param>
         /// <param name="extendedProperties"> Extended properties. </param>
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.Advisor
         /// <param name="remediation"> The automated way to apply recommendation. </param>
         /// <param name="exposedMetadataProperties"> The recommendation metadata properties exposed to customer to provide additional information. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceRecommendationBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Category? category, Impact? impact, string impactedField, string impactedValue, DateTimeOffset? lastUpdated, IDictionary<string, BinaryData> metadata, string recommendationTypeId, Risk? risk, ShortDescription shortDescription, IList<Guid> suppressionIds, IDictionary<string, string> extendedProperties, ResourceMetadata resourceMetadata, string description, string label, string learnMoreLink, string potentialBenefits, IList<IDictionary<string, BinaryData>> actions, IDictionary<string, BinaryData> remediation, IDictionary<string, BinaryData> exposedMetadataProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ResourceRecommendationBaseData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Category? category, Impact? impact, string impactedField, string impactedValue, DateTimeOffset? lastUpdated, IDictionary<string, BinaryData> metadata, string recommendationTypeId, ShortDescription shortDescription, IList<Guid> suppressionIds, IDictionary<string, string> extendedProperties, ResourceMetadata resourceMetadata, string description, string label, string learnMoreLink, string potentialBenefits, IList<IDictionary<string, BinaryData>> actions, IDictionary<string, BinaryData> remediation, IDictionary<string, BinaryData> exposedMetadataProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Category = category;
             Impact = impact;
@@ -96,7 +95,6 @@ namespace Azure.ResourceManager.Advisor
             LastUpdated = lastUpdated;
             Metadata = metadata;
             RecommendationTypeId = recommendationTypeId;
-            Risk = risk;
             ShortDescription = shortDescription;
             SuppressionIds = suppressionIds;
             ExtendedProperties = extendedProperties;
@@ -154,8 +152,6 @@ namespace Azure.ResourceManager.Advisor
         public IDictionary<string, BinaryData> Metadata { get; }
         /// <summary> The recommendation-type GUID. </summary>
         public string RecommendationTypeId { get; set; }
-        /// <summary> The potential risk of not implementing the recommendation. </summary>
-        public Risk? Risk { get; set; }
         /// <summary> A summary of the recommendation. </summary>
         public ShortDescription ShortDescription { get; set; }
         /// <summary> The list of snoozed and dismissed rules for the recommendation. </summary>
