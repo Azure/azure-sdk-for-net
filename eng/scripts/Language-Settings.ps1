@@ -48,15 +48,22 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
   $ServiceProj = Join-Path -Path $EngDir -ChildPath "service.proj"
   Write-Host "Get-AllPackageInfoFromRepo::Executing msbuild"
   Write-Host "dotnet msbuild /nologo /t:GetPackageInfo $ServiceProj /p:ServiceDirectory=$serviceDirectory /p:AddDevVersion=$shouldAddDevVersion"
+
+  $binLogFolder = $env:BUILD_ARTIFACTSTAGINGDIRECTORY
+  $msbuildLogFile = Join-Path $binLogFolder "msbuildcall.binlog"
+  $savepackagePropsLog = Join-Path $binLogFolder "save-package-props.binlog"
+  Write-Host "I will output to $msbuildLogFile and $savepackagePropsLog"
+
   $msbuildOutput = dotnet msbuild `
     /nologo `
     /t:GetPackageInfo `
     $ServiceProj `
     /p:ServiceDirectory=$serviceDirectory `
-    /p:AddDevVersion=$shouldAddDevVersion
+    /p:AddDevVersion=$shouldAddDevVersion /binaryLogger:LogFile=$msbuildLogFile
 
   foreach ($projectOutput in $msbuildOutput)
   {
+
     Write-Host $projectOutput
     if (!$projectOutput) {
       Write-Host "Get-AllPackageInfoFromRepo::projectOutput was null or empty, skipping"
@@ -87,7 +94,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
           /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false
           /p:IncludePerf=false /p:RunApiCompat=false
           /p:InheritDocEnabled=false /p:BuildProjectReferences=false
-          /p:OutputProjectFilePath=`"$outputFilePath`" $($env:DIAGNOSTICSARGUMENTS)> $buildOutputPath 2>&1"
+          /p:OutputProjectFilePath=`"$outputFilePath`" /binaryLogger:LogFile=$($savepackagePropsLog) > $buildOutputPath 2>&1"
 
         # calculate the dependent packages
         dotnet build /t:ProjectDependsOn ./eng/service.proj `
@@ -95,7 +102,7 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
           /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false  `
           /p:IncludePerf=false /p:RunApiCompat=false `
           /p:InheritDocEnabled=false /p:BuildProjectReferences=false `
-          /p:OutputProjectFilePath="$outputFilePath" $($env:DIAGNOSTICSARGUMENTS) > $buildOutputPath 2>&1
+          /p:OutputProjectFilePath="$outputFilePath" /binaryLogger:LogFile=$($savepackagePropsLog) > $buildOutputPath 2>&1
 
         if ($LASTEXITCODE -ne 0) {
           Write-Host "Something went wrong calculating dependencies for $($pkgProp.Name). Exit code $LASTEXITCODE."
