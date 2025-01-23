@@ -104,10 +104,11 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
           /p:InheritDocEnabled=false /p:BuildProjectReferences=false `
           /p:OutputProjectFilePath="$outputFilePath" /binaryLogger:LogFile=$($savepackagePropsLog) > $buildOutputPath 2>&1
 
+        Write-Host "Dumping content from $buildOutputPath"
+        Write-Host (Get-Content -Raw $buildOutputPath)
+
         if ($LASTEXITCODE -ne 0) {
           Write-Host "Something went wrong calculating dependencies for $($pkgProp.Name). Exit code $LASTEXITCODE."
-          Write-Host "Dumping content from $buildOutputPath"
-          Write-Host (Get-Content -Raw $buildOutputPath)
 
           if (Test-Path $outputFilePath) {
             Write-Host "We generated the output file though"
