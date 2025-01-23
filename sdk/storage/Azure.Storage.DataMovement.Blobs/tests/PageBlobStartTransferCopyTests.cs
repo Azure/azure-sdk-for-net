@@ -174,33 +174,22 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 options = new PageBlobStorageResourceOptions
                 {
-                    ContentDisposition = new(_defaultContentDisposition),
-                    ContentLanguage = new(_defaultContentLanguage),
-                    CacheControl = new(_defaultCacheControl),
-                    ContentType = new(_defaultContentType),
-                    Metadata = new(_defaultMetadata)
+                    ContentDisposition = _defaultContentDisposition,
+                    ContentLanguage = _defaultContentLanguage,
+                    CacheControl = _defaultCacheControl,
+                    ContentType = _defaultContentType,
+                    Metadata = _defaultMetadata
                 };
             }
             else if (type == TransferPropertiesTestType.NoPreserve)
             {
                 options = new PageBlobStorageResourceOptions
                 {
-                    ContentDisposition = new(false),
-                    ContentLanguage = new(false),
-                    CacheControl = new(false),
-                    ContentType = new(false),
-                    Metadata = new(false)
-                };
-            }
-            else if (type == TransferPropertiesTestType.Preserve)
-            {
-                options = new PageBlobStorageResourceOptions
-                {
-                    ContentDisposition = new(true),
-                    ContentLanguage = new(true),
-                    CacheControl = new(true),
-                    ContentType = new(true),
-                    Metadata = new(true)
+                    ContentDisposition = default,
+                    ContentLanguage = default,
+                    CacheControl = default,
+                    ContentType = default,
+                    Metadata = default
                 };
             }
             return new PageBlobStorageResource(objectClient, options);
@@ -210,7 +199,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             => objectClient.OpenReadAsync();
 
         protected override async Task VerifyPropertiesCopyAsync(
-            DataTransfer transfer,
+            TransferOperation transfer,
             TransferPropertiesTestType transferPropertiesTestType,
             TestEventsRaised testEventsRaised,
             PageBlobClient sourceClient,
@@ -220,7 +209,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             // Verify completion
             Assert.NotNull(transfer);
             Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+            Assert.AreEqual(TransferState.Completed, transfer.Status.State);
             // Verify Copy - using original source File and Copying the destination
             await testEventsRaised.AssertSingleCompletedCheck();
             using Stream sourceStream = await sourceClient.OpenReadAsync();

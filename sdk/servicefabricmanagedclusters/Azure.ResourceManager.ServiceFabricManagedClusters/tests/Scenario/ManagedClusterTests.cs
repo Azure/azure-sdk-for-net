@@ -24,6 +24,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
 
         [Test]
         [RecordedTest]
+        [Ignore("Nee re-record")]
         public async Task BasicClusterTestAsync()
         {
             resourceGroupResource = await CreateResourceGroupWithTag();

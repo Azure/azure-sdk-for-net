@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.RedisEnterprise.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.RedisEnterprise.Samples
@@ -19,10 +18,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_RedisEnterpriseUpdate()
+        public async Task Get_RedisEnterpriseGet()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseUpdate.json
-            // this example is just showing the usage of "RedisEnterprise_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseGet.json
+            // this example is just showing the usage of "RedisEnterprise_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,20 +37,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             RedisEnterpriseClusterResource redisEnterpriseCluster = client.GetRedisEnterpriseClusterResource(redisEnterpriseClusterResourceId);
 
             // invoke the operation
-            RedisEnterpriseClusterPatch patch = new RedisEnterpriseClusterPatch()
-            {
-                Sku = new RedisEnterpriseSku(RedisEnterpriseSkuName.EnterpriseFlashF300)
-                {
-                    Capacity = 9,
-                },
-                Tags =
-{
-["tag1"] = "value1",
-},
-                MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
-            };
-            ArmOperation<RedisEnterpriseClusterResource> lro = await redisEnterpriseCluster.UpdateAsync(WaitUntil.Completed, patch);
-            RedisEnterpriseClusterResource result = lro.Value;
+            RedisEnterpriseClusterResource result = await redisEnterpriseCluster.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -88,10 +74,10 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_RedisEnterpriseGet()
+        public async Task Update_RedisEnterpriseUpdate()
         {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseGet.json
-            // this example is just showing the usage of "RedisEnterprise_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseUpdate.json
+            // this example is just showing the usage of "RedisEnterprise_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -107,44 +93,26 @@ namespace Azure.ResourceManager.RedisEnterprise.Samples
             RedisEnterpriseClusterResource redisEnterpriseCluster = client.GetRedisEnterpriseClusterResource(redisEnterpriseClusterResourceId);
 
             // invoke the operation
-            RedisEnterpriseClusterResource result = await redisEnterpriseCluster.GetAsync();
+            RedisEnterpriseClusterPatch patch = new RedisEnterpriseClusterPatch
+            {
+                Sku = new RedisEnterpriseSku(RedisEnterpriseSkuName.EnterpriseFlashF300)
+                {
+                    Capacity = 9,
+                },
+                Tags =
+{
+["tag1"] = "value1"
+},
+                MinimumTlsVersion = RedisEnterpriseTlsVersion.Tls1_2,
+            };
+            ArmOperation<RedisEnterpriseClusterResource> lro = await redisEnterpriseCluster.UpdateAsync(WaitUntil.Completed, patch);
+            RedisEnterpriseClusterResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
             RedisEnterpriseClusterData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetRedisEnterpriseClusters_RedisEnterpriseList()
-        {
-            // Generated from example definition: specification/redisenterprise/resource-manager/Microsoft.Cache/preview/2024-09-01-preview/examples/RedisEnterpriseList.json
-            // this example is just showing the usage of "RedisEnterprise_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "e7b5a9d2-6b6a-4d2f-9143-20d9a10f5b8f";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (RedisEnterpriseClusterResource item in subscriptionResource.GetRedisEnterpriseClustersAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                RedisEnterpriseClusterData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
 
         [Test]

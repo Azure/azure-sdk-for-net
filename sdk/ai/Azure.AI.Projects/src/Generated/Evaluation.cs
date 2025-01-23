@@ -71,7 +71,7 @@ namespace Azure.AI.Projects
         /// Please note <see cref="InputData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ApplicationInsightsConfiguration"/> and <see cref="Dataset"/>.
         /// </param>
-        /// <param name="displayName"> Display Name for evaluation. It helps to find evaluation easily in AI Studio. It does not need to be unique. </param>
+        /// <param name="displayName"> Display Name for evaluation. It helps to find the evaluation easily in AI Foundry. It does not need to be unique. </param>
         /// <param name="description"> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </param>
         /// <param name="systemData"> Metadata containing createdBy and modifiedBy information. </param>
         /// <param name="status"> Status of the evaluation. It is set by service and is read-only. </param>
@@ -106,7 +106,7 @@ namespace Azure.AI.Projects
         /// The available derived classes include <see cref="ApplicationInsightsConfiguration"/> and <see cref="Dataset"/>.
         /// </summary>
         public InputData Data { get; set; }
-        /// <summary> Display Name for evaluation. It helps to find evaluation easily in AI Studio. It does not need to be unique. </summary>
+        /// <summary> Display Name for evaluation. It helps to find the evaluation easily in AI Foundry. It does not need to be unique. </summary>
         public string DisplayName { get; set; }
         /// <summary> Description of the evaluation. It can be used to store additional information about the evaluation and is mutable. </summary>
         public string Description { get; set; }

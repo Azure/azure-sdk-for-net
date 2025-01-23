@@ -2288,6 +2288,7 @@ namespace Azure.Storage.Files.Shares.Tests
         [TestCase("%21%27%28%29%3B%5B%5D%40%26%25%3D%2B%24%2C%23äÄöÖüÜß%3B")]
         [TestCase("my cool directory")]
         [TestCase("directory")]
+        [TestCase("  ")]
         public async Task GetDirectoryClient_SpecialCharacters(string directoryName)
         {
             // Arrange

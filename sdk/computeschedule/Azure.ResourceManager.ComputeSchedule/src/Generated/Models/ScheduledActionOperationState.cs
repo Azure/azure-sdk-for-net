@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public static ScheduledActionOperationState Succeeded { get; } = new ScheduledActionOperationState(SucceededValue);
         /// <summary> Operations that have failed. </summary>
         public static ScheduledActionOperationState Failed { get; } = new ScheduledActionOperationState(FailedValue);
-        /// <summary> Operations that have been cancelled by the user. </summary>
+        /// <summary> Operations that have been Cancelled by the user. </summary>
         public static ScheduledActionOperationState Cancelled { get; } = new ScheduledActionOperationState(CancelledValue);
         /// <summary> Operations that are blocked. </summary>
         public static ScheduledActionOperationState Blocked { get; } = new ScheduledActionOperationState(BlockedValue);

@@ -181,7 +181,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallMedias
                 VoiceKind = VoiceKind.Female,
                 VoiceName = "LULU"
             },
-            SpeechLanguage= "en-US",
+            SpeechLanguage = "en-US",
             SpeechModelEndpointId = "customModelEndpointId"
         };
 

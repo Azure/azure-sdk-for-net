@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Compute.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Compute.Samples
@@ -19,73 +18,9 @@ namespace Azure.ResourceManager.Compute.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateExistingCloudServiceToAddTags()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Update_ToIncludeTags.json
-            // this example is just showing the usage of "CloudServices_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CloudServiceResource created on azure
-            // for more information of creating CloudServiceResource, please refer to the document of CloudServiceResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "ConstosoRG";
-            string cloudServiceName = "{cs-name}";
-            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
-            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
-
-            // invoke the operation
-            CloudServicePatch patch = new CloudServicePatch()
-            {
-                Tags =
-{
-["Documentation"] = "RestAPI",
-},
-            };
-            ArmOperation<CloudServiceResource> lro = await cloudService.UpdateAsync(WaitUntil.Completed, patch);
-            CloudServiceResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CloudServiceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteCloudService()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Delete.json
-            // this example is just showing the usage of "CloudServices_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CloudServiceResource created on azure
-            // for more information of creating CloudServiceResource, please refer to the document of CloudServiceResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "ConstosoRG";
-            string cloudServiceName = "{cs-name}";
-            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
-            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
-
-            // invoke the operation
-            await cloudService.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetCloudServiceWithMultipleRolesAndRDPExtension()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Get_WithMultiRoleAndRDP.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2024-11-04/examples/CloudService_Get_WithMultiRoleAndRDP.json
             // this example is just showing the usage of "CloudServices_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -113,9 +48,73 @@ namespace Azure.ResourceManager.Compute.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteCloudService()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2024-11-04/examples/CloudService_Delete.json
+            // this example is just showing the usage of "CloudServices_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudServiceResource created on azure
+            // for more information of creating CloudServiceResource, please refer to the document of CloudServiceResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "ConstosoRG";
+            string cloudServiceName = "{cs-name}";
+            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
+            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
+
+            // invoke the operation
+            await cloudService.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateExistingCloudServiceToAddTags()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2024-11-04/examples/CloudService_Update_ToIncludeTags.json
+            // this example is just showing the usage of "CloudServices_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CloudServiceResource created on azure
+            // for more information of creating CloudServiceResource, please refer to the document of CloudServiceResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "ConstosoRG";
+            string cloudServiceName = "{cs-name}";
+            ResourceIdentifier cloudServiceResourceId = CloudServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, cloudServiceName);
+            CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
+
+            // invoke the operation
+            CloudServicePatch patch = new CloudServicePatch
+            {
+                Tags =
+{
+["Documentation"] = "RestAPI"
+},
+            };
+            ArmOperation<CloudServiceResource> lro = await cloudService.UpdateAsync(WaitUntil.Completed, patch);
+            CloudServiceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CloudServiceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetInstanceView_GetCloudServiceInstanceViewWithMultipleRoles()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Get_InstanceViewWithMultiRole.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2024-11-04/examples/CloudService_Get_InstanceViewWithMultiRole.json
             // this example is just showing the usage of "CloudServices_GetInstanceView" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -139,40 +138,9 @@ namespace Azure.ResourceManager.Compute.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetCloudServices_ListCloudServicesInASubscription()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_List_BySubscription.json
-            // this example is just showing the usage of "CloudServices_ListAll" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "{subscription-id}";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CloudServiceResource item in subscriptionResource.GetCloudServicesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CloudServiceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task PowerOn_StartCloudService()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_Start.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2024-11-04/examples/CloudService_Start.json
             // this example is just showing the usage of "CloudServices_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -198,7 +166,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task PowerOff_StopOrPowerOffCloudService()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudService_PowerOff.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2024-11-04/examples/CloudService_PowerOff.json
             // this example is just showing the usage of "CloudServices_PowerOff" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -224,7 +192,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Restart_RestartCloudServiceRoleInstancesInACloudService()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudServiceRoleInstance_Restart_ByCloudService.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2024-11-04/examples/CloudServiceRoleInstance_Restart_ByCloudService.json
             // this example is just showing the usage of "CloudServices_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -241,10 +209,7 @@ namespace Azure.ResourceManager.Compute.Samples
             CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // invoke the operation
-            RoleInstances roleInstances = new RoleInstances(new string[]
-            {
-"ContosoFrontend_IN_0","ContosoBackend_IN_1"
-            });
+            RoleInstances roleInstances = new RoleInstances(new string[] { "ContosoFrontend_IN_0", "ContosoBackend_IN_1" });
             await cloudService.RestartAsync(WaitUntil.Completed, roleInstances: roleInstances);
 
             Console.WriteLine("Succeeded");
@@ -254,7 +219,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Reimage_ReimageCloudServiceRoleInstancesInACloudService()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudServiceRoleInstance_Reimage_ByCloudService.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2024-11-04/examples/CloudServiceRoleInstance_Reimage_ByCloudService.json
             // this example is just showing the usage of "CloudServices_Reimage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -271,10 +236,7 @@ namespace Azure.ResourceManager.Compute.Samples
             CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // invoke the operation
-            RoleInstances roleInstances = new RoleInstances(new string[]
-            {
-"ContosoFrontend_IN_0","ContosoBackend_IN_1"
-            });
+            RoleInstances roleInstances = new RoleInstances(new string[] { "ContosoFrontend_IN_0", "ContosoBackend_IN_1" });
             await cloudService.ReimageAsync(WaitUntil.Completed, roleInstances: roleInstances);
 
             Console.WriteLine("Succeeded");
@@ -284,7 +246,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Rebuild_RebuildCloudServiceRoleInstancesInACloudService()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudServiceRoleInstance_Rebuild_ByCloudService.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2024-11-04/examples/CloudServiceRoleInstance_Rebuild_ByCloudService.json
             // this example is just showing the usage of "CloudServices_Rebuild" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -301,10 +263,7 @@ namespace Azure.ResourceManager.Compute.Samples
             CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // invoke the operation
-            RoleInstances roleInstances = new RoleInstances(new string[]
-            {
-"ContosoFrontend_IN_0","ContosoBackend_IN_1"
-            });
+            RoleInstances roleInstances = new RoleInstances(new string[] { "ContosoFrontend_IN_0", "ContosoBackend_IN_1" });
             await cloudService.RebuildAsync(WaitUntil.Completed, roleInstances: roleInstances);
 
             Console.WriteLine("Succeeded");
@@ -314,7 +273,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task DeleteInstances_DeleteCloudServiceRoleInstancesInACloudService()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudServiceRoleInstance_Delete_ByCloudService.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2024-11-04/examples/CloudServiceRoleInstance_Delete_ByCloudService.json
             // this example is just showing the usage of "CloudServices_DeleteInstances" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -331,10 +290,7 @@ namespace Azure.ResourceManager.Compute.Samples
             CloudServiceResource cloudService = client.GetCloudServiceResource(cloudServiceResourceId);
 
             // invoke the operation
-            RoleInstances roleInstances = new RoleInstances(new string[]
-            {
-"ContosoFrontend_IN_0","ContosoBackend_IN_1"
-            });
+            RoleInstances roleInstances = new RoleInstances(new string[] { "ContosoFrontend_IN_0", "ContosoBackend_IN_1" });
             await cloudService.DeleteInstancesAsync(WaitUntil.Completed, roleInstances: roleInstances);
 
             Console.WriteLine("Succeeded");
@@ -344,7 +300,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task WalkUpdateDomain_UpdateCloudServiceToSpecifiedDomain()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudServiceUpdateDomain_Update.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2024-11-04/examples/CloudServiceUpdateDomain_Update.json
             // this example is just showing the usage of "CloudServicesUpdateDomain_WalkUpdateDomain" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -371,7 +327,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetUpdateDomain_GetCloudServiceUpdateDomain()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudServiceUpdateDomain_Get.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2024-11-04/examples/CloudServiceUpdateDomain_Get.json
             // this example is just showing the usage of "CloudServicesUpdateDomain_GetUpdateDomain" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -398,7 +354,7 @@ namespace Azure.ResourceManager.Compute.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetUpdateDomains_ListUpdateDomainsInCloudService()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2022-09-04/examples/CloudServiceUpdateDomain_List.json
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/CloudserviceRP/stable/2024-11-04/examples/CloudServiceUpdateDomain_List.json
             // this example is just showing the usage of "CloudServicesUpdateDomain_ListUpdateDomains" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

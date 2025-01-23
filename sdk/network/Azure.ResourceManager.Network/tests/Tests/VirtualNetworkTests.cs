@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Tests
             var vnet = new VirtualNetworkData()
             {
                 Location = location,
-                AddressSpace = new AddressSpace()
+                AddressSpace = new VirtualNetworkAddressSpace()
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
 
-                AddressSpace = new AddressSpace()
+                AddressSpace = new VirtualNetworkAddressSpace()
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network.Tests
             {
                 Location = location,
 
-                AddressSpace = new AddressSpace()
+                AddressSpace = new VirtualNetworkAddressSpace()
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Network.Tests
             var vnet2 = new VirtualNetworkData()
             {
                 Location = location,
-                AddressSpace = new AddressSpace()
+                AddressSpace = new VirtualNetworkAddressSpace()
                 {
                     AddressPrefixes = { "10.1.0.0/16", }
                 },
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Network.Tests
             var vnet = new VirtualNetworkData()
             {
                 Location = location,
-                AddressSpace = new AddressSpace()
+                AddressSpace = new VirtualNetworkAddressSpace()
                 {
                     AddressPrefixes = { "10.0.0.0/16", }
                 },

@@ -47,7 +47,7 @@ namespace Azure.AI.Projects
 
         /// <summary> Initializes a new instance of <see cref="MessageIncompleteDetails"/>. </summary>
         /// <param name="reason"> The provided reason describing why the message was marked as incomplete. </param>
-        public MessageIncompleteDetails(MessageIncompleteDetailsReason reason)
+        internal MessageIncompleteDetails(MessageIncompleteDetailsReason reason)
         {
             Reason = reason;
         }
@@ -67,6 +67,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The provided reason describing why the message was marked as incomplete. </summary>
-        public MessageIncompleteDetailsReason Reason { get; set; }
+        public MessageIncompleteDetailsReason Reason { get; }
     }
 }
