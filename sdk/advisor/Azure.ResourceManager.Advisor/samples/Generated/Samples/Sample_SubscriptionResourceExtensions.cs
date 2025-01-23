@@ -121,12 +121,12 @@ State = DigestConfigState.Active,
 
             // this example assumes you already have this SubscriptionResource created on azure
             // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subscriptionId";
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            Guid operationId = Guid.Parse("operationGUID");
+            Guid operationId = Guid.Parse("00000000-0000-0000-0000-000000000000");
             await subscriptionResource.GetGenerateStatusRecommendationAsync(operationId);
 
             Console.WriteLine("Succeeded");
