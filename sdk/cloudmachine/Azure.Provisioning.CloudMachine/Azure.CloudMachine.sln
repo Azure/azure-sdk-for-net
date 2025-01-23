@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine.OpenAI",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.CloudMachine.OpenAI.Tests", "..\Azure.CloudMachine.OpenAI\tests\Azure.CloudMachine.OpenAI.Tests.csproj", "{6B820761-3C6B-4477-824D-173BC40BE562}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAGMachine", "..\Azure.CloudMachine\samples\RAGMachine\RAGMachine.csproj", "{03462C3E-9426-1DF2-637F-C4AEF1231CA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{6B820761-3C6B-4477-824D-173BC40BE562}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B820761-3C6B-4477-824D-173BC40BE562}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B820761-3C6B-4477-824D-173BC40BE562}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03462C3E-9426-1DF2-637F-C4AEF1231CA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03462C3E-9426-1DF2-637F-C4AEF1231CA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03462C3E-9426-1DF2-637F-C4AEF1231CA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03462C3E-9426-1DF2-637F-C4AEF1231CA9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
