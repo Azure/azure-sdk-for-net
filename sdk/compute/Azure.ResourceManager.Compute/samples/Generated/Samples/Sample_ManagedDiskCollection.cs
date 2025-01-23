@@ -47,12 +47,12 @@ namespace Azure.ResourceManager.Compute.Samples
                 OSType = SupportedOperatingSystemType.Windows,
                 CreationData = new DiskCreationData(DiskCreateOption.FromImage)
                 {
-                    ImageReference = new ImageDiskReference()
+                    ImageReference = new ImageDiskReference
                     {
                         Id = new ResourceIdentifier("/Subscriptions/{subscriptionId}/Providers/Microsoft.Compute/Locations/westus/Publishers/{publisher}/ArtifactTypes/VMImage/Offers/{offer}/Skus/{sku}/Versions/1.0.0"),
                     },
                 },
-                SecurityProfile = new DiskSecurityProfile()
+                SecurityProfile = new DiskSecurityProfile
                 {
                     SecurityType = DiskSecurityType.ConfidentialVmDiskEncryptedWithCustomerKey,
                     SecureVmDiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{diskEncryptionSetName}"),
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute.Samples
             {
                 CreationData = new DiskCreationData(DiskCreateOption.Empty),
                 DiskSizeGB = 200,
-                Encryption = new DiskEncryption()
+                Encryption = new DiskEncryption
                 {
                     DiskEncryptionSetId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/diskEncryptionSets/{existing-diskEncryptionSet-name}"),
                 },
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Compute.Samples
                     SourceUri = new Uri("https://mystorageaccount.blob.core.windows.net/osimages/osimage.vhd"),
                     SecurityDataUri = new Uri("https://mystorageaccount.blob.core.windows.net/osimages/vmgs.vhd"),
                 },
-                SecurityProfile = new DiskSecurityProfile()
+                SecurityProfile = new DiskSecurityProfile
                 {
                     SecurityType = DiskSecurityType.ConfidentialVmGuestStateOnlyEncryptedWithPlatformKey,
                 },
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.Compute.Samples
                 {
                     UploadSizeBytes = 10737418752L,
                 },
-                SecurityProfile = new DiskSecurityProfile()
+                SecurityProfile = new DiskSecurityProfile
                 {
                     SecurityType = DiskSecurityType.TrustedLaunch,
                 },
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Compute.Samples
                 OSType = SupportedOperatingSystemType.Windows,
                 CreationData = new DiskCreationData(DiskCreateOption.FromImage)
                 {
-                    ImageReference = new ImageDiskReference()
+                    ImageReference = new ImageDiskReference
                     {
                         Id = new ResourceIdentifier("/Subscriptions/{subscriptionId}/Providers/Microsoft.Compute/Locations/westus/Publishers/{publisher}/ArtifactTypes/VMImage/Offers/{offer}/Skus/{sku}/Versions/1.0.0"),
                     },
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.Compute.Samples
                 OSType = SupportedOperatingSystemType.Windows,
                 CreationData = new DiskCreationData(DiskCreateOption.FromImage)
                 {
-                    GalleryImageReference = new ImageDiskReference()
+                    GalleryImageReference = new ImageDiskReference
                     {
                         CommunityGalleryImageId = "/CommunityGalleries/{communityGalleryPublicGalleryName}/Images/{imageName}/Versions/1.0.0",
                     },
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.Compute.Samples
                 OSType = SupportedOperatingSystemType.Windows,
                 CreationData = new DiskCreationData(DiskCreateOption.FromImage)
                 {
-                    GalleryImageReference = new ImageDiskReference()
+                    GalleryImageReference = new ImageDiskReference
                     {
                         SharedGalleryImageId = "/SharedGalleries/{sharedGalleryUniqueName}/Images/{imageName}/Versions/1.0.0",
                     },
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.Compute.Samples
                 OSType = SupportedOperatingSystemType.Windows,
                 CreationData = new DiskCreationData(DiskCreateOption.FromImage)
                 {
-                    GalleryImageReference = new ImageDiskReference()
+                    GalleryImageReference = new ImageDiskReference
                     {
                         Id = new ResourceIdentifier("/Subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Providers/Microsoft.Compute/Galleries/{galleryName}/Images/{imageName}/Versions/1.0.0"),
                     },
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.Compute.Samples
             string diskName = "myPremiumV2Disk";
             ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
-                Sku = new DiskSku()
+                Sku = new DiskSku
                 {
                     Name = DiskStorageAccountType.PremiumV2Lrs,
                 },
@@ -827,12 +827,12 @@ namespace Azure.ResourceManager.Compute.Samples
                 OSType = SupportedOperatingSystemType.Windows,
                 CreationData = new DiskCreationData(DiskCreateOption.FromImage)
                 {
-                    ImageReference = new ImageDiskReference()
+                    ImageReference = new ImageDiskReference
                     {
                         Id = new ResourceIdentifier("/Subscriptions/{subscriptionId}/Providers/Microsoft.Compute/Locations/uswest/Publishers/Microsoft/ArtifactTypes/VMImage/Offers/{offer}"),
                     },
                 },
-                SecurityProfile = new DiskSecurityProfile()
+                SecurityProfile = new DiskSecurityProfile
                 {
                     SecurityType = DiskSecurityType.TrustedLaunch,
                 },
@@ -873,7 +873,7 @@ namespace Azure.ResourceManager.Compute.Samples
             string diskName = "myDisk";
             ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
-                Sku = new DiskSku()
+                Sku = new DiskSku
                 {
                     Name = DiskStorageAccountType.PremiumZrs,
                 },
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.Compute.Samples
             string diskName = "myUltraReadOnlyDisk";
             ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
-                Sku = new DiskSku()
+                Sku = new DiskSku
                 {
                     Name = DiskStorageAccountType.UltraSsdLrs,
                 },
@@ -927,7 +927,7 @@ namespace Azure.ResourceManager.Compute.Samples
                 DiskSizeGB = 200,
                 DiskIopsReadWrite = 125L,
                 DiskMBpsReadWrite = 3000L,
-                Encryption = new DiskEncryption()
+                Encryption = new DiskEncryption
                 {
                     EncryptionType = ComputeEncryptionType.EncryptionAtRestWithPlatformKey,
                 },
@@ -1009,7 +1009,7 @@ namespace Azure.ResourceManager.Compute.Samples
             string diskName = "myDisk";
             ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
-                ExtendedLocation = new ExtendedLocation()
+                ExtendedLocation = new ExtendedLocation
                 {
                     Name = "{edge-zone-id}",
                 },
@@ -1091,7 +1091,7 @@ namespace Azure.ResourceManager.Compute.Samples
             string diskName = "myDisk";
             ManagedDiskData data = new ManagedDiskData(new AzureLocation("West US"))
             {
-                Sku = new DiskSku()
+                Sku = new DiskSku
                 {
                     Name = DiskStorageAccountType.UltraSsdLrs,
                 },
@@ -1142,6 +1142,41 @@ namespace Azure.ResourceManager.Compute.Samples
             ManagedDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListAllManagedDisksInAResourceGroup()
+        {
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/diskExamples/Disk_ListByResourceGroup.json
+            // this example is just showing the usage of "Disks_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "myResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this ManagedDiskResource
+            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
+
+            // invoke the operation and iterate over the result
+            await foreach (ManagedDiskResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ManagedDiskData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -1212,41 +1247,6 @@ namespace Azure.ResourceManager.Compute.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListAllManagedDisksInAResourceGroup()
-        {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/DiskRP/stable/2024-03-02/examples/diskExamples/Disk_ListByResourceGroup.json
-            // this example is just showing the usage of "Disks_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "myResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this ManagedDiskResource
-            ManagedDiskCollection collection = resourceGroupResource.GetManagedDisks();
-
-            // invoke the operation and iterate over the result
-            await foreach (ManagedDiskResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ManagedDiskData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

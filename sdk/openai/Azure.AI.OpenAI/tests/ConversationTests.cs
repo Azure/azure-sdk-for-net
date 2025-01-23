@@ -21,6 +21,7 @@ public class ConversationTests : ConversationTestFixtureBase
 
     public ConversationTests(bool isAsync) : base(isAsync) { }
 
+#if !AZURE_OPENAI_GA
     [Test]
     public async Task CanConfigureSession()
     {
@@ -415,4 +416,12 @@ public class ConversationTests : ConversationTestFixtureBase
 
         Assert.That(gotErrorUpdate, Is.True);
     }
+#else
+    [Test]
+    [Category("Smoke")]
+    public void VersionNotSupportedThrows()
+    {
+        Assert.Throws<InvalidOperationException>(() => GetTestClient());
+    }
+#endif
 }

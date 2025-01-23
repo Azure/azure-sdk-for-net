@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppService.Samples
             DomainOwnershipIdentifierResource domainOwnershipIdentifier = client.GetDomainOwnershipIdentifierResource(domainOwnershipIdentifierResourceId);
 
             // invoke the operation
-            DomainOwnershipIdentifierData data = new DomainOwnershipIdentifierData()
+            DomainOwnershipIdentifierData data = new DomainOwnershipIdentifierData
             {
                 OwnershipId = "SampleOwnershipId",
             };

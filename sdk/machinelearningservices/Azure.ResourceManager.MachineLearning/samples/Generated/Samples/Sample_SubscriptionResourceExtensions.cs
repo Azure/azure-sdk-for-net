@@ -19,6 +19,37 @@ namespace Azure.ResourceManager.MachineLearning.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetMachineLearningWorkspaces_GetWorkspacesBySubscription()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/listBySubscription.json
+            // this example is just showing the usage of "Workspaces_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (MachineLearningWorkspaceResource item in subscriptionResource.GetMachineLearningWorkspacesAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                MachineLearningWorkspaceData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetMachineLearningUsages_ListUsages()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Usage/list.json
@@ -93,24 +124,21 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // invoke the operation and iterate over the result
             AzureLocation location = new AzureLocation("eastus");
-            MachineLearningQuotaUpdateContent content = new MachineLearningQuotaUpdateContent()
+            MachineLearningQuotaUpdateContent content = new MachineLearningQuotaUpdateContent
             {
-                Value =
-{
-new MachineLearningQuotaProperties()
+                Value = {new MachineLearningQuotaProperties
 {
 Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace1/quotas/Standard_DSv2_Family_Cluster_Dedicated_vCPUs",
 QuotaBasePropertiesType = "Microsoft.MachineLearningServices/workspaces/quotas",
 Limit = 100L,
 Unit = MachineLearningQuotaUnit.Count,
-},new MachineLearningQuotaProperties()
+}, new MachineLearningQuotaProperties
 {
 Id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg/providers/Microsoft.MachineLearningServices/workspaces/demo_workspace2/quotas/Standard_DSv2_Family_Cluster_Dedicated_vCPUs",
 QuotaBasePropertiesType = "Microsoft.MachineLearningServices/workspaces/quotas",
 Limit = 200L,
 Unit = MachineLearningQuotaUnit.Count,
-}
-},
+}},
             };
             await foreach (MachineLearningWorkspaceQuotaUpdate item in subscriptionResource.UpdateMachineLearningQuotasAsync(location, content))
             {
@@ -143,6 +171,37 @@ Unit = MachineLearningQuotaUnit.Count,
             await foreach (MachineLearningResourceQuota item in subscriptionResource.GetMachineLearningQuotasAsync(location))
             {
                 Console.WriteLine($"Succeeded: {item}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetMachineLearningRegistries_ListRegistriesBySubscription()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Registries/listBySubscription.json
+            // this example is just showing the usage of "Registries_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation and iterate over the result
+            await foreach (MachineLearningRegistryResource item in subscriptionResource.GetMachineLearningRegistriesAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                MachineLearningRegistryData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
 
             Console.WriteLine("Succeeded");

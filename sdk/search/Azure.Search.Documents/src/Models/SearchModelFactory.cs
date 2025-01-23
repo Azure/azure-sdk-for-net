@@ -371,11 +371,12 @@ namespace Azure.Search.Documents.Models
         /// ]]></code>
         /// </example>
         /// <remarks> For more details please refer <see href="https://docs.microsoft.com/en-us/rest/api/searchservice/search-documents#query-parameters"/></remarks>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public static FacetResult FacetResult(long? count = null, IReadOnlyDictionary<string, object> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, object>();
 
-            return new FacetResult(count, additionalProperties);
+            return new FacetResult(count, null, additionalProperties);
         }
 
         /// <summary> Initializes a new instance of IndexDocumentsResult. </summary>

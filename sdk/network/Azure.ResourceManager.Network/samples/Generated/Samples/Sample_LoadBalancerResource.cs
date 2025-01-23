@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Network.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Network.Samples
@@ -19,35 +18,9 @@ namespace Azure.ResourceManager.Network.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteLoadBalancer()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerDelete.json
-            // this example is just showing the usage of "LoadBalancers_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this LoadBalancerResource created on azure
-            // for more information of creating LoadBalancerResource, please refer to the document of LoadBalancerResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string loadBalancerName = "lb";
-            ResourceIdentifier loadBalancerResourceId = LoadBalancerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, loadBalancerName);
-            LoadBalancerResource loadBalancer = client.GetLoadBalancerResource(loadBalancerResourceId);
-
-            // invoke the operation
-            await loadBalancer.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetLoadBalancer()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerGet.json
             // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -77,7 +50,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetLoadBalancerWithInboundNATRulePortMapping()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerGetInboundNatRulePortMapping.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerGetInboundNatRulePortMapping.json
             // this example is just showing the usage of "LoadBalancers_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -105,9 +78,35 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteLoadBalancer()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerDelete.json
+            // this example is just showing the usage of "LoadBalancers_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this LoadBalancerResource created on azure
+            // for more information of creating LoadBalancerResource, please refer to the document of LoadBalancerResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string loadBalancerName = "lb";
+            ResourceIdentifier loadBalancerResourceId = LoadBalancerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, loadBalancerName);
+            LoadBalancerResource loadBalancer = client.GetLoadBalancerResource(loadBalancerResourceId);
+
+            // invoke the operation
+            await loadBalancer.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateLoadBalancerTags()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerUpdateTags.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerUpdateTags.json
             // this example is just showing the usage of "LoadBalancers_UpdateTags" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -124,12 +123,12 @@ namespace Azure.ResourceManager.Network.Samples
             LoadBalancerResource loadBalancer = client.GetLoadBalancerResource(loadBalancerResourceId);
 
             // invoke the operation
-            NetworkTagsObject networkTagsObject = new NetworkTagsObject()
+            NetworkTagsObject networkTagsObject = new NetworkTagsObject
             {
                 Tags =
 {
 ["tag1"] = "value1",
-["tag2"] = "value2",
+["tag2"] = "value2"
 },
             };
             LoadBalancerResource result = await loadBalancer.UpdateAsync(networkTagsObject);
@@ -143,80 +142,9 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetLoadBalancers_ListAllLoadBalancers()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerListAll.json
-            // this example is just showing the usage of "LoadBalancers_ListAll" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (LoadBalancerResource item in subscriptionResource.GetLoadBalancersAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                LoadBalancerData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task SwapPublicIPAddressesLoadBalancer_SwapVIPsBetweenTwoLoadBalancers()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancersSwapPublicIpAddresses.json
-            // this example is just showing the usage of "LoadBalancers_SwapPublicIPAddresses" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            AzureLocation location = new AzureLocation("westus");
-            LoadBalancerVipSwapContent content = new LoadBalancerVipSwapContent()
-            {
-                FrontendIPConfigurations =
-{
-new LoadBalancerVipSwapRequestFrontendIPConfiguration()
-{
-Id = "/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/loadBalancers/lb1/frontendIPConfigurations/lbfe1",
-PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Network/publicIPAddresses/pip2"),
-},new LoadBalancerVipSwapRequestFrontendIPConfiguration()
-{
-Id = "/subscriptions/subid/resourceGroups/rg2/providers/Microsoft.Network/loadBalancers/lb2/frontendIPConfigurations/lbfe2",
-PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/publicIPAddresses/pip1"),
-}
-},
-            };
-            await subscriptionResource.SwapPublicIPAddressesLoadBalancerAsync(WaitUntil.Completed, location, content);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task MigrateToIPBased_MigrateLoadBalancerToIPBased()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/MigrateLoadBalancerToIPBased.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/MigrateLoadBalancerToIPBased.json
             // this example is just showing the usage of "LoadBalancers_MigrateToIPBased" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -233,12 +161,9 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
             LoadBalancerResource loadBalancer = client.GetLoadBalancerResource(loadBalancerResourceId);
 
             // invoke the operation
-            MigrateLoadBalancerToIPBasedContent content = new MigrateLoadBalancerToIPBasedContent()
+            MigrateLoadBalancerToIPBasedContent content = new MigrateLoadBalancerToIPBasedContent
             {
-                Pools =
-{
-"pool1","pool2"
-},
+                Pools = { "pool1", "pool2" },
             };
             MigrateLoadBalancerToIPBasedResult result = await loadBalancer.MigrateToIPBasedAsync(content: content);
 
@@ -249,7 +174,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetLoadBalancerNetworkInterfaces_LoadBalancerNetworkInterfaceListSimple()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerNetworkInterfaceListSimple.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerNetworkInterfaceListSimple.json
             // this example is just showing the usage of "LoadBalancerNetworkInterfaces_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -282,7 +207,7 @@ PublicIPAddressId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/
         [Ignore("Only validating compilation of examples")]
         public async Task GetLoadBalancerNetworkInterfaces_LoadBalancerNetworkInterfaceListVmss()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/LoadBalancerNetworkInterfaceListVmss.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/LoadBalancerNetworkInterfaceListVmss.json
             // this example is just showing the usage of "LoadBalancerNetworkInterfaces_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

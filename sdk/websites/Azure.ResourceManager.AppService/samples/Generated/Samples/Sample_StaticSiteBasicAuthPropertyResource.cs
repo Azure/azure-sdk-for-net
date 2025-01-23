@@ -69,14 +69,12 @@ namespace Azure.ResourceManager.AppService.Samples
             StaticSiteBasicAuthPropertyResource staticSiteBasicAuthProperty = client.GetStaticSiteBasicAuthPropertyResource(staticSiteBasicAuthPropertyResourceId);
 
             // invoke the operation
-            StaticSiteBasicAuthPropertyData data = new StaticSiteBasicAuthPropertyData()
+            StaticSiteBasicAuthPropertyData data = new StaticSiteBasicAuthPropertyData
             {
                 Password = "**********************",
                 SecretUri = null,
                 ApplicableEnvironmentsMode = "AllEnvironments",
-                Environments =
-{
-},
+                Environments = { },
             };
             ArmOperation<StaticSiteBasicAuthPropertyResource> lro = await staticSiteBasicAuthProperty.UpdateAsync(WaitUntil.Completed, data);
             StaticSiteBasicAuthPropertyResource result = lro.Value;

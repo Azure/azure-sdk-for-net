@@ -50,42 +50,6 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_IntegrationRuntimesUpdate()
-        {
-            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_Update.json
-            // this example is just showing the usage of "IntegrationRuntimes_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
-            // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
-            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
-            string resourceGroupName = "exampleResourceGroup";
-            string factoryName = "exampleFactoryName";
-            string integrationRuntimeName = "exampleIntegrationRuntime";
-            ResourceIdentifier dataFactoryIntegrationRuntimeResourceId = DataFactoryIntegrationRuntimeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName, integrationRuntimeName);
-            DataFactoryIntegrationRuntimeResource dataFactoryIntegrationRuntime = client.GetDataFactoryIntegrationRuntimeResource(dataFactoryIntegrationRuntimeResourceId);
-
-            // invoke the operation
-            DataFactoryIntegrationRuntimePatch patch = new DataFactoryIntegrationRuntimePatch()
-            {
-                AutoUpdate = IntegrationRuntimeAutoUpdateState.Off,
-                UpdateDelayOffset = XmlConvert.ToTimeSpan("\"PT3H\""),
-            };
-            DataFactoryIntegrationRuntimeResource result = await dataFactoryIntegrationRuntime.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DataFactoryIntegrationRuntimeData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Delete_IntegrationRuntimesDelete()
         {
             // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_Delete.json
@@ -109,6 +73,42 @@ namespace Azure.ResourceManager.DataFactory.Samples
             await dataFactoryIntegrationRuntime.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_IntegrationRuntimesUpdate()
+        {
+            // Generated from example definition: specification/datafactory/resource-manager/Microsoft.DataFactory/stable/2018-06-01/examples/IntegrationRuntimes_Update.json
+            // this example is just showing the usage of "IntegrationRuntimes_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DataFactoryIntegrationRuntimeResource created on azure
+            // for more information of creating DataFactoryIntegrationRuntimeResource, please refer to the document of DataFactoryIntegrationRuntimeResource
+            string subscriptionId = "12345678-1234-1234-1234-12345678abc";
+            string resourceGroupName = "exampleResourceGroup";
+            string factoryName = "exampleFactoryName";
+            string integrationRuntimeName = "exampleIntegrationRuntime";
+            ResourceIdentifier dataFactoryIntegrationRuntimeResourceId = DataFactoryIntegrationRuntimeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, factoryName, integrationRuntimeName);
+            DataFactoryIntegrationRuntimeResource dataFactoryIntegrationRuntime = client.GetDataFactoryIntegrationRuntimeResource(dataFactoryIntegrationRuntimeResourceId);
+
+            // invoke the operation
+            DataFactoryIntegrationRuntimePatch patch = new DataFactoryIntegrationRuntimePatch
+            {
+                AutoUpdate = IntegrationRuntimeAutoUpdateState.Off,
+                UpdateDelayOffset = XmlConvert.ToTimeSpan("\"PT3H\""),
+            };
+            DataFactoryIntegrationRuntimeResource result = await dataFactoryIntegrationRuntime.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DataFactoryIntegrationRuntimeData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryIntegrationRuntimeResource dataFactoryIntegrationRuntime = client.GetDataFactoryIntegrationRuntimeResource(dataFactoryIntegrationRuntimeResourceId);
 
             // invoke the operation
-            IntegrationRuntimeRegenerateKeyContent content = new IntegrationRuntimeRegenerateKeyContent()
+            IntegrationRuntimeRegenerateKeyContent content = new IntegrationRuntimeRegenerateKeyContent
             {
                 KeyName = IntegrationRuntimeAuthKeyName.AuthKey2,
             };
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryIntegrationRuntimeResource dataFactoryIntegrationRuntime = client.GetDataFactoryIntegrationRuntimeResource(dataFactoryIntegrationRuntimeResourceId);
 
             // invoke the operation
-            CreateLinkedIntegrationRuntimeContent content = new CreateLinkedIntegrationRuntimeContent()
+            CreateLinkedIntegrationRuntimeContent content = new CreateLinkedIntegrationRuntimeContent
             {
                 Name = "bfa92911-9fb6-4fbe-8f23-beae87bc1c83",
                 SubscriptionId = "061774c7-4b5a-4159-a55b-365581830283",
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
             DataFactoryIntegrationRuntimeResource dataFactoryIntegrationRuntime = client.GetDataFactoryIntegrationRuntimeResource(dataFactoryIntegrationRuntimeResourceId);
 
             // invoke the operation and iterate over the result
-            GetSsisObjectMetadataContent content = new GetSsisObjectMetadataContent()
+            GetSsisObjectMetadataContent content = new GetSsisObjectMetadataContent
             {
                 MetadataPath = "ssisFolders",
             };
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.DataFactory.Samples
 
             // invoke the operation
             string nodeName = "Node_1";
-            UpdateIntegrationRuntimeNodeContent content = new UpdateIntegrationRuntimeNodeContent()
+            UpdateIntegrationRuntimeNodeContent content = new UpdateIntegrationRuntimeNodeContent
             {
                 ConcurrentJobsLimit = 2,
             };

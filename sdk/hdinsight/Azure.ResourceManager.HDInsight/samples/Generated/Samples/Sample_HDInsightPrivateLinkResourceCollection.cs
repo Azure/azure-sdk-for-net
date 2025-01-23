@@ -17,6 +17,40 @@ namespace Azure.ResourceManager.HDInsight.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetSpecificPrivateLinkResourceInASpecificHDInsightCluster()
+        {
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetPrivateLinkResource.json
+            // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HDInsightClusterResource created on azure
+            // for more information of creating HDInsightClusterResource, please refer to the document of HDInsightClusterResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string clusterName = "cluster1";
+            ResourceIdentifier hdInsightClusterResourceId = HDInsightClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
+
+            // get the collection of this HDInsightPrivateLinkResource
+            HDInsightPrivateLinkResourceCollection collection = hdInsightCluster.GetHDInsightPrivateLinkResources();
+
+            // invoke the operation
+            string privateLinkResourceName = "gateway";
+            HDInsightPrivateLinkResource result = await collection.GetAsync(privateLinkResourceName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            HDInsightPrivateLinkResourceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GetAllPrivateLinkResourcesInASpecificHDInsightCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetAllPrivateLinkResourcesInCluster.json
@@ -49,40 +83,6 @@ namespace Azure.ResourceManager.HDInsight.Samples
             }
 
             Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetSpecificPrivateLinkResourceInASpecificHDInsightCluster()
-        {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetPrivateLinkResource.json
-            // this example is just showing the usage of "PrivateLinkResources_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HDInsightClusterResource created on azure
-            // for more information of creating HDInsightClusterResource, please refer to the document of HDInsightClusterResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string clusterName = "cluster1";
-            ResourceIdentifier hdInsightClusterResourceId = HDInsightClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
-
-            // get the collection of this HDInsightPrivateLinkResource
-            HDInsightPrivateLinkResourceCollection collection = hdInsightCluster.GetHDInsightPrivateLinkResources();
-
-            // invoke the operation
-            string privateLinkResourceName = "gateway";
-            HDInsightPrivateLinkResource result = await collection.GetAsync(privateLinkResourceName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            HDInsightPrivateLinkResourceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]

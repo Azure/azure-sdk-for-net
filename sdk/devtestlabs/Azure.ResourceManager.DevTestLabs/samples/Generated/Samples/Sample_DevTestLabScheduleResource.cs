@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabScheduleResource devTestLabSchedule = client.GetDevTestLabScheduleResource(devTestLabScheduleResourceId);
 
             // invoke the operation
-            DevTestLabSchedulePatch patch = new DevTestLabSchedulePatch()
+            DevTestLabSchedulePatch patch = new DevTestLabSchedulePatch
             {
                 Tags =
 {
-["tagName1"] = "tagValue1",
+["tagName1"] = "tagValue1"
 },
             };
             DevTestLabScheduleResource result = await devTestLabSchedule.UpdateAsync(patch);

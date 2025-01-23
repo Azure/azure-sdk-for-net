@@ -64,5 +64,22 @@ namespace Azure.Storage.Files.Shares.Models
         /// SMB properties to copy from the source file.
         /// </summary>
         public CopyableFileSmbProperties SmbPropertiesToCopy { get; set; }
+
+        /// <summary>
+        /// Only applicable to NFS Files.  NFS properties to set on the destination file.
+        /// </summary>
+        public FilePosixProperties PosixProperties { get; set; }
+
+        /// <summary>
+        /// Optional, only applicable to NFS Files.
+        /// If not populated, the desination file will have the default File Mode.
+        /// </summary>
+        public ModeCopyMode? ModeCopyMode { get; set; }
+
+        /// <summary>
+        /// Optional, only applicable to NFS Files.
+        /// If not populated, the desination file will have the default Owner and Group.
+        /// </summary>
+        public OwnerCopyMode? OwnerCopyMode { get; set; }
     }
 }

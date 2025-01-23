@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Batch.Samples
 
             // invoke the operation
             string applicationName = "app1";
-            BatchApplicationData data = new BatchApplicationData()
+            BatchApplicationData data = new BatchApplicationData
             {
                 DisplayName = "myAppName",
                 AllowUpdates = false,
@@ -87,6 +87,42 @@ namespace Azure.ResourceManager.Batch.Samples
             BatchApplicationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ApplicationList()
+        {
+            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/ApplicationList.json
+            // this example is just showing the usage of "Application_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BatchAccountResource created on azure
+            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "default-azurebatch-japaneast";
+            string accountName = "sampleacct";
+            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
+
+            // get the collection of this BatchApplicationResource
+            BatchApplicationCollection collection = batchAccount.GetBatchApplications();
+
+            // invoke the operation and iterate over the result
+            await foreach (BatchApplicationResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                BatchApplicationData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -159,42 +195,6 @@ namespace Azure.ResourceManager.Batch.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ApplicationList()
-        {
-            // Generated from example definition: specification/batch/resource-manager/Microsoft.Batch/stable/2024-07-01/examples/ApplicationList.json
-            // this example is just showing the usage of "Application_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BatchAccountResource created on azure
-            // for more information of creating BatchAccountResource, please refer to the document of BatchAccountResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "default-azurebatch-japaneast";
-            string accountName = "sampleacct";
-            ResourceIdentifier batchAccountResourceId = BatchAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
-            BatchAccountResource batchAccount = client.GetBatchAccountResource(batchAccountResourceId);
-
-            // get the collection of this BatchApplicationResource
-            BatchApplicationCollection collection = batchAccount.GetBatchApplications();
-
-            // invoke the operation and iterate over the result
-            await foreach (BatchApplicationResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                BatchApplicationData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

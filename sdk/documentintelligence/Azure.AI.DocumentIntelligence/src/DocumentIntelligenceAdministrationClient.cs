@@ -10,6 +10,257 @@ namespace Azure.AI.DocumentIntelligence
 {
     public partial class DocumentIntelligenceAdministrationClient
     {
+        // CUSTOM CODE NOTE: we're overwriting methods AuthorizeClassifierCopy, AuthorizeModelCopy,
+        // BuildClassifier, BuildDocumentModel, and ComposeModel for the sole reason of renaming
+        // 'request' parameters to 'options'.
+
+        /// <summary>
+        /// Generates authorization to copy a document classifier to this location with
+        /// specified classifierId and optional description.
+        /// </summary>
+        /// <param name="options"> Authorize copy request options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeClassifierCopyAsync(AuthorizeClassifierCopyOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<ClassifierCopyAuthorization>> AuthorizeClassifierCopyAsync(AuthorizeClassifierCopyOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await AuthorizeClassifierCopyAsync(content, context).ConfigureAwait(false);
+            return Response.FromValue(ClassifierCopyAuthorization.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// Generates authorization to copy a document classifier to this location with
+        /// specified classifierId and optional description.
+        /// </summary>
+        /// <param name="options"> Authorize copy request options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeClassifierCopy(AuthorizeClassifierCopyOptions,CancellationToken)']/*" />
+        public virtual Response<ClassifierCopyAuthorization> AuthorizeClassifierCopy(AuthorizeClassifierCopyOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = AuthorizeClassifierCopy(content, context);
+            return Response.FromValue(ClassifierCopyAuthorization.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// Generates authorization to copy a document model to this location with
+        /// specified modelId and optional description.
+        /// </summary>
+        /// <param name="options"> Authorize copy request options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeModelCopyAsync(AuthorizeModelCopyOptions,CancellationToken)']/*" />
+        public virtual async Task<Response<ModelCopyAuthorization>> AuthorizeModelCopyAsync(AuthorizeModelCopyOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = await AuthorizeModelCopyAsync(content, context).ConfigureAwait(false);
+            return Response.FromValue(ModelCopyAuthorization.FromResponse(response), response);
+        }
+
+        /// <summary>
+        /// Generates authorization to copy a document model to this location with
+        /// specified modelId and optional description.
+        /// </summary>
+        /// <param name="options"> Authorize copy request options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='AuthorizeModelCopy(AuthorizeModelCopyOptions,CancellationToken)']/*" />
+        public virtual Response<ModelCopyAuthorization> AuthorizeModelCopy(AuthorizeModelCopyOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Response response = AuthorizeModelCopy(content, context);
+            return Response.FromValue(ModelCopyAuthorization.FromResponse(response), response);
+        }
+
+        /// <summary> Builds a custom document classifier. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="options"> Build request options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='BuildClassifierAsync(WaitUntil,BuildClassifierOptions,CancellationToken)']/*" />
+        public virtual async Task<Operation<DocumentClassifierDetails>> BuildClassifierAsync(WaitUntil waitUntil, BuildClassifierOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = await BuildClassifierAsync(waitUntil, content, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, FetchDocumentClassifierDetailsFromDocumentClassifierBuildOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildClassifier");
+        }
+
+        /// <summary> Builds a custom document classifier. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="options"> Build request options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='BuildClassifier(WaitUntil,BuildClassifierOptions,CancellationToken)']/*" />
+        public virtual Operation<DocumentClassifierDetails> BuildClassifier(WaitUntil waitUntil, BuildClassifierOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = BuildClassifier(waitUntil, content, context);
+            return ProtocolOperationHelpers.Convert(response, FetchDocumentClassifierDetailsFromDocumentClassifierBuildOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildClassifier");
+        }
+
+        /// <summary> Builds a custom document analysis model. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="options"> Build request options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModelAsync(WaitUntil,BuildDocumentModelOptions,CancellationToken)']/*" />
+        public virtual async Task<Operation<DocumentModelDetails>> BuildDocumentModelAsync(WaitUntil waitUntil, BuildDocumentModelOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = await BuildDocumentModelAsync(waitUntil, content, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelBuildOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildDocumentModel");
+        }
+
+        /// <summary> Builds a custom document analysis model. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="options"> Build request options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='BuildDocumentModel(WaitUntil,BuildDocumentModelOptions,CancellationToken)']/*" />
+        public virtual Operation<DocumentModelDetails> BuildDocumentModel(WaitUntil waitUntil, BuildDocumentModelOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = BuildDocumentModel(waitUntil, content, context);
+            return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelBuildOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.BuildDocumentModel");
+        }
+
+        /// <summary> Creates a new document model from document types of existing document models. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="options"> Compose request options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='ComposeModelAsync(WaitUntil,ComposeModelOptions,CancellationToken)']/*" />
+        public virtual async Task<Operation<DocumentModelDetails>> ComposeModelAsync(WaitUntil waitUntil, ComposeModelOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = await ComposeModelAsync(waitUntil, content, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelComposeOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.ComposeModel");
+        }
+
+        /// <summary> Creates a new document model from document types of existing document models. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="options"> Compose request options. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='ComposeModel(WaitUntil,ComposeModelOptions,CancellationToken)']/*" />
+        public virtual Operation<DocumentModelDetails> ComposeModel(WaitUntil waitUntil, ComposeModelOptions options, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(options, nameof(options));
+
+            using RequestContent content = options.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = ComposeModel(waitUntil, content, context);
+            return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelComposeOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.ComposeModel");
+        }
+
+        // CUSTOM CODE NOTE: we're overwriting methods CopyClassifierTo and CopyModelTo for the
+        // sole reason of renaming 'request' parameters to 'authorization'.
+
+        /// <summary> Copies document classifier to the target resource, region, and classifierId. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="authorization"> Copy to request authorization. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="authorization"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='CopyClassifierToAsync(WaitUntil,string,ClassifierCopyAuthorization,CancellationToken)']/*" />
+        public virtual async Task<Operation<DocumentClassifierDetails>> CopyClassifierToAsync(WaitUntil waitUntil, string classifierId, ClassifierCopyAuthorization authorization, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+            Argument.AssertNotNull(authorization, nameof(authorization));
+
+            using RequestContent content = authorization.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = await CopyClassifierToAsync(waitUntil, classifierId, content, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, FetchDocumentClassifierDetailsFromDocumentClassifierCopyToOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyClassifierTo");
+        }
+
+        /// <summary> Copies document classifier to the target resource, region, and classifierId. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="classifierId"> Unique document classifier name. </param>
+        /// <param name="authorization"> Copy to request authorization. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/> or <paramref name="authorization"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="classifierId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='CopyClassifierTo(WaitUntil,string,ClassifierCopyAuthorization,CancellationToken)']/*" />
+        public virtual Operation<DocumentClassifierDetails> CopyClassifierTo(WaitUntil waitUntil, string classifierId, ClassifierCopyAuthorization authorization, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(classifierId, nameof(classifierId));
+            Argument.AssertNotNull(authorization, nameof(authorization));
+
+            using RequestContent content = authorization.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = CopyClassifierTo(waitUntil, classifierId, content, context);
+            return ProtocolOperationHelpers.Convert(response, FetchDocumentClassifierDetailsFromDocumentClassifierCopyToOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyClassifierTo");
+        }
+
+        /// <summary> Copies document model to the target resource, region, and modelId. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="authorization"> Copy to request authorization. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="authorization"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='CopyModelToAsync(WaitUntil,string,ModelCopyAuthorization,CancellationToken)']/*" />
+        public virtual async Task<Operation<DocumentModelDetails>> CopyModelToAsync(WaitUntil waitUntil, string modelId, ModelCopyAuthorization authorization, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNull(authorization, nameof(authorization));
+
+            using RequestContent content = authorization.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = await CopyModelToAsync(waitUntil, modelId, content, context).ConfigureAwait(false);
+            return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelCopyToOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyModelTo");
+        }
+
+        /// <summary> Copies document model to the target resource, region, and modelId. </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="modelId"> Unique document model name. </param>
+        /// <param name="authorization"> Copy to request authorization. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> or <paramref name="authorization"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="modelId"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Generated/Docs/DocumentIntelligenceAdministrationClient.xml" path="doc/members/member[@name='CopyModelTo(WaitUntil,string,ModelCopyAuthorization,CancellationToken)']/*" />
+        public virtual Operation<DocumentModelDetails> CopyModelTo(WaitUntil waitUntil, string modelId, ModelCopyAuthorization authorization, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(modelId, nameof(modelId));
+            Argument.AssertNotNull(authorization, nameof(authorization));
+
+            using RequestContent content = authorization.ToRequestContent();
+            RequestContext context = FromCancellationToken(cancellationToken);
+            Operation<BinaryData> response = CopyModelTo(waitUntil, modelId, content, context);
+            return ProtocolOperationHelpers.Convert(response, FetchDocumentModelDetailsFromDocumentModelCopyToOperationDetails, ClientDiagnostics, "DocumentIntelligenceAdministrationClient.CopyModelTo");
+        }
+
         // CUSTOM CODE NOTE: we're overwriting the behavior of the BuildDocumentModel, ComposeModel,
         // CopyModelTo, BuildClassifier, and CopyClassifierTo APIs to return an instance of OperationWithId.
         // This is a workaround since Operation.Id is not supported by our generator yet (it throws a
@@ -25,7 +276,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BuildDocumentModelAsync(WaitUntil,BuildDocumentModelContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BuildDocumentModelAsync(WaitUntil,BuildDocumentModelOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -66,7 +317,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BuildDocumentModel(WaitUntil,BuildDocumentModelContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BuildDocumentModel(WaitUntil,BuildDocumentModelOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -107,7 +358,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ComposeModelAsync(WaitUntil,ComposeDocumentModelContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ComposeModelAsync(WaitUntil,ComposeModelOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -148,7 +399,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="ComposeModel(WaitUntil,ComposeDocumentModelContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="ComposeModel(WaitUntil,ComposeModelOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -189,7 +440,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CopyModelToAsync(WaitUntil,string,CopyAuthorization,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CopyModelToAsync(WaitUntil,string,ModelCopyAuthorization,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -233,7 +484,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CopyModelTo(WaitUntil,string,CopyAuthorization,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="CopyModelTo(WaitUntil,string,ModelCopyAuthorization,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -277,7 +528,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BuildClassifierAsync(WaitUntil,BuildDocumentClassifierContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BuildClassifierAsync(WaitUntil,BuildClassifierOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -318,7 +569,7 @@ namespace Azure.AI.DocumentIntelligence
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="BuildClassifier(WaitUntil,BuildDocumentClassifierContent,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="BuildClassifier(WaitUntil,BuildClassifierOptions,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>

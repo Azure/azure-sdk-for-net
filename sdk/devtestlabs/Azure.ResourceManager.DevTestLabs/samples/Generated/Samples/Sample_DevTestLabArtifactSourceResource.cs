@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabArtifactSourceResource devTestLabArtifactSource = client.GetDevTestLabArtifactSourceResource(devTestLabArtifactSourceResourceId);
 
             // invoke the operation
-            DevTestLabArtifactSourcePatch patch = new DevTestLabArtifactSourcePatch()
+            DevTestLabArtifactSourcePatch patch = new DevTestLabArtifactSourcePatch
             {
                 Tags =
 {
-["tagName1"] = "tagValue1",
+["tagName1"] = "tagValue1"
 },
             };
             DevTestLabArtifactSourceResource result = await devTestLabArtifactSource.UpdateAsync(patch);

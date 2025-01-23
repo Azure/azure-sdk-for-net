@@ -11,7 +11,6 @@ trigger:
     - sdk/openai
     - sdk/openai/ci.yml
     - sdk/openai/Azure.AI.OpenAI
-    - sdk/openai/Azure.AI.OpenAI.Assistants
 
 pr:
   branches:
@@ -25,7 +24,6 @@ pr:
     - sdk/openai
     - sdk/openai/ci.yml
     - sdk/openai/Azure.AI.OpenAI
-    - sdk/openai/Azure.AI.OpenAI.Assistants
 
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
@@ -38,5 +36,3 @@ extends:
     Artifacts:
     - name: Azure.AI.OpenAI
       safeName: AzureAIOpenAI
-    - name: Azure.AI.OpenAI.Assistants
-      safeName: AzureAIOpenAIAssistants

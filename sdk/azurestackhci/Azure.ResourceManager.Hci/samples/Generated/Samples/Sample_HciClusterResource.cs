@@ -10,44 +10,12 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Hci.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Hci.Samples
 {
     public partial class Sample_HciClusterResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetHciClusters_ListClustersInAGivenSubscription()
-        {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/ListClustersBySubscription.json
-            // this example is just showing the usage of "Clusters_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (HciClusterResource item in subscriptionResource.GetHciClustersAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                HciClusterData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetCluster()
@@ -70,51 +38,6 @@ namespace Azure.ResourceManager.Hci.Samples
 
             // invoke the operation
             HciClusterResource result = await hciCluster.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            HciClusterData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateCluster()
-        {
-            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/UpdateCluster.json
-            // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HciClusterResource created on azure
-            // for more information of creating HciClusterResource, please refer to the document of HciClusterResource
-            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
-            string resourceGroupName = "test-rg";
-            string clusterName = "myCluster";
-            ResourceIdentifier hciClusterResourceId = HciClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            HciClusterResource hciCluster = client.GetHciClusterResource(hciClusterResourceId);
-
-            // invoke the operation
-            HciClusterPatch patch = new HciClusterPatch()
-            {
-                Tags =
-{
-["tag1"] = "value1",
-["tag2"] = "value2",
-},
-                CloudManagementEndpoint = "https://98294836-31be-4668-aeae-698667faf99b.waconazure.com",
-                DesiredProperties = new HciClusterDesiredProperties()
-                {
-                    WindowsServerSubscription = WindowsServerSubscription.Enabled,
-                    DiagnosticLevel = HciClusterDiagnosticLevel.Basic,
-                },
-                ManagedServiceIdentityType = HciManagedServiceIdentityType.SystemAssigned,
-            };
-            HciClusterResource result = await hciCluster.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -151,6 +74,51 @@ namespace Azure.ResourceManager.Hci.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateCluster()
+        {
+            // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/UpdateCluster.json
+            // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HciClusterResource created on azure
+            // for more information of creating HciClusterResource, please refer to the document of HciClusterResource
+            string subscriptionId = "fd3c3665-1729-4b7b-9a38-238e83b0f98b";
+            string resourceGroupName = "test-rg";
+            string clusterName = "myCluster";
+            ResourceIdentifier hciClusterResourceId = HciClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            HciClusterResource hciCluster = client.GetHciClusterResource(hciClusterResourceId);
+
+            // invoke the operation
+            HciClusterPatch patch = new HciClusterPatch
+            {
+                Tags =
+{
+["tag1"] = "value1",
+["tag2"] = "value2"
+},
+                CloudManagementEndpoint = "https://98294836-31be-4668-aeae-698667faf99b.waconazure.com",
+                DesiredProperties = new HciClusterDesiredProperties
+                {
+                    WindowsServerSubscription = WindowsServerSubscription.Enabled,
+                    DiagnosticLevel = HciClusterDiagnosticLevel.Basic,
+                },
+                ManagedServiceIdentityType = HciManagedServiceIdentityType.SystemAssigned,
+            };
+            HciClusterResource result = await hciCluster.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            HciClusterData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task UploadCertificate_UploadCertificate()
         {
             // Generated from example definition: specification/azurestackhci/resource-manager/Microsoft.AzureStackHCI/StackHCI/stable/2024-04-01/examples/UploadCertificate.json
@@ -170,12 +138,9 @@ namespace Azure.ResourceManager.Hci.Samples
             HciClusterResource hciCluster = client.GetHciClusterResource(hciClusterResourceId);
 
             // invoke the operation
-            HciClusterCertificateContent content = new HciClusterCertificateContent()
+            HciClusterCertificateContent content = new HciClusterCertificateContent
             {
-                Certificates =
-{
-"base64cert","base64cert"
-},
+                Certificates = { "base64cert", "base64cert" },
             };
             await hciCluster.UploadCertificateAsync(WaitUntil.Completed, content);
 
@@ -230,7 +195,7 @@ namespace Azure.ResourceManager.Hci.Samples
             HciClusterResource hciCluster = client.GetHciClusterResource(hciClusterResourceId);
 
             // invoke the operation
-            SoftwareAssuranceChangeContent content = new SoftwareAssuranceChangeContent()
+            SoftwareAssuranceChangeContent content = new SoftwareAssuranceChangeContent
             {
                 SoftwareAssuranceIntent = SoftwareAssuranceIntent.Enable,
             };
@@ -265,7 +230,7 @@ namespace Azure.ResourceManager.Hci.Samples
             HciClusterResource hciCluster = client.GetHciClusterResource(hciClusterResourceId);
 
             // invoke the operation
-            LogCollectionContent content = new LogCollectionContent()
+            LogCollectionContent content = new LogCollectionContent
             {
                 Properties = new LogCollectionContentProperties(DateTimeOffset.Parse("2020-01-01T17:18:19.1234567Z"), DateTimeOffset.Parse("2021-01-01T17:18:19.1234567Z")),
             };
@@ -300,9 +265,9 @@ namespace Azure.ResourceManager.Hci.Samples
             HciClusterResource hciCluster = client.GetHciClusterResource(hciClusterResourceId);
 
             // invoke the operation
-            RemoteSupportContent content = new RemoteSupportContent()
+            RemoteSupportContent content = new RemoteSupportContent
             {
-                Properties = new RemoteSupportContentProperties()
+                Properties = new RemoteSupportContentProperties
                 {
                     ExpireOn = DateTimeOffset.Parse("2020-01-01T17:18:19.1234567Z"),
                     RemoteSupportType = RemoteSupportType.Enable,

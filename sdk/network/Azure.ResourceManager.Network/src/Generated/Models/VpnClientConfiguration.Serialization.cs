@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            AddressSpace vpnClientAddressPool = default;
+            VirtualNetworkAddressSpace vpnClientAddressPool = default;
             IList<VpnClientRootCertificate> vpnClientRootCertificates = default;
             IList<VpnClientRevokedCertificate> vpnClientRevokedCertificates = default;
             IList<VpnClientProtocol> vpnClientProtocols = default;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    vpnClientAddressPool = AddressSpace.DeserializeAddressSpace(property.Value, options);
+                    vpnClientAddressPool = VirtualNetworkAddressSpace.DeserializeVirtualNetworkAddressSpace(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vpnClientRootCertificates"u8))

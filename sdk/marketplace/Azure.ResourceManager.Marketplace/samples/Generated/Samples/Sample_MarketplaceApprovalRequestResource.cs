@@ -96,13 +96,10 @@ namespace Azure.ResourceManager.Marketplace.Samples
             MarketplaceApprovalRequestResource marketplaceApprovalRequest = client.GetMarketplaceApprovalRequestResource(marketplaceApprovalRequestResourceId);
 
             // invoke the operation
-            QueryApprovalRequestContent content = new QueryApprovalRequestContent()
+            QueryApprovalRequestContent content = new QueryApprovalRequestContent
             {
                 PublisherId = "marketplacetestthirdparty",
-                PlanIds =
-{
-"testPlanA","testPlanB","*"
-},
+                PlanIds = { "testPlanA", "testPlanB", "*" },
             };
             QueryApprovalRequestResult result = await marketplaceApprovalRequest.QueryApprovalRequestAsync(content: content);
 
@@ -129,7 +126,7 @@ namespace Azure.ResourceManager.Marketplace.Samples
             MarketplaceApprovalRequestResource marketplaceApprovalRequest = client.GetMarketplaceApprovalRequestResource(marketplaceApprovalRequestResourceId);
 
             // invoke the operation
-            WithdrawPlanContent content = new WithdrawPlanContent()
+            WithdrawPlanContent content = new WithdrawPlanContent
             {
                 PlanId = "*",
                 PublisherId = "marketplacetestthirdparty",

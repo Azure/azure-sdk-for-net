@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             CosmosDBForPostgreSqlNodeConfigurationResource cosmosDBForPostgreSqlNodeConfiguration = client.GetCosmosDBForPostgreSqlNodeConfigurationResource(cosmosDBForPostgreSqlNodeConfigurationResourceId);
 
             // invoke the operation
-            CosmosDBForPostgreSqlServerConfigurationData data = new CosmosDBForPostgreSqlServerConfigurationData()
+            CosmosDBForPostgreSqlServerConfigurationData data = new CosmosDBForPostgreSqlServerConfigurationData
             {
                 Value = "off",
             };

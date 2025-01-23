@@ -41,47 +41,35 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
 
             // invoke the operation
             string profileName = "TestProfileType396";
-            ProfileResourceFormatData data = new ProfileResourceFormatData()
+            ProfileResourceFormatData data = new ProfileResourceFormatData
             {
                 SmallImage = "\\\\Images\\\\smallImage",
                 MediumImage = "\\\\Images\\\\MediumImage",
                 LargeImage = "\\\\Images\\\\LargeImage",
                 ApiEntitySetName = "TestProfileType396",
-                Fields =
-{
-new PropertyDefinition("Id","Edm.String")
+                Fields = {new PropertyDefinition("Id", "Edm.String")
 {
 IsArray = false,
 IsRequired = true,
-},new PropertyDefinition("ProfileId","Edm.String")
+}, new PropertyDefinition("ProfileId", "Edm.String")
 {
 IsArray = false,
 IsRequired = true,
-},new PropertyDefinition("LastName","Edm.String")
+}, new PropertyDefinition("LastName", "Edm.String")
 {
 IsArray = false,
 IsRequired = true,
-},new PropertyDefinition("TestProfileType396","Edm.String")
+}, new PropertyDefinition("TestProfileType396", "Edm.String")
 {
 IsArray = false,
 IsRequired = true,
-},new PropertyDefinition("SavingAccountBalance","Edm.Int32")
+}, new PropertyDefinition("SavingAccountBalance", "Edm.Int32")
 {
 IsArray = false,
 IsRequired = true,
-}
-},
+}},
                 SchemaItemTypeLink = "SchemaItemTypeLink",
-                StrongIds =
-{
-new StrongId(new string[]
-{
-"Id","SavingAccountBalance"
-},"Id"),new StrongId(new string[]
-{
-"ProfileId","LastName"
-},"ProfileId")
-},
+                StrongIds = { new StrongId(new string[] { "Id", "SavingAccountBalance" }, "Id"), new StrongId(new string[] { "ProfileId", "LastName" }, "ProfileId") },
             };
             ArmOperation<ProfileResourceFormatResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, profileName, data);
             ProfileResourceFormatResource result = lro.Value;
@@ -125,6 +113,42 @@ new StrongId(new string[]
             ProfileResourceFormatData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ProfilesListByHub()
+        {
+            // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/ProfilesListByHub.json
+            // this example is just showing the usage of "Profiles_ListByHub" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HubResource created on azure
+            // for more information of creating HubResource, please refer to the document of HubResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "TestHubRG";
+            string hubName = "sdkTestHub";
+            ResourceIdentifier hubResourceId = HubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName);
+            HubResource hub = client.GetHubResource(hubResourceId);
+
+            // get the collection of this ProfileResourceFormatResource
+            ProfileResourceFormatCollection collection = hub.GetProfileResourceFormats();
+
+            // invoke the operation and iterate over the result
+            await foreach (ProfileResourceFormatResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ProfileResourceFormatData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -197,42 +221,6 @@ new StrongId(new string[]
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ProfilesListByHub()
-        {
-            // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/ProfilesListByHub.json
-            // this example is just showing the usage of "Profiles_ListByHub" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HubResource created on azure
-            // for more information of creating HubResource, please refer to the document of HubResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "TestHubRG";
-            string hubName = "sdkTestHub";
-            ResourceIdentifier hubResourceId = HubResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName);
-            HubResource hub = client.GetHubResource(hubResourceId);
-
-            // get the collection of this ProfileResourceFormatResource
-            ProfileResourceFormatCollection collection = hub.GetProfileResourceFormats();
-
-            // invoke the operation and iterate over the result
-            await foreach (ProfileResourceFormatResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ProfileResourceFormatData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

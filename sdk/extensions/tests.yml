@@ -1,7 +1,7 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: extensions
-    SupportedClouds: 'Public,Canary,UsGov,China'
+    SupportedClouds: 'Public,Canary'

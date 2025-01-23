@@ -13,9 +13,9 @@ This troubleshooting guide contains instructions to diagnose frequently encounte
 
 ## General troubleshooting
 
-All container registry service operations will throw a [RequestFailedException](https://docs.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet) on failure.
+All container registry service operations will throw a [RequestFailedException](https://learn.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet) on failure.
 
-When you interact with the library, errors returned by the service correspond to the same HTTP status codes returned for [REST API](https://docs.microsoft.com/rest/api/containerregistry/) requests.
+When you interact with the library, errors returned by the service correspond to the same HTTP status codes returned for [REST API](https://learn.microsoft.com/rest/api/containerregistry/) requests.
 
 Here's an example of how to catch an exception using synchronous method
 
@@ -63,9 +63,9 @@ catch (RequestFailedException ex) when (ex.Status == 404)
 
 To troubleshoot issues with the library, first enable logging to monitor the behavior of the application. The errors and warnings in the logs generally provide useful insights into what went wrong and sometimes include corrective actions to fix issues.
 
-This library uses the standard [logging](https://docs.microsoft.com/dotnet/azure/sdk/logging) library. Basic information about HTTP sessions, such as URLs and headers, is logged at the `INFO` level.
+This library uses the standard [logging](https://learn.microsoft.com/dotnet/azure/sdk/logging) library. Basic information about HTTP sessions, such as URLs and headers, is logged at the `INFO` level.
 
-The simplest way to see the logs is to enable console logging. To create an Azure SDK log listener that outputs messages to the console, use the [AzureEventSourceListener.CreateConsoleLogger](https://docs.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener.createconsolelogger?view=azure-dotnet) method:
+The simplest way to see the logs is to enable console logging. To create an Azure SDK log listener that outputs messages to the console, use the [AzureEventSourceListener.CreateConsoleLogger](https://learn.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener.createconsolelogger?view=azure-dotnet) method:
 
 ```csharp
 using Azure.Core.Diagnostics;
@@ -120,7 +120,7 @@ To learn about other logging mechanisms, see [Azure SDK diagnostics](https://git
 
 ## Troubleshooting authentication issues
 
-Azure Container Registry supports Azure Active Directory authentication. To provide a valid credential, you can use the `Azure.Identity` package. For more information on getting started, see the [Azure Container Registry library's README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/containerregistry/Azure.Containers.ContainerRegistry#authenticate-the-client). For details on the credential types supported in `Azure.Identity`, see the [Azure Identity library's documentation](https://docs.microsoft.com/dotnet/api/overview/azure/Identity-readme).
+Azure Container Registry supports Azure Active Directory authentication. To provide a valid credential, you can use the `Azure.Identity` package. For more information on getting started, see the [Azure Container Registry library's README](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/containerregistry/Azure.Containers.ContainerRegistry#authenticate-the-client). For details on the credential types supported in `Azure.Identity`, see the [Azure Identity library's documentation](https://learn.microsoft.com/dotnet/api/overview/azure/Identity-readme).
 
 Here are the authentication exceptions and ways to handle it:
 

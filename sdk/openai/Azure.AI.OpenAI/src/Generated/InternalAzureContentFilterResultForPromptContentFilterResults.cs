@@ -166,4 +166,3 @@ namespace Azure.AI.OpenAI
         internal ContentFilterDetectionResult IndirectAttack { get; set; }
     }
 }
-

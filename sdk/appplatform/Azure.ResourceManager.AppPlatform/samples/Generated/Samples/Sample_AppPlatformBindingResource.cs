@@ -99,15 +99,15 @@ namespace Azure.ResourceManager.AppPlatform.Samples
             AppPlatformBindingResource appPlatformBinding = client.GetAppPlatformBindingResource(appPlatformBindingResourceId);
 
             // invoke the operation
-            AppPlatformBindingData data = new AppPlatformBindingData()
+            AppPlatformBindingData data = new AppPlatformBindingData
             {
-                Properties = new AppPlatformBindingProperties()
+                Properties = new AppPlatformBindingProperties
                 {
                     Key = "xxxx",
                     BindingParameters =
 {
-["apiType"] = BinaryData.FromString("\"SQL\""),
-["databaseName"] = BinaryData.FromString("\"db1\""),
+["apiType"] = BinaryData.FromObjectAsJson("SQL"),
+["databaseName"] = BinaryData.FromObjectAsJson("db1")
 },
                 },
             };

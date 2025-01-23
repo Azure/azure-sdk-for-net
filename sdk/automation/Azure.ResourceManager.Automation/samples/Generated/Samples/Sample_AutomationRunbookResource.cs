@@ -18,6 +18,102 @@ namespace Azure.ResourceManager.Automation.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetRunbook()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/getRunbook.json
+            // this example is just showing the usage of "Runbook_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomationRunbookResource created on azure
+            // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            string automationAccountName = "ContoseAutomationAccount";
+            string runbookName = "Get-AzureVMTutorial";
+            ResourceIdentifier automationRunbookResourceId = AutomationRunbookResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, runbookName);
+            AutomationRunbookResource automationRunbook = client.GetAutomationRunbookResource(automationRunbookResourceId);
+
+            // invoke the operation
+            AutomationRunbookResource result = await automationRunbook.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AutomationRunbookData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteARunbook()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/deleteRunbook.json
+            // this example is just showing the usage of "Runbook_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomationRunbookResource created on azure
+            // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            string automationAccountName = "ContoseAutomationAccount";
+            string runbookName = "Get-AzureVMTutorial";
+            ResourceIdentifier automationRunbookResourceId = AutomationRunbookResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, runbookName);
+            AutomationRunbookResource automationRunbook = client.GetAutomationRunbookResource(automationRunbookResourceId);
+
+            // invoke the operation
+            await automationRunbook.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateRunbook()
+        {
+            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/updateRunbook.json
+            // this example is just showing the usage of "Runbook_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AutomationRunbookResource created on azure
+            // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg";
+            string automationAccountName = "ContoseAutomationAccount";
+            string runbookName = "Get-AzureVMTutorial";
+            ResourceIdentifier automationRunbookResourceId = AutomationRunbookResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, runbookName);
+            AutomationRunbookResource automationRunbook = client.GetAutomationRunbookResource(automationRunbookResourceId);
+
+            // invoke the operation
+            AutomationRunbookPatch patch = new AutomationRunbookPatch
+            {
+                Description = "Updated Description of the Runbook",
+                IsLogVerboseEnabled = false,
+                IsLogProgressEnabled = true,
+                LogActivityTrace = 1,
+            };
+            AutomationRunbookResource result = await automationRunbook.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AutomationRunbookData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetContentRunbookDraft_GetRunbookDraftContent()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/getRunbookDraftContent.json
@@ -153,102 +249,6 @@ namespace Azure.ResourceManager.Automation.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetRunbook()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/getRunbook.json
-            // this example is just showing the usage of "Runbook_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomationRunbookResource created on azure
-            // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            string automationAccountName = "ContoseAutomationAccount";
-            string runbookName = "Get-AzureVMTutorial";
-            ResourceIdentifier automationRunbookResourceId = AutomationRunbookResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, runbookName);
-            AutomationRunbookResource automationRunbook = client.GetAutomationRunbookResource(automationRunbookResourceId);
-
-            // invoke the operation
-            AutomationRunbookResource result = await automationRunbook.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AutomationRunbookData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateRunbook()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/updateRunbook.json
-            // this example is just showing the usage of "Runbook_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomationRunbookResource created on azure
-            // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            string automationAccountName = "ContoseAutomationAccount";
-            string runbookName = "Get-AzureVMTutorial";
-            ResourceIdentifier automationRunbookResourceId = AutomationRunbookResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, runbookName);
-            AutomationRunbookResource automationRunbook = client.GetAutomationRunbookResource(automationRunbookResourceId);
-
-            // invoke the operation
-            AutomationRunbookPatch patch = new AutomationRunbookPatch()
-            {
-                Description = "Updated Description of the Runbook",
-                IsLogVerboseEnabled = false,
-                IsLogProgressEnabled = true,
-                LogActivityTrace = 1,
-            };
-            AutomationRunbookResource result = await automationRunbook.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AutomationRunbookData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteARunbook()
-        {
-            // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/deleteRunbook.json
-            // this example is just showing the usage of "Runbook_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AutomationRunbookResource created on azure
-            // for more information of creating AutomationRunbookResource, please refer to the document of AutomationRunbookResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg";
-            string automationAccountName = "ContoseAutomationAccount";
-            string runbookName = "Get-AzureVMTutorial";
-            ResourceIdentifier automationRunbookResourceId = AutomationRunbookResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, automationAccountName, runbookName);
-            AutomationRunbookResource automationRunbook = client.GetAutomationRunbookResource(automationRunbookResourceId);
-
-            // invoke the operation
-            await automationRunbook.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetTestJobStream_GetTestJobStream()
         {
             // Generated from example definition: specification/automation/resource-manager/Microsoft.Automation/stable/2018-06-30/examples/getTestJobStream.json
@@ -327,12 +327,12 @@ namespace Azure.ResourceManager.Automation.Samples
             AutomationRunbookResource automationRunbook = client.GetAutomationRunbookResource(automationRunbookResourceId);
 
             // invoke the operation
-            RunbookTestJobCreateContent content = new RunbookTestJobCreateContent()
+            RunbookTestJobCreateContent content = new RunbookTestJobCreateContent
             {
                 Parameters =
 {
 ["key01"] = "value01",
-["key02"] = "value02",
+["key02"] = "value02"
 },
                 RunOn = "",
             };

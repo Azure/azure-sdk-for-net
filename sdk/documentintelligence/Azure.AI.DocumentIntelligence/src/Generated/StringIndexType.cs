@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Method used to compute string offset and length. </summary>
-    public readonly partial struct StringIndexType : IEquatable<StringIndexType>
+    internal readonly partial struct StringIndexType : IEquatable<StringIndexType>
     {
         private readonly string _value;
 

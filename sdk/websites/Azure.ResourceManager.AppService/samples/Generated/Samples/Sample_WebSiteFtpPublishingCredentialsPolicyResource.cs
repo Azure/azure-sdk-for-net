@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Samples
             WebSiteFtpPublishingCredentialsPolicyResource webSiteFtpPublishingCredentialsPolicy = client.GetWebSiteFtpPublishingCredentialsPolicyResource(webSiteFtpPublishingCredentialsPolicyResourceId);
 
             // invoke the operation
-            CsmPublishingCredentialsPoliciesEntityData data = new CsmPublishingCredentialsPoliciesEntityData()
+            CsmPublishingCredentialsPoliciesEntityData data = new CsmPublishingCredentialsPoliciesEntityData
             {
                 Allow = true,
             };

@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Network.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_ConfigurationPolicyGroupPut()
+        public async Task Get_ConfigurationPolicyGroupGet()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ConfigurationPolicyGroupPut.json
-            // this example is just showing the usage of "ConfigurationPolicyGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/ConfigurationPolicyGroupGet.json
+            // this example is just showing the usage of "ConfigurationPolicyGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,27 +38,7 @@ namespace Azure.ResourceManager.Network.Samples
             VpnServerConfigurationPolicyGroupResource vpnServerConfigurationPolicyGroup = client.GetVpnServerConfigurationPolicyGroupResource(vpnServerConfigurationPolicyGroupResourceId);
 
             // invoke the operation
-            VpnServerConfigurationPolicyGroupData data = new VpnServerConfigurationPolicyGroupData()
-            {
-                IsDefault = true,
-                Priority = 0,
-                PolicyMembers =
-{
-new VpnServerConfigurationPolicyGroupMember()
-{
-Name = "policy1",
-AttributeType = VpnPolicyMemberAttributeType.RadiusAzureGroupId,
-AttributeValue = "6ad1bd08",
-},new VpnServerConfigurationPolicyGroupMember()
-{
-Name = "policy2",
-AttributeType = VpnPolicyMemberAttributeType.CertificateGroupId,
-AttributeValue = "red.com",
-}
-},
-            };
-            ArmOperation<VpnServerConfigurationPolicyGroupResource> lro = await vpnServerConfigurationPolicyGroup.UpdateAsync(WaitUntil.Completed, data);
-            VpnServerConfigurationPolicyGroupResource result = lro.Value;
+            VpnServerConfigurationPolicyGroupResource result = await vpnServerConfigurationPolicyGroup.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -71,7 +51,7 @@ AttributeValue = "red.com",
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_ConfigurationPolicyGroupDelete()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ConfigurationPolicyGroupDelete.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/ConfigurationPolicyGroupDelete.json
             // this example is just showing the usage of "ConfigurationPolicyGroups_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,10 +76,10 @@ AttributeValue = "red.com",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_ConfigurationPolicyGroupGet()
+        public async Task Update_ConfigurationPolicyGroupPut()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/ConfigurationPolicyGroupGet.json
-            // this example is just showing the usage of "ConfigurationPolicyGroups_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/ConfigurationPolicyGroupPut.json
+            // this example is just showing the usage of "ConfigurationPolicyGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -116,7 +96,24 @@ AttributeValue = "red.com",
             VpnServerConfigurationPolicyGroupResource vpnServerConfigurationPolicyGroup = client.GetVpnServerConfigurationPolicyGroupResource(vpnServerConfigurationPolicyGroupResourceId);
 
             // invoke the operation
-            VpnServerConfigurationPolicyGroupResource result = await vpnServerConfigurationPolicyGroup.GetAsync();
+            VpnServerConfigurationPolicyGroupData data = new VpnServerConfigurationPolicyGroupData
+            {
+                IsDefault = true,
+                Priority = 0,
+                PolicyMembers = {new VpnServerConfigurationPolicyGroupMember
+{
+Name = "policy1",
+AttributeType = VpnPolicyMemberAttributeType.RadiusAzureGroupId,
+AttributeValue = "6ad1bd08",
+}, new VpnServerConfigurationPolicyGroupMember
+{
+Name = "policy2",
+AttributeType = VpnPolicyMemberAttributeType.CertificateGroupId,
+AttributeValue = "red.com",
+}},
+            };
+            ArmOperation<VpnServerConfigurationPolicyGroupResource> lro = await vpnServerConfigurationPolicyGroup.UpdateAsync(WaitUntil.Completed, data);
+            VpnServerConfigurationPolicyGroupResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

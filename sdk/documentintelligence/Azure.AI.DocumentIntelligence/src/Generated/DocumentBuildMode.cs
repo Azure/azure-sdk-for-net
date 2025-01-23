@@ -24,14 +24,11 @@ namespace Azure.AI.DocumentIntelligence
 
         private const string TemplateValue = "template";
         private const string NeuralValue = "neural";
-        private const string GenerativeValue = "generative";
 
         /// <summary> Target documents with similar visual templates. </summary>
         public static DocumentBuildMode Template { get; } = new DocumentBuildMode(TemplateValue);
         /// <summary> Support documents with diverse visual templates. </summary>
         public static DocumentBuildMode Neural { get; } = new DocumentBuildMode(NeuralValue);
-        /// <summary> Enable documents of all types using generative AI techniques. </summary>
-        public static DocumentBuildMode Generative { get; } = new DocumentBuildMode(GenerativeValue);
         /// <summary> Determines if two <see cref="DocumentBuildMode"/> values are the same. </summary>
         public static bool operator ==(DocumentBuildMode left, DocumentBuildMode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="DocumentBuildMode"/> values are not the same. </summary>

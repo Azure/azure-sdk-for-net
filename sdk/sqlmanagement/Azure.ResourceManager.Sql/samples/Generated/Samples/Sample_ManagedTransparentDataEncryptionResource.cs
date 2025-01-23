@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedTransparentDataEncryptionResource managedTransparentDataEncryption = client.GetManagedTransparentDataEncryptionResource(managedTransparentDataEncryptionResourceId);
 
             // invoke the operation
-            ManagedTransparentDataEncryptionData data = new ManagedTransparentDataEncryptionData()
+            ManagedTransparentDataEncryptionData data = new ManagedTransparentDataEncryptionData
             {
                 State = TransparentDataEncryptionState.Enabled,
             };

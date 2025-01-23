@@ -10,13 +10,107 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.OperationalInsights.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.OperationalInsights.Samples
 {
     public partial class Sample_OperationalInsightsWorkspaceResource
     {
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_WorkspaceGet()
+        {
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2022-10-01/examples/WorkspacesGet.json
+            // this example is just showing the usage of "Workspaces_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
+            // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
+            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string resourceGroupName = "oiautorest6685";
+            string workspaceName = "oiautorest6685";
+            ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            OperationalInsightsWorkspaceResource operationalInsightsWorkspace = client.GetOperationalInsightsWorkspaceResource(operationalInsightsWorkspaceResourceId);
+
+            // invoke the operation
+            OperationalInsightsWorkspaceResource result = await operationalInsightsWorkspace.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            OperationalInsightsWorkspaceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_WorkspacesDelete()
+        {
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2022-10-01/examples/WorkspacesDelete.json
+            // this example is just showing the usage of "Workspaces_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
+            // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
+            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string resourceGroupName = "oiautorest6685";
+            string workspaceName = "oiautorest6685";
+            ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            OperationalInsightsWorkspaceResource operationalInsightsWorkspace = client.GetOperationalInsightsWorkspaceResource(operationalInsightsWorkspaceResourceId);
+
+            // invoke the operation
+            await operationalInsightsWorkspace.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_WorkspacesPatch()
+        {
+            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2022-10-01/examples/WorkspacesUpdate.json
+            // this example is just showing the usage of "Workspaces_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
+            // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
+            string subscriptionId = "00000000-0000-0000-0000-00000000000";
+            string resourceGroupName = "oiautorest6685";
+            string workspaceName = "oiautorest6685";
+            ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            OperationalInsightsWorkspaceResource operationalInsightsWorkspace = client.GetOperationalInsightsWorkspaceResource(operationalInsightsWorkspaceResourceId);
+
+            // invoke the operation
+            OperationalInsightsWorkspacePatch patch = new OperationalInsightsWorkspacePatch
+            {
+                Sku = new OperationalInsightsWorkspaceSku(OperationalInsightsWorkspaceSkuName.PerGB2018),
+                RetentionInDays = 30,
+                WorkspaceCapping = new OperationalInsightsWorkspaceCapping
+                {
+                    DailyQuotaInGB = -1,
+                },
+            };
+            OperationalInsightsWorkspaceResource result = await operationalInsightsWorkspace.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            OperationalInsightsWorkspaceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task DisableIntelligencePack_IntelligencePacksDisable()
@@ -318,11 +412,11 @@ namespace Azure.ResourceManager.OperationalInsights.Samples
             // invoke the operation
             OperationalInsightsWorkspacePurgeContent content = new OperationalInsightsWorkspacePurgeContent("Heartbeat", new OperationalInsightsWorkspacePurgeFilter[]
             {
-new OperationalInsightsWorkspacePurgeFilter()
+new OperationalInsightsWorkspacePurgeFilter
 {
 Column = "TimeGenerated",
 Operator = ">",
-Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
+Value = BinaryData.FromObjectAsJson("2017-09-01T00:00:00"),
 }
             });
             OperationalInsightsWorkspacePurgeResult result = await operationalInsightsWorkspace.PurgeAsync(content);
@@ -353,11 +447,11 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             // invoke the operation
             OperationalInsightsWorkspacePurgeContent content = new OperationalInsightsWorkspacePurgeContent("Heartbeat", new OperationalInsightsWorkspacePurgeFilter[]
             {
-new OperationalInsightsWorkspacePurgeFilter()
+new OperationalInsightsWorkspacePurgeFilter
 {
 Column = "_ResourceId",
 Operator = "==",
-Value = BinaryData.FromString("\"/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/SomeResourceGroup/providers/microsoft.insights/components/AppInsightResource\""),
+Value = BinaryData.FromObjectAsJson("/subscriptions/12341234-1234-1234-1234-123412341234/resourceGroups/SomeResourceGroup/providers/microsoft.insights/components/AppInsightResource"),
 }
             });
             OperationalInsightsWorkspacePurgeResult result = await operationalInsightsWorkspace.PurgeAsync(content);
@@ -390,132 +484,6 @@ Value = BinaryData.FromString("\"/subscriptions/12341234-1234-1234-1234-12341234
             OperationalInsightsWorkspacePurgeStatusResult result = await operationalInsightsWorkspace.GetPurgeStatusAsync(purgeId);
 
             Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetOperationalInsightsWorkspaces_WorkspacesSubscriptionList()
-        {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2022-10-01/examples/WorkspacesSubscriptionList.json
-            // this example is just showing the usage of "Workspaces_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (OperationalInsightsWorkspaceResource item in subscriptionResource.GetOperationalInsightsWorkspacesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                OperationalInsightsWorkspaceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_WorkspacesDelete()
-        {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2022-10-01/examples/WorkspacesDelete.json
-            // this example is just showing the usage of "Workspaces_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
-            // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
-            string resourceGroupName = "oiautorest6685";
-            string workspaceName = "oiautorest6685";
-            ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            OperationalInsightsWorkspaceResource operationalInsightsWorkspace = client.GetOperationalInsightsWorkspaceResource(operationalInsightsWorkspaceResourceId);
-
-            // invoke the operation
-            await operationalInsightsWorkspace.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_WorkspaceGet()
-        {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2022-10-01/examples/WorkspacesGet.json
-            // this example is just showing the usage of "Workspaces_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
-            // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
-            string resourceGroupName = "oiautorest6685";
-            string workspaceName = "oiautorest6685";
-            ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            OperationalInsightsWorkspaceResource operationalInsightsWorkspace = client.GetOperationalInsightsWorkspaceResource(operationalInsightsWorkspaceResourceId);
-
-            // invoke the operation
-            OperationalInsightsWorkspaceResource result = await operationalInsightsWorkspace.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            OperationalInsightsWorkspaceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_WorkspacesPatch()
-        {
-            // Generated from example definition: specification/operationalinsights/resource-manager/Microsoft.OperationalInsights/stable/2022-10-01/examples/WorkspacesUpdate.json
-            // this example is just showing the usage of "Workspaces_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this OperationalInsightsWorkspaceResource created on azure
-            // for more information of creating OperationalInsightsWorkspaceResource, please refer to the document of OperationalInsightsWorkspaceResource
-            string subscriptionId = "00000000-0000-0000-0000-00000000000";
-            string resourceGroupName = "oiautorest6685";
-            string workspaceName = "oiautorest6685";
-            ResourceIdentifier operationalInsightsWorkspaceResourceId = OperationalInsightsWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            OperationalInsightsWorkspaceResource operationalInsightsWorkspace = client.GetOperationalInsightsWorkspaceResource(operationalInsightsWorkspaceResourceId);
-
-            // invoke the operation
-            OperationalInsightsWorkspacePatch patch = new OperationalInsightsWorkspacePatch()
-            {
-                Sku = new OperationalInsightsWorkspaceSku(OperationalInsightsWorkspaceSkuName.PerGB2018),
-                RetentionInDays = 30,
-                WorkspaceCapping = new OperationalInsightsWorkspaceCapping()
-                {
-                    DailyQuotaInGB = -1,
-                },
-            };
-            OperationalInsightsWorkspaceResource result = await operationalInsightsWorkspace.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            OperationalInsightsWorkspaceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

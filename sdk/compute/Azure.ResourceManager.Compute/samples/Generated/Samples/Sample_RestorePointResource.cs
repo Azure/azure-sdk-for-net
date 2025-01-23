@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Compute.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_CopyARestorePointToADifferentRegion()
+        public async Task Get_GetARestorePoint()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/restorePointExamples/RestorePoint_Copy_BetweenRegions.json
-            // this example is just showing the usage of "RestorePoints_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/restorePointExamples/RestorePoint_Get.json
+            // this example is just showing the usage of "RestorePoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,12 +38,7 @@ namespace Azure.ResourceManager.Compute.Samples
             RestorePointResource restorePoint = client.GetRestorePointResource(restorePointResourceId);
 
             // invoke the operation
-            RestorePointData data = new RestorePointData()
-            {
-                SourceRestorePointId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/sourceRpcName/restorePoints/sourceRpName"),
-            };
-            ArmOperation<RestorePointResource> lro = await restorePoint.UpdateAsync(WaitUntil.Completed, data);
-            RestorePointResource result = lro.Value;
+            RestorePointResource result = await restorePoint.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -54,10 +49,10 @@ namespace Azure.ResourceManager.Compute.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_CreateARestorePoint()
+        public async Task Get_GetRestorePointWithInstanceView()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/restorePointExamples/RestorePoint_Create.json
-            // this example is just showing the usage of "RestorePoints_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/restorePointExamples/RestorePoint_Get_WithInstanceView.json
+            // this example is just showing the usage of "RestorePoints_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -74,18 +69,7 @@ namespace Azure.ResourceManager.Compute.Samples
             RestorePointResource restorePoint = client.GetRestorePointResource(restorePointResourceId);
 
             // invoke the operation
-            RestorePointData data = new RestorePointData()
-            {
-                ExcludeDisks =
-{
-new WritableSubResource()
-{
-Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/disk123"),
-}
-},
-            };
-            ArmOperation<RestorePointResource> lro = await restorePoint.UpdateAsync(WaitUntil.Completed, data);
-            RestorePointResource result = lro.Value;
+            RestorePointResource result = await restorePoint.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -150,10 +134,10 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetARestorePoint()
+        public async Task Update_CopyARestorePointToADifferentRegion()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/restorePointExamples/RestorePoint_Get.json
-            // this example is just showing the usage of "RestorePoints_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/restorePointExamples/RestorePoint_Copy_BetweenRegions.json
+            // this example is just showing the usage of "RestorePoints_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -170,7 +154,12 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             RestorePointResource restorePoint = client.GetRestorePointResource(restorePointResourceId);
 
             // invoke the operation
-            RestorePointResource result = await restorePoint.GetAsync();
+            RestorePointData data = new RestorePointData
+            {
+                SourceRestorePointId = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/restorePointCollections/sourceRpcName/restorePoints/sourceRpName"),
+            };
+            ArmOperation<RestorePointResource> lro = await restorePoint.UpdateAsync(WaitUntil.Completed, data);
+            RestorePointResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -181,10 +170,10 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetRestorePointWithInstanceView()
+        public async Task Update_CreateARestorePoint()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/restorePointExamples/RestorePoint_Get_WithInstanceView.json
-            // this example is just showing the usage of "RestorePoints_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/restorePointExamples/RestorePoint_Create.json
+            // this example is just showing the usage of "RestorePoints_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -201,7 +190,15 @@ Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myR
             RestorePointResource restorePoint = client.GetRestorePointResource(restorePointResourceId);
 
             // invoke the operation
-            RestorePointResource result = await restorePoint.GetAsync();
+            RestorePointData data = new RestorePointData
+            {
+                ExcludeDisks = {new WritableSubResource
+{
+Id = new ResourceIdentifier("/subscriptions/{subscription-id}/resourceGroups/myResourceGroup/providers/Microsoft.Compute/disks/disk123"),
+}},
+            };
+            ArmOperation<RestorePointResource> lro = await restorePoint.UpdateAsync(WaitUntil.Completed, data);
+            RestorePointResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if !AZURE_OPENAI_GA
+
 using System.ClientModel;
 using System.ClientModel.Primitives;
 using System.Diagnostics.CodeAnalysis;
@@ -48,3 +50,5 @@ internal partial class AzureRealtimeConversationSession : RealtimeConversationSe
         _userAgent = userAgent;
     }
 }
+
+#endif

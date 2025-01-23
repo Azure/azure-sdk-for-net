@@ -1070,7 +1070,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppServicePlanResourceListResult>> ListWebAppsByHybridConnectionAsync(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppListResult>> ListWebAppsByHybridConnectionAsync(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1084,9 +1084,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServicePlanResourceListResult value = default;
+                        WebAppListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServicePlanResourceListResult.DeserializeAppServicePlanResourceListResult(document.RootElement);
+                        value = WebAppListResult.DeserializeWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -1103,7 +1103,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppServicePlanResourceListResult> ListWebAppsByHybridConnection(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public Response<WebAppListResult> ListWebAppsByHybridConnection(string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1117,9 +1117,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServicePlanResourceListResult value = default;
+                        WebAppListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServicePlanResourceListResult.DeserializeAppServicePlanResourceListResult(document.RootElement);
+                        value = WebAppListResult.DeserializeWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2899,7 +2899,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppServicePlanResourceListResult>> ListWebAppsByHybridConnectionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public async Task<Response<WebAppListResult>> ListWebAppsByHybridConnectionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -2914,9 +2914,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServicePlanResourceListResult value = default;
+                        WebAppListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServicePlanResourceListResult.DeserializeAppServicePlanResourceListResult(document.RootElement);
+                        value = WebAppListResult.DeserializeWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -2934,7 +2934,7 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/>, <paramref name="namespaceName"/> or <paramref name="relayName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppServicePlanResourceListResult> ListWebAppsByHybridConnectionNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
+        public Response<WebAppListResult> ListWebAppsByHybridConnectionNextPage(string nextLink, string subscriptionId, string resourceGroupName, string name, string namespaceName, string relayName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -2949,9 +2949,9 @@ namespace Azure.ResourceManager.AppService
             {
                 case 200:
                     {
-                        AppServicePlanResourceListResult value = default;
+                        WebAppListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServicePlanResourceListResult.DeserializeAppServicePlanResourceListResult(document.RootElement);
+                        value = WebAppListResult.DeserializeWebAppListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

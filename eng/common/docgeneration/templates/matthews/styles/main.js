@@ -108,7 +108,7 @@ function httpGetAsyncFallbackOnFail(targetUrl, successCallback, failureCallback)
 }
 
 function populateOptions(selector, packageName) {
-    var versionRequestUrl = "https://azuresdkdocs.blob.core.windows.net/$web/" + SELECTED_LANGUAGE + "/" + packageName + "/versioning/versions"
+    var versionRequestUrl = "https://azuresdkdocs.z19.web.core.windows.net/" + SELECTED_LANGUAGE + "/" + packageName + "/versioning/versions"
 
     httpGetAsync(versionRequestUrl, function (responseText) {
         var versionselector = document.createElement("select")
@@ -181,9 +181,9 @@ function loadedOtherVersions(url, latestVersions, publishedVersions, selector, c
 }
 
 function populateIndexList(selector, packageName) {
-    var url = "https://azuresdkdocs.blob.core.windows.net/$web/" + SELECTED_LANGUAGE + "/" + packageName + "/versioning/versions"
-    var latestGAUrl = "https://azuresdkdocs.blob.core.windows.net/$web/" + SELECTED_LANGUAGE + "/" + packageName + "/versioning/latest-ga"
-    var latestPreviewUrl = "https://azuresdkdocs.blob.core.windows.net/$web/" + SELECTED_LANGUAGE + "/" + packageName + "/versioning/latest-preview"
+    var url = "https://azuresdkdocs.z19.web.core.windows.net/" + SELECTED_LANGUAGE + "/" + packageName + "/versioning/versions"
+    var latestGAUrl = "https://azuresdkdocs.z19.web.core.windows.net/" + SELECTED_LANGUAGE + "/" + packageName + "/versioning/latest-ga"
+    var latestPreviewUrl = "https://azuresdkdocs.z19.web.core.windows.net/" + SELECTED_LANGUAGE + "/" + packageName + "/versioning/latest-preview"
     var latestVersions = document.createElement("ul")
     httpGetLatestAsync(latestGAUrl, latestVersions, packageName)
     httpGetLatestAsync(latestPreviewUrl, latestVersions, packageName)
@@ -217,7 +217,7 @@ function populateIndexList(selector, packageName) {
 }
 
 function getPackageUrl(language, package, version) {
-    return "https://azuresdkdocs.blob.core.windows.net/$web/" + language + "/" + package + "/" + version + "/index.html"
+    return "https://azuresdkdocs.z19.web.core.windows.net/" + language + "/" + package + "/" + version + "/index.html"
 }
 
 // Populate Versions

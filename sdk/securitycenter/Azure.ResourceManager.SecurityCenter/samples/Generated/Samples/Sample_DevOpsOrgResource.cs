@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             DevOpsOrgResource devOpsOrg = client.GetDevOpsOrgResource(devOpsOrgResourceId);
 
             // invoke the operation
-            DevOpsOrgData data = new DevOpsOrgData()
+            DevOpsOrgData data = new DevOpsOrgData
             {
-                Properties = new DevOpsOrgProperties()
+                Properties = new DevOpsOrgProperties
                 {
                     OnboardingState = ResourceOnboardingState.NotApplicable,
-                    ActionableRemediation = new ActionableRemediation()
+                    ActionableRemediation = new ActionableRemediation
                     {
                         State = ActionableRemediationState.Enabled,
                     },

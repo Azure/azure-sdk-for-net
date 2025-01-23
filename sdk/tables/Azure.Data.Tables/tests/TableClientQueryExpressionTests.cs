@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Xml;
+using Azure.Core.TestFramework;
 using Azure.Data.Tables.Models;
 using NUnit.Framework;
 using static Azure.Data.Tables.Tests.TableServiceLiveTestsBase;
@@ -176,7 +177,7 @@ namespace Azure.Data.Tables.Tests
             new object[] { $"PartitionKey eq '{Partition}'", s_tableEntExpEquals },
         };
 
-        public static object[] UnSupportedTableItemExpressionTestCases =
+        public static object[] UnsupportedTableItemExpressionTestCases =
         {
             new object[] { s_TEequalsUnsupported },
             new object[] { s_TEequalsStaticUnsupported },
@@ -211,11 +212,38 @@ namespace Azure.Data.Tables.Tests
             Assert.That(filter, Is.EqualTo(expectedFilter));
         }
 
-        [TestCaseSource(nameof(UnSupportedTableItemExpressionTestCases))]
+        [TestCaseSource(nameof(UnsupportedTableItemExpressionTestCases))]
         [Test]
+        [NonParallelizable]
         public void TestTableItemFilterExpressionsUnsupported(Expression<Func<TableEntity, bool>> expression)
         {
             Assert.Throws<NotSupportedException>(() => TableClient.CreateQueryFilter(expression));
+        }
+
+        [TestCaseSource(nameof(UnsupportedTableItemExpressionTestCases))]
+        [Test]
+        [NonParallelizable]
+        public void TestTableItemFilterExpressionsUnsupportedDoesNotThrowWithCompatSwitch(Expression<Func<TableEntity, bool>> expression)
+        {
+            if (expression == s_TEequalsStaticUnsupported)
+            {
+                Assert.Ignore("Ignore this expression because it was never supported.");
+            }
+            using var ctx = new TestAppContextSwitch(TableConstants.CompatSwitches.DisableThrowOnStringComparisonFilterSwitchName, true.ToString());
+            TableClient.CreateQueryFilter(expression);
+        }
+
+        [TestCaseSource(nameof(UnsupportedTableItemExpressionTestCases))]
+        [Test]
+        [NonParallelizable]
+        public void TestTableItemFilterExpressionsUnsupportedDoesNotThrowWithCompatSwitchEnv(Expression<Func<TableEntity, bool>> expression)
+        {
+            if (expression == s_TEequalsStaticUnsupported)
+            {
+                Assert.Ignore("Ignore this expression because it was never supported.");
+            }
+            using var env = new TestEnvVar(TableConstants.CompatSwitches.DisableThrowOnStringComparisonFilterEnvVar, true.ToString());
+            TableClient.CreateQueryFilter(expression);
         }
     }
 }

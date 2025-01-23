@@ -99,7 +99,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="documents"> Extracted documents. </param>
         /// <param name="warnings"> List of warnings encountered. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeResult(string apiVersion, string modelId, StringIndexType stringIndexType, ContentFormat? contentFormat, string content, IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentParagraph> paragraphs, IReadOnlyList<DocumentTable> tables, IReadOnlyList<DocumentFigure> figures, IReadOnlyList<DocumentSection> sections, IReadOnlyList<DocumentKeyValuePair> keyValuePairs, IReadOnlyList<DocumentStyle> styles, IReadOnlyList<DocumentLanguage> languages, IReadOnlyList<AnalyzedDocument> documents, IReadOnlyList<DocumentIntelligenceWarning> warnings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AnalyzeResult(string apiVersion, string modelId, StringIndexType stringIndexType, DocumentContentFormat? contentFormat, string content, IReadOnlyList<DocumentPage> pages, IReadOnlyList<DocumentParagraph> paragraphs, IReadOnlyList<DocumentTable> tables, IReadOnlyList<DocumentFigure> figures, IReadOnlyList<DocumentSection> sections, IReadOnlyList<DocumentKeyValuePair> keyValuePairs, IReadOnlyList<DocumentStyle> styles, IReadOnlyList<DocumentLanguage> languages, IReadOnlyList<AnalyzedDocument> documents, IReadOnlyList<DocumentIntelligenceWarning> warnings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ApiVersion = apiVersion;
             ModelId = modelId;
@@ -128,10 +128,8 @@ namespace Azure.AI.DocumentIntelligence
         public string ApiVersion { get; }
         /// <summary> Document model ID used to produce this result. </summary>
         public string ModelId { get; }
-        /// <summary> Method used to compute string offset and length. </summary>
-        public StringIndexType StringIndexType { get; }
         /// <summary> Format of the analyze result top-level content. </summary>
-        public ContentFormat? ContentFormat { get; }
+        public DocumentContentFormat? ContentFormat { get; }
         /// <summary>
         /// Concatenate string representation of all textual and visual elements in reading
         /// order.

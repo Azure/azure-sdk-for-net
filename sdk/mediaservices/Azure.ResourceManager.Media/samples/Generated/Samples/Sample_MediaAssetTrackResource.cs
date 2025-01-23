@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.Media.Samples
             MediaAssetTrackResource mediaAssetTrack = client.GetMediaAssetTrackResource(mediaAssetTrackResourceId);
 
             // invoke the operation
-            MediaAssetTrackData data = new MediaAssetTrackData()
+            MediaAssetTrackData data = new MediaAssetTrackData
             {
-                Track = new TextTrack()
+                Track = new TextTrack
                 {
                     DisplayName = "A new name",
                 },

@@ -17,9 +17,42 @@ namespace Azure.ResourceManager.Quota.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_GroupQuotaSubscriptionRequestsGet()
+        {
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-12-18-preview/examples/SubscriptionRequests/SubscriptionRequests_Get.json
+            // this example is just showing the usage of "GroupQuotaSubscriptionRequests_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this GroupQuotaEntityResource created on azure
+            // for more information of creating GroupQuotaEntityResource, please refer to the document of GroupQuotaEntityResource
+            string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
+            string groupQuotaName = "groupquota1";
+            ResourceIdentifier groupQuotaEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
+            GroupQuotaEntityResource groupQuotaEntity = client.GetGroupQuotaEntityResource(groupQuotaEntityResourceId);
+
+            // get the collection of this GroupQuotaSubscriptionRequestStatusResource
+            GroupQuotaSubscriptionRequestStatusCollection collection = groupQuotaEntity.GetGroupQuotaSubscriptionRequestStatuses();
+
+            // invoke the operation
+            string requestId = "00000000-0000-0000-0000-000000000000";
+            GroupQuotaSubscriptionRequestStatusResource result = await collection.GetAsync(requestId);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            GroupQuotaSubscriptionRequestStatusData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_GroupQuotaSubscriptionRequestsList()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/SubscriptionRequests/SubscriptionRequests_List.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-12-18-preview/examples/SubscriptionRequests/SubscriptionRequests_List.json
             // this example is just showing the usage of "GroupQuotaSubscriptionRequests_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,42 +85,9 @@ namespace Azure.ResourceManager.Quota.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GroupQuotaSubscriptionRequestsGet()
-        {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/SubscriptionRequests/SubscriptionRequests_Get.json
-            // this example is just showing the usage of "GroupQuotaSubscriptionRequests_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this GroupQuotaEntityResource created on azure
-            // for more information of creating GroupQuotaEntityResource, please refer to the document of GroupQuotaEntityResource
-            string managementGroupId = "E7EC67B3-7657-4966-BFFC-41EFD36BAA09";
-            string groupQuotaName = "groupquota1";
-            ResourceIdentifier groupQuotaEntityResourceId = GroupQuotaEntityResource.CreateResourceIdentifier(managementGroupId, groupQuotaName);
-            GroupQuotaEntityResource groupQuotaEntity = client.GetGroupQuotaEntityResource(groupQuotaEntityResourceId);
-
-            // get the collection of this GroupQuotaSubscriptionRequestStatusResource
-            GroupQuotaSubscriptionRequestStatusCollection collection = groupQuotaEntity.GetGroupQuotaSubscriptionRequestStatuses();
-
-            // invoke the operation
-            string requestId = "00000000-0000-0000-0000-000000000000";
-            GroupQuotaSubscriptionRequestStatusResource result = await collection.GetAsync(requestId);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            GroupQuotaSubscriptionRequestStatusData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GroupQuotaSubscriptionRequestsGet()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/SubscriptionRequests/SubscriptionRequests_Get.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-12-18-preview/examples/SubscriptionRequests/SubscriptionRequests_Get.json
             // this example is just showing the usage of "GroupQuotaSubscriptionRequests_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GroupQuotaSubscriptionRequestsGet()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/SubscriptionRequests/SubscriptionRequests_Get.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-12-18-preview/examples/SubscriptionRequests/SubscriptionRequests_Get.json
             // this example is just showing the usage of "GroupQuotaSubscriptionRequests_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

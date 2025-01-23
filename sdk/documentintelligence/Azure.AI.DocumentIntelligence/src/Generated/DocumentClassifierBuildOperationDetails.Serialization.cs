@@ -64,7 +64,7 @@ namespace Azure.AI.DocumentIntelligence
             }
             DocumentClassifierDetails result = default;
             string operationId = default;
-            OperationStatus status = default;
+            DocumentIntelligenceOperationStatus status = default;
             int? percentCompleted = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
@@ -93,7 +93,7 @@ namespace Azure.AI.DocumentIntelligence
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new OperationStatus(property.Value.GetString());
+                    status = new DocumentIntelligenceOperationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("percentCompleted"u8))

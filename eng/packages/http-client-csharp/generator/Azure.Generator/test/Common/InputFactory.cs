@@ -21,17 +21,17 @@ namespace Azure.Generator.Tests.Common
         {
             public static InputEnumTypeValue Int32(string name, int value)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.Int32, $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.Int32, null, $"{name} description");
             }
 
             public static InputEnumTypeValue Float32(string name, float value)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.Float32, $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.Float32, null, $"{name} description");
             }
 
             public static InputEnumTypeValue String(string name, string value)
             {
-                return new InputEnumTypeValue(name, value, InputPrimitiveType.String, $"{name} description");
+                return new InputEnumTypeValue(name, value, InputPrimitiveType.String, null, $"{name} description");
             }
         }
 
@@ -87,6 +87,7 @@ namespace Azure.Generator.Tests.Common
             return new InputParameter(
                 name,
                 nameInRequest ?? name,
+                null,
                 $"{name} description",
                 type,
                 location,
@@ -127,10 +128,11 @@ namespace Azure.Generator.Tests.Common
                 name,
                 access,
                 null,
+                null,
                 $"{name} description",
                 usage,
                 underlyingType,
-                values is null ? [new InputEnumTypeValue("Value", 1, InputPrimitiveType.Int32, "Value description")] : [.. values],
+                values is null ? [new InputEnumTypeValue("Value", 1, InputPrimitiveType.Int32, null, "Value description")] : [.. values],
                 isExtensible);
         }
 
@@ -141,11 +143,13 @@ namespace Azure.Generator.Tests.Common
             bool isReadOnly = false,
             bool isDiscriminator = false,
             string? wireName = null,
+            string? summary = null,
             string? description = null)
         {
             return new InputModelProperty(
                 name,
                 wireName ?? name,
+                summary,
                 description ?? $"Description for {name}",
                 type,
                 isRequired,
@@ -170,6 +174,7 @@ namespace Azure.Generator.Tests.Common
                 name,
                 name,
                 access,
+                null,
                 null,
                 $"{name} description",
                 usage,
@@ -208,6 +213,7 @@ namespace Azure.Generator.Tests.Common
             return new InputOperation(
                 name,
                 null,
+                null,
                 $"{name} description",
                 null,
                 access,
@@ -242,6 +248,7 @@ namespace Azure.Generator.Tests.Common
         {
             return new InputClient(
                 name,
+                null,
                 $"{name} description",
                 operations is null ? [] : [.. operations],
                 parameters is null ? [] : [.. parameters],

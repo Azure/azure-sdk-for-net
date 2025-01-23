@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.DocumentIntelligence
 {
     /// <summary> Get Operation response object. </summary>
-    public partial class DocumentModelBuildOperationDetails : OperationDetails
+    public partial class DocumentModelBuildOperationDetails : DocumentIntelligenceOperationDetails
     {
         /// <summary> Initializes a new instance of <see cref="DocumentModelBuildOperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
@@ -20,7 +20,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="resourceLocation"/> is null. </exception>
-        internal DocumentModelBuildOperationDetails(string operationId, OperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, Uri resourceLocation) : base(operationId, status, createdOn, lastUpdatedOn, resourceLocation)
+        internal DocumentModelBuildOperationDetails(string operationId, DocumentIntelligenceOperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, Uri resourceLocation) : base(operationId, status, createdOn, lastUpdatedOn, resourceLocation)
         {
             Argument.AssertNotNull(operationId, nameof(operationId));
             Argument.AssertNotNull(resourceLocation, nameof(resourceLocation));
@@ -41,7 +41,7 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="error"> Encountered error. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="result"> Operation result upon success. </param>
-        internal DocumentModelBuildOperationDetails(string operationId, OperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, OperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error, IDictionary<string, BinaryData> serializedAdditionalRawData, DocumentModelDetails result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags, error, serializedAdditionalRawData)
+        internal DocumentModelBuildOperationDetails(string operationId, DocumentIntelligenceOperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, OperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error, IDictionary<string, BinaryData> serializedAdditionalRawData, DocumentModelDetails result) : base(operationId, status, percentCompleted, createdOn, lastUpdatedOn, kind, resourceLocation, apiVersion, tags, error, serializedAdditionalRawData)
         {
             Result = result;
         }

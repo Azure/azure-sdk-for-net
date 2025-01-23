@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#if !AZURE_OPENAI_GA
+
 using Azure.Core;
 using System.ClientModel.Primitives;
 using System.ComponentModel;
@@ -84,3 +86,5 @@ internal partial class AzureRealtimeConversationSession : RealtimeConversationSe
         return clientWebSocket;
     }
 }
+
+#endif

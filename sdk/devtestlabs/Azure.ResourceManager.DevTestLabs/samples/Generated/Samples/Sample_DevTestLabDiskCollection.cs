@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_DisksList()
+        public async Task CreateOrUpdate_DisksCreateOrUpdate()
         {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Disks_List.json
-            // this example is just showing the usage of "Disks_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Disks_CreateOrUpdate.json
+            // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -33,24 +33,29 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             string subscriptionId = "{subscriptionId}";
             string resourceGroupName = "resourceGroupName";
             string labName = "{labName}";
-            string userName = "@me";
+            string userName = "{userId}";
             ResourceIdentifier devTestLabUserResourceId = DevTestLabUserResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, userName);
             DevTestLabUserResource devTestLabUser = client.GetDevTestLabUserResource(devTestLabUserResourceId);
 
             // get the collection of this DevTestLabDiskResource
             DevTestLabDiskCollection collection = devTestLabUser.GetDevTestLabDisks();
 
-            // invoke the operation and iterate over the result
-            await foreach (DevTestLabDiskResource item in collection.GetAllAsync())
+            // invoke the operation
+            string name = "{diskName}";
+            DevTestLabDiskData data = new DevTestLabDiskData(default)
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                DevTestLabDiskData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                DiskType = DevTestLabStorageType.Standard,
+                DiskSizeGiB = 1023,
+                LeasedByLabVmId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourcegroups/resourceGroupName/providers/microsoft.devtestlab/labs/{labName}/virtualmachines/vmName"),
+            };
+            ArmOperation<DevTestLabDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
+            DevTestLabDiskResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DevTestLabDiskData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -86,6 +91,43 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabDiskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_DisksList()
+        {
+            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Disks_List.json
+            // this example is just showing the usage of "Disks_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevTestLabUserResource created on azure
+            // for more information of creating DevTestLabUserResource, please refer to the document of DevTestLabUserResource
+            string subscriptionId = "{subscriptionId}";
+            string resourceGroupName = "resourceGroupName";
+            string labName = "{labName}";
+            string userName = "@me";
+            ResourceIdentifier devTestLabUserResourceId = DevTestLabUserResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, userName);
+            DevTestLabUserResource devTestLabUser = client.GetDevTestLabUserResource(devTestLabUserResourceId);
+
+            // get the collection of this DevTestLabDiskResource
+            DevTestLabDiskCollection collection = devTestLabUser.GetDevTestLabDisks();
+
+            // invoke the operation and iterate over the result
+            await foreach (DevTestLabDiskResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                DevTestLabDiskData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -160,48 +202,6 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_DisksCreateOrUpdate()
-        {
-            // Generated from example definition: specification/devtestlabs/resource-manager/Microsoft.DevTestLab/stable/2018-09-15/examples/Disks_CreateOrUpdate.json
-            // this example is just showing the usage of "Disks_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DevTestLabUserResource created on azure
-            // for more information of creating DevTestLabUserResource, please refer to the document of DevTestLabUserResource
-            string subscriptionId = "{subscriptionId}";
-            string resourceGroupName = "resourceGroupName";
-            string labName = "{labName}";
-            string userName = "{userId}";
-            ResourceIdentifier devTestLabUserResourceId = DevTestLabUserResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, labName, userName);
-            DevTestLabUserResource devTestLabUser = client.GetDevTestLabUserResource(devTestLabUserResourceId);
-
-            // get the collection of this DevTestLabDiskResource
-            DevTestLabDiskCollection collection = devTestLabUser.GetDevTestLabDisks();
-
-            // invoke the operation
-            string name = "{diskName}";
-            DevTestLabDiskData data = new DevTestLabDiskData(new AzureLocation("placeholder"))
-            {
-                DiskType = DevTestLabStorageType.Standard,
-                DiskSizeGiB = 1023,
-                LeasedByLabVmId = new ResourceIdentifier("/subscriptions/{subscriptionId}/resourcegroups/resourceGroupName/providers/microsoft.devtestlab/labs/{labName}/virtualmachines/vmName"),
-            };
-            ArmOperation<DevTestLabDiskResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, name, data);
-            DevTestLabDiskResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DevTestLabDiskData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

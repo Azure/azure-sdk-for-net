@@ -37,6 +37,7 @@ namespace Azure.Storage.Queues.Tests
                     QueueClientOptions.ServiceVersion.V2024_08_04,
                     QueueClientOptions.ServiceVersion.V2024_11_04,
                     QueueClientOptions.ServiceVersion.V2025_01_05,
+                    QueueClientOptions.ServiceVersion.V2025_05_05,
                     StorageVersionExtensions.LatestVersion,
                     StorageVersionExtensions.MaxVersion
                 },

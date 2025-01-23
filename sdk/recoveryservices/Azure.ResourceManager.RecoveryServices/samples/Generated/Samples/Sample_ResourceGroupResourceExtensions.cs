@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("westus");
-            RecoveryServicesNameAvailabilityContent content = new RecoveryServicesNameAvailabilityContent()
+            RecoveryServicesNameAvailabilityContent content = new RecoveryServicesNameAvailabilityContent
             {
                 ResourceType = new ResourceType("Microsoft.RecoveryServices/Vaults"),
                 Name = "swaggerExample",
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServices.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("westus");
-            RecoveryServicesNameAvailabilityContent content = new RecoveryServicesNameAvailabilityContent()
+            RecoveryServicesNameAvailabilityContent content = new RecoveryServicesNameAvailabilityContent
             {
                 ResourceType = new ResourceType("Microsoft.RecoveryServices/Vaults"),
                 Name = "swaggerExample2",

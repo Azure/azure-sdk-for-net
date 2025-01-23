@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingCustomerPolicyResource billingCustomerPolicy = client.GetBillingCustomerPolicyResource(billingCustomerPolicyResourceId);
 
             // invoke the operation
-            BillingCustomerPolicyData data = new BillingCustomerPolicyData()
+            BillingCustomerPolicyData data = new BillingCustomerPolicyData
             {
                 Properties = new BillingCustomerPolicyProperties(ViewChargesPolicy.Allowed),
             };

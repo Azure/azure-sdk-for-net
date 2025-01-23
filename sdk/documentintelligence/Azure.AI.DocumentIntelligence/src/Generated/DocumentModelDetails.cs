@@ -54,7 +54,7 @@ namespace Azure.AI.DocumentIntelligence
 
             ModelId = modelId;
             Tags = new ChangeTrackingDictionary<string, string>();
-            DocTypes = new ChangeTrackingDictionary<string, DocumentTypeDetails>();
+            DocumentTypes = new ChangeTrackingDictionary<string, DocumentTypeDetails>();
             Warnings = new ChangeTrackingList<DocumentIntelligenceWarning>();
         }
 
@@ -63,37 +63,39 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="description"> Document model description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document model was created. </param>
         /// <param name="expiresOn"> Date and time (UTC) when the document model will expire. </param>
+        /// <param name="modifiedOn"> Date and time (UTC) when the document model was last modified. </param>
         /// <param name="apiVersion"> API version used to create this document model. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="buildMode"> Custom document model build mode. </param>
-        /// <param name="azureBlobSource">
+        /// <param name="blobSource">
         /// Azure Blob Storage location containing the training data.  Either
         /// azureBlobSource or azureBlobFileListSource must be specified.
         /// </param>
-        /// <param name="azureBlobFileListSource">
+        /// <param name="blobFileListSource">
         /// Azure Blob Storage file list specifying the training data.  Either
         /// azureBlobSource or azureBlobFileListSource must be specified.
         /// </param>
         /// <param name="classifierId"> For composed models, the custom classifier to split and classify the input file. </param>
         /// <param name="split"> For composed models, the file splitting behavior. </param>
-        /// <param name="docTypes"> Supported document types. </param>
+        /// <param name="documentTypes"> Supported document types. </param>
         /// <param name="warnings"> List of warnings encountered while building the model. </param>
         /// <param name="trainingHours"> Number of V100-equivalent GPU hours consumed for model training. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentModelDetails(string modelId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentBuildMode? buildMode, AzureBlobContentSource azureBlobSource, AzureBlobFileListContentSource azureBlobFileListSource, string classifierId, SplitMode? split, IReadOnlyDictionary<string, DocumentTypeDetails> docTypes, IReadOnlyList<DocumentIntelligenceWarning> warnings, float? trainingHours, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentModelDetails(string modelId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, DateTimeOffset? modifiedOn, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentBuildMode? buildMode, BlobContentSource blobSource, BlobFileListContentSource blobFileListSource, string classifierId, SplitMode? split, IReadOnlyDictionary<string, DocumentTypeDetails> documentTypes, IReadOnlyList<DocumentIntelligenceWarning> warnings, float? trainingHours, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelId = modelId;
             Description = description;
             CreatedOn = createdOn;
             ExpiresOn = expiresOn;
+            ModifiedOn = modifiedOn;
             ApiVersion = apiVersion;
             Tags = tags;
             BuildMode = buildMode;
-            AzureBlobSource = azureBlobSource;
-            AzureBlobFileListSource = azureBlobFileListSource;
+            BlobSource = blobSource;
+            BlobFileListSource = blobFileListSource;
             ClassifierId = classifierId;
             Split = split;
-            DocTypes = docTypes;
+            DocumentTypes = documentTypes;
             Warnings = warnings;
             TrainingHours = trainingHours;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -112,6 +114,8 @@ namespace Azure.AI.DocumentIntelligence
         public DateTimeOffset CreatedOn { get; }
         /// <summary> Date and time (UTC) when the document model will expire. </summary>
         public DateTimeOffset? ExpiresOn { get; }
+        /// <summary> Date and time (UTC) when the document model was last modified. </summary>
+        public DateTimeOffset? ModifiedOn { get; }
         /// <summary> API version used to create this document model. </summary>
         public string ApiVersion { get; }
         /// <summary> List of key-value tag attributes associated with the document model. </summary>
@@ -122,18 +126,18 @@ namespace Azure.AI.DocumentIntelligence
         /// Azure Blob Storage location containing the training data.  Either
         /// azureBlobSource or azureBlobFileListSource must be specified.
         /// </summary>
-        public AzureBlobContentSource AzureBlobSource { get; }
+        public BlobContentSource BlobSource { get; }
         /// <summary>
         /// Azure Blob Storage file list specifying the training data.  Either
         /// azureBlobSource or azureBlobFileListSource must be specified.
         /// </summary>
-        public AzureBlobFileListContentSource AzureBlobFileListSource { get; }
+        public BlobFileListContentSource BlobFileListSource { get; }
         /// <summary> For composed models, the custom classifier to split and classify the input file. </summary>
         public string ClassifierId { get; }
         /// <summary> For composed models, the file splitting behavior. </summary>
         public SplitMode? Split { get; }
         /// <summary> Supported document types. </summary>
-        public IReadOnlyDictionary<string, DocumentTypeDetails> DocTypes { get; }
+        public IReadOnlyDictionary<string, DocumentTypeDetails> DocumentTypes { get; }
         /// <summary> List of warnings encountered while building the model. </summary>
         public IReadOnlyList<DocumentIntelligenceWarning> Warnings { get; }
         /// <summary> Number of V100-equivalent GPU hours consumed for model training. </summary>

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Samples
             EncryptionProtectorResource encryptionProtector = client.GetEncryptionProtectorResource(encryptionProtectorResourceId);
 
             // invoke the operation
-            EncryptionProtectorData data = new EncryptionProtectorData()
+            EncryptionProtectorData data = new EncryptionProtectorData
             {
                 ServerKeyName = "someVault_someKey_01234567890123456789012345678901",
                 ServerKeyType = SqlServerKeyType.AzureKeyVault,
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Sql.Samples
             EncryptionProtectorResource encryptionProtector = client.GetEncryptionProtectorResource(encryptionProtectorResourceId);
 
             // invoke the operation
-            EncryptionProtectorData data = new EncryptionProtectorData()
+            EncryptionProtectorData data = new EncryptionProtectorData
             {
                 ServerKeyName = "ServiceManaged",
                 ServerKeyType = SqlServerKeyType.ServiceManaged,

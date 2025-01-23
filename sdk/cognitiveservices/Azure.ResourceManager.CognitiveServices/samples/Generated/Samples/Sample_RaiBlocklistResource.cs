@@ -50,42 +50,6 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_PutRaiBlocklist()
-        {
-            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/PutRaiBlocklist.json
-            // this example is just showing the usage of "RaiBlocklists_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this RaiBlocklistResource created on azure
-            // for more information of creating RaiBlocklistResource, please refer to the document of RaiBlocklistResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "resourceGroupName";
-            string accountName = "accountName";
-            string raiBlocklistName = "raiBlocklistName";
-            ResourceIdentifier raiBlocklistResourceId = RaiBlocklistResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, raiBlocklistName);
-            RaiBlocklistResource raiBlocklist = client.GetRaiBlocklistResource(raiBlocklistResourceId);
-
-            // invoke the operation
-            RaiBlocklistData data = new RaiBlocklistData()
-            {
-                RaiBlocklistDescription = "Basic blocklist description",
-            };
-            ArmOperation<RaiBlocklistResource> lro = await raiBlocklist.UpdateAsync(WaitUntil.Completed, data);
-            RaiBlocklistResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            RaiBlocklistData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteRaiBlocklist()
         {
             // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/DeleteRaiBlocklist.json
@@ -113,6 +77,42 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Update_PutRaiBlocklist()
+        {
+            // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/PutRaiBlocklist.json
+            // this example is just showing the usage of "RaiBlocklists_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this RaiBlocklistResource created on azure
+            // for more information of creating RaiBlocklistResource, please refer to the document of RaiBlocklistResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "resourceGroupName";
+            string accountName = "accountName";
+            string raiBlocklistName = "raiBlocklistName";
+            ResourceIdentifier raiBlocklistResourceId = RaiBlocklistResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, raiBlocklistName);
+            RaiBlocklistResource raiBlocklist = client.GetRaiBlocklistResource(raiBlocklistResourceId);
+
+            // invoke the operation
+            RaiBlocklistData data = new RaiBlocklistData
+            {
+                RaiBlocklistDescription = "Basic blocklist description",
+            };
+            ArmOperation<RaiBlocklistResource> lro = await raiBlocklist.UpdateAsync(WaitUntil.Completed, data);
+            RaiBlocklistResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            RaiBlocklistData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task BatchAddRaiBlocklistItem_AddRaiBlocklistItems()
         {
             // Generated from example definition: specification/cognitiveservices/resource-manager/Microsoft.CognitiveServices/stable/2024-10-01/examples/AddRaiBlocklistItems.json
@@ -135,18 +135,19 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             // invoke the operation
             IEnumerable<RaiBlocklistItemBulkContent> content = new RaiBlocklistItemBulkContent[]
             {
-new RaiBlocklistItemBulkContent()
+new RaiBlocklistItemBulkContent
 {
 Name = "myblocklistitem1",
-Properties = new RaiBlocklistItemProperties()
+Properties = new RaiBlocklistItemProperties
 {
 Pattern = "^[a-z0-9_-]{2,16}$",
 IsRegex = true,
 },
-},new RaiBlocklistItemBulkContent()
+},
+new RaiBlocklistItemBulkContent
 {
 Name = "myblocklistitem2",
-Properties = new RaiBlocklistItemProperties()
+Properties = new RaiBlocklistItemProperties
 {
 Pattern = "blockwords",
 IsRegex = false,
@@ -184,7 +185,11 @@ IsRegex = false,
             RaiBlocklistResource raiBlocklist = client.GetRaiBlocklistResource(raiBlocklistResourceId);
 
             // invoke the operation
-            BinaryData raiBlocklistItemsNames = BinaryData.FromObjectAsJson(new object[] { "myblocklistitem1", "myblocklistitem2" });
+            BinaryData raiBlocklistItemsNames = BinaryData.FromObjectAsJson(new object[]
+            {
+"myblocklistitem1",
+"myblocklistitem2"
+            });
             await raiBlocklist.BatchDeleteRaiBlocklistItemAsync(raiBlocklistItemsNames);
 
             Console.WriteLine("Succeeded");

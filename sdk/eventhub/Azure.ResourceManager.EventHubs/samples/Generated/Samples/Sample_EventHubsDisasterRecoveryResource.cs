@@ -17,10 +17,10 @@ namespace Azure.ResourceManager.EventHubs.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_EHAliasCreate()
+        public async Task Get_EHAliasGet()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/disasterRecoveryConfigs/EHAliasCreate.json
-            // this example is just showing the usage of "DisasterRecoveryConfigs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/disasterRecoveryConfigs/EHAliasGet.json
+            // this example is just showing the usage of "DisasterRecoveryConfigs_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -37,12 +37,7 @@ namespace Azure.ResourceManager.EventHubs.Samples
             EventHubsDisasterRecoveryResource eventHubsDisasterRecovery = client.GetEventHubsDisasterRecoveryResource(eventHubsDisasterRecoveryResourceId);
 
             // invoke the operation
-            EventHubsDisasterRecoveryData data = new EventHubsDisasterRecoveryData()
-            {
-                PartnerNamespace = "sdk-Namespace-37",
-            };
-            ArmOperation<EventHubsDisasterRecoveryResource> lro = await eventHubsDisasterRecovery.UpdateAsync(WaitUntil.Completed, data);
-            EventHubsDisasterRecoveryResource result = lro.Value;
+            EventHubsDisasterRecoveryResource result = await eventHubsDisasterRecovery.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -80,10 +75,10 @@ namespace Azure.ResourceManager.EventHubs.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_EHAliasGet()
+        public async Task Update_EHAliasCreate()
         {
-            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/disasterRecoveryConfigs/EHAliasGet.json
-            // this example is just showing the usage of "DisasterRecoveryConfigs_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/eventhub/resource-manager/Microsoft.EventHub/stable/2024-01-01/examples/disasterRecoveryConfigs/EHAliasCreate.json
+            // this example is just showing the usage of "DisasterRecoveryConfigs_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -100,7 +95,12 @@ namespace Azure.ResourceManager.EventHubs.Samples
             EventHubsDisasterRecoveryResource eventHubsDisasterRecovery = client.GetEventHubsDisasterRecoveryResource(eventHubsDisasterRecoveryResourceId);
 
             // invoke the operation
-            EventHubsDisasterRecoveryResource result = await eventHubsDisasterRecovery.GetAsync();
+            EventHubsDisasterRecoveryData data = new EventHubsDisasterRecoveryData
+            {
+                PartnerNamespace = "sdk-Namespace-37",
+            };
+            ArmOperation<EventHubsDisasterRecoveryResource> lro = await eventHubsDisasterRecovery.UpdateAsync(WaitUntil.Completed, data);
+            EventHubsDisasterRecoveryResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

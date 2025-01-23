@@ -10,5 +10,7 @@ namespace Azure.AI.Projects.Tests
         public string AzureAICONNECTIONSTRING => GetRecordedVariable("PROJECT_CONNECTION_STRING");
         public string BINGCONNECTIONNAME => GetRecordedVariable("BING_CONNECTION_NAME");
         public string MODELDEPLOYMENTNAME => GetRecordedVariable("MODEL_DEPLOYMENT_NAME");
+        public string STORAGE_QUEUE_URI => GetRecordedVariable("STORAGE_QUEUE_URI");
+        public string AZURE_BLOB_URI => GetRecordedVariable("AZURE_BLOB_URI");
     }
 }

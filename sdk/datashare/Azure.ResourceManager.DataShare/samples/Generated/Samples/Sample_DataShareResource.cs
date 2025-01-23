@@ -18,6 +18,103 @@ namespace Azure.ResourceManager.DataShare.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_SharesGet()
+        {
+            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Shares_Get.json
+            // this example is just showing the usage of "Shares_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DataShareResource created on azure
+            // for more information of creating DataShareResource, please refer to the document of DataShareResource
+            string subscriptionId = "12345678-1234-1234-12345678abc";
+            string resourceGroupName = "SampleResourceGroup";
+            string accountName = "Account1";
+            string shareName = "Share1";
+            ResourceIdentifier dataShareResourceId = DataShareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareName);
+            DataShareResource dataShare = client.GetDataShareResource(dataShareResourceId);
+
+            // invoke the operation
+            DataShareResource result = await dataShare.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DataShareData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_SharesDelete()
+        {
+            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Shares_Delete.json
+            // this example is just showing the usage of "Shares_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DataShareResource created on azure
+            // for more information of creating DataShareResource, please refer to the document of DataShareResource
+            string subscriptionId = "12345678-1234-1234-12345678abc";
+            string resourceGroupName = "SampleResourceGroup";
+            string accountName = "Account1";
+            string shareName = "Share1";
+            ResourceIdentifier dataShareResourceId = DataShareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareName);
+            DataShareResource dataShare = client.GetDataShareResource(dataShareResourceId);
+
+            // invoke the operation
+            ArmOperation<DataShareOperationResult> lro = await dataShare.DeleteAsync(WaitUntil.Completed);
+            DataShareOperationResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_SharesCreate()
+        {
+            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Shares_Create.json
+            // this example is just showing the usage of "Shares_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DataShareResource created on azure
+            // for more information of creating DataShareResource, please refer to the document of DataShareResource
+            string subscriptionId = "12345678-1234-1234-12345678abc";
+            string resourceGroupName = "SampleResourceGroup";
+            string accountName = "Account1";
+            string shareName = "Share1";
+            ResourceIdentifier dataShareResourceId = DataShareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareName);
+            DataShareResource dataShare = client.GetDataShareResource(dataShareResourceId);
+
+            // invoke the operation
+            DataShareData data = new DataShareData
+            {
+                Description = "share description",
+                ShareKind = DataShareKind.CopyBased,
+                Terms = "Confidential",
+            };
+            ArmOperation<DataShareResource> lro = await dataShare.UpdateAsync(WaitUntil.Completed, data);
+            DataShareResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DataShareData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetSynchronizationDetails_SharesListSynchronizationDetails()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Shares_ListSynchronizationDetails.json
@@ -38,7 +135,7 @@ namespace Azure.ResourceManager.DataShare.Samples
             DataShareResource dataShare = client.GetDataShareResource(dataShareResourceId);
 
             // invoke the operation and iterate over the result
-            ShareSynchronization shareSynchronization = new ShareSynchronization()
+            ShareSynchronization shareSynchronization = new ShareSynchronization
             {
                 SynchronizationId = Guid.Parse("7d0536a6-3fa5-43de-b152-3d07c4f6b2bb"),
             };
@@ -78,103 +175,6 @@ namespace Azure.ResourceManager.DataShare.Samples
             }
 
             Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_SharesGet()
-        {
-            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Shares_Get.json
-            // this example is just showing the usage of "Shares_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DataShareResource created on azure
-            // for more information of creating DataShareResource, please refer to the document of DataShareResource
-            string subscriptionId = "12345678-1234-1234-12345678abc";
-            string resourceGroupName = "SampleResourceGroup";
-            string accountName = "Account1";
-            string shareName = "Share1";
-            ResourceIdentifier dataShareResourceId = DataShareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareName);
-            DataShareResource dataShare = client.GetDataShareResource(dataShareResourceId);
-
-            // invoke the operation
-            DataShareResource result = await dataShare.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DataShareData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_SharesCreate()
-        {
-            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Shares_Create.json
-            // this example is just showing the usage of "Shares_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DataShareResource created on azure
-            // for more information of creating DataShareResource, please refer to the document of DataShareResource
-            string subscriptionId = "12345678-1234-1234-12345678abc";
-            string resourceGroupName = "SampleResourceGroup";
-            string accountName = "Account1";
-            string shareName = "Share1";
-            ResourceIdentifier dataShareResourceId = DataShareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareName);
-            DataShareResource dataShare = client.GetDataShareResource(dataShareResourceId);
-
-            // invoke the operation
-            DataShareData data = new DataShareData()
-            {
-                Description = "share description",
-                ShareKind = DataShareKind.CopyBased,
-                Terms = "Confidential",
-            };
-            ArmOperation<DataShareResource> lro = await dataShare.UpdateAsync(WaitUntil.Completed, data);
-            DataShareResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DataShareData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_SharesDelete()
-        {
-            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/Shares_Delete.json
-            // this example is just showing the usage of "Shares_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DataShareResource created on azure
-            // for more information of creating DataShareResource, please refer to the document of DataShareResource
-            string subscriptionId = "12345678-1234-1234-12345678abc";
-            string resourceGroupName = "SampleResourceGroup";
-            string accountName = "Account1";
-            string shareName = "Share1";
-            ResourceIdentifier dataShareResourceId = DataShareResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareName);
-            DataShareResource dataShare = client.GetDataShareResource(dataShareResourceId);
-
-            // invoke the operation
-            ArmOperation<DataShareOperationResult> lro = await dataShare.DeleteAsync(WaitUntil.Completed);
-            DataShareOperationResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

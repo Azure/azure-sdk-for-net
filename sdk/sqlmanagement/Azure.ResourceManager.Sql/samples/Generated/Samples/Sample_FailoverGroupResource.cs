@@ -96,16 +96,13 @@ namespace Azure.ResourceManager.Sql.Samples
             FailoverGroupResource failoverGroup = client.GetFailoverGroupResource(failoverGroupResourceId);
 
             // invoke the operation
-            FailoverGroupPatch patch = new FailoverGroupPatch()
+            FailoverGroupPatch patch = new FailoverGroupPatch
             {
                 ReadWriteEndpoint = new FailoverGroupReadWriteEndpoint(ReadWriteEndpointFailoverPolicy.Automatic)
                 {
                     FailoverWithDataLossGracePeriodMinutes = 120,
                 },
-                FailoverDatabases =
-{
-new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default/providers/Microsoft.Sql/servers/failover-group-primary-server/databases/testdb-1")
-},
+                FailoverDatabases = { new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default/providers/Microsoft.Sql/servers/failover-group-primary-server/databases/testdb-1") },
                 SecondaryType = FailoverGroupDatabasesSecondaryType.Standby,
             };
             ArmOperation<FailoverGroupResource> lro = await failoverGroup.UpdateAsync(WaitUntil.Completed, patch);
@@ -140,16 +137,13 @@ new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/reso
             FailoverGroupResource failoverGroup = client.GetFailoverGroupResource(failoverGroupResourceId);
 
             // invoke the operation
-            FailoverGroupPatch patch = new FailoverGroupPatch()
+            FailoverGroupPatch patch = new FailoverGroupPatch
             {
                 ReadWriteEndpoint = new FailoverGroupReadWriteEndpoint(ReadWriteEndpointFailoverPolicy.Automatic)
                 {
                     FailoverWithDataLossGracePeriodMinutes = 120,
                 },
-                FailoverDatabases =
-{
-new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default/providers/Microsoft.Sql/servers/failover-group-primary-server/databases/testdb-1")
-},
+                FailoverDatabases = { new ResourceIdentifier("/subscriptions/00000000-1111-2222-3333-444444444444/resourceGroups/Default/providers/Microsoft.Sql/servers/failover-group-primary-server/databases/testdb-1") },
             };
             ArmOperation<FailoverGroupResource> lro = await failoverGroup.UpdateAsync(WaitUntil.Completed, patch);
             FailoverGroupResource result = lro.Value;

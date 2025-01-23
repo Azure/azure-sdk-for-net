@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Resources.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_CreateManagementLockAtScope()
+        public async Task Get_GetManagementLockAtScope()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2020-05-01/examples/ManagementLocks_CreateOrUpdateAtScope.json
-            // this example is just showing the usage of "ManagementLocks_CreateOrUpdateByScope" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2020-05-01/examples/ManagementLocks_GetAtScope.json
+            // this example is just showing the usage of "ManagementLocks_GetByScope" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -36,9 +36,7 @@ namespace Azure.ResourceManager.Resources.Samples
             ManagementLockResource managementLock = client.GetManagementLockResource(managementLockResourceId);
 
             // invoke the operation
-            ManagementLockData data = new ManagementLockData(ManagementLockLevel.ReadOnly);
-            ArmOperation<ManagementLockResource> lro = await managementLock.UpdateAsync(WaitUntil.Completed, data);
-            ManagementLockResource result = lro.Value;
+            ManagementLockResource result = await managementLock.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -74,10 +72,10 @@ namespace Azure.ResourceManager.Resources.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetManagementLockAtScope()
+        public async Task Update_CreateManagementLockAtScope()
         {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2020-05-01/examples/ManagementLocks_GetAtScope.json
-            // this example is just showing the usage of "ManagementLocks_GetByScope" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2020-05-01/examples/ManagementLocks_CreateOrUpdateAtScope.json
+            // this example is just showing the usage of "ManagementLocks_CreateOrUpdateByScope" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -92,7 +90,9 @@ namespace Azure.ResourceManager.Resources.Samples
             ManagementLockResource managementLock = client.GetManagementLockResource(managementLockResourceId);
 
             // invoke the operation
-            ManagementLockResource result = await managementLock.GetAsync();
+            ManagementLockData data = new ManagementLockData(ManagementLockLevel.ReadOnly);
+            ArmOperation<ManagementLockResource> lro = await managementLock.UpdateAsync(WaitUntil.Completed, data);
+            ManagementLockResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

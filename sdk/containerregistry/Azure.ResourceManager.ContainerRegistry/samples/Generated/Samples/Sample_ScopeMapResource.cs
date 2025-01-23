@@ -96,13 +96,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Samples
             ScopeMapResource scopeMap = client.GetScopeMapResource(scopeMapResourceId);
 
             // invoke the operation
-            ScopeMapPatch patch = new ScopeMapPatch()
+            ScopeMapPatch patch = new ScopeMapPatch
             {
                 Description = "Developer Scopes",
-                Actions =
-{
-"repositories/myrepository/contentWrite","repositories/myrepository/contentRead"
-},
+                Actions = { "repositories/myrepository/contentWrite", "repositories/myrepository/contentRead" },
             };
             ArmOperation<ScopeMapResource> lro = await scopeMap.UpdateAsync(WaitUntil.Completed, patch);
             ScopeMapResource result = lro.Value;

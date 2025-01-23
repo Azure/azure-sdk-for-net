@@ -51,78 +51,6 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_ErrorSummariesGetMaximumSetGen()
-        {
-            // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/ErrorSummaries_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "ErrorSummaries_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SpringBootSiteResource created on azure
-            // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
-            string subscriptionId = "libzegdqkcxmhqhhhcxm";
-            string resourceGroupName = "rgspringbootdiscovery";
-            string siteName = "xxkzlvbihwxunadjcpjpjmghmhxrqyvghtpfps";
-            ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
-            SpringBootSiteResource springBootSite = client.GetSpringBootSiteResource(springBootSiteResourceId);
-
-            // get the collection of this SpringBootSiteErrorSummaryResource
-            SpringBootSiteErrorSummaryCollection collection = springBootSite.GetSpringBootSiteErrorSummaries();
-
-            // invoke the operation
-            string errorSummaryName = "K2lv";
-            bool result = await collection.ExistsAsync(errorSummaryName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_ErrorSummariesGetMaximumSetGen()
-        {
-            // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/ErrorSummaries_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "ErrorSummaries_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SpringBootSiteResource created on azure
-            // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
-            string subscriptionId = "libzegdqkcxmhqhhhcxm";
-            string resourceGroupName = "rgspringbootdiscovery";
-            string siteName = "xxkzlvbihwxunadjcpjpjmghmhxrqyvghtpfps";
-            ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
-            SpringBootSiteResource springBootSite = client.GetSpringBootSiteResource(springBootSiteResourceId);
-
-            // get the collection of this SpringBootSiteErrorSummaryResource
-            SpringBootSiteErrorSummaryCollection collection = springBootSite.GetSpringBootSiteErrorSummaries();
-
-            // invoke the operation
-            string errorSummaryName = "K2lv";
-            NullableResponse<SpringBootSiteErrorSummaryResource> response = await collection.GetIfExistsAsync(errorSummaryName);
-            SpringBootSiteErrorSummaryResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SpringBootSiteErrorSummaryData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_ErrorSummariesGetMinimumSetGen()
         {
             // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/ErrorSummaries_Get_MinimumSet_Gen.json
@@ -153,78 +81,6 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             SpringBootSiteErrorSummaryData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_ErrorSummariesGetMinimumSetGen()
-        {
-            // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/ErrorSummaries_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "ErrorSummaries_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SpringBootSiteResource created on azure
-            // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
-            string subscriptionId = "libzegdqkcxmhqhhhcxm";
-            string resourceGroupName = "rgspringbootdiscovery";
-            string siteName = "xxkzlvbihwxunadjcpjpjmghmhxrqyvghtpfps";
-            ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
-            SpringBootSiteResource springBootSite = client.GetSpringBootSiteResource(springBootSiteResourceId);
-
-            // get the collection of this SpringBootSiteErrorSummaryResource
-            SpringBootSiteErrorSummaryCollection collection = springBootSite.GetSpringBootSiteErrorSummaries();
-
-            // invoke the operation
-            string errorSummaryName = "K2lv";
-            bool result = await collection.ExistsAsync(errorSummaryName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_ErrorSummariesGetMinimumSetGen()
-        {
-            // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/ErrorSummaries_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "ErrorSummaries_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SpringBootSiteResource created on azure
-            // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
-            string subscriptionId = "libzegdqkcxmhqhhhcxm";
-            string resourceGroupName = "rgspringbootdiscovery";
-            string siteName = "xxkzlvbihwxunadjcpjpjmghmhxrqyvghtpfps";
-            ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
-            SpringBootSiteResource springBootSite = client.GetSpringBootSiteResource(springBootSiteResourceId);
-
-            // get the collection of this SpringBootSiteErrorSummaryResource
-            SpringBootSiteErrorSummaryCollection collection = springBootSite.GetSpringBootSiteErrorSummaries();
-
-            // invoke the operation
-            string errorSummaryName = "K2lv";
-            NullableResponse<SpringBootSiteErrorSummaryResource> response = await collection.GetIfExistsAsync(errorSummaryName);
-            SpringBootSiteErrorSummaryResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SpringBootSiteErrorSummaryData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
         }
 
         [Test]
@@ -297,6 +153,150 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Samples
             }
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_ErrorSummariesGetMaximumSetGen()
+        {
+            // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/ErrorSummaries_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "ErrorSummaries_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SpringBootSiteResource created on azure
+            // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
+            string subscriptionId = "libzegdqkcxmhqhhhcxm";
+            string resourceGroupName = "rgspringbootdiscovery";
+            string siteName = "xxkzlvbihwxunadjcpjpjmghmhxrqyvghtpfps";
+            ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
+            SpringBootSiteResource springBootSite = client.GetSpringBootSiteResource(springBootSiteResourceId);
+
+            // get the collection of this SpringBootSiteErrorSummaryResource
+            SpringBootSiteErrorSummaryCollection collection = springBootSite.GetSpringBootSiteErrorSummaries();
+
+            // invoke the operation
+            string errorSummaryName = "K2lv";
+            bool result = await collection.ExistsAsync(errorSummaryName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_ErrorSummariesGetMinimumSetGen()
+        {
+            // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/ErrorSummaries_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "ErrorSummaries_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SpringBootSiteResource created on azure
+            // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
+            string subscriptionId = "libzegdqkcxmhqhhhcxm";
+            string resourceGroupName = "rgspringbootdiscovery";
+            string siteName = "xxkzlvbihwxunadjcpjpjmghmhxrqyvghtpfps";
+            ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
+            SpringBootSiteResource springBootSite = client.GetSpringBootSiteResource(springBootSiteResourceId);
+
+            // get the collection of this SpringBootSiteErrorSummaryResource
+            SpringBootSiteErrorSummaryCollection collection = springBootSite.GetSpringBootSiteErrorSummaries();
+
+            // invoke the operation
+            string errorSummaryName = "K2lv";
+            bool result = await collection.ExistsAsync(errorSummaryName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_ErrorSummariesGetMaximumSetGen()
+        {
+            // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/ErrorSummaries_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "ErrorSummaries_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SpringBootSiteResource created on azure
+            // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
+            string subscriptionId = "libzegdqkcxmhqhhhcxm";
+            string resourceGroupName = "rgspringbootdiscovery";
+            string siteName = "xxkzlvbihwxunadjcpjpjmghmhxrqyvghtpfps";
+            ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
+            SpringBootSiteResource springBootSite = client.GetSpringBootSiteResource(springBootSiteResourceId);
+
+            // get the collection of this SpringBootSiteErrorSummaryResource
+            SpringBootSiteErrorSummaryCollection collection = springBootSite.GetSpringBootSiteErrorSummaries();
+
+            // invoke the operation
+            string errorSummaryName = "K2lv";
+            NullableResponse<SpringBootSiteErrorSummaryResource> response = await collection.GetIfExistsAsync(errorSummaryName);
+            SpringBootSiteErrorSummaryResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SpringBootSiteErrorSummaryData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_ErrorSummariesGetMinimumSetGen()
+        {
+            // Generated from example definition: specification/offazurespringboot/resource-manager/Microsoft.OffAzureSpringBoot/preview/2023-01-01-preview/examples/ErrorSummaries_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "ErrorSummaries_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SpringBootSiteResource created on azure
+            // for more information of creating SpringBootSiteResource, please refer to the document of SpringBootSiteResource
+            string subscriptionId = "libzegdqkcxmhqhhhcxm";
+            string resourceGroupName = "rgspringbootdiscovery";
+            string siteName = "xxkzlvbihwxunadjcpjpjmghmhxrqyvghtpfps";
+            ResourceIdentifier springBootSiteResourceId = SpringBootSiteResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, siteName);
+            SpringBootSiteResource springBootSite = client.GetSpringBootSiteResource(springBootSiteResourceId);
+
+            // get the collection of this SpringBootSiteErrorSummaryResource
+            SpringBootSiteErrorSummaryCollection collection = springBootSite.GetSpringBootSiteErrorSummaries();
+
+            // invoke the operation
+            string errorSummaryName = "K2lv";
+            NullableResponse<SpringBootSiteErrorSummaryResource> response = await collection.GetIfExistsAsync(errorSummaryName);
+            SpringBootSiteErrorSummaryResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SpringBootSiteErrorSummaryData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

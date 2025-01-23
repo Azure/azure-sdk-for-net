@@ -23,13 +23,7 @@ namespace Azure.AI.DocumentIntelligence.Samples
 #else
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
-
-            var content = new AnalyzeDocumentContent()
-            {
-                UrlSource = uriSource
-            };
-
-            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", content);
+            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", uriSource);
             AnalyzeResult result = operation.Value;
 
             foreach (DocumentPage page in result.Pages)
@@ -96,8 +90,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
 
                     foreach (DocumentSpan span in style.Spans)
                     {
-                        var handwrittenContent = result.Content.Substring(span.Offset, span.Length);
-                        Console.WriteLine($"  {handwrittenContent}");
+                        var handwrittenOptions = result.Content.Substring(span.Offset, span.Length);
+                        Console.WriteLine($"  {handwrittenOptions}");
                     }
                 }
             }

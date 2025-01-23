@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedLedgerDigestUploadResource managedLedgerDigestUpload = client.GetManagedLedgerDigestUploadResource(managedLedgerDigestUploadResourceId);
 
             // invoke the operation
-            ManagedLedgerDigestUploadData data = new ManagedLedgerDigestUploadData()
+            ManagedLedgerDigestUploadData data = new ManagedLedgerDigestUploadData
             {
                 DigestStorageEndpoint = "https://MyAccount.blob.core.windows.net",
             };

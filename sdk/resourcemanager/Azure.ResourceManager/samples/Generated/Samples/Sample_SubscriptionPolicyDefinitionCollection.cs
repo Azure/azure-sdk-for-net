@@ -40,50 +40,50 @@ namespace Azure.ResourceManager.Resources.Samples
 
             // invoke the operation
             string policyDefinitionName = "ResourceNaming";
-            PolicyDefinitionData data = new PolicyDefinitionData()
+            PolicyDefinitionData data = new PolicyDefinitionData
             {
                 Mode = "All",
                 DisplayName = "Enforce resource naming convention",
                 Description = "Force resource names to begin with given 'prefix' and/or end with given 'suffix'",
-                PolicyRule = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                PolicyRule = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["if"] = new Dictionary<string, object>()
+                    ["if"] = new
                     {
-                        ["not"] = new Dictionary<string, object>()
+                        not = new
                         {
-                            ["field"] = "name",
-                            ["like"] = "[concat(parameters('prefix'), '*', parameters('suffix'))]"
-                        }
+                            field = "name",
+                            like = "[concat(parameters('prefix'), '*', parameters('suffix'))]",
+                        },
                     },
-                    ["then"] = new Dictionary<string, object>()
+                    ["then"] = new
                     {
-                        ["effect"] = "deny"
+                        effect = "deny",
                     }
                 }),
-                Metadata = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                Metadata = BinaryData.FromObjectAsJson(new
                 {
-                    ["category"] = "Naming"
+                    category = "Naming",
                 }),
                 Parameters =
 {
-["prefix"] = new ArmPolicyParameter()
+["prefix"] = new ArmPolicyParameter
 {
 ParameterType = ArmPolicyParameterType.String,
-Metadata = new ParameterDefinitionsValueMetadata()
+Metadata = new ParameterDefinitionsValueMetadata
 {
 DisplayName = "Prefix",
 Description = "Resource name prefix",
 },
 },
-["suffix"] = new ArmPolicyParameter()
+["suffix"] = new ArmPolicyParameter
 {
 ParameterType = ArmPolicyParameterType.String,
-Metadata = new ParameterDefinitionsValueMetadata()
+Metadata = new ParameterDefinitionsValueMetadata
 {
 DisplayName = "Suffix",
 Description = "Resource name suffix",
 },
-},
+}
 },
             };
             ArmOperation<SubscriptionPolicyDefinitionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyDefinitionName, data);
@@ -119,57 +119,60 @@ Description = "Resource name suffix",
 
             // invoke the operation
             string policyDefinitionName = "EventHubDiagnosticLogs";
-            PolicyDefinitionData data = new PolicyDefinitionData()
+            PolicyDefinitionData data = new PolicyDefinitionData
             {
                 Mode = "Indexed",
                 DisplayName = "Event Hubs should have diagnostic logging enabled",
                 Description = "Audit enabling of logs and retain them up to a year. This enables recreation of activity trails for investigation purposes when a security incident occurs or your network is compromised",
-                PolicyRule = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                PolicyRule = BinaryData.FromObjectAsJson(new Dictionary<string, object>
                 {
-                    ["if"] = new Dictionary<string, object>()
+                    ["if"] = new
                     {
-                        ["equals"] = "Microsoft.EventHub/namespaces",
-                        ["field"] = "type"
+                        equals = "Microsoft.EventHub/namespaces",
+                        field = "type",
                     },
-                    ["then"] = new Dictionary<string, object>()
+                    ["then"] = new
                     {
-                        ["effect"] = "AuditIfNotExists",
-                        ["details"] = new Dictionary<string, object>()
+                        effect = "AuditIfNotExists",
+                        details = new
                         {
-                            ["type"] = "Microsoft.Insights/diagnosticSettings",
-                            ["existenceCondition"] = new Dictionary<string, object>()
+                            type = "Microsoft.Insights/diagnosticSettings",
+                            existenceCondition = new
                             {
-                                ["allOf"] = new object[] { new Dictionary<string, object>()
+                                allOf = new object[]
+            {
+new
 {
-["equals"] = "true",
-["field"] = "Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.enabled"}, new Dictionary<string, object>()
+equals = "true",
+field = "Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.enabled",
+},
+new
 {
-["equals"] = "[parameters('requiredRetentionDays')]",
-["field"] = "Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.days"} }
-                            }
-                        }
+equals = "[parameters('requiredRetentionDays')]",
+field = "Microsoft.Insights/diagnosticSettings/logs[*].retentionPolicy.days",
+}
+            },
+                            },
+                        },
                     }
                 }),
-                Metadata = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+                Metadata = BinaryData.FromObjectAsJson(new
                 {
-                    ["category"] = "Event Hub"
+                    category = "Event Hub",
                 }),
                 Parameters =
 {
-["requiredRetentionDays"] = new ArmPolicyParameter()
+["requiredRetentionDays"] = new ArmPolicyParameter
 {
 ParameterType = ArmPolicyParameterType.Integer,
-AllowedValues =
-{
-BinaryData.FromString("\"0\""),BinaryData.FromString("\"30\""),BinaryData.FromString("\"90\""),BinaryData.FromString("\"180\""),BinaryData.FromString("\"365\"")
-},
-DefaultValue = BinaryData.FromString("\"365\""),
-Metadata = new ParameterDefinitionsValueMetadata()
+AllowedValues = {BinaryData.FromObjectAsJson("0"), BinaryData.FromObjectAsJson("30"), BinaryData.FromObjectAsJson("90"), BinaryData.FromObjectAsJson("180"), BinaryData.FromObjectAsJson("365")},
+DefaultValue = BinaryData.FromObjectAsJson("365"),
+Metadata = new ParameterDefinitionsValueMetadata
 {
 DisplayName = "Required retention (days)",
 Description = "The required diagnostic logs retention in days",
 },
-},
+}
 },
             };
             ArmOperation<SubscriptionPolicyDefinitionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, policyDefinitionName, data);
@@ -212,6 +215,40 @@ Description = "The required diagnostic logs retention in days",
             PolicyDefinitionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListPolicyDefinitionsBySubscription()
+        {
+            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/listPolicyDefinitions.json
+            // this example is just showing the usage of "PolicyDefinitions_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SubscriptionPolicyDefinitionResource
+            SubscriptionPolicyDefinitionCollection collection = subscription.GetSubscriptionPolicyDefinitions();
+
+            // invoke the operation and iterate over the result
+            await foreach (SubscriptionPolicyDefinitionResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PolicyDefinitionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -280,40 +317,6 @@ Description = "The required diagnostic logs retention in days",
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListPolicyDefinitionsBySubscription()
-        {
-            // Generated from example definition: specification/resources/resource-manager/Microsoft.Authorization/stable/2021-06-01/examples/listPolicyDefinitions.json
-            // this example is just showing the usage of "PolicyDefinitions_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "ae640e6b-ba3e-4256-9d62-2993eecfa6f2";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscription = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // get the collection of this SubscriptionPolicyDefinitionResource
-            SubscriptionPolicyDefinitionCollection collection = subscription.GetSubscriptionPolicyDefinitions();
-
-            // invoke the operation and iterate over the result
-            await foreach (SubscriptionPolicyDefinitionResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PolicyDefinitionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

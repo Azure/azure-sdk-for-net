@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabSecretResource devTestLabSecret = client.GetDevTestLabSecretResource(devTestLabSecretResourceId);
 
             // invoke the operation
-            DevTestLabSecretPatch patch = new DevTestLabSecretPatch()
+            DevTestLabSecretPatch patch = new DevTestLabSecretPatch
             {
                 Tags =
 {
-["tagName1"] = "tagValue1",
+["tagName1"] = "tagValue1"
 },
             };
             DevTestLabSecretResource result = await devTestLabSecret.UpdateAsync(patch);

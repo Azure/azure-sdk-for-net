@@ -18,6 +18,45 @@ namespace Azure.ResourceManager.Billing.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_InitiatePartnerTransfer()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/partnerTransfersInitiate.json
+            // this example is just showing the usage of "PartnerTransfers_Initiate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingProfileCustomerResource created on azure
+            // for more information of creating BillingProfileCustomerResource, please refer to the document of BillingProfileCustomerResource
+            string billingAccountName = "10000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            string billingProfileName = "xxxx-xxxx-xxx-xxx";
+            string customerName = "11111111-1111-1111-1111-111111111111";
+            ResourceIdentifier billingProfileCustomerResourceId = BillingProfileCustomerResource.CreateResourceIdentifier(billingAccountName, billingProfileName, customerName);
+            BillingProfileCustomerResource billingProfileCustomer = client.GetBillingProfileCustomerResource(billingProfileCustomerResourceId);
+
+            // get the collection of this PartnerTransferDetailResource
+            PartnerTransferDetailCollection collection = billingProfileCustomer.GetPartnerTransferDetails();
+
+            // invoke the operation
+            string transferName = "aabb123";
+            PartnerTransferDetailCreateOrUpdateContent content = new PartnerTransferDetailCreateOrUpdateContent
+            {
+                RecipientEmailId = "user@contoso.com",
+            };
+            ArmOperation<PartnerTransferDetailResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, transferName, content);
+            PartnerTransferDetailResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PartnerTransferDetailData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_PartnerTransferGet()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/partnerTransfersGet.json
@@ -48,6 +87,42 @@ namespace Azure.ResourceManager.Billing.Samples
             PartnerTransferDetailData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_PartnerTransfersList()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/partnerTransfersList.json
+            // this example is just showing the usage of "PartnerTransfers_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingProfileCustomerResource created on azure
+            // for more information of creating BillingProfileCustomerResource, please refer to the document of BillingProfileCustomerResource
+            string billingAccountName = "10000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            string billingProfileName = "xxxx-xxxx-xxx-xxx";
+            string customerName = "11111111-1111-1111-1111-111111111111";
+            ResourceIdentifier billingProfileCustomerResourceId = BillingProfileCustomerResource.CreateResourceIdentifier(billingAccountName, billingProfileName, customerName);
+            BillingProfileCustomerResource billingProfileCustomer = client.GetBillingProfileCustomerResource(billingProfileCustomerResourceId);
+
+            // get the collection of this PartnerTransferDetailResource
+            PartnerTransferDetailCollection collection = billingProfileCustomer.GetPartnerTransferDetails();
+
+            // invoke the operation and iterate over the result
+            await foreach (PartnerTransferDetailResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PartnerTransferDetailData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -120,81 +195,6 @@ namespace Azure.ResourceManager.Billing.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_InitiatePartnerTransfer()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/partnerTransfersInitiate.json
-            // this example is just showing the usage of "PartnerTransfers_Initiate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingProfileCustomerResource created on azure
-            // for more information of creating BillingProfileCustomerResource, please refer to the document of BillingProfileCustomerResource
-            string billingAccountName = "10000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            string billingProfileName = "xxxx-xxxx-xxx-xxx";
-            string customerName = "11111111-1111-1111-1111-111111111111";
-            ResourceIdentifier billingProfileCustomerResourceId = BillingProfileCustomerResource.CreateResourceIdentifier(billingAccountName, billingProfileName, customerName);
-            BillingProfileCustomerResource billingProfileCustomer = client.GetBillingProfileCustomerResource(billingProfileCustomerResourceId);
-
-            // get the collection of this PartnerTransferDetailResource
-            PartnerTransferDetailCollection collection = billingProfileCustomer.GetPartnerTransferDetails();
-
-            // invoke the operation
-            string transferName = "aabb123";
-            PartnerTransferDetailCreateOrUpdateContent content = new PartnerTransferDetailCreateOrUpdateContent()
-            {
-                RecipientEmailId = "user@contoso.com",
-            };
-            ArmOperation<PartnerTransferDetailResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, transferName, content);
-            PartnerTransferDetailResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PartnerTransferDetailData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_PartnerTransfersList()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/partnerTransfersList.json
-            // this example is just showing the usage of "PartnerTransfers_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingProfileCustomerResource created on azure
-            // for more information of creating BillingProfileCustomerResource, please refer to the document of BillingProfileCustomerResource
-            string billingAccountName = "10000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            string billingProfileName = "xxxx-xxxx-xxx-xxx";
-            string customerName = "11111111-1111-1111-1111-111111111111";
-            ResourceIdentifier billingProfileCustomerResourceId = BillingProfileCustomerResource.CreateResourceIdentifier(billingAccountName, billingProfileName, customerName);
-            BillingProfileCustomerResource billingProfileCustomer = client.GetBillingProfileCustomerResource(billingProfileCustomerResourceId);
-
-            // get the collection of this PartnerTransferDetailResource
-            PartnerTransferDetailCollection collection = billingProfileCustomer.GetPartnerTransferDetails();
-
-            // invoke the operation and iterate over the result
-            await foreach (PartnerTransferDetailResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PartnerTransferDetailData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

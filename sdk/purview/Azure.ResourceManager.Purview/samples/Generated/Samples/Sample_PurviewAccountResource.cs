@@ -10,44 +10,12 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Purview.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Purview.Samples
 {
     public partial class Sample_PurviewAccountResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetPurviewAccounts_AccountsListBySubscription()
-        {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/Accounts_ListBySubscription.json
-            // this example is just showing the usage of "Accounts_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (PurviewAccountResource item in subscriptionResource.GetPurviewAccountsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PurviewAccountData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_AccountsGet()
@@ -125,11 +93,11 @@ namespace Azure.ResourceManager.Purview.Samples
             PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
             // invoke the operation
-            PurviewAccountPatch patch = new PurviewAccountPatch()
+            PurviewAccountPatch patch = new PurviewAccountPatch
             {
                 Tags =
 {
-["newTag"] = "New tag value.",
+["newTag"] = "New tag value."
 },
             };
             ArmOperation<PurviewAccountResource> lro = await purviewAccount.UpdateAsync(WaitUntil.Completed, patch);
@@ -163,7 +131,7 @@ namespace Azure.ResourceManager.Purview.Samples
             PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
             // invoke the operation
-            CollectionAdminUpdateContent content = new CollectionAdminUpdateContent()
+            CollectionAdminUpdateContent content = new CollectionAdminUpdateContent
             {
                 AdminObjectId = "7e8de0e7-2bfc-4e1f-9659-2a5785e4356f",
             };
@@ -200,35 +168,6 @@ namespace Azure.ResourceManager.Purview.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckPurviewAccountNameAvailability_AccountsCheckNameAvailability()
-        {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/Accounts_CheckNameAvailability.json
-            // this example is just showing the usage of "Accounts_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            PurviewAccountNameAvailabilityContent content = new PurviewAccountNameAvailabilityContent()
-            {
-                Name = "account1",
-                ResourceType = "Microsoft.Purview/accounts",
-            };
-            PurviewAccountNameAvailabilityResult result = await subscriptionResource.CheckPurviewAccountNameAvailabilityAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task AccountGetFeature_FeaturesAccountGet()
         {
             // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/Features_AccountGet.json
@@ -248,12 +187,9 @@ namespace Azure.ResourceManager.Purview.Samples
             PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
             // invoke the operation
-            PurviewBatchFeatureContent content = new PurviewBatchFeatureContent()
+            PurviewBatchFeatureContent content = new PurviewBatchFeatureContent
             {
-                Features =
-{
-"Feature1","Feature2","FeatureThatDoesntExist"
-},
+                Features = { "Feature1", "Feature2", "FeatureThatDoesntExist" },
             };
             PurviewBatchFeatureStatus result = await purviewAccount.AccountGetFeatureAsync(content);
 
@@ -314,7 +250,7 @@ namespace Azure.ResourceManager.Purview.Samples
             PurviewAccountResource purviewAccount = client.GetPurviewAccountResource(purviewAccountResourceId);
 
             // invoke the operation
-            PrivateEndpointConnectionStatusUpdateContent content = new PrivateEndpointConnectionStatusUpdateContent()
+            PrivateEndpointConnectionStatusUpdateContent content = new PrivateEndpointConnectionStatusUpdateContent
             {
                 PrivateEndpointId = "/subscriptions/12345678-1234-1234-12345678abc/resourceGroups/SampleResourceGroup/providers/Microsoft.Purview/accounts/account1/privateEndpointConnections/privateEndpointConnection1",
                 Status = "Approved",

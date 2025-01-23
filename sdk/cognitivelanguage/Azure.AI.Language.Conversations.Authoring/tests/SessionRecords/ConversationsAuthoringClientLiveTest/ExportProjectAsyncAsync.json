@@ -1,0 +1,99 @@
+{
+  "Entries": [
+    {
+      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/MyNewProjectAsync/:export?stringIndexType=Utf16CodeUnit&api-version=2024-11-15-preview&format=Conversation",
+      "RequestMethod": "POST",
+      "RequestHeaders": {
+        "Accept": "application/json",
+        "Content-Length": "0",
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20241119.1 (.NET 8.0.10; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 202,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "0c087c5b-b078-484a-88e1-fead426475d9",
+        "Content-Length": "0",
+        "Date": "Wed, 20 Nov 2024 00:20:33 GMT",
+        "operation-location": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/MyNewProjectAsync/export/jobs/e09d5c1b-8a74-4d5e-b2e6-8e21f9ee1ceb_638676576000000000?api-version=2024-11-15-preview",
+        "request-id": "0c087c5b-b078-484a-88e1-fead426475d9",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "48",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": null
+    },
+    {
+      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/MyNewProjectAsync/export/jobs/e09d5c1b-8a74-4d5e-b2e6-8e21f9ee1ceb_638676576000000000?api-version=2024-11-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20241119.1 (.NET 8.0.10; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "b4646a5a-6805-44a6-8090-3a02e4e1581d",
+        "Content-Length": "216",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 20 Nov 2024 00:20:33 GMT",
+        "request-id": "b4646a5a-6805-44a6-8090-3a02e4e1581d",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "23",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "jobId": "e09d5c1b-8a74-4d5e-b2e6-8e21f9ee1ceb_638676576000000000",
+        "createdDateTime": "2024-11-20T00:20:33Z",
+        "lastUpdatedDateTime": "2024-11-20T00:20:33Z",
+        "expirationDateTime": "2024-11-27T00:20:33Z",
+        "status": "running"
+      }
+    },
+    {
+      "RequestUri": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/MyNewProjectAsync/export/jobs/e09d5c1b-8a74-4d5e-b2e6-8e21f9ee1ceb_638676576000000000?api-version=2024-11-15-preview",
+      "RequestMethod": "GET",
+      "RequestHeaders": {
+        "Ocp-Apim-Subscription-Key": "Sanitized",
+        "User-Agent": "azsdk-net-AI.Language.Conversations.Authoring/1.0.0-alpha.20241119.1 (.NET 8.0.10; Microsoft Windows 10.0.26100)",
+        "x-ms-client-request-id": "Sanitized",
+        "x-ms-return-client-request-id": "true"
+      },
+      "RequestBody": null,
+      "StatusCode": 200,
+      "ResponseHeaders": {
+        "Access-Control-Expose-Headers": "*",
+        "apim-request-id": "6d452efb-0699-496d-b680-8e1d4a425107",
+        "Content-Length": "454",
+        "Content-Type": "application/json; charset=utf-8",
+        "Date": "Wed, 20 Nov 2024 00:20:34 GMT",
+        "request-id": "6d452efb-0699-496d-b680-8e1d4a425107",
+        "Strict-Transport-Security": "max-age=31536000; includeSubDomains; preload",
+        "X-Content-Type-Options": "nosniff",
+        "x-envoy-upstream-service-time": "34",
+        "x-ms-region": "East US"
+      },
+      "ResponseBody": {
+        "resultUrl": "https://gokulk-test.cognitiveservices.azure.com/language/authoring/analyze-conversations/projects/MyNewProjectAsync/export/jobs/e09d5c1b-8a74-4d5e-b2e6-8e21f9ee1ceb_638676576000000000/result?api-version=2024-11-15-preview",
+        "jobId": "e09d5c1b-8a74-4d5e-b2e6-8e21f9ee1ceb_638676576000000000",
+        "createdDateTime": "2024-11-20T00:20:33Z",
+        "lastUpdatedDateTime": "2024-11-20T00:20:33Z",
+        "expirationDateTime": "2024-11-27T00:20:33Z",
+        "status": "succeeded"
+      }
+    }
+  ],
+  "Variables": {
+    "AZURE_AUTHORING_ENDPOINT": "https://gokulk-test.cognitiveservices.azure.com",
+    "AZURE_AUTHORING_KEY": "Sanitized",
+    "RandomSeed": "1801203526"
+  }
+}

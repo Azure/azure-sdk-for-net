@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerDevOpsAuditingSettingResource sqlServerDevOpsAuditingSetting = client.GetSqlServerDevOpsAuditingSettingResource(sqlServerDevOpsAuditingSettingResourceId);
 
             // invoke the operation
-            SqlServerDevOpsAuditingSettingData data = new SqlServerDevOpsAuditingSettingData()
+            SqlServerDevOpsAuditingSettingData data = new SqlServerDevOpsAuditingSettingData
             {
                 IsAzureMonitorTargetEnabled = true,
                 State = BlobAuditingPolicyState.Enabled,
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerDevOpsAuditingSettingResource sqlServerDevOpsAuditingSetting = client.GetSqlServerDevOpsAuditingSettingResource(sqlServerDevOpsAuditingSettingResourceId);
 
             // invoke the operation
-            SqlServerDevOpsAuditingSettingData data = new SqlServerDevOpsAuditingSettingData()
+            SqlServerDevOpsAuditingSettingData data = new SqlServerDevOpsAuditingSettingData
             {
                 State = BlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",

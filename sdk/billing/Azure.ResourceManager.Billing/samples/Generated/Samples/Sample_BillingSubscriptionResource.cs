@@ -19,6 +19,94 @@ namespace Azure.ResourceManager.Billing.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_BillingSubscriptionsGet()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionsGet.json
+            // this example is just showing the usage of "BillingSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingSubscriptionResource created on azure
+            // for more information of creating BillingSubscriptionResource, please refer to the document of BillingSubscriptionResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            string billingSubscriptionName = "11111111-1111-1111-1111-111111111111";
+            ResourceIdentifier billingSubscriptionResourceId = BillingSubscriptionResource.CreateResourceIdentifier(billingAccountName, billingSubscriptionName);
+            BillingSubscriptionResource billingSubscription = client.GetBillingSubscriptionResource(billingSubscriptionResourceId);
+
+            // invoke the operation
+            BillingSubscriptionResource result = await billingSubscription.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BillingSubscriptionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_BillingSubscriptionsDelete()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionsDelete.json
+            // this example is just showing the usage of "BillingSubscriptions_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingSubscriptionResource created on azure
+            // for more information of creating BillingSubscriptionResource, please refer to the document of BillingSubscriptionResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            string billingSubscriptionName = "11111111-1111-1111-1111-111111111111";
+            ResourceIdentifier billingSubscriptionResourceId = BillingSubscriptionResource.CreateResourceIdentifier(billingAccountName, billingSubscriptionName);
+            BillingSubscriptionResource billingSubscription = client.GetBillingSubscriptionResource(billingSubscriptionResourceId);
+
+            // invoke the operation
+            await billingSubscription.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_BillingSubscriptionsUpdate()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionsUpdate.json
+            // this example is just showing the usage of "BillingSubscriptions_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingSubscriptionResource created on azure
+            // for more information of creating BillingSubscriptionResource, please refer to the document of BillingSubscriptionResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            string billingSubscriptionName = "11111111-1111-1111-1111-111111111111";
+            ResourceIdentifier billingSubscriptionResourceId = BillingSubscriptionResource.CreateResourceIdentifier(billingAccountName, billingSubscriptionName);
+            BillingSubscriptionResource billingSubscription = client.GetBillingSubscriptionResource(billingSubscriptionResourceId);
+
+            // invoke the operation
+            BillingSubscriptionPatch patch = new BillingSubscriptionPatch
+            {
+                ConsumptionCostCenter = "ABC1234",
+            };
+            ArmOperation<BillingSubscriptionResource> lro = await billingSubscription.UpdateAsync(WaitUntil.Completed, patch);
+            BillingSubscriptionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BillingSubscriptionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Cancel_BillingSubscriptionsCancel()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionsCancel.json
@@ -66,7 +154,7 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingSubscriptionResource billingSubscription = client.GetBillingSubscriptionResource(billingSubscriptionResourceId);
 
             // invoke the operation
-            BillingSubscriptionMergeContent content = new BillingSubscriptionMergeContent()
+            BillingSubscriptionMergeContent content = new BillingSubscriptionMergeContent
             {
                 TargetBillingSubscriptionName = "22222222-2222-2222-2222-222222222222",
                 Quantity = 1,
@@ -101,7 +189,7 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingSubscriptionResource billingSubscription = client.GetBillingSubscriptionResource(billingSubscriptionResourceId);
 
             // invoke the operation
-            BillingSubscriptionMoveContent content = new BillingSubscriptionMoveContent()
+            BillingSubscriptionMoveContent content = new BillingSubscriptionMoveContent
             {
                 DestinationInvoiceSectionId = new ResourceIdentifier("/providers/Microsoft.Billing/billingAccounts/a1a9c77e-4cec-4a6c-a089-867d973a6074:a80d3b1f-c626-4e5e-82ed-1173bd91c838_2019-05-31/billingProfiles/ea36e548-1505-41db-bebc-46fff3d37998/invoiceSections/Q7GV-UUVA-PJA-TGB"),
             };
@@ -135,7 +223,7 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingSubscriptionResource billingSubscription = client.GetBillingSubscriptionResource(billingSubscriptionResourceId);
 
             // invoke the operation
-            BillingSubscriptionSplitContent content = new BillingSubscriptionSplitContent()
+            BillingSubscriptionSplitContent content = new BillingSubscriptionSplitContent
             {
                 TargetProductTypeId = "XYZ56789",
                 TargetSkuId = "0001",
@@ -173,7 +261,7 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingSubscriptionResource billingSubscription = client.GetBillingSubscriptionResource(billingSubscriptionResourceId);
 
             // invoke the operation
-            BillingSubscriptionMoveContent content = new BillingSubscriptionMoveContent()
+            BillingSubscriptionMoveContent content = new BillingSubscriptionMoveContent
             {
                 DestinationInvoiceSectionId = new ResourceIdentifier("/providers/Microsoft.Billing/billingAccounts/a1a9c77e-4cec-4a6c-a089-867d973a6074:a80d3b1f-c626-4e5e-82ed-1173bd91c838_2019-05-31/billingProfiles/ea36e548-1505-41db-bebc-46fff3d37998/invoiceSections/Q7GV-UUVA-PJA-TGB"),
             };
@@ -202,101 +290,13 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingSubscriptionResource billingSubscription = client.GetBillingSubscriptionResource(billingSubscriptionResourceId);
 
             // invoke the operation
-            BillingSubscriptionMoveContent content = new BillingSubscriptionMoveContent()
+            BillingSubscriptionMoveContent content = new BillingSubscriptionMoveContent
             {
                 DestinationInvoiceSectionId = new ResourceIdentifier("/providers/Microsoft.Billing/billingAccounts/a1a9c77e-4cec-4a6c-a089-867d973a6074:a80d3b1f-c626-4e5e-82ed-1173bd91c838_2019-05-31/billingProfiles/ea36e548-1505-41db-bebc-46fff3d37998/invoiceSections/Q7GV-UUVA-PJA-TGB"),
             };
             BillingSubscriptionValidateMoveEligibilityResult result = await billingSubscription.ValidateMoveEligibilityAsync(content);
 
             Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_BillingSubscriptionsDelete()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionsDelete.json
-            // this example is just showing the usage of "BillingSubscriptions_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingSubscriptionResource created on azure
-            // for more information of creating BillingSubscriptionResource, please refer to the document of BillingSubscriptionResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            string billingSubscriptionName = "11111111-1111-1111-1111-111111111111";
-            ResourceIdentifier billingSubscriptionResourceId = BillingSubscriptionResource.CreateResourceIdentifier(billingAccountName, billingSubscriptionName);
-            BillingSubscriptionResource billingSubscription = client.GetBillingSubscriptionResource(billingSubscriptionResourceId);
-
-            // invoke the operation
-            await billingSubscription.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_BillingSubscriptionsGet()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionsGet.json
-            // this example is just showing the usage of "BillingSubscriptions_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingSubscriptionResource created on azure
-            // for more information of creating BillingSubscriptionResource, please refer to the document of BillingSubscriptionResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            string billingSubscriptionName = "11111111-1111-1111-1111-111111111111";
-            ResourceIdentifier billingSubscriptionResourceId = BillingSubscriptionResource.CreateResourceIdentifier(billingAccountName, billingSubscriptionName);
-            BillingSubscriptionResource billingSubscription = client.GetBillingSubscriptionResource(billingSubscriptionResourceId);
-
-            // invoke the operation
-            BillingSubscriptionResource result = await billingSubscription.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BillingSubscriptionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_BillingSubscriptionsUpdate()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingSubscriptionsUpdate.json
-            // this example is just showing the usage of "BillingSubscriptions_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingSubscriptionResource created on azure
-            // for more information of creating BillingSubscriptionResource, please refer to the document of BillingSubscriptionResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            string billingSubscriptionName = "11111111-1111-1111-1111-111111111111";
-            ResourceIdentifier billingSubscriptionResourceId = BillingSubscriptionResource.CreateResourceIdentifier(billingAccountName, billingSubscriptionName);
-            BillingSubscriptionResource billingSubscription = client.GetBillingSubscriptionResource(billingSubscriptionResourceId);
-
-            // invoke the operation
-            BillingSubscriptionPatch patch = new BillingSubscriptionPatch()
-            {
-                ConsumptionCostCenter = "ABC1234",
-            };
-            ArmOperation<BillingSubscriptionResource> lro = await billingSubscription.UpdateAsync(WaitUntil.Completed, patch);
-            BillingSubscriptionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BillingSubscriptionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

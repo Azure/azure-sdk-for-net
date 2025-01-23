@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceAdvancedThreatProtectionResource managedInstanceAdvancedThreatProtection = client.GetManagedInstanceAdvancedThreatProtectionResource(managedInstanceAdvancedThreatProtectionResourceId);
 
             // invoke the operation
-            ManagedInstanceAdvancedThreatProtectionData data = new ManagedInstanceAdvancedThreatProtectionData()
+            ManagedInstanceAdvancedThreatProtectionData data = new ManagedInstanceAdvancedThreatProtectionData
             {
                 State = AdvancedThreatProtectionState.Enabled,
             };
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceAdvancedThreatProtectionResource managedInstanceAdvancedThreatProtection = client.GetManagedInstanceAdvancedThreatProtectionResource(managedInstanceAdvancedThreatProtectionResourceId);
 
             // invoke the operation
-            ManagedInstanceAdvancedThreatProtectionData data = new ManagedInstanceAdvancedThreatProtectionData()
+            ManagedInstanceAdvancedThreatProtectionData data = new ManagedInstanceAdvancedThreatProtectionData
             {
                 State = AdvancedThreatProtectionState.Disabled,
             };

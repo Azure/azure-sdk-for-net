@@ -99,14 +99,11 @@ namespace Azure.ResourceManager.Media.Samples
             MediaJobResource mediaJob = client.GetMediaJobResource(mediaJobResourceId);
 
             // invoke the operation
-            MediaJobData data = new MediaJobData()
+            MediaJobData data = new MediaJobData
             {
                 Description = "Example job to illustrate update.",
                 Input = new MediaJobInputAsset("job1-InputAsset"),
-                Outputs =
-{
-new MediaJobOutputAsset("job1-OutputAsset")
-},
+                Outputs = { new MediaJobOutputAsset("job1-OutputAsset") },
                 Priority = MediaJobPriority.High,
             };
             MediaJobResource result = await mediaJob.UpdateAsync(data);

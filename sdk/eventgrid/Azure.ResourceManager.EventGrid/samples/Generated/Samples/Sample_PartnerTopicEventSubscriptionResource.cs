@@ -96,22 +96,19 @@ namespace Azure.ResourceManager.EventGrid.Samples
             PartnerTopicEventSubscriptionResource partnerTopicEventSubscription = client.GetPartnerTopicEventSubscriptionResource(partnerTopicEventSubscriptionResourceId);
 
             // invoke the operation
-            EventGridSubscriptionPatch patch = new EventGridSubscriptionPatch()
+            EventGridSubscriptionPatch patch = new EventGridSubscriptionPatch
             {
-                Destination = new WebHookEventSubscriptionDestination()
+                Destination = new WebHookEventSubscriptionDestination
                 {
                     Endpoint = new Uri("https://requestb.in/15ksip71"),
                 },
-                Filter = new EventSubscriptionFilter()
+                Filter = new EventSubscriptionFilter
                 {
                     SubjectBeginsWith = "existingPrefix",
                     SubjectEndsWith = "newSuffix",
                     IsSubjectCaseSensitive = true,
                 },
-                Labels =
-{
-"label1","label2"
-},
+                Labels = { "label1", "label2" },
             };
             ArmOperation<PartnerTopicEventSubscriptionResource> lro = await partnerTopicEventSubscription.UpdateAsync(WaitUntil.Completed, patch);
             PartnerTopicEventSubscriptionResource result = lro.Value;

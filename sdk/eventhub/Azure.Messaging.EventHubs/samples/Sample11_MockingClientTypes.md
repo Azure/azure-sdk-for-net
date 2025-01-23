@@ -220,7 +220,7 @@ Mock<EventHubConsumerClient> mockConsumer = new();
 
 LastEnqueuedEventProperties lastEnqueueEventProperties = EventHubsModelFactory.LastEnqueuedEventProperties(
     lastSequenceNumber : 1234,
-    lastOffset : 234,
+    lastOffsetString : "234:1:954-2",
     lastEnqueuedTime : DateTimeOffset.Parse("1:24 AM"),
     lastReceivedTime : DateTimeOffset.Parse("1:26 AM"));
 
@@ -246,7 +246,7 @@ async IAsyncEnumerable<PartitionEvent> mockReturn()
         systemProperties: new Dictionary<string, object>(), //arbitrary value
         partitionKey: "sample-key",
         sequenceNumber: 1000,
-        offset: 1500,
+        offsetString: "1500:44:59492",
         enqueuedTime: DateTimeOffset.Parse("11:36 PM"));
 
     EventData eventData2 = EventHubsModelFactory.EventData(
@@ -254,7 +254,7 @@ async IAsyncEnumerable<PartitionEvent> mockReturn()
         systemProperties: new Dictionary<string, object>(), //arbitrary value
         partitionKey: "sample-key",
         sequenceNumber: 1000,
-        offset: 1500,
+        offsetString: "1500:2:1111",
         enqueuedTime: DateTimeOffset.Parse("11:36 PM"));
 
     // This creates a mock PartitionEvent to return from the consumer client.
@@ -341,7 +341,7 @@ for (int index = 0; index < 10; index++)
         systemProperties: new Dictionary<string, object>(), //arbitrary value
         partitionKey: $"sample-key-{index}",
         sequenceNumber: 1234,
-        offset: 234,
+        offsetString: "234:5:93928381.1",
         enqueuedTime: DateTimeOffset.Parse("9:25 AM"));
 
     receivedEvents.Add(eventData);
@@ -431,7 +431,7 @@ Dictionary<string, PartitionProperties> partitionProperties = new()
         isEmpty : true,
         beginningSequenceNumber: 1000,
         lastSequenceNumber : 1100,
-        lastOffset : 500,
+        lastOffsetString : "500:1:7863",
         lastEnqueuedTime : DateTime.UtcNow) },
 
     // Empty partition
@@ -441,7 +441,7 @@ Dictionary<string, PartitionProperties> partitionProperties = new()
         isEmpty : false,
         beginningSequenceNumber : 2000,
         lastSequenceNumber : 2000,
-        lastOffset : 760,
+        lastOffsetString : "760:1:8800",
         lastEnqueuedTime : DateTime.UtcNow) }
 };
 

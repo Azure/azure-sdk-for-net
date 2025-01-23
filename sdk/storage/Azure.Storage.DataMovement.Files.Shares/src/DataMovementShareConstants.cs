@@ -12,14 +12,15 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         internal const int MaxRange = 4 * MB;
 
-        internal class SourceCheckpointData
+        internal class SourceCheckpointDetails
         {
             internal const int DataSize = 0;
         }
 
-        internal class DestinationCheckpointData
+        internal class DestinationCheckpointDetails
         {
-            internal const int SchemaVersion = 2;
+            internal const int SchemaVersion_3 = 3;
+            internal const int SchemaVersion = SchemaVersion_3;
 
             internal const int VersionEncodedSize = IntSizeInBytes;
             internal const int PreserveEncodedSize = OneByte;

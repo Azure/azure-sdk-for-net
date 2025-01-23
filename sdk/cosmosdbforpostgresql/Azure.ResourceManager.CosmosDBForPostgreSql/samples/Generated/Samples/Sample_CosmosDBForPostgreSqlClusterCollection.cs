@@ -18,41 +18,6 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListTheClustersByResourceGroup()
-        {
-            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/stable/2022-11-08/examples/ClusterListByResourceGroup.json
-            // this example is just showing the usage of "Clusters_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "TestGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this CosmosDBForPostgreSqlClusterResource
-            CosmosDBForPostgreSqlClusterCollection collection = resourceGroupResource.GetCosmosDBForPostgreSqlClusters();
-
-            // invoke the operation and iterate over the result
-            await foreach (CosmosDBForPostgreSqlClusterResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CosmosDBForPostgreSqlClusterData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateANewClusterAsAPointInTimeRestore()
         {
             // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/stable/2022-11-08/examples/ClusterCreatePITR.json
@@ -171,9 +136,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
                 NodeStorageQuotaInMb = 524288,
                 NodeVCores = 8,
                 IsNodePublicIPAccessEnabled = false,
-                Tags =
-{
-},
+                Tags = { },
             };
             ArmOperation<CosmosDBForPostgreSqlClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
             CosmosDBForPostgreSqlClusterResource result = lro.Value;
@@ -224,7 +187,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
                 NodeCount = 0,
                 Tags =
 {
-["owner"] = "JohnDoe",
+["owner"] = "JohnDoe"
 },
             };
             ArmOperation<CosmosDBForPostgreSqlClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
@@ -276,7 +239,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
                 NodeCount = 0,
                 Tags =
 {
-["owner"] = "JohnDoe",
+["owner"] = "JohnDoe"
 },
             };
             ArmOperation<CosmosDBForPostgreSqlClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
@@ -328,7 +291,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
                 NodeCount = 0,
                 Tags =
 {
-["owner"] = "JohnDoe",
+["owner"] = "JohnDoe"
 },
             };
             ArmOperation<CosmosDBForPostgreSqlClusterResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, clusterName, data);
@@ -372,6 +335,41 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Samples
             CosmosDBForPostgreSqlClusterData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListTheClustersByResourceGroup()
+        {
+            // Generated from example definition: specification/postgresqlhsc/resource-manager/Microsoft.DBforPostgreSQL/stable/2022-11-08/examples/ClusterListByResourceGroup.json
+            // this example is just showing the usage of "Clusters_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "TestGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this CosmosDBForPostgreSqlClusterResource
+            CosmosDBForPostgreSqlClusterCollection collection = resourceGroupResource.GetCosmosDBForPostgreSqlClusters();
+
+            // invoke the operation and iterate over the result
+            await foreach (CosmosDBForPostgreSqlClusterResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CosmosDBForPostgreSqlClusterData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]

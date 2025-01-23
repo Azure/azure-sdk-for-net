@@ -209,6 +209,11 @@ namespace Azure.AI.Projects
                     writer.WriteNull("response_format");
                 }
             }
+            if (Optional.IsDefined(ParallelToolCalls))
+            {
+                writer.WritePropertyName("parallel_tool_calls"u8);
+                writer.WriteBooleanValue(ParallelToolCalls.Value);
+            }
             if (Optional.IsCollectionDefined(Metadata))
             {
                 if (Metadata != null)
@@ -268,7 +273,7 @@ namespace Azure.AI.Projects
             string model = default;
             string instructions = default;
             string additionalInstructions = default;
-            IReadOnlyList<ThreadMessage> additionalMessages = default;
+            IReadOnlyList<ThreadMessageOptions> additionalMessages = default;
             IReadOnlyList<ToolDefinition> tools = default;
             bool? stream = default;
             float? temperature = default;
@@ -278,6 +283,7 @@ namespace Azure.AI.Projects
             TruncationObject truncationStrategy = default;
             BinaryData toolChoice = default;
             BinaryData responseFormat = default;
+            bool? parallelToolCalls = default;
             IReadOnlyDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -324,10 +330,10 @@ namespace Azure.AI.Projects
                     {
                         continue;
                     }
-                    List<ThreadMessage> array = new List<ThreadMessage>();
+                    List<ThreadMessageOptions> array = new List<ThreadMessageOptions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThreadMessage.DeserializeThreadMessage(item, options));
+                        array.Add(ThreadMessageOptions.DeserializeThreadMessageOptions(item, options));
                     }
                     additionalMessages = array;
                     continue;
@@ -425,6 +431,15 @@ namespace Azure.AI.Projects
                     responseFormat = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("parallel_tool_calls"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parallelToolCalls = property.Value.GetBoolean();
+                    continue;
+                }
                 if (property.NameEquals("metadata"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -450,7 +465,7 @@ namespace Azure.AI.Projects
                 model,
                 instructions,
                 additionalInstructions,
-                additionalMessages ?? new ChangeTrackingList<ThreadMessage>(),
+                additionalMessages ?? new ChangeTrackingList<ThreadMessageOptions>(),
                 tools ?? new ChangeTrackingList<ToolDefinition>(),
                 stream,
                 temperature,
@@ -460,6 +475,7 @@ namespace Azure.AI.Projects
                 truncationStrategy,
                 toolChoice,
                 responseFormat,
+                parallelToolCalls,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }

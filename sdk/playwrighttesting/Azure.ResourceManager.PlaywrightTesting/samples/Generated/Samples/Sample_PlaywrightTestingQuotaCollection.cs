@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_QuotasListBySubscription()
+        public async Task Get_QuotasGet()
         {
-            // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2023-10-01-preview/examples/Quotas_ListBySubscription.json
-            // this example is just showing the usage of "Quotas_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-01/Quotas_Get.json
+            // this example is just showing the usage of "Quota_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -36,7 +36,40 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this PlaywrightTestingQuotaResource
-            AzureLocation location = new AzureLocation("eastus");
+            string location = "eastus";
+            PlaywrightTestingQuotaCollection collection = subscriptionResource.GetAllPlaywrightTestingQuota(location);
+
+            // invoke the operation
+            PlaywrightTestingQuotaName quotaName = PlaywrightTestingQuotaName.ScalableExecution;
+            PlaywrightTestingQuotaResource result = await collection.GetAsync(quotaName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PlaywrightTestingQuotaData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_QuotasListBySubscription()
+        {
+            // Generated from example definition: 2024-12-01/Quotas_ListBySubscription.json
+            // this example is just showing the usage of "Quota_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this PlaywrightTestingQuotaResource
+            string location = "eastus";
             PlaywrightTestingQuotaCollection collection = subscriptionResource.GetAllPlaywrightTestingQuota(location);
 
             // invoke the operation and iterate over the result
@@ -54,43 +87,10 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_QuotasGet()
-        {
-            // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2023-10-01-preview/examples/Quotas_Get.json
-            // this example is just showing the usage of "Quotas_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // get the collection of this PlaywrightTestingQuotaResource
-            AzureLocation location = new AzureLocation("eastus");
-            PlaywrightTestingQuotaCollection collection = subscriptionResource.GetAllPlaywrightTestingQuota(location);
-
-            // invoke the operation
-            PlaywrightTestingQuotaName name = PlaywrightTestingQuotaName.ScalableExecution;
-            PlaywrightTestingQuotaResource result = await collection.GetAsync(name);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PlaywrightTestingQuotaData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Exists_QuotasGet()
         {
-            // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2023-10-01-preview/examples/Quotas_Get.json
-            // this example is just showing the usage of "Quotas_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-01/Quotas_Get.json
+            // this example is just showing the usage of "Quota_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -104,12 +104,12 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this PlaywrightTestingQuotaResource
-            AzureLocation location = new AzureLocation("eastus");
+            string location = "eastus";
             PlaywrightTestingQuotaCollection collection = subscriptionResource.GetAllPlaywrightTestingQuota(location);
 
             // invoke the operation
-            PlaywrightTestingQuotaName name = PlaywrightTestingQuotaName.ScalableExecution;
-            bool result = await collection.ExistsAsync(name);
+            PlaywrightTestingQuotaName quotaName = PlaywrightTestingQuotaName.ScalableExecution;
+            bool result = await collection.ExistsAsync(quotaName);
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_QuotasGet()
         {
-            // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2023-10-01-preview/examples/Quotas_Get.json
-            // this example is just showing the usage of "Quotas_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: 2024-12-01/Quotas_Get.json
+            // this example is just showing the usage of "Quota_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // get the collection of this PlaywrightTestingQuotaResource
-            AzureLocation location = new AzureLocation("eastus");
+            string location = "eastus";
             PlaywrightTestingQuotaCollection collection = subscriptionResource.GetAllPlaywrightTestingQuota(location);
 
             // invoke the operation
-            PlaywrightTestingQuotaName name = PlaywrightTestingQuotaName.ScalableExecution;
-            NullableResponse<PlaywrightTestingQuotaResource> response = await collection.GetIfExistsAsync(name);
+            PlaywrightTestingQuotaName quotaName = PlaywrightTestingQuotaName.ScalableExecution;
+            NullableResponse<PlaywrightTestingQuotaResource> response = await collection.GetIfExistsAsync(quotaName);
             PlaywrightTestingQuotaResource result = response.HasValue ? response.Value : null;
 
             if (result == null)

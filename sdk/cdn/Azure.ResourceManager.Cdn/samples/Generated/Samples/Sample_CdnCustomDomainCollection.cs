@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.Cdn.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_CustomDomainsListByEndpoint()
+        public async Task CreateOrUpdate_CustomDomainsCreate()
         {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/CustomDomains_ListByEndpoint.json
-            // this example is just showing the usage of "CdnCustomDomains_ListByEndpoint" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/CustomDomains_Create.json
+            // this example is just showing the usage of "CdnCustomDomains_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -40,17 +40,20 @@ namespace Azure.ResourceManager.Cdn.Samples
             // get the collection of this CdnCustomDomainResource
             CdnCustomDomainCollection collection = cdnEndpoint.GetCdnCustomDomains();
 
-            // invoke the operation and iterate over the result
-            await foreach (CdnCustomDomainResource item in collection.GetAllAsync())
+            // invoke the operation
+            string customDomainName = "www-someDomain-net";
+            CdnCustomDomainCreateOrUpdateContent content = new CdnCustomDomainCreateOrUpdateContent
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CdnCustomDomainData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                HostName = "www.someDomain.net",
+            };
+            ArmOperation<CdnCustomDomainResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, customDomainName, content);
+            CdnCustomDomainResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CdnCustomDomainData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -86,6 +89,43 @@ namespace Azure.ResourceManager.Cdn.Samples
             CdnCustomDomainData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_CustomDomainsListByEndpoint()
+        {
+            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/CustomDomains_ListByEndpoint.json
+            // this example is just showing the usage of "CdnCustomDomains_ListByEndpoint" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CdnEndpointResource created on azure
+            // for more information of creating CdnEndpointResource, please refer to the document of CdnEndpointResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "RG";
+            string profileName = "profile1";
+            string endpointName = "endpoint1";
+            ResourceIdentifier cdnEndpointResourceId = CdnEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
+            CdnEndpointResource cdnEndpoint = client.GetCdnEndpointResource(cdnEndpointResourceId);
+
+            // get the collection of this CdnCustomDomainResource
+            CdnCustomDomainCollection collection = cdnEndpoint.GetCdnCustomDomains();
+
+            // invoke the operation and iterate over the result
+            await foreach (CdnCustomDomainResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CdnCustomDomainData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -160,46 +200,6 @@ namespace Azure.ResourceManager.Cdn.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CustomDomainsCreate()
-        {
-            // Generated from example definition: specification/cdn/resource-manager/Microsoft.Cdn/stable/2024-02-01/examples/CustomDomains_Create.json
-            // this example is just showing the usage of "CdnCustomDomains_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CdnEndpointResource created on azure
-            // for more information of creating CdnEndpointResource, please refer to the document of CdnEndpointResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "RG";
-            string profileName = "profile1";
-            string endpointName = "endpoint1";
-            ResourceIdentifier cdnEndpointResourceId = CdnEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, profileName, endpointName);
-            CdnEndpointResource cdnEndpoint = client.GetCdnEndpointResource(cdnEndpointResourceId);
-
-            // get the collection of this CdnCustomDomainResource
-            CdnCustomDomainCollection collection = cdnEndpoint.GetCdnCustomDomains();
-
-            // invoke the operation
-            string customDomainName = "www-someDomain-net";
-            CdnCustomDomainCreateOrUpdateContent content = new CdnCustomDomainCreateOrUpdateContent()
-            {
-                HostName = "www.someDomain.net",
-            };
-            ArmOperation<CdnCustomDomainResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, customDomainName, content);
-            CdnCustomDomainResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CdnCustomDomainData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

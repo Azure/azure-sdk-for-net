@@ -22,7 +22,7 @@ These prerequisites allow you to create an Azure OpenAI resource and get both a 
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.AI.OpenAI
+dotnet add package Azure.AI.OpenAI --prerelease
 ```
 
 The `Azure.AI.OpenAI` package builds on the [official OpenAI package](https://www.nuget.org/packages/OpenAI), which is included as a dependency.
@@ -66,7 +66,8 @@ AzureOpenAIClientOptions options = new()
 };
 AzureOpenAIClient azureClient = new(
     new Uri("https://your-azure-openai-resource.com"),
-    new DefaultAzureCredential());
+    new DefaultAzureCredential(),
+    options);
 ChatClient chatClient = azureClient.GetChatClient("my-gpt-4o-mini-deployment");
 ```
 

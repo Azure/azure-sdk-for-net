@@ -3,6 +3,8 @@
 
 using System;
 using System.ComponentModel;
+using System.Globalization;
+using Azure.Messaging.EventHubs.Core;
 
 namespace Azure.Messaging.EventHubs
 {
@@ -41,7 +43,26 @@ namespace Azure.Messaging.EventHubs
         ///   The offset of the last observed event to be enqueued in the partition.
         /// </summary>
         ///
-        public long LastEnqueuedOffset { get; }
+        [Obsolete(AttributeMessageText.LongLastEnqueuedOffsetOffsetObsolete, false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public long LastEnqueuedOffset
+        {
+            get
+            {
+                if (long.TryParse(LastEnqueuedOffsetString, out var value))
+                {
+                    return value;
+                }
+
+                throw new NotSupportedException(Resources.LongLastEnqueuedOffsetOffsetUnsupported);
+            }
+        }
+
+        /// <summary>
+        ///   The offset of the last observed event to be enqueued in the partition.
+        /// </summary>
+        ///
+        public string LastEnqueuedOffsetString { get; }
 
         /// <summary>
         ///   The date and time, in UTC, that the last observed event was enqueued in the partition.
@@ -58,6 +79,8 @@ namespace Azure.Messaging.EventHubs
         public bool IsEmpty { get; }
 
         /// <summary>
+        ///   Obsolete.
+        ///
         ///   Initializes a new instance of the <see cref="PartitionProperties"/> class.
         /// </summary>
         ///
@@ -69,19 +92,53 @@ namespace Azure.Messaging.EventHubs
         /// <param name="lastOffset">The offset of the last event to be enqueued in the partition.</param>
         /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
         ///
+        /// <remarks>
+        ///   This constructor is obsolete and should no longer be used.  Please use the string-based offset overload instead.
+        /// </remarks>
+        ///
+        [Obsolete(AttributeMessageText.LongOffsetOffsetParameterObsolete, false)]
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal PartitionProperties(string eventHubName,
                                                string partitionId,
                                                bool isEmpty,
                                                long beginningSequenceNumber,
                                                long lastSequenceNumber,
                                                long lastOffset,
+                                               DateTimeOffset lastEnqueuedTime) : this(eventHubName,
+                                                                                       partitionId,
+                                                                                       isEmpty,
+                                                                                       beginningSequenceNumber,
+                                                                                       lastSequenceNumber,
+                                                                                       (lastOffset > long.MinValue) ? lastOffset.ToString(CultureInfo.InvariantCulture) : null,
+                                                                                       lastEnqueuedTime)
+        {
+        }
+
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="PartitionProperties"/> class.
+        /// </summary>
+        ///
+        /// <param name="eventHubName">The name of the Event Hub that contains the partitions.</param>
+        /// <param name="partitionId">The identifier of the partition.</param>
+        /// <param name="isEmpty">Indicates whether or not the partition is currently empty.</param>
+        /// <param name="beginningSequenceNumber">The first sequence number available for events in the partition.</param>
+        /// <param name="lastSequenceNumber">The sequence number observed the last event to be enqueued in the partition.</param>
+        /// <param name="lastOffsetString">The offset of the last event to be enqueued in the partition.</param>
+        /// <param name="lastEnqueuedTime">The date and time, in UTC, that the last event was enqueued in the partition.</param>
+        ///
+        protected internal PartitionProperties(string eventHubName,
+                                               string partitionId,
+                                               bool isEmpty,
+                                               long beginningSequenceNumber,
+                                               long lastSequenceNumber,
+                                               string lastOffsetString,
                                                DateTimeOffset lastEnqueuedTime)
         {
             EventHubName = eventHubName;
             Id = partitionId;
             BeginningSequenceNumber = beginningSequenceNumber;
             LastEnqueuedSequenceNumber = lastSequenceNumber;
-            LastEnqueuedOffset = lastOffset;
+            LastEnqueuedOffsetString = lastOffsetString;
             LastEnqueuedTime = lastEnqueuedTime;
             IsEmpty = isEmpty;
         }

@@ -73,13 +73,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var mockLogger = new Mock<EventProcessorClientEventSource>();
             mockLogger
-                .Setup(log => log.UpdateCheckpointComplete(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(log => log.UpdateCheckpointComplete(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Callback(() => completionSource.TrySetResult(true));
 
             mockProcessor.Object.Logger = mockLogger.Object;
 
             using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
-            await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 998, default);
+            await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, "998", default);
+            await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, "1:0:556", default);
 
             Assert.IsEmpty(listener.Activities);
         }
@@ -106,7 +107,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 .Returns(Mock.Of<EventHubConnection>());
 
             mockLogger
-                .Setup(log => log.UpdateCheckpointComplete(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+                .Setup(log => log.UpdateCheckpointComplete(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Callback(() => completionSource.TrySetResult(true));
 
             mockProcessor.Object.Logger = mockLogger.Object;
@@ -114,7 +115,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var _ = SetAppConfigSwitch();
 
             using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
-            await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, 998, default);
+            await InvokeUpdateCheckpointAsync(mockProcessor.Object, mockContext.Object.PartitionId, "1:0:998", default);
 
             await Task.WhenAny(completionSource.Task, Task.Delay(Timeout.Infinite, cancellationSource.Token));
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
@@ -141,8 +142,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var enqueuedTime = DateTimeOffset.UtcNow;
             var eventBatch = new[]
             {
-                new MockEventData(new byte[] { 0x11 }, offset: 123, sequenceNumber: 123, enqueuedTime: enqueuedTime),
-                new MockEventData(new byte[] { 0x22 }, offset: 456, sequenceNumber: 456, enqueuedTime: enqueuedTime)
+                new MockEventData(new byte[] { 0x11 }, offset: "123", sequenceNumber: 123, enqueuedTime: enqueuedTime),
+                new MockEventData(new byte[] { 0x22 }, offset: "456", sequenceNumber: 456, enqueuedTime: enqueuedTime)
             };
 
             for (int i = 0; i < eventBatch.Length; i++)
@@ -199,8 +200,8 @@ namespace Azure.Messaging.EventHubs.Tests
             using var listener = new TestActivitySourceListener(source => source.Name.StartsWith(DiagnosticProperty.DiagnosticNamespace));
             var eventBatch = new[]
             {
-                new MockEventData(new byte[] { 0x11 }, offset: 123, sequenceNumber: 123),
-                new MockEventData(new byte[] { 0x22 }, offset: 456, sequenceNumber: 456)
+                new MockEventData(new byte[] { 0x11 }, offset: "123", sequenceNumber: 123),
+                new MockEventData(new byte[] { 0x22 }, offset: "456", sequenceNumber: 456)
             };
 
             var mockLogger = new Mock<EventProcessorClientEventSource>();
@@ -252,8 +253,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var enqueuedTime = DateTimeOffset.UtcNow;
             var eventBatch = new[]
             {
-                new MockEventData(new byte[] { 0x11 }, offset: 123, sequenceNumber: 123, enqueuedTime: enqueuedTime),
-                new MockEventData(new byte[] { 0x22 }, offset: 456, sequenceNumber: 456, enqueuedTime: enqueuedTime)
+                new MockEventData(new byte[] { 0x11 }, offset: "123", sequenceNumber: 123, enqueuedTime: enqueuedTime),
+                new MockEventData(new byte[] { 0x22 }, offset: "456", sequenceNumber: 456, enqueuedTime: enqueuedTime)
             };
 
             var mockLogger = new Mock<EventProcessorClientEventSource>();
@@ -295,19 +296,38 @@ namespace Azure.Messaging.EventHubs.Tests
         /// <param name="target">The client whose method to invoke.</param>
         /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
         /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
-        /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
         /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
         ///
         /// <returns>The translated options.</returns>
         ///
         private static Task InvokeUpdateCheckpointAsync(EventProcessorClient target,
                                                         string partitionId,
-                                                        long sequenceNumber,
+                                                        string offset,
                                                         CancellationToken cancellationToken) =>
             (Task)
                 typeof(EventProcessorClient)
                     .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic, new Type[] { typeof(string), typeof(CheckpointPosition), typeof(CancellationToken) })
-                    .Invoke(target, new object[] { partitionId, new CheckpointPosition(sequenceNumber), cancellationToken });
+                    .Invoke(target, new object[] { partitionId, new CheckpointPosition(offset), cancellationToken });
+
+        /// <summary>
+        ///   Invokes the protected UpdateCheckpointAsync method on the processor client.
+        /// </summary>
+        ///
+        /// <param name="target">The client whose method to invoke.</param>
+        /// <param name="partitionId">The identifier of the partition the checkpoint is for.</param>
+        /// <param name="offset">The offset to associate with the checkpoint, indicating that a processor should begin reading form the next event in the stream.</param>
+        /// <param name="sequenceNumber">An optional sequence number to associate with the checkpoint, intended as informational metadata.  The <paramref name="offset" /> will be used for positioning when events are read.</param>
+        /// <param name="cancellationToken">A <see cref="CancellationToken" /> instance to signal a request to cancel the operation.</param>
+        ///
+        private static Task InvokeOldUpdateCheckpointAsync(EventProcessorClient target,
+                                                        string partitionId,
+                                                        string offset,
+                                                        long sequenceNumber,
+                                                        CancellationToken cancellationToken) =>
+            (Task)
+                typeof(EventProcessorClient)
+                    .GetMethod("UpdateCheckpointAsync", BindingFlags.Instance | BindingFlags.NonPublic, new Type[] { typeof(string), typeof(string), typeof(long), typeof(CancellationToken) })
+                    .Invoke(target, new object[] { partitionId, offset, sequenceNumber, cancellationToken });
 
         /// <summary>
         /// Sets and returns the app config switch to enable Activity Source. The switch must be disposed at the end of the test.

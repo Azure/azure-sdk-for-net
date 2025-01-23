@@ -127,9 +127,9 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
             InformaticaServerlessRuntimeResource informaticaServerlessRuntime = client.GetInformaticaServerlessRuntimeResource(informaticaServerlessRuntimeResourceId);
 
             // invoke the operation
-            InformaticaServerlessRuntimePatch patch = new InformaticaServerlessRuntimePatch()
+            InformaticaServerlessRuntimePatch patch = new InformaticaServerlessRuntimePatch
             {
-                Properties = new ServerlessRuntimePropertiesUpdate()
+                Properties = new ServerlessRuntimePropertiesUpdate
                 {
                     Description = "ocprslpljoikxyduackzqnkuhyzrh",
                     Platform = InformaticaPlatformType.Azure,
@@ -137,46 +137,46 @@ namespace Azure.ResourceManager.InformaticaDataManagement.Samples
                     ComputeUnits = "uncwbpu",
                     ExecutionTimeout = "tjyfytuywriabt",
                     ServerlessAccountLocation = "goaugkyfanqfnvcmntreibqrswfpis",
-                    NetworkInterfaceConfiguration = new InformaticaNetworkInterfaceConfigurationUpdate()
+                    NetworkInterfaceConfiguration = new InformaticaNetworkInterfaceConfigurationUpdate
                     {
                         VnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/HypernetVnet1"),
                         SubnetId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Networks/virtualNetworks/test-vnet/subnets/subnet1"),
                         VnetResourceGuid = "5328d299-1462-4be0-bef1-303a28e556a0",
                     },
-                    AdvancedCustomProperties =
-{
-new AdvancedCustomProperties()
+                    AdvancedCustomProperties = {new AdvancedCustomProperties
 {
 Key = "qcmc",
 Value = "unraxmnohdmvutt",
-}
-},
+}},
                     SupplementaryFileLocation = "csxaqzpxu",
-                    ServerlessRuntimeConfig = new ServerlessRuntimeConfigPropertiesUpdate()
+                    ServerlessRuntimeConfig = new ServerlessRuntimeConfigPropertiesUpdate
                     {
-                        CdiConfigProps =
+                        CdiConfigProps = {new CdiConfigProperties("hngsdqvtjdhwqlbqfotipaiwjuys", "zlrlbg", new InformaticaApplicationConfigs[]
 {
-new CdiConfigProperties("hngsdqvtjdhwqlbqfotipaiwjuys","zlrlbg",new InformaticaApplicationConfigs[]
+new InformaticaApplicationConfigs(
+    "lw",
+    "upfvjrqcrwwedfujkmsodeinw",
+    "mozgsetpwjmtyl",
+    "dixfyeobngivyvf",
+    "j",
+    "zvgkqwmi")
+})},
+                        CdieConfigProps = {new CdiConfigProperties("hngsdqvtjdhwqlbqfotipaiwjuys", "zlrlbg", new InformaticaApplicationConfigs[]
 {
-new InformaticaApplicationConfigs("lw","upfvjrqcrwwedfujkmsodeinw","mozgsetpwjmtyl","dixfyeobngivyvf","j","zvgkqwmi")
-})
-},
-                        CdieConfigProps =
-{
-new CdiConfigProperties("hngsdqvtjdhwqlbqfotipaiwjuys","zlrlbg",new InformaticaApplicationConfigs[]
-{
-new InformaticaApplicationConfigs("lw","upfvjrqcrwwedfujkmsodeinw","mozgsetpwjmtyl","dixfyeobngivyvf","j","zvgkqwmi")
-})
-},
+new InformaticaApplicationConfigs(
+    "lw",
+    "upfvjrqcrwwedfujkmsodeinw",
+    "mozgsetpwjmtyl",
+    "dixfyeobngivyvf",
+    "j",
+    "zvgkqwmi")
+})},
                     },
-                    ServerlessRuntimeTags =
-{
-new ServerlessRuntimeTag()
+                    ServerlessRuntimeTags = {new ServerlessRuntimeTag
 {
 Name = "korveuycuwhs",
 Value = "uyiuegxnkgp",
-}
-},
+}},
                     UserContextToken = "ctgebtvjhwh",
                 },
             };

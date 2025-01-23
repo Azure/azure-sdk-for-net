@@ -1,17 +1,72 @@
 # Release History
 
-## 1.0.0-beta.4 (Unreleased)
+## 1.1.0-beta.1 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
 ### Bugs Fixed
-- Fixed a bug where calling `Operation.Id` would sometimes return an `InvalidOperationException` with message "The operation ID was not present in the service response.".
 
 ### Other Changes
+
+## 1.0.0 (2024-12-16)
+
+### Features Added
+- Added methods `GetAnalyzeBatchResult`, `GetAnalyzeBatchResults`, `DeleteAnalyzeBatchResult`, and `DeleteAnalyzeResult` to `DocumentIntelligenceClient`.
+- Added class `AnalyzeBatchOperationDetails` to be used as the output of the `GetAnalyzeBatchResult` and `GetAnalyzeBatchResults` APIs.
+- Added overloads for the `AnalyzeDocument` API that take only required parameters.
+- Added property `ModifiedOn` to `DocumentModelDetails` and to `DocumentClassifierDetails`.
+- Added member `Skipped` to `DocumentIntelligenceOperationStatus` (former `OperationStatus`).
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
+### Breaking Changes
+- Replaced the following `Content` classes with new corresponding `Options` classes:
+  - `AnalyzeBatchDocumentsContent` to `AnalyzeBatchDocumentsOptions`.
+  - `AnalyzeDocumentContent` to `AnalyzeDocumentOptions`.
+  - `AuthorizeClassifierCopyContent` to `AuthorizeClassifierCopyOptions`.
+  - `AuthorizeCopyContent` to `AuthorizeModelCopyOptions`.
+  - `BuildDocumentClassifierContent` to `BuildClassifierOptions`.
+  - `BuildDocumentModelContent` to `BuildDocumentModelOptions`.
+  - `ClassifyDocumentContent` to `ClassifyDocumentOptions`.
+  - `ComposeDocumentModelContent` to `ComposeModelOptions`.
+  - Parameters of the `AnalyzeBatchDocuments`, `AnalyzeDocument`, and `ClassifyDocument` methods have been moved into their corresponding `Options` class.
+- Updated parameter `resultId` of methods `GetAnalyzeResultPdf` and `GetAnalyzeResultFigure` to take a `string` instead of a `Guid`.
+- Renamed all occurrences of property `UrlSource` to `UriSource`.
+- Renamed all occurrences of properties `DocType` and `DocTypes` to `DocumentType` and `DocumentTypes`, respectively.
+- In `DocumentField`, renamed properties `Type` and `ValueLong` to `FieldType` and `ValueInt64`, respectively.
+- Renamed property `Type` to `FieldType` in `DocumentFieldSchema`.
+- Renamed class `AzureBlobContentSource` to `BlobContentSource`.
+- Renamed class `AzureBlobFileListContentSource` to `BlobFileListContentSource`.
+- Renamed all occurrences of properties `AzureBlobSource` and `AzureBlobFileListSource` to `BlobSource` and `BlobFileListSource`, respectively.
+- Renamed all occurrences of property `ContainerUrl` to `ContainerUri`.
+- Renamed property `ResultContainerUrl` to `ResultContainerUri` in `AnalyzeBatchDocumentsContent`.
+- Renamed class `AnalyzeBatchOperationDetail` to `AnalyzeBatchResultDetails`.
+- In `AnalyzeBatchResultDetails` (former `AnalyzeBatchOperationDetail`), renamed properties `SourceUrl` and `ResultUrl` to `SourceUri` and `ResultUri`, respectively.
+- Removed member `Generative` from `DocumentBuildMode`.
+- Renamed member `StyleFonts` to `FontStyling` in `DocumentAnalysisFeature`.
+- In `ContentSourceKind`, renamed members `Url`, `Base64`, `AzureBlob`, and `AzureBlobFileList` to `Uri`, `Bytes`, `Blob`, and `BlobFileList`, respectively.
+- Renamed all occurrences of property `ExpirationDateTime` to `ExpiresOn`.
+- Renamed method `GetResourceInfo` to `GetResourceDetails` in `DocumentIntelligenceAdministrationClient`.
+- Renamed class `ResourceDetails` to `DocumentIntelligenceResourceDetails`.
+- Renamed type `ContentFormat` to `DocumentContentFormat`.
+- Renamed class `OperationDetails` to `DocumentIntelligenceOperationDetails`.
+- Renamed class `InnerError` to `DocumentIntelligenceInnerError`.
+- Renamed class `CopyAuthorization` to `ModelCopyAuthorization`.
+- Renamed type `OperationStatus` to `DocumentIntelligenceOperationStatus`.
+- Renamed property `Innererror` to `InnerError` in `DocumentIntelligenceError`.
+- Renamed property `InnerErrorObject` to `InnerError` in `DocumentIntelligenceInnerError` (former class `InnerError`).
+- Removed member `Completed` from `DocumentIntelligenceOperationStatus` (former `OperationStatus`).
+- Removed type `StringIndexType`.
+- Removed property `StringIndexType` in `AnalyzeResult`.
+- Updated property `Fields` in `AnalyzedDocument` to be a `DocumentFieldDictionary` instead of an `IReadOnly<string, DocumentField>`.
+- Updated property `ValueDictionary` in `DocumentField` to be a `DocumentFieldDictionary` instead of an `IReadOnly<string, DocumentField>`.
+- Made type `BoundingRegion` a `struct`.
+- Made type `DocumentSpan` a `struct`.
+
+### Bugs Fixed
+- Fixed a bug where calling `Operation.Id` would sometimes return an `InvalidOperationException` with message "The operation ID was not present in the service response.".
+- Calling `Operation.Id` in an operation returned from the `AnalyzeBatchDocuments` and `ClassifyDocument` APIs won't throw a `NotSupportedException` anymore.
 
 ## 1.0.0-beta.3 (2024-08-14)
 

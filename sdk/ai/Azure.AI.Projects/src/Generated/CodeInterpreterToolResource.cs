@@ -57,7 +57,7 @@ namespace Azure.AI.Projects
         /// A list of file IDs made available to the `code_interpreter` tool. There can be a maximum of 20 files
         /// associated with the tool.
         /// </param>
-        /// <param name="dataSources"> The data sources to be used. This option is mutually exclusive with fileIds. </param>
+        /// <param name="dataSources"> The data sources to be used. This option is mutually exclusive with the `fileIds` property. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CodeInterpreterToolResource(IList<string> fileIds, IList<VectorStoreDataSource> dataSources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
@@ -71,7 +71,7 @@ namespace Azure.AI.Projects
         /// associated with the tool.
         /// </summary>
         public IList<string> FileIds { get; }
-        /// <summary> The data sources to be used. This option is mutually exclusive with fileIds. </summary>
+        /// <summary> The data sources to be used. This option is mutually exclusive with the `fileIds` property. </summary>
         public IList<VectorStoreDataSource> DataSources { get; }
     }
 }

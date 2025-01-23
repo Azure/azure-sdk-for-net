@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/738879cc6e1c5569b01130fd69a2587388fc34b3/specification/network/resource-manager/readme.md
-# tag: package-2024-03
+require: https://github.com/Azure/azure-rest-api-specs/blob/5dc3201e0fd56e77cd54d8f79867af4d3f57a51b/specification/network/resource-manager/readme.md
+# tag: package-2024-05
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -44,6 +44,7 @@ rename-mapping:
   ActiveConfigurationParameter: ActiveConfigurationContent
   ActiveConnectivityConfiguration.commitTime: CommittedOn
   ActiveConnectivityConfiguration.region: -|azure-location
+  AddressSpace: VirtualNetworkAddressSpace 
   AdminRule: NetworkAdminRule
   AdminRuleCollection: AdminRuleGroup
   AdminRuleCollectionListResult: AdminRuleGroupListResult
@@ -113,6 +114,8 @@ rename-mapping:
   Hub: ConnectivityHub
   IdpsQueryObject: IdpsQueryContent
   InboundNatPool: LoadBalancerInboundNatPool
+  InboundNatPoolPropertiesFormat: LoadBalancerInboundNatPoolProperties
+  IntentContent: AnalysisRunIntentContent
   IpAllocation.properties.type: IPAllocationType
   IpAllocationListResult: NetworkIPAllocationListResult
   IPAllocationMethod: NetworkIPAllocationMethod
@@ -123,6 +126,8 @@ rename-mapping:
   IPConfigurationProfile: NetworkIPConfigurationProfile
   IPPrefixesList: LearnedIPPrefixesListResult
   IPRule: BastionHostIPRule
+  IPTraffic: NetworkVerifierIPTraffic
+  IpType: IpamIPType
   IPVersion: NetworkIPVersion
   IsGlobal: GlobalMeshSupportFlag
   IssueType: ConnectivityIssueType
@@ -141,6 +146,8 @@ rename-mapping:
   PacketCaptureResult.properties.continuousCapture: IsContinuousCapture
   PacketCaptureResult: PacketCapture
   Parameter: RouteMapActionParameter
+  PoolAssociation: IpamPoolAssociation
+  PoolUsage: IpamPoolUsage
   PreferredIPVersion: TestEvalPreferredIPVersion
   PrivateEndpointIPConfiguration.properties.privateIPAddress: -|ip-address
   PrivateEndpointVNetPolicies: PrivateEndpointVnetPolicies
@@ -157,6 +164,7 @@ rename-mapping:
   QueryResults: IdpsSignatureListResult
   ResiliencyModel: ExpressRouteGatewayResiliencyModel
   Resource: NetworkTrackedResourceData
+  ResourceBasics: IpamResourceBasics
   RoutingRule: NetworkManagerRoutingRule
   RoutingRuleCollection: NetworkManagerRoutingRules
   SecurityUserConfiguration: NetworkManagerSecurityUserConfiguration
@@ -196,6 +204,8 @@ rename-mapping:
   UsagesListResult: NetworkUsagesListResult
   UsageUnit: NetworkUsageUnit
   UseHubGateway: HubGatewayUsageFlag
+  VerifierWorkspace: NetworkVerifierWorkspace
+  VerifierWorkspaceProperties: NetworkVerifierWorkspaceProperties
   VirtualApplianceIPConfigurationProperties.primary: IsPrimary
   VirtualNetwork.properties.privateEndpointVNetPolicies: PrivateEndpointVnetPolicy
   VirtualNetworkEncryption.enabled: IsEnabled
@@ -209,6 +219,7 @@ rename-mapping:
   VpnPacketCaptureStartParameters: VpnPacketCaptureStartContent
   VpnPacketCaptureStopParameters: VpnPacketCaptureStopContent
   VpnPolicyMemberAttributeType.AADGroupId: AadGroupId
+  LoadBalancingRulePropertiesFormat: LoadBalancingRuleProperties
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps
@@ -598,6 +609,14 @@ directive:
       {
           delete $[path];
       }
+  # disable the flatten and add additional properties to its properties object
+  - from: loadBalancer.json
+    where: $.definitions
+    transform: >
+      $.LoadBalancingRule.properties.properties["x-ms-client-flatten"] = false;
+      $.LoadBalancingRulePropertiesFormat.additionalProperties = true;
+      $.InboundNatPool.properties.properties["x-ms-client-flatten"] = false;
+      $.InboundNatPoolPropertiesFormat.additionalProperties = true;
   # - from: vmssPublicIpAddress.json
   #   where: $.paths
   #   transform: >
@@ -626,5 +645,10 @@ directive:
   #     {
   #         delete $[param];
   #     }
-
+  
+  # Remove the format of id which break current type replacement logic, issue https://github.com/Azure/azure-sdk-for-net/issues/47589 opened to track this requirement.
+  - from: network.json
+    where: $.definitions
+    transform: >
+      delete $.CommonResource.properties.id.format;
 ```

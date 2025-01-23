@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabVirtualNetworkResource devTestLabVirtualNetwork = client.GetDevTestLabVirtualNetworkResource(devTestLabVirtualNetworkResourceId);
 
             // invoke the operation
-            DevTestLabVirtualNetworkPatch patch = new DevTestLabVirtualNetworkPatch()
+            DevTestLabVirtualNetworkPatch patch = new DevTestLabVirtualNetworkPatch
             {
                 Tags =
 {
-["tagName1"] = "tagValue1",
+["tagName1"] = "tagValue1"
 },
             };
             DevTestLabVirtualNetworkResource result = await devTestLabVirtualNetwork.UpdateAsync(patch);

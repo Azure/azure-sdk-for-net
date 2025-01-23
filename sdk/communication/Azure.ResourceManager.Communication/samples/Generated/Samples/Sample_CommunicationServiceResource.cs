@@ -11,330 +11,12 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Communication.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Communication.Samples
 {
     public partial class Sample_CommunicationServiceResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CheckCommunicationNameAvailability_CheckNameAvailabilityAvailable()
-        {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/checkNameAvailabilityAvailable.json
-            // this example is just showing the usage of "CommunicationServices_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            CommunicationServiceNameAvailabilityContent content = new CommunicationServiceNameAvailabilityContent()
-            {
-                Name = "MyCommunicationService",
-                ResourceType = new ResourceType("Microsoft.Communication/CommunicationServices"),
-            };
-            CommunicationNameAvailabilityResult result = await subscriptionResource.CheckCommunicationNameAvailabilityAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CheckCommunicationNameAvailability_CheckNameAvailabilityUnavailable()
-        {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/checkNameAvailabilityUnavailable.json
-            // this example is just showing the usage of "CommunicationServices_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            CommunicationServiceNameAvailabilityContent content = new CommunicationServiceNameAvailabilityContent()
-            {
-                Name = "MyCommunicationService",
-                ResourceType = new ResourceType("Microsoft.Communication/CommunicationServices"),
-            };
-            CommunicationNameAvailabilityResult result = await subscriptionResource.CheckCommunicationNameAvailabilityAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task LinkNotificationHub_LinkNotificationHub()
-        {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/linkNotificationHub.json
-            // this example is just showing the usage of "CommunicationServices_LinkNotificationHub" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CommunicationServiceResource created on azure
-            // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
-            string resourceGroupName = "MyResourceGroup";
-            string communicationServiceName = "MyCommunicationResource";
-            ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
-            CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
-
-            // invoke the operation
-            LinkNotificationHubContent content = new LinkNotificationHubContent(new ResourceIdentifier("/subscriptions/11112222-3333-4444-5555-666677778888/resourceGroups/MyOtherResourceGroup/providers/Microsoft.NotificationHubs/namespaces/MyNamespace/notificationHubs/MyHub"), "Endpoint=sb://MyNamespace.servicebus.windows.net/;SharedAccessKey=abcd1234");
-            LinkedNotificationHub result = await communicationServiceResource.LinkNotificationHubAsync(content: content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetCommunicationServiceResources_ListBySubscription()
-        {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/listBySubscription.json
-            // this example is just showing the usage of "CommunicationServices_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (CommunicationServiceResource item in subscriptionResource.GetCommunicationServiceResourcesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CommunicationServiceResourceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateResource()
-        {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/update.json
-            // this example is just showing the usage of "CommunicationServices_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CommunicationServiceResource created on azure
-            // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
-            string resourceGroupName = "MyResourceGroup";
-            string communicationServiceName = "MyCommunicationResource";
-            ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
-            CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
-
-            // invoke the operation
-            CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch()
-            {
-                Tags =
-{
-["newTag"] = "newVal",
-},
-            };
-            CommunicationServiceResource result = await communicationServiceResource.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CommunicationServiceResourceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateResourceToAddSystemAndUserManagedIdentities()
-        {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/updateWithSystemAndUserIdentity.json
-            // this example is just showing the usage of "CommunicationServices_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CommunicationServiceResource created on azure
-            // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
-            string resourceGroupName = "MyResourceGroup";
-            string communicationServiceName = "MyCommunicationResource";
-            ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
-            CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
-
-            // invoke the operation
-            CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch()
-            {
-                Identity = new ManagedServiceIdentity("SystemAssigned,UserAssigned")
-                {
-                    UserAssignedIdentities =
-{
-[new ResourceIdentifier("/user/assigned/resource/id")] = new UserAssignedIdentity(),
-},
-                },
-                Tags =
-{
-["newTag"] = "newVal",
-},
-            };
-            CommunicationServiceResource result = await communicationServiceResource.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CommunicationServiceResourceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateResourceToAddASystemAssignedManagedIdentity()
-        {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/updateWithSystemAssignedIdentity.json
-            // this example is just showing the usage of "CommunicationServices_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CommunicationServiceResource created on azure
-            // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
-            string resourceGroupName = "MyResourceGroup";
-            string communicationServiceName = "MyCommunicationResource";
-            ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
-            CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
-
-            // invoke the operation
-            CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch()
-            {
-                Identity = new ManagedServiceIdentity("SystemAssigned"),
-                Tags =
-{
-["newTag"] = "newVal",
-},
-            };
-            CommunicationServiceResource result = await communicationServiceResource.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CommunicationServiceResourceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateResourceToAddAUserAssignedManagedIdentity()
-        {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/updateWithUserAssignedIdentity.json
-            // this example is just showing the usage of "CommunicationServices_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CommunicationServiceResource created on azure
-            // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
-            string resourceGroupName = "MyResourceGroup";
-            string communicationServiceName = "MyCommunicationResource";
-            ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
-            CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
-
-            // invoke the operation
-            CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch()
-            {
-                Identity = new ManagedServiceIdentity("UserAssigned")
-                {
-                    UserAssignedIdentities =
-{
-[new ResourceIdentifier("/user/assigned/resource/id")] = new UserAssignedIdentity(),
-},
-                },
-                Tags =
-{
-["newTag"] = "newVal",
-},
-            };
-            CommunicationServiceResource result = await communicationServiceResource.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CommunicationServiceResourceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateResourceToRemoveIdentity()
-        {
-            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/updateRemoveSystemIdentity.json
-            // this example is just showing the usage of "CommunicationServices_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this CommunicationServiceResource created on azure
-            // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
-            string subscriptionId = "11112222-3333-4444-5555-666677778888";
-            string resourceGroupName = "MyResourceGroup";
-            string communicationServiceName = "MyCommunicationResource";
-            ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
-            CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
-
-            // invoke the operation
-            CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch()
-            {
-                Identity = new ManagedServiceIdentity("None"),
-                Tags =
-{
-["newTag"] = "newVal",
-},
-            };
-            CommunicationServiceResource result = await communicationServiceResource.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CommunicationServiceResourceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetResource()
@@ -393,6 +75,234 @@ namespace Azure.ResourceManager.Communication.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateResource()
+        {
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/update.json
+            // this example is just showing the usage of "CommunicationServices_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CommunicationServiceResource created on azure
+            // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
+            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string resourceGroupName = "MyResourceGroup";
+            string communicationServiceName = "MyCommunicationResource";
+            ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
+            CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
+
+            // invoke the operation
+            CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch
+            {
+                Tags =
+{
+["newTag"] = "newVal"
+},
+            };
+            CommunicationServiceResource result = await communicationServiceResource.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CommunicationServiceResourceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateResourceToAddSystemAndUserManagedIdentities()
+        {
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/updateWithSystemAndUserIdentity.json
+            // this example is just showing the usage of "CommunicationServices_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CommunicationServiceResource created on azure
+            // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
+            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string resourceGroupName = "MyResourceGroup";
+            string communicationServiceName = "MyCommunicationResource";
+            ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
+            CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
+
+            // invoke the operation
+            CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch
+            {
+                Identity = new ManagedServiceIdentity("SystemAssigned,UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/user/assigned/resource/id")] = new UserAssignedIdentity()
+},
+                },
+                Tags =
+{
+["newTag"] = "newVal"
+},
+            };
+            CommunicationServiceResource result = await communicationServiceResource.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CommunicationServiceResourceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateResourceToAddASystemAssignedManagedIdentity()
+        {
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/updateWithSystemAssignedIdentity.json
+            // this example is just showing the usage of "CommunicationServices_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CommunicationServiceResource created on azure
+            // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
+            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string resourceGroupName = "MyResourceGroup";
+            string communicationServiceName = "MyCommunicationResource";
+            ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
+            CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
+
+            // invoke the operation
+            CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch
+            {
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
+                Tags =
+{
+["newTag"] = "newVal"
+},
+            };
+            CommunicationServiceResource result = await communicationServiceResource.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CommunicationServiceResourceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateResourceToAddAUserAssignedManagedIdentity()
+        {
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/updateWithUserAssignedIdentity.json
+            // this example is just showing the usage of "CommunicationServices_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CommunicationServiceResource created on azure
+            // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
+            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string resourceGroupName = "MyResourceGroup";
+            string communicationServiceName = "MyCommunicationResource";
+            ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
+            CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
+
+            // invoke the operation
+            CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch
+            {
+                Identity = new ManagedServiceIdentity("UserAssigned")
+                {
+                    UserAssignedIdentities =
+{
+[new ResourceIdentifier("/user/assigned/resource/id")] = new UserAssignedIdentity()
+},
+                },
+                Tags =
+{
+["newTag"] = "newVal"
+},
+            };
+            CommunicationServiceResource result = await communicationServiceResource.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CommunicationServiceResourceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateResourceToRemoveIdentity()
+        {
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/updateRemoveSystemIdentity.json
+            // this example is just showing the usage of "CommunicationServices_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CommunicationServiceResource created on azure
+            // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
+            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string resourceGroupName = "MyResourceGroup";
+            string communicationServiceName = "MyCommunicationResource";
+            ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
+            CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
+
+            // invoke the operation
+            CommunicationServiceResourcePatch patch = new CommunicationServiceResourcePatch
+            {
+                Identity = new ManagedServiceIdentity("None"),
+                Tags =
+{
+["newTag"] = "newVal"
+},
+            };
+            CommunicationServiceResource result = await communicationServiceResource.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CommunicationServiceResourceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task LinkNotificationHub_LinkNotificationHub()
+        {
+            // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/linkNotificationHub.json
+            // this example is just showing the usage of "CommunicationServices_LinkNotificationHub" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this CommunicationServiceResource created on azure
+            // for more information of creating CommunicationServiceResource, please refer to the document of CommunicationServiceResource
+            string subscriptionId = "11112222-3333-4444-5555-666677778888";
+            string resourceGroupName = "MyResourceGroup";
+            string communicationServiceName = "MyCommunicationResource";
+            ResourceIdentifier communicationServiceResourceId = CommunicationServiceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, communicationServiceName);
+            CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
+
+            // invoke the operation
+            LinkNotificationHubContent content = new LinkNotificationHubContent(new ResourceIdentifier("/subscriptions/11112222-3333-4444-5555-666677778888/resourceGroups/MyOtherResourceGroup/providers/Microsoft.NotificationHubs/namespaces/MyNamespace/notificationHubs/MyHub"), "Endpoint=sb://MyNamespace.servicebus.windows.net/;SharedAccessKey=abcd1234");
+            LinkedNotificationHub result = await communicationServiceResource.LinkNotificationHubAsync(content: content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetKeys_ListKeys()
         {
             // Generated from example definition: specification/communication/resource-manager/Microsoft.Communication/stable/2023-04-01/examples/communicationServices/listKeys.json
@@ -438,7 +348,7 @@ namespace Azure.ResourceManager.Communication.Samples
             CommunicationServiceResource communicationServiceResource = client.GetCommunicationServiceResource(communicationServiceResourceId);
 
             // invoke the operation
-            RegenerateCommunicationServiceKeyContent content = new RegenerateCommunicationServiceKeyContent()
+            RegenerateCommunicationServiceKeyContent content = new RegenerateCommunicationServiceKeyContent
             {
                 KeyType = CommunicationServiceKeyType.Primary,
             };

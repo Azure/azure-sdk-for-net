@@ -10,44 +10,12 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ContainerInstance.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ContainerInstance.Samples
 {
     public partial class Sample_ContainerGroupProfileResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetContainerGroupProfiles_ContainerGroupProfilesList()
-        {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfilesList.json
-            // this example is just showing the usage of "ContainerGroupProfiles_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ContainerGroupProfileResource item in subscriptionResource.GetContainerGroupProfilesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ContainerGroupProfileData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ContainerGroupProfilesGetWithPriority()
@@ -110,44 +78,6 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_ContainerGroupProfilesPatch()
-        {
-            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfilesPatch.json
-            // this example is just showing the usage of "ContainerGroupProfiles_Patch" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerGroupProfileResource created on azure
-            // for more information of creating ContainerGroupProfileResource, please refer to the document of ContainerGroupProfileResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "demoResource";
-            string containerGroupProfileName = "demo1";
-            ResourceIdentifier containerGroupProfileResourceId = ContainerGroupProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerGroupProfileName);
-            ContainerGroupProfileResource containerGroupProfile = client.GetContainerGroupProfileResource(containerGroupProfileResourceId);
-
-            // invoke the operation
-            ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch()
-            {
-                Tags =
-{
-["tag1key"] = "tag1Value",
-["tag2key"] = "tag2Value",
-},
-            };
-            ContainerGroupProfileResource result = await containerGroupProfile.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerGroupProfileData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ContainerGroupProfilesDelete()
         {
             // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfilesDelete.json
@@ -170,6 +100,44 @@ namespace Azure.ResourceManager.ContainerInstance.Samples
             await containerGroupProfile.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ContainerGroupProfilesPatch()
+        {
+            // Generated from example definition: specification/containerinstance/resource-manager/Microsoft.ContainerInstance/preview/2024-05-01-preview/examples/ContainerGroupProfilesPatch.json
+            // this example is just showing the usage of "ContainerGroupProfiles_Patch" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerGroupProfileResource created on azure
+            // for more information of creating ContainerGroupProfileResource, please refer to the document of ContainerGroupProfileResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "demoResource";
+            string containerGroupProfileName = "demo1";
+            ResourceIdentifier containerGroupProfileResourceId = ContainerGroupProfileResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, containerGroupProfileName);
+            ContainerGroupProfileResource containerGroupProfile = client.GetContainerGroupProfileResource(containerGroupProfileResourceId);
+
+            // invoke the operation
+            ContainerGroupProfilePatch patch = new ContainerGroupProfilePatch
+            {
+                Tags =
+{
+["tag1key"] = "tag1Value",
+["tag2key"] = "tag2Value"
+},
+            };
+            ContainerGroupProfileResource result = await containerGroupProfile.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerGroupProfileData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

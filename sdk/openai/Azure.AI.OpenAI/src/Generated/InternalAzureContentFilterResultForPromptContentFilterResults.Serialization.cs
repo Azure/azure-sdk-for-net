@@ -260,4 +260,3 @@ namespace Azure.AI.OpenAI
         }
     }
 }
-

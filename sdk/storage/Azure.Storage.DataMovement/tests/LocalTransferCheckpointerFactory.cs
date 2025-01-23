@@ -16,7 +16,7 @@ namespace Azure.Storage.DataMovement.Tests
         internal const string _testSourcePath = "C:/sample-source";
         internal const string _testDestinationProviderId = "test";
         internal const string _testDestinationPath = "C:/sample-destination";
-        internal static readonly DataTransferStatus _testPartStatus = new DataTransferStatus(DataTransferState.Queued, false, false);
+        internal static readonly TransferStatus _testPartStatus = new TransferStatus(TransferState.Queued, false, false);
 
         private string _checkpointerPath;
 
@@ -42,16 +42,16 @@ namespace Azure.Storage.DataMovement.Tests
             return new LocalTransferCheckpointer(_checkpointerPath);
         }
 
-        public LocalTransferCheckpointer BuildCheckpointer(List<DataTransfer> dataTransfers)
+        public LocalTransferCheckpointer BuildCheckpointer(List<TransferOperation> transfers)
         {
-            foreach (DataTransfer dataTransfer in dataTransfers)
+            foreach (TransferOperation transfer in transfers)
             {
-                CreateStubJobPlanFile(_checkpointerPath, dataTransfer.Id, status: dataTransfer.TransferStatus);
+                CreateStubJobPlanFile(_checkpointerPath, transfer.Id, status: transfer.Status);
                 CreateStubJobPartPlanFilesAsync(
                     checkpointerPath: _checkpointerPath,
-                    transferId: dataTransfer.Id,
+                    transferId: transfer.Id,
                     jobPartCount: _partCountDefault,
-                    status: new DataTransferStatus(DataTransferState.Paused, false, false));
+                    status: new TransferStatus(TransferState.Paused, false, false));
             }
             return new LocalTransferCheckpointer(_checkpointerPath);
         }
@@ -64,7 +64,7 @@ namespace Azure.Storage.DataMovement.Tests
             string checkpointerPath,
             string transferId,
             int jobPartCount,
-            DataTransferStatus status = default,
+            TransferStatus status = default,
             List<string> sourcePaths = default,
             List<string> destinationPaths = default,
             string sourceTypeId = "LocalFile",
@@ -122,13 +122,13 @@ namespace Azure.Storage.DataMovement.Tests
             string sourceProviderId = _testSourceProviderId,
             string destinationProviderId = _testDestinationProviderId,
             bool isContainer = false,
-            DataTransferStatus status = default,
-            StorageResourceCheckpointData sourceCheckpointData = default,
-            StorageResourceCheckpointData destinationCheckpointData = default)
+            TransferStatus status = default,
+            StorageResourceCheckpointDetails sourceCheckpointDetails = default,
+            StorageResourceCheckpointDetails destinationCheckpointDetails = default)
         {
-            status ??= new DataTransferStatus();
-            sourceCheckpointData ??= MockResourceCheckpointData.DefaultInstance;
-            destinationCheckpointData ??= MockResourceCheckpointData.DefaultInstance;
+            status ??= new TransferStatus();
+            sourceCheckpointDetails ??= MockResourceCheckpointDetails.DefaultInstance;
+            destinationCheckpointDetails ??= MockResourceCheckpointDetails.DefaultInstance;
 
             JobPlanHeader header = new JobPlanHeader(
                 DataMovementConstants.JobPlanFile.SchemaVersion,
@@ -142,8 +142,8 @@ namespace Azure.Storage.DataMovement.Tests
                 status,
                 parentSourcePath,
                 parentDestinationPath,
-                sourceCheckpointData,
-                destinationCheckpointData);
+                sourceCheckpointDetails,
+                destinationCheckpointDetails);
 
             string filePath = Path.Combine(checkpointPath, $"{transferId}{DataMovementConstants.JobPlanFile.FileExtension}");
             using (FileStream stream = File.Create(filePath))

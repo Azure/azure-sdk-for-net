@@ -56,12 +56,13 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         public static Azure.ResourceManager.ComputeSchedule.Models.GetOperationErrorsResult GetOperationErrorsResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.OperationErrorsResult> results = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.GetOperationStatusResult GetOperationStatusResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult> results = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.HibernateResourceOperationResult HibernateResourceOperationResult(string description = null, string resourceType = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult> results = null) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.OperationErrorDetails OperationErrorDetails(string errorCode = null, System.DateTimeOffset errorDetails = default(System.DateTimeOffset), System.DateTimeOffset timeStamp = default(System.DateTimeOffset), string crpOperationId = null) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.OperationErrorDetails OperationErrorDetails(string errorCode = null, string errorDetails = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), System.DateTimeOffset? errorDetailsTimestamp = default(System.DateTimeOffset?), string azureOperationName = null, string crpOperationId = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.OperationErrorsResult OperationErrorsResult(string operationId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? activationOn = default(System.DateTimeOffset?), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.OperationErrorDetails> operationErrors = null, string requestErrorCode = null, string requestErrorDetails = null) { throw null; }
-        public static Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationDetails ResourceOperationDetails(string operationId = null, Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationType opType = default(Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationType), string subscriptionId = null, System.DateTimeOffset deadline = default(System.DateTimeOffset), Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionDeadlineType deadlineType = default(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionDeadlineType), Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionOperationState state = default(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionOperationState), string timeZone = null, Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationError resourceOperationError = null, System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), Azure.ResourceManager.ComputeSchedule.Models.UserRequestRetryPolicy retryPolicy = null) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationDetails ResourceOperationDetails(string operationId = null, Azure.Core.ResourceIdentifier resourceId = null, Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationType? opType = default(Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationType?), string subscriptionId = null, System.DateTimeOffset? deadline = default(System.DateTimeOffset?), Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionDeadlineType? deadlineType = default(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionDeadlineType?), Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionOperationState? state = default(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionOperationState?), string timezone = null, string operationTimezone = null, Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationError resourceOperationError = null, System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), Azure.ResourceManager.ComputeSchedule.Models.UserRequestRetryPolicy retryPolicy = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationError ResourceOperationError(string errorCode = null, string errorDetails = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult ResourceOperationResult(Azure.Core.ResourceIdentifier resourceId = null, string errorCode = null, string errorDetails = null, Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationDetails operation = null) { throw null; }
         public static Azure.ResourceManager.ComputeSchedule.Models.StartResourceOperationResult StartResourceOperationResult(string description = null, string resourceType = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationResult> results = null) { throw null; }
+        public static Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule UserRequestSchedule(System.DateTimeOffset? deadline = default(System.DateTimeOffset?), System.DateTimeOffset? userRequestDeadline = default(System.DateTimeOffset?), string timezone = null, string userRequestTimezone = null, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionDeadlineType deadlineType = default(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionDeadlineType)) { throw null; }
     }
     public partial class CancelOperationsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.CancelOperationsContent>
     {
@@ -201,10 +202,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     public partial class OperationErrorDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OperationErrorDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.OperationErrorDetails>
     {
         internal OperationErrorDetails() { }
+        public string AzureOperationName { get { throw null; } }
         public string CrpOperationId { get { throw null; } }
         public string ErrorCode { get { throw null; } }
-        public System.DateTimeOffset ErrorDetails { get { throw null; } }
-        public System.DateTimeOffset TimeStamp { get { throw null; } }
+        public string ErrorDetails { get { throw null; } }
+        public System.DateTimeOffset? ErrorDetailsTimestamp { get { throw null; } }
+        public System.DateTimeOffset? Timestamp { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.OperationErrorDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OperationErrorDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.OperationErrorDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -233,16 +236,17 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     {
         internal ResourceOperationDetails() { }
         public System.DateTimeOffset? CompletedOn { get { throw null; } }
-        public System.DateTimeOffset Deadline { get { throw null; } }
-        public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionDeadlineType DeadlineType { get { throw null; } }
+        public System.DateTimeOffset? Deadline { get { throw null; } }
+        public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionDeadlineType? DeadlineType { get { throw null; } }
         public string OperationId { get { throw null; } }
-        public Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationType OpType { get { throw null; } }
+        public string OperationTimezone { get { throw null; } }
+        public Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationType? OpType { get { throw null; } }
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationError ResourceOperationError { get { throw null; } }
         public Azure.ResourceManager.ComputeSchedule.Models.UserRequestRetryPolicy RetryPolicy { get { throw null; } }
-        public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionOperationState State { get { throw null; } }
+        public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionOperationState? State { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
-        public string TimeZone { get { throw null; } }
+        public string Timezone { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.ResourceOperationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -452,10 +456,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
     }
     public partial class UserRequestSchedule : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule>
     {
-        public UserRequestSchedule(System.DateTimeOffset deadLine, string timeZone, Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionDeadlineType deadlineType) { }
-        public System.DateTimeOffset DeadLine { get { throw null; } }
+        public UserRequestSchedule(Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionDeadlineType deadlineType) { }
+        public System.DateTimeOffset? Deadline { get { throw null; } set { } }
         public Azure.ResourceManager.ComputeSchedule.Models.ScheduledActionDeadlineType DeadlineType { get { throw null; } }
-        public string TimeZone { get { throw null; } }
+        public string Timezone { get { throw null; } set { } }
+        public System.DateTimeOffset? UserRequestDeadline { get { throw null; } set { } }
+        public string UserRequestTimezone { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ComputeSchedule.Models.UserRequestSchedule>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

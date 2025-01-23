@@ -83,11 +83,8 @@ namespace Azure.AI.Language.Text
                 switch (discriminator.GetString())
                 {
                     case "AbstractiveSummarization": return AbstractiveSummarizationOperationAction.DeserializeAbstractiveSummarizationOperationAction(element, options);
-                    case "CustomAbstractiveSummarization": return CustomAbstractiveSummarizationOperationAction.DeserializeCustomAbstractiveSummarizationOperationAction(element, options);
                     case "CustomEntityRecognition": return CustomEntitiesOperationAction.DeserializeCustomEntitiesOperationAction(element, options);
-                    case "CustomHealthcare": return CustomHealthcareOperationAction.DeserializeCustomHealthcareOperationAction(element, options);
                     case "CustomMultiLabelClassification": return CustomMultiLabelClassificationOperationAction.DeserializeCustomMultiLabelClassificationOperationAction(element, options);
-                    case "CustomSentimentAnalysis": return CustomSentimentAnalysisOperationAction.DeserializeCustomSentimentAnalysisOperationAction(element, options);
                     case "CustomSingleLabelClassification": return CustomSingleLabelClassificationOperationAction.DeserializeCustomSingleLabelClassificationOperationAction(element, options);
                     case "EntityLinking": return EntityLinkingOperationAction.DeserializeEntityLinkingOperationAction(element, options);
                     case "EntityRecognition": return EntitiesOperationAction.DeserializeEntitiesOperationAction(element, options);

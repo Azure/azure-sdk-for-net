@@ -1,0 +1,9 @@
+﻿{
+  "profiles": {
+    "Basic-TypeSpec": {
+      "commandLineArgs": "$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll $(SolutionDir)/TestProjects/Local/Basic-TypeSpec -p AzureClientPlugin",
+      "commandName": "Executable",
+      "executablePath": "dotnet"
+    }
+  }
+}

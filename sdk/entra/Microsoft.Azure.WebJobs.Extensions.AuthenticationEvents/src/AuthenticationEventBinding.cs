@@ -86,8 +86,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents
         public async Task<ITriggerData> BindAsync(object value, ValueBindingContext context)
         {
             var request = (HttpRequestMessage)value;
+#if NET8_0_OR_GREATER
+            HttpRequestOptionsKey<WebJobsAuthenticationEventResponseHandler> httpRequestOptionsKey = new(WebJobsAuthenticationEventResponseHandler.EventResponseProperty);
+            request.Options.TryGetValue(httpRequestOptionsKey, out WebJobsAuthenticationEventResponseHandler eventResponseHandler);
+#else
             WebJobsAuthenticationEventResponseHandler eventResponseHandler =
                 (WebJobsAuthenticationEventResponseHandler)request.Properties[WebJobsAuthenticationEventResponseHandler.EventResponseProperty];
+#endif
             try
             {
                 if (request == null)

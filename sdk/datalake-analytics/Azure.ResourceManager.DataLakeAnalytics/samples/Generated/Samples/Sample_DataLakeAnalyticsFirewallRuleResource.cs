@@ -50,42 +50,6 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdatesTheSpecifiedFirewallRule()
-        {
-            // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/FirewallRules_Update.json
-            // this example is just showing the usage of "FirewallRules_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DataLakeAnalyticsFirewallRuleResource created on azure
-            // for more information of creating DataLakeAnalyticsFirewallRuleResource, please refer to the document of DataLakeAnalyticsFirewallRuleResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "contosorg";
-            string accountName = "contosoadla";
-            string firewallRuleName = "test_rule";
-            ResourceIdentifier dataLakeAnalyticsFirewallRuleResourceId = DataLakeAnalyticsFirewallRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, firewallRuleName);
-            DataLakeAnalyticsFirewallRuleResource dataLakeAnalyticsFirewallRule = client.GetDataLakeAnalyticsFirewallRuleResource(dataLakeAnalyticsFirewallRuleResourceId);
-
-            // invoke the operation
-            DataLakeAnalyticsFirewallRulePatch patch = new DataLakeAnalyticsFirewallRulePatch()
-            {
-                StartIPAddress = IPAddress.Parse("1.1.1.1"),
-                EndIPAddress = IPAddress.Parse("2.2.2.2"),
-            };
-            DataLakeAnalyticsFirewallRuleResource result = await dataLakeAnalyticsFirewallRule.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DataLakeAnalyticsFirewallRuleData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletesTheSpecifiedFirewallRule()
         {
             // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/FirewallRules_Delete.json
@@ -109,6 +73,42 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Samples
             await dataLakeAnalyticsFirewallRule.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdatesTheSpecifiedFirewallRule()
+        {
+            // Generated from example definition: specification/datalake-analytics/resource-manager/Microsoft.DataLakeAnalytics/stable/2016-11-01/examples/FirewallRules_Update.json
+            // this example is just showing the usage of "FirewallRules_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DataLakeAnalyticsFirewallRuleResource created on azure
+            // for more information of creating DataLakeAnalyticsFirewallRuleResource, please refer to the document of DataLakeAnalyticsFirewallRuleResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "contosorg";
+            string accountName = "contosoadla";
+            string firewallRuleName = "test_rule";
+            ResourceIdentifier dataLakeAnalyticsFirewallRuleResourceId = DataLakeAnalyticsFirewallRuleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, firewallRuleName);
+            DataLakeAnalyticsFirewallRuleResource dataLakeAnalyticsFirewallRule = client.GetDataLakeAnalyticsFirewallRuleResource(dataLakeAnalyticsFirewallRuleResourceId);
+
+            // invoke the operation
+            DataLakeAnalyticsFirewallRulePatch patch = new DataLakeAnalyticsFirewallRulePatch
+            {
+                StartIPAddress = IPAddress.Parse("1.1.1.1"),
+                EndIPAddress = IPAddress.Parse("2.2.2.2"),
+            };
+            DataLakeAnalyticsFirewallRuleResource result = await dataLakeAnalyticsFirewallRule.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DataLakeAnalyticsFirewallRuleData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

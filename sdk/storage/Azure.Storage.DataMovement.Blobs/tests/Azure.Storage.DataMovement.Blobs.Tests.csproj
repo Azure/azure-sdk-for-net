@@ -43,7 +43,7 @@
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)DisposingLocalDirectory.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)MemoryTransferCheckpointer.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)MockQueueInternalTasks.cs" LinkBase="Shared\DataMovement" />
-    <Compile Include="$(AzureStorageDataMovementTestSharedSources)MockResourceCheckpointData.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)MockResourceCheckpointDetails.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)StartTransferUploadTestBase.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)StartTransferCopyTestBase.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)StartTransferDownloadTestBase.cs" LinkBase="Shared\DataMovement" />
@@ -54,6 +54,7 @@
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)DataMovementTestBase.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)TransferDirection.cs" LinkBase="Shared\DataMovement" />
     <Compile Include="$(AzureStorageDataMovementTestSharedSources)TransferValidator.Local.cs" LinkBase="Shared\DataMovement" />
+    <Compile Include="$(AzureStorageDataMovementTestSharedSources)TestProgressHandler.cs" LinkBase="Shared\DataMovement" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\**">

@@ -350,10 +350,10 @@ namespace Azure.Messaging.EventHubs.Primitives
 
             var unevenPartitionDistribution = (partitionCount % ActiveOwnershipWithDistribution.Keys.Count) > 0;
             var minimumOwnedPartitionsCount = partitionCount / ActiveOwnershipWithDistribution.Keys.Count;
-            Logger.MinimumPartitionsPerEventProcessor(minimumOwnedPartitionsCount);
+            Logger.MinimumPartitionsPerEventProcessor(minimumOwnedPartitionsCount, EventHubName);
 
             var ownedPartitionsCount = ActiveOwnershipWithDistribution[OwnerIdentifier].Count;
-            Logger.CurrentOwnershipCount(ownedPartitionsCount, OwnerIdentifier);
+            Logger.CurrentOwnershipCount(ownedPartitionsCount, OwnerIdentifier, EventHubName);
 
             // There are two possible situations in which we may need to claim a partition ownership:
             //
@@ -374,7 +374,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             {
                 // Look for unclaimed partitions.  If any, randomly pick one of them to claim.
 
-                Logger.UnclaimedPartitions(unclaimedPartitions);
+                Logger.UnclaimedPartitions(unclaimedPartitions, EventHubName);
 
                 if (unclaimedPartitions.Count > 0)
                 {
@@ -423,7 +423,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 if ((ownedPartitionsCount < minimumOwnedPartitionsCount)
                     || (ownedPartitionsCount < maximumOwnedPartitionsCount && partitionsOwnedByProcessorWithGreaterThanMaximumOwnedPartitionsCount.Count > 0))
                 {
-                    Logger.ShouldStealPartition(OwnerIdentifier);
+                    Logger.ShouldStealPartition(OwnerIdentifier, EventHubName);
 
                     // Prefer stealing from a processor that owns more than the maximum number of partitions.
 
@@ -444,7 +444,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                             }
                         }
 
-                        Logger.StealPartition(partitionToSteal, stealingFrom, OwnerIdentifier);
+                        Logger.StealPartition(partitionToSteal, stealingFrom, OwnerIdentifier, EventHubName);
 
                         var returnTask = ClaimOwnershipAsync(
                             partitionToSteal,
@@ -474,7 +474,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                             }
                         }
 
-                        Logger.StealPartition(partitionToSteal, stealingFrom, OwnerIdentifier);
+                        Logger.StealPartition(partitionToSteal, stealingFrom, OwnerIdentifier, EventHubName);
 
                         var returnTask = ClaimOwnershipAsync(
                             partitionToSteal,
@@ -501,7 +501,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
 
-            Logger.RenewOwnershipStart(OwnerIdentifier);
+            Logger.RenewOwnershipStart(OwnerIdentifier, EventHubName);
 
             var utcNow = GetDateTimeOffsetNow();
 
@@ -543,7 +543,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                 // If ownership renewal fails just give up and try again in the next cycle.  The processor may
                 // end up losing some of its ownership.
 
-                Logger.RenewOwnershipError(OwnerIdentifier, ex.Message);
+                Logger.RenewOwnershipError(OwnerIdentifier, ex.Message, EventHubName);
 
                 // Set the EventHubName to null so it doesn't modify the exception message. This exception message is
                 // used so the processor can retrieve the raw Operation string, and adding the EventHubName would append
@@ -553,7 +553,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
             finally
             {
-                Logger.RenewOwnershipComplete(OwnerIdentifier);
+                Logger.RenewOwnershipComplete(OwnerIdentifier, EventHubName);
             }
         }
 
@@ -572,7 +572,7 @@ namespace Azure.Messaging.EventHubs.Primitives
                                                                                                                             CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
-            Logger.ClaimOwnershipStart(partitionId);
+            Logger.ClaimOwnershipStart(partitionId, EventHubName);
 
             // We need the eTag from the most recent ownership of this partition, even if it's expired.  We want to keep the offset and
             // the sequence number as well.
@@ -602,7 +602,7 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                 // If ownership claim fails, just treat it as a usual ownership claim failure.
 
-                Logger.ClaimOwnershipError(partitionId, ex.Message);
+                Logger.ClaimOwnershipError(partitionId, ex.Message, EventHubName);
 
                 // Set the EventHubName to null so it doesn't modify the exception message. This exception message is
                 // used so the processor can retrieve the raw Operation string, and adding the EventHubName would append

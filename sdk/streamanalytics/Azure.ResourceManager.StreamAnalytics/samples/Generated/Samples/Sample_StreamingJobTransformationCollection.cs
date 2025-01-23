@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // invoke the operation
             string transformationName = "transformation952";
-            StreamingJobTransformationData data = new StreamingJobTransformationData()
+            StreamingJobTransformationData data = new StreamingJobTransformationData
             {
                 StreamingUnits = 6,
                 Query = "Select Id, Name from inputtest",

@@ -69,7 +69,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
                 TargetResourceId = "resource_id",
                 TargetResourceRegion = "resource_region",
                 AccessToken = "token",
-                ExpirationDateTime = new DateTimeOffset(2024, 9, 24, 0, 0, 0, TimeSpan.Zero)
+                ExpiresOn = new DateTimeOffset(2024, 9, 24, 0, 0, 0, TimeSpan.Zero)
             };
 
             var operation = isAsync
@@ -132,14 +132,14 @@ namespace Azure.AI.DocumentIntelligence.Tests
             mockResponse.ContentStream = mockResponseBody;
 
             var mockTransport = new InterceptorMockTransport(new[] { mockResponse });
-            var options = new DocumentIntelligenceClientOptions() { Transport = mockTransport };
-            var client = CreateNonInstrumentedClient(options);
+            var clientOptions = new DocumentIntelligenceClientOptions() { Transport = mockTransport };
+            var client = CreateNonInstrumentedClient(clientOptions);
 
-            var content = new AuthorizeClassifierCopyContent("classifier_id");
+            var options = new AuthorizeClassifierCopyOptions("classifier_id");
 
             ClassifierCopyAuthorization copyAuthorization = isAsync
-                ? await client.AuthorizeClassifierCopyAsync(content)
-                : client.AuthorizeClassifierCopy(content);
+                ? await client.AuthorizeClassifierCopyAsync(options)
+                : client.AuthorizeClassifierCopy(options);
 
             // Validate the request.
 
@@ -159,7 +159,7 @@ namespace Azure.AI.DocumentIntelligence.Tests
             Assert.That(copyAuthorization.TargetResourceId, Is.EqualTo("resource_id"));
             Assert.That(copyAuthorization.TargetResourceRegion, Is.EqualTo("resource_region"));
             Assert.That(copyAuthorization.AccessToken, Is.EqualTo("token"));
-            Assert.That(copyAuthorization.ExpirationDateTime, Is.EqualTo(expectedTime));
+            Assert.That(copyAuthorization.ExpiresOn, Is.EqualTo(expectedTime));
         }
 
         private DocumentIntelligenceAdministrationClient CreateNonInstrumentedClient(DocumentIntelligenceClientOptions options)

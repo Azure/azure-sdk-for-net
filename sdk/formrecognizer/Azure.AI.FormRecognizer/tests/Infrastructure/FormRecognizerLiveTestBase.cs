@@ -113,6 +113,11 @@ namespace Azure.AI.FormRecognizer.Tests
         /// <returns>A <see cref="DisposableTrainedModel"/> instance from which the trained model ID can be obtained.</returns>
         protected async ValueTask<DisposableTrainedModel> CreateDisposableTrainedModelAsync(bool useTrainingLabels, ContainerType containerType = default, string modelName = default)
         {
+            if (!useTrainingLabels)
+            {
+                Assert.Ignore("https://github.com/Azure/azure-sdk-for-net/issues/47689");
+            }
+
             var client = CreateFormTrainingClient();
             string trainingFiles = containerType switch
             {

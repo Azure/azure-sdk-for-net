@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Samples
             LogicalDatabaseTransparentDataEncryptionResource logicalDatabaseTransparentDataEncryption = client.GetLogicalDatabaseTransparentDataEncryptionResource(logicalDatabaseTransparentDataEncryptionResourceId);
 
             // invoke the operation
-            LogicalDatabaseTransparentDataEncryptionData data = new LogicalDatabaseTransparentDataEncryptionData()
+            LogicalDatabaseTransparentDataEncryptionData data = new LogicalDatabaseTransparentDataEncryptionData
             {
                 State = TransparentDataEncryptionState.Enabled,
             };

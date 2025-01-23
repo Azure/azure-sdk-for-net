@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.MarketplaceOrdering.Samples
             MarketplaceAgreementTermResource marketplaceAgreementTerm = client.GetMarketplaceAgreementTermResource(marketplaceAgreementTermResourceId);
 
             // invoke the operation
-            MarketplaceAgreementTermData data = new MarketplaceAgreementTermData()
+            MarketplaceAgreementTermData data = new MarketplaceAgreementTermData
             {
                 Publisher = "pubid",
                 Product = "offid",

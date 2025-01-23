@@ -11,7 +11,6 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ResourceMover.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ResourceMover.Samples
@@ -20,10 +19,10 @@ namespace Azure.ResourceManager.ResourceMover.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_MoveCollectionsUpdate()
+        public async Task Get_MoveCollectionsGet()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Update.json
-            // this example is just showing the usage of "MoveCollections_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Get.json
+            // this example is just showing the usage of "MoveCollections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,15 +38,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
             MoverResourceSetResource moverResourceSet = client.GetMoverResourceSetResource(moverResourceSetResourceId);
 
             // invoke the operation
-            MoverResourceSetPatch patch = new MoverResourceSetPatch()
-            {
-                Tags =
-{
-["key1"] = "mc1",
-},
-                Identity = new ManagedServiceIdentity("SystemAssigned"),
-            };
-            MoverResourceSetResource result = await moverResourceSet.UpdateAsync(patch);
+            MoverResourceSetResource result = await moverResourceSet.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -85,10 +76,10 @@ namespace Azure.ResourceManager.ResourceMover.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_MoveCollectionsGet()
+        public async Task Update_MoveCollectionsUpdate()
         {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Get.json
-            // this example is just showing the usage of "MoveCollections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_Update.json
+            // this example is just showing the usage of "MoveCollections_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -104,7 +95,15 @@ namespace Azure.ResourceManager.ResourceMover.Samples
             MoverResourceSetResource moverResourceSet = client.GetMoverResourceSetResource(moverResourceSetResourceId);
 
             // invoke the operation
-            MoverResourceSetResource result = await moverResourceSet.GetAsync();
+            MoverResourceSetPatch patch = new MoverResourceSetPatch
+            {
+                Tags =
+{
+["key1"] = "mc1"
+},
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
+            };
+            MoverResourceSetResource result = await moverResourceSet.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -134,10 +133,7 @@ namespace Azure.ResourceManager.ResourceMover.Samples
             MoverResourceSetResource moverResourceSet = client.GetMoverResourceSetResource(moverResourceSetResourceId);
 
             // invoke the operation
-            MoverPrepareContent content = new MoverPrepareContent(new ResourceIdentifier[]
-            {
-new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Migrate/MoveCollections/movecollection1/MoveResources/moveresource1")
-            })
+            MoverPrepareContent content = new MoverPrepareContent(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Migrate/MoveCollections/movecollection1/MoveResources/moveresource1") })
             {
                 ValidateOnly = false,
             };
@@ -168,10 +164,7 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             MoverResourceSetResource moverResourceSet = client.GetMoverResourceSetResource(moverResourceSetResourceId);
 
             // invoke the operation
-            MoverResourceMoveContent content = new MoverResourceMoveContent(new ResourceIdentifier[]
-            {
-new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Migrate/MoveCollections/movecollection1/MoveResources/moveresource1")
-            })
+            MoverResourceMoveContent content = new MoverResourceMoveContent(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Migrate/MoveCollections/movecollection1/MoveResources/moveresource1") })
             {
                 ValidateOnly = false,
             };
@@ -202,10 +195,7 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             MoverResourceSetResource moverResourceSet = client.GetMoverResourceSetResource(moverResourceSetResourceId);
 
             // invoke the operation
-            MoverCommitContent content = new MoverCommitContent(new ResourceIdentifier[]
-            {
-new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Migrate/MoveCollections/movecollection1/MoveResources/moveresource1")
-            })
+            MoverCommitContent content = new MoverCommitContent(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Migrate/MoveCollections/movecollection1/MoveResources/moveresource1") })
             {
                 ValidateOnly = false,
             };
@@ -236,10 +226,7 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             MoverResourceSetResource moverResourceSet = client.GetMoverResourceSetResource(moverResourceSetResourceId);
 
             // invoke the operation
-            MoverDiscardContent content = new MoverDiscardContent(new ResourceIdentifier[]
-            {
-new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Migrate/MoveCollections/movecollection1/MoveResources/moveresource1")
-            })
+            MoverDiscardContent content = new MoverDiscardContent(new ResourceIdentifier[] { new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Migrate/MoveCollections/movecollection1/MoveResources/moveresource1") })
             {
                 ValidateOnly = false,
             };
@@ -297,49 +284,15 @@ new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Micros
             MoverResourceSetResource moverResourceSet = client.GetMoverResourceSetResource(moverResourceSetResourceId);
 
             // invoke the operation
-            MoverBulkRemoveContent content = new MoverBulkRemoveContent()
+            MoverBulkRemoveContent content = new MoverBulkRemoveContent
             {
                 ValidateOnly = false,
-                MoverResources =
-{
-new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Migrate/MoveCollections/movecollection1/MoveResources/moveresource1")
-},
+                MoverResources = { new ResourceIdentifier("/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Migrate/MoveCollections/movecollection1/MoveResources/moveresource1") },
             };
             ArmOperation<MoverOperationStatus> lro = await moverResourceSet.BulkRemoveAsync(WaitUntil.Completed, content: content);
             MoverOperationStatus result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetMoverResourceSets_MoveCollectionsListMoveCollectionsBySubscription()
-        {
-            // Generated from example definition: specification/resourcemover/resource-manager/Microsoft.Migrate/stable/2023-08-01/examples/MoveCollections_ListMoveCollectionsBySubscription.json
-            // this example is just showing the usage of "MoveCollections_ListMoveCollectionsBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (MoverResourceSetResource item in subscriptionResource.GetMoverResourceSetsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                MoverResourceSetData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
 
         [Test]

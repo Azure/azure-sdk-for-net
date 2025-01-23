@@ -57,20 +57,25 @@ namespace Azure.Identity
             return authorityHost;
         }
 
-        /// <summary>
-        /// PowerShell Legacy can only be used on Windows OS systems.
-        /// </summary>
-        /// <param name="useLegacyPowerShell"></param>
-        /// <returns></returns>
-        public static bool CanUseLegacyPowerShell(bool useLegacyPowerShell)
+        public static bool IsValidateSubscriptionNameOrId(string subscription)
         {
-            //If the OS is not Windows, PowerShell Legacy cannot be used
-            if (useLegacyPowerShell && !RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            if (string.IsNullOrEmpty(subscription))
             {
-                throw new ArgumentException(NoWindowsPowerShellLegacyErrorMessage);
+                return false;
             }
+            foreach (char c in subscription)
+            {
+                if (!IsValidateSubscriptionNameOrIdCharacter(c))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
 
-            return useLegacyPowerShell;
+        private static bool IsValidateSubscriptionNameOrIdCharacter(char c)
+        {
+            return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || (c == ' ') || (c == '-') || (c == '_');
         }
 
         private static bool IsValidTenantCharacter(char c)

@@ -28,9 +28,7 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenant = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
             string resourceProviderNamespace = "Microsoft.Storage";

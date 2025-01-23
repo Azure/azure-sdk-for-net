@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Search.Samples
                 HostingMode = SearchServiceHostingMode.Default,
                 Tags =
 {
-["app-name"] = "My e-commerce app",
+["app-name"] = "My e-commerce app"
 },
             };
             ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
@@ -93,13 +93,13 @@ namespace Azure.ResourceManager.Search.Samples
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                AuthOptions = new SearchAadAuthDataPlaneAuthOptions()
+                AuthOptions = new SearchAadAuthDataPlaneAuthOptions
                 {
                     AadAuthFailureMode = SearchAadAuthFailureMode.Http401WithBearerChallenge,
                 },
                 Tags =
 {
-["app-name"] = "My e-commerce app",
+["app-name"] = "My e-commerce app"
 },
             };
             ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Search.Samples
                 IsLocalAuthDisabled = true,
                 Tags =
 {
-["app-name"] = "My e-commerce app",
+["app-name"] = "My e-commerce app"
 },
             };
             ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Search.Samples
                 PublicInternetAccess = SearchServicePublicInternetAccess.Disabled,
                 Tags =
 {
-["app-name"] = "My e-commerce app",
+["app-name"] = "My e-commerce app"
 },
             };
             ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
@@ -234,22 +234,19 @@ namespace Azure.ResourceManager.Search.Samples
                 ReplicaCount = 1,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                NetworkRuleSet = new SearchServiceNetworkRuleSet()
+                NetworkRuleSet = new SearchServiceNetworkRuleSet
                 {
-                    IPRules =
-{
-new SearchServiceIPRule()
+                    IPRules = {new SearchServiceIPRule
 {
 Value = "123.4.5.6",
-},new SearchServiceIPRule()
+}, new SearchServiceIPRule
 {
 Value = "123.4.6.0/18",
-}
-},
+}},
                 },
                 Tags =
 {
-["app-name"] = "My e-commerce app",
+["app-name"] = "My e-commerce app"
 },
             };
             ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
@@ -292,23 +289,20 @@ Value = "123.4.6.0/18",
                 ReplicaCount = 1,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                NetworkRuleSet = new SearchServiceNetworkRuleSet()
+                NetworkRuleSet = new SearchServiceNetworkRuleSet
                 {
-                    IPRules =
-{
-new SearchServiceIPRule()
+                    IPRules = {new SearchServiceIPRule
 {
 Value = "123.4.5.6",
-},new SearchServiceIPRule()
+}, new SearchServiceIPRule
 {
 Value = "123.4.6.0/18",
-}
-},
+}},
                     Bypass = SearchBypass.AzurePortal,
                 },
                 Tags =
 {
-["app-name"] = "My e-commerce app",
+["app-name"] = "My e-commerce app"
 },
             };
             ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
@@ -351,13 +345,13 @@ Value = "123.4.6.0/18",
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                EncryptionWithCmk = new SearchEncryptionWithCmk()
+                EncryptionWithCmk = new SearchEncryptionWithCmk
                 {
                     Enforcement = SearchEncryptionWithCmkEnforcement.Enabled,
                 },
                 Tags =
 {
-["app-name"] = "My e-commerce app",
+["app-name"] = "My e-commerce app"
 },
             };
             ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
@@ -400,13 +394,10 @@ Value = "123.4.6.0/18",
                 ReplicaCount = 3,
                 PartitionCount = 1,
                 HostingMode = SearchServiceHostingMode.Default,
-                DisabledDataExfiltrationOptions =
-{
-SearchDisabledDataExfiltrationOption.All
-},
+                DisabledDataExfiltrationOptions = { SearchDisabledDataExfiltrationOption.All },
                 Tags =
 {
-["app-name"] = "My e-commerce app",
+["app-name"] = "My e-commerce app"
 },
             };
             ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
@@ -450,7 +441,7 @@ SearchDisabledDataExfiltrationOption.All
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/user-mi")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourcegroups/rg1/providers/Microsoft.ManagedIdentity/userAssignedIdentities/user-mi")] = new UserAssignedIdentity()
 },
                 },
                 ReplicaCount = 3,
@@ -458,7 +449,7 @@ SearchDisabledDataExfiltrationOption.All
                 HostingMode = SearchServiceHostingMode.Default,
                 Tags =
 {
-["app-name"] = "My e-commerce app",
+["app-name"] = "My e-commerce app"
 },
             };
             ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
@@ -504,7 +495,7 @@ SearchDisabledDataExfiltrationOption.All
                 SemanticSearch = SearchSemanticSearch.Free,
                 Tags =
 {
-["app-name"] = "My e-commerce app",
+["app-name"] = "My e-commerce app"
 },
             };
             ArmOperation<SearchServiceResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, searchServiceName, data);
@@ -548,6 +539,41 @@ SearchDisabledDataExfiltrationOption.All
             SearchServiceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_SearchListServicesByResourceGroup()
+        {
+            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchListServicesByResourceGroup.json
+            // this example is just showing the usage of "Services_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this SearchServiceResource
+            SearchServiceCollection collection = resourceGroupResource.GetSearchServices();
+
+            // invoke the operation and iterate over the result
+            await foreach (SearchServiceResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SearchServiceData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -618,41 +644,6 @@ SearchDisabledDataExfiltrationOption.All
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_SearchListServicesByResourceGroup()
-        {
-            // Generated from example definition: specification/search/resource-manager/Microsoft.Search/preview/2024-06-01-preview/examples/SearchListServicesByResourceGroup.json
-            // this example is just showing the usage of "Services_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this SearchServiceResource
-            SearchServiceCollection collection = resourceGroupResource.GetSearchServices();
-
-            // invoke the operation and iterate over the result
-            await foreach (SearchServiceResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SearchServiceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StorageSync.Samples
 
             // invoke the operation
             string cloudEndpointName = "SampleCloudEndpoint_1";
-            CloudEndpointCreateOrUpdateContent content = new CloudEndpointCreateOrUpdateContent()
+            CloudEndpointCreateOrUpdateContent content = new CloudEndpointCreateOrUpdateContent
             {
                 StorageAccountResourceId = new ResourceIdentifier("/subscriptions/744f4d70-6d17-4921-8970-a765d14f763f/resourceGroups/tminienv59svc/providers/Microsoft.Storage/storageAccounts/tminienv59storage"),
                 AzureFileShareName = "cvcloud-afscv-0719-058-a94a1354-a1fd-4e9a-9a50-919fad8c4ba4",
@@ -92,6 +92,43 @@ namespace Azure.ResourceManager.StorageSync.Samples
             CloudEndpointData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_CloudEndpointsListBySyncGroup()
+        {
+            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_ListBySyncGroup.json
+            // this example is just showing the usage of "CloudEndpoints_ListBySyncGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StorageSyncGroupResource created on azure
+            // for more information of creating StorageSyncGroupResource, please refer to the document of StorageSyncGroupResource
+            string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
+            string resourceGroupName = "SampleResourceGroup_1";
+            string storageSyncServiceName = "SampleStorageSyncService_1";
+            string syncGroupName = "SampleSyncGroup_1";
+            ResourceIdentifier storageSyncGroupResourceId = StorageSyncGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName);
+            StorageSyncGroupResource storageSyncGroup = client.GetStorageSyncGroupResource(storageSyncGroupResourceId);
+
+            // get the collection of this CloudEndpointResource
+            CloudEndpointCollection collection = storageSyncGroup.GetCloudEndpoints();
+
+            // invoke the operation and iterate over the result
+            await foreach (CloudEndpointResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CloudEndpointData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -166,43 +203,6 @@ namespace Azure.ResourceManager.StorageSync.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_CloudEndpointsListBySyncGroup()
-        {
-            // Generated from example definition: specification/storagesync/resource-manager/Microsoft.StorageSync/stable/2022-06-01/examples/CloudEndpoints_ListBySyncGroup.json
-            // this example is just showing the usage of "CloudEndpoints_ListBySyncGroup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StorageSyncGroupResource created on azure
-            // for more information of creating StorageSyncGroupResource, please refer to the document of StorageSyncGroupResource
-            string subscriptionId = "52b8da2f-61e0-4a1f-8dde-336911f367fb";
-            string resourceGroupName = "SampleResourceGroup_1";
-            string storageSyncServiceName = "SampleStorageSyncService_1";
-            string syncGroupName = "SampleSyncGroup_1";
-            ResourceIdentifier storageSyncGroupResourceId = StorageSyncGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName);
-            StorageSyncGroupResource storageSyncGroup = client.GetStorageSyncGroupResource(storageSyncGroupResourceId);
-
-            // get the collection of this CloudEndpointResource
-            CloudEndpointCollection collection = storageSyncGroup.GetCloudEndpoints();
-
-            // invoke the operation and iterate over the result
-            await foreach (CloudEndpointResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CloudEndpointData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

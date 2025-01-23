@@ -19,6 +19,142 @@ namespace Azure.ResourceManager.Sql.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_GetsAManagedDatabase()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedDatabaseGet.json
+            // this example is just showing the usage of "ManagedDatabases_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedDatabaseResource created on azure
+            // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "Test1";
+            string managedInstanceName = "managedInstance";
+            string databaseName = "managedDatabase";
+            ResourceIdentifier managedDatabaseResourceId = ManagedDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
+            ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
+
+            // invoke the operation
+            ManagedDatabaseResource result = await managedDatabase.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ManagedDatabaseData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteManagedDatabase()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedDatabaseDelete.json
+            // this example is just showing the usage of "ManagedDatabases_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedDatabaseResource created on azure
+            // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "Default-SQL-SouthEastAsia";
+            string managedInstanceName = "managedInstance";
+            string databaseName = "testdb";
+            ResourceIdentifier managedDatabaseResourceId = ManagedDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
+            ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
+
+            // invoke the operation
+            await managedDatabase.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdatesAManagedDatabaseWithMaximalProperties()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedDatabaseUpdateMax.json
+            // this example is just showing the usage of "ManagedDatabases_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedDatabaseResource created on azure
+            // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "Default-SQL-SouthEastAsia";
+            string managedInstanceName = "managedInstance";
+            string databaseName = "testdb";
+            ResourceIdentifier managedDatabaseResourceId = ManagedDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
+            ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
+
+            // invoke the operation
+            ManagedDatabasePatch patch = new ManagedDatabasePatch
+            {
+                Tags =
+{
+["tagKey1"] = "TagValue1"
+},
+            };
+            ArmOperation<ManagedDatabaseResource> lro = await managedDatabase.UpdateAsync(WaitUntil.Completed, patch);
+            ManagedDatabaseResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ManagedDatabaseData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdatesAManagedDatabaseWithMinimalProperties()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedDatabaseUpdateMin.json
+            // this example is just showing the usage of "ManagedDatabases_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedDatabaseResource created on azure
+            // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "Default-SQL-SouthEastAsia";
+            string managedInstanceName = "managedInstance";
+            string databaseName = "testdb";
+            ResourceIdentifier managedDatabaseResourceId = ManagedDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
+            ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
+
+            // invoke the operation
+            ManagedDatabasePatch patch = new ManagedDatabasePatch
+            {
+                Tags =
+{
+["tagKey1"] = "TagValue1"
+},
+            };
+            ArmOperation<ManagedDatabaseResource> lro = await managedDatabase.UpdateAsync(WaitUntil.Completed, patch);
+            ManagedDatabaseResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ManagedDatabaseData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetManagedDatabaseColumnsByDatabase_FilterManagedDatabaseColumns()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/ManagedColumnsListByDatabaseMax.json
@@ -39,22 +175,10 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
 
             // invoke the operation and iterate over the result
-            IEnumerable<string> schema = new string[]
-            {
-"dbo"
-            };
-            IEnumerable<string> table = new string[]
-            {
-"customer","address"
-            };
-            IEnumerable<string> column = new string[]
-            {
-"username"
-            };
-            IEnumerable<string> orderBy = new string[]
-            {
-"schema asc","table","column desc"
-            };
+            IEnumerable<string> schema = new string[] { "dbo" };
+            IEnumerable<string> table = new string[] { "customer", "address" };
+            IEnumerable<string> column = new string[] { "username" };
+            IEnumerable<string> orderBy = new string[] { "schema asc", "table", "column desc" };
             await foreach (ManagedDatabaseColumnResource item in managedDatabase.GetManagedDatabaseColumnsByDatabaseAsync(schema: schema, table: table, column: column, orderBy: orderBy))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -346,44 +470,41 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
 
             // invoke the operation
-            SensitivityLabelUpdateList sensitivityLabelUpdateList = new SensitivityLabelUpdateList()
+            SensitivityLabelUpdateList sensitivityLabelUpdateList = new SensitivityLabelUpdateList
             {
-                Operations =
-{
-new SensitivityLabelUpdate()
+                Operations = {new SensitivityLabelUpdate
 {
 Op = SensitivityLabelUpdateKind.Set,
 Schema = "dbo",
 Table = "table1",
 Column = "column1",
-SensitivityLabel = new SensitivityLabelData()
+SensitivityLabel = new SensitivityLabelData
 {
 LabelName = "Highly Confidential",
 LabelId = "3A477B16-9423-432B-AA97-6069B481CEC3",
 InformationType = "Financial",
 InformationTypeId = "1D3652D6-422C-4115-82F1-65DAEBC665C8",
 },
-},new SensitivityLabelUpdate()
+}, new SensitivityLabelUpdate
 {
 Op = SensitivityLabelUpdateKind.Set,
 Schema = "dbo",
 Table = "table2",
 Column = "column2",
-SensitivityLabel = new SensitivityLabelData()
+SensitivityLabel = new SensitivityLabelData
 {
 LabelName = "PII",
 LabelId = "bf91e08c-f4f0-478a-b016-25164b2a65ff",
 InformationType = "PhoneNumber",
 InformationTypeId = "d22fa6e9-5ee4-3bde-4c2b-a409604c4646",
 },
-},new SensitivityLabelUpdate()
+}, new SensitivityLabelUpdate
 {
 Op = SensitivityLabelUpdateKind.Remove,
 Schema = "dbo",
 Table = "Table1",
 Column = "Column3",
-}
-},
+}},
             };
             await managedDatabase.UpdateManagedDatabaseSensitivityLabelAsync(sensitivityLabelUpdateList);
 
@@ -446,170 +567,31 @@ Column = "Column3",
             ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
 
             // invoke the operation
-            RecommendedSensitivityLabelUpdateList recommendedSensitivityLabelUpdateList = new RecommendedSensitivityLabelUpdateList()
+            RecommendedSensitivityLabelUpdateList recommendedSensitivityLabelUpdateList = new RecommendedSensitivityLabelUpdateList
             {
-                Operations =
-{
-new RecommendedSensitivityLabelUpdate()
+                Operations = {new RecommendedSensitivityLabelUpdate
 {
 Op = RecommendedSensitivityLabelUpdateKind.Enable,
 Schema = "dbo",
 Table = "table1",
 Column = "column1",
-},new RecommendedSensitivityLabelUpdate()
+}, new RecommendedSensitivityLabelUpdate
 {
 Op = RecommendedSensitivityLabelUpdateKind.Disable,
 Schema = "dbo",
 Table = "table2",
 Column = "column2",
-},new RecommendedSensitivityLabelUpdate()
+}, new RecommendedSensitivityLabelUpdate
 {
 Op = RecommendedSensitivityLabelUpdateKind.Disable,
 Schema = "dbo",
 Table = "Table1",
 Column = "Column3",
-}
-},
+}},
             };
             await managedDatabase.UpdateRecommendedManagedDatabaseSensitivityLabelAsync(recommendedSensitivityLabelUpdateList);
 
             Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_GetsAManagedDatabase()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedDatabaseGet.json
-            // this example is just showing the usage of "ManagedDatabases_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagedDatabaseResource created on azure
-            // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "Test1";
-            string managedInstanceName = "managedInstance";
-            string databaseName = "managedDatabase";
-            ResourceIdentifier managedDatabaseResourceId = ManagedDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
-            ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
-
-            // invoke the operation
-            ManagedDatabaseResource result = await managedDatabase.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ManagedDatabaseData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteManagedDatabase()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedDatabaseDelete.json
-            // this example is just showing the usage of "ManagedDatabases_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagedDatabaseResource created on azure
-            // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "Default-SQL-SouthEastAsia";
-            string managedInstanceName = "managedInstance";
-            string databaseName = "testdb";
-            ResourceIdentifier managedDatabaseResourceId = ManagedDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
-            ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
-
-            // invoke the operation
-            await managedDatabase.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdatesAManagedDatabaseWithMaximalProperties()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedDatabaseUpdateMax.json
-            // this example is just showing the usage of "ManagedDatabases_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagedDatabaseResource created on azure
-            // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "Default-SQL-SouthEastAsia";
-            string managedInstanceName = "managedInstance";
-            string databaseName = "testdb";
-            ResourceIdentifier managedDatabaseResourceId = ManagedDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
-            ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
-
-            // invoke the operation
-            ManagedDatabasePatch patch = new ManagedDatabasePatch()
-            {
-                Tags =
-{
-["tagKey1"] = "TagValue1",
-},
-            };
-            ArmOperation<ManagedDatabaseResource> lro = await managedDatabase.UpdateAsync(WaitUntil.Completed, patch);
-            ManagedDatabaseResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ManagedDatabaseData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdatesAManagedDatabaseWithMinimalProperties()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/ManagedDatabaseUpdateMin.json
-            // this example is just showing the usage of "ManagedDatabases_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagedDatabaseResource created on azure
-            // for more information of creating ManagedDatabaseResource, please refer to the document of ManagedDatabaseResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "Default-SQL-SouthEastAsia";
-            string managedInstanceName = "managedInstance";
-            string databaseName = "testdb";
-            ResourceIdentifier managedDatabaseResourceId = ManagedDatabaseResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
-            ManagedDatabaseResource managedDatabase = client.GetManagedDatabaseResource(managedDatabaseResourceId);
-
-            // invoke the operation
-            ManagedDatabasePatch patch = new ManagedDatabasePatch()
-            {
-                Tags =
-{
-["tagKey1"] = "TagValue1",
-},
-            };
-            ArmOperation<ManagedDatabaseResource> lro = await managedDatabase.UpdateAsync(WaitUntil.Completed, patch);
-            ManagedDatabaseResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ManagedDatabaseData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]

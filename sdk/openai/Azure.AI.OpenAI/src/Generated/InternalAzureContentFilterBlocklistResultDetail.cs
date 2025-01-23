@@ -75,4 +75,3 @@ namespace Azure.AI.OpenAI
         internal string Id { get; set; }
     }
 }
-

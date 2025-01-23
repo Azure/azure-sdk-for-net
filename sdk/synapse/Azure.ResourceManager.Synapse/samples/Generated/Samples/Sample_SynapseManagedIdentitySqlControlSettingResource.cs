@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseManagedIdentitySqlControlSettingResource synapseManagedIdentitySqlControlSetting = client.GetSynapseManagedIdentitySqlControlSettingResource(synapseManagedIdentitySqlControlSettingResourceId);
 
             // invoke the operation
-            SynapseManagedIdentitySqlControlSettingData data = new SynapseManagedIdentitySqlControlSettingData()
+            SynapseManagedIdentitySqlControlSettingData data = new SynapseManagedIdentitySqlControlSettingData
             {
-                GrantSqlControlToManagedIdentity = new SynapseGrantSqlControlToManagedIdentity()
+                GrantSqlControlToManagedIdentity = new SynapseGrantSqlControlToManagedIdentity
                 {
                     DesiredState = SynapseDesiredState.Enabled,
                 },

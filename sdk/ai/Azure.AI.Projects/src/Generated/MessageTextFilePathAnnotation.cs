@@ -32,8 +32,8 @@ namespace Azure.AI.Projects
         {
         }
         /// <summary> The first text index associated with this text annotation. </summary>
-        public int? StartIndex { get; set; }
+        public int? StartIndex { get; }
         /// <summary> The last text index associated with this text annotation. </summary>
-        public int? EndIndex { get; set; }
+        public int? EndIndex { get; }
     }
 }

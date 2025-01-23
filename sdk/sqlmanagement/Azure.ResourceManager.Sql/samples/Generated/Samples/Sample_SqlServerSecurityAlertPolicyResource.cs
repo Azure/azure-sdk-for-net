@@ -69,17 +69,11 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerSecurityAlertPolicyResource sqlServerSecurityAlertPolicy = client.GetSqlServerSecurityAlertPolicyResource(sqlServerSecurityAlertPolicyResourceId);
 
             // invoke the operation
-            SqlServerSecurityAlertPolicyData data = new SqlServerSecurityAlertPolicyData()
+            SqlServerSecurityAlertPolicyData data = new SqlServerSecurityAlertPolicyData
             {
                 State = SecurityAlertsPolicyState.Enabled,
-                DisabledAlerts =
-{
-"Access_Anomaly","Usage_Anomaly"
-},
-                EmailAddresses =
-{
-"testSecurityAlert@microsoft.com"
-},
+                DisabledAlerts = { "Access_Anomaly", "Usage_Anomaly" },
+                EmailAddresses = { "testSecurityAlert@microsoft.com" },
                 SendToEmailAccountAdmins = true,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
@@ -117,7 +111,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerSecurityAlertPolicyResource sqlServerSecurityAlertPolicy = client.GetSqlServerSecurityAlertPolicyResource(sqlServerSecurityAlertPolicyResourceId);
 
             // invoke the operation
-            SqlServerSecurityAlertPolicyData data = new SqlServerSecurityAlertPolicyData()
+            SqlServerSecurityAlertPolicyData data = new SqlServerSecurityAlertPolicyData
             {
                 State = SecurityAlertsPolicyState.Enabled,
             };

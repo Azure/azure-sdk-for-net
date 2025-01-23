@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Authorization.Samples
             RoleManagementPolicyAssignmentResource roleManagementPolicyAssignment = client.GetRoleManagementPolicyAssignmentResource(roleManagementPolicyAssignmentResourceId);
 
             // invoke the operation
-            RoleManagementPolicyAssignmentData data = new RoleManagementPolicyAssignmentData()
+            RoleManagementPolicyAssignmentData data = new RoleManagementPolicyAssignmentData
             {
                 Scope = "/subscriptions/129ff972-28f8-46b8-a726-e497be039368",
                 RoleDefinitionId = new ResourceIdentifier("/subscriptions/129ff972-28f8-46b8-a726-e497be039368/providers/Microsoft.Authorization/roleDefinitions/a1705bd2-3a8f-45a5-8683-466fcfd5cc24"),

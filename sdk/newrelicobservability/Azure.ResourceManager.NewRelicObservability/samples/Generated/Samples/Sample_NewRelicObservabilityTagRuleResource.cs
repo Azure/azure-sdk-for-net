@@ -154,34 +154,28 @@ namespace Azure.ResourceManager.NewRelicObservability.Samples
             NewRelicObservabilityTagRuleResource newRelicObservabilityTagRule = client.GetNewRelicObservabilityTagRuleResource(newRelicObservabilityTagRuleResourceId);
 
             // invoke the operation
-            NewRelicObservabilityTagRulePatch patch = new NewRelicObservabilityTagRulePatch()
+            NewRelicObservabilityTagRulePatch patch = new NewRelicObservabilityTagRulePatch
             {
-                LogRules = new NewRelicObservabilityLogRules()
+                LogRules = new NewRelicObservabilityLogRules
                 {
                     SendAadLogs = NewRelicObservabilitySendAadLogsStatus.IsEnabled,
                     SendSubscriptionLogs = NewRelicObservabilitySendSubscriptionLogsStatus.IsEnabled,
                     SendActivityLogs = NewRelicObservabilitySendActivityLogsStatus.IsEnabled,
-                    FilteringTags =
-{
-new NewRelicObservabilityFilteringTag()
+                    FilteringTags = {new NewRelicObservabilityFilteringTag
 {
 Name = "saokgpjvdlorciqbjmjxazpee",
 Value = "sarxrqsxouhdjwsrqqicbeirdb",
 Action = NewRelicObservabilityTagAction.Include,
-}
-},
+}},
                 },
-                MetricRules = new NewRelicObservabilityMetricRules()
+                MetricRules = new NewRelicObservabilityMetricRules
                 {
-                    FilteringTags =
-{
-new NewRelicObservabilityFilteringTag()
+                    FilteringTags = {new NewRelicObservabilityFilteringTag
 {
 Name = "saokgpjvdlorciqbjmjxazpee",
 Value = "sarxrqsxouhdjwsrqqicbeirdb",
 Action = NewRelicObservabilityTagAction.Include,
-}
-},
+}},
                     UserEmail = "test@testing.com",
                 },
             };

@@ -71,10 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
             // invoke the operation
             DataReplicationEmailConfigurationData data = new DataReplicationEmailConfigurationData(new DataReplicationEmailConfigurationProperties(true)
             {
-                CustomEmailAddresses =
-{
-"ketvbducyailcny"
-},
+                CustomEmailAddresses = { "ketvbducyailcny" },
                 Locale = "vpnjxjvdqtebnucyxiyrjiko",
             });
             ArmOperation<DataReplicationEmailConfigurationResource> lro = await dataReplicationEmailConfiguration.UpdateAsync(WaitUntil.Completed, data);

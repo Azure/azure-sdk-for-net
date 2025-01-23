@@ -49,6 +49,34 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteAWorkloadGroup()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/DeleteWorkloadGroup.json
+            // this example is just showing the usage of "WorkloadGroups_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this WorkloadGroupResource created on azure
+            // for more information of creating WorkloadGroupResource, please refer to the document of WorkloadGroupResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "Default-SQL-SouthEastAsia";
+            string serverName = "testsvr";
+            string databaseName = "testdb";
+            string workloadGroupName = "wlm_workloadgroup";
+            ResourceIdentifier workloadGroupResourceId = WorkloadGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName);
+            WorkloadGroupResource workloadGroup = client.GetWorkloadGroupResource(workloadGroupResourceId);
+
+            // invoke the operation
+            await workloadGroup.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateAWorkloadGroupWithAllPropertiesSpecified()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/CreateOrUpdateWorkloadGroupMax.json
@@ -70,7 +98,7 @@ namespace Azure.ResourceManager.Sql.Samples
             WorkloadGroupResource workloadGroup = client.GetWorkloadGroupResource(workloadGroupResourceId);
 
             // invoke the operation
-            WorkloadGroupData data = new WorkloadGroupData()
+            WorkloadGroupData data = new WorkloadGroupData
             {
                 MinResourcePercent = 0,
                 MaxResourcePercent = 100,
@@ -112,7 +140,7 @@ namespace Azure.ResourceManager.Sql.Samples
             WorkloadGroupResource workloadGroup = client.GetWorkloadGroupResource(workloadGroupResourceId);
 
             // invoke the operation
-            WorkloadGroupData data = new WorkloadGroupData()
+            WorkloadGroupData data = new WorkloadGroupData
             {
                 MinResourcePercent = 0,
                 MaxResourcePercent = 100,
@@ -126,34 +154,6 @@ namespace Azure.ResourceManager.Sql.Samples
             WorkloadGroupData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteAWorkloadGroup()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2020-11-01-preview/examples/DeleteWorkloadGroup.json
-            // this example is just showing the usage of "WorkloadGroups_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this WorkloadGroupResource created on azure
-            // for more information of creating WorkloadGroupResource, please refer to the document of WorkloadGroupResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "Default-SQL-SouthEastAsia";
-            string serverName = "testsvr";
-            string databaseName = "testdb";
-            string workloadGroupName = "wlm_workloadgroup";
-            ResourceIdentifier workloadGroupResourceId = WorkloadGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serverName, databaseName, workloadGroupName);
-            WorkloadGroupResource workloadGroup = client.GetWorkloadGroupResource(workloadGroupResourceId);
-
-            // invoke the operation
-            await workloadGroup.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -7,11 +7,11 @@ namespace Microsoft.Azure.WebJobs.EventHubs.Processor
 {
     internal struct CheckpointInfo
     {
-        public long Offset { get; }
+        public string Offset { get; }
         public long SequenceNumber { get; }
         public DateTimeOffset? LastModified { get; }
 
-        public CheckpointInfo(long offset, long sequenceNumber, DateTimeOffset? lastModified)
+        public CheckpointInfo(string offset, long sequenceNumber, DateTimeOffset? lastModified)
         {
             Offset = offset;
             SequenceNumber = sequenceNumber;

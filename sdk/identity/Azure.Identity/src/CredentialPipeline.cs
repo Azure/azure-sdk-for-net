@@ -4,7 +4,6 @@
 using System;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Microsoft.Identity.Client;
 
 namespace Azure.Identity
 {
@@ -55,11 +54,6 @@ namespace Azure.Identity
 
         public ClientDiagnostics Diagnostics { get; }
 
-        public IConfidentialClientApplication CreateMsalConfidentialClient(string tenantId, string clientId, string clientSecret)
-        {
-            return ConfidentialClientApplicationBuilder.Create(clientId).WithHttpClientFactory(new HttpPipelineClientFactory(HttpPipeline)).WithTenantId(tenantId).WithClientSecret(clientSecret).Build();
-        }
-
         public CredentialDiagnosticScope StartGetTokenScope(string fullyQualifiedMethod, TokenRequestContext context)
         {
             IScopeHandler scopeHandler = ScopeGroupHandler.Current ?? _defaultScopeHandler;
@@ -75,14 +69,6 @@ namespace Azure.Identity
             CredentialDiagnosticScope scope = new CredentialDiagnosticScope(Diagnostics, fullyQualifiedMethod, context, scopeHandler);
             scope.Start();
             return scope;
-        }
-
-        private class CredentialResponseClassifier : ResponseClassifier
-        {
-            public override bool IsRetriableResponse(HttpMessage message)
-            {
-                return base.IsRetriableResponse(message) || message.Response.Status == 404;
-            }
         }
 
         private class ScopeHandler : IScopeHandler

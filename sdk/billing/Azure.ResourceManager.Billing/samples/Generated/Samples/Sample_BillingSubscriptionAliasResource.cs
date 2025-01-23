@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingSubscriptionAliasResource billingSubscriptionAlias = client.GetBillingSubscriptionAliasResource(billingSubscriptionAliasResourceId);
 
             // invoke the operation
-            BillingSubscriptionAliasData data = new BillingSubscriptionAliasData()
+            BillingSubscriptionAliasData data = new BillingSubscriptionAliasData
             {
                 BillingFrequency = "P1M",
                 DisplayName = "Subscription 3",

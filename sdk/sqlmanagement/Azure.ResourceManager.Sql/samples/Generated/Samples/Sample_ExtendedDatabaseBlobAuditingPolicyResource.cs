@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ExtendedDatabaseBlobAuditingPolicyResource extendedDatabaseBlobAuditingPolicy = client.GetExtendedDatabaseBlobAuditingPolicyResource(extendedDatabaseBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            ExtendedDatabaseBlobAuditingPolicyData data = new ExtendedDatabaseBlobAuditingPolicyData()
+            ExtendedDatabaseBlobAuditingPolicyData data = new ExtendedDatabaseBlobAuditingPolicyData
             {
                 IsAzureMonitorTargetEnabled = true,
                 State = BlobAuditingPolicyState.Enabled,
@@ -109,14 +109,11 @@ namespace Azure.ResourceManager.Sql.Samples
             ExtendedDatabaseBlobAuditingPolicyResource extendedDatabaseBlobAuditingPolicy = client.GetExtendedDatabaseBlobAuditingPolicyResource(extendedDatabaseBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            ExtendedDatabaseBlobAuditingPolicyData data = new ExtendedDatabaseBlobAuditingPolicyData()
+            ExtendedDatabaseBlobAuditingPolicyData data = new ExtendedDatabaseBlobAuditingPolicyData
             {
                 PredicateExpression = "statement = 'select 1'",
                 RetentionDays = 6,
-                AuditActionsAndGroups =
-{
-"DATABASE_LOGOUT_GROUP","DATABASE_ROLE_MEMBER_CHANGE_GROUP","UPDATE on database::TestDatabaseName by public"
-},
+                AuditActionsAndGroups = { "DATABASE_LOGOUT_GROUP", "DATABASE_ROLE_MEMBER_CHANGE_GROUP", "UPDATE on database::TestDatabaseName by public" },
                 IsStorageSecondaryKeyInUse = false,
                 IsAzureMonitorTargetEnabled = true,
                 QueueDelayMs = 4000,
@@ -158,7 +155,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ExtendedDatabaseBlobAuditingPolicyResource extendedDatabaseBlobAuditingPolicy = client.GetExtendedDatabaseBlobAuditingPolicyResource(extendedDatabaseBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            ExtendedDatabaseBlobAuditingPolicyData data = new ExtendedDatabaseBlobAuditingPolicyData()
+            ExtendedDatabaseBlobAuditingPolicyData data = new ExtendedDatabaseBlobAuditingPolicyData
             {
                 State = BlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",

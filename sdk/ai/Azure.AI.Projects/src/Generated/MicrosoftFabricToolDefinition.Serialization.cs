@@ -35,8 +35,8 @@ namespace Azure.AI.Projects
             }
 
             base.JsonModelWriteCore(writer, options);
-            writer.WritePropertyName("microsoft_fabric"u8);
-            writer.WriteObjectValue(MicrosoftFabric, options);
+            writer.WritePropertyName("fabric_aiskill"u8);
+            writer.WriteObjectValue(FabricAiskill, options);
         }
 
         MicrosoftFabricToolDefinition IJsonModel<MicrosoftFabricToolDefinition>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -59,15 +59,15 @@ namespace Azure.AI.Projects
             {
                 return null;
             }
-            ToolConnectionList microsoftFabric = default;
+            ToolConnectionList fabricAiskill = default;
             string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("microsoft_fabric"u8))
+                if (property.NameEquals("fabric_aiskill"u8))
                 {
-                    microsoftFabric = ToolConnectionList.DeserializeToolConnectionList(property.Value, options);
+                    fabricAiskill = ToolConnectionList.DeserializeToolConnectionList(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("type"u8))
@@ -81,7 +81,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new MicrosoftFabricToolDefinition(type, serializedAdditionalRawData, microsoftFabric);
+            return new MicrosoftFabricToolDefinition(type, serializedAdditionalRawData, fabricAiskill);
         }
 
         BinaryData IPersistableModel<MicrosoftFabricToolDefinition>.Write(ModelReaderWriterOptions options)

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -266,34 +265,25 @@ namespace Azure.ResourceManager.PolicyInsights.Samples
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
             // invoke the operation
-            CheckPolicyRestrictionsContent content = new CheckPolicyRestrictionsContent(new CheckRestrictionsResourceDetails(BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+            CheckPolicyRestrictionsContent content = new CheckPolicyRestrictionsContent(new CheckRestrictionsResourceDetails(BinaryData.FromObjectAsJson(new
             {
-                ["type"] = "Microsoft.Compute/virtualMachines",
-                ["properties"] = new Dictionary<string, object>()
+                type = "Microsoft.Compute/virtualMachines",
+                properties = new
                 {
-                    ["priority"] = "Spot"
-                }
+                    priority = "Spot",
+                },
             }))
             {
                 ApiVersion = "2019-12-01",
             })
             {
-                PendingFields =
+                PendingFields = {new PendingField("name")
 {
-new PendingField("name")
+Values = {"myVMName"},
+}, new PendingField("location")
 {
-Values =
-{
-"myVMName"
-},
-},new PendingField("location")
-{
-Values =
-{
-"eastus","westus","westus2","westeurope"
-},
-},new PendingField("tags")
-},
+Values = {"eastus", "westus", "westus2", "westeurope"},
+}, new PendingField("tags")},
             };
             CheckPolicyRestrictionsResult result = await resourceGroupResource.CheckPolicyRestrictionsAsync(content);
 

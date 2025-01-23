@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            IReadOnlyList<OpenAIIntegrationRPModelData> value = default;
+            IReadOnlyList<ElasticOpenAIIntegrationData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    List<OpenAIIntegrationRPModelData> array = new List<OpenAIIntegrationRPModelData>();
+                    List<ElasticOpenAIIntegrationData> array = new List<ElasticOpenAIIntegrationData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(OpenAIIntegrationRPModelData.DeserializeOpenAIIntegrationRPModelData(item, options));
+                        array.Add(ElasticOpenAIIntegrationData.DeserializeElasticOpenAIIntegrationData(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new OpenAIIntegrationRPModelListResponse(value ?? new ChangeTrackingList<OpenAIIntegrationRPModelData>(), nextLink, serializedAdditionalRawData);
+            return new OpenAIIntegrationRPModelListResponse(value ?? new ChangeTrackingList<ElasticOpenAIIntegrationData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OpenAIIntegrationRPModelListResponse>.Write(ModelReaderWriterOptions options)

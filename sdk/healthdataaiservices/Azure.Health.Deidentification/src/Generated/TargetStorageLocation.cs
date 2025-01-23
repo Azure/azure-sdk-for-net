@@ -47,7 +47,16 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Initializes a new instance of <see cref="TargetStorageLocation"/>. </summary>
         /// <param name="location"> URL to storage location. </param>
-        /// <param name="prefix"> Prefix to filter path by. </param>
+        /// <param name="prefix">
+        /// Replaces the input prefix of a file path with the output prefix, preserving the rest of the path structure.
+        ///
+        /// Example:
+        /// File full path: documents/user/note.txt
+        /// Input Prefix: "documents/user/"
+        /// Output Prefix: "output_docs/"
+        ///
+        /// Output file: "output_docs/note.txt"
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="location"/> or <paramref name="prefix"/> is null. </exception>
         public TargetStorageLocation(Uri location, string prefix)
         {
@@ -60,12 +69,23 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Initializes a new instance of <see cref="TargetStorageLocation"/>. </summary>
         /// <param name="location"> URL to storage location. </param>
-        /// <param name="prefix"> Prefix to filter path by. </param>
+        /// <param name="prefix">
+        /// Replaces the input prefix of a file path with the output prefix, preserving the rest of the path structure.
+        ///
+        /// Example:
+        /// File full path: documents/user/note.txt
+        /// Input Prefix: "documents/user/"
+        /// Output Prefix: "output_docs/"
+        ///
+        /// Output file: "output_docs/note.txt"
+        /// </param>
+        /// <param name="overwrite"> When set to true during a job, the service will overwrite the output location if it already exists. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TargetStorageLocation(Uri location, string prefix, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TargetStorageLocation(Uri location, string prefix, bool? overwrite, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Location = location;
             Prefix = prefix;
+            Overwrite = overwrite;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,7 +96,18 @@ namespace Azure.Health.Deidentification
 
         /// <summary> URL to storage location. </summary>
         public Uri Location { get; set; }
-        /// <summary> Prefix to filter path by. </summary>
+        /// <summary>
+        /// Replaces the input prefix of a file path with the output prefix, preserving the rest of the path structure.
+        ///
+        /// Example:
+        /// File full path: documents/user/note.txt
+        /// Input Prefix: "documents/user/"
+        /// Output Prefix: "output_docs/"
+        ///
+        /// Output file: "output_docs/note.txt"
+        /// </summary>
         public string Prefix { get; set; }
+        /// <summary> When set to true during a job, the service will overwrite the output location if it already exists. </summary>
+        public bool? Overwrite { get; set; }
     }
 }

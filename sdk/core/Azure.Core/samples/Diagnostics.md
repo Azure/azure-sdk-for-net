@@ -10,7 +10,7 @@ The Azure SDK libraries produce various log messages that include information ab
 2. Authentication attempts
 3. Retries
 
-The simplest way to see the logs is to enable the console logging using the [`AzureEventSourceListener`](https://docs.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener?view=azure-dotnet).
+The simplest way to see the logs is to enable the console logging using the [`AzureEventSourceListener`](https://learn.microsoft.com/dotnet/api/azure.core.diagnostics.azureeventsourcelistener?view=azure-dotnet).
 
 ```C# Snippet:ConsoleLogging
 // Setup a listener to monitor logged events.
@@ -41,7 +41,7 @@ using AzureEventSourceListener traceListener = AzureEventSourceListener.CreateTr
 
 ### Enabling content logging
 
-By default only URI and headers are logged. To enable content logging, set the `Diagnostics.IsLoggingContentEnabled` client option:
+By default only URI and headers are logged. To enable content logging, set the logging level to `EventLevel.Verbose` and set the `Diagnostics.IsLoggingContentEnabled` client option:
 
 ```C# Snippet:LoggingContent
 SecretClientOptions options = new SecretClientOptions()
@@ -94,7 +94,7 @@ using AzureEventSourceListener listener = new AzureEventSourceListener(
 When targeting .NET Standard 2.1, .NET Core 2.2, or newer, you might instead use `args.TimeStamp` to log the time the event was written instead of rendered, like above. It's in UTC format, so if you want to log the local time like in the example call `ToLocaleTime()` first.
 For help diagnosing multi-threading issues, you might also log `args.OSThreadId` which is also available on those same targets.
 
-More information about the `args` parameter for the callback can be found in the [EventWrittenEventArgs](https://docs.microsoft.com/dotnet/api/system.diagnostics.tracing.eventwritteneventargs) documentation.
+More information about the `args` parameter for the callback can be found in the [EventWrittenEventArgs](https://learn.microsoft.com/dotnet/api/system.diagnostics.tracing.eventwritteneventargs) documentation.
 
 ### Applying filtering logic
 

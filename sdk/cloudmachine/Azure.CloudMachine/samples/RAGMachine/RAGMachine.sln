@@ -1,0 +1,24 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RAGMachine", "RAGMachine.csproj", "{975B7535-0A67-4222-51AC-54660CFE778D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{975B7535-0A67-4222-51AC-54660CFE778D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{975B7535-0A67-4222-51AC-54660CFE778D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{975B7535-0A67-4222-51AC-54660CFE778D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{975B7535-0A67-4222-51AC-54660CFE778D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9D880DBA-F11A-4C6E-ABA6-C39DE1BA8513}
+	EndGlobalSection
+EndGlobal

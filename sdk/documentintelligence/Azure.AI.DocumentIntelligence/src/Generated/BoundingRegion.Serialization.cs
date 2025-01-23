@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    public partial class BoundingRegion : IUtf8JsonSerializable, IJsonModel<BoundingRegion>
+    public partial struct BoundingRegion : IUtf8JsonSerializable, IJsonModel<BoundingRegion>, IJsonModel<object>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<BoundingRegion>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
@@ -26,7 +26,7 @@ namespace Azure.AI.DocumentIntelligence
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        private void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BoundingRegion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -72,14 +72,14 @@ namespace Azure.AI.DocumentIntelligence
             return DeserializeBoundingRegion(document.RootElement, options);
         }
 
+        void IJsonModel<object>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<BoundingRegion>)this).Write(writer, options);
+
+        object IJsonModel<object>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<BoundingRegion>)this).Create(ref reader, options);
+
         internal static BoundingRegion DeserializeBoundingRegion(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
             int pageNumber = default;
             IReadOnlyList<float> polygon = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -141,6 +141,12 @@ namespace Azure.AI.DocumentIntelligence
 
         string IPersistableModel<BoundingRegion>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        BinaryData IPersistableModel<object>.Write(ModelReaderWriterOptions options) => ((IPersistableModel<BoundingRegion>)this).Write(options);
+
+        object IPersistableModel<object>.Create(BinaryData data, ModelReaderWriterOptions options) => ((IPersistableModel<BoundingRegion>)this).Create(data, options);
+
+        string IPersistableModel<object>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<BoundingRegion>)this).GetFormatFromOptions(options);
+
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
         internal static BoundingRegion FromResponse(Response response)
@@ -150,7 +156,7 @@ namespace Azure.AI.DocumentIntelligence
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
+        internal RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);

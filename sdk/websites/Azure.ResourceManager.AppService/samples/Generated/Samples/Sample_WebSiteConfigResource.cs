@@ -67,13 +67,10 @@ namespace Azure.ResourceManager.AppService.Samples
             WebSiteConfigResource webSiteConfig = client.GetWebSiteConfigResource(webSiteConfigResourceId);
 
             // invoke the operation
-            SiteConfigData data = new SiteConfigData()
+            SiteConfigData data = new SiteConfigData
             {
                 NumberOfWorkers = 1,
-                DefaultDocuments =
-{
-"Default.htm","Default.html","Default.asp","index.htm","index.html","iisstart.htm","default.aspx","index.php","hostingstart.html"
-},
+                DefaultDocuments = { "Default.htm", "Default.html", "Default.asp", "index.htm", "index.html", "iisstart.htm", "default.aspx", "index.php", "hostingstart.html" },
                 NetFrameworkVersion = "v4.0",
                 PhpVersion = "5.6",
                 PythonVersion = "",
@@ -91,15 +88,12 @@ namespace Azure.ResourceManager.AppService.Samples
                 IsAlwaysOn = false,
                 AppCommandLine = "",
                 ManagedPipelineMode = ManagedPipelineMode.Integrated,
-                VirtualApplications =
-{
-new VirtualApplication()
+                VirtualApplications = {new VirtualApplication
 {
 VirtualPath = "/",
 PhysicalPath = "site\\wwwroot",
 IsPreloadEnabled = false,
-}
-},
+}},
                 LoadBalancing = SiteLoadBalancing.LeastRequests,
                 IsAutoHealEnabled = false,
                 VnetName = "",
@@ -112,9 +106,7 @@ IsPreloadEnabled = false,
                 FunctionAppScaleLimit = 0,
                 IsFunctionsRuntimeScaleMonitoringEnabled = false,
                 MinimumElasticInstanceCount = 0,
-                AzureStorageAccounts =
-{
-},
+                AzureStorageAccounts = { },
             };
             ArmOperation<WebSiteConfigResource> lro = await webSiteConfig.CreateOrUpdateAsync(WaitUntil.Completed, data);
             WebSiteConfigResource result = lro.Value;

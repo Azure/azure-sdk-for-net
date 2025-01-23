@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.MachineLearning.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.MachineLearning.Samples
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningWorkspaceResource machineLearningWorkspace = client.GetMachineLearningWorkspaceResource(machineLearningWorkspaceResourceId);
 
             // invoke the operation
-            MachineLearningWorkspacePatch patch = new MachineLearningWorkspacePatch()
+            MachineLearningWorkspacePatch patch = new MachineLearningWorkspacePatch
             {
                 Description = "new description",
                 FriendlyName = "New friendly name",
@@ -131,37 +130,19 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningWorkspaceResource machineLearningWorkspace = client.GetMachineLearningWorkspaceResource(machineLearningWorkspaceResourceId);
 
             // invoke the operation
-            MachineLearningWorkspaceDiagnoseContent content = new MachineLearningWorkspaceDiagnoseContent()
+            MachineLearningWorkspaceDiagnoseContent content = new MachineLearningWorkspaceDiagnoseContent
             {
-                Value = new MachineLearningWorkspaceDiagnoseProperties()
+                Value = new MachineLearningWorkspaceDiagnoseProperties
                 {
-                    Udr =
-{
-},
-                    Nsg =
-{
-},
-                    ResourceLock =
-{
-},
-                    DnsResolution =
-{
-},
-                    StorageAccount =
-{
-},
-                    KeyVault =
-{
-},
-                    ContainerRegistry =
-{
-},
-                    ApplicationInsights =
-{
-},
-                    Others =
-{
-},
+                    Udr = { },
+                    Nsg = { },
+                    ResourceLock = { },
+                    DnsResolution = { },
+                    StorageAccount = { },
+                    KeyVault = { },
+                    ContainerRegistry = { },
+                    ApplicationInsights = { },
+                    Others = { },
                 },
             };
             ArmOperation<MachineLearningWorkspaceDiagnoseResult> lro = await machineLearningWorkspace.DiagnoseAsync(WaitUntil.Completed, content: content);
@@ -218,37 +199,6 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
             // invoke the operation
             await machineLearningWorkspace.ResyncKeysAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetMachineLearningWorkspaces_GetWorkspacesBySubscription()
-        {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Workspace/listBySubscription.json
-            // this example is just showing the usage of "Workspaces_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (MachineLearningWorkspaceResource item in subscriptionResource.GetMachineLearningWorkspacesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                MachineLearningWorkspaceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
 
             Console.WriteLine("Succeeded");
         }
@@ -437,7 +387,7 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningWorkspaceResource machineLearningWorkspace = client.GetMachineLearningWorkspaceResource(machineLearningWorkspaceResourceId);
 
             // invoke the operation
-            ManagedNetworkProvisionContent content = new ManagedNetworkProvisionContent()
+            ManagedNetworkProvisionContent content = new ManagedNetworkProvisionContent
             {
                 IncludeSpark = false,
             };

@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseAadOnlyAuthenticationResource synapseAadOnlyAuthentication = client.GetSynapseAadOnlyAuthenticationResource(synapseAadOnlyAuthenticationResourceId);
 
             // invoke the operation
-            SynapseAadOnlyAuthenticationData data = new SynapseAadOnlyAuthenticationData()
+            SynapseAadOnlyAuthenticationData data = new SynapseAadOnlyAuthenticationData
             {
                 IsAadOnlyAuthenticationEnabled = true,
             };

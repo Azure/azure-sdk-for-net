@@ -22,19 +22,16 @@ namespace Azure.AI.Projects
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string InternalErrorValue = "internal_error";
-        private const string FileNotFoundValue = "file_not_found";
-        private const string ParsingErrorValue = "parsing_error";
-        private const string UnhandledMimeTypeValue = "unhandled_mime_type";
+        private const string ServerErrorValue = "server_error";
+        private const string InvalidFileValue = "invalid_file";
+        private const string UnsupportedFileValue = "unsupported_file";
 
-        /// <summary> An internal error occurred. </summary>
-        public static VectorStoreFileErrorCode InternalError { get; } = new VectorStoreFileErrorCode(InternalErrorValue);
-        /// <summary> The file was not found. </summary>
-        public static VectorStoreFileErrorCode FileNotFound { get; } = new VectorStoreFileErrorCode(FileNotFoundValue);
-        /// <summary> The file could not be parsed. </summary>
-        public static VectorStoreFileErrorCode ParsingError { get; } = new VectorStoreFileErrorCode(ParsingErrorValue);
-        /// <summary> The file has an unhandled mime type. </summary>
-        public static VectorStoreFileErrorCode UnhandledMimeType { get; } = new VectorStoreFileErrorCode(UnhandledMimeTypeValue);
+        /// <summary> An server error occurred. </summary>
+        public static VectorStoreFileErrorCode ServerError { get; } = new VectorStoreFileErrorCode(ServerErrorValue);
+        /// <summary> The file is not valid. </summary>
+        public static VectorStoreFileErrorCode InvalidFile { get; } = new VectorStoreFileErrorCode(InvalidFileValue);
+        /// <summary> The file is of unsupported type. </summary>
+        public static VectorStoreFileErrorCode UnsupportedFile { get; } = new VectorStoreFileErrorCode(UnsupportedFileValue);
         /// <summary> Determines if two <see cref="VectorStoreFileErrorCode"/> values are the same. </summary>
         public static bool operator ==(VectorStoreFileErrorCode left, VectorStoreFileErrorCode right) => left.Equals(right);
         /// <summary> Determines if two <see cref="VectorStoreFileErrorCode"/> values are not the same. </summary>

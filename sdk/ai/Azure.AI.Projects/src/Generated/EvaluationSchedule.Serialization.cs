@@ -51,10 +51,10 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("systemData"u8);
                 writer.WriteObjectValue(SystemData, options);
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningStatus))
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
-                writer.WritePropertyName("provisioningStatus"u8);
-                writer.WriteStringValue(ProvisioningStatus);
+                writer.WritePropertyName("provisioningState"u8);
+                writer.WriteStringValue(ProvisioningState);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -77,6 +77,11 @@ namespace Azure.AI.Projects
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsEnabled))
+            {
+                writer.WritePropertyName("isEnabled"u8);
+                writer.WriteStringValue(IsEnabled);
             }
             writer.WritePropertyName("evaluators"u8);
             writer.WriteStartObject();
@@ -129,9 +134,10 @@ namespace Azure.AI.Projects
             ApplicationInsightsConfiguration data = default;
             string description = default;
             SystemData systemData = default;
-            string provisioningStatus = default;
+            string provisioningState = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, string> properties = default;
+            string isEnabled = default;
             IDictionary<string, EvaluatorConfiguration> evaluators = default;
             Trigger trigger = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -162,9 +168,9 @@ namespace Azure.AI.Projects
                     systemData = SystemData.DeserializeSystemData(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("provisioningStatus"u8))
+                if (property.NameEquals("provisioningState"u8))
                 {
-                    provisioningStatus = property.Value.GetString();
+                    provisioningState = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -195,6 +201,11 @@ namespace Azure.AI.Projects
                     properties = dictionary;
                     continue;
                 }
+                if (property.NameEquals("isEnabled"u8))
+                {
+                    isEnabled = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("evaluators"u8))
                 {
                     Dictionary<string, EvaluatorConfiguration> dictionary = new Dictionary<string, EvaluatorConfiguration>();
@@ -221,9 +232,10 @@ namespace Azure.AI.Projects
                 data,
                 description,
                 systemData,
-                provisioningStatus,
+                provisioningState,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 properties ?? new ChangeTrackingDictionary<string, string>(),
+                isEnabled,
                 evaluators,
                 trigger,
                 serializedAdditionalRawData);

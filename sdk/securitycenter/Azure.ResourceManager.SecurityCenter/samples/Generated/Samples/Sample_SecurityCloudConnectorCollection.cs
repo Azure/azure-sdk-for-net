@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_GetAllCloudAccountsConnectorsOfASubscription()
+        public async Task CreateOrUpdate_AwsAssumeRoleCreateACloudAccountConnectorForASubscription()
         {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2020-01-01-preview/examples/Connectors/GetListConnectorSubscription_example.json
-            // this example is just showing the usage of "Connectors_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2020-01-01-preview/examples/Connectors/CreateUpdateAwsAssumeRoleConnectorSubscription_example.json
+            // this example is just showing the usage of "Connectors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,17 +38,136 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // get the collection of this SecurityCloudConnectorResource
             SecurityCloudConnectorCollection collection = subscriptionResource.GetSecurityCloudConnectors();
 
-            // invoke the operation and iterate over the result
-            await foreach (SecurityCloudConnectorResource item in collection.GetAllAsync())
+            // invoke the operation
+            string connectorName = "aws_dev2";
+            SecurityCloudConnectorData data = new SecurityCloudConnectorData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SecurityCloudConnectorData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                HybridComputeSettings = new HybridComputeSettingsProperties(AutoProvisionState.On)
+                {
+                    ResourceGroupName = "AwsConnectorRG",
+                    Region = "West US 2",
+                    ProxyServer = new ProxyServerProperties
+                    {
+                        IP = "167.220.197.140",
+                        Port = "34",
+                    },
+                    ServicePrincipal = new ServicePrincipalProperties
+                    {
+                        ApplicationId = Guid.Parse("ad9bcd79-be9c-45ab-abd8-80ca1654a7d1"),
+                        Secret = "<secret>",
+                    },
+                },
+                AuthenticationDetails = new AwsAssumeRoleAuthenticationDetailsProperties("arn:aws:iam::81231569658:role/AscConnector", Guid.Parse("20ff7fc3-e762-44dd-bd96-b71116dcdc23")),
+            };
+            ArmOperation<SecurityCloudConnectorResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectorName, data);
+            SecurityCloudConnectorResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SecurityCloudConnectorData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_AwsCredCreateACloudAccountConnectorForASubscription()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2020-01-01-preview/examples/Connectors/CreateUpdateAwsCredConnectorSubscription_example.json
+            // this example is just showing the usage of "Connectors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SecurityCloudConnectorResource
+            SecurityCloudConnectorCollection collection = subscriptionResource.GetSecurityCloudConnectors();
+
+            // invoke the operation
+            string connectorName = "aws_dev1";
+            SecurityCloudConnectorData data = new SecurityCloudConnectorData
+            {
+                HybridComputeSettings = new HybridComputeSettingsProperties(AutoProvisionState.On)
+                {
+                    ResourceGroupName = "AwsConnectorRG",
+                    Region = "West US 2",
+                    ProxyServer = new ProxyServerProperties
+                    {
+                        IP = "167.220.197.140",
+                        Port = "34",
+                    },
+                    ServicePrincipal = new ServicePrincipalProperties
+                    {
+                        ApplicationId = Guid.Parse("ad9bcd79-be9c-45ab-abd8-80ca1654a7d1"),
+                        Secret = "<secret>",
+                    },
+                },
+                AuthenticationDetails = new AwsCredsAuthenticationDetailsProperties("AKIARPZCNODDNAEQFSOE", "<awsSecretAccessKey>"),
+            };
+            ArmOperation<SecurityCloudConnectorResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectorName, data);
+            SecurityCloudConnectorResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SecurityCloudConnectorData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_GcpCredentialsCreateACloudAccountConnectorForASubscription()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2020-01-01-preview/examples/Connectors/CreateUpdateGcpCredentialsConnectorSubscription_example.json
+            // this example is just showing the usage of "Connectors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SecurityCloudConnectorResource
+            SecurityCloudConnectorCollection collection = subscriptionResource.GetSecurityCloudConnectors();
+
+            // invoke the operation
+            string connectorName = "gcp_dev";
+            SecurityCloudConnectorData data = new SecurityCloudConnectorData
+            {
+                HybridComputeSettings = new HybridComputeSettingsProperties(AutoProvisionState.Off),
+                AuthenticationDetails = new GcpCredentialsDetailsProperties(
+                "AscDemoOrg",
+                "service_account",
+                "asc-project-1234",
+                "6efg587hra2568as34d22326b044cc20dc2af",
+                "******",
+                "asc-135@asc-project-1234.iam.gserviceaccount.com",
+                "105889053725632919854",
+                new Uri("https://accounts.google.com/o/oauth2/auth"),
+                new Uri("https://oauth2.googleapis.com/token"),
+                new Uri("https://www.googleapis.com/oauth2/v1/certs"),
+                new Uri("https://www.googleapis.com/robot/v1/metadata/x509/asc-135%40asc-project-1234.iam.gserviceaccount.com")),
+            };
+            ArmOperation<SecurityCloudConnectorResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectorName, data);
+            SecurityCloudConnectorResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SecurityCloudConnectorData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -81,6 +200,40 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SecurityCloudConnectorData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_GetAllCloudAccountsConnectorsOfASubscription()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2020-01-01-preview/examples/Connectors/GetListConnectorSubscription_example.json
+            // this example is just showing the usage of "Connectors_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // get the collection of this SecurityCloudConnectorResource
+            SecurityCloudConnectorCollection collection = subscriptionResource.GetSecurityCloudConnectors();
+
+            // invoke the operation and iterate over the result
+            await foreach (SecurityCloudConnectorResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SecurityCloudConnectorData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -149,148 +302,6 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_AwsAssumeRoleCreateACloudAccountConnectorForASubscription()
-        {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2020-01-01-preview/examples/Connectors/CreateUpdateAwsAssumeRoleConnectorSubscription_example.json
-            // this example is just showing the usage of "Connectors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // get the collection of this SecurityCloudConnectorResource
-            SecurityCloudConnectorCollection collection = subscriptionResource.GetSecurityCloudConnectors();
-
-            // invoke the operation
-            string connectorName = "aws_dev2";
-            SecurityCloudConnectorData data = new SecurityCloudConnectorData()
-            {
-                HybridComputeSettings = new HybridComputeSettingsProperties(AutoProvisionState.On)
-                {
-                    ResourceGroupName = "AwsConnectorRG",
-                    Region = "West US 2",
-                    ProxyServer = new ProxyServerProperties()
-                    {
-                        IP = "167.220.197.140",
-                        Port = "34",
-                    },
-                    ServicePrincipal = new ServicePrincipalProperties()
-                    {
-                        ApplicationId = Guid.Parse("ad9bcd79-be9c-45ab-abd8-80ca1654a7d1"),
-                        Secret = "<secret>",
-                    },
-                },
-                AuthenticationDetails = new AwsAssumeRoleAuthenticationDetailsProperties("arn:aws:iam::81231569658:role/AscConnector", Guid.Parse("20ff7fc3-e762-44dd-bd96-b71116dcdc23")),
-            };
-            ArmOperation<SecurityCloudConnectorResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectorName, data);
-            SecurityCloudConnectorResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SecurityCloudConnectorData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_AwsCredCreateACloudAccountConnectorForASubscription()
-        {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2020-01-01-preview/examples/Connectors/CreateUpdateAwsCredConnectorSubscription_example.json
-            // this example is just showing the usage of "Connectors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // get the collection of this SecurityCloudConnectorResource
-            SecurityCloudConnectorCollection collection = subscriptionResource.GetSecurityCloudConnectors();
-
-            // invoke the operation
-            string connectorName = "aws_dev1";
-            SecurityCloudConnectorData data = new SecurityCloudConnectorData()
-            {
-                HybridComputeSettings = new HybridComputeSettingsProperties(AutoProvisionState.On)
-                {
-                    ResourceGroupName = "AwsConnectorRG",
-                    Region = "West US 2",
-                    ProxyServer = new ProxyServerProperties()
-                    {
-                        IP = "167.220.197.140",
-                        Port = "34",
-                    },
-                    ServicePrincipal = new ServicePrincipalProperties()
-                    {
-                        ApplicationId = Guid.Parse("ad9bcd79-be9c-45ab-abd8-80ca1654a7d1"),
-                        Secret = "<secret>",
-                    },
-                },
-                AuthenticationDetails = new AwsCredsAuthenticationDetailsProperties("AKIARPZCNODDNAEQFSOE", "<awsSecretAccessKey>"),
-            };
-            ArmOperation<SecurityCloudConnectorResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectorName, data);
-            SecurityCloudConnectorResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SecurityCloudConnectorData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_GcpCredentialsCreateACloudAccountConnectorForASubscription()
-        {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2020-01-01-preview/examples/Connectors/CreateUpdateGcpCredentialsConnectorSubscription_example.json
-            // this example is just showing the usage of "Connectors_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "20ff7fc3-e762-44dd-bd96-b71116dcdc23";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // get the collection of this SecurityCloudConnectorResource
-            SecurityCloudConnectorCollection collection = subscriptionResource.GetSecurityCloudConnectors();
-
-            // invoke the operation
-            string connectorName = "gcp_dev";
-            SecurityCloudConnectorData data = new SecurityCloudConnectorData()
-            {
-                HybridComputeSettings = new HybridComputeSettingsProperties(AutoProvisionState.Off),
-                AuthenticationDetails = new GcpCredentialsDetailsProperties("AscDemoOrg", "service_account", "asc-project-1234", "6efg587hra2568as34d22326b044cc20dc2af", "******", "asc-135@asc-project-1234.iam.gserviceaccount.com", "105889053725632919854", new Uri("https://accounts.google.com/o/oauth2/auth"), new Uri("https://oauth2.googleapis.com/token"), new Uri("https://www.googleapis.com/oauth2/v1/certs"), new Uri("https://www.googleapis.com/robot/v1/metadata/x509/asc-135%40asc-project-1234.iam.gserviceaccount.com")),
-            };
-            ArmOperation<SecurityCloudConnectorResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, connectorName, data);
-            SecurityCloudConnectorResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SecurityCloudConnectorData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

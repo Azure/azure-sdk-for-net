@@ -1,14 +1,18 @@
 # Release History
 
-## 1.16.0-beta.1 (Unreleased)
+## 2.0.0-beta.1 (Unreleased)
 
 ### Features Added
 
 ### Breaking Changes
+* Remove .NET 6.0 support.
 
 ### Bugs Fixed
+* Correctly support returning result for SignalR invocation in MessagePack protocol from isolated-worker process.
 
 ### Other Changes
+* Update `MessagePack` to 2.5.192
+* Update `Microsoft.Azure.SignalR`, `Microsoft.Azure.SignalR.Management`, `Microsoft.Azure.SignalR.Protocols` to 1.29.0
 
 ## 1.15.0 (2024-10-14)
 

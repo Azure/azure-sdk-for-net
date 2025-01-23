@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.DataMigration.Samples
             ServiceProjectTaskResource serviceProjectTask = client.GetServiceProjectTaskResource(serviceProjectTaskResourceId);
 
             // invoke the operation
-            ProjectTaskData data = new ProjectTaskData()
+            ProjectTaskData data = new ProjectTaskData
             {
-                Properties = new ConnectToTargetSqlDBTaskProperties()
+                Properties = new ConnectToTargetSqlDBTaskProperties
                 {
                     Input = new ConnectToTargetSqlDBTaskInput(new SqlConnectionInfo("ssma-test-server.database.windows.net")
                     {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataMigration.Samples
             ServiceProjectTaskResource serviceProjectTask = client.GetServiceProjectTaskResource(serviceProjectTaskResourceId);
 
             // invoke the operation
-            CommandProperties commandProperties = new MigrateSyncCompleteCommandProperties()
+            CommandProperties commandProperties = new MigrateSyncCompleteCommandProperties
             {
                 Input = new MigrateSyncCompleteCommandInput("TestDatabase"),
             };

@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SecurityCenterPricingResource securityCenterPricing = client.GetSecurityCenterPricingResource(securityCenterPricingResourceId);
 
             // invoke the operation
-            SecurityCenterPricingData data = new SecurityCenterPricingData()
+            SecurityCenterPricingData data = new SecurityCenterPricingData
             {
                 PricingTier = SecurityCenterPricingTier.Standard,
             };
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             SecurityCenterPricingResource securityCenterPricing = client.GetSecurityCenterPricingResource(securityCenterPricingResourceId);
 
             // invoke the operation
-            SecurityCenterPricingData data = new SecurityCenterPricingData()
+            SecurityCenterPricingData data = new SecurityCenterPricingData
             {
                 PricingTier = SecurityCenterPricingTier.Standard,
             };

@@ -173,11 +173,11 @@ namespace Azure.AI.Projects
             DateTimeOffset? completedAt = default;
             DateTimeOffset? incompleteAt = default;
             MessageRole role = default;
-            IList<MessageContent> content = default;
+            IReadOnlyList<MessageContent> content = default;
             string assistantId = default;
             string runId = default;
-            IList<MessageAttachment> attachments = default;
-            IDictionary<string, string> metadata = default;
+            IReadOnlyList<MessageAttachment> attachments = default;
+            IReadOnlyDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())

@@ -18,34 +18,6 @@ namespace Azure.ResourceManager.ApiManagement.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetEntityTag_ApiManagementHeadApiPolicy()
-        {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadApiPolicy.json
-            // this example is just showing the usage of "ApiPolicy_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApiPolicyResource created on azure
-            // for more information of creating ApiPolicyResource, please refer to the document of ApiPolicyResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string serviceName = "apimService1";
-            string apiId = "57d1f7558aa04f15146d9d8a";
-            PolicyName policyId = PolicyName.Policy;
-            ResourceIdentifier apiPolicyResourceId = ApiPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, policyId);
-            ApiPolicyResource apiPolicy = client.GetApiPolicyResource(apiPolicyResourceId);
-
-            // invoke the operation
-            bool result = await apiPolicy.GetEntityTagAsync();
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_ApiManagementGetApiPolicy()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementGetApiPolicy.json
@@ -78,6 +50,35 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_ApiManagementDeleteApiPolicy()
+        {
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteApiPolicy.json
+            // this example is just showing the usage of "ApiPolicy_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApiPolicyResource created on azure
+            // for more information of creating ApiPolicyResource, please refer to the document of ApiPolicyResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string serviceName = "apimService1";
+            string apiId = "loggerId";
+            PolicyName policyId = PolicyName.Policy;
+            ResourceIdentifier apiPolicyResourceId = ApiPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, policyId);
+            ApiPolicyResource apiPolicy = client.GetApiPolicyResource(apiPolicyResourceId);
+
+            // invoke the operation
+            ETag ifMatch = new ETag("*");
+            await apiPolicy.DeleteAsync(WaitUntil.Completed, ifMatch);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ApiManagementCreateApiPolicy()
         {
             // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementCreateApiPolicy.json
@@ -99,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiPolicyResource apiPolicy = client.GetApiPolicyResource(apiPolicyResourceId);
 
             // invoke the operation
-            PolicyContractData data = new PolicyContractData()
+            PolicyContractData data = new PolicyContractData
             {
                 Value = "<policies> <inbound /> <backend>    <forward-request />  </backend>  <outbound /></policies>",
                 Format = PolicyContentFormat.Xml,
@@ -138,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             ApiPolicyResource apiPolicy = client.GetApiPolicyResource(apiPolicyResourceId);
 
             // invoke the operation
-            PolicyContractData data = new PolicyContractData()
+            PolicyContractData data = new PolicyContractData
             {
                 Value = "<policies>\r\n     <inbound>\r\n     <base />\r\n  <set-header name=\"newvalue\" exists-action=\"override\">\r\n   <value>\"@(context.Request.Headers.FirstOrDefault(h => h.Ke==\"Via\"))\" </value>\r\n    </set-header>\r\n  </inbound>\r\n      </policies>",
                 Format = PolicyContentFormat.RawXml,
@@ -156,10 +157,10 @@ namespace Azure.ResourceManager.ApiManagement.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_ApiManagementDeleteApiPolicy()
+        public async Task GetEntityTag_ApiManagementHeadApiPolicy()
         {
-            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementDeleteApiPolicy.json
-            // this example is just showing the usage of "ApiPolicy_Delete" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/apimanagement/resource-manager/Microsoft.ApiManagement/preview/2023-03-01-preview/examples/ApiManagementHeadApiPolicy.json
+            // this example is just showing the usage of "ApiPolicy_GetEntityTag" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -171,16 +172,15 @@ namespace Azure.ResourceManager.ApiManagement.Samples
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "rg1";
             string serviceName = "apimService1";
-            string apiId = "loggerId";
+            string apiId = "57d1f7558aa04f15146d9d8a";
             PolicyName policyId = PolicyName.Policy;
             ResourceIdentifier apiPolicyResourceId = ApiPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, serviceName, apiId, policyId);
             ApiPolicyResource apiPolicy = client.GetApiPolicyResource(apiPolicyResourceId);
 
             // invoke the operation
-            ETag ifMatch = new ETag("*");
-            await apiPolicy.DeleteAsync(WaitUntil.Completed, ifMatch);
+            bool result = await apiPolicy.GetEntityTagAsync();
 
-            Console.WriteLine("Succeeded");
+            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

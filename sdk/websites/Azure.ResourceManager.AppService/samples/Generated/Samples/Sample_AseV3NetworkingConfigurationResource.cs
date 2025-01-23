@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.AppService.Samples
             AseV3NetworkingConfigurationResource aseV3NetworkingConfiguration = client.GetAseV3NetworkingConfigurationResource(aseV3NetworkingConfigurationResourceId);
 
             // invoke the operation
-            AseV3NetworkingConfigurationData data = new AseV3NetworkingConfigurationData()
+            AseV3NetworkingConfigurationData data = new AseV3NetworkingConfigurationData
             {
                 IsFtpEnabled = true,
                 IsRemoteDebugEnabled = true,

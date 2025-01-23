@@ -10,44 +10,12 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Confluent.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.Confluent.Samples
 {
     public partial class Sample_ConfluentOrganizationResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetConfluentOrganizations_OrganizationListBySubscription()
-        {
-            // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_ListBySubscription.json
-            // this example is just showing the usage of "Organization_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ConfluentOrganizationResource item in subscriptionResource.GetConfluentOrganizationsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ConfluentOrganizationData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_OrganizationGet()
@@ -80,44 +48,6 @@ namespace Azure.ResourceManager.Confluent.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_ConfluentUpdate()
-        {
-            // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_Update.json
-            // this example is just showing the usage of "Organization_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ConfluentOrganizationResource created on azure
-            // for more information of creating ConfluentOrganizationResource, please refer to the document of ConfluentOrganizationResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string organizationName = "myOrganization";
-            ResourceIdentifier confluentOrganizationResourceId = ConfluentOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
-            ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
-
-            // invoke the operation
-            ConfluentOrganizationPatch patch = new ConfluentOrganizationPatch()
-            {
-                Tags =
-{
-["client"] = "dev-client",
-["env"] = "dev",
-},
-            };
-            ConfluentOrganizationResource result = await confluentOrganization.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ConfluentOrganizationData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Delete_ConfluentDelete()
         {
             // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_Delete.json
@@ -140,6 +70,44 @@ namespace Azure.ResourceManager.Confluent.Samples
             await confluentOrganization.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ConfluentUpdate()
+        {
+            // Generated from example definition: specification/confluent/resource-manager/Microsoft.Confluent/stable/2024-02-13/examples/Organization_Update.json
+            // this example is just showing the usage of "Organization_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ConfluentOrganizationResource created on azure
+            // for more information of creating ConfluentOrganizationResource, please refer to the document of ConfluentOrganizationResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string organizationName = "myOrganization";
+            ResourceIdentifier confluentOrganizationResourceId = ConfluentOrganizationResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, organizationName);
+            ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
+
+            // invoke the operation
+            ConfluentOrganizationPatch patch = new ConfluentOrganizationPatch
+            {
+                Tags =
+{
+["client"] = "dev-client",
+["env"] = "dev"
+},
+            };
+            ConfluentOrganizationResource result = await confluentOrganization.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ConfluentOrganizationData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -281,13 +249,13 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            AccessListContent content = new AccessListContent()
+            AccessListContent content = new AccessListContent
             {
                 SearchFilters =
 {
 ["cloud"] = "azure",
 ["packages"] = "ADVANCED,ESSENTIALS",
-["region"] = "eastus",
+["region"] = "eastus"
 },
             };
             ConfluentRegionListResult result = await confluentOrganization.GetRegionsAsync(content);
@@ -318,7 +286,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             // invoke the operation
             string environmentId = "env-12132";
             string clusterId = "clusterId-123";
-            ConfluentApiKeyCreateContent content = new ConfluentApiKeyCreateContent()
+            ConfluentApiKeyCreateContent content = new ConfluentApiKeyCreateContent
             {
                 Name = "CI kafka access key",
                 Description = "This API key provides kafka access to cluster x",
@@ -459,12 +427,12 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            AccessListContent content = new AccessListContent()
+            AccessListContent content = new AccessListContent
             {
                 SearchFilters =
 {
 ["pageSize"] = "10",
-["pageToken"] = "asc4fts4ft",
+["pageToken"] = "asc4fts4ft"
 },
             };
             AccessUserListResult result = await confluentOrganization.GetAccessUsersAsync(content);
@@ -493,12 +461,12 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            AccessListContent content = new AccessListContent()
+            AccessListContent content = new AccessListContent
             {
                 SearchFilters =
 {
 ["pageSize"] = "10",
-["pageToken"] = "asc4fts4ft",
+["pageToken"] = "asc4fts4ft"
 },
             };
             AccessServiceAccountListResult result = await confluentOrganization.GetAccessServiceAccountsAsync(content);
@@ -527,13 +495,13 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            AccessListContent content = new AccessListContent()
+            AccessListContent content = new AccessListContent
             {
                 SearchFilters =
 {
 ["pageSize"] = "10",
 ["pageToken"] = "asc4fts4ft",
-["status"] = "INVITE_STATUS_SENT",
+["status"] = "INVITE_STATUS_SENT"
 },
             };
             AccessInvitationListResult result = await confluentOrganization.GetAccessInvitationsAsync(content);
@@ -562,9 +530,9 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            AccessInvitationContent content = new AccessInvitationContent()
+            AccessInvitationContent content = new AccessInvitationContent
             {
-                InvitedUserDetails = new AccessInvitedUserDetails()
+                InvitedUserDetails = new AccessInvitedUserDetails
                 {
                     InvitedEmail = "user2@onmicrosoft.com",
                     AuthType = "AUTH_TYPE_SSO",
@@ -596,12 +564,12 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            AccessListContent content = new AccessListContent()
+            AccessListContent content = new AccessListContent
             {
                 SearchFilters =
 {
 ["pageSize"] = "10",
-["pageToken"] = "asc4fts4ft",
+["pageToken"] = "asc4fts4ft"
 },
             };
             AccessEnvironmentListResult result = await confluentOrganization.GetAccessEnvironmentsAsync(content);
@@ -630,12 +598,12 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            AccessListContent content = new AccessListContent()
+            AccessListContent content = new AccessListContent
             {
                 SearchFilters =
 {
 ["pageSize"] = "10",
-["pageToken"] = "asc4fts4ft",
+["pageToken"] = "asc4fts4ft"
 },
             };
             AccessClusterListResult result = await confluentOrganization.GetAccessClustersAsync(content);
@@ -664,12 +632,12 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            AccessListContent content = new AccessListContent()
+            AccessListContent content = new AccessListContent
             {
                 SearchFilters =
 {
 ["pageSize"] = "10",
-["pageToken"] = "asc4fts4ft",
+["pageToken"] = "asc4fts4ft"
 },
             };
             AccessRoleBindingListResult result = await confluentOrganization.GetAccessRoleBindingsAsync(content);
@@ -698,7 +666,7 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            AccessRoleBindingCreateContent content = new AccessRoleBindingCreateContent()
+            AccessRoleBindingCreateContent content = new AccessRoleBindingCreateContent
             {
                 Principal = "User:u-111aaa",
                 RoleName = "CloudClusterAdmin",
@@ -757,12 +725,12 @@ namespace Azure.ResourceManager.Confluent.Samples
             ConfluentOrganizationResource confluentOrganization = client.GetConfluentOrganizationResource(confluentOrganizationResourceId);
 
             // invoke the operation
-            AccessListContent content = new AccessListContent()
+            AccessListContent content = new AccessListContent
             {
                 SearchFilters =
 {
 ["crn_pattern"] = "crn://confluent.cloud/organization=1aa7de07-298e-479c-8f2f-16ac91fd8e76",
-["namespace"] = "public,dataplane,networking,identity,datagovernance,connect,streamcatalog,pipelines,ksql",
+["namespace"] = "public,dataplane,networking,identity,datagovernance,connect,streamcatalog,pipelines,ksql"
 },
             };
             AccessRoleBindingNameListResult result = await confluentOrganization.GetAccessRoleBindingNamesAsync(content);

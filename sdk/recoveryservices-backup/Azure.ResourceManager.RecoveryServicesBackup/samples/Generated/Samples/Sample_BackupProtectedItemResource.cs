@@ -84,6 +84,35 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteProtectionFromAzureVirtualMachine()
+        {
+            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/Common/ProtectedItem_Delete.json
+            // this example is just showing the usage of "ProtectedItems_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BackupProtectedItemResource created on azure
+            // for more information of creating BackupProtectedItemResource, please refer to the document of BackupProtectedItemResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "PythonSDKBackupTestRg";
+            string vaultName = "PySDKBackupTestRsVault";
+            string fabricName = "Azure";
+            string containerName = "iaasvmcontainer;iaasvmcontainerv2;pysdktestrg;pysdktestv2vm1";
+            string protectedItemName = "vm;iaasvmcontainerv2;pysdktestrg;pysdktestv2vm1";
+            ResourceIdentifier backupProtectedItemResourceId = BackupProtectedItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, protectedItemName);
+            BackupProtectedItemResource backupProtectedItem = client.GetBackupProtectedItemResource(backupProtectedItemResourceId);
+
+            // invoke the operation
+            await backupProtectedItem.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_EnableProtectionOnAzureIaasVm()
         {
             // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/AzureIaasVm/ConfigureProtection.json
@@ -106,9 +135,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupProtectedItemResource backupProtectedItem = client.GetBackupProtectedItemResource(backupProtectedItemResourceId);
 
             // invoke the operation
-            BackupProtectedItemData data = new BackupProtectedItemData(new AzureLocation("placeholder"))
+            BackupProtectedItemData data = new BackupProtectedItemData(default)
             {
-                Properties = new IaasComputeVmProtectedItem()
+                Properties = new IaasComputeVmProtectedItem
                 {
                     SourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1"),
                     PolicyId = new ResourceIdentifier("/Subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/SwaggerTestRg/providers/Microsoft.RecoveryServices/vaults/NetSDKTestRsVault/backupPolicies/DefaultPolicy"),
@@ -148,9 +177,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupProtectedItemResource backupProtectedItem = client.GetBackupProtectedItemResource(backupProtectedItemResourceId);
 
             // invoke the operation
-            BackupProtectedItemData data = new BackupProtectedItemData(new AzureLocation("placeholder"))
+            BackupProtectedItemData data = new BackupProtectedItemData(default)
             {
-                Properties = new IaasComputeVmProtectedItem()
+                Properties = new IaasComputeVmProtectedItem
                 {
                     ProtectionState = BackupProtectionState.ProtectionStopped,
                     SourceResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/netsdktestrg/providers/Microsoft.Compute/virtualMachines/netvmtestv2vm1"),
@@ -164,35 +193,6 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupProtectedItemData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteProtectionFromAzureVirtualMachine()
-        {
-            // Generated from example definition: specification/recoveryservicesbackup/resource-manager/Microsoft.RecoveryServices/stable/2023-06-01/examples/Common/ProtectedItem_Delete.json
-            // this example is just showing the usage of "ProtectedItems_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BackupProtectedItemResource created on azure
-            // for more information of creating BackupProtectedItemResource, please refer to the document of BackupProtectedItemResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "PythonSDKBackupTestRg";
-            string vaultName = "PySDKBackupTestRsVault";
-            string fabricName = "Azure";
-            string containerName = "iaasvmcontainer;iaasvmcontainerv2;pysdktestrg;pysdktestv2vm1";
-            string protectedItemName = "vm;iaasvmcontainerv2;pysdktestrg;pysdktestv2vm1";
-            ResourceIdentifier backupProtectedItemResourceId = BackupProtectedItemResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, vaultName, fabricName, containerName, protectedItemName);
-            BackupProtectedItemResource backupProtectedItem = client.GetBackupProtectedItemResource(backupProtectedItemResourceId);
-
-            // invoke the operation
-            await backupProtectedItem.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupProtectedItemResource backupProtectedItem = client.GetBackupProtectedItemResource(backupProtectedItemResourceId);
 
             // invoke the operation
-            TriggerBackupContent content = new TriggerBackupContent(new AzureLocation("placeholder"))
+            TriggerBackupContent content = new TriggerBackupContent(default)
             {
                 Properties = new IaasVmBackupContent(),
             };
@@ -252,13 +252,10 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupProtectedItemResource backupProtectedItem = client.GetBackupProtectedItemResource(backupProtectedItemResourceId);
 
             // invoke the operation and iterate over the result
-            RecoveryPointsRecommendedForMoveContent content = new RecoveryPointsRecommendedForMoveContent()
+            RecoveryPointsRecommendedForMoveContent content = new RecoveryPointsRecommendedForMoveContent
             {
                 ObjectType = "ListRecoveryPointsRecommendedForMoveRequest",
-                ExcludedRPList =
-{
-"348916168024334","348916168024335"
-},
+                ExcludedRPList = { "348916168024334", "348916168024335" },
             };
             await foreach (BackupRecoveryPointResource item in backupProtectedItem.GetRecoveryPointsRecommendedForMoveAsync(content))
             {

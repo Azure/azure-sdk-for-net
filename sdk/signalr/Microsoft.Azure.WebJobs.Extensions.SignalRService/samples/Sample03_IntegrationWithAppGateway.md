@@ -7,13 +7,13 @@ This way works if you want to auth with access key or managed identity. Just app
 
 `Endpoint=https://<SIGNALR_RESOURCE_NAME>.service.signalr.net;AccessKey=<access_key>;ServerEndpoint=https://<url_to_app_gateway>;ClientEndpoint=https://<url_to_app_gateway>;Version=1.0;`
 
-To see more about connection string , go [here](https://docs.microsoft.com/azure/azure-signalr/concept-connection-string).
+To see more about connection string , go [here](https://learn.microsoft.com/azure/azure-signalr/concept-connection-string).
 
 ## Option 2: Identity-based Connection
 
 Identity-based connection allows you to auth with multiple types of azure credentials including managed identity credentials.
 
-Here is a sample to configure the identity-based connection when your [connectionStringSetting](https://docs.microsoft.com/azure/azure-functions/functions-bindings-signalr-service-trigger?tabs=in-process&pivots=programming-language-csharp#attributes) has the default value `AzureSignalRConnectionString`.
+Here is a sample to configure the identity-based connection when your [connectionStringSetting](https://learn.microsoft.com/azure/azure-functions/functions-bindings-signalr-service-trigger?tabs=in-process&pivots=programming-language-csharp#attributes) has the default value `AzureSignalRConnectionString`.
 
 ```properties
 AzureSignalRConnectionString__serviceUri = https://<SIGNALR_RESOURCE_NAME>.service.signalr.net
@@ -22,8 +22,8 @@ AzureSignalRConnectionString__clientEndpoint = https://<url_to_app_gateway>
 ```
 
 Related docs:
-* [Azure Application Identity](https://docs.microsoft.com/azure/azure-signalr/signalr-howto-authorize-application#azure-functions-signalr-bindings)
-* [Managed identity](https://docs.microsoft.com/azure/azure-signalr/signalr-howto-authorize-managed-identity#azure-functions-signalr-bindings)
+* [Azure Application Identity](https://learn.microsoft.com/azure/azure-signalr/signalr-howto-authorize-application#azure-functions-signalr-bindings)
+* [Managed identity](https://learn.microsoft.com/azure/azure-signalr/signalr-howto-authorize-managed-identity#azure-functions-signalr-bindings)
 
 ## Option 3: Dependency injection (In-Process Model Runtime Only)
 This is the most flexible way for C# in-process model functions. Configure `SignalROptions.ServiceEndpoints` in your startup class as follows:

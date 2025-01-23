@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_CloudHsmClusterPrivateEndpointConnectionCreateMaximumSetGen()
+        public async Task Get_CloudHsmClusterPrivateEndpointConnectionGetMaximumSetGen()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmClusterPrivateEndpointConnection_Create_MaximumSet_Gen.json
-            // this example is just showing the usage of "CloudHsmClusterPrivateEndpointConnections_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmClusterPrivateEndpointConnection_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "CloudHsmClusterPrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -38,16 +38,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             CloudHsmClusterPrivateEndpointConnectionResource cloudHsmClusterPrivateEndpointConnection = client.GetCloudHsmClusterPrivateEndpointConnectionResource(cloudHsmClusterPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            CloudHsmClusterPrivateEndpointConnectionData data = new CloudHsmClusterPrivateEndpointConnectionData()
-            {
-                Properties = new CloudHsmClusterPrivateEndpointConnectionProperties(new CloudHsmClusterPrivateLinkServiceConnectionState()
-                {
-                    Status = CloudHsmClusterPrivateEndpointServiceConnectionStatus.Approved,
-                    Description = "My name is Joe and I'm approving this.",
-                }),
-            };
-            ArmOperation<CloudHsmClusterPrivateEndpointConnectionResource> lro = await cloudHsmClusterPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
-            CloudHsmClusterPrivateEndpointConnectionResource result = lro.Value;
+            CloudHsmClusterPrivateEndpointConnectionResource result = await cloudHsmClusterPrivateEndpointConnection.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -85,10 +76,10 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_CloudHsmClusterPrivateEndpointConnectionGetMaximumSetGen()
+        public async Task Update_CloudHsmClusterPrivateEndpointConnectionCreateMaximumSetGen()
         {
-            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmClusterPrivateEndpointConnection_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "CloudHsmClusterPrivateEndpointConnections_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/hardwaresecuritymodules/resource-manager/Microsoft.HardwareSecurityModules/preview/2024-06-30-preview/examples/CloudHsmClusterPrivateEndpointConnection_Create_MaximumSet_Gen.json
+            // this example is just showing the usage of "CloudHsmClusterPrivateEndpointConnections_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -105,7 +96,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Samples
             CloudHsmClusterPrivateEndpointConnectionResource cloudHsmClusterPrivateEndpointConnection = client.GetCloudHsmClusterPrivateEndpointConnectionResource(cloudHsmClusterPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            CloudHsmClusterPrivateEndpointConnectionResource result = await cloudHsmClusterPrivateEndpointConnection.GetAsync();
+            CloudHsmClusterPrivateEndpointConnectionData data = new CloudHsmClusterPrivateEndpointConnectionData
+            {
+                Properties = new CloudHsmClusterPrivateEndpointConnectionProperties(new CloudHsmClusterPrivateLinkServiceConnectionState
+                {
+                    Status = CloudHsmClusterPrivateEndpointServiceConnectionStatus.Approved,
+                    Description = "My name is Joe and I'm approving this.",
+                }),
+            };
+            ArmOperation<CloudHsmClusterPrivateEndpointConnectionResource> lro = await cloudHsmClusterPrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
+            CloudHsmClusterPrivateEndpointConnectionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

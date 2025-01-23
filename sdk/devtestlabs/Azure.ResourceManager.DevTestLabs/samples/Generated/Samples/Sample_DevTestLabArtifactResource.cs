@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabArtifactResource devTestLabArtifact = client.GetDevTestLabArtifactResource(devTestLabArtifactResourceId);
 
             // invoke the operation
-            DevTestLabArtifactGenerateArmTemplateContent content = new DevTestLabArtifactGenerateArmTemplateContent()
+            DevTestLabArtifactGenerateArmTemplateContent content = new DevTestLabArtifactGenerateArmTemplateContent
             {
                 VmName = "{vmName}",
                 Location = new AzureLocation("{location}"),

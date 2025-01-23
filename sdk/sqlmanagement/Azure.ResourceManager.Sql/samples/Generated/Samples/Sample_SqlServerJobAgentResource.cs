@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerJobAgentResource sqlServerJobAgent = client.GetSqlServerJobAgentResource(sqlServerJobAgentResourceId);
 
             // invoke the operation
-            SqlServerJobAgentPatch patch = new SqlServerJobAgentPatch()
+            SqlServerJobAgentPatch patch = new SqlServerJobAgentPatch
             {
                 Tags =
 {
-["mytag1"] = "myvalue1",
+["mytag1"] = "myvalue1"
 },
             };
             ArmOperation<SqlServerJobAgentResource> lro = await sqlServerJobAgent.UpdateAsync(WaitUntil.Completed, patch);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerJobAgentResource sqlServerJobAgent = client.GetSqlServerJobAgentResource(sqlServerJobAgentResourceId);
 
             // invoke the operation and iterate over the result
-            SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options = new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions() { CreateTimeMin = DateTimeOffset.Parse("2017-03-21T19:00:00Z"), CreateTimeMax = DateTimeOffset.Parse("2017-03-21T19:05:00Z"), EndTimeMin = DateTimeOffset.Parse("2017-03-21T19:20:00Z"), EndTimeMax = DateTimeOffset.Parse("2017-03-21T19:25:00Z"), IsActive = false };
+            SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options = new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions { CreateTimeMin = DateTimeOffset.Parse("2017-03-21T19:00:00Z"), CreateTimeMax = DateTimeOffset.Parse("2017-03-21T19:05:00Z"), EndTimeMin = DateTimeOffset.Parse("2017-03-21T19:20:00Z"), EndTimeMax = DateTimeOffset.Parse("2017-03-21T19:25:00Z"), IsActive = false };
             await foreach (SqlServerJobExecutionResource item in sqlServerJobAgent.GetJobExecutionsByAgentAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerJobAgentResource sqlServerJobAgent = client.GetSqlServerJobAgentResource(sqlServerJobAgentResourceId);
 
             // invoke the operation and iterate over the result
-            SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options = new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions() { };
+            SqlServerJobAgentResourceGetJobExecutionsByAgentOptions options = new SqlServerJobAgentResourceGetJobExecutionsByAgentOptions();
             await foreach (SqlServerJobExecutionResource item in sqlServerJobAgent.GetJobExecutionsByAgentAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well

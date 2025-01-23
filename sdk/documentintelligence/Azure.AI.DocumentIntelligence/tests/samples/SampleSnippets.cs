@@ -81,14 +81,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             var client = new DocumentIntelligenceClient(new Uri(endpoint), TestEnvironment.Credential);
 
             #region Snippet:DocumentIntelligenceBadRequest
-            var content = new AnalyzeDocumentContent()
-            {
-                UrlSource = new Uri("http://invalid.uri")
-            };
+            var uriSource = new Uri("http://invalid.uri");
+            var options = new AnalyzeDocumentOptions("prebuilt-receipt", uriSource);
 
             try
             {
-                Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-receipt", content);
+                Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
             }
             catch (RequestFailedException e)
             {
@@ -110,12 +108,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Uri uriSource = DocumentIntelligenceTestEnvironment.CreateUri("Form_1.jpg");
 #endif
 
-            var content = new AnalyzeDocumentContent()
-            {
-                UrlSource = uriSource
-            };
+            var options = new AnalyzeDocumentOptions("prebuilt-invoice", uriSource);
 
-            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-invoice", content);
+            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, options);
             AnalyzeResult result = operation.Value;
 
             DocumentPage firstPage = result.Pages[0];

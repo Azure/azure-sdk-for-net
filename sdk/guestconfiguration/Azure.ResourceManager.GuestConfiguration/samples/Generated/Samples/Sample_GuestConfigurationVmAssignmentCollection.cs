@@ -28,23 +28,20 @@ namespace Azure.ResourceManager.GuestConfiguration.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this GuestConfigurationVmAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Compute/virtualMachines/{2}", subscriptionId, resourceGroupName, vmName));
-            GuestConfigurationVmAssignmentCollection collection = client.GetGuestConfigurationVmAssignments(scopeId);
+            string scope = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+            GuestConfigurationVmAssignmentCollection collection = client.GetGuestConfigurationVmAssignments(new ResourceIdentifier(scope));
 
             // invoke the operation
             string guestConfigurationAssignmentName = "NotInstalledApplicationForWindows";
-            GuestConfigurationAssignmentData data = new GuestConfigurationAssignmentData()
+            GuestConfigurationAssignmentData data = new GuestConfigurationAssignmentData
             {
-                Properties = new GuestConfigurationAssignmentProperties()
+                Properties = new GuestConfigurationAssignmentProperties
                 {
-                    GuestConfiguration = new GuestConfigurationNavigation()
+                    GuestConfiguration = new GuestConfigurationNavigation
                     {
                         Name = "NotInstalledApplicationForWindows",
                         Version = "1.0.0.3",
@@ -52,14 +49,11 @@ namespace Azure.ResourceManager.GuestConfiguration.Samples
                         ContentHash = "123contenthash",
                         ContentManagedIdentity = "test_identity",
                         AssignmentType = GuestConfigurationAssignmentType.ApplyAndAutoCorrect,
-                        ConfigurationParameters =
-{
-new GuestConfigurationParameter()
+                        ConfigurationParameters = {new GuestConfigurationParameter
 {
 Name = "[InstalledApplication]NotInstalledApplicationResource1;Name",
 Value = "NotePad,sql",
-}
-},
+}},
                     },
                     Context = "Azure policy",
                 },
@@ -88,15 +82,12 @@ Value = "NotePad,sql",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this GuestConfigurationVmAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Compute/virtualMachines/{2}", subscriptionId, resourceGroupName, vmName));
-            GuestConfigurationVmAssignmentCollection collection = client.GetGuestConfigurationVmAssignments(scopeId);
+            string scope = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+            GuestConfigurationVmAssignmentCollection collection = client.GetGuestConfigurationVmAssignments(new ResourceIdentifier(scope));
 
             // invoke the operation
             string guestConfigurationAssignmentName = "SecureProtocol";
@@ -111,6 +102,38 @@ Value = "NotePad,sql",
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListAllGuestConfigurationAssignmentsForAVirtualMachine()
+        {
+            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/listGuestConfigurationAssignments.json
+            // this example is just showing the usage of "GuestConfigurationAssignments_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this GuestConfigurationVmAssignmentResource
+            string subscriptionId = "mySubscriptionId";
+            string resourceGroupName = "myResourceGroupName";
+            string vmName = "myVMName";
+            string scope = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+            GuestConfigurationVmAssignmentCollection collection = client.GetGuestConfigurationVmAssignments(new ResourceIdentifier(scope));
+
+            // invoke the operation and iterate over the result
+            await foreach (GuestConfigurationVmAssignmentResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                GuestConfigurationAssignmentData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAGuestConfigurationAssignment()
         {
             // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/getGuestConfigurationAssignment.json
@@ -121,15 +144,12 @@ Value = "NotePad,sql",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this GuestConfigurationVmAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Compute/virtualMachines/{2}", subscriptionId, resourceGroupName, vmName));
-            GuestConfigurationVmAssignmentCollection collection = client.GetGuestConfigurationVmAssignments(scopeId);
+            string scope = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+            GuestConfigurationVmAssignmentCollection collection = client.GetGuestConfigurationVmAssignments(new ResourceIdentifier(scope));
 
             // invoke the operation
             string guestConfigurationAssignmentName = "SecureProtocol";
@@ -150,15 +170,12 @@ Value = "NotePad,sql",
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this GuestConfigurationVmAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string vmName = "myVMName";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Compute/virtualMachines/{2}", subscriptionId, resourceGroupName, vmName));
-            GuestConfigurationVmAssignmentCollection collection = client.GetGuestConfigurationVmAssignments(scopeId);
+            string scope = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Compute/virtualMachines/{vmName}";
+            GuestConfigurationVmAssignmentCollection collection = client.GetGuestConfigurationVmAssignments(new ResourceIdentifier(scope));
 
             // invoke the operation
             string guestConfigurationAssignmentName = "SecureProtocol";
@@ -177,41 +194,6 @@ Value = "NotePad,sql",
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListAllGuestConfigurationAssignmentsForAVirtualMachine()
-        {
-            // Generated from example definition: specification/guestconfiguration/resource-manager/Microsoft.GuestConfiguration/stable/2024-04-05/examples/listGuestConfigurationAssignments.json
-            // this example is just showing the usage of "GuestConfigurationAssignments_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this GuestConfigurationVmAssignmentResource
-            string subscriptionId = "mySubscriptionId";
-            string resourceGroupName = "myResourceGroupName";
-            string vmName = "myVMName";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.Compute/virtualMachines/{2}", subscriptionId, resourceGroupName, vmName));
-            GuestConfigurationVmAssignmentCollection collection = client.GetGuestConfigurationVmAssignments(scopeId);
-
-            // invoke the operation and iterate over the result
-            await foreach (GuestConfigurationVmAssignmentResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                GuestConfigurationAssignmentData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

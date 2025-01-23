@@ -7,9 +7,6 @@ using System;
 using Azure.Core;
 using Azure.Storage.Stress;
 using BaseBlobs::Azure.Storage.Blobs;
-using System.Threading.Tasks;
-using System.IO;
-using System.Threading;
 using Azure.Storage.DataMovement.Stress;
 
 namespace Azure.Storage.DataMovement.Blobs.Stress
@@ -27,11 +24,11 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             Uri blobUri,
             int? blobSize,
             TransferManagerOptions transferManagerOptions,
-            DataTransferOptions dataTransferOptions,
+            TransferOptions transferOptions,
             TokenCredential tokenCredential,
             Metrics metrics,
             string testRunId)
-            : base(transferManagerOptions, dataTransferOptions, metrics, testRunId)
+            : base(transferManagerOptions, transferOptions, metrics, testRunId)
         {
             _destinationBlobUri = blobUri;
             _blobSize = blobSize != default ? blobSize.Value : DataMovementBlobStressConstants.DefaultObjectSize;

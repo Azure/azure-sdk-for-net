@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabEnvironmentResource devTestLabEnvironment = client.GetDevTestLabEnvironmentResource(devTestLabEnvironmentResourceId);
 
             // invoke the operation
-            DevTestLabEnvironmentPatch patch = new DevTestLabEnvironmentPatch()
+            DevTestLabEnvironmentPatch patch = new DevTestLabEnvironmentPatch
             {
                 Tags =
 {
-["tagName1"] = "tagValue1",
+["tagName1"] = "tagValue1"
 },
             };
             DevTestLabEnvironmentResource result = await devTestLabEnvironment.UpdateAsync(patch);

@@ -90,9 +90,9 @@ namespace Azure.ResourceManager.ServiceLinker.Samples
             LinkerResource linkerResource = client.GetLinkerResource(linkerResourceId);
 
             // invoke the operation
-            LinkerResourcePatch patch = new LinkerResourcePatch()
+            LinkerResourcePatch patch = new LinkerResourcePatch
             {
-                TargetService = new AzureResourceInfo()
+                TargetService = new AzureResourceInfo
                 {
                     Id = new ResourceIdentifier("/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test-rg/providers/Microsoft.DocumentDb/databaseAccounts/test-acc/mongodbDatabases/test-db"),
                 },

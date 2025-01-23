@@ -17,6 +17,41 @@ namespace Azure.ResourceManager.DevCenter.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_ImagesGet()
+        {
+            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Images_Get.json
+            // this example is just showing the usage of "Images_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DevCenterGalleryResource created on azure
+            // for more information of creating DevCenterGalleryResource, please refer to the document of DevCenterGalleryResource
+            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
+            string resourceGroupName = "rg1";
+            string devCenterName = "Contoso";
+            string galleryName = "DefaultDevGallery";
+            ResourceIdentifier devCenterGalleryResourceId = DevCenterGalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, galleryName);
+            DevCenterGalleryResource devCenterGallery = client.GetDevCenterGalleryResource(devCenterGalleryResourceId);
+
+            // get the collection of this DevCenterImageResource
+            DevCenterImageCollection collection = devCenterGallery.GetDevCenterImages();
+
+            // invoke the operation
+            string imageName = "ContosoBaseImage";
+            DevCenterImageResource result = await collection.GetAsync(imageName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DevCenterImageData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ImagesListByGallery()
         {
             // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Images_ListByGallery.json
@@ -50,41 +85,6 @@ namespace Azure.ResourceManager.DevCenter.Samples
             }
 
             Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_ImagesGet()
-        {
-            // Generated from example definition: specification/devcenter/resource-manager/Microsoft.DevCenter/stable/2023-04-01/examples/Images_Get.json
-            // this example is just showing the usage of "Images_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DevCenterGalleryResource created on azure
-            // for more information of creating DevCenterGalleryResource, please refer to the document of DevCenterGalleryResource
-            string subscriptionId = "0ac520ee-14c0-480f-b6c9-0a90c58ffff";
-            string resourceGroupName = "rg1";
-            string devCenterName = "Contoso";
-            string galleryName = "DefaultDevGallery";
-            ResourceIdentifier devCenterGalleryResourceId = DevCenterGalleryResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, devCenterName, galleryName);
-            DevCenterGalleryResource devCenterGallery = client.GetDevCenterGalleryResource(devCenterGalleryResourceId);
-
-            // get the collection of this DevCenterImageResource
-            DevCenterImageCollection collection = devCenterGallery.GetDevCenterImages();
-
-            // invoke the operation
-            string imageName = "ContosoBaseImage";
-            DevCenterImageResource result = await collection.GetAsync(imageName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DevCenterImageData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]

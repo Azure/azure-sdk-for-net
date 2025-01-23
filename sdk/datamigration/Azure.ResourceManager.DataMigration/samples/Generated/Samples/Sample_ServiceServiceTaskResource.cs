@@ -96,9 +96,9 @@ namespace Azure.ResourceManager.DataMigration.Samples
             ServiceServiceTaskResource serviceServiceTask = client.GetServiceServiceTaskResource(serviceServiceTaskResourceId);
 
             // invoke the operation
-            ProjectTaskData data = new ProjectTaskData()
+            ProjectTaskData data = new ProjectTaskData
             {
-                Properties = new CheckOciDriverTaskProperties()
+                Properties = new CheckOciDriverTaskProperties
                 {
                     InputServerVersion = "NA",
                 },

@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             SessionHostResource sessionHost = client.GetSessionHostResource(sessionHostResourceId);
 
             // invoke the operation
-            SessionHostPatch patch = new SessionHostPatch()
+            SessionHostPatch patch = new SessionHostPatch
             {
                 AllowNewSession = true,
                 AssignedUser = "user1@microsoft.com",

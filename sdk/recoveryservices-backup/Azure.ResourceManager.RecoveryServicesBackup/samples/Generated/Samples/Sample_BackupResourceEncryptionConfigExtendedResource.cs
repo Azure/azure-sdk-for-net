@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupResourceEncryptionConfigExtendedResource backupResourceEncryptionConfigExtended = client.GetBackupResourceEncryptionConfigExtendedResource(backupResourceEncryptionConfigExtendedResourceId);
 
             // invoke the operation
-            BackupResourceEncryptionConfigExtendedCreateOrUpdateContent content = new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(new AzureLocation("placeholder"))
+            BackupResourceEncryptionConfigExtendedCreateOrUpdateContent content = new BackupResourceEncryptionConfigExtendedCreateOrUpdateContent(default)
             {
-                Properties = new BackupResourceEncryptionConfig()
+                Properties = new BackupResourceEncryptionConfig
                 {
                     EncryptionAtRestType = BackupEncryptionAtRestType.CustomerManaged,
                     KeyUri = new Uri("https://gktestkv1.vault.azure.net/keys/Test1/ed2e8cdc7f86477ebf0c6462b504a9ed"),

@@ -38,18 +38,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Samples
 
             // invoke the operation
             string deploymentId = "kjoiahxljomjcmvabaobumg";
-            DeploymentPreflightModel body = new DeploymentPreflightModel()
+            DeploymentPreflightModel body = new DeploymentPreflightModel
             {
-                Resources =
-{
-new DeploymentPreflightResourceInfo()
+                Resources = {new DeploymentPreflightResourceInfo
 {
 Name = "xtgugoflfc",
 DeploymentPreflightResourceType = new ResourceType("nsnaptduolqcxsikrewvgjbxqpt"),
 Location = new AzureLocation("cbsgtxkjdzwbyp"),
 ApiVersion = "otihymhvzblycdoxo",
-}
-},
+}},
             };
             DeploymentPreflightModel result = await resourceGroupResource.DeploymentPreflightAsync(deploymentId, body: body);
 

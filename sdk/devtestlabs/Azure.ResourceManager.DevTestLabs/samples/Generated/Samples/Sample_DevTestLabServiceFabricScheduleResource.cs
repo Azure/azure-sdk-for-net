@@ -102,11 +102,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabServiceFabricScheduleResource devTestLabServiceFabricSchedule = client.GetDevTestLabServiceFabricScheduleResource(devTestLabServiceFabricScheduleResourceId);
 
             // invoke the operation
-            DevTestLabSchedulePatch patch = new DevTestLabSchedulePatch()
+            DevTestLabSchedulePatch patch = new DevTestLabSchedulePatch
             {
                 Tags =
 {
-["tagName1"] = "tagValue1",
+["tagName1"] = "tagValue1"
 },
             };
             DevTestLabServiceFabricScheduleResource result = await devTestLabServiceFabricSchedule.UpdateAsync(patch);

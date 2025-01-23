@@ -101,14 +101,8 @@ namespace Azure.ResourceManager.TrafficManager.Samples
             TrafficManagerHeatMapResource trafficManagerHeatMap = client.GetTrafficManagerHeatMapResource(trafficManagerHeatMapResourceId);
 
             // invoke the operation
-            IEnumerable<double> topLeft = new double[]
-            {
-10,50.001
-            };
-            IEnumerable<double> botRight = new double[]
-            {
--50.001,80
-            };
+            IEnumerable<double> topLeft = new double[] { 10, 50.001 };
+            IEnumerable<double> botRight = new double[] { -50.001, 80 };
             TrafficManagerHeatMapResource result = await trafficManagerHeatMap.GetAsync(topLeft: topLeft, botRight: botRight);
 
             // the variable result is a resource, you could call other operations on this instance as well

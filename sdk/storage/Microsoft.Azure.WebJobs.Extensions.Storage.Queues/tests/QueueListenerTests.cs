@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -15,6 +16,7 @@ using Microsoft.Azure.WebJobs.Extensions.Storage.Common;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Listeners;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Common.Tests;
 using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Listeners;
+using Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Azure.WebJobs.Host.Executors;
 using Microsoft.Azure.WebJobs.Host.Protocols;
@@ -649,6 +651,136 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
         }
 
         [Test]
+        public async Task CompleteProcessingMessageAsync_PassesShutdownCancellationToken()
+        {
+            var systemShutdownCts = new CancellationTokenSource();
+            QueueProcessorOptions options = new QueueProcessorOptions(_mockQueue.Object, _loggerFactory, _queuesOptions);
+            var testQueueProcessor = new TestQueueProcessor(options);
+
+            _mockTriggerExecutor.Setup(x => x.ExecuteAsync(It.IsAny<QueueMessage>(), It.IsAny<CancellationToken>()))
+                               .ReturnsAsync(new FunctionResult(true));
+
+            var exceptionHandlerMock = new Mock<IWebJobsExceptionHandler>();
+
+            var listener = new QueueListener(
+               _mockQueue.Object,
+               null,
+               _mockTriggerExecutor.Object,
+               _mockExceptionDispatcher.Object,
+               _loggerFactory,
+               null,
+               _queuesOptions,
+               testQueueProcessor,
+               new FunctionDescriptor { Id = TestFunctionId },
+               null,
+               drainModeManager: null);
+
+            SetCancellationToken(listener, systemShutdownCts, "_shutdownCancellationTokenSource");
+
+            // Act
+            await listener.ProcessMessageAsync(_queueMessage, TimeSpan.FromMinutes(2), CancellationToken.None);
+
+            Assert.AreEqual(systemShutdownCts.Token, testQueueProcessor.CapturedDeleteToken);
+        }
+
+        [Test]
+        public async Task StopAsync_WhenDrainModeNotEnabled_ExecutionCancellationTokenIsCanceled()
+        {
+            var drainModeManagerMock = new Mock<IDrainModeManager>();
+            drainModeManagerMock.Setup(d => d.IsDrainModeEnabled).Returns(false);
+            var executionCancellationTokenSource = new CancellationTokenSource();
+
+            var listener = new QueueListener(
+                _mockQueue.Object,
+                null,
+                _mockTriggerExecutor.Object,
+                _mockExceptionDispatcher.Object,
+                _loggerFactory,
+                null,
+                _queuesOptions,
+                _mockQueueProcessor.Object,
+                new FunctionDescriptor { Id = TestFunctionId },
+                null,
+                drainModeManager: drainModeManagerMock.Object);
+
+            SetCancellationToken(listener, executionCancellationTokenSource, "_executionCancellationTokenSource");
+
+            // Act
+            await listener.StartAsync(CancellationToken.None);
+            await listener.StopAsync(CancellationToken.None);
+
+            // Assert
+            Assert.IsTrue(executionCancellationTokenSource.Token.IsCancellationRequested, "Execution token should be canceled when drain mode is not enabled.");
+        }
+
+        [Test]
+        public async Task StopAsync_WhenDrainModeEnabled_ExecutionCancellationTokenIsNotCanceled()
+        {
+            // Arrange
+            var drainModeManagerMock = new Mock<IDrainModeManager>();
+            drainModeManagerMock.Setup(d => d.IsDrainModeEnabled).Returns(true);
+            var executionCancellationTokenSource = new CancellationTokenSource();
+
+            var listener = new QueueListener(
+                _mockQueue.Object,
+                null,
+                _mockTriggerExecutor.Object,
+                _mockExceptionDispatcher.Object,
+                _loggerFactory,
+                null,
+                _queuesOptions,
+                _mockQueueProcessor.Object,
+                new FunctionDescriptor { Id = TestFunctionId },
+                null,
+                drainModeManager: drainModeManagerMock.Object);
+
+            SetCancellationToken(listener, executionCancellationTokenSource, "_executionCancellationTokenSource");
+
+            // Act
+            await listener.StartAsync(CancellationToken.None);
+            await listener.StopAsync(CancellationToken.None);
+
+            // Assert
+            Assert.IsFalse(executionCancellationTokenSource.Token.IsCancellationRequested, "Execution token should not be canceled when drain mode is enabled.");
+        }
+
+        [Test]
+        public async Task StopAsync_ActivatesCancellation_WhenDrainModeManagerNull()
+        {
+            // Arrange
+            var executionCancellationTokenSource = new CancellationTokenSource();
+
+            var listener = new QueueListener(
+               _mockQueue.Object,
+               null,
+               _mockTriggerExecutor.Object,
+               _mockExceptionDispatcher.Object,
+               _loggerFactory,
+               null,
+               _queuesOptions,
+               _mockQueueProcessor.Object,
+               new FunctionDescriptor { Id = TestFunctionId },
+               null,
+               drainModeManager: null);
+
+            SetCancellationToken(listener, executionCancellationTokenSource, "_executionCancellationTokenSource");
+
+            // Act
+            await listener.StartAsync(CancellationToken.None);
+
+            await listener.StopAsync(CancellationToken.None);
+
+            // Assert
+            Assert.IsTrue(executionCancellationTokenSource.Token.IsCancellationRequested, "Execution token should be canceled when drain mode manager is null.");
+        }
+
+        private static void SetCancellationToken(QueueListener listener, CancellationTokenSource cts, string fieldName)
+        {
+            var shutdownTokenField = typeof(QueueListener).GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+            shutdownTokenField.SetValue(listener, cts);
+        }
+
+        [Test]
         public void Get_TargetScale_IsNotNull()
         {
             var concurrencyOptions = new ConcurrencyOptions
@@ -676,6 +808,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues
             var result = localListener.GetTargetScaler();
             Assert.IsNotNull(result);
         }
+
         public class TestFixture : IDisposable
         {
             private const string TestQueuePrefix = "queuelistenertests";

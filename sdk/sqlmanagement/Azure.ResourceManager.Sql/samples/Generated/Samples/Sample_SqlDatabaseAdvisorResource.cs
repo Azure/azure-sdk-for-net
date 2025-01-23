@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlDatabaseAdvisorResource sqlDatabaseAdvisor = client.GetSqlDatabaseAdvisorResource(sqlDatabaseAdvisorResourceId);
 
             // invoke the operation
-            SqlAdvisorData data = new SqlAdvisorData()
+            SqlAdvisorData data = new SqlAdvisorData
             {
                 AutoExecuteStatus = AutoExecuteStatus.Disabled,
             };

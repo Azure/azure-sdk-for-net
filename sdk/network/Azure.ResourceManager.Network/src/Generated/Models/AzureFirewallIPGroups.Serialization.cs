@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 if (property.NameEquals("changeNumber"u8))
                 {
-                    changeNumber = property.Value.GetString();
+                    DeserializeNumberValue(property, ref changeNumber);
                     continue;
                 }
                 if (options.Format != "W")

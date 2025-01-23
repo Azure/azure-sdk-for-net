@@ -70,25 +70,27 @@ namespace Azure.ResourceManager.DataBox.Samples
             AzureLocation location = new AzureLocation("westus");
             DataBoxValidationContent content = new CreateJobValidationContent(new DataBoxValidationInputContent[]
             {
-new DataTransferDetailsValidationContent(DataBoxSkuName.DataBox,DataBoxJobTransferType.ImportToAzure)
+new DataTransferDetailsValidationContent(DataBoxSkuName.DataBox, DataBoxJobTransferType.ImportToAzure)
 {
-DataImportDetails =
-{
-new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourcegroups/YourResourceGroupName/providers/Microsoft.Storage/storageAccounts/YourStorageAccountName")))
+DataImportDetails = {new DataImportDetails(new DataBoxStorageAccountDetails(new ResourceIdentifier("/subscriptions/YourSubscriptionId/resourcegroups/YourResourceGroupName/providers/Microsoft.Storage/storageAccounts/YourStorageAccountName")))},
 },
-},new DataBoxValidateAddressContent(new DataBoxShippingAddress("XXXX XXXX","XX","00000")
+new DataBoxValidateAddressContent(new DataBoxShippingAddress("XXXX XXXX", "XX", "00000")
 {
 StreetAddress2 = "XXXX XXXX",
 City = "XXXX XXXX",
 StateOrProvince = "XX",
 CompanyName = "XXXX XXXX",
 AddressType = DataBoxShippingAddressType.Commercial,
-},DataBoxSkuName.DataBox)
+}, DataBoxSkuName.DataBox)
 {
 TransportPreferences = new TransportPreferences(TransportShipmentType.MicrosoftManaged),
-},new SubscriptionIsAllowedToCreateJobValidationContent(),new SkuAvailabilityValidationContent(DataBoxSkuName.DataBox,DataBoxJobTransferType.ImportToAzure,"XX",new AzureLocation("westus")),new CreateOrderLimitForSubscriptionValidationContent(DataBoxSkuName.DataBox),new PreferencesValidationContent(DataBoxSkuName.DataBox)
+},
+new SubscriptionIsAllowedToCreateJobValidationContent(),
+new SkuAvailabilityValidationContent(DataBoxSkuName.DataBox, DataBoxJobTransferType.ImportToAzure, "XX", new AzureLocation("westus")),
+new CreateOrderLimitForSubscriptionValidationContent(DataBoxSkuName.DataBox),
+new PreferencesValidationContent(DataBoxSkuName.DataBox)
 {
-Preference = new DataBoxOrderPreferences()
+Preference = new DataBoxOrderPreferences
 {
 TransportPreferences = new TransportPreferences(TransportShipmentType.MicrosoftManaged),
 },
@@ -120,7 +122,7 @@ TransportPreferences = new TransportPreferences(TransportShipmentType.MicrosoftM
 
             // invoke the operation
             AzureLocation location = new AzureLocation("westus");
-            RegionConfigurationContent content = new RegionConfigurationContent()
+            RegionConfigurationContent content = new RegionConfigurationContent
             {
                 ScheduleAvailabilityRequest = new DataBoxScheduleAvailabilityContent(new AzureLocation("westus")),
             };

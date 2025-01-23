@@ -10,3 +10,6 @@ namespace Azure.AI.OpenAI;
 [Experimental("AOAI001")][CodeGenModel("AzureContentFilterBlocklistResultDetail")] internal partial class InternalAzureContentFilterBlocklistResultDetail { }
 [Experimental("AOAI001")][CodeGenModel("AzureContentFilterResultForPromptContentFilterResults")] internal partial class InternalAzureContentFilterResultForPromptContentFilterResults { }
 [Experimental("AOAI001")][CodeGenModel("AzureContentFilterResultForPromptContentFilterResultsError")] internal partial class InternalAzureContentFilterResultForPromptContentFilterResultsError { }
+#if AZURE_OPENAI_GA
+[Experimental("AOAI001")][CodeGenModel("AzureContentFilterCompletionTextSpan")] internal partial class ContentFilterTextSpan { }
+#endif

@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.AppContainers.Samples
             ContainerAppConnectedEnvironmentCertificateResource containerAppConnectedEnvironmentCertificate = client.GetContainerAppConnectedEnvironmentCertificateResource(containerAppConnectedEnvironmentCertificateResourceId);
 
             // invoke the operation
-            ContainerAppCertificatePatch patch = new ContainerAppCertificatePatch()
+            ContainerAppCertificatePatch patch = new ContainerAppCertificatePatch
             {
                 Tags =
 {
 ["tag1"] = "value1",
-["tag2"] = "value2",
+["tag2"] = "value2"
 },
             };
             ContainerAppConnectedEnvironmentCertificateResource result = await containerAppConnectedEnvironmentCertificate.UpdateAsync(patch);

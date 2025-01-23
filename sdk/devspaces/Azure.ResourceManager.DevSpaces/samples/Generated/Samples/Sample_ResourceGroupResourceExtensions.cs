@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DevSpaces.Samples
 
             // invoke the operation
             AzureLocation location = new AzureLocation("eastus");
-            ContainerHostMapping containerHostMapping = new ContainerHostMapping()
+            ContainerHostMapping containerHostMapping = new ContainerHostMapping
             {
                 ContainerHostResourceId = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/myResourceGroup/providers/Microsoft.ContainerService/managedClusters/myCluster",
             };

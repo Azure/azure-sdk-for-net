@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Resources.Samples
             ArmApplicationResource armApplication = client.GetArmApplicationResource(armApplicationResourceId);
 
             // invoke the operation
-            ArmApplicationPatch patch = new ArmApplicationPatch(new AzureLocation("placeholder"))
+            ArmApplicationPatch patch = new ArmApplicationPatch(default)
             {
                 Kind = "ServiceCatalog",
                 ManagedResourceGroupId = new ResourceIdentifier("/subscriptions/subid/resourceGroups/myManagedRG"),

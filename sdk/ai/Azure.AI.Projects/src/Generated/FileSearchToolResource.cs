@@ -58,9 +58,9 @@ namespace Azure.AI.Projects
         /// store attached to the agent.
         /// </param>
         /// <param name="vectorStores">
-        /// The list of vector store configuration objects from Azure. This list is limited to one
-        /// element. The only element of this list contains
-        /// the list of azure asset IDs used by the search tool.
+        /// The list of vector store configuration objects from Azure.
+        /// This list is limited to one element.
+        /// The only element of this list contains the list of azure asset IDs used by the search tool.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal FileSearchToolResource(IList<string> vectorStoreIds, IList<VectorStoreConfigurations> vectorStores, IDictionary<string, BinaryData> serializedAdditionalRawData)
@@ -76,9 +76,9 @@ namespace Azure.AI.Projects
         /// </summary>
         public IList<string> VectorStoreIds { get; }
         /// <summary>
-        /// The list of vector store configuration objects from Azure. This list is limited to one
-        /// element. The only element of this list contains
-        /// the list of azure asset IDs used by the search tool.
+        /// The list of vector store configuration objects from Azure.
+        /// This list is limited to one element.
+        /// The only element of this list contains the list of azure asset IDs used by the search tool.
         /// </summary>
         public IList<VectorStoreConfigurations> VectorStores { get; }
     }

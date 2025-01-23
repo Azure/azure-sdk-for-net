@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             PostgreSqlFlexibleServerConfigurationResource postgreSqlFlexibleServerConfiguration = client.GetPostgreSqlFlexibleServerConfigurationResource(postgreSqlFlexibleServerConfigurationResourceId);
 
             // invoke the operation
-            PostgreSqlFlexibleServerConfigurationData data = new PostgreSqlFlexibleServerConfigurationData()
+            PostgreSqlFlexibleServerConfigurationData data = new PostgreSqlFlexibleServerConfigurationData
             {
                 Value = "on",
                 Source = "user-override",

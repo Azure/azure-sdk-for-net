@@ -18,6 +18,43 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatesOrUpdatesTheDefenderForStorageSettingsOnASpecifiedResource()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2022-12-01-preview/examples/DefenderForStorage/PutDefenderForStorageSettings_example.json
+            // this example is just showing the usage of "DefenderForStorage_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this DefenderForStorageSettingResource
+            string resourceId = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/SampleRG/providers/Microsoft.Storage/storageAccounts/samplestorageaccount";
+            DefenderForStorageSettingCollection collection = client.GetDefenderForStorageSettings(new ResourceIdentifier(resourceId));
+
+            // invoke the operation
+            DefenderForStorageSettingName settingName = DefenderForStorageSettingName.Current;
+            DefenderForStorageSettingData data = new DefenderForStorageSettingData
+            {
+                IsEnabled = true,
+                IsOverrideSubscriptionLevelSettingsEnabled = true,
+                IsSensitiveDataDiscoveryEnabled = true,
+                ScanResultsEventGridTopicResourceId = new ResourceIdentifier("/subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/SampleRG/providers/Microsoft.EventGrid/topics/sampletopic"),
+                IsMalwareScanningOnUploadEnabled = true,
+                CapGBPerMonth = -1,
+            };
+            ArmOperation<DefenderForStorageSettingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, settingName, data);
+            DefenderForStorageSettingResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            DefenderForStorageSettingData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetsTheDefenderForStorageSettingsForTheSpecifiedResource()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2022-12-01-preview/examples/DefenderForStorage/GetDefenderForStorageSettings_example.json
@@ -28,13 +65,9 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this DefenderForStorageSettingResource
             string resourceId = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/SampleRG/providers/Microsoft.Storage/storageAccounts/samplestorageaccount";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceId));
-            DefenderForStorageSettingCollection collection = client.GetDefenderForStorageSettings(scopeId);
+            DefenderForStorageSettingCollection collection = client.GetDefenderForStorageSettings(new ResourceIdentifier(resourceId));
 
             // invoke the operation
             DefenderForStorageSettingName settingName = DefenderForStorageSettingName.Current;
@@ -59,13 +92,9 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this DefenderForStorageSettingResource
             string resourceId = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/SampleRG/providers/Microsoft.Storage/storageAccounts/samplestorageaccount";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceId));
-            DefenderForStorageSettingCollection collection = client.GetDefenderForStorageSettings(scopeId);
+            DefenderForStorageSettingCollection collection = client.GetDefenderForStorageSettings(new ResourceIdentifier(resourceId));
 
             // invoke the operation
             DefenderForStorageSettingName settingName = DefenderForStorageSettingName.Current;
@@ -86,13 +115,9 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this DefenderForStorageSettingResource
             string resourceId = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/SampleRG/providers/Microsoft.Storage/storageAccounts/samplestorageaccount";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceId));
-            DefenderForStorageSettingCollection collection = client.GetDefenderForStorageSettings(scopeId);
+            DefenderForStorageSettingCollection collection = client.GetDefenderForStorageSettings(new ResourceIdentifier(resourceId));
 
             // invoke the operation
             DefenderForStorageSettingName settingName = DefenderForStorageSettingName.Current;
@@ -111,47 +136,6 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CreatesOrUpdatesTheDefenderForStorageSettingsOnASpecifiedResource()
-        {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2022-12-01-preview/examples/DefenderForStorage/PutDefenderForStorageSettings_example.json
-            // this example is just showing the usage of "DefenderForStorage_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this DefenderForStorageSettingResource
-            string resourceId = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/SampleRG/providers/Microsoft.Storage/storageAccounts/samplestorageaccount";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/{0}", resourceId));
-            DefenderForStorageSettingCollection collection = client.GetDefenderForStorageSettings(scopeId);
-
-            // invoke the operation
-            DefenderForStorageSettingName settingName = DefenderForStorageSettingName.Current;
-            DefenderForStorageSettingData data = new DefenderForStorageSettingData()
-            {
-                IsEnabled = true,
-                IsOverrideSubscriptionLevelSettingsEnabled = true,
-                IsSensitiveDataDiscoveryEnabled = true,
-                ScanResultsEventGridTopicResourceId = new ResourceIdentifier("/subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/SampleRG/providers/Microsoft.EventGrid/topics/sampletopic"),
-                IsMalwareScanningOnUploadEnabled = true,
-                CapGBPerMonth = -1,
-            };
-            ArmOperation<DefenderForStorageSettingResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, settingName, data);
-            DefenderForStorageSettingResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            DefenderForStorageSettingData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

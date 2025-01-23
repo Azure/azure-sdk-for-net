@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.ContainerService.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListPrivateEndpointConnectionsByManagedCluster()
+        public async Task CreateOrUpdate_UpdatePrivateEndpointConnection()
         {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/PrivateEndpointConnectionsList.json
-            // this example is just showing the usage of "PrivateEndpointConnections_List" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/PrivateEndpointConnectionsUpdate.json
+            // this example is just showing the usage of "PrivateEndpointConnections_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,17 +39,23 @@ namespace Azure.ResourceManager.ContainerService.Samples
             // get the collection of this ContainerServicePrivateEndpointConnectionResource
             ContainerServicePrivateEndpointConnectionCollection collection = containerServiceManagedCluster.GetContainerServicePrivateEndpointConnections();
 
-            // invoke the operation and iterate over the result
-            await foreach (ContainerServicePrivateEndpointConnectionResource item in collection.GetAllAsync())
+            // invoke the operation
+            string privateEndpointConnectionName = "privateendpointconnection1";
+            ContainerServicePrivateEndpointConnectionData data = new ContainerServicePrivateEndpointConnectionData
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ContainerServicePrivateEndpointConnectionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                ConnectionState = new ContainerServicePrivateLinkServiceConnectionState
+                {
+                    Status = ContainerServicePrivateLinkServiceConnectionStatus.Approved,
+                },
+            };
+            ArmOperation<ContainerServicePrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
+            ContainerServicePrivateEndpointConnectionResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            ContainerServicePrivateEndpointConnectionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -84,6 +90,42 @@ namespace Azure.ResourceManager.ContainerService.Samples
             ContainerServicePrivateEndpointConnectionData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListPrivateEndpointConnectionsByManagedCluster()
+        {
+            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/PrivateEndpointConnectionsList.json
+            // this example is just showing the usage of "PrivateEndpointConnections_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
+            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "rg1";
+            string resourceName = "clustername1";
+            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
+
+            // get the collection of this ContainerServicePrivateEndpointConnectionResource
+            ContainerServicePrivateEndpointConnectionCollection collection = containerServiceManagedCluster.GetContainerServicePrivateEndpointConnections();
+
+            // invoke the operation and iterate over the result
+            await foreach (ContainerServicePrivateEndpointConnectionResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                ContainerServicePrivateEndpointConnectionData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -156,48 +198,6 @@ namespace Azure.ResourceManager.ContainerService.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_UpdatePrivateEndpointConnection()
-        {
-            // Generated from example definition: specification/containerservice/resource-manager/Microsoft.ContainerService/aks/stable/2023-10-01/examples/PrivateEndpointConnectionsUpdate.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ContainerServiceManagedClusterResource created on azure
-            // for more information of creating ContainerServiceManagedClusterResource, please refer to the document of ContainerServiceManagedClusterResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "rg1";
-            string resourceName = "clustername1";
-            ResourceIdentifier containerServiceManagedClusterResourceId = ContainerServiceManagedClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ContainerServiceManagedClusterResource containerServiceManagedCluster = client.GetContainerServiceManagedClusterResource(containerServiceManagedClusterResourceId);
-
-            // get the collection of this ContainerServicePrivateEndpointConnectionResource
-            ContainerServicePrivateEndpointConnectionCollection collection = containerServiceManagedCluster.GetContainerServicePrivateEndpointConnections();
-
-            // invoke the operation
-            string privateEndpointConnectionName = "privateendpointconnection1";
-            ContainerServicePrivateEndpointConnectionData data = new ContainerServicePrivateEndpointConnectionData()
-            {
-                ConnectionState = new ContainerServicePrivateLinkServiceConnectionState()
-                {
-                    Status = ContainerServicePrivateLinkServiceConnectionStatus.Approved,
-                },
-            };
-            ArmOperation<ContainerServicePrivateEndpointConnectionResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateEndpointConnectionName, data);
-            ContainerServicePrivateEndpointConnectionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            ContainerServicePrivateEndpointConnectionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

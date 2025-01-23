@@ -869,7 +869,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         // The following properties should have been updated.
 
                         Assert.That(newPartitionProperties.LastEnqueuedSequenceNumber, Is.GreaterThan(oldPartitionProperties.LastEnqueuedSequenceNumber));
-                        Assert.That(newPartitionProperties.LastEnqueuedOffset, Is.GreaterThan(oldPartitionProperties.LastEnqueuedOffset));
+                        Assert.That(newPartitionProperties.LastEnqueuedOffsetString, Is.GreaterThan(oldPartitionProperties.LastEnqueuedOffsetString));
                     }
                 }
             }
@@ -920,7 +920,8 @@ namespace Azure.Messaging.EventHubs.Tests
                         // The following properties should have been updated.
 
                         Assert.That(newPartitionProperties.LastEnqueuedSequenceNumber, Is.GreaterThan(oldPartitionProperties.LastEnqueuedSequenceNumber));
-                        Assert.That(newPartitionProperties.LastEnqueuedOffset, Is.GreaterThan(oldPartitionProperties.LastEnqueuedOffset));
+                        Assert.That(newPartitionProperties.LastEnqueuedOffsetString, Is.Not.EqualTo(oldPartitionProperties.LastEnqueuedOffsetString));
+                        Assert.That(newPartitionProperties.LastEnqueuedOffsetString, Is.Not.Null.And.Not.Empty);
                     }
                 }
             }
@@ -964,7 +965,7 @@ namespace Azure.Messaging.EventHubs.Tests
                         Assert.That(newPartitionProperties.EventHubName, Is.EqualTo(oldPartitionProperties.EventHubName));
                         Assert.That(newPartitionProperties.BeginningSequenceNumber, Is.EqualTo(oldPartitionProperties.BeginningSequenceNumber));
                         Assert.That(newPartitionProperties.LastEnqueuedSequenceNumber, Is.EqualTo(oldPartitionProperties.LastEnqueuedSequenceNumber));
-                        Assert.That(newPartitionProperties.LastEnqueuedOffset, Is.EqualTo(oldPartitionProperties.LastEnqueuedOffset));
+                        Assert.That(newPartitionProperties.LastEnqueuedOffsetString, Is.EqualTo(oldPartitionProperties.LastEnqueuedOffsetString));
                     }
                 }
             }
@@ -1375,7 +1376,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     Assert.That(partitionProperties.EventHubName, Is.EqualTo(scope.EventHubName).Using((IEqualityComparer<string>)StringComparer.InvariantCultureIgnoreCase), "The Event Hub path should match.");
                     Assert.That(partitionProperties.BeginningSequenceNumber, Is.Not.EqualTo(default(long)), "The beginning sequence number should have been populated.");
                     Assert.That(partitionProperties.LastEnqueuedSequenceNumber, Is.Not.EqualTo(default(long)), "The last sequence number should have been populated.");
-                    Assert.That(partitionProperties.LastEnqueuedOffset, Is.Not.EqualTo(default(long)), "The last offset should have been populated.");
+                    Assert.That(partitionProperties.LastEnqueuedOffsetString, Is.Not.Null.And.Not.Empty, "The last offset should have been populated.");
                 }
             }
         }

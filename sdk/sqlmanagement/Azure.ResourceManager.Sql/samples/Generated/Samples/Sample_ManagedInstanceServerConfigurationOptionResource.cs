@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceServerConfigurationOptionResource managedInstanceServerConfigurationOption = client.GetManagedInstanceServerConfigurationOptionResource(managedInstanceServerConfigurationOptionResourceId);
 
             // invoke the operation
-            ManagedInstanceServerConfigurationOptionData data = new ManagedInstanceServerConfigurationOptionData()
+            ManagedInstanceServerConfigurationOptionData data = new ManagedInstanceServerConfigurationOptionData
             {
                 ServerConfigurationOptionValue = 1,
             };

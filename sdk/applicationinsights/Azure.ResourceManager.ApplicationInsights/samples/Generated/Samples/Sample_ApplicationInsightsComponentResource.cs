@@ -10,70 +10,12 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.ApplicationInsights.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.ApplicationInsights.Samples
 {
     public partial class Sample_ApplicationInsightsComponentResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetApplicationInsightsComponents_ComponentsListJson()
-        {
-            // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2020-02-02/examples/ComponentsList.json
-            // this example is just showing the usage of "Components_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (ApplicationInsightsComponentResource item in subscriptionResource.GetApplicationInsightsComponentsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                ApplicationInsightsComponentData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_ComponentsDelete()
-        {
-            // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2020-02-02/examples/ComponentsDelete.json
-            // this example is just showing the usage of "Components_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ApplicationInsightsComponentResource created on azure
-            // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "my-resource-group";
-            string resourceName = "my-component";
-            ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
-
-            // invoke the operation
-            await applicationInsightsComponent.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_ComponentGet()
@@ -106,6 +48,32 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_ComponentsDelete()
+        {
+            // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2020-02-02/examples/ComponentsDelete.json
+            // this example is just showing the usage of "Components_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ApplicationInsightsComponentResource created on azure
+            // for more information of creating ApplicationInsightsComponentResource, please refer to the document of ApplicationInsightsComponentResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "my-resource-group";
+            string resourceName = "my-component";
+            ResourceIdentifier applicationInsightsComponentResourceId = ApplicationInsightsComponentResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
+
+            // invoke the operation
+            await applicationInsightsComponent.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_ComponentUpdateTagsOnly()
         {
             // Generated from example definition: specification/applicationinsights/resource-manager/Microsoft.Insights/stable/2020-02-02/examples/ComponentsUpdateTagsOnly.json
@@ -125,7 +93,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation
-            WebTestComponentTag componentTags = new WebTestComponentTag()
+            WebTestComponentTag componentTags = new WebTestComponentTag
             {
                 Tags =
 {
@@ -133,7 +101,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
 ["BillingEntity"] = "Self",
 ["Color"] = "AzureBlue",
 ["CustomField_01"] = "Custom text in some random field named randomly",
-["NodeType"] = "Edge",
+["NodeType"] = "Edge"
 },
             };
             ApplicationInsightsComponentResource result = await applicationInsightsComponent.UpdateAsync(componentTags);
@@ -168,11 +136,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Samples
             // invoke the operation
             ComponentPurgeContent content = new ComponentPurgeContent("Heartbeat", new ComponentPurgeFilters[]
             {
-new ComponentPurgeFilters()
+new ComponentPurgeFilters
 {
 Column = "TimeGenerated",
 Operator = ">",
-Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
+Value = BinaryData.FromObjectAsJson("2017-09-01T00:00:00"),
 }
             });
             ComponentPurgeResult result = await applicationInsightsComponent.PurgeAsync(content);
@@ -259,7 +227,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation and iterate over the result
-            ApplicationInsightsAnnotation annotationProperties = new ApplicationInsightsAnnotation()
+            ApplicationInsightsAnnotation annotationProperties = new ApplicationInsightsAnnotation
             {
                 AnnotationName = "TestAnnotation",
                 Category = "Text",
@@ -382,17 +350,11 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation
-            ApplicationInsightsApiKeyContent content = new ApplicationInsightsApiKeyContent()
+            ApplicationInsightsApiKeyContent content = new ApplicationInsightsApiKeyContent
             {
                 Name = "test2",
-                LinkedReadProperties =
-{
-"/subscriptions/subid/resourceGroups/my-resource-group/providers/Microsoft.Insights/components/my-component/api","/subscriptions/subid/resourceGroups/my-resource-group/providers/Microsoft.Insights/components/my-component/agentconfig"
-},
-                LinkedWriteProperties =
-{
-"/subscriptions/subid/resourceGroups/my-resource-group/providers/Microsoft.Insights/components/my-component/annotations"
-},
+                LinkedReadProperties = { "/subscriptions/subid/resourceGroups/my-resource-group/providers/Microsoft.Insights/components/my-component/api", "/subscriptions/subid/resourceGroups/my-resource-group/providers/Microsoft.Insights/components/my-component/agentconfig" },
+                LinkedWriteProperties = { "/subscriptions/subid/resourceGroups/my-resource-group/providers/Microsoft.Insights/components/my-component/annotations" },
             };
             ApplicationInsightsComponentApiKey result = await applicationInsightsComponent.CreateApiKeyAsync(content);
 
@@ -503,7 +465,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation and iterate over the result
-            ApplicationInsightsComponentExportContent content = new ApplicationInsightsComponentExportContent()
+            ApplicationInsightsComponentExportContent content = new ApplicationInsightsComponentExportContent
             {
                 RecordTypes = "Requests, Event, Exceptions, Metrics, PageViews, PageViewPerformance, Rdd, PerformanceCounters, Availability",
                 DestinationType = "Blob",
@@ -599,7 +561,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // invoke the operation
             string exportId = "uGOoki0jQsyEs3IdQ83Q4QsNr4=";
-            ApplicationInsightsComponentExportContent content = new ApplicationInsightsComponentExportContent()
+            ApplicationInsightsComponentExportContent content = new ApplicationInsightsComponentExportContent
             {
                 RecordTypes = "Requests, Event, Exceptions, Metrics, PageViews, PageViewPerformance, Rdd, PerformanceCounters, Availability",
                 DestinationType = "Blob",
@@ -663,17 +625,14 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
             ApplicationInsightsComponentResource applicationInsightsComponent = client.GetApplicationInsightsComponentResource(applicationInsightsComponentResourceId);
 
             // invoke the operation
-            ApplicationInsightsComponentBillingFeatures billingFeaturesProperties = new ApplicationInsightsComponentBillingFeatures()
+            ApplicationInsightsComponentBillingFeatures billingFeaturesProperties = new ApplicationInsightsComponentBillingFeatures
             {
-                DataVolumeCap = new ApplicationInsightsComponentDataVolumeCap()
+                DataVolumeCap = new ApplicationInsightsComponentDataVolumeCap
                 {
                     Cap = 100,
                     IsStopSendNotificationWhenHitCap = true,
                 },
-                CurrentBillingFeatures =
-{
-"Basic","Application Insights Enterprise"
-},
+                CurrentBillingFeatures = { "Basic", "Application Insights Enterprise" },
             };
             ApplicationInsightsComponentBillingFeatures result = await applicationInsightsComponent.UpdateComponentCurrentBillingFeatureAsync(billingFeaturesProperties);
 
@@ -836,17 +795,14 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // invoke the operation
             string configurationId = "slowpageloadtime";
-            ApplicationInsightsComponentProactiveDetectionConfiguration proactiveDetectionProperties = new ApplicationInsightsComponentProactiveDetectionConfiguration()
+            ApplicationInsightsComponentProactiveDetectionConfiguration proactiveDetectionProperties = new ApplicationInsightsComponentProactiveDetectionConfiguration
             {
                 Name = "slowpageloadtime",
                 IsEnabled = true,
                 SendEmailsToSubscriptionOwners = true,
-                CustomEmails =
-{
-"foo@microsoft.com","foo2@microsoft.com"
-},
-                LastUpdatedOn = null,
-                RuleDefinitions = new ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions()
+                CustomEmails = { "foo@microsoft.com", "foo2@microsoft.com" },
+                LastUpdatedOn = default,
+                RuleDefinitions = new ApplicationInsightsComponentProactiveDetectionConfigurationRuleDefinitions
                 {
                     Name = "slowpageloadtime",
                     DisplayName = "Slow page load time",
@@ -1050,17 +1006,14 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // invoke the operation
             string favoriteId = "deadb33f-8bee-4d3b-a059-9be8dac93960";
-            ApplicationInsightsComponentFavorite favoriteProperties = new ApplicationInsightsComponentFavorite()
+            ApplicationInsightsComponentFavorite favoriteProperties = new ApplicationInsightsComponentFavorite
             {
                 Name = "Blah Blah Blah",
                 Config = "{\"MEDataModelRawJSON\":\"{\\n  \\\"version\\\": \\\"1.4.1\\\",\\n  \\\"isCustomDataModel\\\": true,\\n  \\\"items\\\": [\\n    {\\n      \\\"id\\\": \\\"90a7134d-9a38-4c25-88d3-a495209873eb\\\",\\n      \\\"chartType\\\": \\\"Area\\\",\\n      \\\"chartHeight\\\": 4,\\n      \\\"metrics\\\": [\\n        {\\n          \\\"id\\\": \\\"preview/requests/count\\\",\\n          \\\"metricAggregation\\\": \\\"Sum\\\",\\n          \\\"color\\\": \\\"msportalfx-bgcolor-d0\\\"\\n        }\\n      ],\\n      \\\"priorPeriod\\\": false,\\n      \\\"clickAction\\\": {\\n        \\\"defaultBlade\\\": \\\"SearchBlade\\\"\\n      },\\n      \\\"horizontalBars\\\": true,\\n      \\\"showOther\\\": true,\\n      \\\"aggregation\\\": \\\"Sum\\\",\\n      \\\"percentage\\\": false,\\n      \\\"palette\\\": \\\"fail\\\",\\n      \\\"yAxisOption\\\": 0,\\n      \\\"title\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"0c289098-88e8-4010-b212-546815cddf70\\\",\\n      \\\"chartType\\\": \\\"Area\\\",\\n      \\\"chartHeight\\\": 2,\\n      \\\"metrics\\\": [\\n        {\\n          \\\"id\\\": \\\"preview/requests/duration\\\",\\n          \\\"metricAggregation\\\": \\\"Avg\\\",\\n          \\\"color\\\": \\\"msportalfx-bgcolor-j1\\\"\\n        }\\n      ],\\n      \\\"priorPeriod\\\": false,\\n      \\\"clickAction\\\": {\\n        \\\"defaultBlade\\\": \\\"SearchBlade\\\"\\n      },\\n      \\\"horizontalBars\\\": true,\\n      \\\"showOther\\\": true,\\n      \\\"aggregation\\\": \\\"Avg\\\",\\n      \\\"percentage\\\": false,\\n      \\\"palette\\\": \\\"greenHues\\\",\\n      \\\"yAxisOption\\\": 0,\\n      \\\"title\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"cbdaab6f-a808-4f71-aca5-b3976cbb7345\\\",\\n      \\\"chartType\\\": \\\"Bar\\\",\\n      \\\"chartHeight\\\": 4,\\n      \\\"metrics\\\": [\\n        {\\n          \\\"id\\\": \\\"preview/requests/duration\\\",\\n          \\\"metricAggregation\\\": \\\"Avg\\\",\\n          \\\"color\\\": \\\"msportalfx-bgcolor-d0\\\"\\n        }\\n      ],\\n      \\\"priorPeriod\\\": false,\\n      \\\"clickAction\\\": {\\n        \\\"defaultBlade\\\": \\\"SearchBlade\\\"\\n      },\\n      \\\"horizontalBars\\\": true,\\n      \\\"showOther\\\": true,\\n      \\\"aggregation\\\": \\\"Avg\\\",\\n      \\\"percentage\\\": false,\\n      \\\"palette\\\": \\\"magentaHues\\\",\\n      \\\"yAxisOption\\\": 0,\\n      \\\"title\\\": \\\"\\\"\\n    },\\n    {\\n      \\\"id\\\": \\\"1d5a6a3a-9fa1-4099-9cf9-05eff72d1b02\\\",\\n      \\\"grouping\\\": {\\n        \\\"kind\\\": \\\"ByDimension\\\",\\n        \\\"dimension\\\": \\\"context.application.version\\\"\\n      },\\n      \\\"chartType\\\": \\\"Grid\\\",\\n      \\\"chartHeight\\\": 1,\\n      \\\"metrics\\\": [\\n        {\\n          \\\"id\\\": \\\"basicException.count\\\",\\n          \\\"metricAggregation\\\": \\\"Sum\\\",\\n          \\\"color\\\": \\\"msportalfx-bgcolor-g0\\\"\\n        },\\n        {\\n          \\\"id\\\": \\\"requestFailed.count\\\",\\n          \\\"metricAggregation\\\": \\\"Sum\\\",\\n          \\\"color\\\": \\\"msportalfx-bgcolor-f0s2\\\"\\n        }\\n      ],\\n      \\\"priorPeriod\\\": true,\\n      \\\"clickAction\\\": {\\n        \\\"defaultBlade\\\": \\\"SearchBlade\\\"\\n      },\\n      \\\"horizontalBars\\\": true,\\n      \\\"showOther\\\": true,\\n      \\\"percentage\\\": false,\\n      \\\"palette\\\": \\\"blueHues\\\",\\n      \\\"yAxisOption\\\": 0,\\n      \\\"title\\\": \\\"\\\"\\n    }\\n  ],\\n  \\\"currentFilter\\\": {\\n    \\\"eventTypes\\\": [\\n      1,\\n      2\\n    ],\\n    \\\"typeFacets\\\": {},\\n    \\\"isPermissive\\\": false\\n  },\\n  \\\"timeContext\\\": {\\n    \\\"durationMs\\\": 75600000,\\n    \\\"endTime\\\": \\\"2018-01-31T20:30:00.000Z\\\",\\n    \\\"createdTime\\\": \\\"2018-01-31T23:54:26.280Z\\\",\\n    \\\"isInitialTime\\\": false,\\n    \\\"grain\\\": 1,\\n    \\\"useDashboardTimeRange\\\": false\\n  },\\n  \\\"jsonUri\\\": \\\"Favorite_BlankChart\\\",\\n  \\\"timeSource\\\": 0\\n}\"}",
                 Version = "ME",
                 FavoriteType = ComponentFavoriteType.Shared,
                 SourceType = null,
-                Tags =
-{
-"TagSample01","TagSample02"
-},
+                Tags = { "TagSample01", "TagSample02" },
                 Category = null,
                 IsGeneratedFromTemplate = false,
             };
@@ -1091,17 +1044,14 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // invoke the operation
             string favoriteId = "deadb33f-5e0d-4064-8ebb-1a4ed0313eb2";
-            ApplicationInsightsComponentFavorite favoriteProperties = new ApplicationInsightsComponentFavorite()
+            ApplicationInsightsComponentFavorite favoriteProperties = new ApplicationInsightsComponentFavorite
             {
                 Name = "Derek Changed This",
                 Config = "{\"MEDataModelRawJSON\":\"{\\\"version\\\": \\\"1.4.1\\\",\\\"isCustomDataModel\\\": true,\\\"items\\\": [{\\\"id\\\": \\\"90a7134d-9a38-4c25-88d3-a495209873eb\\\",\\\"chartType\\\": \\\"Area\\\",\\\"chartHeight\\\": 4,\\\"metrics\\\": [{\\\"id\\\": \\\"preview/requests/count\\\",\\\"metricAggregation\\\": \\\"Sum\\\",\\\"color\\\": \\\"msportalfx-bgcolor-d0\\\"}],\\\"priorPeriod\\\": false,\\\"clickAction\\\": {\\\"defaultBlade\\\": \\\"SearchBlade\\\"},\\\"horizontalBars\\\": true,\\\"showOther\\\": true,\\\"aggregation\\\": \\\"Sum\\\",\\\"percentage\\\": false,\\\"palette\\\": \\\"fail\\\",\\\"yAxisOption\\\": 0,\\\"title\\\": \\\"\\\"},{\\\"id\\\": \\\"0c289098-88e8-4010-b212-546815cddf70\\\",\\\"chartType\\\": \\\"Area\\\",\\\"chartHeight\\\": 2,\\\"metrics\\\": [{\\\"id\\\": \\\"preview/requests/duration\\\",\\\"metricAggregation\\\": \\\"Avg\\\",\\\"color\\\": \\\"msportalfx-bgcolor-j1\\\"}],\\\"priorPeriod\\\": false,\\\"clickAction\\\": {\\\"defaultBlade\\\": \\\"SearchBlade\\\"},\\\"horizontalBars\\\": true,\\\"showOther\\\": true,\\\"aggregation\\\": \\\"Avg\\\",\\\"percentage\\\": false,\\\"palette\\\": \\\"greenHues\\\",\\\"yAxisOption\\\": 0,\\\"title\\\": \\\"\\\"},{\\\"id\\\": \\\"cbdaab6f-a808-4f71-aca5-b3976cbb7345\\\",\\\"chartType\\\": \\\"Bar\\\",\\\"chartHeight\\\": 4,\\\"metrics\\\": [{\\\"id\\\": \\\"preview/requests/duration\\\",\\\"metricAggregation\\\": \\\"Avg\\\",\\\"color\\\": \\\"msportalfx-bgcolor-d0\\\"}],\\\"priorPeriod\\\": false,\\\"clickAction\\\": {\\\"defaultBlade\\\": \\\"SearchBlade\\\"},\\\"horizontalBars\\\": true,\\\"showOther\\\": true,\\\"aggregation\\\": \\\"Avg\\\",\\\"percentage\\\": false,\\\"palette\\\": \\\"magentaHues\\\",\\\"yAxisOption\\\": 0,\\\"title\\\": \\\"\\\"},{\\\"id\\\": \\\"1d5a6a3a-9fa1-4099-9cf9-05eff72d1b02\\\",\\\"grouping\\\": {\\\"kind\\\": \\\"ByDimension\\\",\\\"dimension\\\": \\\"context.application.version\\\"},\\\"chartType\\\": \\\"Grid\\\",\\\"chartHeight\\\": 1,\\\"metrics\\\": [{\\\"id\\\": \\\"basicException.count\\\",\\\"metricAggregation\\\": \\\"Sum\\\",\\\"color\\\": \\\"msportalfx-bgcolor-g0\\\"},{\\\"id\\\": \\\"requestFailed.count\\\",\\\"metricAggregation\\\": \\\"Sum\\\",\\\"color\\\": \\\"msportalfx-bgcolor-f0s2\\\"}],\\\"priorPeriod\\\": true,\\\"clickAction\\\": {\\\"defaultBlade\\\": \\\"SearchBlade\\\"},\\\"horizontalBars\\\": true,\\\"showOther\\\": true,\\\"percentage\\\": false,\\\"palette\\\": \\\"blueHues\\\",\\\"yAxisOption\\\": 0,\\\"title\\\": \\\"\\\"}],\\\"currentFilter\\\": {\\\"eventTypes\\\": [1,2],\\\"typeFacets\\\": {},\\\"isPermissive\\\": false},\\\"timeContext\\\": {\\\"durationMs\\\": 75600000,\\\"endTime\\\": \\\"2018-01-31T20:30:00.000Z\\\",\\\"createdTime\\\": \\\"2018-01-31T23:54:26.280Z\\\",\\\"isInitialTime\\\": false,\\\"grain\\\": 1,\\\"useDashboardTimeRange\\\": false},\\\"jsonUri\\\": \\\"Favorite_BlankChart\\\",\\\"timeSource\\\": 0}\"}",
                 Version = "ME",
                 FavoriteType = ComponentFavoriteType.Shared,
                 SourceType = null,
-                Tags =
-{
-"TagSample01","TagSample02","TagSample03"
-},
+                Tags = { "TagSample01", "TagSample02", "TagSample03" },
                 Category = null,
                 IsGeneratedFromTemplate = false,
             };
@@ -1279,7 +1229,7 @@ Value = BinaryData.FromString("\"2017-09-01T00:00:00\""),
 
             // invoke the operation
             AnalyticsItemScopePath scopePath = AnalyticsItemScopePath.AnalyticsItems;
-            ApplicationInsightsComponentAnalyticsItem itemProperties = new ApplicationInsightsComponentAnalyticsItem()
+            ApplicationInsightsComponentAnalyticsItem itemProperties = new ApplicationInsightsComponentAnalyticsItem
             {
                 Name = "Exceptions - New in the last 24 hours",
                 Content = "let newExceptionsTimeRange = 1d;\nlet timeRangeToCheckBefore = 7d;\nexceptions\n| where timestamp < ago(timeRangeToCheckBefore)\n| summarize count() by problemId\n| join kind= rightanti (\nexceptions\n| where timestamp >= ago(newExceptionsTimeRange)\n| extend stack = tostring(details[0].rawStack)\n| summarize count(), dcount(user_AuthenticatedId), min(timestamp), max(timestamp), any(stack) by problemId  \n) on problemId \n| order by  count_ desc\n",

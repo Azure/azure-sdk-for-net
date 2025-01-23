@@ -11,75 +11,12 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 {
     public partial class Sample_LocalRulestackResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetLocalRulestacks_LocalRulestacksListBySubscriptionMaximumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_ListBySubscription_MaximumSet_Gen.json
-            // this example is just showing the usage of "LocalRulestacks_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (LocalRulestackResource item in subscriptionResource.GetLocalRulestacksAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                LocalRulestackData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetLocalRulestacks_LocalRulestacksListBySubscriptionMinimumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_ListBySubscription_MinimumSet_Gen.json
-            // this example is just showing the usage of "LocalRulestacks_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (LocalRulestackResource item in subscriptionResource.GetLocalRulestacksAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                LocalRulestackData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_LocalRulestacksGetMaximumSetGen()
@@ -142,6 +79,58 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_LocalRulestacksDeleteMaximumSetGen()
+        {
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_Delete_MaximumSet_Gen.json
+            // this example is just showing the usage of "LocalRulestacks_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this LocalRulestackResource created on azure
+            // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
+            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string resourceGroupName = "rgopenapi";
+            string localRulestackName = "lrs1";
+            ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
+
+            // invoke the operation
+            await localRulestack.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_LocalRulestacksDeleteMinimumSetGen()
+        {
+            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_Delete_MinimumSet_Gen.json
+            // this example is just showing the usage of "LocalRulestacks_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this LocalRulestackResource created on azure
+            // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
+            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
+            string resourceGroupName = "rgopenapi";
+            string localRulestackName = "lrs1";
+            ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
+            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
+
+            // invoke the operation
+            await localRulestack.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_LocalRulestacksUpdateMaximumSetGen()
         {
             // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_Update_MaximumSet_Gen.json
@@ -161,32 +150,29 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
 
             // invoke the operation
-            LocalRulestackPatch patch = new LocalRulestackPatch()
+            LocalRulestackPatch patch = new LocalRulestackPatch
             {
                 Identity = new ManagedServiceIdentity("None")
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("key16")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("key16")] = new UserAssignedIdentity()
 },
                 },
                 Tags =
 {
-["tagName"] = "value",
+["tagName"] = "value"
 },
-                Properties = new LocalRulestackUpdateProperties()
+                Properties = new LocalRulestackUpdateProperties
                 {
                     PanETag = new ETag("2bf4a339-294d-4c25-b0b2-ef649e9f5c12"),
                     PanLocation = new AzureLocation("eastus"),
                     Scope = RulestackScopeType.Local,
-                    AssociatedSubscriptions =
-{
-"2bf4a339-294d-4c25-b0b2-ef649e9f5c27"
-},
+                    AssociatedSubscriptions = { "2bf4a339-294d-4c25-b0b2-ef649e9f5c27" },
                     Description = "local rulestacks",
                     DefaultMode = RuleCreationDefaultMode.IPS,
                     MinAppIdVersion = "8.5.3",
-                    SecurityServices = new RulestackSecurityServices()
+                    SecurityServices = new RulestackSecurityServices
                     {
                         VulnerabilityProfile = "default",
                         AntiSpywareProfile = "default",
@@ -237,58 +223,6 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Samples
             LocalRulestackData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_LocalRulestacksDeleteMaximumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_Delete_MaximumSet_Gen.json
-            // this example is just showing the usage of "LocalRulestacks_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this LocalRulestackResource created on azure
-            // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
-            string resourceGroupName = "rgopenapi";
-            string localRulestackName = "lrs1";
-            ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
-
-            // invoke the operation
-            await localRulestack.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_LocalRulestacksDeleteMinimumSetGen()
-        {
-            // Generated from example definition: specification/paloaltonetworks/resource-manager/PaloAltoNetworks.Cloudngfw/stable/2023-09-01/examples/LocalRulestacks_Delete_MinimumSet_Gen.json
-            // this example is just showing the usage of "LocalRulestacks_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this LocalRulestackResource created on azure
-            // for more information of creating LocalRulestackResource, please refer to the document of LocalRulestackResource
-            string subscriptionId = "2bf4a339-294d-4c25-b0b2-ef649e9f5c27";
-            string resourceGroupName = "rgopenapi";
-            string localRulestackName = "lrs1";
-            ResourceIdentifier localRulestackResourceId = LocalRulestackResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, localRulestackName);
-            LocalRulestackResource localRulestack = client.GetLocalRulestackResource(localRulestackResourceId);
-
-            // invoke the operation
-            await localRulestack.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
         }
 
         [Test]

@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Subscription.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation
-            SubscriptionName body = new SubscriptionName()
+            SubscriptionName body = new SubscriptionName
             {
                 SubscriptionNameValue = "Test Sub",
             };

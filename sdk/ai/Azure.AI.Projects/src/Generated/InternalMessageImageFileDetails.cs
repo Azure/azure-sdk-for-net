@@ -48,7 +48,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="InternalMessageImageFileDetails"/>. </summary>
         /// <param name="internalDetails"> The ID for the file associated with this image. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="internalDetails"/> is null. </exception>
-        public InternalMessageImageFileDetails(string internalDetails)
+        internal InternalMessageImageFileDetails(string internalDetails)
         {
             Argument.AssertNotNull(internalDetails, nameof(internalDetails));
 
@@ -70,6 +70,6 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The ID for the file associated with this image. </summary>
-        public string InternalDetails { get; set; }
+        public string InternalDetails { get; }
     }
 }

@@ -69,17 +69,11 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseServerSecurityAlertPolicyResource synapseServerSecurityAlertPolicy = client.GetSynapseServerSecurityAlertPolicyResource(synapseServerSecurityAlertPolicyResourceId);
 
             // invoke the operation
-            SynapseServerSecurityAlertPolicyData data = new SynapseServerSecurityAlertPolicyData()
+            SynapseServerSecurityAlertPolicyData data = new SynapseServerSecurityAlertPolicyData
             {
                 State = SynapseSecurityAlertPolicyState.Enabled,
-                DisabledAlerts =
-{
-"Access_Anomaly","Usage_Anomaly"
-},
-                EmailAddresses =
-{
-"testSecurityAlert@microsoft.com"
-},
+                DisabledAlerts = { "Access_Anomaly", "Usage_Anomaly" },
+                EmailAddresses = { "testSecurityAlert@microsoft.com" },
                 EnableEmailToAccountAdmins = true,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
@@ -117,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseServerSecurityAlertPolicyResource synapseServerSecurityAlertPolicy = client.GetSynapseServerSecurityAlertPolicyResource(synapseServerSecurityAlertPolicyResourceId);
 
             // invoke the operation
-            SynapseServerSecurityAlertPolicyData data = new SynapseServerSecurityAlertPolicyData()
+            SynapseServerSecurityAlertPolicyData data = new SynapseServerSecurityAlertPolicyData
             {
                 State = SynapseSecurityAlertPolicyState.Disabled,
                 EnableEmailToAccountAdmins = true,

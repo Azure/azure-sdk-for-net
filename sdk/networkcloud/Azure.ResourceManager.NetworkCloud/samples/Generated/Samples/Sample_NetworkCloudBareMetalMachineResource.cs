@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetworkCloud.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetworkCloud.Samples
@@ -19,40 +18,9 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetNetworkCloudBareMetalMachines_ListBareMetalMachinesForSubscription()
-        {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/BareMetalMachines_ListBySubscription.json
-            // this example is just showing the usage of "BareMetalMachines_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "123e4567-e89b-12d3-a456-426655440000";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (NetworkCloudBareMetalMachineResource item in subscriptionResource.GetNetworkCloudBareMetalMachinesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                NetworkCloudBareMetalMachineData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetBareMetalMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/BareMetalMachines_Get.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2024-07-01/examples/BareMetalMachines_Get.json
             // this example is just showing the usage of "BareMetalMachines_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +50,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchBareMetalMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/BareMetalMachines_Patch.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2024-07-01/examples/BareMetalMachines_Patch.json
             // this example is just showing the usage of "BareMetalMachines_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,12 +67,12 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudBareMetalMachineResource networkCloudBareMetalMachine = client.GetNetworkCloudBareMetalMachineResource(networkCloudBareMetalMachineResourceId);
 
             // invoke the operation
-            NetworkCloudBareMetalMachinePatch patch = new NetworkCloudBareMetalMachinePatch()
+            NetworkCloudBareMetalMachinePatch patch = new NetworkCloudBareMetalMachinePatch
             {
                 Tags =
 {
 ["key1"] = "myvalue1",
-["key2"] = "myvalue2",
+["key2"] = "myvalue2"
 },
                 MachineDetails = "machinedetails",
             };
@@ -122,7 +90,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Cordon_CordonBareMetalMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/BareMetalMachines_Cordon.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2024-07-01/examples/BareMetalMachines_Cordon.json
             // this example is just showing the usage of "BareMetalMachines_Cordon" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -139,7 +107,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudBareMetalMachineResource networkCloudBareMetalMachine = client.GetNetworkCloudBareMetalMachineResource(networkCloudBareMetalMachineResourceId);
 
             // invoke the operation
-            BareMetalMachineCordonContent content = new BareMetalMachineCordonContent()
+            BareMetalMachineCordonContent content = new BareMetalMachineCordonContent
             {
                 Evacuate = BareMetalMachineEvacuate.True,
             };
@@ -153,7 +121,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task PowerOff_PowerOffBareMetalMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/BareMetalMachines_PowerOff.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2024-07-01/examples/BareMetalMachines_PowerOff.json
             // this example is just showing the usage of "BareMetalMachines_PowerOff" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,7 +138,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudBareMetalMachineResource networkCloudBareMetalMachine = client.GetNetworkCloudBareMetalMachineResource(networkCloudBareMetalMachineResourceId);
 
             // invoke the operation
-            BareMetalMachinePowerOffContent content = new BareMetalMachinePowerOffContent()
+            BareMetalMachinePowerOffContent content = new BareMetalMachinePowerOffContent
             {
                 SkipShutdown = BareMetalMachineSkipShutdown.True,
             };
@@ -184,7 +152,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Reimage_ReimageBareMetalMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/BareMetalMachines_Reimage.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2024-07-01/examples/BareMetalMachines_Reimage.json
             // this example is just showing the usage of "BareMetalMachines_Reimage" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -211,7 +179,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Replace_ReplaceBareMetalMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/BareMetalMachines_Replace.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2024-07-01/examples/BareMetalMachines_Replace.json
             // this example is just showing the usage of "BareMetalMachines_Replace" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -228,7 +196,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             NetworkCloudBareMetalMachineResource networkCloudBareMetalMachine = client.GetNetworkCloudBareMetalMachineResource(networkCloudBareMetalMachineResourceId);
 
             // invoke the operation
-            BareMetalMachineReplaceContent content = new BareMetalMachineReplaceContent()
+            BareMetalMachineReplaceContent content = new BareMetalMachineReplaceContent
             {
                 BmcCredentials = new AdministrativeCredentials("bmcuser")
                 {
@@ -249,7 +217,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Restart_RestartBareMetalMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/BareMetalMachines_Restart.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2024-07-01/examples/BareMetalMachines_Restart.json
             // this example is just showing the usage of "BareMetalMachines_Restart" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -276,7 +244,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RunCommand_RunCommandOnBareMetalMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/BareMetalMachines_RunCommand.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2024-07-01/examples/BareMetalMachines_RunCommand.json
             // this example is just showing the usage of "BareMetalMachines_RunCommand" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -295,10 +263,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             // invoke the operation
             BareMetalMachineRunCommandContent content = new BareMetalMachineRunCommandContent(60L, "cHdkCg==")
             {
-                Arguments =
-{
-"--argument1","argument2"
-},
+                Arguments = { "--argument1", "argument2" },
             };
             ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.RunCommandAsync(WaitUntil.Completed, content);
             NetworkCloudOperationStatusResult result = lro.Value;
@@ -310,7 +275,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RunDataExtracts_RunDataExtractionOnBareMetalMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/BareMetalMachines_RunDataExtracts.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2024-07-01/examples/BareMetalMachines_RunDataExtracts.json
             // this example is just showing the usage of "BareMetalMachines_RunDataExtracts" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -331,10 +296,7 @@ namespace Azure.ResourceManager.NetworkCloud.Samples
             {
 new BareMetalMachineCommandSpecification("hardware-support-data-collection")
 {
-Arguments =
-{
-"SysInfo","TTYLog"
-},
+Arguments = {"SysInfo", "TTYLog"},
 }
             }, 60L);
             ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.RunDataExtractsAsync(WaitUntil.Completed, content);
@@ -347,7 +309,7 @@ Arguments =
         [Ignore("Only validating compilation of examples")]
         public async Task RunReadCommands_RunAndRetrieveOutputFromReadOnlyCommandsOnBareMetalMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/BareMetalMachines_RunReadCommands.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2024-07-01/examples/BareMetalMachines_RunReadCommands.json
             // this example is just showing the usage of "BareMetalMachines_RunReadCommands" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -368,16 +330,11 @@ Arguments =
             {
 new BareMetalMachineCommandSpecification("kubectl get")
 {
-Arguments =
-{
-"pods","-A"
+Arguments = {"pods", "-A"},
 },
-},new BareMetalMachineCommandSpecification("ping")
+new BareMetalMachineCommandSpecification("ping")
 {
-Arguments =
-{
-"192.168.0.99","-c","3"
-},
+Arguments = {"192.168.0.99", "-c", "3"},
 }
             }, 60L);
             ArmOperation<NetworkCloudOperationStatusResult> lro = await networkCloudBareMetalMachine.RunReadCommandsAsync(WaitUntil.Completed, content);
@@ -390,7 +347,7 @@ Arguments =
         [Ignore("Only validating compilation of examples")]
         public async Task Start_StartBareMetalMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/BareMetalMachines_Start.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2024-07-01/examples/BareMetalMachines_Start.json
             // this example is just showing the usage of "BareMetalMachines_Start" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -417,7 +374,7 @@ Arguments =
         [Ignore("Only validating compilation of examples")]
         public async Task Uncordon_UncordonBareMetalMachine()
         {
-            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/preview/2024-06-01-preview/examples/BareMetalMachines_Uncordon.json
+            // Generated from example definition: specification/networkcloud/resource-manager/Microsoft.NetworkCloud/stable/2024-07-01/examples/BareMetalMachines_Uncordon.json
             // this example is just showing the usage of "BareMetalMachines_Uncordon" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

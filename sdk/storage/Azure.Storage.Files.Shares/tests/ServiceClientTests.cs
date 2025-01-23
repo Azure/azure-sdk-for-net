@@ -151,21 +151,36 @@ namespace Azure.Storage.Files.Shares.Tests
             Response<ShareServiceProperties> propertiesResponse = await service.GetPropertiesAsync();
             ShareServiceProperties properties = propertiesResponse.Value;
 
-            // Assert
-            Assert.IsFalse(properties.Protocol.Smb.Multichannel.Enabled);
+            if (properties.Protocol.Smb.Multichannel.Enabled == true)
+            {
+                // Act
+                properties.Protocol.Smb.Multichannel.Enabled = false;
+                await service.SetPropertiesAsync(properties);
+                propertiesResponse = await service.GetPropertiesAsync();
+                properties = propertiesResponse.Value;
 
-            // Act
-            properties.Protocol.Smb.Multichannel.Enabled = true;
-            await service.SetPropertiesAsync(properties);
-            propertiesResponse = await service.GetPropertiesAsync();
-            properties = propertiesResponse.Value;
+                // Assert
+                Assert.IsFalse(properties.Protocol.Smb.Multichannel.Enabled);
 
-            // Assert
-            Assert.IsTrue(properties.Protocol.Smb.Multichannel.Enabled);
+                // Cleanup
+                properties.Protocol.Smb.Multichannel.Enabled = true;
+                await service.SetPropertiesAsync(properties);
+            }
+            else
+            {
+                // Act
+                properties.Protocol.Smb.Multichannel.Enabled = true;
+                await service.SetPropertiesAsync(properties);
+                propertiesResponse = await service.GetPropertiesAsync();
+                properties = propertiesResponse.Value;
 
-            // Cleanup
-            properties.Protocol.Smb.Multichannel.Enabled = false;
-            await service.SetPropertiesAsync(properties);
+                // Assert
+                Assert.IsTrue(properties.Protocol.Smb.Multichannel.Enabled);
+
+                // Cleanup
+                properties.Protocol.Smb.Multichannel.Enabled = false;
+                await service.SetPropertiesAsync(properties);
+            }
         }
 
         [RecordedTest]

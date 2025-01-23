@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -362,7 +363,7 @@ namespace Azure.Messaging.EventHubs.Tests
         [Test]
         public async Task GetCheckpointUsesOffsetAsTheStartingPositionWhenNoSequenceNumberIsPresent()
         {
-            var expectedOffset = 13;
+            var expectedOffset = "13";
             var expectedStartingPosition = EventPosition.FromOffset(expectedOffset, false);
             var partition = Guid.NewGuid().ToString();
 
@@ -428,48 +429,10 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task GetCheckpointUsesSequenceNumberAsTheStartingPositionWhenOffsetIsMinValue()
+        public async Task GetCheckpointUsesOffsetAsTheStartingPosition()
         {
-            var expectedSequence = 133;
-            var expectedStartingPosition = EventPosition.FromSequenceNumber(expectedSequence, false);
-            var partition = Guid.NewGuid().ToString();
-
-            var blobList = new List<BlobItem>
-            {
-                BlobsModelFactory.BlobItem($"{FullyQualifiedNamespaceLowercase}/{EventHubNameLowercase}/{ConsumerGroupLowercase}/checkpoint/{partition}",
-                                           false,
-                                           BlobsModelFactory.BlobItemProperties(true, lastModified: DateTime.UtcNow, eTag: new ETag(MatchingEtag)),
-                                           "snapshot",
-                                           new Dictionary<string, string>
-                                           {
-                                               {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
-                                               {BlobMetadataKey.Offset, long.MinValue.ToString()},
-                                               {BlobMetadataKey.SequenceNumber, expectedSequence.ToString()}
-                                           })
-            };
-
-            var target = new BlobCheckpointStoreInternal(new MockBlobContainerClient() { Blobs = blobList });
-            var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, partition, CancellationToken.None);
-
-            Assert.That(checkpoint, Is.Not.Null, "A checkpoint should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(expectedStartingPosition));
-
-            Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
-            var blobCheckpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoint;
-            Assert.That(blobCheckpoint.Offset, Is.EqualTo(long.MinValue), "The offset should have been long.MinValue.");
-            Assert.That(expectedSequence, Is.EqualTo(blobCheckpoint.SequenceNumber), "Checkpoint sequence number did not have the correct value.");
-        }
-
-        /// <summary>
-        ///   Verifies basic functionality of GetCheckpointAsync and ensures the starting position is set correctly.
-        /// </summary>
-        ///
-        [Test]
-        public async Task GetCheckpointUsesSequenceNumberAsTheStartingPositionWhenInvalidOffsetIsPresent()
-        {
-            var expectedSequence = 133;
-            var expectedOffset = "invalid offset";
-            var expectedStartingPosition = EventPosition.FromSequenceNumber(expectedSequence, false);
+            var expectedOffset = "133";
+            var expectedStartingPosition = EventPosition.FromOffset(expectedOffset, false);
             var partition = Guid.NewGuid().ToString();
 
             var blobList = new List<BlobItem>
@@ -482,7 +445,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                            {
                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
                                                {BlobMetadataKey.Offset, expectedOffset},
-                                               {BlobMetadataKey.SequenceNumber, expectedSequence.ToString()}
+                                               {BlobMetadataKey.SequenceNumber, long.MinValue.ToString()}
                                            })
             };
 
@@ -494,8 +457,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
             var blobCheckpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoint;
-            Assert.That(blobCheckpoint.Offset, Is.Null, $"The offset should not have been populated, as it was an invalid number.");
-            Assert.That(expectedSequence, Is.EqualTo(blobCheckpoint.SequenceNumber), "Checkpoint sequence number did not have the correct value.");
+            Assert.That(blobCheckpoint.SequenceNumber, Is.EqualTo(long.MinValue), "The offset should have been long.MinValue.");
+            Assert.That(expectedOffset, Is.EqualTo(blobCheckpoint.Offset), "Checkpoint sequence number did not have the correct value.");
         }
 
         /// <summary>
@@ -503,11 +466,11 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task GetCheckpointPrefersSequenceNumberAsTheStartingPosition()
+        public async Task GetCheckpointPrefersOffsetAsTheStartingPosition()
         {
-            var offset = 13;
+            var offset = "13";
             var sequenceNumber = 7777;
-            var expectedStartingPosition = EventPosition.FromSequenceNumber(sequenceNumber, false);
+            var expectedStartingPosition = EventPosition.FromOffset(offset, false);
             var partition = Guid.NewGuid().ToString();
 
             var blobList = new List<BlobItem>
@@ -519,7 +482,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                            new Dictionary<string, string>
                                            {
                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
-                                               {BlobMetadataKey.Offset, offset.ToString()},
+                                               {BlobMetadataKey.Offset, offset},
                                                {BlobMetadataKey.SequenceNumber, sequenceNumber.ToString()}
                                            })
             };
@@ -548,7 +511,7 @@ namespace Azure.Messaging.EventHubs.Tests
                                            new Dictionary<string, string>
                                            {
                                                {BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString()},
-                                               {BlobMetadataKey.Offset, "invalid"},
+                                               {BlobMetadataKey.Offset, ""},
                                                {BlobMetadataKey.SequenceNumber, long.MinValue.ToString()}
                                            })
             };
@@ -569,7 +532,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task GetCheckpointUsesSequenceNumberAsTheStartingPositionWhenPresentInLegacyCheckpoint()
+        public async Task GetCheckpointUsesOffsetAsTheStartingPositionWhenPresentInLegacyCheckpoint()
         {
             var blobList = new List<BlobItem>
             {
@@ -596,7 +559,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", CancellationToken.None);
 
             Assert.That(checkpoint, Is.Not.Null, "A checkpoints should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromSequenceNumber(960180, false)));
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset("13", false)));
             Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
         }
 
@@ -629,11 +592,10 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task UpdateCheckpointLogsStartAndCompleteWhenTheBlobExists(bool useCheckpointPositionOverload)
+        public async Task UpdateCheckpointLogsStartAndCompleteWhenTheBlobExists()
         {
-            var sequenceNumber = 777;
+            var position = new CheckpointPosition("777", 89);
+            var expectedSequenceNumber = position.SequenceNumber.ToString(CultureInfo.InvariantCulture);
 
             var checkpoint = new EventProcessorCheckpoint
             {
@@ -642,7 +604,7 @@ namespace Azure.Messaging.EventHubs.Tests
                 ConsumerGroup = ConsumerGroup,
                 PartitionId = PartitionId,
                 ClientIdentifier = Identifier,
-                StartingPosition = EventPosition.FromSequenceNumber(sequenceNumber)
+                StartingPosition = EventPosition.FromOffset(position.OffsetString)
             };
 
             var blobInfo = BlobsModelFactory.BlobInfo(new ETag($@"""{MatchingEtag}"""), DateTime.UtcNow);
@@ -655,7 +617,8 @@ namespace Azure.Messaging.EventHubs.Tests
                                            "snapshot",
                                            new Dictionary<string, string> {
                                                { BlobMetadataKey.OwnerIdentifier, Guid.NewGuid().ToString() },
-                                               { BlobMetadataKey.SequenceNumber, sequenceNumber.ToString() },
+                                               { BlobMetadataKey.Offset, position.OffsetString },
+                                               { BlobMetadataKey.SequenceNumber, expectedSequenceNumber },
                                                { BlobMetadataKey.ClientIdentifier, Identifier }
                                            })
             };
@@ -673,18 +636,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockLog = new Mock<IBlobEventLogger>();
             target.Logger = mockLog.Object;
 
-            if (useCheckpointPositionOverload)
-            {
-                await target.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientIdentifier, new CheckpointPosition(sequenceNumber), CancellationToken.None);
-                mockLog.Verify(log => log.UpdateCheckpointStart(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientIdentifier, sequenceNumber.ToString(), "-1", string.Empty));
-                mockLog.Verify(log => log.UpdateCheckpointComplete(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientIdentifier, sequenceNumber.ToString(), "-1", string.Empty));
-            }
-            else
-            {
-                await target.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, 123, null, CancellationToken.None);
-                mockLog.Verify(log => log.UpdateCheckpointStart(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, string.Empty, string.Empty, "-1", "123"));
-                mockLog.Verify(log => log.UpdateCheckpointComplete(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, string.Empty, string.Empty, "-1", "123"));
-            }
+            await target.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientIdentifier, position, CancellationToken.None);
+            mockLog.Verify(log => log.UpdateCheckpointStart(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientIdentifier, expectedSequenceNumber, position.OffsetString));
+            mockLog.Verify(log => log.UpdateCheckpointComplete(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientIdentifier, expectedSequenceNumber, position.OffsetString));
         }
 
         /// <summary>
@@ -692,12 +646,10 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task UpdateCheckpointLogsStartAndCompleteWhenTheBlobDoesNotExist(bool useCheckpointPositionOverload)
+        public async Task UpdateCheckpointLogsStartAndCompleteWhenTheBlobDoesNotExist()
         {
             var sequenceNumber = 1234;
-            var offset = 5678;
+            var offset = "5678";
 
             var checkpoint = new EventProcessorCheckpoint
             {
@@ -726,18 +678,9 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockLog = new Mock<IBlobEventLogger>();
             target.Logger = mockLog.Object;
 
-            if (useCheckpointPositionOverload)
-            {
-                await target.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientIdentifier, new CheckpointPosition(sequenceNumber), CancellationToken.None);
-                mockLog.Verify(log => log.UpdateCheckpointStart(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientIdentifier, sequenceNumber.ToString(), "-1", string.Empty));
-                mockLog.Verify(log => log.UpdateCheckpointComplete(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientIdentifier, sequenceNumber.ToString(), "-1", string.Empty));
-            }
-            else
-            {
-                await target.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, offset, sequenceNumber, CancellationToken.None);
-                mockLog.Verify(log => log.UpdateCheckpointStart(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, string.Empty, sequenceNumber.ToString(), "-1", offset.ToString()));
-                mockLog.Verify(log => log.UpdateCheckpointComplete(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, string.Empty, sequenceNumber.ToString(), "-1", offset.ToString()));
-            }
+            await target.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientIdentifier, new CheckpointPosition(offset, sequenceNumber), CancellationToken.None);
+            mockLog.Verify(log => log.UpdateCheckpointStart(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientIdentifier, sequenceNumber.ToString(), offset));
+            mockLog.Verify(log => log.UpdateCheckpointComplete(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientIdentifier, sequenceNumber.ToString(), offset));
         }
 
         /// <summary>
@@ -746,12 +689,10 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void UpdateCheckpointLogsErrorsWhenTheBlobExists(bool useCheckpointPositionOverload)
+        public void UpdateCheckpointLogsErrorsWhenTheBlobExists()
         {
             var sequenceNumber = 456;
-            var offset = 789;
+            var offset = "789";
 
             var checkpoint = new EventProcessorCheckpoint
             {
@@ -775,16 +716,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var target = new BlobCheckpointStoreInternal(mockContainerClient);
             target.Logger = mockLog.Object;
 
-            if (useCheckpointPositionOverload)
-            {
-                Assert.That(async () => await target.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientIdentifier, new CheckpointPosition(sequenceNumber), CancellationToken.None), Throws.Exception.EqualTo(expectedException));
-                mockLog.Verify(log => log.UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientIdentifier, sequenceNumber.ToString(), "-1", string.Empty, expectedException.Message));
-            }
-            else
-            {
-                Assert.That(async () => await target.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, offset, sequenceNumber, CancellationToken.None), Throws.Exception.EqualTo(expectedException));
-                mockLog.Verify(log => log.UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, string.Empty, sequenceNumber.ToString(), "-1", offset.ToString(), expectedException.Message));
-            }
+            Assert.That(async () => await target.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientIdentifier, new CheckpointPosition(offset, sequenceNumber), CancellationToken.None), Throws.Exception.EqualTo(expectedException));
+            mockLog.Verify(log => log.UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientIdentifier, sequenceNumber.ToString(), offset.ToString(), expectedException.Message));
         }
 
         /// <summary>
@@ -793,9 +726,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public void UpdateCheckpointLogsErrorsWhenTheBlobDoesNotExist(bool useCheckpointPositionOverload)
+        public void UpdateCheckpointLogsErrorsWhenTheBlobDoesNotExist()
         {
             var checkpoint = new EventProcessorCheckpoint
             {
@@ -817,16 +748,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var target = new BlobCheckpointStoreInternal(mockContainerClient);
             target.Logger = mockLog.Object;
 
-            if (useCheckpointPositionOverload)
-            {
-                Assert.That(async () => await target.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientIdentifier, new CheckpointPosition(0), CancellationToken.None), Throws.Exception.EqualTo(expectedException));
-                mockLog.Verify(log => log.UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientIdentifier, "0", "-1", string.Empty, expectedException.Message));
-            }
-            else
-            {
-                Assert.That(async () => await target.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, 0, 0, CancellationToken.None), Throws.Exception.EqualTo(expectedException));
-                mockLog.Verify(log => log.UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, string.Empty, "0", "-1", "0", expectedException.Message));
-            }
+            Assert.That(async () => await target.UpdateCheckpointAsync(checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.PartitionId, checkpoint.ClientIdentifier, new CheckpointPosition("0", 0), CancellationToken.None), Throws.Exception.EqualTo(expectedException));
+            mockLog.Verify(log => log.UpdateCheckpointError(checkpoint.PartitionId, checkpoint.FullyQualifiedNamespace, checkpoint.EventHubName, checkpoint.ConsumerGroup, checkpoint.ClientIdentifier, "0", "0", expectedException.Message));
         }
 
         /// <summary>
@@ -843,8 +766,8 @@ namespace Azure.Messaging.EventHubs.Tests
             var mockLog = new Mock<IBlobEventLogger>();
             target.Logger = mockLog.Object;
 
-            Assert.That(async () => await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, Identifier, new CheckpointPosition(0), CancellationToken.None), Throws.InstanceOf<RequestFailedException>());
-            mockLog.Verify(m => m.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, "0", "-1", string.Empty, ex.Message));
+            Assert.That(async () => await target.UpdateCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, PartitionId, Identifier, new CheckpointPosition("111", 0), CancellationToken.None), Throws.InstanceOf<RequestFailedException>());
+            mockLog.Verify(m => m.UpdateCheckpointError(PartitionId, FullyQualifiedNamespace, EventHubName, ConsumerGroup, Identifier, "0", "111", ex.Message));
         }
 
         /// <summary>
@@ -1210,7 +1133,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointPosition(10), cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointPosition("10"), cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
             Assert.That(serviceCalls, Is.EqualTo(expectedServiceCalls), "The retry policy should have been applied.");
         }
@@ -1239,7 +1162,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
-            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointPosition(10), cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
+            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointPosition("10"), cancellationSource.Token), Throws.TypeOf(exception.GetType()), "The method call should surface the exception.");
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The operation should have stopped without cancellation.");
         }
 
@@ -1249,9 +1172,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        [TestCase(true)]
-        [TestCase(false)]
-        public async Task UpdateCheckpointAsyncDelegatesTheCancellationTokenWhenTheBlobExists(bool useCheckpointPositionOverload)
+        public async Task UpdateCheckpointAsyncDelegatesTheCancellationTokenWhenTheBlobExists()
         {
             using var cancellationSource = new CancellationTokenSource();
 
@@ -1277,14 +1198,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var checkpointStore = new BlobCheckpointStoreInternal(mockContainerClient);
 
-            if (useCheckpointPositionOverload)
-            {
-                await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointPosition(10), cancellationSource.Token);
-            }
-            else
-            {
-                await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, 0, 10, cancellationSource.Token);
-            }
+            await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointPosition("10"), cancellationSource.Token);
 
             Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
             Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
@@ -1320,7 +1234,7 @@ namespace Azure.Messaging.EventHubs.Tests
             });
 
             var checkpointStore = new BlobCheckpointStoreInternal(mockContainerClient);
-            await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointPosition(10), cancellationSource.Token);
+            await checkpointStore.UpdateCheckpointAsync(FullyQualifiedNamespaceLowercase, EventHubNameLowercase, ConsumerGroupLowercase, partition, "Id", new CheckpointPosition("10"), cancellationSource.Token);
 
             Assert.That(stateBeforeCancellation.HasValue, Is.True, "State before cancellation should have been captured.");
             Assert.That(stateBeforeCancellation.Value, Is.False, "The token should not have been canceled before cancellation request.");
@@ -1341,7 +1255,7 @@ namespace Azure.Messaging.EventHubs.Tests
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.Cancel();
 
-            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync("ns", "eh", "cg", "p0", "Id", new CheckpointPosition(10), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
+            Assert.That(async () => await checkpointStore.UpdateCheckpointAsync("ns", "eh", "cg", "p0", "Id", new CheckpointPosition("10"), cancellationSource.Token), Throws.InstanceOf<TaskCanceledException>());
         }
 
         /// <summary>
@@ -1388,12 +1302,12 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", CancellationToken.None);
 
             Assert.That(checkpoint, Is.Not.Null, "A single checkpoint should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromSequenceNumber(960182, false)));
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset("14", false)));
             Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
 
             Assert.That(checkpoint, Is.InstanceOf<BlobCheckpointStoreInternal.BlobStorageCheckpoint>(), "Checkpoint instance was not the expected type.");
             var blobCheckpoint = (BlobCheckpointStoreInternal.BlobStorageCheckpoint)checkpoint;
-            Assert.That(14, Is.EqualTo(blobCheckpoint.Offset), "Checkpoint offset did not have the correct value.");
+            Assert.That("14", Is.EqualTo(blobCheckpoint.Offset), "Checkpoint offset did not have the correct value.");
             Assert.That(960182, Is.EqualTo(blobCheckpoint.SequenceNumber), "Checkpoint sequence number did not have the correct value.");
         }
 
@@ -1430,7 +1344,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var checkpoint = await target.GetCheckpointAsync(FullyQualifiedNamespace, EventHubName, ConsumerGroup, "0", CancellationToken.None);
 
             Assert.That(checkpoint, Is.Not.Null, "A set of checkpoints should have been returned.");
-            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromSequenceNumber(960180, false)));
+            Assert.That(checkpoint.StartingPosition, Is.EqualTo(EventPosition.FromOffset("13", false)));
             Assert.That(checkpoint.PartitionId, Is.EqualTo("0"));
         }
 

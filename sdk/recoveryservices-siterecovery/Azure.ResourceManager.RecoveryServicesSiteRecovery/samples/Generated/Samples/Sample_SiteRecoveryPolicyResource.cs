@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             SiteRecoveryPolicyResource siteRecoveryPolicy = client.GetSiteRecoveryPolicyResource(siteRecoveryPolicyResourceId);
 
             // invoke the operation
-            SiteRecoveryPolicyPatch patch = new SiteRecoveryPolicyPatch()
+            SiteRecoveryPolicyPatch patch = new SiteRecoveryPolicyPatch
             {
                 UpdatePolicyContentReplicationProviderSettings = new HyperVReplicaAzurePolicyContent(),
             };

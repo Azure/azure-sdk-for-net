@@ -26,6 +26,7 @@ namespace Azure.Generator.Tests.TestHelpers
             Func<InputType, TypeProvider, IReadOnlyList<TypeProvider>>? createSerializationsCore = null,
             Func<InputType, CSharpType>? createCSharpTypeCore = null,
             Func<InputApiKeyAuth>? apiKeyAuth = null,
+            Func<InputOAuth2Auth>? oauth2Auth = null,
             Func<IReadOnlyList<string>>? apiVersions = null,
             Func<IReadOnlyList<InputEnumType>>? inputEnums = null,
             Func<IReadOnlyList<InputModelType>>? inputModels = null,
@@ -38,8 +39,7 @@ namespace Azure.Generator.Tests.TestHelpers
             IReadOnlyList<InputEnumType> inputNsEnums = inputEnums?.Invoke() ?? [];
             IReadOnlyList<InputClient> inputNsClients = clients?.Invoke() ?? [];
             IReadOnlyList<InputModelType> inputNsModels = inputModels?.Invoke() ?? [];
-            InputAuth inputNsAuth = apiKeyAuth != null ? new InputAuth(apiKeyAuth(), null) : new InputAuth();
-            var mockTypeFactory = new Mock<AzureTypeFactory>() { CallBase = true };
+            InputAuth inputNsAuth = new InputAuth(apiKeyAuth?.Invoke(), oauth2Auth?.Invoke());
             var mockInputNs = new Mock<InputNamespace>(
                 string.Empty,
                 inputNsApiVersions,
@@ -50,8 +50,10 @@ namespace Azure.Generator.Tests.TestHelpers
             var mockInputLibrary = new Mock<InputLibrary>(_configFilePath);
             mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNs.Object);
 
+            Mock<AzureTypeFactory>? mockTypeFactory = null;
             if (createCSharpTypeCore is not null)
             {
+                mockTypeFactory = new Mock<AzureTypeFactory>() { CallBase = true };
                 mockTypeFactory.Protected().Setup<CSharpType>("CreateCSharpTypeCore", ItExpr.IsAny<InputType>()).Returns(createCSharpTypeCore);
             }
 
@@ -65,15 +67,18 @@ namespace Azure.Generator.Tests.TestHelpers
             var config = loadMethod?.Invoke(null, parameters);
             var mockGeneratorContext = new Mock<GeneratorContext>(config!);
             var mockPluginInstance = new Mock<AzureClientPlugin>(mockGeneratorContext.Object) { CallBase = true };
-            mockPluginInstance.SetupGet(p => p.TypeFactory).Returns(mockTypeFactory.Object);
-            mockPluginInstance.Setup(p => p.InputLibrary).Returns(mockInputLibrary.Object);
-
-            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null)) { CallBase = true };
-            mockPluginInstance.Setup(p => p.SourceInputModel).Returns(sourceInputModel.Object);
-
             codeModelInstance!.SetValue(null, mockPluginInstance.Object);
             clientModelInstance!.SetValue(null, mockPluginInstance.Object);
             azureInstance!.SetValue(null, mockPluginInstance.Object);
+            mockPluginInstance.SetupGet(p => p.InputLibrary).Returns(mockInputLibrary.Object);
+
+            if (mockTypeFactory is not null)
+            {
+                mockPluginInstance.SetupGet(p => p.TypeFactory).Returns(mockTypeFactory.Object);
+            }
+
+            var sourceInputModel = new Mock<SourceInputModel>(() => new SourceInputModel(null)) { CallBase = true };
+            mockPluginInstance.Setup(p => p.SourceInputModel).Returns(sourceInputModel.Object);
             mockPluginInstance.Object.Configure();
             return mockPluginInstance;
         }

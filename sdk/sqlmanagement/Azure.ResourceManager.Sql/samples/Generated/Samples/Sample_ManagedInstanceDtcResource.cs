@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceDtcResource managedInstanceDtc = client.GetManagedInstanceDtcResource(managedInstanceDtcResourceId);
 
             // invoke the operation
-            ManagedInstanceDtcData data = new ManagedInstanceDtcData()
+            ManagedInstanceDtcData data = new ManagedInstanceDtcData
             {
                 DtcEnabled = true,
             };
@@ -105,12 +105,12 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceDtcResource managedInstanceDtc = client.GetManagedInstanceDtcResource(managedInstanceDtcResourceId);
 
             // invoke the operation
-            ManagedInstanceDtcData data = new ManagedInstanceDtcData()
+            ManagedInstanceDtcData data = new ManagedInstanceDtcData
             {
                 DtcEnabled = true,
-                SecuritySettings = new ManagedInstanceDtcSecuritySettings()
+                SecuritySettings = new ManagedInstanceDtcSecuritySettings
                 {
-                    TransactionManagerCommunicationSettings = new ManagedInstanceDtcTransactionManagerCommunicationSettings()
+                    TransactionManagerCommunicationSettings = new ManagedInstanceDtcTransactionManagerCommunicationSettings
                     {
                         AllowInboundEnabled = false,
                         AllowOutboundEnabled = true,
@@ -121,10 +121,7 @@ namespace Azure.ResourceManager.Sql.Samples
                     XATransactionsDefaultTimeoutInSeconds = 1000,
                     XATransactionsMaximumTimeoutInSeconds = 3000,
                 },
-                ExternalDnsSuffixSearchList =
-{
-"dns.example1.com","dns.example2.com"
-},
+                ExternalDnsSuffixSearchList = { "dns.example1.com", "dns.example2.com" },
             };
             ArmOperation<ManagedInstanceDtcResource> lro = await managedInstanceDtc.UpdateAsync(WaitUntil.Completed, data);
             ManagedInstanceDtcResource result = lro.Value;

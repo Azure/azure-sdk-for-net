@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CognitiveServices.Samples
             DefenderForAISettingResource defenderForAISetting = client.GetDefenderForAISettingResource(defenderForAISettingResourceId);
 
             // invoke the operation
-            DefenderForAISettingData data = new DefenderForAISettingData()
+            DefenderForAISettingData data = new DefenderForAISettingData
             {
                 State = DefenderForAISettingState.Enabled,
             };

@@ -46,4 +46,3 @@ namespace Azure.AI.OpenAI.Chat
         internal string KeyId { get; set; }
     }
 }
-

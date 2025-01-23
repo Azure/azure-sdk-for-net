@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Elastic.Models
             {
                 return null;
             }
-            IReadOnlyList<ElasticVersionListFormat> value = default;
+            IReadOnlyList<ElasticVersion> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,10 +98,10 @@ namespace Azure.ResourceManager.Elastic.Models
                     {
                         continue;
                     }
-                    List<ElasticVersionListFormat> array = new List<ElasticVersionListFormat>();
+                    List<ElasticVersion> array = new List<ElasticVersion>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ElasticVersionListFormat.DeserializeElasticVersionListFormat(item, options));
+                        array.Add(ElasticVersion.DeserializeElasticVersion(item, options));
                     }
                     value = array;
                     continue;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ElasticVersionsListResponse(value ?? new ChangeTrackingList<ElasticVersionListFormat>(), nextLink, serializedAdditionalRawData);
+            return new ElasticVersionsListResponse(value ?? new ChangeTrackingList<ElasticVersion>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ElasticVersionsListResponse>.Write(ModelReaderWriterOptions options)

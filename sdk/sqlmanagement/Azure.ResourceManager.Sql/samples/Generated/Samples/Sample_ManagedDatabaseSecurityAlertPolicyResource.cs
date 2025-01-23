@@ -71,17 +71,11 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedDatabaseSecurityAlertPolicyResource managedDatabaseSecurityAlertPolicy = client.GetManagedDatabaseSecurityAlertPolicyResource(managedDatabaseSecurityAlertPolicyResourceId);
 
             // invoke the operation
-            ManagedDatabaseSecurityAlertPolicyData data = new ManagedDatabaseSecurityAlertPolicyData()
+            ManagedDatabaseSecurityAlertPolicyData data = new ManagedDatabaseSecurityAlertPolicyData
             {
                 State = SecurityAlertPolicyState.Enabled,
-                DisabledAlerts =
-{
-"Sql_Injection","Usage_Anomaly"
-},
-                EmailAddresses =
-{
-"test@contoso.com","user@contoso.com"
-},
+                DisabledAlerts = { "Sql_Injection", "Usage_Anomaly" },
+                EmailAddresses = { "test@contoso.com", "user@contoso.com" },
                 SendToEmailAccountAdmins = true,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
@@ -120,7 +114,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedDatabaseSecurityAlertPolicyResource managedDatabaseSecurityAlertPolicy = client.GetManagedDatabaseSecurityAlertPolicyResource(managedDatabaseSecurityAlertPolicyResourceId);
 
             // invoke the operation
-            ManagedDatabaseSecurityAlertPolicyData data = new ManagedDatabaseSecurityAlertPolicyData()
+            ManagedDatabaseSecurityAlertPolicyData data = new ManagedDatabaseSecurityAlertPolicyData
             {
                 State = SecurityAlertPolicyState.Enabled,
             };

@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabUserResource devTestLabUser = client.GetDevTestLabUserResource(devTestLabUserResourceId);
 
             // invoke the operation
-            DevTestLabUserPatch patch = new DevTestLabUserPatch()
+            DevTestLabUserPatch patch = new DevTestLabUserPatch
             {
                 Tags =
 {
-["tagName1"] = "tagValue1",
+["tagName1"] = "tagValue1"
 },
             };
             DevTestLabUserResource result = await devTestLabUser.UpdateAsync(patch);

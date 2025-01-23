@@ -23,6 +23,7 @@ namespace Integration.Identity.Func
             try
             {
                 ManagedIdentityTests.AuthToStorage();
+                await Task.Yield();
                 return new OkObjectResult("Successfully acquired a token from ManagedIdentityCredential");
             }
             catch (Exception ex)

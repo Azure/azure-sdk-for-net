@@ -96,66 +96,37 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             SiteRecoveryRecoveryPlanResource siteRecoveryRecoveryPlan = client.GetSiteRecoveryRecoveryPlanResource(siteRecoveryRecoveryPlanResourceId);
 
             // invoke the operation
-            SiteRecoveryRecoveryPlanPatch patch = new SiteRecoveryRecoveryPlanPatch()
+            SiteRecoveryRecoveryPlanPatch patch = new SiteRecoveryRecoveryPlanPatch
             {
-                UpdateRecoveryPlanContentGroups =
+                UpdateRecoveryPlanContentGroups = {new SiteRecoveryPlanGroup(RecoveryPlanGroupType.Shutdown)
 {
-new SiteRecoveryPlanGroup(RecoveryPlanGroupType.Shutdown)
+ReplicationProtectedItems = {},
+StartGroupActions = {},
+EndGroupActions = {},
+}, new SiteRecoveryPlanGroup(RecoveryPlanGroupType.Failover)
 {
-ReplicationProtectedItems =
+ReplicationProtectedItems = {},
+StartGroupActions = {},
+EndGroupActions = {},
+}, new SiteRecoveryPlanGroup(RecoveryPlanGroupType.Boot)
 {
-},
-StartGroupActions =
-{
-},
-EndGroupActions =
-{
-},
-},new SiteRecoveryPlanGroup(RecoveryPlanGroupType.Failover)
-{
-ReplicationProtectedItems =
-{
-},
-StartGroupActions =
-{
-},
-EndGroupActions =
-{
-},
-},new SiteRecoveryPlanGroup(RecoveryPlanGroupType.Boot)
-{
-ReplicationProtectedItems =
-{
-new RecoveryPlanProtectedItem()
+ReplicationProtectedItems = {new RecoveryPlanProtectedItem
 {
 Id = new ResourceIdentifier("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud1/replicationProtectionContainers/cloud_6d224fc6-f326-5d35-96de-fbf51efb3179/replicationProtectedItems/f8491e4f-817a-40dd-a90c-af773978c75b"),
 VirtualMachineId = "f8491e4f-817a-40dd-a90c-af773978c75b",
-}
-},
-StartGroupActions =
+}},
+StartGroupActions = {},
+EndGroupActions = {},
+}, new SiteRecoveryPlanGroup(RecoveryPlanGroupType.Boot)
 {
-},
-EndGroupActions =
-{
-},
-},new SiteRecoveryPlanGroup(RecoveryPlanGroupType.Boot)
-{
-ReplicationProtectedItems =
-{
-new RecoveryPlanProtectedItem()
+ReplicationProtectedItems = {new RecoveryPlanProtectedItem
 {
 Id = new ResourceIdentifier("/Subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/resourceGroupPS1/providers/Microsoft.RecoveryServices/vaults/vault1/replicationFabrics/cloud1/replicationProtectionContainers/cloud_6d224fc6-f326-5d35-96de-fbf51efb3179/replicationProtectedItems/c0c14913-3d7a-48ea-9531-cc99e0e686e6"),
 VirtualMachineId = "c0c14913-3d7a-48ea-9531-cc99e0e686e6",
-}
-},
-StartGroupActions =
-{
-},
-EndGroupActions =
-{
-},
-}
-},
+}},
+StartGroupActions = {},
+EndGroupActions = {},
+}},
             };
             ArmOperation<SiteRecoveryRecoveryPlanResource> lro = await siteRecoveryRecoveryPlan.UpdateAsync(WaitUntil.Completed, patch);
             SiteRecoveryRecoveryPlanResource result = lro.Value;
@@ -255,10 +226,7 @@ EndGroupActions =
             // invoke the operation
             RecoveryPlanPlannedFailoverContent content = new RecoveryPlanPlannedFailoverContent(new RecoveryPlanPlannedFailoverProperties(PossibleOperationsDirection.PrimaryToRecovery)
             {
-                ProviderSpecificDetails =
-{
-new RecoveryPlanHyperVReplicaAzureFailoverContent()
-},
+                ProviderSpecificDetails = { new RecoveryPlanHyperVReplicaAzureFailoverContent() },
             });
             ArmOperation<SiteRecoveryRecoveryPlanResource> lro = await siteRecoveryRecoveryPlan.PlannedFailoverAsync(WaitUntil.Completed, content);
             SiteRecoveryRecoveryPlanResource result = lro.Value;
@@ -327,10 +295,7 @@ new RecoveryPlanHyperVReplicaAzureFailoverContent()
             RecoveryPlanTestFailoverContent content = new RecoveryPlanTestFailoverContent(new RecoveryPlanTestFailoverProperties(PossibleOperationsDirection.PrimaryToRecovery, "VmNetworkAsInput")
             {
                 NetworkId = new ResourceIdentifier("/subscriptions/c183865e-6077-46f2-a3b1-deb0f4f4650a/resourceGroups/siterecoveryProd1/providers/Microsoft.Network/virtualNetworks/vnetavrai"),
-                ProviderSpecificDetails =
-{
-new RecoveryPlanHyperVReplicaAzureFailoverContent()
-},
+                ProviderSpecificDetails = { new RecoveryPlanHyperVReplicaAzureFailoverContent() },
             });
             ArmOperation<SiteRecoveryRecoveryPlanResource> lro = await siteRecoveryRecoveryPlan.TestFailoverAsync(WaitUntil.Completed, content);
             SiteRecoveryRecoveryPlanResource result = lro.Value;
@@ -364,7 +329,7 @@ new RecoveryPlanHyperVReplicaAzureFailoverContent()
             SiteRecoveryRecoveryPlanResource siteRecoveryRecoveryPlan = client.GetSiteRecoveryRecoveryPlanResource(siteRecoveryRecoveryPlanResourceId);
 
             // invoke the operation
-            RecoveryPlanTestFailoverCleanupContent content = new RecoveryPlanTestFailoverCleanupContent(new RecoveryPlanTestFailoverCleanupProperties()
+            RecoveryPlanTestFailoverCleanupContent content = new RecoveryPlanTestFailoverCleanupContent(new RecoveryPlanTestFailoverCleanupProperties
             {
                 Comments = "Test Failover Cleanup",
             });
@@ -402,10 +367,7 @@ new RecoveryPlanHyperVReplicaAzureFailoverContent()
             // invoke the operation
             RecoveryPlanUnplannedFailoverContent content = new RecoveryPlanUnplannedFailoverContent(new RecoveryPlanUnplannedFailoverProperties(PossibleOperationsDirection.PrimaryToRecovery, SourceSiteOperation.Required)
             {
-                ProviderSpecificDetails =
-{
-new RecoveryPlanHyperVReplicaAzureFailoverContent()
-},
+                ProviderSpecificDetails = { new RecoveryPlanHyperVReplicaAzureFailoverContent() },
             });
             ArmOperation<SiteRecoveryRecoveryPlanResource> lro = await siteRecoveryRecoveryPlan.UnplannedFailoverAsync(WaitUntil.Completed, content);
             SiteRecoveryRecoveryPlanResource result = lro.Value;

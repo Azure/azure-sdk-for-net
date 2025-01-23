@@ -128,17 +128,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             SiteRecoveryFabricResource siteRecoveryFabric = client.GetSiteRecoveryFabricResource(siteRecoveryFabricResourceId);
 
             // invoke the operation
-            FailoverProcessServerContent content = new FailoverProcessServerContent()
+            FailoverProcessServerContent content = new FailoverProcessServerContent
             {
-                Properties = new FailoverProcessServerProperties()
+                Properties = new FailoverProcessServerProperties
                 {
                     ContainerName = "cloud_1f3c15af-2256-4568-9e06-e1ef4f728f75",
                     SourceProcessServerId = Guid.Parse("AFA0EC54-1894-4E44-9CAB02DB8854B117"),
                     TargetProcessServerId = Guid.Parse("5D3ED340-85AE-C646-B338641E015DA405"),
-                    VmsToMigrate =
-{
-"Vm1","Vm2"
-},
+                    VmsToMigrate = { "Vm1", "Vm2" },
                     UpdateType = "ServerLevel",
                 },
             };
@@ -201,7 +198,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             SiteRecoveryFabricResource siteRecoveryFabric = client.GetSiteRecoveryFabricResource(siteRecoveryFabricResourceId);
 
             // invoke the operation
-            RenewCertificateContent content = new RenewCertificateContent()
+            RenewCertificateContent content = new RenewCertificateContent
             {
                 RenewCertificateType = "Cloud",
             };

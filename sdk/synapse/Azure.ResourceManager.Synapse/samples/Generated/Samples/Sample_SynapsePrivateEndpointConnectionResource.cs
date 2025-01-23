@@ -49,46 +49,6 @@ namespace Azure.ResourceManager.Synapse.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_ApprovePrivateEndpointConnection()
-        {
-            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/ApprovePrivateEndpointConnection.json
-            // this example is just showing the usage of "PrivateEndpointConnections_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SynapsePrivateEndpointConnectionResource created on azure
-            // for more information of creating SynapsePrivateEndpointConnectionResource, please refer to the document of SynapsePrivateEndpointConnectionResource
-            string subscriptionId = "01234567-89ab-4def-0123-456789abcdef";
-            string resourceGroupName = "ExampleResourceGroup";
-            string workspaceName = "ExampleWorkspace";
-            string privateEndpointConnectionName = "ExamplePrivateEndpointConnection";
-            ResourceIdentifier synapsePrivateEndpointConnectionResourceId = SynapsePrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, privateEndpointConnectionName);
-            SynapsePrivateEndpointConnectionResource synapsePrivateEndpointConnection = client.GetSynapsePrivateEndpointConnectionResource(synapsePrivateEndpointConnectionResourceId);
-
-            // invoke the operation
-            SynapsePrivateEndpointConnectionData data = new SynapsePrivateEndpointConnectionData()
-            {
-                ConnectionState = new SynapsePrivateLinkServiceConnectionState()
-                {
-                    Status = "Approved",
-                    Description = "Approved by abc@example.com",
-                },
-            };
-            ArmOperation<SynapsePrivateEndpointConnectionResource> lro = await synapsePrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
-            SynapsePrivateEndpointConnectionResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SynapsePrivateEndpointConnectionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletePrivateEndpointConnection()
         {
             // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/DeletePrivateEndpointConnection.json
@@ -112,6 +72,46 @@ namespace Azure.ResourceManager.Synapse.Samples
             await synapsePrivateEndpointConnection.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_ApprovePrivateEndpointConnection()
+        {
+            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/stable/2021-06-01/examples/ApprovePrivateEndpointConnection.json
+            // this example is just showing the usage of "PrivateEndpointConnections_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SynapsePrivateEndpointConnectionResource created on azure
+            // for more information of creating SynapsePrivateEndpointConnectionResource, please refer to the document of SynapsePrivateEndpointConnectionResource
+            string subscriptionId = "01234567-89ab-4def-0123-456789abcdef";
+            string resourceGroupName = "ExampleResourceGroup";
+            string workspaceName = "ExampleWorkspace";
+            string privateEndpointConnectionName = "ExamplePrivateEndpointConnection";
+            ResourceIdentifier synapsePrivateEndpointConnectionResourceId = SynapsePrivateEndpointConnectionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, privateEndpointConnectionName);
+            SynapsePrivateEndpointConnectionResource synapsePrivateEndpointConnection = client.GetSynapsePrivateEndpointConnectionResource(synapsePrivateEndpointConnectionResourceId);
+
+            // invoke the operation
+            SynapsePrivateEndpointConnectionData data = new SynapsePrivateEndpointConnectionData
+            {
+                ConnectionState = new SynapsePrivateLinkServiceConnectionState
+                {
+                    Status = "Approved",
+                    Description = "Approved by abc@example.com",
+                },
+            };
+            ArmOperation<SynapsePrivateEndpointConnectionResource> lro = await synapsePrivateEndpointConnection.UpdateAsync(WaitUntil.Completed, data);
+            SynapsePrivateEndpointConnectionResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SynapsePrivateEndpointConnectionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

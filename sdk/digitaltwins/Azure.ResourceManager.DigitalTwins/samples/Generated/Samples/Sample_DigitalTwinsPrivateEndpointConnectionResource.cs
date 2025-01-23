@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DigitalTwins.Samples
             DigitalTwinsPrivateEndpointConnectionResource digitalTwinsPrivateEndpointConnection = client.GetDigitalTwinsPrivateEndpointConnectionResource(digitalTwinsPrivateEndpointConnectionResourceId);
 
             // invoke the operation
-            DigitalTwinsPrivateEndpointConnectionData data = new DigitalTwinsPrivateEndpointConnectionData(new DigitalTwinsPrivateEndpointConnectionProperties()
+            DigitalTwinsPrivateEndpointConnectionData data = new DigitalTwinsPrivateEndpointConnectionData(new DigitalTwinsPrivateEndpointConnectionProperties
             {
                 PrivateLinkServiceConnectionState = new DigitalTwinsPrivateLinkServiceConnectionState(DigitalTwinsPrivateLinkServiceConnectionStatus.Approved, "Approved by johndoe@company.com."),
             });

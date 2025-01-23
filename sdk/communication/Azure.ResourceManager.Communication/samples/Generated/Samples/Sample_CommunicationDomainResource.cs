@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Communication.Samples
             CommunicationDomainResource communicationDomainResource = client.GetCommunicationDomainResource(communicationDomainResourceId);
 
             // invoke the operation
-            CommunicationDomainResourcePatch patch = new CommunicationDomainResourcePatch()
+            CommunicationDomainResourcePatch patch = new CommunicationDomainResourcePatch
             {
                 UserEngagementTracking = UserEngagementTracking.Enabled,
             };

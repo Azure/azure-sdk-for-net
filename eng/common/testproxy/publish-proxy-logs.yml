@@ -5,6 +5,7 @@ steps:
   - pwsh: |
       New-Item -ItemType Directory -Force "${{ parameters.rootFolder }}/proxy-logs"
       Copy-Item -Path "${{ parameters.rootFolder }}/test-proxy.log" -Destination "${{ parameters.rootFolder }}/proxy-logs/proxy.log"
+      Copy-Item -Path "${{ parameters.rootFolder }}/test-proxy-error.log" -Destination "${{ parameters.rootFolder }}/proxy-logs/proxy-error.log"
     displayName: Copy Log File
     condition: succeededOrFailed()
 

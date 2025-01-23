@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Samples
             ScalingPlanPersonalScheduleResource scalingPlanPersonalSchedule = client.GetScalingPlanPersonalScheduleResource(scalingPlanPersonalScheduleResourceId);
 
             // invoke the operation
-            ScalingPlanPersonalSchedulePatch patch = new ScalingPlanPersonalSchedulePatch()
+            ScalingPlanPersonalSchedulePatch patch = new ScalingPlanPersonalSchedulePatch
             {
                 PeakStartTime = new ScalingActionTime(8, 0),
                 PeakActionOnDisconnect = SessionHandlingOperation.None,

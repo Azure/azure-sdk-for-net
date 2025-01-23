@@ -69,13 +69,13 @@ namespace Azure.ResourceManager.Reservations.Samples
             ReservationQuotaResource reservationQuota = client.GetReservationQuotaResource(reservationQuotaResourceId);
 
             // invoke the operation
-            ReservationQuotaData data = new ReservationQuotaData()
+            ReservationQuotaData data = new ReservationQuotaData
             {
-                Properties = new QuotaProperties()
+                Properties = new QuotaProperties
                 {
                     Limit = 200,
                     Unit = "Count",
-                    ResourceName = new ReservationResourceName()
+                    ResourceName = new ReservationResourceName
                     {
                         Value = "standardFSv2Family",
                     },

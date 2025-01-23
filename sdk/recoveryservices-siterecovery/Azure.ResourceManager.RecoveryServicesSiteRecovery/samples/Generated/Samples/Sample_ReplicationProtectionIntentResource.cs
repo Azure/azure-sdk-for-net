@@ -69,9 +69,15 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             ReplicationProtectionIntentResource replicationProtectionIntent = client.GetReplicationProtectionIntentResource(replicationProtectionIntentResourceId);
 
             // invoke the operation
-            ReplicationProtectionIntentCreateOrUpdateContent content = new ReplicationProtectionIntentCreateOrUpdateContent()
+            ReplicationProtectionIntentCreateOrUpdateContent content = new ReplicationProtectionIntentCreateOrUpdateContent
             {
-                SiteRecoveryCreateProtectionIntentProviderSpecificDetails = new A2ACreateProtectionIntentContent(new ResourceIdentifier("/subscriptions/509099b2-9d2c-4636-b43e-bd5cafb6be69/resourceGroups/removeOne/providers/Microsoft.Compute/virtualMachines/vmPpgAv5"), new AzureLocation("eastUs2"), new AzureLocation("westus2"), "ed5bcdf6-d61e-47bd-8ea9-f2bd379a2640", A2ARecoveryAvailabilityType.Single, new ResourceIdentifier("/subscriptions/509099b2-9d2c-4636-b43e-bd5cafb6be69/resourceGroups/removeOne-asr")),
+                SiteRecoveryCreateProtectionIntentProviderSpecificDetails = new A2ACreateProtectionIntentContent(
+                new ResourceIdentifier("/subscriptions/509099b2-9d2c-4636-b43e-bd5cafb6be69/resourceGroups/removeOne/providers/Microsoft.Compute/virtualMachines/vmPpgAv5"),
+                new AzureLocation("eastUs2"),
+                new AzureLocation("westus2"),
+                "ed5bcdf6-d61e-47bd-8ea9-f2bd379a2640",
+                A2ARecoveryAvailabilityType.Single,
+                new ResourceIdentifier("/subscriptions/509099b2-9d2c-4636-b43e-bd5cafb6be69/resourceGroups/removeOne-asr")),
             };
             ArmOperation<ReplicationProtectionIntentResource> lro = await replicationProtectionIntent.UpdateAsync(WaitUntil.Completed, content);
             ReplicationProtectionIntentResource result = lro.Value;

@@ -49,6 +49,33 @@ namespace Azure.ResourceManager.Media.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteAStreamingEndpoint()
+        {
+            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Streaming/stable/2022-08-01/examples/streamingendpoint-delete.json
+            // this example is just showing the usage of "StreamingEndpoints_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingEndpointResource created on azure
+            // for more information of creating StreamingEndpointResource, please refer to the document of StreamingEndpointResource
+            string subscriptionId = "0a6ec948-5a62-437d-b9df-934dc7c1b722";
+            string resourceGroupName = "mediaresources";
+            string accountName = "slitestmedia10";
+            string streamingEndpointName = "myStreamingEndpoint1";
+            ResourceIdentifier streamingEndpointResourceId = StreamingEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingEndpointName);
+            StreamingEndpointResource streamingEndpoint = client.GetStreamingEndpointResource(streamingEndpointResourceId);
+
+            // invoke the operation
+            await streamingEndpoint.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_UpdateAStreamingEndpoint()
         {
             // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Streaming/stable/2022-08-01/examples/streamingendpoint-update.json
@@ -77,7 +104,7 @@ namespace Azure.ResourceManager.Media.Samples
                 Tags =
 {
 ["tag3"] = "value3",
-["tag5"] = "value5",
+["tag5"] = "value5"
 },
             };
             ArmOperation<StreamingEndpointResource> lro = await streamingEndpoint.UpdateAsync(WaitUntil.Completed, data);
@@ -88,33 +115,6 @@ namespace Azure.ResourceManager.Media.Samples
             StreamingEndpointData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteAStreamingEndpoint()
-        {
-            // Generated from example definition: specification/mediaservices/resource-manager/Microsoft.Media/Streaming/stable/2022-08-01/examples/streamingendpoint-delete.json
-            // this example is just showing the usage of "StreamingEndpoints_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StreamingEndpointResource created on azure
-            // for more information of creating StreamingEndpointResource, please refer to the document of StreamingEndpointResource
-            string subscriptionId = "0a6ec948-5a62-437d-b9df-934dc7c1b722";
-            string resourceGroupName = "mediaresources";
-            string accountName = "slitestmedia10";
-            string streamingEndpointName = "myStreamingEndpoint1";
-            ResourceIdentifier streamingEndpointResourceId = StreamingEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, streamingEndpointName);
-            StreamingEndpointResource streamingEndpoint = client.GetStreamingEndpointResource(streamingEndpointResourceId);
-
-            // invoke the operation
-            await streamingEndpoint.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.Media.Samples
             StreamingEndpointResource streamingEndpoint = client.GetStreamingEndpointResource(streamingEndpointResourceId);
 
             // invoke the operation
-            StreamingEntityScaleUnit streamingEntityScaleUnit = new StreamingEntityScaleUnit()
+            StreamingEntityScaleUnit streamingEntityScaleUnit = new StreamingEntityScaleUnit
             {
                 ScaleUnit = 5,
             };

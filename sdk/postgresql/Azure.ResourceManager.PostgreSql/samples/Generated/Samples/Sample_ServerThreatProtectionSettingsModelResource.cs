@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
             ServerThreatProtectionSettingsModelResource serverThreatProtectionSettingsModel = client.GetServerThreatProtectionSettingsModelResource(serverThreatProtectionSettingsModelResourceId);
 
             // invoke the operation
-            ServerThreatProtectionSettingsModelData data = new ServerThreatProtectionSettingsModelData()
+            ServerThreatProtectionSettingsModelData data = new ServerThreatProtectionSettingsModelData
             {
                 State = ThreatProtectionState.Enabled,
             };

@@ -12,116 +12,12 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HDInsight.Models;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.HDInsight.Samples
 {
     public partial class Sample_HDInsightClusterResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_PatchHDInsightLinuxClusters()
-        {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/PatchLinuxHadoopCluster.json
-            // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HDInsightClusterResource created on azure
-            // for more information of creating HDInsightClusterResource, please refer to the document of HDInsightClusterResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string clusterName = "cluster1";
-            ResourceIdentifier hdInsightClusterResourceId = HDInsightClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
-
-            // invoke the operation
-            HDInsightClusterPatch patch = new HDInsightClusterPatch()
-            {
-                Tags =
-{
-["key1"] = "val1",
-["key2"] = "val2",
-},
-            };
-            HDInsightClusterResource result = await hdInsightCluster.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            HDInsightClusterData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_PatchHDInsightLinuxClustersWithSystemAssignedMSI()
-        {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/PatchLinuxHadoopClusterWithSystemMSI.json
-            // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HDInsightClusterResource created on azure
-            // for more information of creating HDInsightClusterResource, please refer to the document of HDInsightClusterResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string clusterName = "cluster1";
-            ResourceIdentifier hdInsightClusterResourceId = HDInsightClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
-
-            // invoke the operation
-            HDInsightClusterPatch patch = new HDInsightClusterPatch()
-            {
-                Tags =
-{
-["key1"] = "val1",
-["key2"] = "val2",
-},
-                Identity = new ManagedServiceIdentity("SystemAssigned"),
-            };
-            HDInsightClusterResource result = await hdInsightCluster.UpdateAsync(patch);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            HDInsightClusterData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteHadoopOnLinuxCluster()
-        {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/DeleteLinuxHadoopCluster.json
-            // this example is just showing the usage of "Clusters_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HDInsightClusterResource created on azure
-            // for more information of creating HDInsightClusterResource, please refer to the document of HDInsightClusterResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "rg1";
-            string clusterName = "cluster1";
-            ResourceIdentifier hdInsightClusterResourceId = HDInsightClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
-            HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
-
-            // invoke the operation
-            await hdInsightCluster.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetHadoopOnLinuxCluster()
@@ -184,6 +80,109 @@ namespace Azure.ResourceManager.HDInsight.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteHadoopOnLinuxCluster()
+        {
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/DeleteLinuxHadoopCluster.json
+            // this example is just showing the usage of "Clusters_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HDInsightClusterResource created on azure
+            // for more information of creating HDInsightClusterResource, please refer to the document of HDInsightClusterResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string clusterName = "cluster1";
+            ResourceIdentifier hdInsightClusterResourceId = HDInsightClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
+
+            // invoke the operation
+            await hdInsightCluster.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_PatchHDInsightLinuxClusters()
+        {
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/PatchLinuxHadoopCluster.json
+            // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HDInsightClusterResource created on azure
+            // for more information of creating HDInsightClusterResource, please refer to the document of HDInsightClusterResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string clusterName = "cluster1";
+            ResourceIdentifier hdInsightClusterResourceId = HDInsightClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
+
+            // invoke the operation
+            HDInsightClusterPatch patch = new HDInsightClusterPatch
+            {
+                Tags =
+{
+["key1"] = "val1",
+["key2"] = "val2"
+},
+            };
+            HDInsightClusterResource result = await hdInsightCluster.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            HDInsightClusterData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_PatchHDInsightLinuxClustersWithSystemAssignedMSI()
+        {
+            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/PatchLinuxHadoopClusterWithSystemMSI.json
+            // this example is just showing the usage of "Clusters_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HDInsightClusterResource created on azure
+            // for more information of creating HDInsightClusterResource, please refer to the document of HDInsightClusterResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "rg1";
+            string clusterName = "cluster1";
+            ResourceIdentifier hdInsightClusterResourceId = HDInsightClusterResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, clusterName);
+            HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
+
+            // invoke the operation
+            HDInsightClusterPatch patch = new HDInsightClusterPatch
+            {
+                Tags =
+{
+["key1"] = "val1",
+["key2"] = "val2"
+},
+                Identity = new ManagedServiceIdentity("SystemAssigned"),
+            };
+            HDInsightClusterResource result = await hdInsightCluster.UpdateAsync(patch);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            HDInsightClusterData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Resize_ResizeTheWorkerNodesForAHadoopOnLinuxCluster()
         {
             // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/ResizeLinuxHadoopCluster.json
@@ -204,7 +203,7 @@ namespace Azure.ResourceManager.HDInsight.Samples
 
             // invoke the operation
             HDInsightRoleName roleName = HDInsightRoleName.Workernode;
-            HDInsightClusterResizeContent content = new HDInsightClusterResizeContent()
+            HDInsightClusterResizeContent content = new HDInsightClusterResizeContent
             {
                 TargetInstanceCount = 10,
             };
@@ -263,11 +262,11 @@ namespace Azure.ResourceManager.HDInsight.Samples
 
             // invoke the operation
             HDInsightRoleName roleName = HDInsightRoleName.Workernode;
-            HDInsightAutoScaleConfigurationUpdateContent content = new HDInsightAutoScaleConfigurationUpdateContent()
+            HDInsightAutoScaleConfigurationUpdateContent content = new HDInsightAutoScaleConfigurationUpdateContent
             {
-                AutoScale = new HDInsightAutoScaleConfiguration()
+                AutoScale = new HDInsightAutoScaleConfiguration
                 {
-                    Capacity = new HDInsightAutoScaleCapacity()
+                    Capacity = new HDInsightAutoScaleCapacity
                     {
                         MinInstanceCount = 3,
                         MaxInstanceCount = 5,
@@ -301,64 +300,27 @@ namespace Azure.ResourceManager.HDInsight.Samples
 
             // invoke the operation
             HDInsightRoleName roleName = HDInsightRoleName.Workernode;
-            HDInsightAutoScaleConfigurationUpdateContent content = new HDInsightAutoScaleConfigurationUpdateContent()
+            HDInsightAutoScaleConfigurationUpdateContent content = new HDInsightAutoScaleConfigurationUpdateContent
             {
-                AutoScale = new HDInsightAutoScaleConfiguration()
+                AutoScale = new HDInsightAutoScaleConfiguration
                 {
-                    Recurrence = new HDInsightAutoScaleRecurrence()
+                    Recurrence = new HDInsightAutoScaleRecurrence
                     {
                         TimeZone = "China Standard Time",
-                        Schedule =
+                        Schedule = {new HDInsightAutoScaleSchedule
 {
-new HDInsightAutoScaleSchedule()
-{
-Days =
-{
-HDInsightDayOfWeek.Thursday
-},
-TimeAndCapacity = new HDInsightAutoScaleTimeAndCapacity()
+Days = {HDInsightDayOfWeek.Thursday},
+TimeAndCapacity = new HDInsightAutoScaleTimeAndCapacity
 {
 Time = "16:00",
 MinInstanceCount = 4,
 MaxInstanceCount = 4,
 },
-}
-},
+}},
                     },
                 },
             };
             await hdInsightCluster.UpdateAutoScaleConfigurationAsync(WaitUntil.Completed, roleName, content);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetHDInsightClusters_GetAllHadoopOnLinuxClusters()
-        {
-            // Generated from example definition: specification/hdinsight/resource-manager/Microsoft.HDInsight/preview/2024-08-01-preview/examples/GetLinuxHadoopAllClusters.json
-            // this example is just showing the usage of "Clusters_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (HDInsightClusterResource item in subscriptionResource.GetHDInsightClustersAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                HDInsightClusterData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
 
             Console.WriteLine("Succeeded");
         }
@@ -384,7 +346,7 @@ MaxInstanceCount = 4,
             HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
-            HDInsightClusterDiskEncryptionContent content = new HDInsightClusterDiskEncryptionContent()
+            HDInsightClusterDiskEncryptionContent content = new HDInsightClusterDiskEncryptionContent
             {
                 VaultUri = new Uri("https://newkeyvault.vault.azure.net/"),
                 KeyName = "newkeyname",
@@ -442,7 +404,7 @@ MaxInstanceCount = 4,
             HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
-            HDInsightClusterUpdateGatewaySettingsContent content = new HDInsightClusterUpdateGatewaySettingsContent()
+            HDInsightClusterUpdateGatewaySettingsContent content = new HDInsightClusterUpdateGatewaySettingsContent
             {
                 IsCredentialEnabled = true,
                 UserName = "hadoop",
@@ -501,7 +463,7 @@ MaxInstanceCount = 4,
             HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
-            HDInsightClusterUpdateIdentityCertificateContent content = new HDInsightClusterUpdateIdentityCertificateContent()
+            HDInsightClusterUpdateIdentityCertificateContent content = new HDInsightClusterUpdateIdentityCertificateContent
             {
                 ApplicationId = "applicationId",
                 Certificate = "base64encodedcertificate",
@@ -535,16 +497,10 @@ MaxInstanceCount = 4,
             // invoke the operation
             ExecuteScriptActionContent content = new ExecuteScriptActionContent(false)
             {
-                ScriptActions =
-{
-new RuntimeScriptAction("Test",new Uri("http://testurl.com/install.ssh"),new string[]
-{
-"headnode","workernode"
-})
+                ScriptActions = {new RuntimeScriptAction("Test", new Uri("http://testurl.com/install.ssh"), new string[]{"headnode", "workernode"})
 {
 Parameters = "",
-}
-},
+}},
             };
             await hdInsightCluster.ExecuteScriptActionsAsync(WaitUntil.Completed, content);
 
@@ -599,9 +555,9 @@ Parameters = "",
 
             // invoke the operation
             string configurationName = "gateway";
-            IDictionary<string, string> clusterConfiguration = new Dictionary<string, string>()
+            IDictionary<string, string> clusterConfiguration = new Dictionary<string, string>
             {
-                ["restAuthCredential.isEnabled"] = "false",
+                ["restAuthCredential.isEnabled"] = "false"
             };
             await hdInsightCluster.UpdateConfigurationAsync(WaitUntil.Completed, configurationName, clusterConfiguration);
 
@@ -630,11 +586,11 @@ Parameters = "",
 
             // invoke the operation
             string configurationName = "gateway";
-            IDictionary<string, string> clusterConfiguration = new Dictionary<string, string>()
+            IDictionary<string, string> clusterConfiguration = new Dictionary<string, string>
             {
                 ["restAuthCredential.isEnabled"] = "true",
                 ["restAuthCredential.password"] = "**********",
-                ["restAuthCredential.username"] = "hadoop",
+                ["restAuthCredential.username"] = "hadoop"
             };
             await hdInsightCluster.UpdateConfigurationAsync(WaitUntil.Completed, configurationName, clusterConfiguration);
 
@@ -690,7 +646,7 @@ Parameters = "",
             HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
-            HDInsightClusterEnableClusterMonitoringContent content = new HDInsightClusterEnableClusterMonitoringContent()
+            HDInsightClusterEnableClusterMonitoringContent content = new HDInsightClusterEnableClusterMonitoringContent
             {
                 WorkspaceId = "a2090ead-8c9f-4fba-b70e-533e3e003163",
                 PrimaryKey = "**********",
@@ -773,7 +729,7 @@ Parameters = "",
             HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
-            HDInsightAzureMonitorExtensionEnableContent content = new HDInsightAzureMonitorExtensionEnableContent()
+            HDInsightAzureMonitorExtensionEnableContent content = new HDInsightAzureMonitorExtensionEnableContent
             {
                 WorkspaceId = "a2090ead-8c9f-4fba-b70e-533e3e003163",
                 PrimaryKey = "**********",
@@ -856,7 +812,7 @@ Parameters = "",
             HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
-            HDInsightAzureMonitorExtensionEnableContent content = new HDInsightAzureMonitorExtensionEnableContent()
+            HDInsightAzureMonitorExtensionEnableContent content = new HDInsightAzureMonitorExtensionEnableContent
             {
                 WorkspaceId = "a2090ead-8c9f-4fba-b70e-533e3e003163",
                 PrimaryKey = "**********",
@@ -940,7 +896,7 @@ Parameters = "",
 
             // invoke the operation
             string extensionName = "clustermonitoring";
-            HDInsightClusterCreateExtensionContent content = new HDInsightClusterCreateExtensionContent()
+            HDInsightClusterCreateExtensionContent content = new HDInsightClusterCreateExtensionContent
             {
                 WorkspaceId = "a2090ead-8c9f-4fba-b70e-533e3e003163",
                 PrimaryKey = "**********",
@@ -1248,10 +1204,7 @@ Parameters = "",
             HDInsightClusterResource hdInsightCluster = client.GetHDInsightClusterResource(hdInsightClusterResourceId);
 
             // invoke the operation
-            IEnumerable<string> content = new string[]
-            {
-"gateway1","gateway3"
-            };
+            IEnumerable<string> content = new string[] { "gateway1", "gateway3" };
             await hdInsightCluster.RestartVirtualMachineHostsAsync(WaitUntil.Completed, content);
 
             Console.WriteLine("Succeeded");

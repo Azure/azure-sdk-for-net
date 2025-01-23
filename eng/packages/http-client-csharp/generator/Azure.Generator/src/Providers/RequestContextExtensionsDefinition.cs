@@ -14,7 +14,7 @@ namespace Azure.Generator.Providers
 {
     internal class RequestContextExtensionsDefinition : TypeProvider
     {
-        protected override TypeSignatureModifiers GetDeclarationModifiers() => TypeSignatureModifiers.Internal | TypeSignatureModifiers.Static;
+        protected override TypeSignatureModifiers BuildDeclarationModifiers() => TypeSignatureModifiers.Internal | TypeSignatureModifiers.Static;
 
         protected override string BuildName() => "RequestContextExtensions";
 

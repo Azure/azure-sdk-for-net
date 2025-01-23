@@ -96,16 +96,13 @@ namespace Azure.ResourceManager.Media.Samples
             MediaTransformResource mediaTransform = client.GetMediaTransformResource(mediaTransformResourceId);
 
             // invoke the operation
-            MediaTransformData data = new MediaTransformData()
+            MediaTransformData data = new MediaTransformData
             {
                 Description = "Example transform to illustrate update.",
-                Outputs =
-{
-new MediaTransformOutput(new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264MultipleBitrate720P))
+                Outputs = {new MediaTransformOutput(new BuiltInStandardEncoderPreset(EncoderNamedPreset.H264MultipleBitrate720P))
 {
 RelativePriority = MediaJobPriority.High,
-}
-},
+}},
             };
             MediaTransformResource result = await mediaTransform.UpdateAsync(data);
 

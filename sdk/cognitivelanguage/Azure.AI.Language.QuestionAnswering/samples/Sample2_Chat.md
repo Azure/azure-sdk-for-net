@@ -59,4 +59,4 @@ foreach (KnowledgeBaseAnswer answer in response.Value.Answers)
 }
 ```
 
-[questionanswering_docs_chat]: https://docs.microsoft.com/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base
+[questionanswering_docs_chat]: https://learn.microsoft.com/azure/cognitive-services/qnamaker/how-to/chit-chat-knowledge-base

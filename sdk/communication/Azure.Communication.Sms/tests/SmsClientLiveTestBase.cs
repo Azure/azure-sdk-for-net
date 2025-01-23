@@ -5,7 +5,6 @@ using System;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
-using Azure.Identity;
 using NUnit.Framework;
 
 namespace Azure.Communication.Sms.Tests

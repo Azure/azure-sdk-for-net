@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             AdvancedThreatProtectionResource advancedThreatProtection = client.GetAdvancedThreatProtectionResource(advancedThreatProtectionResourceId);
 
             // invoke the operation
-            AdvancedThreatProtectionPatch patch = new AdvancedThreatProtectionPatch()
+            AdvancedThreatProtectionPatch patch = new AdvancedThreatProtectionPatch
             {
                 State = AdvancedThreatProtectionState.Disabled,
             };
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Samples
             AdvancedThreatProtectionResource advancedThreatProtection = client.GetAdvancedThreatProtectionResource(advancedThreatProtectionResourceId);
 
             // invoke the operation
-            AdvancedThreatProtectionPatch patch = new AdvancedThreatProtectionPatch()
+            AdvancedThreatProtectionPatch patch = new AdvancedThreatProtectionPatch
             {
                 State = AdvancedThreatProtectionState.Enabled,
             };

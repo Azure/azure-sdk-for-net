@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Sql.Samples
             SqlServerConnectionPolicyResource sqlServerConnectionPolicy = client.GetSqlServerConnectionPolicyResource(sqlServerConnectionPolicyResourceId);
 
             // invoke the operation
-            SqlServerConnectionPolicyData data = new SqlServerConnectionPolicyData()
+            SqlServerConnectionPolicyData data = new SqlServerConnectionPolicyData
             {
                 ConnectionType = ServerConnectionType.Redirect,
             };

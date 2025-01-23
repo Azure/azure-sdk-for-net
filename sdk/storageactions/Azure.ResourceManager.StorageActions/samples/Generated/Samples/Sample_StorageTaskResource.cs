@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.StorageActions.Models;
 using NUnit.Framework;
@@ -19,32 +18,6 @@ namespace Azure.ResourceManager.StorageActions.Samples
 {
     public partial class Sample_StorageTaskResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteStorageTask()
-        {
-            // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksCrud/DeleteStorageTask.json
-            // this example is just showing the usage of "StorageTasks_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StorageTaskResource created on azure
-            // for more information of creating StorageTaskResource, please refer to the document of StorageTaskResource
-            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
-            string resourceGroupName = "res4228";
-            string storageTaskName = "mytask1";
-            ResourceIdentifier storageTaskResourceId = StorageTaskResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, storageTaskName);
-            StorageTaskResource storageTask = client.GetStorageTaskResource(storageTaskResourceId);
-
-            // invoke the operation
-            await storageTask.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetStorageTask()
@@ -77,6 +50,32 @@ namespace Azure.ResourceManager.StorageActions.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteStorageTask()
+        {
+            // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksCrud/DeleteStorageTask.json
+            // this example is just showing the usage of "StorageTasks_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StorageTaskResource created on azure
+            // for more information of creating StorageTaskResource, please refer to the document of StorageTaskResource
+            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
+            string resourceGroupName = "res4228";
+            string storageTaskName = "mytask1";
+            ResourceIdentifier storageTaskResourceId = StorageTaskResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, storageTaskName);
+            StorageTaskResource storageTask = client.GetStorageTaskResource(storageTaskResourceId);
+
+            // invoke the operation
+            await storageTask.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_PatchStorageTask()
         {
             // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksCrud/PatchStorageTask.json
@@ -96,13 +95,13 @@ namespace Azure.ResourceManager.StorageActions.Samples
             StorageTaskResource storageTask = client.GetStorageTaskResource(storageTaskResourceId);
 
             // invoke the operation
-            StorageTaskPatch patch = new StorageTaskPatch()
+            StorageTaskPatch patch = new StorageTaskPatch
             {
                 Identity = new ManagedServiceIdentity("UserAssigned")
                 {
                     UserAssignedIdentities =
 {
-[new ResourceIdentifier("/subscriptions/1f31ba14-ce16-4281-b9b4-3e78da6e1616/resourceGroups/res4228/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myUserAssignedIdentity")] = new UserAssignedIdentity(),
+[new ResourceIdentifier("/subscriptions/1f31ba14-ce16-4281-b9b4-3e78da6e1616/resourceGroups/res4228/providers/Microsoft.ManagedIdentity/userAssignedIdentities/myUserAssignedIdentity")] = new UserAssignedIdentity()
 },
                 },
                 Properties = new StorageTaskProperties(true, "My Storage task", new StorageTaskAction(new StorageTaskIfCondition("[[equals(AccessTier, 'Cool')]]", new StorageTaskOperationInfo[]
@@ -111,21 +110,18 @@ new StorageTaskOperationInfo(StorageTaskOperationName.SetBlobTier)
 {
 Parameters =
 {
-["tier"] = "Hot",
+["tier"] = "Hot"
 },
 OnSuccess = OnSuccessAction.Continue,
 OnFailure = OnFailureAction.Break,
 }
             }))
                 {
-                    ElseOperations =
-{
-new StorageTaskOperationInfo(StorageTaskOperationName.DeleteBlob)
+                    ElseOperations = {new StorageTaskOperationInfo(StorageTaskOperationName.DeleteBlob)
 {
 OnSuccess = OnSuccessAction.Continue,
 OnFailure = OnFailureAction.Break,
-}
-},
+}},
                 }),
             };
             ArmOperation<StorageTaskResource> lro = await storageTask.UpdateAsync(WaitUntil.Completed, patch);
@@ -136,210 +132,6 @@ OnFailure = OnFailureAction.Break,
             StorageTaskData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetStorageTasks_ListStorageTasksBySubscription()
-        {
-            // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/storageTasksList/ListStorageTasksBySubscription.json
-            // this example is just showing the usage of "StorageTasks_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (StorageTaskResource item in subscriptionResource.GetStorageTasksAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                StorageTaskData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task PreviewActions_PerformStorageTaskActionsPreview()
-        {
-            // Generated from example definition: specification/storageactions/resource-manager/Microsoft.StorageActions/stable/2023-01-01/examples/misc/PerformStorageTaskActionsPreview.json
-            // this example is just showing the usage of "StorageTasks_PreviewActions" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "1f31ba14-ce16-4281-b9b4-3e78da6e1616";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            AzureLocation location = new AzureLocation("eastus");
-            StorageTaskPreviewAction storageTaskPreviewAction = new StorageTaskPreviewAction(new StorageTaskPreviewActionProperties(new StorageTaskPreviewContainerProperties()
-            {
-                Name = "firstContainer",
-                Metadata =
-{
-new StorageTaskPreviewKeyValueProperties()
-{
-Key = "mContainerKey1",
-Value = "mContainerValue1",
-}
-},
-            }, new StorageTaskPreviewBlobProperties[]
-            {
-new StorageTaskPreviewBlobProperties()
-{
-Name = "folder1/file1.txt",
-Properties =
-{
-new StorageTaskPreviewKeyValueProperties()
-{
-Key = "Creation-Time",
-Value = "Wed, 07 Jun 2023 05:23:29 GMT",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "Last-Modified",
-Value = "Wed, 07 Jun 2023 05:23:29 GMT",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "Etag",
-Value = "0x8DB67175454D36D",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "Content-Length",
-Value = "38619",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "Content-Type",
-Value = "text/xml",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "Content-Encoding",
-Value = "",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "Content-Language",
-Value = "",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "Content-CRC64",
-Value = "",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "Content-MD5",
-Value = "njr6iDrmU9+FC89WMK22EA==",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "Cache-Control",
-Value = "",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "Content-Disposition",
-Value = "",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "BlobType",
-Value = "BlockBlob",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "AccessTier",
-Value = "Hot",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "AccessTierInferred",
-Value = "true",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "LeaseStatus",
-Value = "unlocked",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "LeaseState",
-Value = "available",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "ServerEncrypted",
-Value = "true",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "TagCount",
-Value = "1",
-}
-},
-Metadata =
-{
-new StorageTaskPreviewKeyValueProperties()
-{
-Key = "mKey1",
-Value = "mValue1",
-}
-},
-Tags =
-{
-new StorageTaskPreviewKeyValueProperties()
-{
-Key = "tKey1",
-Value = "tValue1",
-}
-},
-},new StorageTaskPreviewBlobProperties()
-{
-Name = "folder2/file1.txt",
-Properties =
-{
-new StorageTaskPreviewKeyValueProperties()
-{
-Key = "Creation-Time",
-Value = "Wed, 06 Jun 2023 05:23:29 GMT",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "Last-Modified",
-Value = "Wed, 06 Jun 2023 05:23:29 GMT",
-},new StorageTaskPreviewKeyValueProperties()
-{
-Key = "Etag",
-Value = "0x6FB67175454D36D",
-}
-},
-Metadata =
-{
-new StorageTaskPreviewKeyValueProperties()
-{
-Key = "mKey2",
-Value = "mValue2",
-}
-},
-Tags =
-{
-new StorageTaskPreviewKeyValueProperties()
-{
-Key = "tKey2",
-Value = "tValue2",
-}
-},
-}
-            }, new StorageTaskPreviewActionCondition(new StorageTaskPreviewActionIfCondition()
-            {
-                Condition = "[[equals(AccessTier, 'Hot')]]",
-            }, true)));
-            StorageTaskPreviewAction result = await subscriptionResource.PreviewActionsAsync(location, storageTaskPreviewAction);
-
-            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]

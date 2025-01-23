@@ -18,10 +18,10 @@ namespace Azure.ResourceManager.ElasticSan.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_VolumeSnapshotsCreateMaximumSetGen()
+        public async Task Get_VolumeSnapshotsGetMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeSnapshots_Create_MaximumSet_Gen.json
-            // this example is just showing the usage of "VolumeSnapshots_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeSnapshots_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "VolumeSnapshots_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -39,9 +39,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanSnapshotResource elasticSanSnapshot = client.GetElasticSanSnapshotResource(elasticSanSnapshotResourceId);
 
             // invoke the operation
-            ElasticSanSnapshotData data = new ElasticSanSnapshotData(new SnapshotCreationInfo(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}")));
-            ArmOperation<ElasticSanSnapshotResource> lro = await elasticSanSnapshot.UpdateAsync(WaitUntil.Completed, data);
-            ElasticSanSnapshotResource result = lro.Value;
+            ElasticSanSnapshotResource result = await elasticSanSnapshot.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -52,10 +50,10 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_VolumeSnapshotsCreateMinimumSetGen()
+        public async Task Get_VolumeSnapshotsGetMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeSnapshots_Create_MinimumSet_Gen.json
-            // this example is just showing the usage of "VolumeSnapshots_Create" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeSnapshots_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "VolumeSnapshots_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -73,9 +71,7 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanSnapshotResource elasticSanSnapshot = client.GetElasticSanSnapshotResource(elasticSanSnapshotResourceId);
 
             // invoke the operation
-            ElasticSanSnapshotData data = new ElasticSanSnapshotData(new SnapshotCreationInfo(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}")));
-            ArmOperation<ElasticSanSnapshotResource> lro = await elasticSanSnapshot.UpdateAsync(WaitUntil.Completed, data);
-            ElasticSanSnapshotResource result = lro.Value;
+            ElasticSanSnapshotResource result = await elasticSanSnapshot.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -142,10 +138,10 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_VolumeSnapshotsGetMaximumSetGen()
+        public async Task Update_VolumeSnapshotsCreateMaximumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeSnapshots_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "VolumeSnapshots_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeSnapshots_Create_MaximumSet_Gen.json
+            // this example is just showing the usage of "VolumeSnapshots_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -163,7 +159,9 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanSnapshotResource elasticSanSnapshot = client.GetElasticSanSnapshotResource(elasticSanSnapshotResourceId);
 
             // invoke the operation
-            ElasticSanSnapshotResource result = await elasticSanSnapshot.GetAsync();
+            ElasticSanSnapshotData data = new ElasticSanSnapshotData(new SnapshotCreationInfo(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}")));
+            ArmOperation<ElasticSanSnapshotResource> lro = await elasticSanSnapshot.UpdateAsync(WaitUntil.Completed, data);
+            ElasticSanSnapshotResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -174,10 +172,10 @@ namespace Azure.ResourceManager.ElasticSan.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_VolumeSnapshotsGetMinimumSetGen()
+        public async Task Update_VolumeSnapshotsCreateMinimumSetGen()
         {
-            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeSnapshots_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "VolumeSnapshots_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/elasticsan/resource-manager/Microsoft.ElasticSan/preview/2024-06-01-preview/examples/VolumeSnapshots_Create_MinimumSet_Gen.json
+            // this example is just showing the usage of "VolumeSnapshots_Create" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -195,7 +193,9 @@ namespace Azure.ResourceManager.ElasticSan.Samples
             ElasticSanSnapshotResource elasticSanSnapshot = client.GetElasticSanSnapshotResource(elasticSanSnapshotResourceId);
 
             // invoke the operation
-            ElasticSanSnapshotResource result = await elasticSanSnapshot.GetAsync();
+            ElasticSanSnapshotData data = new ElasticSanSnapshotData(new SnapshotCreationInfo(new ResourceIdentifier("/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ElasticSan/elasticSans/{elasticSanName}/volumegroups/{volumeGroupName}/volumes/{volumeName}")));
+            ArmOperation<ElasticSanSnapshotResource> lro = await elasticSanSnapshot.UpdateAsync(WaitUntil.Completed, data);
+            ElasticSanSnapshotResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

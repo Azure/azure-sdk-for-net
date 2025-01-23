@@ -69,16 +69,13 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseServerBlobAuditingPolicyResource synapseServerBlobAuditingPolicy = client.GetSynapseServerBlobAuditingPolicyResource(synapseServerBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            SynapseServerBlobAuditingPolicyData data = new SynapseServerBlobAuditingPolicyData()
+            SynapseServerBlobAuditingPolicyData data = new SynapseServerBlobAuditingPolicyData
             {
                 State = SynapseBlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
                 RetentionDays = 6,
-                AuditActionsAndGroups =
-{
-"SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP","FAILED_DATABASE_AUTHENTICATION_GROUP","BATCH_COMPLETED_GROUP"
-},
+                AuditActionsAndGroups = { "SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP", "FAILED_DATABASE_AUTHENTICATION_GROUP", "BATCH_COMPLETED_GROUP" },
                 StorageAccountSubscriptionId = Guid.Parse("00000000-1234-0000-5678-000000000000"),
                 IsStorageSecondaryKeyInUse = false,
                 IsAzureMonitorTargetEnabled = true,
@@ -116,7 +113,7 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseServerBlobAuditingPolicyResource synapseServerBlobAuditingPolicy = client.GetSynapseServerBlobAuditingPolicyResource(synapseServerBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            SynapseServerBlobAuditingPolicyData data = new SynapseServerBlobAuditingPolicyData()
+            SynapseServerBlobAuditingPolicyData data = new SynapseServerBlobAuditingPolicyData
             {
                 State = SynapseBlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",

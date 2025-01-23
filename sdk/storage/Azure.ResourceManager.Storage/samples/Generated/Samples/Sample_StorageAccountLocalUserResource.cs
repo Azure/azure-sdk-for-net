@@ -49,6 +49,33 @@ namespace Azure.ResourceManager.Storage.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteLocalUser()
+        {
+            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/LocalUserDelete.json
+            // this example is just showing the usage of "LocalUsers_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StorageAccountLocalUserResource created on azure
+            // for more information of creating StorageAccountLocalUserResource, please refer to the document of StorageAccountLocalUserResource
+            string subscriptionId = "{subscription-id}";
+            string resourceGroupName = "res6977";
+            string accountName = "sto2527";
+            string username = "user1";
+            ResourceIdentifier storageAccountLocalUserResourceId = StorageAccountLocalUserResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, username);
+            StorageAccountLocalUserResource storageAccountLocalUser = client.GetStorageAccountLocalUserResource(storageAccountLocalUserResourceId);
+
+            // invoke the operation
+            await storageAccountLocalUser.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateLocalUser()
         {
             // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/LocalUserCreate.json
@@ -69,21 +96,15 @@ namespace Azure.ResourceManager.Storage.Samples
             StorageAccountLocalUserResource storageAccountLocalUser = client.GetStorageAccountLocalUserResource(storageAccountLocalUserResourceId);
 
             // invoke the operation
-            StorageAccountLocalUserData data = new StorageAccountLocalUserData()
+            StorageAccountLocalUserData data = new StorageAccountLocalUserData
             {
-                PermissionScopes =
-{
-new StoragePermissionScope("rwd","file","share1"),new StoragePermissionScope("rw","file","share2")
-},
+                PermissionScopes = { new StoragePermissionScope("rwd", "file", "share1"), new StoragePermissionScope("rw", "file", "share2") },
                 HomeDirectory = "homedirectory",
-                SshAuthorizedKeys =
-{
-new StorageSshPublicKey()
+                SshAuthorizedKeys = {new StorageSshPublicKey
 {
 Description = "key name",
 Key = "ssh-rsa keykeykeykeykey=",
-}
-},
+}},
                 HasSshPassword = true,
                 GroupId = 2000,
                 IsAclAuthorizationAllowed = true,
@@ -120,12 +141,9 @@ Key = "ssh-rsa keykeykeykeykey=",
             StorageAccountLocalUserResource storageAccountLocalUser = client.GetStorageAccountLocalUserResource(storageAccountLocalUserResourceId);
 
             // invoke the operation
-            StorageAccountLocalUserData data = new StorageAccountLocalUserData()
+            StorageAccountLocalUserData data = new StorageAccountLocalUserData
             {
-                ExtendedGroups =
-{
-1001,1005,2005
-},
+                ExtendedGroups = { 1001, 1005, 2005 },
                 IsNfsV3Enabled = true,
             };
             ArmOperation<StorageAccountLocalUserResource> lro = await storageAccountLocalUser.UpdateAsync(WaitUntil.Completed, data);
@@ -160,7 +178,7 @@ Key = "ssh-rsa keykeykeykeykey=",
             StorageAccountLocalUserResource storageAccountLocalUser = client.GetStorageAccountLocalUserResource(storageAccountLocalUserResourceId);
 
             // invoke the operation
-            StorageAccountLocalUserData data = new StorageAccountLocalUserData()
+            StorageAccountLocalUserData data = new StorageAccountLocalUserData
             {
                 HomeDirectory = "homedirectory2",
                 HasSharedKey = false,
@@ -168,10 +186,7 @@ Key = "ssh-rsa keykeykeykeykey=",
                 HasSshPassword = false,
                 GroupId = 3000,
                 IsAclAuthorizationAllowed = false,
-                ExtendedGroups =
-{
-1001,1005,2005
-},
+                ExtendedGroups = { 1001, 1005, 2005 },
                 IsNfsV3Enabled = true,
             };
             ArmOperation<StorageAccountLocalUserResource> lro = await storageAccountLocalUser.UpdateAsync(WaitUntil.Completed, data);
@@ -182,33 +197,6 @@ Key = "ssh-rsa keykeykeykeykey=",
             StorageAccountLocalUserData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteLocalUser()
-        {
-            // Generated from example definition: specification/storage/resource-manager/Microsoft.Storage/stable/2023-05-01/examples/LocalUserDelete.json
-            // this example is just showing the usage of "LocalUsers_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StorageAccountLocalUserResource created on azure
-            // for more information of creating StorageAccountLocalUserResource, please refer to the document of StorageAccountLocalUserResource
-            string subscriptionId = "{subscription-id}";
-            string resourceGroupName = "res6977";
-            string accountName = "sto2527";
-            string username = "user1";
-            ResourceIdentifier storageAccountLocalUserResourceId = StorageAccountLocalUserResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, username);
-            StorageAccountLocalUserResource storageAccountLocalUser = client.GetStorageAccountLocalUserResource(storageAccountLocalUserResourceId);
-
-            // invoke the operation
-            await storageAccountLocalUser.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
         }
 
         [Test]

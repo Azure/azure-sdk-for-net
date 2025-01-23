@@ -44,13 +44,13 @@ If you ran the tests in RECORD mode, you may have noticed that the files inside 
 
 The most probable thing is that the managed identity tests will fail at first. This is because we haven't set up any managed identity credentials for the DefaultAzureCredential object inside the tests to reference to. There are multiple ways of creating a managed identity credential.
 
-One of the easiest ways is to install the [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) and run the `az login` command. If you are listed as a contributor of the resource you are testing against, this should be enough for the DefaultAzureCredential object to get the corresponding Azure Active Directory credentials you need.
+One of the easiest ways is to install the [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) and run the `az login` command. If you are listed as a contributor of the resource you are testing against, this should be enough for the DefaultAzureCredential object to get the corresponding Azure Active Directory credentials you need.
 
 Another way to authenticate is to set up 3 environment variables called `AZURE_CLIENT_ID`, `AZURE_TENANT_ID` and `AZURE_CLIENT_SECRET` and set their values to the ones from a registered Azure Active Directory application that is linked to the resource you are testing against.
 
-If you are testing against a personal resource, you can check the [Managed Identity Quickstart Guide for ACS](https://docs.microsoft.com/azure/communication-services/quickstarts/managed-identity-from-cli) for an easy ramp-up process.
+If you are testing against a personal resource, you can check the [Managed Identity Quickstart Guide for ACS](https://learn.microsoft.com/azure/communication-services/quickstarts/managed-identity-from-cli) for an easy ramp-up process.
 
-For a more in-depth look on how to authenticate using managed identity, refer to the [Azure Identity client library for .Net](https://docs.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet) documentation. This document also has more ways for you to authenticate using the DefaultAzureCredential object besides the ones we discussed in this contributing file.
+For a more in-depth look on how to authenticate using managed identity, refer to the [Azure Identity client library for .Net](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet) documentation. This document also has more ways for you to authenticate using the DefaultAzureCredential object besides the ones we discussed in this contributing file.
 
 ## Submitting a Pull Request
 

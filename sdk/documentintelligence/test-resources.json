@@ -32,7 +32,7 @@
         },
         "trainingDataAccount": {
             "type": "string",
-            "defaultValue": "azuresdktrainingdata"
+            "defaultValue": "azuresdktrainingdatatme"
         },
         "trainingDataContainer": {
             "type": "string",
@@ -42,9 +42,17 @@
             "type": "string",
             "defaultValue": "training-data-classifier"
         },
+        "batchSourceContainer": {
+            "type": "string",
+            "defaultValue": "trainingdata-batch"
+        },
+        "batchResultContainer": {
+            "type": "string",
+            "defaultValue": "trainingdata-batch-result"
+        },
         "trainingDataResourceId": {
             "type": "string",
-            "defaultValue": "[resourceId('TrainingData', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
+            "defaultValue": "[resourceId('static-test-resources', 'Microsoft.Storage/storageAccounts', parameters('trainingDataAccount'))]"
         },
         "trainingDataSasProperties": {
             "type": "object",
@@ -61,6 +69,24 @@
                 "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('classifierTrainingDataContainer'))]",
                 "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
                 "signedPermission": "rl",
+                "signedResource": "c"
+            }
+        },
+        "batchSourceSasProperties": {
+            "type": "object",
+            "defaultValue": {
+                "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('batchSourceContainer'))]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedPermission": "rwdl",
+                "signedResource": "c"
+            }
+        },
+        "batchResultSasProperties": {
+            "type": "object",
+            "defaultValue": {
+                "canonicalizedResource": "[concat('/blob/', parameters('trainingDataAccount'), '/', parameters('batchResultContainer'))]",
+                "signedExpiry": "[dateTimeAdd(utcNow('u'), 'PT2H')]",
+                "signedPermission": "rwdl",
                 "signedResource": "c"
             }
         }
@@ -118,6 +144,14 @@
         "CLASSIFIER_BLOB_CONTAINER_SAS_URL": {
             "type": "string",
             "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('classifierTrainingDataContainer'), '?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('classifierTrainingSasProperties')).serviceSasToken)]"
+        },
+        "BATCH_SOURCE_BLOB_CONTAINER_SAS_URL": {
+            "type": "string",
+            "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('batchSourceContainer'), '?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('batchSourceSasProperties')).serviceSasToken)]"
+        },
+        "BATCH_RESULT_BLOB_CONTAINER_SAS_URL": {
+            "type": "string",
+            "value": "[concat(reference(parameters('trainingDataResourceId'), '2019-06-01').primaryEndpoints.blob, parameters('batchResultContainer'), '?', listServiceSas(parameters('trainingDataResourceId'), '2019-06-01', parameters('batchResultSasProperties')).serviceSasToken)]"
         }
     }
 }

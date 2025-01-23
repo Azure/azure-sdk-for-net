@@ -20,7 +20,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override string ResourceId => "Mock";
 
-        protected internal override DataTransferOrder TransferType { get; }
+        protected internal override TransferOrder TransferType { get; }
 
         protected internal override long MaxSupportedSingleTransferSize => Constants.GB;
 
@@ -28,7 +28,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override long? Length { get; }
 
-        private MockStorageResourceItem(long? length, Uri uri, int failAfter, DataTransferOrder transferOrder = DataTransferOrder.Sequential)
+        private MockStorageResourceItem(long? length, Uri uri, int failAfter, TransferOrder transferOrder = TransferOrder.Sequential)
         {
             Length = length;
             _uri = uri ?? new Uri("https://example.com");
@@ -41,7 +41,7 @@ namespace Azure.Storage.DataMovement.Tests
             return new MockStorageResourceItem(length, uri, failAfter);
         }
 
-        public static MockStorageResourceItem MakeDestinationResource(Uri uri = default, DataTransferOrder transferOrder = DataTransferOrder.Sequential, int failAfter = int.MaxValue)
+        public static MockStorageResourceItem MakeDestinationResource(Uri uri = default, TransferOrder transferOrder = TransferOrder.Sequential, int failAfter = int.MaxValue)
         {
             return new MockStorageResourceItem(default, uri, failAfter, transferOrder);
         }
@@ -77,11 +77,12 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken token = default)
         {
-            return Task.FromResult(new StorageResourceItemProperties(
-                resourceLength: Length ?? 0,
-                eTag: new ETag("etag"),
-                lastModifiedTime: DateTimeOffset.UtcNow,
-                properties: default));
+            return Task.FromResult(new StorageResourceItemProperties()
+            {
+                ResourceLength = Length ?? 0,
+                ETag = new ETag("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow
+            });
         }
 
         protected internal override Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
@@ -103,14 +104,14 @@ namespace Azure.Storage.DataMovement.Tests
             return Task.FromResult(new StorageResourceReadStreamResult(result));
         }
 
-        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new MockResourceCheckpointData();
+            return new MockResourceCheckpointDetails();
         }
 
-        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
-            return new MockResourceCheckpointData();
+            return new MockResourceCheckpointDetails();
         }
 
         protected internal override Task CopyFromStreamAsync(Stream stream, long streamLength, bool overwrite, long completeLength, StorageResourceWriteToOffsetOptions options = null, CancellationToken cancellationToken = default)
@@ -140,7 +141,7 @@ namespace Azure.Storage.DataMovement.Tests
 
         public static (StorageResourceItem Source, StorageResourceItem Destination) GetMockTransferResources(
             TransferDirection transferDirection,
-            DataTransferOrder transferOrder = DataTransferOrder.Unordered,
+            TransferOrder transferOrder = TransferOrder.Unordered,
             long fileSize = 4L * Constants.KB,
             int sourceFailAfter = int.MaxValue,
             int destinationFailAfter = int.MaxValue)

@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Resources;
 using Azure.ResourceManager.Subscription.Models;
 using NUnit.Framework;
 
@@ -28,22 +29,20 @@ namespace Azure.ResourceManager.Subscription.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this SubscriptionAliasResource
             SubscriptionAliasCollection collection = tenantResource.GetSubscriptionAliases();
 
             // invoke the operation
             string aliasName = "aliasForNewSub";
-            SubscriptionAliasCreateOrUpdateContent content = new SubscriptionAliasCreateOrUpdateContent()
+            SubscriptionAliasCreateOrUpdateContent content = new SubscriptionAliasCreateOrUpdateContent
             {
                 DisplayName = "Test Subscription",
                 Workload = SubscriptionWorkload.Production,
                 BillingScope = "/billingAccounts/af6231a7-7f8d-4fcc-a993-dd8466108d07:c663dac6-a9a5-405a-8938-cd903e12ab5b_2019_05_31/billingProfiles/QWDQ-QWHI-AUW-SJDO-DJH/invoiceSections/FEUF-EUHE-ISJ-SKDW-DJH",
                 SubscriptionId = null,
-                AdditionalProperties = new SubscriptionAliasAdditionalProperties()
+                AdditionalProperties = new SubscriptionAliasAdditionalProperties
                 {
                     ManagementGroupId = null,
                     SubscriptionTenantId = Guid.Parse("66f6e4d6-07dc-4aea-94ea-e12d3026a3c8"),
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.Subscription.Samples
 {
 ["tag1"] = "Messi",
 ["tag2"] = "Ronaldo",
-["tag3"] = "Lebron",
+["tag3"] = "Lebron"
 },
                 },
             };
@@ -78,9 +77,7 @@ namespace Azure.ResourceManager.Subscription.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this SubscriptionAliasResource
             SubscriptionAliasCollection collection = tenantResource.GetSubscriptionAliases();
@@ -98,6 +95,36 @@ namespace Azure.ResourceManager.Subscription.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListAlias()
+        {
+            // Generated from example definition: specification/subscription/resource-manager/Microsoft.Subscription/stable/2021-10-01/examples/listAlias.json
+            // this example is just showing the usage of "Alias_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this SubscriptionAliasResource
+            SubscriptionAliasCollection collection = tenantResource.GetSubscriptionAliases();
+
+            // invoke the operation and iterate over the result
+            await foreach (SubscriptionAliasResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SubscriptionAliasData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAlias()
         {
             // Generated from example definition: specification/subscription/resource-manager/Microsoft.Subscription/stable/2021-10-01/examples/getAlias.json
@@ -108,9 +135,7 @@ namespace Azure.ResourceManager.Subscription.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this SubscriptionAliasResource
             SubscriptionAliasCollection collection = tenantResource.GetSubscriptionAliases();
@@ -134,9 +159,7 @@ namespace Azure.ResourceManager.Subscription.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this SubscriptionAliasResource
             SubscriptionAliasCollection collection = tenantResource.GetSubscriptionAliases();
@@ -158,38 +181,6 @@ namespace Azure.ResourceManager.Subscription.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListAlias()
-        {
-            // Generated from example definition: specification/subscription/resource-manager/Microsoft.Subscription/stable/2021-10-01/examples/listAlias.json
-            // this example is just showing the usage of "Alias_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this SubscriptionAliasResource
-            SubscriptionAliasCollection collection = tenantResource.GetSubscriptionAliases();
-
-            // invoke the operation and iterate over the result
-            await foreach (SubscriptionAliasResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SubscriptionAliasData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

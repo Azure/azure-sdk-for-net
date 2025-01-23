@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupResourceVaultConfigResource backupResourceVaultConfig = client.GetBackupResourceVaultConfigResource(backupResourceVaultConfigResourceId);
 
             // invoke the operation
-            BackupResourceVaultConfigData data = new BackupResourceVaultConfigData(new AzureLocation("placeholder"))
+            BackupResourceVaultConfigData data = new BackupResourceVaultConfigData(default)
             {
-                Properties = new BackupResourceVaultConfigProperties()
+                Properties = new BackupResourceVaultConfigProperties
                 {
                     EnhancedSecurityState = EnhancedSecurityState.Enabled,
                 },

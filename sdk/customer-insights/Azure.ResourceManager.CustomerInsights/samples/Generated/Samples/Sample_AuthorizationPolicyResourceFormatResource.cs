@@ -18,45 +18,6 @@ namespace Azure.ResourceManager.CustomerInsights.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_AuthorizationPoliciesCreateOrUpdate()
-        {
-            // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/AuthorizationPoliciesCreateOrUpdate.json
-            // this example is just showing the usage of "AuthorizationPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this AuthorizationPolicyResourceFormatResource created on azure
-            // for more information of creating AuthorizationPolicyResourceFormatResource, please refer to the document of AuthorizationPolicyResourceFormatResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "TestHubRG";
-            string hubName = "azSdkTestHub";
-            string authorizationPolicyName = "testPolicy4222";
-            ResourceIdentifier authorizationPolicyResourceFormatResourceId = AuthorizationPolicyResourceFormatResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName, authorizationPolicyName);
-            AuthorizationPolicyResourceFormatResource authorizationPolicyResourceFormat = client.GetAuthorizationPolicyResourceFormatResource(authorizationPolicyResourceFormatResourceId);
-
-            // invoke the operation
-            AuthorizationPolicyResourceFormatData data = new AuthorizationPolicyResourceFormatData()
-            {
-                Permissions =
-{
-PermissionType.Read,PermissionType.Write,PermissionType.Manage
-},
-            };
-            ArmOperation<AuthorizationPolicyResourceFormatResource> lro = await authorizationPolicyResourceFormat.UpdateAsync(WaitUntil.Completed, data);
-            AuthorizationPolicyResourceFormatResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            AuthorizationPolicyResourceFormatData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_AuthorizationPoliciesGet()
         {
             // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/AuthorizationPoliciesGet.json
@@ -78,6 +39,42 @@ PermissionType.Read,PermissionType.Write,PermissionType.Manage
 
             // invoke the operation
             AuthorizationPolicyResourceFormatResource result = await authorizationPolicyResourceFormat.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            AuthorizationPolicyResourceFormatData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_AuthorizationPoliciesCreateOrUpdate()
+        {
+            // Generated from example definition: specification/customer-insights/resource-manager/Microsoft.CustomerInsights/stable/2017-04-26/examples/AuthorizationPoliciesCreateOrUpdate.json
+            // this example is just showing the usage of "AuthorizationPolicies_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this AuthorizationPolicyResourceFormatResource created on azure
+            // for more information of creating AuthorizationPolicyResourceFormatResource, please refer to the document of AuthorizationPolicyResourceFormatResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "TestHubRG";
+            string hubName = "azSdkTestHub";
+            string authorizationPolicyName = "testPolicy4222";
+            ResourceIdentifier authorizationPolicyResourceFormatResourceId = AuthorizationPolicyResourceFormatResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, hubName, authorizationPolicyName);
+            AuthorizationPolicyResourceFormatResource authorizationPolicyResourceFormat = client.GetAuthorizationPolicyResourceFormatResource(authorizationPolicyResourceFormatResourceId);
+
+            // invoke the operation
+            AuthorizationPolicyResourceFormatData data = new AuthorizationPolicyResourceFormatData
+            {
+                Permissions = { PermissionType.Read, PermissionType.Write, PermissionType.Manage },
+            };
+            ArmOperation<AuthorizationPolicyResourceFormatResource> lro = await authorizationPolicyResourceFormat.UpdateAsync(WaitUntil.Completed, data);
+            AuthorizationPolicyResourceFormatResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

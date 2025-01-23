@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.Media.Samples
             MediaAssetFilterResource mediaAssetFilter = client.GetMediaAssetFilterResource(mediaAssetFilterResourceId);
 
             // invoke the operation
-            MediaAssetFilterData data = new MediaAssetFilterData()
+            MediaAssetFilterData data = new MediaAssetFilterData
             {
-                PresentationTimeRange = new PresentationTimeRange()
+                PresentationTimeRange = new PresentationTimeRange
                 {
                     StartTimestamp = 10L,
                     EndTimestamp = 170000000L,

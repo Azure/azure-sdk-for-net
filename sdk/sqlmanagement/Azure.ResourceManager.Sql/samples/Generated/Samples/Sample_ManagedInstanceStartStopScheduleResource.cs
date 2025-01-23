@@ -49,6 +49,33 @@ namespace Azure.ResourceManager.Sql.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeletesTheManagedInstanceSStartStopSchedule()
+        {
+            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/StartStopManagedInstanceScheduleDelete.json
+            // this example is just showing the usage of "StartStopManagedInstanceSchedules_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ManagedInstanceStartStopScheduleResource created on azure
+            // for more information of creating ManagedInstanceStartStopScheduleResource, please refer to the document of ManagedInstanceStartStopScheduleResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "schedulerg";
+            string managedInstanceName = "schedulemi";
+            ManagedInstanceStartStopScheduleName startStopScheduleName = ManagedInstanceStartStopScheduleName.Default;
+            ResourceIdentifier managedInstanceStartStopScheduleResourceId = ManagedInstanceStartStopScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, startStopScheduleName);
+            ManagedInstanceStartStopScheduleResource managedInstanceStartStopSchedule = client.GetManagedInstanceStartStopScheduleResource(managedInstanceStartStopScheduleResourceId);
+
+            // invoke the operation
+            await managedInstanceStartStopSchedule.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreatesOrUpdatesTheManagedInstanceSStartStopScheduleWithAllOptionalParametersSpecified()
         {
             // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/StartStopManagedInstanceScheduleCreateOrUpdateMax.json
@@ -69,14 +96,11 @@ namespace Azure.ResourceManager.Sql.Samples
             ManagedInstanceStartStopScheduleResource managedInstanceStartStopSchedule = client.GetManagedInstanceStartStopScheduleResource(managedInstanceStartStopScheduleResourceId);
 
             // invoke the operation
-            ManagedInstanceStartStopScheduleData data = new ManagedInstanceStartStopScheduleData()
+            ManagedInstanceStartStopScheduleData data = new ManagedInstanceStartStopScheduleData
             {
                 Description = "This is a schedule for our Dev/Test environment.",
                 TimeZoneId = "Central European Standard Time",
-                ScheduleList =
-{
-new SqlScheduleItem(SqlDayOfWeek.Thursday,"18:00",SqlDayOfWeek.Thursday,"17:00"),new SqlScheduleItem(SqlDayOfWeek.Thursday,"15:00",SqlDayOfWeek.Thursday,"14:00")
-},
+                ScheduleList = { new SqlScheduleItem(SqlDayOfWeek.Thursday, "18:00", SqlDayOfWeek.Thursday, "17:00"), new SqlScheduleItem(SqlDayOfWeek.Thursday, "15:00", SqlDayOfWeek.Thursday, "14:00") },
             };
             ArmOperation<ManagedInstanceStartStopScheduleResource> lro = await managedInstanceStartStopSchedule.UpdateAsync(WaitUntil.Completed, data);
             ManagedInstanceStartStopScheduleResource result = lro.Value;
@@ -110,12 +134,9 @@ new SqlScheduleItem(SqlDayOfWeek.Thursday,"18:00",SqlDayOfWeek.Thursday,"17:00")
             ManagedInstanceStartStopScheduleResource managedInstanceStartStopSchedule = client.GetManagedInstanceStartStopScheduleResource(managedInstanceStartStopScheduleResourceId);
 
             // invoke the operation
-            ManagedInstanceStartStopScheduleData data = new ManagedInstanceStartStopScheduleData()
+            ManagedInstanceStartStopScheduleData data = new ManagedInstanceStartStopScheduleData
             {
-                ScheduleList =
-{
-new SqlScheduleItem(SqlDayOfWeek.Thursday,"18:00",SqlDayOfWeek.Thursday,"17:00"),new SqlScheduleItem(SqlDayOfWeek.Thursday,"15:00",SqlDayOfWeek.Thursday,"14:00")
-},
+                ScheduleList = { new SqlScheduleItem(SqlDayOfWeek.Thursday, "18:00", SqlDayOfWeek.Thursday, "17:00"), new SqlScheduleItem(SqlDayOfWeek.Thursday, "15:00", SqlDayOfWeek.Thursday, "14:00") },
             };
             ArmOperation<ManagedInstanceStartStopScheduleResource> lro = await managedInstanceStartStopSchedule.UpdateAsync(WaitUntil.Completed, data);
             ManagedInstanceStartStopScheduleResource result = lro.Value;
@@ -125,33 +146,6 @@ new SqlScheduleItem(SqlDayOfWeek.Thursday,"18:00",SqlDayOfWeek.Thursday,"17:00")
             ManagedInstanceStartStopScheduleData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeletesTheManagedInstanceSStartStopSchedule()
-        {
-            // Generated from example definition: specification/sql/resource-manager/Microsoft.Sql/preview/2022-08-01-preview/examples/StartStopManagedInstanceScheduleDelete.json
-            // this example is just showing the usage of "StartStopManagedInstanceSchedules_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ManagedInstanceStartStopScheduleResource created on azure
-            // for more information of creating ManagedInstanceStartStopScheduleResource, please refer to the document of ManagedInstanceStartStopScheduleResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "schedulerg";
-            string managedInstanceName = "schedulemi";
-            ManagedInstanceStartStopScheduleName startStopScheduleName = ManagedInstanceStartStopScheduleName.Default;
-            ResourceIdentifier managedInstanceStartStopScheduleResourceId = ManagedInstanceStartStopScheduleResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, managedInstanceName, startStopScheduleName);
-            ManagedInstanceStartStopScheduleResource managedInstanceStartStopSchedule = client.GetManagedInstanceStartStopScheduleResource(managedInstanceStartStopScheduleResourceId);
-
-            // invoke the operation
-            await managedInstanceStartStopSchedule.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

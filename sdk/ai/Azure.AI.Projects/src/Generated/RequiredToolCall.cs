@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Projects
 {
     /// <summary>
-    /// An abstract representation a a tool invocation needed by the model to continue a run.
+    /// An abstract representation of a tool invocation needed by the model to continue a run.
     /// Please note <see cref="RequiredToolCall"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="RequiredFunctionToolCall"/>.
     /// </summary>

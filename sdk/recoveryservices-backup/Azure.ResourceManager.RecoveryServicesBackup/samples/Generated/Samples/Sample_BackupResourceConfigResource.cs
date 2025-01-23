@@ -67,9 +67,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Samples
             BackupResourceConfigResource backupResourceConfig = client.GetBackupResourceConfigResource(backupResourceConfigResourceId);
 
             // invoke the operation
-            BackupResourceConfigData data = new BackupResourceConfigData(new AzureLocation("placeholder"))
+            BackupResourceConfigData data = new BackupResourceConfigData(default)
             {
-                Properties = new BackupResourceConfigProperties()
+                Properties = new BackupResourceConfigProperties
                 {
                     StorageType = BackupStorageType.LocallyRedundant,
                     StorageTypeState = BackupStorageTypeState.Unlocked,

@@ -49,18 +49,18 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="classifierId"> Unique document classifier name. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
         /// <param name="apiVersion"> API version used to create this document classifier. </param>
-        /// <param name="docTypes"> List of document types to classify against. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/>, <paramref name="apiVersion"/> or <paramref name="docTypes"/> is null. </exception>
-        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string apiVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes)
+        /// <param name="documentTypes"> List of document types to classify against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="classifierId"/>, <paramref name="apiVersion"/> or <paramref name="documentTypes"/> is null. </exception>
+        internal DocumentClassifierDetails(string classifierId, DateTimeOffset createdOn, string apiVersion, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes)
         {
             Argument.AssertNotNull(classifierId, nameof(classifierId));
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
-            Argument.AssertNotNull(docTypes, nameof(docTypes));
+            Argument.AssertNotNull(documentTypes, nameof(documentTypes));
 
             ClassifierId = classifierId;
             CreatedOn = createdOn;
             ApiVersion = apiVersion;
-            DocTypes = docTypes;
+            DocumentTypes = documentTypes;
             Warnings = new ChangeTrackingList<DocumentIntelligenceWarning>();
         }
 
@@ -69,20 +69,22 @@ namespace Azure.AI.DocumentIntelligence
         /// <param name="description"> Document classifier description. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document classifier was created. </param>
         /// <param name="expiresOn"> Date and time (UTC) when the document classifier will expire. </param>
+        /// <param name="modifiedOn"> Date and time (UTC) when the document model was last modified. </param>
         /// <param name="apiVersion"> API version used to create this document classifier. </param>
         /// <param name="baseClassifierId"> Base classifierId on top of which the classifier was trained. </param>
-        /// <param name="docTypes"> List of document types to classify against. </param>
+        /// <param name="documentTypes"> List of document types to classify against. </param>
         /// <param name="warnings"> List of warnings encountered while building the classifier. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DocumentClassifierDetails(string classifierId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, string apiVersion, string baseClassifierId, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> docTypes, IReadOnlyList<DocumentIntelligenceWarning> warnings, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DocumentClassifierDetails(string classifierId, string description, DateTimeOffset createdOn, DateTimeOffset? expiresOn, DateTimeOffset? modifiedOn, string apiVersion, string baseClassifierId, IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> documentTypes, IReadOnlyList<DocumentIntelligenceWarning> warnings, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ClassifierId = classifierId;
             Description = description;
             CreatedOn = createdOn;
             ExpiresOn = expiresOn;
+            ModifiedOn = modifiedOn;
             ApiVersion = apiVersion;
             BaseClassifierId = baseClassifierId;
-            DocTypes = docTypes;
+            DocumentTypes = documentTypes;
             Warnings = warnings;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -100,12 +102,14 @@ namespace Azure.AI.DocumentIntelligence
         public DateTimeOffset CreatedOn { get; }
         /// <summary> Date and time (UTC) when the document classifier will expire. </summary>
         public DateTimeOffset? ExpiresOn { get; }
+        /// <summary> Date and time (UTC) when the document model was last modified. </summary>
+        public DateTimeOffset? ModifiedOn { get; }
         /// <summary> API version used to create this document classifier. </summary>
         public string ApiVersion { get; }
         /// <summary> Base classifierId on top of which the classifier was trained. </summary>
         public string BaseClassifierId { get; }
         /// <summary> List of document types to classify against. </summary>
-        public IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> DocTypes { get; }
+        public IReadOnlyDictionary<string, ClassifierDocumentTypeDetails> DocumentTypes { get; }
         /// <summary> List of warnings encountered while building the classifier. </summary>
         public IReadOnlyList<DocumentIntelligenceWarning> Warnings { get; }
     }

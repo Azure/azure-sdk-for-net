@@ -37,6 +37,28 @@ resource storageAccount 'Microsoft.Storage/storageAccounts@2022-05-01' = {
   kind: 'StorageV2'
   properties: {
     minimumTlsVersion: 'TLS1_2'
+
+    accessTier: 'Hot'
+    supportsHttpsTrafficOnly: true
+    allowBlobPublicAccess: false
+    allowCrossTenantReplication: false
+    allowSharedKeyAccess: false
+
+    encryption: {
+      services: {
+        blob: {
+          enabled: true
+          keyType: 'Account'
+        }
+        file: {
+          enabled: true
+          keyType: 'Account'
+        }
+      }
+      requireInfrastructureEncryption: true
+      keySource: 'Microsoft.Storage'
+    }
+
     networkAcls: {
       bypass: 'AzureServices'
       defaultAction: 'Deny'

@@ -49,10 +49,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 SslMode = PostgreSqlFlexibleServersSslMode.Prefer,
                 SourceDbServerResourceId = new ResourceIdentifier("testsource:5432@pguser"),
                 SecretParameters = new PostgreSqlMigrationSecretParameters(new PostgreSqlMigrationAdminCredentials("xxxxxxxx", "xxxxxxxx")),
-                DbsToMigrate =
-{
-"db1","db2","db3","db4"
-},
+                DbsToMigrate = { "db1", "db2", "db3", "db4" },
                 OverwriteDbsInTarget = PostgreSqlMigrationOverwriteDbsInTarget.True,
             };
             ArmOperation<PostgreSqlMigrationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, migrationName, data);
@@ -96,10 +93,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 MigrationOption = MigrationOption.Validate,
                 SourceDbServerResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testrg/providers/Microsoft.DBForPostgreSql/servers/testsource"),
                 SecretParameters = new PostgreSqlMigrationSecretParameters(new PostgreSqlMigrationAdminCredentials("xxxxxxxx", "xxxxxxxx")),
-                DbsToMigrate =
-{
-"db1","db2","db3","db4"
-},
+                DbsToMigrate = { "db1", "db2", "db3", "db4" },
                 OverwriteDbsInTarget = PostgreSqlMigrationOverwriteDbsInTarget.True,
             };
             ArmOperation<PostgreSqlMigrationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, migrationName, data);
@@ -146,10 +140,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                     SourceServerUsername = "newadmin@testsource",
                     TargetServerUsername = "targetadmin",
                 },
-                DbsToMigrate =
-{
-"db1","db2","db3","db4"
-},
+                DbsToMigrate = { "db1", "db2", "db3", "db4" },
             };
             ArmOperation<PostgreSqlMigrationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, migrationName, data);
             PostgreSqlMigrationResource result = lro.Value;
@@ -192,10 +183,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 MigrationMode = PostgreSqlMigrationMode.Offline,
                 SourceDbServerResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testrg/providers/Microsoft.DBForPostgreSql/servers/testsource"),
                 SecretParameters = new PostgreSqlMigrationSecretParameters(new PostgreSqlMigrationAdminCredentials("xxxxxxxx", "xxxxxxxx")),
-                DbsToMigrate =
-{
-"db1","db2","db3","db4"
-},
+                DbsToMigrate = { "db1", "db2", "db3", "db4" },
                 OverwriteDbsInTarget = PostgreSqlMigrationOverwriteDbsInTarget.True,
             };
             ArmOperation<PostgreSqlMigrationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, migrationName, data);
@@ -238,10 +226,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 MigrationMode = PostgreSqlMigrationMode.Offline,
                 SourceDbServerResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testrg/providers/Microsoft.DBForPostgreSql/servers/testsource"),
                 SecretParameters = new PostgreSqlMigrationSecretParameters(new PostgreSqlMigrationAdminCredentials("xxxxxxxx", "xxxxxxxx")),
-                DbsToMigrate =
-{
-"db1","db2","db3","db4"
-},
+                DbsToMigrate = { "db1", "db2", "db3", "db4" },
                 OverwriteDbsInTarget = PostgreSqlMigrationOverwriteDbsInTarget.True,
                 MigrateRoles = MigrateRolesEnum.True,
             };
@@ -286,10 +271,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 MigrationMode = PostgreSqlMigrationMode.Offline,
                 SourceDbServerResourceId = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/resourceGroups/testrg/providers/Microsoft.DBForPostgreSql/servers/testsource"),
                 SecretParameters = new PostgreSqlMigrationSecretParameters(new PostgreSqlMigrationAdminCredentials("xxxxxxxx", "xxxxxxxx")),
-                DbsToMigrate =
-{
-"db1","db2","db3","db4"
-},
+                DbsToMigrate = { "db1", "db2", "db3", "db4" },
                 OverwriteDbsInTarget = PostgreSqlMigrationOverwriteDbsInTarget.True,
             };
             ArmOperation<PostgreSqlMigrationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, migrationName, data);
@@ -338,6 +320,179 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_MigrationsGetMigrationWithSuccessfulValidationAndMigration()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithSuccessfulValidationAndMigration.json
+            // this example is just showing the usage of "Migrations_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            string targetDbServerName = "testtarget";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // get the collection of this PostgreSqlMigrationResource
+            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
+
+            // invoke the operation
+            string migrationName = "testmigrationwithsuccessfulvalidationandmigration";
+            PostgreSqlMigrationResource result = await collection.GetAsync(migrationName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PostgreSqlMigrationData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_MigrationsGetMigrationWithSuccessfulValidationButMigrationFailure()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithSuccessfulValidationButMigrationFailure.json
+            // this example is just showing the usage of "Migrations_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            string targetDbServerName = "testtarget";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // get the collection of this PostgreSqlMigrationResource
+            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
+
+            // invoke the operation
+            string migrationName = "testmigrationwithsuccessfulvalidationbutmigrationfailure";
+            PostgreSqlMigrationResource result = await collection.GetAsync(migrationName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PostgreSqlMigrationData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_MigrationsGetMigrationWithSuccessfulValidationOnly()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithSuccessfulValidationOnly.json
+            // this example is just showing the usage of "Migrations_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            string targetDbServerName = "testtarget";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // get the collection of this PostgreSqlMigrationResource
+            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
+
+            // invoke the operation
+            string migrationName = "testmigrationwithsuccessfulvalidationonly";
+            PostgreSqlMigrationResource result = await collection.GetAsync(migrationName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PostgreSqlMigrationData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_MigrationsGetMigrationWithValidationFailures()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithValidationFailures.json
+            // this example is just showing the usage of "Migrations_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            string targetDbServerName = "testtarget";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // get the collection of this PostgreSqlMigrationResource
+            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
+
+            // invoke the operation
+            string migrationName = "testmigrationwithvalidationfailure";
+            PostgreSqlMigrationResource result = await collection.GetAsync(migrationName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PostgreSqlMigrationData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_MigrationsListByTargetServer()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_ListByTargetServer.json
+            // this example is just showing the usage of "Migrations_ListByTargetServer" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            string targetDbServerName = "testtarget";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // get the collection of this PostgreSqlMigrationResource
+            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
+
+            // invoke the operation and iterate over the result
+            PostgreSqlMigrationListFilter? migrationListFilter = PostgreSqlMigrationListFilter.All;
+            await foreach (PostgreSqlMigrationResource item in collection.GetAllAsync(migrationListFilter: migrationListFilter))
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PostgreSqlMigrationData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_MigrationsGet()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_Get.json
@@ -361,6 +516,126 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
             // invoke the operation
             string migrationName = "testmigration";
+            bool result = await collection.ExistsAsync(migrationName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_MigrationsGetMigrationWithSuccessfulValidationAndMigration()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithSuccessfulValidationAndMigration.json
+            // this example is just showing the usage of "Migrations_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            string targetDbServerName = "testtarget";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // get the collection of this PostgreSqlMigrationResource
+            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
+
+            // invoke the operation
+            string migrationName = "testmigrationwithsuccessfulvalidationandmigration";
+            bool result = await collection.ExistsAsync(migrationName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_MigrationsGetMigrationWithSuccessfulValidationButMigrationFailure()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithSuccessfulValidationButMigrationFailure.json
+            // this example is just showing the usage of "Migrations_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            string targetDbServerName = "testtarget";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // get the collection of this PostgreSqlMigrationResource
+            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
+
+            // invoke the operation
+            string migrationName = "testmigrationwithsuccessfulvalidationbutmigrationfailure";
+            bool result = await collection.ExistsAsync(migrationName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_MigrationsGetMigrationWithSuccessfulValidationOnly()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithSuccessfulValidationOnly.json
+            // this example is just showing the usage of "Migrations_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            string targetDbServerName = "testtarget";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // get the collection of this PostgreSqlMigrationResource
+            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
+
+            // invoke the operation
+            string migrationName = "testmigrationwithsuccessfulvalidationonly";
+            bool result = await collection.ExistsAsync(migrationName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_MigrationsGetMigrationWithValidationFailures()
+        {
+            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithValidationFailures.json
+            // this example is just showing the usage of "Migrations_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
+            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
+            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
+            string resourceGroupName = "testrg";
+            string targetDbServerName = "testtarget";
+            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
+            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
+
+            // get the collection of this PostgreSqlMigrationResource
+            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
+
+            // invoke the operation
+            string migrationName = "testmigrationwithvalidationfailure";
             bool result = await collection.ExistsAsync(migrationName);
 
             Console.WriteLine($"Succeeded: {result}");
@@ -410,70 +685,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_MigrationsGetMigrationWithSuccessfulValidationAndMigration()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithSuccessfulValidationAndMigration.json
-            // this example is just showing the usage of "Migrations_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string targetDbServerName = "testtarget";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // get the collection of this PostgreSqlMigrationResource
-            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
-
-            // invoke the operation
-            string migrationName = "testmigrationwithsuccessfulvalidationandmigration";
-            PostgreSqlMigrationResource result = await collection.GetAsync(migrationName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PostgreSqlMigrationData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_MigrationsGetMigrationWithSuccessfulValidationAndMigration()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithSuccessfulValidationAndMigration.json
-            // this example is just showing the usage of "Migrations_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string targetDbServerName = "testtarget";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // get the collection of this PostgreSqlMigrationResource
-            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
-
-            // invoke the operation
-            string migrationName = "testmigrationwithsuccessfulvalidationandmigration";
-            bool result = await collection.ExistsAsync(migrationName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_MigrationsGetMigrationWithSuccessfulValidationAndMigration()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithSuccessfulValidationAndMigration.json
@@ -512,70 +723,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_MigrationsGetMigrationWithSuccessfulValidationButMigrationFailure()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithSuccessfulValidationButMigrationFailure.json
-            // this example is just showing the usage of "Migrations_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string targetDbServerName = "testtarget";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // get the collection of this PostgreSqlMigrationResource
-            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
-
-            // invoke the operation
-            string migrationName = "testmigrationwithsuccessfulvalidationbutmigrationfailure";
-            PostgreSqlMigrationResource result = await collection.GetAsync(migrationName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PostgreSqlMigrationData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_MigrationsGetMigrationWithSuccessfulValidationButMigrationFailure()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithSuccessfulValidationButMigrationFailure.json
-            // this example is just showing the usage of "Migrations_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string targetDbServerName = "testtarget";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // get the collection of this PostgreSqlMigrationResource
-            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
-
-            // invoke the operation
-            string migrationName = "testmigrationwithsuccessfulvalidationbutmigrationfailure";
-            bool result = await collection.ExistsAsync(migrationName);
-
-            Console.WriteLine($"Succeeded: {result}");
         }
 
         [Test]
@@ -622,70 +769,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_MigrationsGetMigrationWithSuccessfulValidationOnly()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithSuccessfulValidationOnly.json
-            // this example is just showing the usage of "Migrations_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string targetDbServerName = "testtarget";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // get the collection of this PostgreSqlMigrationResource
-            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
-
-            // invoke the operation
-            string migrationName = "testmigrationwithsuccessfulvalidationonly";
-            PostgreSqlMigrationResource result = await collection.GetAsync(migrationName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PostgreSqlMigrationData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_MigrationsGetMigrationWithSuccessfulValidationOnly()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithSuccessfulValidationOnly.json
-            // this example is just showing the usage of "Migrations_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string targetDbServerName = "testtarget";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // get the collection of this PostgreSqlMigrationResource
-            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
-
-            // invoke the operation
-            string migrationName = "testmigrationwithsuccessfulvalidationonly";
-            bool result = await collection.ExistsAsync(migrationName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_MigrationsGetMigrationWithSuccessfulValidationOnly()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithSuccessfulValidationOnly.json
@@ -728,70 +811,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_MigrationsGetMigrationWithValidationFailures()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithValidationFailures.json
-            // this example is just showing the usage of "Migrations_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string targetDbServerName = "testtarget";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // get the collection of this PostgreSqlMigrationResource
-            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
-
-            // invoke the operation
-            string migrationName = "testmigrationwithvalidationfailure";
-            PostgreSqlMigrationResource result = await collection.GetAsync(migrationName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PostgreSqlMigrationData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_MigrationsGetMigrationWithValidationFailures()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithValidationFailures.json
-            // this example is just showing the usage of "Migrations_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string targetDbServerName = "testtarget";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // get the collection of this PostgreSqlMigrationResource
-            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
-
-            // invoke the operation
-            string migrationName = "testmigrationwithvalidationfailure";
-            bool result = await collection.ExistsAsync(migrationName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_MigrationsGetMigrationWithValidationFailures()
         {
             // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_GetMigrationWithValidationFailures.json
@@ -830,43 +849,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_MigrationsListByTargetServer()
-        {
-            // Generated from example definition: specification/postgresql/resource-manager/Microsoft.DBforPostgreSQL/stable/2024-08-01/examples/Migrations_ListByTargetServer.json
-            // this example is just showing the usage of "Migrations_ListByTargetServer" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PostgreSqlFlexibleServerResource created on azure
-            // for more information of creating PostgreSqlFlexibleServerResource, please refer to the document of PostgreSqlFlexibleServerResource
-            string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
-            string resourceGroupName = "testrg";
-            string targetDbServerName = "testtarget";
-            ResourceIdentifier postgreSqlFlexibleServerResourceId = PostgreSqlFlexibleServerResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, targetDbServerName);
-            PostgreSqlFlexibleServerResource postgreSqlFlexibleServer = client.GetPostgreSqlFlexibleServerResource(postgreSqlFlexibleServerResourceId);
-
-            // get the collection of this PostgreSqlMigrationResource
-            PostgreSqlMigrationCollection collection = postgreSqlFlexibleServer.GetPostgreSqlMigrations();
-
-            // invoke the operation and iterate over the result
-            PostgreSqlMigrationListFilter? migrationListFilter = PostgreSqlMigrationListFilter.All;
-            await foreach (PostgreSqlMigrationResource item in collection.GetAllAsync(migrationListFilter: migrationListFilter))
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PostgreSqlMigrationData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -46,35 +46,6 @@ namespace Azure.ResourceManager.Marketplace.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_PrivateStoresUpdate()
-        {
-            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/PrivateStores_update.json
-            // this example is just showing the usage of "PrivateStore_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PrivateStoreResource created on azure
-            // for more information of creating PrivateStoreResource, please refer to the document of PrivateStoreResource
-            Guid privateStoreId = Guid.Parse("a0e28e55-90c4-41d8-8e34-bb7ef7775406");
-            ResourceIdentifier privateStoreResourceId = PrivateStoreResource.CreateResourceIdentifier(privateStoreId);
-            PrivateStoreResource privateStore = client.GetPrivateStoreResource(privateStoreResourceId);
-
-            // invoke the operation
-            PrivateStoreData data = new PrivateStoreData()
-            {
-                Availability = PrivateStoreAvailability.Disabled,
-                ETag = new ETag("\"9301f4fd-0000-0100-0000-5e248b350345\""),
-            };
-            await privateStore.UpdateAsync(WaitUntil.Completed, data);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeletePrivateStores()
         {
             // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/DeletePrivateStore.json
@@ -93,6 +64,35 @@ namespace Azure.ResourceManager.Marketplace.Samples
 
             // invoke the operation
             await privateStore.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_PrivateStoresUpdate()
+        {
+            // Generated from example definition: specification/marketplace/resource-manager/Microsoft.Marketplace/stable/2023-01-01/examples/PrivateStores_update.json
+            // this example is just showing the usage of "PrivateStore_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PrivateStoreResource created on azure
+            // for more information of creating PrivateStoreResource, please refer to the document of PrivateStoreResource
+            Guid privateStoreId = Guid.Parse("a0e28e55-90c4-41d8-8e34-bb7ef7775406");
+            ResourceIdentifier privateStoreResourceId = PrivateStoreResource.CreateResourceIdentifier(privateStoreId);
+            PrivateStoreResource privateStore = client.GetPrivateStoreResource(privateStoreResourceId);
+
+            // invoke the operation
+            PrivateStoreData data = new PrivateStoreData
+            {
+                Availability = PrivateStoreAvailability.Disabled,
+                ETag = new ETag("\"9301f4fd-0000-0100-0000-5e248b350345\""),
+            };
+            await privateStore.UpdateAsync(WaitUntil.Completed, data);
 
             Console.WriteLine("Succeeded");
         }
@@ -167,16 +167,10 @@ namespace Azure.ResourceManager.Marketplace.Samples
             PrivateStoreResource privateStore = client.GetPrivateStoreResource(privateStoreResourceId);
 
             // invoke the operation and iterate over the result
-            QueryUserOffersContent content = new QueryUserOffersContent()
+            QueryUserOffersContent content = new QueryUserOffersContent
             {
-                OfferIds =
-{
-"contoso.logger","contoso.monitor"
-},
-                SubscriptionIds =
-{
-"b340914e-353d-453a-85fb-8f9b65b51f91"
-},
+                OfferIds = { "contoso.logger", "contoso.monitor" },
+                SubscriptionIds = { "b340914e-353d-453a-85fb-8f9b65b51f91" },
             };
             await foreach (PrivateStoreOfferResult item in privateStore.QueryUserOffersAsync(content: content))
             {
@@ -229,12 +223,9 @@ namespace Azure.ResourceManager.Marketplace.Samples
             PrivateStoreResource privateStore = client.GetPrivateStoreResource(privateStoreResourceId);
 
             // invoke the operation
-            CollectionsToSubscriptionsMappingContent content = new CollectionsToSubscriptionsMappingContent()
+            CollectionsToSubscriptionsMappingContent content = new CollectionsToSubscriptionsMappingContent
             {
-                CollectionsToSubscriptionsMappingSubscriptionIds =
-{
-"b340914e-353d-453a-85fb-8f9b65b51f91","f2baa04d-5bfc-461b-b6d8-61b403c9ec48"
-},
+                CollectionsToSubscriptionsMappingSubscriptionIds = { "b340914e-353d-453a-85fb-8f9b65b51f91", "f2baa04d-5bfc-461b-b6d8-61b403c9ec48" },
             };
             CollectionsToSubscriptionsMappingResult result = await privateStore.FetchCollectionsToSubscriptionsMappingAsync(content: content);
 
@@ -260,17 +251,11 @@ namespace Azure.ResourceManager.Marketplace.Samples
             PrivateStoreResource privateStore = client.GetPrivateStoreResource(privateStoreResourceId);
 
             // invoke the operation
-            QueryApprovedPlansContent content = new QueryApprovedPlansContent()
+            QueryApprovedPlansContent content = new QueryApprovedPlansContent
             {
                 OfferId = "marketplacetestthirdparty.md-test-third-party-2",
-                PlanIds =
-{
-"testPlanA","testPlanB","testPlanC"
-},
-                SubscriptionIds =
-{
-"85e3e079-c718-4e4c-abbe-f72fceba8305","7752d461-4bf1-4185-8b56-8a3f11486ac6"
-},
+                PlanIds = { "testPlanA", "testPlanB", "testPlanC" },
+                SubscriptionIds = { "85e3e079-c718-4e4c-abbe-f72fceba8305", "7752d461-4bf1-4185-8b56-8a3f11486ac6" },
             };
             QueryApprovedPlansResult result = await privateStore.QueryApprovedPlansAsync(content: content);
 
@@ -296,12 +281,9 @@ namespace Azure.ResourceManager.Marketplace.Samples
             PrivateStoreResource privateStore = client.GetPrivateStoreResource(privateStoreResourceId);
 
             // invoke the operation
-            BulkCollectionsActionContent content = new BulkCollectionsActionContent()
+            BulkCollectionsActionContent content = new BulkCollectionsActionContent
             {
-                CollectionIds =
-{
-Guid.Parse("c752f021-1c37-4af5-b82f-74c51c27b44a"),Guid.Parse("f47ef1c7-e908-4f39-ae29-db181634ad8d")
-},
+                CollectionIds = { Guid.Parse("c752f021-1c37-4af5-b82f-74c51c27b44a"), Guid.Parse("f47ef1c7-e908-4f39-ae29-db181634ad8d") },
                 Action = "EnableCollections",
             };
             BulkCollectionsActionResult result = await privateStore.PerformActionOnBulkCollectionsAsync(content: content);
@@ -353,18 +335,13 @@ Guid.Parse("c752f021-1c37-4af5-b82f-74c51c27b44a"),Guid.Parse("f47ef1c7-e908-4f3
 
             // invoke the operation
             string offerId = "marketplacetestthirdparty.md-test-third-party-2";
-            AcknowledgeOfferNotificationContent content = new AcknowledgeOfferNotificationContent()
+            AcknowledgeOfferNotificationContent content = new AcknowledgeOfferNotificationContent
             {
                 IsAcknowledgeActionFlagEnabled = false,
                 IsDismissActionFlagEnabled = false,
                 IsRemoveOfferActionFlagEnabled = false,
-                AddPlans =
-{
-},
-                RemovePlans =
-{
-"testPlanA"
-},
+                AddPlans = { },
+                RemovePlans = { "testPlanA" },
             };
             await privateStore.AcknowledgeOfferNotificationAsync(offerId, content: content);
 
@@ -489,12 +466,9 @@ Guid.Parse("c752f021-1c37-4af5-b82f-74c51c27b44a"),Guid.Parse("f47ef1c7-e908-4f3
             PrivateStoreResource privateStore = client.GetPrivateStoreResource(privateStoreResourceId);
 
             // invoke the operation and iterate over the result
-            QueryUserRulesContent content = new QueryUserRulesContent()
+            QueryUserRulesContent content = new QueryUserRulesContent
             {
-                SubscriptionIds =
-{
-"b340914e-353d-453a-85fb-8f9b65b51f91"
-},
+                SubscriptionIds = { "b340914e-353d-453a-85fb-8f9b65b51f91" },
             };
             await foreach (MarketplaceRule item in privateStore.QueryUserRulesAsync(content: content))
             {

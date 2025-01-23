@@ -18,41 +18,6 @@ namespace Azure.ResourceManager.Automanage.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListConfigurationProfileAssignmentsByResourceGroupAndCluster()
-        {
-            // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/listConfigurationProfileAssignmentsByClusterName.json
-            // this example is just showing the usage of "ConfigurationProfileAssignments_ListByClusterName" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
-            // get the collection of this AutomanageHciClusterConfigurationProfileAssignmentResource
-            string subscriptionId = "mySubscriptionId";
-            string resourceGroupName = "myResourceGroupName";
-            string clusterName = "myClusterName";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.AzureStackHci/clusters/{2}", subscriptionId, resourceGroupName, clusterName));
-            AutomanageHciClusterConfigurationProfileAssignmentCollection collection = client.GetAutomanageHciClusterConfigurationProfileAssignments(scopeId);
-
-            // invoke the operation and iterate over the result
-            await foreach (AutomanageHciClusterConfigurationProfileAssignmentResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                AutomanageConfigurationProfileAssignmentData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateOrUpdateAHCIConfigurationProfileAssignment()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/createOrUpdateConfigurationProfileHCIAssignment.json
@@ -63,21 +28,18 @@ namespace Azure.ResourceManager.Automanage.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this AutomanageHciClusterConfigurationProfileAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string clusterName = "myClusterName";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.AzureStackHci/clusters/{2}", subscriptionId, resourceGroupName, clusterName));
-            AutomanageHciClusterConfigurationProfileAssignmentCollection collection = client.GetAutomanageHciClusterConfigurationProfileAssignments(scopeId);
+            string scope = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}";
+            AutomanageHciClusterConfigurationProfileAssignmentCollection collection = client.GetAutomanageHciClusterConfigurationProfileAssignments(new ResourceIdentifier(scope));
 
             // invoke the operation
             string configurationProfileAssignmentName = "default";
-            AutomanageConfigurationProfileAssignmentData data = new AutomanageConfigurationProfileAssignmentData()
+            AutomanageConfigurationProfileAssignmentData data = new AutomanageConfigurationProfileAssignmentData
             {
-                Properties = new AutomanageConfigurationProfileAssignmentProperties()
+                Properties = new AutomanageConfigurationProfileAssignmentProperties
                 {
                     ConfigurationProfile = new ResourceIdentifier("/providers/Microsoft.Automanage/bestPractices/AzureBestPracticesProduction"),
                 },
@@ -104,15 +66,12 @@ namespace Azure.ResourceManager.Automanage.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this AutomanageHciClusterConfigurationProfileAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string clusterName = "myClusterName";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.AzureStackHci/clusters/{2}", subscriptionId, resourceGroupName, clusterName));
-            AutomanageHciClusterConfigurationProfileAssignmentCollection collection = client.GetAutomanageHciClusterConfigurationProfileAssignments(scopeId);
+            string scope = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}";
+            AutomanageHciClusterConfigurationProfileAssignmentCollection collection = client.GetAutomanageHciClusterConfigurationProfileAssignments(new ResourceIdentifier(scope));
 
             // invoke the operation
             string configurationProfileAssignmentName = "default";
@@ -127,6 +86,38 @@ namespace Azure.ResourceManager.Automanage.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListConfigurationProfileAssignmentsByResourceGroupAndCluster()
+        {
+            // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/listConfigurationProfileAssignmentsByClusterName.json
+            // this example is just showing the usage of "ConfigurationProfileAssignments_ListByClusterName" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // get the collection of this AutomanageHciClusterConfigurationProfileAssignmentResource
+            string subscriptionId = "mySubscriptionId";
+            string resourceGroupName = "myResourceGroupName";
+            string clusterName = "myClusterName";
+            string scope = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}";
+            AutomanageHciClusterConfigurationProfileAssignmentCollection collection = client.GetAutomanageHciClusterConfigurationProfileAssignments(new ResourceIdentifier(scope));
+
+            // invoke the operation and iterate over the result
+            await foreach (AutomanageHciClusterConfigurationProfileAssignmentResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                AutomanageConfigurationProfileAssignmentData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAHCIConfigurationProfileAssignment()
         {
             // Generated from example definition: specification/automanage/resource-manager/Microsoft.Automanage/stable/2022-05-04/examples/getConfigurationProfileHCIAssignment.json
@@ -137,15 +128,12 @@ namespace Azure.ResourceManager.Automanage.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this AutomanageHciClusterConfigurationProfileAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string clusterName = "myClusterName";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.AzureStackHci/clusters/{2}", subscriptionId, resourceGroupName, clusterName));
-            AutomanageHciClusterConfigurationProfileAssignmentCollection collection = client.GetAutomanageHciClusterConfigurationProfileAssignments(scopeId);
+            string scope = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}";
+            AutomanageHciClusterConfigurationProfileAssignmentCollection collection = client.GetAutomanageHciClusterConfigurationProfileAssignments(new ResourceIdentifier(scope));
 
             // invoke the operation
             string configurationProfileAssignmentName = "default";
@@ -166,15 +154,12 @@ namespace Azure.ResourceManager.Automanage.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmResource created on azure
-            // for more information of creating ArmResource, please refer to the document of ArmResource
-
             // get the collection of this AutomanageHciClusterConfigurationProfileAssignmentResource
             string subscriptionId = "mySubscriptionId";
             string resourceGroupName = "myResourceGroupName";
             string clusterName = "myClusterName";
-            ResourceIdentifier scopeId = new ResourceIdentifier(string.Format("/subscriptions/{0}/resourceGroups/{1}/providers/Microsoft.AzureStackHci/clusters/{2}", subscriptionId, resourceGroupName, clusterName));
-            AutomanageHciClusterConfigurationProfileAssignmentCollection collection = client.GetAutomanageHciClusterConfigurationProfileAssignments(scopeId);
+            string scope = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHci/clusters/{clusterName}";
+            AutomanageHciClusterConfigurationProfileAssignmentCollection collection = client.GetAutomanageHciClusterConfigurationProfileAssignments(new ResourceIdentifier(scope));
 
             // invoke the operation
             string configurationProfileAssignmentName = "default";

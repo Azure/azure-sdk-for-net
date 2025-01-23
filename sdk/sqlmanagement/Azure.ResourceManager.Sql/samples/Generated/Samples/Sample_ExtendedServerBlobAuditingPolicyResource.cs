@@ -69,14 +69,11 @@ namespace Azure.ResourceManager.Sql.Samples
             ExtendedServerBlobAuditingPolicyResource extendedServerBlobAuditingPolicy = client.GetExtendedServerBlobAuditingPolicyResource(extendedServerBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            ExtendedServerBlobAuditingPolicyData data = new ExtendedServerBlobAuditingPolicyData()
+            ExtendedServerBlobAuditingPolicyData data = new ExtendedServerBlobAuditingPolicyData
             {
                 PredicateExpression = "object_name = 'SensitiveData'",
                 RetentionDays = 6,
-                AuditActionsAndGroups =
-{
-"SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP","FAILED_DATABASE_AUTHENTICATION_GROUP","BATCH_COMPLETED_GROUP"
-},
+                AuditActionsAndGroups = { "SUCCESSFUL_DATABASE_AUTHENTICATION_GROUP", "FAILED_DATABASE_AUTHENTICATION_GROUP", "BATCH_COMPLETED_GROUP" },
                 IsStorageSecondaryKeyInUse = false,
                 IsAzureMonitorTargetEnabled = true,
                 QueueDelayMs = 4000,
@@ -117,7 +114,7 @@ namespace Azure.ResourceManager.Sql.Samples
             ExtendedServerBlobAuditingPolicyResource extendedServerBlobAuditingPolicy = client.GetExtendedServerBlobAuditingPolicyResource(extendedServerBlobAuditingPolicyResourceId);
 
             // invoke the operation
-            ExtendedServerBlobAuditingPolicyData data = new ExtendedServerBlobAuditingPolicyData()
+            ExtendedServerBlobAuditingPolicyData data = new ExtendedServerBlobAuditingPolicyData
             {
                 State = BlobAuditingPolicyState.Enabled,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",

@@ -14,6 +14,9 @@ parameters:
   - name: ScriptDirectory
     type: string
     default: eng/common/scripts
+  - name: ExcludePaths
+    type: object
+    default: []
 
 steps:
   # There will be transitory period for every language repo where the <language> - pullrequest build definition will run
@@ -26,10 +29,12 @@ steps:
       - task: Powershell@2
         displayName: Generate PR Diff
         inputs:
-          filePath: ${{ parameters.ScriptDirectory }}/Generate-PR-Diff.ps1
-          arguments: >
+          targetType: inline
+          script: >
+            ${{ parameters.ScriptDirectory }}/Generate-PR-Diff.ps1
             -TargetPath '${{ parameters.TargetPath }}'
             -ArtifactPath '${{ parameters.DiffDirectory }}'
+            -ExcludePaths ('${{ convertToJson(parameters.ExcludePaths) }}' | ConvertFrom-Json)
           pwsh: true
 
       # When running in PR mode, we want the detected changed services to be attached to the build as tags.

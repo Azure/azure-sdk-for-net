@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.IotHub.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.IotHub.Samples
@@ -39,44 +38,6 @@ namespace Azure.ResourceManager.IotHub.Samples
 
             // invoke the operation
             IotHubDescriptionResource result = await iotHubDescription.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            IotHubDescriptionData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_IotHubResourceUpdate()
-        {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_patch.json
-            // this example is just showing the usage of "IotHubResource_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this IotHubDescriptionResource created on azure
-            // for more information of creating IotHubDescriptionResource, please refer to the document of IotHubDescriptionResource
-            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
-            string resourceGroupName = "myResourceGroup";
-            string resourceName = "myHub";
-            ResourceIdentifier iotHubDescriptionResourceId = IotHubDescriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
-            IotHubDescriptionResource iotHubDescription = client.GetIotHubDescriptionResource(iotHubDescriptionResourceId);
-
-            // invoke the operation
-            IotHubDescriptionPatch patch = new IotHubDescriptionPatch()
-            {
-                Tags =
-{
-["foo"] = "bar",
-},
-            };
-            ArmOperation<IotHubDescriptionResource> lro = await iotHubDescription.UpdateAsync(WaitUntil.Completed, patch);
-            IotHubDescriptionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -118,33 +79,40 @@ namespace Azure.ResourceManager.IotHub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetIotHubDescriptions_IotHubResourceListBySubscription()
+        public async Task Update_IotHubResourceUpdate()
         {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_listbysubscription.json
-            // this example is just showing the usage of "IotHubResource_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_patch.json
+            // this example is just showing the usage of "IotHubResource_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            // this example assumes you already have this IotHubDescriptionResource created on azure
+            // for more information of creating IotHubDescriptionResource, please refer to the document of IotHubDescriptionResource
             string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+            string resourceGroupName = "myResourceGroup";
+            string resourceName = "myHub";
+            ResourceIdentifier iotHubDescriptionResourceId = IotHubDescriptionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, resourceName);
+            IotHubDescriptionResource iotHubDescription = client.GetIotHubDescriptionResource(iotHubDescriptionResourceId);
 
-            // invoke the operation and iterate over the result
-            await foreach (IotHubDescriptionResource item in subscriptionResource.GetIotHubDescriptionsAsync())
+            // invoke the operation
+            IotHubDescriptionPatch patch = new IotHubDescriptionPatch
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                IotHubDescriptionData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                Tags =
+{
+["foo"] = "bar"
+},
+            };
+            ArmOperation<IotHubDescriptionResource> lro = await iotHubDescription.UpdateAsync(WaitUntil.Completed, patch);
+            IotHubDescriptionResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            IotHubDescriptionData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -318,31 +286,6 @@ namespace Azure.ResourceManager.IotHub.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task CheckIotHubNameAvailability_IotHubResourceCheckNameAvailability()
-        {
-            // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/checkNameAvailability.json
-            // this example is just showing the usage of "IotHubResource_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "91d12660-3dec-467a-be2a-213b5544ddc0";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation
-            IotHubNameAvailabilityContent content = new IotHubNameAvailabilityContent("test-request");
-            IotHubNameAvailabilityResponse result = await subscriptionResource.CheckIotHubNameAvailabilityAsync(content);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task TestAllRoutes_IotHubResourceTestAllRoutes()
         {
             // Generated from example definition: specification/iothub/resource-manager/Microsoft.Devices/stable/2023-06-30/examples/iothub_testallroutes.json
@@ -362,19 +305,19 @@ namespace Azure.ResourceManager.IotHub.Samples
             IotHubDescriptionResource iotHubDescription = client.GetIotHubDescriptionResource(iotHubDescriptionResourceId);
 
             // invoke the operation
-            IotHubTestAllRoutesContent content = new IotHubTestAllRoutesContent()
+            IotHubTestAllRoutesContent content = new IotHubTestAllRoutesContent
             {
                 RoutingSource = IotHubRoutingSource.DeviceMessages,
-                Message = new RoutingMessage()
+                Message = new RoutingMessage
                 {
                     Body = "Body of message",
                     AppProperties =
 {
-["key1"] = "value1",
+["key1"] = "value1"
 },
                     SystemProperties =
 {
-["key1"] = "value1",
+["key1"] = "value1"
 },
                 },
             };
@@ -404,21 +347,18 @@ namespace Azure.ResourceManager.IotHub.Samples
             IotHubDescriptionResource iotHubDescription = client.GetIotHubDescriptionResource(iotHubDescriptionResourceId);
 
             // invoke the operation
-            IotHubTestRouteContent content = new IotHubTestRouteContent(new RoutingRuleProperties("Routeid", IotHubRoutingSource.DeviceMessages, new string[]
+            IotHubTestRouteContent content = new IotHubTestRouteContent(new RoutingRuleProperties("Routeid", IotHubRoutingSource.DeviceMessages, new string[] { "id1" }, true))
             {
-"id1"
-            }, true))
-            {
-                Message = new RoutingMessage()
+                Message = new RoutingMessage
                 {
                     Body = "Body of message",
                     AppProperties =
 {
-["key1"] = "value1",
+["key1"] = "value1"
 },
                     SystemProperties =
 {
-["key1"] = "value1",
+["key1"] = "value1"
 },
                 },
             };

@@ -77,41 +77,6 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_CreateSecurityRecommendationTaskOnAResource()
-        {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2021-06-01/examples/Assessments/PutAssessment_example.json
-            // this example is just showing the usage of "Assessments_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SecurityAssessmentResource created on azure
-            // for more information of creating SecurityAssessmentResource, please refer to the document of SecurityAssessmentResource
-            string resourceId = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachineScaleSets/vmss2";
-            string assessmentName = "8bb8be0a-6010-4789-812f-e4d661c4ed0e";
-            ResourceIdentifier securityAssessmentResourceId = SecurityAssessmentResource.CreateResourceIdentifier(resourceId, assessmentName);
-            SecurityAssessmentResource securityAssessment = client.GetSecurityAssessmentResource(securityAssessmentResourceId);
-
-            // invoke the operation
-            SecurityAssessmentCreateOrUpdateContent content = new SecurityAssessmentCreateOrUpdateContent()
-            {
-                ResourceDetails = new AzureResourceDetails(),
-                Status = new SecurityAssessmentStatus(SecurityAssessmentStatusCode.Healthy),
-            };
-            ArmOperation<SecurityAssessmentResource> lro = await securityAssessment.UpdateAsync(WaitUntil.Completed, content);
-            SecurityAssessmentResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SecurityAssessmentData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteASecurityRecommendationTaskOnAResource()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2021-06-01/examples/Assessments/DeleteAssessment_example.json
@@ -133,6 +98,41 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             await securityAssessment.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_CreateSecurityRecommendationTaskOnAResource()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/stable/2021-06-01/examples/Assessments/PutAssessment_example.json
+            // this example is just showing the usage of "Assessments_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SecurityAssessmentResource created on azure
+            // for more information of creating SecurityAssessmentResource, please refer to the document of SecurityAssessmentResource
+            string resourceId = "subscriptions/20ff7fc3-e762-44dd-bd96-b71116dcdc23/resourceGroups/myRg/providers/Microsoft.Compute/virtualMachineScaleSets/vmss2";
+            string assessmentName = "8bb8be0a-6010-4789-812f-e4d661c4ed0e";
+            ResourceIdentifier securityAssessmentResourceId = SecurityAssessmentResource.CreateResourceIdentifier(resourceId, assessmentName);
+            SecurityAssessmentResource securityAssessment = client.GetSecurityAssessmentResource(securityAssessmentResourceId);
+
+            // invoke the operation
+            SecurityAssessmentCreateOrUpdateContent content = new SecurityAssessmentCreateOrUpdateContent
+            {
+                ResourceDetails = new AzureResourceDetails(),
+                Status = new SecurityAssessmentStatus(SecurityAssessmentStatusCode.Healthy),
+            };
+            ArmOperation<SecurityAssessmentResource> lro = await securityAssessment.UpdateAsync(WaitUntil.Completed, content);
+            SecurityAssessmentResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SecurityAssessmentData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

@@ -48,14 +48,14 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <summary> Initializes a new instance of <see cref="ServiceConfigurationList"/>. </summary>
         internal ServiceConfigurationList()
         {
-            Value = new ChangeTrackingList<ServiceConfigurationResourceData>();
+            Value = new ChangeTrackingList<HybridConnectivityServiceConfigurationData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ServiceConfigurationList"/>. </summary>
         /// <param name="value"> The list of service configuration. </param>
         /// <param name="nextLink"> The link to fetch the next page of connected cluster. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceConfigurationList(IReadOnlyList<ServiceConfigurationResourceData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ServiceConfigurationList(IReadOnlyList<HybridConnectivityServiceConfigurationData> value, string nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         }
 
         /// <summary> The list of service configuration. </summary>
-        public IReadOnlyList<ServiceConfigurationResourceData> Value { get; }
+        public IReadOnlyList<HybridConnectivityServiceConfigurationData> Value { get; }
         /// <summary> The link to fetch the next page of connected cluster. </summary>
         public string NextLink { get; }
     }

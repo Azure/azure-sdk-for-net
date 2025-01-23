@@ -69,17 +69,11 @@ namespace Azure.ResourceManager.PostgreSql.Samples
             PostgreSqlServerSecurityAlertPolicyResource postgreSqlServerSecurityAlertPolicy = client.GetPostgreSqlServerSecurityAlertPolicyResource(postgreSqlServerSecurityAlertPolicyResourceId);
 
             // invoke the operation
-            PostgreSqlServerSecurityAlertPolicyData data = new PostgreSqlServerSecurityAlertPolicyData()
+            PostgreSqlServerSecurityAlertPolicyData data = new PostgreSqlServerSecurityAlertPolicyData
             {
                 State = PostgreSqlServerSecurityAlertPolicyState.Enabled,
-                DisabledAlerts =
-{
-"Access_Anomaly","Usage_Anomaly"
-},
-                EmailAddresses =
-{
-"testSecurityAlert@microsoft.com"
-},
+                DisabledAlerts = { "Access_Anomaly", "Usage_Anomaly" },
+                EmailAddresses = { "testSecurityAlert@microsoft.com" },
                 SendToEmailAccountAdmins = true,
                 StorageEndpoint = "https://mystorage.blob.core.windows.net",
                 StorageAccountAccessKey = "sdlfkjabc+sdlfkjsdlkfsjdfLDKFTERLKFDFKLjsdfksjdflsdkfD2342309432849328476458/3RSD==",
@@ -117,7 +111,7 @@ namespace Azure.ResourceManager.PostgreSql.Samples
             PostgreSqlServerSecurityAlertPolicyResource postgreSqlServerSecurityAlertPolicy = client.GetPostgreSqlServerSecurityAlertPolicyResource(postgreSqlServerSecurityAlertPolicyResourceId);
 
             // invoke the operation
-            PostgreSqlServerSecurityAlertPolicyData data = new PostgreSqlServerSecurityAlertPolicyData()
+            PostgreSqlServerSecurityAlertPolicyData data = new PostgreSqlServerSecurityAlertPolicyData
             {
                 State = PostgreSqlServerSecurityAlertPolicyState.Disabled,
                 SendToEmailAccountAdmins = true,

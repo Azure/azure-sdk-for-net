@@ -626,7 +626,7 @@ namespace Azure.Messaging.EventGrid
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AcsEmailDeliveryReportReceivedEventData AcsEmailDeliveryReportReceivedEventData(string sender = null, string recipient = null, string messageId = null, AcsEmailDeliveryReportStatus? status = null, DateTimeOffset? deliveryAttemptTimestamp = null)
         {
-            return new AcsEmailDeliveryReportReceivedEventData(sender, recipient, messageId, status, default, deliveryAttemptTimestamp);
+            return new AcsEmailDeliveryReportReceivedEventData(sender, recipient, default, messageId, status, default, deliveryAttemptTimestamp);
         }
 
         /// <summary> Initializes a new instance of HealthcareDicomImageCreatedEventData. </summary>
@@ -836,6 +836,49 @@ namespace Azure.Messaging.EventGrid
         public static StorageLifecyclePolicyCompletedEventData StorageLifecyclePolicyCompletedEventData(string scheduleTime, StorageLifecyclePolicyActionSummaryDetail deleteSummary, StorageLifecyclePolicyActionSummaryDetail tierToCoolSummary, StorageLifecyclePolicyActionSummaryDetail tierToColdSummary, StorageLifecyclePolicyActionSummaryDetail tierToArchiveSummary)
         {
             return new StorageLifecyclePolicyCompletedEventData(scheduleTime, null, deleteSummary, tierToCoolSummary, tierToColdSummary, tierToArchiveSummary);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsSmsReceivedEventData"/>. </summary>
+        /// <param name="messageId"> The identity of the SMS message. </param>
+        /// <param name="from"> The identity of SMS message sender. </param>
+        /// <param name="to"> The identity of SMS message receiver. </param>
+        /// <param name="message"> The SMS content. </param>
+        /// <param name="receivedTimestamp"> The time at which the SMS was received. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsSmsReceivedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsSmsReceivedEventData AcsSmsReceivedEventData(string messageId, string @from, string to, string message, DateTimeOffset? receivedTimestamp)
+        {
+            return new AcsSmsReceivedEventData(messageId, @from, to, message, receivedTimestamp, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsEmailDeliveryReportReceivedEventData"/>. </summary>
+        /// <param name="sender"> The Sender Email Address. </param>
+        /// <param name="recipient"> The recipient Email Address. </param>
+        /// <param name="messageId"> The Id of the email been sent. </param>
+        /// <param name="status"> The status of the email. Any value other than Delivered is considered failed. </param>
+        /// <param name="deliveryStatusDetails"> Detailed information about the status if any. </param>
+        /// <param name="deliveryAttemptTimestamp"> The time at which the email delivery report received timestamp. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsEmailDeliveryReportReceivedEventData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsEmailDeliveryReportReceivedEventData AcsEmailDeliveryReportReceivedEventData(string sender, string recipient, string messageId, AcsEmailDeliveryReportStatus? status, AcsEmailDeliveryReportStatusDetails deliveryStatusDetails, DateTimeOffset? deliveryAttemptTimestamp)
+        {
+            return new AcsEmailDeliveryReportReceivedEventData(
+                sender,
+                recipient,
+                default,
+                messageId,
+                status,
+                deliveryStatusDetails,
+                deliveryAttemptTimestamp);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SystemEvents.AcsEmailDeliveryReportStatusDetails"/>. </summary>
+        /// <param name="statusMessage"> Detailed status message. </param>
+        /// <returns> A new <see cref="SystemEvents.AcsEmailDeliveryReportStatusDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AcsEmailDeliveryReportStatusDetails AcsEmailDeliveryReportStatusDetails(string statusMessage)
+        {
+            return new AcsEmailDeliveryReportStatusDetails(default, statusMessage);
         }
     }
 #pragma warning restore CA1054 // URI-like parameters should not be strings

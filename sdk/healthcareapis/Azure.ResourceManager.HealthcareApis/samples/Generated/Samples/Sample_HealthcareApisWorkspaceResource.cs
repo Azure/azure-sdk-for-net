@@ -10,44 +10,12 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.HealthcareApis.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.HealthcareApis.Samples
 {
     public partial class Sample_HealthcareApisWorkspaceResource
     {
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetHealthcareApisWorkspaces_GetWorkspacesBySubscription()
-        {
-            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2024-03-31/examples/workspaces/Workspaces_ListBySubscription.json
-            // this example is just showing the usage of "Workspaces_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "subid";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (HealthcareApisWorkspaceResource item in subscriptionResource.GetHealthcareApisWorkspacesAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                HealthcareApisWorkspaceData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetWorkspace()
@@ -80,44 +48,6 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateAWorkspace()
-        {
-            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2024-03-31/examples/workspaces/Workspaces_Patch.json
-            // this example is just showing the usage of "Workspaces_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this HealthcareApisWorkspaceResource created on azure
-            // for more information of creating HealthcareApisWorkspaceResource, please refer to the document of HealthcareApisWorkspaceResource
-            string subscriptionId = "subid";
-            string resourceGroupName = "testRG";
-            string workspaceName = "workspace1";
-            ResourceIdentifier healthcareApisWorkspaceResourceId = HealthcareApisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
-            HealthcareApisWorkspaceResource healthcareApisWorkspace = client.GetHealthcareApisWorkspaceResource(healthcareApisWorkspaceResourceId);
-
-            // invoke the operation
-            HealthcareApisWorkspacePatch patch = new HealthcareApisWorkspacePatch()
-            {
-                Tags =
-{
-["tagKey"] = "tagValue",
-},
-            };
-            ArmOperation<HealthcareApisWorkspaceResource> lro = await healthcareApisWorkspace.UpdateAsync(WaitUntil.Completed, patch);
-            HealthcareApisWorkspaceResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            HealthcareApisWorkspaceData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteAWorkspace()
         {
             // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2024-03-31/examples/workspaces/Workspaces_Delete.json
@@ -140,6 +70,44 @@ namespace Azure.ResourceManager.HealthcareApis.Samples
             await healthcareApisWorkspace.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateAWorkspace()
+        {
+            // Generated from example definition: specification/healthcareapis/resource-manager/Microsoft.HealthcareApis/stable/2024-03-31/examples/workspaces/Workspaces_Patch.json
+            // this example is just showing the usage of "Workspaces_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this HealthcareApisWorkspaceResource created on azure
+            // for more information of creating HealthcareApisWorkspaceResource, please refer to the document of HealthcareApisWorkspaceResource
+            string subscriptionId = "subid";
+            string resourceGroupName = "testRG";
+            string workspaceName = "workspace1";
+            ResourceIdentifier healthcareApisWorkspaceResourceId = HealthcareApisWorkspaceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName);
+            HealthcareApisWorkspaceResource healthcareApisWorkspace = client.GetHealthcareApisWorkspaceResource(healthcareApisWorkspaceResourceId);
+
+            // invoke the operation
+            HealthcareApisWorkspacePatch patch = new HealthcareApisWorkspacePatch
+            {
+                Tags =
+{
+["tagKey"] = "tagValue"
+},
+            };
+            ArmOperation<HealthcareApisWorkspaceResource> lro = await healthcareApisWorkspace.UpdateAsync(WaitUntil.Completed, patch);
+            HealthcareApisWorkspaceResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            HealthcareApisWorkspaceData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

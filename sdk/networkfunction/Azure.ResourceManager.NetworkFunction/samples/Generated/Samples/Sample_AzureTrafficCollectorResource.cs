@@ -93,12 +93,12 @@ namespace Azure.ResourceManager.NetworkFunction.Samples
             AzureTrafficCollectorResource azureTrafficCollector = client.GetAzureTrafficCollectorResource(azureTrafficCollectorResourceId);
 
             // invoke the operation
-            TagsObject tagsObject = new TagsObject()
+            TagsObject tagsObject = new TagsObject
             {
                 Tags =
 {
 ["key1"] = "value1",
-["key2"] = "value2",
+["key2"] = "value2"
 },
             };
             AzureTrafficCollectorResource result = await azureTrafficCollector.UpdateAsync(tagsObject);

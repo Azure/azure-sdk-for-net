@@ -17,6 +17,11 @@ namespace Azure.Search.Documents.Models
             writer.WriteStartObject();
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
+            if (Optional.IsDefined(QueryRewrites))
+            {
+                writer.WritePropertyName("queryRewrites"u8);
+                writer.WriteStringValue(QueryRewrites.Value.ToString());
+            }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(KNearestNeighborsCount))
@@ -64,6 +69,7 @@ namespace Azure.Search.Documents.Models
                 return null;
             }
             string text = default;
+            QueryRewritesType? queryRewrites = default;
             VectorQueryKind kind = default;
             int? k = default;
             string fields = default;
@@ -77,6 +83,15 @@ namespace Azure.Search.Documents.Models
                 if (property.NameEquals("text"u8))
                 {
                     text = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("queryRewrites"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    queryRewrites = new QueryRewritesType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -149,7 +164,8 @@ namespace Azure.Search.Documents.Models
                 weight,
                 threshold,
                 filterOverride,
-                text);
+                text,
+                queryRewrites);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

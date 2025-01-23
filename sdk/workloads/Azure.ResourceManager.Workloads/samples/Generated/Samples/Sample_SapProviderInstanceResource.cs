@@ -205,6 +205,34 @@ namespace Azure.ResourceManager.Workloads.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeletesASAPMonitorProvider()
+        {
+            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/ProviderInstances_Delete.json
+            // this example is just showing the usage of "ProviderInstances_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SapProviderInstanceResource created on azure
+            // for more information of creating SapProviderInstanceResource, please refer to the document of SapProviderInstanceResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            string resourceGroupName = "myResourceGroup";
+            string monitorName = "mySapMonitor";
+            string providerInstanceName = "myProviderInstance";
+            ResourceIdentifier sapProviderInstanceResourceId = SapProviderInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName, providerInstanceName);
+            SapProviderInstanceResource sapProviderInstance = client.GetSapProviderInstanceResource(sapProviderInstanceResourceId);
+
+            // invoke the operation
+            ArmOperation<OperationStatusResult> lro = await sapProviderInstance.DeleteAsync(WaitUntil.Completed);
+            OperationStatusResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateADb2Provider()
         {
             // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/Db2ProviderInstances_Create.json
@@ -225,9 +253,9 @@ namespace Azure.ResourceManager.Workloads.Samples
             SapProviderInstanceResource sapProviderInstance = client.GetSapProviderInstanceResource(sapProviderInstanceResourceId);
 
             // invoke the operation
-            SapProviderInstanceData data = new SapProviderInstanceData()
+            SapProviderInstanceData data = new SapProviderInstanceData
             {
-                ProviderSettings = new DB2ProviderInstanceProperties()
+                ProviderSettings = new DB2ProviderInstanceProperties
                 {
                     Hostname = "hostname",
                     DBName = "dbName",
@@ -272,9 +300,9 @@ namespace Azure.ResourceManager.Workloads.Samples
             SapProviderInstanceResource sapProviderInstance = client.GetSapProviderInstanceResource(sapProviderInstanceResourceId);
 
             // invoke the operation
-            SapProviderInstanceData data = new SapProviderInstanceData()
+            SapProviderInstanceData data = new SapProviderInstanceData
             {
-                ProviderSettings = new DB2ProviderInstanceProperties()
+                ProviderSettings = new DB2ProviderInstanceProperties
                 {
                     Hostname = "hostname",
                     DBName = "dbName",
@@ -318,9 +346,9 @@ namespace Azure.ResourceManager.Workloads.Samples
             SapProviderInstanceResource sapProviderInstance = client.GetSapProviderInstanceResource(sapProviderInstanceResourceId);
 
             // invoke the operation
-            SapProviderInstanceData data = new SapProviderInstanceData()
+            SapProviderInstanceData data = new SapProviderInstanceData
             {
-                ProviderSettings = new MsSqlServerProviderInstanceProperties()
+                ProviderSettings = new MsSqlServerProviderInstanceProperties
                 {
                     Hostname = "hostname",
                     DBPort = "5912",
@@ -364,9 +392,9 @@ namespace Azure.ResourceManager.Workloads.Samples
             SapProviderInstanceResource sapProviderInstance = client.GetSapProviderInstanceResource(sapProviderInstanceResourceId);
 
             // invoke the operation
-            SapProviderInstanceData data = new SapProviderInstanceData()
+            SapProviderInstanceData data = new SapProviderInstanceData
             {
-                ProviderSettings = new MsSqlServerProviderInstanceProperties()
+                ProviderSettings = new MsSqlServerProviderInstanceProperties
                 {
                     Hostname = "hostname",
                     DBPort = "5912",
@@ -409,9 +437,9 @@ namespace Azure.ResourceManager.Workloads.Samples
             SapProviderInstanceResource sapProviderInstance = client.GetSapProviderInstanceResource(sapProviderInstanceResourceId);
 
             // invoke the operation
-            SapProviderInstanceData data = new SapProviderInstanceData()
+            SapProviderInstanceData data = new SapProviderInstanceData
             {
-                ProviderSettings = new PrometheusOSProviderInstanceProperties()
+                ProviderSettings = new PrometheusOSProviderInstanceProperties
                 {
                     PrometheusUri = new Uri("http://192.168.0.0:9090/metrics"),
                     SslPreference = SapSslPreference.ServerCertificate,
@@ -451,9 +479,9 @@ namespace Azure.ResourceManager.Workloads.Samples
             SapProviderInstanceResource sapProviderInstance = client.GetSapProviderInstanceResource(sapProviderInstanceResourceId);
 
             // invoke the operation
-            SapProviderInstanceData data = new SapProviderInstanceData()
+            SapProviderInstanceData data = new SapProviderInstanceData
             {
-                ProviderSettings = new PrometheusOSProviderInstanceProperties()
+                ProviderSettings = new PrometheusOSProviderInstanceProperties
                 {
                     PrometheusUri = new Uri("http://192.168.0.0:9090/metrics"),
                     SslPreference = SapSslPreference.RootCertificate,
@@ -492,9 +520,9 @@ namespace Azure.ResourceManager.Workloads.Samples
             SapProviderInstanceResource sapProviderInstance = client.GetSapProviderInstanceResource(sapProviderInstanceResourceId);
 
             // invoke the operation
-            SapProviderInstanceData data = new SapProviderInstanceData()
+            SapProviderInstanceData data = new SapProviderInstanceData
             {
-                ProviderSettings = new PrometheusHAClusterProviderInstanceProperties()
+                ProviderSettings = new PrometheusHAClusterProviderInstanceProperties
                 {
                     PrometheusUri = new Uri("http://192.168.0.0:9090/metrics"),
                     Hostname = "hostname",
@@ -536,9 +564,9 @@ namespace Azure.ResourceManager.Workloads.Samples
             SapProviderInstanceResource sapProviderInstance = client.GetSapProviderInstanceResource(sapProviderInstanceResourceId);
 
             // invoke the operation
-            SapProviderInstanceData data = new SapProviderInstanceData()
+            SapProviderInstanceData data = new SapProviderInstanceData
             {
-                ProviderSettings = new PrometheusHAClusterProviderInstanceProperties()
+                ProviderSettings = new PrometheusHAClusterProviderInstanceProperties
                 {
                     PrometheusUri = new Uri("http://192.168.0.0:9090/metrics"),
                     Hostname = "hostname",
@@ -579,9 +607,9 @@ namespace Azure.ResourceManager.Workloads.Samples
             SapProviderInstanceResource sapProviderInstance = client.GetSapProviderInstanceResource(sapProviderInstanceResourceId);
 
             // invoke the operation
-            SapProviderInstanceData data = new SapProviderInstanceData()
+            SapProviderInstanceData data = new SapProviderInstanceData
             {
-                ProviderSettings = new HanaDBProviderInstanceProperties()
+                ProviderSettings = new HanaDBProviderInstanceProperties
                 {
                     Hostname = "name",
                     DBName = "db",
@@ -628,9 +656,9 @@ namespace Azure.ResourceManager.Workloads.Samples
             SapProviderInstanceResource sapProviderInstance = client.GetSapProviderInstanceResource(sapProviderInstanceResourceId);
 
             // invoke the operation
-            SapProviderInstanceData data = new SapProviderInstanceData()
+            SapProviderInstanceData data = new SapProviderInstanceData
             {
-                ProviderSettings = new HanaDBProviderInstanceProperties()
+                ProviderSettings = new HanaDBProviderInstanceProperties
                 {
                     Hostname = "name",
                     DBName = "db",
@@ -676,17 +704,14 @@ namespace Azure.ResourceManager.Workloads.Samples
             SapProviderInstanceResource sapProviderInstance = client.GetSapProviderInstanceResource(sapProviderInstanceResourceId);
 
             // invoke the operation
-            SapProviderInstanceData data = new SapProviderInstanceData()
+            SapProviderInstanceData data = new SapProviderInstanceData
             {
-                ProviderSettings = new SapNetWeaverProviderInstanceProperties()
+                ProviderSettings = new SapNetWeaverProviderInstanceProperties
                 {
                     SapSid = "SID",
                     SapHostname = "name",
                     SapInstanceNr = "00",
-                    SapHostFileEntries =
-{
-"127.0.0.1 name fqdn"
-},
+                    SapHostFileEntries = { "127.0.0.1 name fqdn" },
                     SapUsername = "username",
                     SapPassword = "****",
                     SapPasswordUri = new Uri(""),
@@ -728,17 +753,14 @@ namespace Azure.ResourceManager.Workloads.Samples
             SapProviderInstanceResource sapProviderInstance = client.GetSapProviderInstanceResource(sapProviderInstanceResourceId);
 
             // invoke the operation
-            SapProviderInstanceData data = new SapProviderInstanceData()
+            SapProviderInstanceData data = new SapProviderInstanceData
             {
-                ProviderSettings = new SapNetWeaverProviderInstanceProperties()
+                ProviderSettings = new SapNetWeaverProviderInstanceProperties
                 {
                     SapSid = "SID",
                     SapHostname = "name",
                     SapInstanceNr = "00",
-                    SapHostFileEntries =
-{
-"127.0.0.1 name fqdn"
-},
+                    SapHostFileEntries = { "127.0.0.1 name fqdn" },
                     SapUsername = "username",
                     SapPassword = "****",
                     SapPasswordUri = new Uri(""),
@@ -755,34 +777,6 @@ namespace Azure.ResourceManager.Workloads.Samples
             SapProviderInstanceData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeletesASAPMonitorProvider()
-        {
-            // Generated from example definition: specification/workloads/resource-manager/Microsoft.Workloads/stable/2023-04-01/examples/workloadmonitor/ProviderInstances_Delete.json
-            // this example is just showing the usage of "ProviderInstances_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SapProviderInstanceResource created on azure
-            // for more information of creating SapProviderInstanceResource, please refer to the document of SapProviderInstanceResource
-            string subscriptionId = "00000000-0000-0000-0000-000000000000";
-            string resourceGroupName = "myResourceGroup";
-            string monitorName = "mySapMonitor";
-            string providerInstanceName = "myProviderInstance";
-            ResourceIdentifier sapProviderInstanceResourceId = SapProviderInstanceResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, monitorName, providerInstanceName);
-            SapProviderInstanceResource sapProviderInstance = client.GetSapProviderInstanceResource(sapProviderInstanceResourceId);
-
-            // invoke the operation
-            ArmOperation<OperationStatusResult> lro = await sapProviderInstance.DeleteAsync(WaitUntil.Completed);
-            OperationStatusResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

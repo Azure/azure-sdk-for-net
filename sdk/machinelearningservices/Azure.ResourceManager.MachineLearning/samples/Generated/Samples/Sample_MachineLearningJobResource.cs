@@ -20,33 +20,6 @@ namespace Azure.ResourceManager.MachineLearning.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_DeleteJob()
-        {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Job/delete.json
-            // this example is just showing the usage of "Jobs_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MachineLearningJobResource created on azure
-            // for more information of creating MachineLearningJobResource, please refer to the document of MachineLearningJobResource
-            string subscriptionId = "00000000-1111-2222-3333-444444444444";
-            string resourceGroupName = "test-rg";
-            string workspaceName = "my-aml-workspace";
-            string id = "http://subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs/my-favorite-aml-job";
-            ResourceIdentifier machineLearningJobResourceId = MachineLearningJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, id);
-            MachineLearningJobResource machineLearningJob = client.GetMachineLearningJobResource(machineLearningJobResourceId);
-
-            // invoke the operation
-            await machineLearningJob.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAutoMLJob()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Job/AutoMLJob/get.json
@@ -171,6 +144,33 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_DeleteJob()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Job/delete.json
+            // this example is just showing the usage of "Jobs_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MachineLearningJobResource created on azure
+            // for more information of creating MachineLearningJobResource, please refer to the document of MachineLearningJobResource
+            string subscriptionId = "00000000-1111-2222-3333-444444444444";
+            string resourceGroupName = "test-rg";
+            string workspaceName = "my-aml-workspace";
+            string id = "http://subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/jobs/my-favorite-aml-job";
+            ResourceIdentifier machineLearningJobResourceId = MachineLearningJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, id);
+            MachineLearningJobResource machineLearningJob = client.GetMachineLearningJobResource(machineLearningJobResourceId);
+
+            // invoke the operation
+            await machineLearningJob.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_CreateOrUpdateAutoMLJob()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Job/AutoMLJob/createOrUpdate.json
@@ -191,64 +191,62 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             MachineLearningJobResource machineLearningJob = client.GetMachineLearningJobResource(machineLearningJobResourceId);
 
             // invoke the operation
-            MachineLearningJobData data = new MachineLearningJobData(new AutoMLJob(new ImageClassification(new MachineLearningTableJobInput(new Uri("string")), new ImageLimitSettings()
+            MachineLearningJobData data = new MachineLearningJobData(new AutoMLJob(new ImageClassification(new MachineLearningTableJobInput(new Uri("string")), new ImageLimitSettings
             {
                 MaxTrials = 2,
             })
             {
-                ModelSettings = new ImageModelSettingsClassification()
+                ModelSettings = new ImageModelSettingsClassification
                 {
                     ValidationCropSize = 2,
                 },
-                SearchSpace =
-{
-new ImageModelDistributionSettingsClassification()
+                SearchSpace = {new ImageModelDistributionSettingsClassification
 {
 ValidationCropSize = "choice(2, 360)",
-}
-},
+}},
                 TargetColumnName = "string",
             })
             {
-                Resources = new MachineLearningJobResourceConfiguration()
+                Resources = new MachineLearningJobResourceConfiguration
                 {
                     InstanceCount = 1,
                     InstanceType = "string",
                     Properties =
 {
-["string"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+["string"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad"] = null}),
+["9bec0ab0-c62f-4fa9-a97c-7b24bbcc90ad"] = null
+})
 },
                 },
                 EnvironmentId = "string",
                 EnvironmentVariables =
 {
-["string"] = "string",
+["string"] = "string"
 },
                 Outputs =
 {
-["string"] = new MachineLearningUriFileJobOutput()
+["string"] = new MachineLearningUriFileJobOutput
 {
 Uri = new Uri("string"),
 Mode = MachineLearningOutputDeliveryMode.ReadWriteMount,
 Description = "string",
-},
+}
 },
                 DisplayName = "string",
                 ExperimentName = "string",
                 Services =
 {
-["string"] = new MachineLearningJobService()
+["string"] = new MachineLearningJobService
 {
 JobServiceType = "string",
 Port = 1,
 Endpoint = "string",
 Properties =
 {
-["string"] = "string",
+["string"] = "string"
 },
-},
+}
 },
                 ComputeId = new ResourceIdentifier("string"),
                 IsArchived = false,
@@ -256,11 +254,11 @@ Properties =
                 Description = "string",
                 Tags =
 {
-["string"] = "string",
+["string"] = "string"
 },
                 Properties =
 {
-["string"] = "string",
+["string"] = "string"
 },
             });
             ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data);
@@ -297,15 +295,16 @@ Properties =
             // invoke the operation
             MachineLearningJobData data = new MachineLearningJobData(new MachineLearningCommandJob("string", new ResourceIdentifier("string"))
             {
-                Resources = new MachineLearningJobResourceConfiguration()
+                Resources = new MachineLearningJobResourceConfiguration
                 {
                     InstanceCount = 1,
                     InstanceType = "string",
                     Properties =
 {
-["string"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+["string"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["e6b6493e-7d5e-4db3-be1e-306ec641327e"] = null}),
+["e6b6493e-7d5e-4db3-be1e-306ec641327e"] = null
+})
 },
                 },
                 CodeId = new ResourceIdentifier("string"),
@@ -314,55 +313,55 @@ Properties =
 ["string"] = new MachineLearningLiteralJobInput("string")
 {
 Description = "string",
-},
+}
 },
                 Outputs =
 {
-["string"] = new MachineLearningUriFileJobOutput()
+["string"] = new MachineLearningUriFileJobOutput
 {
 Uri = new Uri("string"),
 Mode = MachineLearningOutputDeliveryMode.ReadWriteMount,
 Description = "string",
+}
 },
-},
-                Distribution = new TensorFlowDistributionConfiguration()
+                Distribution = new TensorFlowDistributionConfiguration
                 {
                     WorkerCount = 1,
                     ParameterServerCount = 1,
                 },
-                Limits = new MachineLearningCommandJobLimits()
+                Limits = new MachineLearningCommandJobLimits
                 {
                     Timeout = XmlConvert.ToTimeSpan("PT5M"),
                 },
                 EnvironmentVariables =
 {
-["string"] = "string",
+["string"] = "string"
 },
                 DisplayName = "string",
                 ExperimentName = "string",
                 Services =
 {
-["string"] = new MachineLearningJobService()
+["string"] = new MachineLearningJobService
 {
 JobServiceType = "string",
 Port = 1,
 Endpoint = "string",
 Properties =
 {
-["string"] = "string",
+["string"] = "string"
 },
-},
+}
 },
                 ComputeId = new ResourceIdentifier("string"),
                 Identity = new AmlToken(),
                 Description = "string",
                 Tags =
 {
-["string"] = "string",
+["string"] = "string"
 },
                 Properties =
 {
-["string"] = "string",
+["string"] = "string"
 },
             });
             ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data);
@@ -397,51 +396,49 @@ Properties =
             MachineLearningJobResource machineLearningJob = client.GetMachineLearningJobResource(machineLearningJobResourceId);
 
             // invoke the operation
-            MachineLearningJobData data = new MachineLearningJobData(new MachineLearningPipelineJob()
+            MachineLearningJobData data = new MachineLearningJobData(new MachineLearningPipelineJob
             {
-                Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-                {
-                }),
+                Settings = BinaryData.FromObjectAsJson(new object()),
                 Inputs =
 {
 ["string"] = new MachineLearningLiteralJobInput("string")
 {
 Description = "string",
-},
+}
 },
                 Outputs =
 {
-["string"] = new MachineLearningUriFileJobOutput()
+["string"] = new MachineLearningUriFileJobOutput
 {
 Uri = new Uri("string"),
 Mode = MachineLearningOutputDeliveryMode.Upload,
 Description = "string",
-},
+}
 },
                 DisplayName = "string",
                 ExperimentName = "string",
                 Services =
 {
-["string"] = new MachineLearningJobService()
+["string"] = new MachineLearningJobService
 {
 JobServiceType = "string",
 Port = 1,
 Endpoint = "string",
 Properties =
 {
-["string"] = "string",
+["string"] = "string"
 },
-},
+}
 },
                 ComputeId = new ResourceIdentifier("string"),
                 Description = "string",
                 Tags =
 {
-["string"] = "string",
+["string"] = "string"
 },
                 Properties =
 {
-["string"] = "string",
+["string"] = "string"
 },
             });
             ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data);
@@ -476,42 +473,41 @@ Properties =
             MachineLearningJobResource machineLearningJob = client.GetMachineLearningJobResource(machineLearningJobResourceId);
 
             // invoke the operation
-            MachineLearningJobData data = new MachineLearningJobData(new MachineLearningSweepJob(BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+            MachineLearningJobData data = new MachineLearningJobData(new MachineLearningSweepJob(BinaryData.FromObjectAsJson(new Dictionary<string, object>
             {
-                ["string"] = new Dictionary<string, object>()
-                {
-                }
+                ["string"] = new object()
             }), new GridSamplingAlgorithm(), new MachineLearningObjective("string", MachineLearningGoal.Minimize), new MachineLearningTrialComponent("string", new ResourceIdentifier("string"))
             {
                 CodeId = new ResourceIdentifier("string"),
                 EnvironmentVariables =
 {
-["string"] = "string",
+["string"] = "string"
 },
-                Distribution = new MpiDistributionConfiguration()
+                Distribution = new MpiDistributionConfiguration
                 {
                     ProcessCountPerInstance = 1,
                 },
-                Resources = new MachineLearningJobResourceConfiguration()
+                Resources = new MachineLearningJobResourceConfiguration
                 {
                     InstanceCount = 1,
                     InstanceType = "string",
                     Properties =
 {
-["string"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
+["string"] = BinaryData.FromObjectAsJson(new Dictionary<string, object>
 {
-["e6b6493e-7d5e-4db3-be1e-306ec641327e"] = null}),
+["e6b6493e-7d5e-4db3-be1e-306ec641327e"] = null
+})
 },
                 },
             })
             {
-                Limits = new MachineLearningSweepJobLimits()
+                Limits = new MachineLearningSweepJobLimits
                 {
                     MaxTotalTrials = 1,
                     MaxConcurrentTrials = 1,
                     TrialTimeout = XmlConvert.ToTimeSpan("PT1S"),
                 },
-                EarlyTermination = new MedianStoppingPolicy()
+                EarlyTermination = new MedianStoppingPolicy
                 {
                     EvaluationInterval = 1,
                     DelayEvaluation = 1,
@@ -520,26 +516,26 @@ Properties =
                 ExperimentName = "string",
                 Services =
 {
-["string"] = new MachineLearningJobService()
+["string"] = new MachineLearningJobService
 {
 JobServiceType = "string",
 Port = 1,
 Endpoint = "string",
 Properties =
 {
-["string"] = "string",
+["string"] = "string"
 },
-},
+}
 },
                 ComputeId = new ResourceIdentifier("string"),
                 Description = "string",
                 Tags =
 {
-["string"] = "string",
+["string"] = "string"
 },
                 Properties =
 {
-["string"] = "string",
+["string"] = "string"
 },
             });
             ArmOperation<MachineLearningJobResource> lro = await machineLearningJob.UpdateAsync(WaitUntil.Completed, data);

@@ -13,8 +13,6 @@ public class FileTests : AoaiTestBase<OpenAIFileClient>
     public FileTests(bool isAsync) : base(isAsync)
     { }
 
-#if !AZURE_OPENAI_GA
-
     [Test]
     [Category("Smoke")]
     public void CanCreateClient() => Assert.That(GetTestClient(), Is.InstanceOf<OpenAIFileClient>());
@@ -40,15 +38,4 @@ public class FileTests : AoaiTestBase<OpenAIFileClient>
         OpenAIFileCollection files = await client.GetFilesAsync();
         Assert.That(files, Has.Count.GreaterThan(0));
     }
-
-#else
-
-    [Test]
-    [SyncOnly]
-    public void UnsupportedVersionFileClientThrows()
-    {
-        Assert.Throws<InvalidOperationException>(() => GetTestClient());
-    }
-
-#endif
 }

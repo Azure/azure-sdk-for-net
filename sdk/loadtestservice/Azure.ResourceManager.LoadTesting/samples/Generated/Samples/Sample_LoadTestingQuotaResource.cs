@@ -67,12 +67,12 @@ namespace Azure.ResourceManager.LoadTesting.Samples
             LoadTestingQuotaResource loadTestingQuota = client.GetLoadTestingQuotaResource(loadTestingQuotaResourceId);
 
             // invoke the operation
-            LoadTestingQuotaBucketContent content = new LoadTestingQuotaBucketContent()
+            LoadTestingQuotaBucketContent content = new LoadTestingQuotaBucketContent
             {
                 CurrentUsage = 20,
                 CurrentQuota = 40,
                 NewQuota = 50,
-                Dimensions = new LoadTestingQuotaBucketDimensions()
+                Dimensions = new LoadTestingQuotaBucketDimensions
                 {
                     SubscriptionId = "testsubscriptionId",
                     Location = new AzureLocation("westus"),

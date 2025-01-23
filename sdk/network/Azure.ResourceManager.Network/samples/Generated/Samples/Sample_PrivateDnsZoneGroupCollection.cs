@@ -18,9 +18,51 @@ namespace Azure.ResourceManager.Network.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreatePrivateDnsZoneGroup()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/PrivateEndpointDnsZoneGroupCreate.json
+            // this example is just showing the usage of "PrivateDnsZoneGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PrivateEndpointResource created on azure
+            // for more information of creating PrivateEndpointResource, please refer to the document of PrivateEndpointResource
+            string subscriptionId = "subId";
+            string resourceGroupName = "rg1";
+            string privateEndpointName = "testPe";
+            ResourceIdentifier privateEndpointResourceId = PrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
+            PrivateEndpointResource privateEndpoint = client.GetPrivateEndpointResource(privateEndpointResourceId);
+
+            // get the collection of this PrivateDnsZoneGroupResource
+            PrivateDnsZoneGroupCollection collection = privateEndpoint.GetPrivateDnsZoneGroups();
+
+            // invoke the operation
+            string privateDnsZoneGroupName = "testPdnsgroup";
+            PrivateDnsZoneGroupData data = new PrivateDnsZoneGroupData
+            {
+                PrivateDnsZoneConfigs = {new PrivateDnsZoneConfig
+{
+PrivateDnsZoneId = "/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.Network/privateDnsZones/zone1.com",
+}},
+            };
+            ArmOperation<PrivateDnsZoneGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateDnsZoneGroupName, data);
+            PrivateDnsZoneGroupResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            PrivateDnsZoneGroupData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetPrivateDnsZoneGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/PrivateEndpointDnsZoneGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/PrivateEndpointDnsZoneGroupGet.json
             // this example is just showing the usage of "PrivateDnsZoneGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -52,9 +94,45 @@ namespace Azure.ResourceManager.Network.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListPrivateEndpointsInResourceGroup()
+        {
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/PrivateEndpointDnsZoneGroupList.json
+            // this example is just showing the usage of "PrivateDnsZoneGroups_List" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this PrivateEndpointResource created on azure
+            // for more information of creating PrivateEndpointResource, please refer to the document of PrivateEndpointResource
+            string subscriptionId = "subId";
+            string resourceGroupName = "rg1";
+            string privateEndpointName = "testPe";
+            ResourceIdentifier privateEndpointResourceId = PrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
+            PrivateEndpointResource privateEndpoint = client.GetPrivateEndpointResource(privateEndpointResourceId);
+
+            // get the collection of this PrivateDnsZoneGroupResource
+            PrivateDnsZoneGroupCollection collection = privateEndpoint.GetPrivateDnsZoneGroups();
+
+            // invoke the operation and iterate over the result
+            await foreach (PrivateDnsZoneGroupResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                PrivateDnsZoneGroupData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetPrivateDnsZoneGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/PrivateEndpointDnsZoneGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/PrivateEndpointDnsZoneGroupGet.json
             // this example is just showing the usage of "PrivateDnsZoneGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -84,7 +162,7 @@ namespace Azure.ResourceManager.Network.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetPrivateDnsZoneGroup()
         {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/PrivateEndpointDnsZoneGroupGet.json
+            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-05-01/examples/PrivateEndpointDnsZoneGroupGet.json
             // this example is just showing the usage of "PrivateDnsZoneGroups_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -120,87 +198,6 @@ namespace Azure.ResourceManager.Network.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CreatePrivateDnsZoneGroup()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/PrivateEndpointDnsZoneGroupCreate.json
-            // this example is just showing the usage of "PrivateDnsZoneGroups_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PrivateEndpointResource created on azure
-            // for more information of creating PrivateEndpointResource, please refer to the document of PrivateEndpointResource
-            string subscriptionId = "subId";
-            string resourceGroupName = "rg1";
-            string privateEndpointName = "testPe";
-            ResourceIdentifier privateEndpointResourceId = PrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
-            PrivateEndpointResource privateEndpoint = client.GetPrivateEndpointResource(privateEndpointResourceId);
-
-            // get the collection of this PrivateDnsZoneGroupResource
-            PrivateDnsZoneGroupCollection collection = privateEndpoint.GetPrivateDnsZoneGroups();
-
-            // invoke the operation
-            string privateDnsZoneGroupName = "testPdnsgroup";
-            PrivateDnsZoneGroupData data = new PrivateDnsZoneGroupData()
-            {
-                PrivateDnsZoneConfigs =
-{
-new PrivateDnsZoneConfig()
-{
-PrivateDnsZoneId = "/subscriptions/subId/resourceGroups/rg1/providers/Microsoft.Network/privateDnsZones/zone1.com",
-}
-},
-            };
-            ArmOperation<PrivateDnsZoneGroupResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, privateDnsZoneGroupName, data);
-            PrivateDnsZoneGroupResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            PrivateDnsZoneGroupData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListPrivateEndpointsInResourceGroup()
-        {
-            // Generated from example definition: specification/network/resource-manager/Microsoft.Network/stable/2024-03-01/examples/PrivateEndpointDnsZoneGroupList.json
-            // this example is just showing the usage of "PrivateDnsZoneGroups_List" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this PrivateEndpointResource created on azure
-            // for more information of creating PrivateEndpointResource, please refer to the document of PrivateEndpointResource
-            string subscriptionId = "subId";
-            string resourceGroupName = "rg1";
-            string privateEndpointName = "testPe";
-            ResourceIdentifier privateEndpointResourceId = PrivateEndpointResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, privateEndpointName);
-            PrivateEndpointResource privateEndpoint = client.GetPrivateEndpointResource(privateEndpointResourceId);
-
-            // get the collection of this PrivateDnsZoneGroupResource
-            PrivateDnsZoneGroupCollection collection = privateEndpoint.GetPrivateDnsZoneGroups();
-
-            // invoke the operation and iterate over the result
-            await foreach (PrivateDnsZoneGroupResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                PrivateDnsZoneGroupData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

@@ -17,16 +17,22 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
+            string recipientMailServerHostName = default;
             string statusMessage = default;
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("recipientMailServerHostName"u8))
+                {
+                    recipientMailServerHostName = property.Value.GetString();
+                    continue;
+                }
                 if (property.NameEquals("statusMessage"u8))
                 {
                     statusMessage = property.Value.GetString();
                     continue;
                 }
             }
-            return new AcsEmailDeliveryReportStatusDetails(statusMessage);
+            return new AcsEmailDeliveryReportStatusDetails(recipientMailServerHostName, statusMessage);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

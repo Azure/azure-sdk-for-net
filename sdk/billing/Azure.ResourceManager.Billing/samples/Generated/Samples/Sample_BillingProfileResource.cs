@@ -18,6 +18,134 @@ namespace Azure.ResourceManager.Billing.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Get_BillingProfilesGet()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingProfilesGet.json
+            // this example is just showing the usage of "BillingProfiles_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingProfileResource created on azure
+            // for more information of creating BillingProfileResource, please refer to the document of BillingProfileResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            string billingProfileName = "xxxx-xxxx-xxx-xxx";
+            ResourceIdentifier billingProfileResourceId = BillingProfileResource.CreateResourceIdentifier(billingAccountName, billingProfileName);
+            BillingProfileResource billingProfile = client.GetBillingProfileResource(billingProfileResourceId);
+
+            // invoke the operation
+            BillingProfileResource result = await billingProfile.GetAsync();
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BillingProfileData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Delete_BillingProfilesDelete()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingProfilesDelete.json
+            // this example is just showing the usage of "BillingProfiles_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingProfileResource created on azure
+            // for more information of creating BillingProfileResource, please refer to the document of BillingProfileResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            string billingProfileName = "xxxx-xxxx-xxx-xxx";
+            ResourceIdentifier billingProfileResourceId = BillingProfileResource.CreateResourceIdentifier(billingAccountName, billingProfileName);
+            BillingProfileResource billingProfile = client.GetBillingProfileResource(billingProfileResourceId);
+
+            // invoke the operation
+            await billingProfile.DeleteAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_BillingProfilesCreateOrUpdate()
+        {
+            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingProfilesCreateOrUpdate.json
+            // this example is just showing the usage of "BillingProfiles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this BillingProfileResource created on azure
+            // for more information of creating BillingProfileResource, please refer to the document of BillingProfileResource
+            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
+            string billingProfileName = "xxxx-xxxx-xxx-xxx";
+            ResourceIdentifier billingProfileResourceId = BillingProfileResource.CreateResourceIdentifier(billingAccountName, billingProfileName);
+            BillingProfileResource billingProfile = client.GetBillingProfileResource(billingProfileResourceId);
+
+            // invoke the operation
+            BillingProfileData data = new BillingProfileData
+            {
+                Properties = new BillingProfileProperties
+                {
+                    BillTo = new BillingAddressDetails("Test Address1", "US")
+                    {
+                        AddressLine2 = "Test Address2",
+                        AddressLine3 = "Test Address3",
+                        City = "City",
+                        CompanyName = "Contoso",
+                        Email = "abc@contoso.com",
+                        FirstName = "Test",
+                        LastName = "User",
+                        PhoneNumber = "000-000-0000",
+                        PostalCode = "00000",
+                        Region = "WA",
+                        IsValidAddress = true,
+                    },
+                    DisplayName = "Billing Profile 1",
+                    EnabledAzurePlans = {new BillingAzurePlan
+{
+SkuId = "0001",
+}, new BillingAzurePlan
+{
+SkuId = "0002",
+}},
+                    IsInvoiceEmailOptIn = true,
+                    PoNumber = "ABC12345",
+                    ShipTo = new BillingAddressDetails("Test Address1", "US")
+                    {
+                        AddressLine2 = "Test Address2",
+                        AddressLine3 = "Test Address3",
+                        City = "City",
+                        CompanyName = "Contoso",
+                        Email = "abc@contoso.com",
+                        FirstName = "Test",
+                        LastName = "User",
+                        PhoneNumber = "000-000-0000",
+                        PostalCode = "00000",
+                        Region = "WA",
+                        IsValidAddress = true,
+                    },
+                },
+            };
+            ArmOperation<BillingProfileResource> lro = await billingProfile.UpdateAsync(WaitUntil.Completed, data);
+            BillingProfileResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            BillingProfileData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetBillingProfileAvailableBalance_AvailableBalanceGetByBillingProfile()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/availableBalanceGetByBillingProfile.json
@@ -89,12 +217,9 @@ namespace Azure.ResourceManager.Billing.Samples
             BillingProfileResource billingProfile = client.GetBillingProfileResource(billingProfileResourceId);
 
             // invoke the operation and iterate over the result
-            BillingCheckAccessContent content = new BillingCheckAccessContent()
+            BillingCheckAccessContent content = new BillingCheckAccessContent
             {
-                Actions =
-{
-"Microsoft.Billing/billingAccounts/read","Microsoft.Subscription/subscriptions/write"
-},
+                Actions = { "Microsoft.Billing/billingAccounts/read", "Microsoft.Subscription/subscriptions/write" },
             };
             await foreach (BillingCheckAccessResult item in billingProfile.CheckAccessBillingPermissionsAsync(content))
             {
@@ -156,137 +281,6 @@ namespace Azure.ResourceManager.Billing.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Delete_BillingProfilesDelete()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingProfilesDelete.json
-            // this example is just showing the usage of "BillingProfiles_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingProfileResource created on azure
-            // for more information of creating BillingProfileResource, please refer to the document of BillingProfileResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            string billingProfileName = "xxxx-xxxx-xxx-xxx";
-            ResourceIdentifier billingProfileResourceId = BillingProfileResource.CreateResourceIdentifier(billingAccountName, billingProfileName);
-            BillingProfileResource billingProfile = client.GetBillingProfileResource(billingProfileResourceId);
-
-            // invoke the operation
-            await billingProfile.DeleteAsync(WaitUntil.Completed);
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Get_BillingProfilesGet()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingProfilesGet.json
-            // this example is just showing the usage of "BillingProfiles_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingProfileResource created on azure
-            // for more information of creating BillingProfileResource, please refer to the document of BillingProfileResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            string billingProfileName = "xxxx-xxxx-xxx-xxx";
-            ResourceIdentifier billingProfileResourceId = BillingProfileResource.CreateResourceIdentifier(billingAccountName, billingProfileName);
-            BillingProfileResource billingProfile = client.GetBillingProfileResource(billingProfileResourceId);
-
-            // invoke the operation
-            BillingProfileResource result = await billingProfile.GetAsync();
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BillingProfileData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Update_BillingProfilesCreateOrUpdate()
-        {
-            // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingProfilesCreateOrUpdate.json
-            // this example is just showing the usage of "BillingProfiles_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this BillingProfileResource created on azure
-            // for more information of creating BillingProfileResource, please refer to the document of BillingProfileResource
-            string billingAccountName = "00000000-0000-0000-0000-000000000000:00000000-0000-0000-0000-000000000000_2019-05-31";
-            string billingProfileName = "xxxx-xxxx-xxx-xxx";
-            ResourceIdentifier billingProfileResourceId = BillingProfileResource.CreateResourceIdentifier(billingAccountName, billingProfileName);
-            BillingProfileResource billingProfile = client.GetBillingProfileResource(billingProfileResourceId);
-
-            // invoke the operation
-            BillingProfileData data = new BillingProfileData()
-            {
-                Properties = new BillingProfileProperties()
-                {
-                    BillTo = new BillingAddressDetails("Test Address1", "US")
-                    {
-                        AddressLine2 = "Test Address2",
-                        AddressLine3 = "Test Address3",
-                        City = "City",
-                        CompanyName = "Contoso",
-                        Email = "abc@contoso.com",
-                        FirstName = "Test",
-                        LastName = "User",
-                        PhoneNumber = "000-000-0000",
-                        PostalCode = "00000",
-                        Region = "WA",
-                        IsValidAddress = true,
-                    },
-                    DisplayName = "Billing Profile 1",
-                    EnabledAzurePlans =
-{
-new BillingAzurePlan()
-{
-SkuId = "0001",
-},new BillingAzurePlan()
-{
-SkuId = "0002",
-}
-},
-                    IsInvoiceEmailOptIn = true,
-                    PoNumber = "ABC12345",
-                    ShipTo = new BillingAddressDetails("Test Address1", "US")
-                    {
-                        AddressLine2 = "Test Address2",
-                        AddressLine3 = "Test Address3",
-                        City = "City",
-                        CompanyName = "Contoso",
-                        Email = "abc@contoso.com",
-                        FirstName = "Test",
-                        LastName = "User",
-                        PhoneNumber = "000-000-0000",
-                        PostalCode = "00000",
-                        Region = "WA",
-                        IsValidAddress = true,
-                    },
-                },
-            };
-            ArmOperation<BillingProfileResource> lro = await billingProfile.UpdateAsync(WaitUntil.Completed, data);
-            BillingProfileResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            BillingProfileData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task GetBillingRequests_BillingRequestsListByBillingProfile()
         {
             // Generated from example definition: specification/billing/resource-manager/Microsoft.Billing/stable/2024-04-01/examples/billingRequestsListByBillingProfile.json
@@ -305,7 +299,7 @@ SkuId = "0002",
             BillingProfileResource billingProfile = client.GetBillingProfileResource(billingProfileResourceId);
 
             // invoke the operation and iterate over the result
-            BillingProfileResourceGetBillingRequestsOptions options = new BillingProfileResourceGetBillingRequestsOptions() { };
+            BillingProfileResourceGetBillingRequestsOptions options = new BillingProfileResourceGetBillingRequestsOptions();
             await foreach (BillingRequestResource item in billingProfile.GetBillingRequestsAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -397,7 +391,7 @@ SkuId = "0002",
             BillingProfileResource billingProfile = client.GetBillingProfileResource(billingProfileResourceId);
 
             // invoke the operation and iterate over the result
-            BillingProfileResourceGetInvoicesOptions options = new BillingProfileResourceGetInvoicesOptions() { PeriodStartDate = DateTimeOffset.Parse("2023-01-01"), PeriodEndDate = DateTimeOffset.Parse("2023-06-30") };
+            BillingProfileResourceGetInvoicesOptions options = new BillingProfileResourceGetInvoicesOptions { PeriodStartDate = DateTimeOffset.Parse("2023-01-01"), PeriodEndDate = DateTimeOffset.Parse("2023-06-30") };
             await foreach (BillingInvoiceData item in billingProfile.GetInvoicesAsync(options))
             {
                 // for demo we just print out the id
@@ -427,7 +421,7 @@ SkuId = "0002",
             BillingProfileResource billingProfile = client.GetBillingProfileResource(billingProfileResourceId);
 
             // invoke the operation and iterate over the result
-            BillingProfileResourceGetProductsOptions options = new BillingProfileResourceGetProductsOptions() { };
+            BillingProfileResourceGetProductsOptions options = new BillingProfileResourceGetProductsOptions();
             await foreach (BillingProductResource item in billingProfile.GetProductsAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -460,7 +454,7 @@ SkuId = "0002",
             BillingProfileResource billingProfile = client.GetBillingProfileResource(billingProfileResourceId);
 
             // invoke the operation and iterate over the result
-            BillingProfileResourceGetReservationsOptions options = new BillingProfileResourceGetReservationsOptions() { SelectedState = "Succeeded" };
+            BillingProfileResourceGetReservationsOptions options = new BillingProfileResourceGetReservationsOptions { SelectedState = "Succeeded" };
             await foreach (BillingReservationResource item in billingProfile.GetReservationsAsync(options))
             {
                 // the variable item is a resource, you could call other operations on this instance as well
@@ -493,7 +487,10 @@ SkuId = "0002",
             BillingProfileResource billingProfile = client.GetBillingProfileResource(billingProfileResourceId);
 
             // invoke the operation and iterate over the result
-            BillingProfileResourceGetTransactionsOptions options = new BillingProfileResourceGetTransactionsOptions(periodStartDate: DateTimeOffset.Parse("2024-04-01"), periodEndDate: DateTimeOffset.Parse("2023-05-30"), type: TransactionType.Billed) { Filter = "properties/date gt '2020-10-01'", Search = "storage" };
+            DateTimeOffset periodStartDate = DateTimeOffset.Parse("2024-04-01");
+            DateTimeOffset periodEndDate = DateTimeOffset.Parse("2023-05-30");
+            TransactionType type = TransactionType.Billed;
+            BillingProfileResourceGetTransactionsOptions options = new BillingProfileResourceGetTransactionsOptions(periodStartDate, periodEndDate, type) { Filter = "properties/date gt '2020-10-01'", Search = "storage" };
             await foreach (BillingTransactionData item in billingProfile.GetTransactionsAsync(options))
             {
                 Console.WriteLine($"Succeeded: {item}");

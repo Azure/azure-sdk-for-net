@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.DevTestLabs.Samples
             DevTestLabServiceFabricResource devTestLabServiceFabric = client.GetDevTestLabServiceFabricResource(devTestLabServiceFabricResourceId);
 
             // invoke the operation
-            DevTestLabServiceFabricPatch patch = new DevTestLabServiceFabricPatch()
+            DevTestLabServiceFabricPatch patch = new DevTestLabServiceFabricPatch
             {
                 Tags =
 {
-["tagName1"] = "tagValue1",
+["tagName1"] = "tagValue1"
 },
             };
             DevTestLabServiceFabricResource result = await devTestLabServiceFabric.UpdateAsync(patch);

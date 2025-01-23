@@ -7,6 +7,7 @@
 
 using System;
 using System.Threading.Tasks;
+using System.Xml;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.StreamAnalytics.Models;
@@ -41,11 +42,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // invoke the operation
             string inputName = "input7970";
-            StreamingJobInputData input = new StreamingJobInputData()
+            StreamingJobInputData input = new StreamingJobInputData
             {
-                Properties = new StreamInputProperties()
+                Properties = new StreamInputProperties
                 {
-                    Datasource = new GatewayMessageBusStreamInputDataSource()
+                    Datasource = new GatewayMessageBusStreamInputDataSource
                     {
                         Topic = "EdgeTopic1",
                     },
@@ -86,20 +87,17 @@ namespace Azure.ResourceManager.StreamAnalytics.Samples
 
             // invoke the operation
             string inputName = "input7225";
-            StreamingJobInputData input = new StreamingJobInputData()
+            StreamingJobInputData input = new StreamingJobInputData
             {
-                Properties = new ReferenceInputProperties()
+                Properties = new ReferenceInputProperties
                 {
-                    Datasource = new BlobReferenceInputDataSource()
+                    Datasource = new BlobReferenceInputDataSource
                     {
-                        StorageAccounts =
-{
-new StreamAnalyticsStorageAccount()
+                        StorageAccounts = {new StreamAnalyticsStorageAccount
 {
 AccountName = "someAccountName",
 AccountKey = "someAccountKey==",
-}
-},
+}},
                         Container = "state",
                         PathPattern = "{date}/{time}",
                         DateFormat = "yyyy/MM/dd",
@@ -107,10 +105,10 @@ AccountKey = "someAccountKey==",
                         BlobName = "myblobinput",
                         DeltaPathPattern = "/testBlob/{date}/delta/{time}/",
                         SourcePartitionCount = 16,
-                        FullSnapshotRefreshInterval = TimeSpan.Parse("16:14:30"),
-                        DeltaSnapshotRefreshInterval = TimeSpan.Parse("16:14:30"),
+                        FullSnapshotRefreshInterval = XmlConvert.ToTimeSpan("16:14:30"),
+                        DeltaSnapshotRefreshInterval = XmlConvert.ToTimeSpan("16:14:30"),
                     },
-                    Serialization = new CsvFormatSerialization()
+                    Serialization = new CsvFormatSerialization
                     {
                         FieldDelimiter = ",",
                         Encoding = StreamAnalyticsDataSerializationEncoding.Utf8,
@@ -152,11 +150,11 @@ AccountKey = "someAccountKey==",
 
             // invoke the operation
             string inputName = "input7425";
-            StreamingJobInputData input = new StreamingJobInputData()
+            StreamingJobInputData input = new StreamingJobInputData
             {
-                Properties = new StreamInputProperties()
+                Properties = new StreamInputProperties
                 {
-                    Datasource = new EventHubStreamInputDataSource()
+                    Datasource = new EventHubStreamInputDataSource
                     {
                         ServiceBusNamespace = "sdktest",
                         SharedAccessPolicyName = "RootManageSharedAccessKey",
@@ -164,7 +162,7 @@ AccountKey = "someAccountKey==",
                         EventHubName = "sdkeventhub",
                         ConsumerGroupName = "sdkconsumergroup",
                     },
-                    Serialization = new JsonFormatSerialization()
+                    Serialization = new JsonFormatSerialization
                     {
                         Encoding = StreamAnalyticsDataSerializationEncoding.Utf8,
                     },
@@ -206,11 +204,11 @@ AccountKey = "someAccountKey==",
 
             // invoke the operation
             string inputName = "input7970";
-            StreamingJobInputData input = new StreamingJobInputData()
+            StreamingJobInputData input = new StreamingJobInputData
             {
-                Properties = new StreamInputProperties()
+                Properties = new StreamInputProperties
                 {
-                    Datasource = new IoTHubStreamInputDataSource()
+                    Datasource = new IoTHubStreamInputDataSource
                     {
                         IotHubNamespace = "iothub",
                         SharedAccessPolicyName = "owner",
@@ -256,27 +254,24 @@ AccountKey = "someAccountKey==",
 
             // invoke the operation
             string inputName = "input8899";
-            StreamingJobInputData input = new StreamingJobInputData()
+            StreamingJobInputData input = new StreamingJobInputData
             {
-                Properties = new StreamInputProperties()
+                Properties = new StreamInputProperties
                 {
-                    Datasource = new BlobStreamInputDataSource()
+                    Datasource = new BlobStreamInputDataSource
                     {
-                        StorageAccounts =
-{
-new StreamAnalyticsStorageAccount()
+                        StorageAccounts = {new StreamAnalyticsStorageAccount
 {
 AccountName = "someAccountName",
 AccountKey = "someAccountKey==",
-}
-},
+}},
                         Container = "state",
                         PathPattern = "{date}/{time}",
                         DateFormat = "yyyy/MM/dd",
                         TimeFormat = "HH",
                         SourcePartitionCount = 16,
                     },
-                    Serialization = new CsvFormatSerialization()
+                    Serialization = new CsvFormatSerialization
                     {
                         FieldDelimiter = ",",
                         Encoding = StreamAnalyticsDataSerializationEncoding.Utf8,
@@ -318,13 +313,13 @@ AccountKey = "someAccountKey==",
 
             // invoke the operation
             string inputName = "input7970";
-            StreamingJobInputData input = new StreamingJobInputData()
+            StreamingJobInputData input = new StreamingJobInputData
             {
-                Properties = new StreamInputProperties()
+                Properties = new StreamInputProperties
                 {
-                    Datasource = new EventGridStreamInputDataSource()
+                    Datasource = new EventGridStreamInputDataSource
                     {
-                        Subscriber = new EventHubV2StreamInputDataSource()
+                        Subscriber = new EventHubV2StreamInputDataSource
                         {
                             ServiceBusNamespace = "sdktest",
                             SharedAccessPolicyName = "RootManageSharedAccessKey",
@@ -335,19 +330,13 @@ AccountKey = "someAccountKey==",
                             ConsumerGroupName = "sdkconsumergroup",
                         },
                         Schema = EventGridEventSchemaType.CloudEventSchema,
-                        StorageAccounts =
-{
-new StreamAnalyticsStorageAccount()
+                        StorageAccounts = {new StreamAnalyticsStorageAccount
 {
 AccountName = "myaccount",
 AccountKey = "myaccountkey",
 AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
-}
-},
-                        EventTypes =
-{
-"Microsoft.Storage.BlobCreated"
-},
+}},
+                        EventTypes = { "Microsoft.Storage.BlobCreated" },
                     },
                 },
             };
@@ -397,78 +386,6 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetAReferenceBlobInputWithCSVSerialization()
-        {
-            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Reference_Blob_CSV.json
-            // this example is just showing the usage of "Inputs_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StreamingJobResource created on azure
-            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
-            string resourceGroupName = "sjrg8440";
-            string jobName = "sj9597";
-            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
-
-            // get the collection of this StreamingJobInputResource
-            StreamingJobInputCollection collection = streamingJob.GetStreamingJobInputs();
-
-            // invoke the operation
-            string inputName = "input7225";
-            bool result = await collection.ExistsAsync(inputName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetAReferenceBlobInputWithCSVSerialization()
-        {
-            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Reference_Blob_CSV.json
-            // this example is just showing the usage of "Inputs_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StreamingJobResource created on azure
-            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
-            string resourceGroupName = "sjrg8440";
-            string jobName = "sj9597";
-            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
-
-            // get the collection of this StreamingJobInputResource
-            StreamingJobInputCollection collection = streamingJob.GetStreamingJobInputs();
-
-            // invoke the operation
-            string inputName = "input7225";
-            NullableResponse<StreamingJobInputResource> response = await collection.GetIfExistsAsync(inputName);
-            StreamingJobInputResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                StreamingJobInputData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAStreamEventHubInputWithJSONSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_EventHub_JSON.json
@@ -499,78 +416,6 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
             StreamingJobInputData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetAStreamEventHubInputWithJSONSerialization()
-        {
-            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_EventHub_JSON.json
-            // this example is just showing the usage of "Inputs_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StreamingJobResource created on azure
-            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
-            string resourceGroupName = "sjrg3139";
-            string jobName = "sj197";
-            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
-
-            // get the collection of this StreamingJobInputResource
-            StreamingJobInputCollection collection = streamingJob.GetStreamingJobInputs();
-
-            // invoke the operation
-            string inputName = "input7425";
-            bool result = await collection.ExistsAsync(inputName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetAStreamEventHubInputWithJSONSerialization()
-        {
-            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_EventHub_JSON.json
-            // this example is just showing the usage of "Inputs_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StreamingJobResource created on azure
-            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
-            string resourceGroupName = "sjrg3139";
-            string jobName = "sj197";
-            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
-
-            // get the collection of this StreamingJobInputResource
-            StreamingJobInputCollection collection = streamingJob.GetStreamingJobInputs();
-
-            // invoke the operation
-            string inputName = "input7425";
-            NullableResponse<StreamingJobInputResource> response = await collection.GetIfExistsAsync(inputName);
-            StreamingJobInputResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                StreamingJobInputData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
         }
 
         [Test]
@@ -609,78 +454,6 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetAStreamIoTHubInputWithAvroSerialization()
-        {
-            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_IoTHub_Avro.json
-            // this example is just showing the usage of "Inputs_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StreamingJobResource created on azure
-            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
-            string resourceGroupName = "sjrg3467";
-            string jobName = "sj9742";
-            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
-
-            // get the collection of this StreamingJobInputResource
-            StreamingJobInputCollection collection = streamingJob.GetStreamingJobInputs();
-
-            // invoke the operation
-            string inputName = "input7970";
-            bool result = await collection.ExistsAsync(inputName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetAStreamIoTHubInputWithAvroSerialization()
-        {
-            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_IoTHub_Avro.json
-            // this example is just showing the usage of "Inputs_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StreamingJobResource created on azure
-            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
-            string resourceGroupName = "sjrg3467";
-            string jobName = "sj9742";
-            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
-
-            // get the collection of this StreamingJobInputResource
-            StreamingJobInputCollection collection = streamingJob.GetStreamingJobInputs();
-
-            // invoke the operation
-            string inputName = "input7970";
-            NullableResponse<StreamingJobInputResource> response = await collection.GetIfExistsAsync(inputName);
-            StreamingJobInputResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                StreamingJobInputData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAStreamBlobInputWithCSVSerialization()
         {
             // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_Blob_CSV.json
@@ -711,78 +484,6 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
             StreamingJobInputData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Exists_GetAStreamBlobInputWithCSVSerialization()
-        {
-            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_Blob_CSV.json
-            // this example is just showing the usage of "Inputs_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StreamingJobResource created on azure
-            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
-            string resourceGroupName = "sjrg8161";
-            string jobName = "sj6695";
-            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
-
-            // get the collection of this StreamingJobInputResource
-            StreamingJobInputCollection collection = streamingJob.GetStreamingJobInputs();
-
-            // invoke the operation
-            string inputName = "input8899";
-            bool result = await collection.ExistsAsync(inputName);
-
-            Console.WriteLine($"Succeeded: {result}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetIfExists_GetAStreamBlobInputWithCSVSerialization()
-        {
-            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_Blob_CSV.json
-            // this example is just showing the usage of "Inputs_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this StreamingJobResource created on azure
-            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
-            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
-            string resourceGroupName = "sjrg8161";
-            string jobName = "sj6695";
-            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
-            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
-
-            // get the collection of this StreamingJobInputResource
-            StreamingJobInputCollection collection = streamingJob.GetStreamingJobInputs();
-
-            // invoke the operation
-            string inputName = "input8899";
-            NullableResponse<StreamingJobInputResource> response = await collection.GetIfExistsAsync(inputName);
-            StreamingJobInputResource result = response.HasValue ? response.Value : null;
-
-            if (result == null)
-            {
-                Console.WriteLine("Succeeded with null as result");
-            }
-            else
-            {
-                // the variable result is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                StreamingJobInputData resourceData = result.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
         }
 
         [Test]
@@ -856,6 +557,294 @@ AuthenticationMode = StreamAnalyticsAuthenticationMode.Msi,
             }
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAReferenceBlobInputWithCSVSerialization()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Reference_Blob_CSV.json
+            // this example is just showing the usage of "Inputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg8440";
+            string jobName = "sj9597";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobInputResource
+            StreamingJobInputCollection collection = streamingJob.GetStreamingJobInputs();
+
+            // invoke the operation
+            string inputName = "input7225";
+            bool result = await collection.ExistsAsync(inputName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAStreamEventHubInputWithJSONSerialization()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_EventHub_JSON.json
+            // this example is just showing the usage of "Inputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg3139";
+            string jobName = "sj197";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobInputResource
+            StreamingJobInputCollection collection = streamingJob.GetStreamingJobInputs();
+
+            // invoke the operation
+            string inputName = "input7425";
+            bool result = await collection.ExistsAsync(inputName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAStreamIoTHubInputWithAvroSerialization()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_IoTHub_Avro.json
+            // this example is just showing the usage of "Inputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg3467";
+            string jobName = "sj9742";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobInputResource
+            StreamingJobInputCollection collection = streamingJob.GetStreamingJobInputs();
+
+            // invoke the operation
+            string inputName = "input7970";
+            bool result = await collection.ExistsAsync(inputName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Exists_GetAStreamBlobInputWithCSVSerialization()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_Blob_CSV.json
+            // this example is just showing the usage of "Inputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg8161";
+            string jobName = "sj6695";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobInputResource
+            StreamingJobInputCollection collection = streamingJob.GetStreamingJobInputs();
+
+            // invoke the operation
+            string inputName = "input8899";
+            bool result = await collection.ExistsAsync(inputName);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAReferenceBlobInputWithCSVSerialization()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Reference_Blob_CSV.json
+            // this example is just showing the usage of "Inputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg8440";
+            string jobName = "sj9597";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobInputResource
+            StreamingJobInputCollection collection = streamingJob.GetStreamingJobInputs();
+
+            // invoke the operation
+            string inputName = "input7225";
+            NullableResponse<StreamingJobInputResource> response = await collection.GetIfExistsAsync(inputName);
+            StreamingJobInputResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StreamingJobInputData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAStreamEventHubInputWithJSONSerialization()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_EventHub_JSON.json
+            // this example is just showing the usage of "Inputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg3139";
+            string jobName = "sj197";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobInputResource
+            StreamingJobInputCollection collection = streamingJob.GetStreamingJobInputs();
+
+            // invoke the operation
+            string inputName = "input7425";
+            NullableResponse<StreamingJobInputResource> response = await collection.GetIfExistsAsync(inputName);
+            StreamingJobInputResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StreamingJobInputData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAStreamIoTHubInputWithAvroSerialization()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_IoTHub_Avro.json
+            // this example is just showing the usage of "Inputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg3467";
+            string jobName = "sj9742";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobInputResource
+            StreamingJobInputCollection collection = streamingJob.GetStreamingJobInputs();
+
+            // invoke the operation
+            string inputName = "input7970";
+            NullableResponse<StreamingJobInputResource> response = await collection.GetIfExistsAsync(inputName);
+            StreamingJobInputResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StreamingJobInputData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetIfExists_GetAStreamBlobInputWithCSVSerialization()
+        {
+            // Generated from example definition: specification/streamanalytics/resource-manager/Microsoft.StreamAnalytics/preview/2021-10-01-preview/examples/Input_Get_Stream_Blob_CSV.json
+            // this example is just showing the usage of "Inputs_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this StreamingJobResource created on azure
+            // for more information of creating StreamingJobResource, please refer to the document of StreamingJobResource
+            string subscriptionId = "56b5e0a9-b645-407d-99b0-c64f86013e3d";
+            string resourceGroupName = "sjrg8161";
+            string jobName = "sj6695";
+            ResourceIdentifier streamingJobResourceId = StreamingJobResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, jobName);
+            StreamingJobResource streamingJob = client.GetStreamingJobResource(streamingJobResourceId);
+
+            // get the collection of this StreamingJobInputResource
+            StreamingJobInputCollection collection = streamingJob.GetStreamingJobInputs();
+
+            // invoke the operation
+            string inputName = "input8899";
+            NullableResponse<StreamingJobInputResource> response = await collection.GetIfExistsAsync(inputName);
+            StreamingJobInputResource result = response.HasValue ? response.Value : null;
+
+            if (result == null)
+            {
+                Console.WriteLine("Succeeded with null as result");
+            }
+            else
+            {
+                // the variable result is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                StreamingJobInputData resourceData = result.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
         }
     }
 }

@@ -3,7 +3,7 @@
 ## Install
 
 - Install the latest [Powershell 7](https://github.com/PowerShell/PowerShell/releases)
-- Install the latest [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest])
+- Install the latest [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli?view=azure-cli-latest])
 - Install `Az.Kusto` module by running `Install-Module Az.Kusto` in PowerShell
 
 ## Usage

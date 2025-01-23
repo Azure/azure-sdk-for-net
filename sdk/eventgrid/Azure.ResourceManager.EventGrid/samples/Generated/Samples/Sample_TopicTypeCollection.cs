@@ -9,12 +9,41 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
+using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.EventGrid.Samples
 {
     public partial class Sample_TopicTypeCollection
     {
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Get_TopicTypesGet()
+        {
+            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/TopicTypes_Get.json
+            // this example is just showing the usage of "TopicTypes_Get" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+
+            // get the collection of this TopicTypeResource
+            TopicTypeCollection collection = tenantResource.GetTopicTypes();
+
+            // invoke the operation
+            string topicTypeName = "Microsoft.Storage.StorageAccounts";
+            TopicTypeResource result = await collection.GetAsync(topicTypeName);
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            TopicTypeData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
         [Test]
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_TopicTypesList()
@@ -27,9 +56,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TopicTypeResource
             TopicTypeCollection collection = tenantResource.GetTopicTypes();
@@ -49,36 +76,6 @@ namespace Azure.ResourceManager.EventGrid.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_TopicTypesGet()
-        {
-            // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/TopicTypes_Get.json
-            // this example is just showing the usage of "TopicTypes_Get" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
-
-            // get the collection of this TopicTypeResource
-            TopicTypeCollection collection = tenantResource.GetTopicTypes();
-
-            // invoke the operation
-            string topicTypeName = "Microsoft.Storage.StorageAccounts";
-            TopicTypeResource result = await collection.GetAsync(topicTypeName);
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            TopicTypeData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Exists_TopicTypesGet()
         {
             // Generated from example definition: specification/eventgrid/resource-manager/Microsoft.EventGrid/preview/2024-06-01-preview/examples/TopicTypes_Get.json
@@ -89,9 +86,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TopicTypeResource
             TopicTypeCollection collection = tenantResource.GetTopicTypes();
@@ -115,9 +110,7 @@ namespace Azure.ResourceManager.EventGrid.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this TenantResource created on azure
-            // for more information of creating TenantResource, please refer to the document of TenantResource
-            var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
+            TenantResource tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // get the collection of this TopicTypeResource
             TopicTypeCollection collection = tenantResource.GetTopicTypes();

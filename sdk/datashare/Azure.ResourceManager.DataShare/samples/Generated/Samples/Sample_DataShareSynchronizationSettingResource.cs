@@ -50,6 +50,35 @@ namespace Azure.ResourceManager.DataShare.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task Delete_SynchronizationSettingsDelete()
+        {
+            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/SynchronizationSettings_Delete.json
+            // this example is just showing the usage of "SynchronizationSettings_Delete" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this DataShareSynchronizationSettingResource created on azure
+            // for more information of creating DataShareSynchronizationSettingResource, please refer to the document of DataShareSynchronizationSettingResource
+            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
+            string resourceGroupName = "SampleResourceGroup";
+            string accountName = "Account1";
+            string shareName = "Share1";
+            string synchronizationSettingName = "SynchronizationSetting1";
+            ResourceIdentifier dataShareSynchronizationSettingResourceId = DataShareSynchronizationSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareName, synchronizationSettingName);
+            DataShareSynchronizationSettingResource dataShareSynchronizationSetting = client.GetDataShareSynchronizationSettingResource(dataShareSynchronizationSettingResourceId);
+
+            // invoke the operation
+            ArmOperation<DataShareOperationResult> lro = await dataShareSynchronizationSetting.DeleteAsync(WaitUntil.Completed);
+            DataShareOperationResult result = lro.Value;
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Update_SynchronizationSettingsCreate()
         {
             // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/SynchronizationSettings_Create.json
@@ -80,35 +109,6 @@ namespace Azure.ResourceManager.DataShare.Samples
             DataShareSynchronizationSettingData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Delete_SynchronizationSettingsDelete()
-        {
-            // Generated from example definition: specification/datashare/resource-manager/Microsoft.DataShare/stable/2021-08-01/examples/SynchronizationSettings_Delete.json
-            // this example is just showing the usage of "SynchronizationSettings_Delete" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this DataShareSynchronizationSettingResource created on azure
-            // for more information of creating DataShareSynchronizationSettingResource, please refer to the document of DataShareSynchronizationSettingResource
-            string subscriptionId = "433a8dfd-e5d5-4e77-ad86-90acdc75eb1a";
-            string resourceGroupName = "SampleResourceGroup";
-            string accountName = "Account1";
-            string shareName = "Share1";
-            string synchronizationSettingName = "SynchronizationSetting1";
-            ResourceIdentifier dataShareSynchronizationSettingResourceId = DataShareSynchronizationSettingResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName, shareName, synchronizationSettingName);
-            DataShareSynchronizationSettingResource dataShareSynchronizationSetting = client.GetDataShareSynchronizationSettingResource(dataShareSynchronizationSettingResourceId);
-
-            // invoke the operation
-            ArmOperation<DataShareOperationResult> lro = await dataShareSynchronizationSetting.DeleteAsync(WaitUntil.Completed);
-            DataShareOperationResult result = lro.Value;
-
-            Console.WriteLine($"Succeeded: {result}");
         }
     }
 }

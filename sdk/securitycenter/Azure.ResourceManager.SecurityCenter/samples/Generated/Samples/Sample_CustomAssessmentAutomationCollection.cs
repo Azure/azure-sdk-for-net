@@ -19,6 +19,49 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task CreateOrUpdate_CreateACustomAssessmentAutomation()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2021-07-01-preview/examples/CustomAssessmentAutomations/customAssessmentAutomationCreate_example.json
+            // this example is just showing the usage of "CustomAssessmentAutomations_Create" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "e5d1b86c-3051-44d5-8802-aa65d45a279b";
+            string resourceGroupName = "TestResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this CustomAssessmentAutomationResource
+            CustomAssessmentAutomationCollection collection = resourceGroupResource.GetCustomAssessmentAutomations();
+
+            // invoke the operation
+            string customAssessmentAutomationName = "MyCustomAssessmentAutomation";
+            CustomAssessmentAutomationCreateOrUpdateContent content = new CustomAssessmentAutomationCreateOrUpdateContent
+            {
+                CompressedQuery = "DQAKAEkAYQBtAF8ARwByAG8AdQBwAA0ACgB8ACAAZQB4AHQAZQBuAGQAIABIAGUAYQBsAHQAaABTAHQAYQB0AHUAcwAgAD0AIABpAGYAZgAoAHQAbwBzAHQAcgBpAG4AZwAoAFIAZQBjAG8AcgBkAC4AVQBzAGUAcgBOAGEAbQBlACkAIABjAG8AbgB0AGEAaQBuAHMAIAAnAHUAcwBlAHIAJwAsACAAJwBVAE4ASABFAEEATABUAEgAWQAnACwAIAAnAEgARQBBAEwAVABIAFkAJwApAA0ACgA=",
+                SupportedCloud = CustomAssessmentAutomationSupportedCloud.Aws,
+                Severity = CustomAssessmentSeverity.Medium,
+                DisplayName = "Password Policy",
+                Description = "Data should be encrypted",
+                RemediationDescription = "Encrypt store by...",
+            };
+            ArmOperation<CustomAssessmentAutomationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, customAssessmentAutomationName, content);
+            CustomAssessmentAutomationResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            CustomAssessmentAutomationData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACustomAssessmentAutomation()
         {
             // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2021-07-01-preview/examples/CustomAssessmentAutomations/customAssessmentAutomationGet_example.json
@@ -48,6 +91,41 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
             CustomAssessmentAutomationData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_ListCustomAssessmentAutomationsInASubscriptionAndAResourceGroup()
+        {
+            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2021-07-01-preview/examples/CustomAssessmentAutomations/customAssessmentAutomationListByResourceGroup_example.json
+            // this example is just showing the usage of "CustomAssessmentAutomations_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this ResourceGroupResource created on azure
+            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
+            string subscriptionId = "e5d1b86c-3051-44d5-8802-aa65d45a279b";
+            string resourceGroupName = "TestResourceGroup";
+            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
+            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
+
+            // get the collection of this CustomAssessmentAutomationResource
+            CustomAssessmentAutomationCollection collection = resourceGroupResource.GetCustomAssessmentAutomations();
+
+            // invoke the operation and iterate over the result
+            await foreach (CustomAssessmentAutomationResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                CustomAssessmentAutomationData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -118,84 +196,6 @@ namespace Azure.ResourceManager.SecurityCenter.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_CreateACustomAssessmentAutomation()
-        {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2021-07-01-preview/examples/CustomAssessmentAutomations/customAssessmentAutomationCreate_example.json
-            // this example is just showing the usage of "CustomAssessmentAutomations_Create" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "e5d1b86c-3051-44d5-8802-aa65d45a279b";
-            string resourceGroupName = "TestResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this CustomAssessmentAutomationResource
-            CustomAssessmentAutomationCollection collection = resourceGroupResource.GetCustomAssessmentAutomations();
-
-            // invoke the operation
-            string customAssessmentAutomationName = "MyCustomAssessmentAutomation";
-            CustomAssessmentAutomationCreateOrUpdateContent content = new CustomAssessmentAutomationCreateOrUpdateContent()
-            {
-                CompressedQuery = "DQAKAEkAYQBtAF8ARwByAG8AdQBwAA0ACgB8ACAAZQB4AHQAZQBuAGQAIABIAGUAYQBsAHQAaABTAHQAYQB0AHUAcwAgAD0AIABpAGYAZgAoAHQAbwBzAHQAcgBpAG4AZwAoAFIAZQBjAG8AcgBkAC4AVQBzAGUAcgBOAGEAbQBlACkAIABjAG8AbgB0AGEAaQBuAHMAIAAnAHUAcwBlAHIAJwAsACAAJwBVAE4ASABFAEEATABUAEgAWQAnACwAIAAnAEgARQBBAEwAVABIAFkAJwApAA0ACgA=",
-                SupportedCloud = CustomAssessmentAutomationSupportedCloud.Aws,
-                Severity = CustomAssessmentSeverity.Medium,
-                DisplayName = "Password Policy",
-                Description = "Data should be encrypted",
-                RemediationDescription = "Encrypt store by...",
-            };
-            ArmOperation<CustomAssessmentAutomationResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, customAssessmentAutomationName, content);
-            CustomAssessmentAutomationResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            CustomAssessmentAutomationData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_ListCustomAssessmentAutomationsInASubscriptionAndAResourceGroup()
-        {
-            // Generated from example definition: specification/security/resource-manager/Microsoft.Security/preview/2021-07-01-preview/examples/CustomAssessmentAutomations/customAssessmentAutomationListByResourceGroup_example.json
-            // this example is just showing the usage of "CustomAssessmentAutomations_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this ResourceGroupResource created on azure
-            // for more information of creating ResourceGroupResource, please refer to the document of ResourceGroupResource
-            string subscriptionId = "e5d1b86c-3051-44d5-8802-aa65d45a279b";
-            string resourceGroupName = "TestResourceGroup";
-            ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
-            ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
-
-            // get the collection of this CustomAssessmentAutomationResource
-            CustomAssessmentAutomationCollection collection = resourceGroupResource.GetCustomAssessmentAutomations();
-
-            // invoke the operation and iterate over the result
-            await foreach (CustomAssessmentAutomationResource item in collection.GetAllAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                CustomAssessmentAutomationData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
         }
     }
 }

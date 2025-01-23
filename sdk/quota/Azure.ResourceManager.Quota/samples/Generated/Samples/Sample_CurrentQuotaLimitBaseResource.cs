@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_QuotasGetRequestForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/getComputeOneSkuQuotaLimit.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-12-18-preview/examples/getComputeOneSkuQuotaLimit.json
             // this example is just showing the usage of "Quota_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_QuotasUsagesRequestForNetwork()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/getNetworkOneSkuQuotaLimit.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-12-18-preview/examples/getNetworkOneSkuQuotaLimit.json
             // this example is just showing the usage of "Quota_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_QuotasRequestPatchForCompute()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/patchComputeQuotaRequest.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-12-18-preview/examples/patchComputeQuotaRequest.json
             // this example is just showing the usage of "Quota_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Quota.Samples
             CurrentQuotaLimitBaseResource currentQuotaLimitBase = client.GetCurrentQuotaLimitBaseResource(currentQuotaLimitBaseResourceId);
 
             // invoke the operation
-            CurrentQuotaLimitBaseData data = new CurrentQuotaLimitBaseData()
+            CurrentQuotaLimitBaseData data = new CurrentQuotaLimitBaseData
             {
-                Properties = new QuotaProperties()
+                Properties = new QuotaProperties
                 {
                     Limit = new QuotaLimitObject(10),
-                    Name = new QuotaRequestResourceName()
+                    Name = new QuotaRequestResourceName
                     {
                         Value = "standardFSv2Family",
                     },
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Quota.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_QuotasRequestPatchForNetwork()
         {
-            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2023-06-01-preview/examples/patchNetworkOneSkuQuotaRequest.json
+            // Generated from example definition: specification/quota/resource-manager/Microsoft.Quota/preview/2024-12-18-preview/examples/patchNetworkOneSkuQuotaRequest.json
             // this example is just showing the usage of "Quota_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.Quota.Samples
             CurrentQuotaLimitBaseResource currentQuotaLimitBase = client.GetCurrentQuotaLimitBaseResource(currentQuotaLimitBaseResourceId);
 
             // invoke the operation
-            CurrentQuotaLimitBaseData data = new CurrentQuotaLimitBaseData()
+            CurrentQuotaLimitBaseData data = new CurrentQuotaLimitBaseData
             {
-                Properties = new QuotaProperties()
+                Properties = new QuotaProperties
                 {
                     Limit = new QuotaLimitObject(10),
-                    Name = new QuotaRequestResourceName()
+                    Name = new QuotaRequestResourceName
                     {
                         Value = "MinPublicIpInterNetworkPrefixLength",
                     },

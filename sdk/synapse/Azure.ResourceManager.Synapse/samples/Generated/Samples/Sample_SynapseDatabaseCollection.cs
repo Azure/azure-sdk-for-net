@@ -19,10 +19,10 @@ namespace Azure.ResourceManager.Synapse.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetAll_KustoDatabasesListByKustoPool()
+        public async Task CreateOrUpdate_KustoPoolDatabasesCreateOrUpdate()
         {
-            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/preview/2021-06-01-preview/examples/KustoDatabasesListByKustoPool.json
-            // this example is just showing the usage of "KustoPoolDatabases_ListByKustoPool" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/preview/2021-06-01-preview/examples/KustoPoolDatabasesCreateOrUpdate.json
+            // this example is just showing the usage of "KustoPoolDatabases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -41,17 +41,21 @@ namespace Azure.ResourceManager.Synapse.Samples
             // get the collection of this SynapseDatabaseResource
             SynapseDatabaseCollection collection = synapseKustoPool.GetSynapseDatabases();
 
-            // invoke the operation and iterate over the result
-            await foreach (SynapseDatabaseResource item in collection.GetAllAsync())
+            // invoke the operation
+            string databaseName = "KustoDatabase8";
+            SynapseDatabaseData data = new SynapseReadWriteDatabase
             {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                SynapseDatabaseData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
+                SoftDeletePeriod = XmlConvert.ToTimeSpan("P1D"),
+                Location = new AzureLocation("westus"),
+            };
+            ArmOperation<SynapseDatabaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, data);
+            SynapseDatabaseResource result = lro.Value;
 
-            Console.WriteLine("Succeeded");
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            SynapseDatabaseData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]
@@ -87,6 +91,43 @@ namespace Azure.ResourceManager.Synapse.Samples
             SynapseDatabaseData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetAll_KustoDatabasesListByKustoPool()
+        {
+            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/preview/2021-06-01-preview/examples/KustoDatabasesListByKustoPool.json
+            // this example is just showing the usage of "KustoPoolDatabases_ListByKustoPool" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SynapseKustoPoolResource created on azure
+            // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
+            string subscriptionId = "12345678-1234-1234-1234-123456789098";
+            string resourceGroupName = "kustorptest";
+            string workspaceName = "synapseWorkspaceName";
+            string kustoPoolName = "kustoclusterrptest4";
+            ResourceIdentifier synapseKustoPoolResourceId = SynapseKustoPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, kustoPoolName);
+            SynapseKustoPoolResource synapseKustoPool = client.GetSynapseKustoPoolResource(synapseKustoPoolResourceId);
+
+            // get the collection of this SynapseDatabaseResource
+            SynapseDatabaseCollection collection = synapseKustoPool.GetSynapseDatabases();
+
+            // invoke the operation and iterate over the result
+            await foreach (SynapseDatabaseResource item in collection.GetAllAsync())
+            {
+                // the variable item is a resource, you could call other operations on this instance as well
+                // but just for demo, we get its data from this resource instance
+                SynapseDatabaseData resourceData = item.Data;
+                // for demo we just print out the id
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
+
+            Console.WriteLine("Succeeded");
         }
 
         [Test]
@@ -161,47 +202,6 @@ namespace Azure.ResourceManager.Synapse.Samples
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task CreateOrUpdate_KustoPoolDatabasesCreateOrUpdate()
-        {
-            // Generated from example definition: specification/synapse/resource-manager/Microsoft.Synapse/preview/2021-06-01-preview/examples/KustoPoolDatabasesCreateOrUpdate.json
-            // this example is just showing the usage of "KustoPoolDatabases_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SynapseKustoPoolResource created on azure
-            // for more information of creating SynapseKustoPoolResource, please refer to the document of SynapseKustoPoolResource
-            string subscriptionId = "12345678-1234-1234-1234-123456789098";
-            string resourceGroupName = "kustorptest";
-            string workspaceName = "synapseWorkspaceName";
-            string kustoPoolName = "kustoclusterrptest4";
-            ResourceIdentifier synapseKustoPoolResourceId = SynapseKustoPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, kustoPoolName);
-            SynapseKustoPoolResource synapseKustoPool = client.GetSynapseKustoPoolResource(synapseKustoPoolResourceId);
-
-            // get the collection of this SynapseDatabaseResource
-            SynapseDatabaseCollection collection = synapseKustoPool.GetSynapseDatabases();
-
-            // invoke the operation
-            string databaseName = "KustoDatabase8";
-            SynapseDatabaseData data = new SynapseReadWriteDatabase()
-            {
-                SoftDeletePeriod = XmlConvert.ToTimeSpan("P1D"),
-                Location = new AzureLocation("westus"),
-            };
-            ArmOperation<SynapseDatabaseResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, databaseName, data);
-            SynapseDatabaseResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            SynapseDatabaseData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
     }
 }

@@ -69,15 +69,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Samples
             SiteRecoveryAlertResource siteRecoveryAlert = client.GetSiteRecoveryAlertResource(siteRecoveryAlertResourceId);
 
             // invoke the operation
-            SiteRecoveryAlertCreateOrUpdateContent content = new SiteRecoveryAlertCreateOrUpdateContent()
+            SiteRecoveryAlertCreateOrUpdateContent content = new SiteRecoveryAlertCreateOrUpdateContent
             {
-                Properties = new SiteRecoveryConfigureAlertProperties()
+                Properties = new SiteRecoveryConfigureAlertProperties
                 {
                     SendToOwners = "false",
-                    CustomEmailAddresses =
-{
-"ronehr@microsoft.com"
-},
+                    CustomEmailAddresses = { "ronehr@microsoft.com" },
                     Locale = "",
                 },
             };

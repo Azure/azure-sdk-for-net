@@ -43,4 +43,3 @@ namespace Azure.AI.OpenAI
         public override string ToString() => _value;
     }
 }
-

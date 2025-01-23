@@ -15,6 +15,19 @@ namespace Azure.Search.Documents.Models
     /// <summary> Model factory for models. </summary>
     public static partial class SearchModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.FacetResult"/>. </summary>
+        /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
+        /// <param name="facets"> The nested facet query results for the search operation, organized as a collection of buckets for each faceted field; null if the query did not contain any nested facets. </param>
+        /// <param name="additionalProperties"> Additional Properties. </param>
+        /// <returns> A new <see cref="Models.FacetResult"/> instance for mocking. </returns>
+        public static FacetResult FacetResult(long? count = null, IReadOnlyDictionary<string, IList<FacetResult>> facets = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        {
+            facets ??= new Dictionary<string, IList<FacetResult>>();
+            additionalProperties ??= new Dictionary<string, object>();
+
+            return new FacetResult(count, facets, additionalProperties);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.QueryAnswerResult"/>. </summary>
         /// <param name="score"> The score value represents how relevant the answer is to the query relative to other answers returned for the query. </param>
         /// <param name="key"> The key of the document the answer was extracted from. </param>
@@ -118,6 +131,36 @@ namespace Azure.Search.Documents.Models
         public static SingleVectorFieldResult SingleVectorFieldResult(double? searchScore = null, double? vectorSimilarity = null)
         {
             return new SingleVectorFieldResult(searchScore, vectorSimilarity);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DebugInfo"/>. </summary>
+        /// <param name="queryRewrites"> Contains debugging information specific to query rewrites. </param>
+        /// <returns> A new <see cref="Models.DebugInfo"/> instance for mocking. </returns>
+        public static DebugInfo DebugInfo(QueryRewritesDebugInfo queryRewrites = null)
+        {
+            return new DebugInfo(queryRewrites);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.QueryRewritesDebugInfo"/>. </summary>
+        /// <param name="text"> List of query rewrites generated for the text query. </param>
+        /// <param name="vectors"> List of query rewrites generated for the vectorizable text queries. </param>
+        /// <returns> A new <see cref="Models.QueryRewritesDebugInfo"/> instance for mocking. </returns>
+        public static QueryRewritesDebugInfo QueryRewritesDebugInfo(QueryRewritesValuesDebugInfo text = null, IEnumerable<QueryRewritesValuesDebugInfo> vectors = null)
+        {
+            vectors ??= new List<QueryRewritesValuesDebugInfo>();
+
+            return new QueryRewritesDebugInfo(text, vectors?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.QueryRewritesValuesDebugInfo"/>. </summary>
+        /// <param name="inputQuery"> The input text to the generative query rewriting model. There may be cases where the user query and the input to the generative model are not identical. </param>
+        /// <param name="rewrites"> List of query rewrites. </param>
+        /// <returns> A new <see cref="Models.QueryRewritesValuesDebugInfo"/> instance for mocking. </returns>
+        public static QueryRewritesValuesDebugInfo QueryRewritesValuesDebugInfo(string inputQuery = null, IEnumerable<string> rewrites = null)
+        {
+            rewrites ??= new List<string>();
+
+            return new QueryRewritesValuesDebugInfo(inputQuery, rewrites?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AutocompleteResults"/>. </summary>

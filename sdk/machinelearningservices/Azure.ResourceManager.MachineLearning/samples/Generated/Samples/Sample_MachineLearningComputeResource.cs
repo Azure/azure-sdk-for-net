@@ -143,46 +143,6 @@ namespace Azure.ResourceManager.MachineLearning.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_UpdateAAmlComputeCompute()
-        {
-            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Compute/patch.json
-            // this example is just showing the usage of "Compute_Update" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this MachineLearningComputeResource created on azure
-            // for more information of creating MachineLearningComputeResource, please refer to the document of MachineLearningComputeResource
-            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
-            string resourceGroupName = "testrg123";
-            string workspaceName = "workspaces123";
-            string computeName = "compute123";
-            ResourceIdentifier machineLearningComputeResourceId = MachineLearningComputeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, computeName);
-            MachineLearningComputeResource machineLearningCompute = client.GetMachineLearningComputeResource(machineLearningComputeResourceId);
-
-            // invoke the operation
-            MachineLearningComputePatch patch = new MachineLearningComputePatch()
-            {
-                ScaleSettings = new AmlComputeScaleSettings(4)
-                {
-                    MinNodeCount = 4,
-                    NodeIdleTimeBeforeScaleDown = XmlConvert.ToTimeSpan("PT5M"),
-                },
-            };
-            ArmOperation<MachineLearningComputeResource> lro = await machineLearningCompute.UpdateAsync(WaitUntil.Completed, patch);
-            MachineLearningComputeResource result = lro.Value;
-
-            // the variable result is a resource, you could call other operations on this instance as well
-            // but just for demo, we get its data from this resource instance
-            MachineLearningComputeData resourceData = result.Data;
-            // for demo we just print out the id
-            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Delete_DeleteCompute()
         {
             // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Compute/delete.json
@@ -207,6 +167,46 @@ namespace Azure.ResourceManager.MachineLearning.Samples
             await machineLearningCompute.DeleteAsync(WaitUntil.Completed, underlyingResourceAction);
 
             Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Update_UpdateAAmlComputeCompute()
+        {
+            // Generated from example definition: specification/machinelearningservices/resource-manager/Microsoft.MachineLearningServices/stable/2024-04-01/examples/Compute/patch.json
+            // this example is just showing the usage of "Compute_Update" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this MachineLearningComputeResource created on azure
+            // for more information of creating MachineLearningComputeResource, please refer to the document of MachineLearningComputeResource
+            string subscriptionId = "34adfa4f-cedf-4dc0-ba29-b6d1a69ab345";
+            string resourceGroupName = "testrg123";
+            string workspaceName = "workspaces123";
+            string computeName = "compute123";
+            ResourceIdentifier machineLearningComputeResourceId = MachineLearningComputeResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, workspaceName, computeName);
+            MachineLearningComputeResource machineLearningCompute = client.GetMachineLearningComputeResource(machineLearningComputeResourceId);
+
+            // invoke the operation
+            MachineLearningComputePatch patch = new MachineLearningComputePatch
+            {
+                ScaleSettings = new AmlComputeScaleSettings(4)
+                {
+                    MinNodeCount = 4,
+                    NodeIdleTimeBeforeScaleDown = XmlConvert.ToTimeSpan("PT5M"),
+                },
+            };
+            ArmOperation<MachineLearningComputeResource> lro = await machineLearningCompute.UpdateAsync(WaitUntil.Completed, patch);
+            MachineLearningComputeResource result = lro.Value;
+
+            // the variable result is a resource, you could call other operations on this instance as well
+            // but just for demo, we get its data from this resource instance
+            MachineLearningComputeData resourceData = result.Data;
+            // for demo we just print out the id
+            Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
 
         [Test]

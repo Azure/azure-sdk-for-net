@@ -132,8 +132,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var eventBatch = new[]
             {
-                EventHubsModelFactory.EventData(new BinaryData(Array.Empty<byte>()), sequenceNumber: 12345),
-                EventHubsModelFactory.EventData(new BinaryData(Array.Empty<byte>()), sequenceNumber: 67890),
+                EventHubsModelFactory.EventData(new BinaryData(Array.Empty<byte>()), sequenceNumber: 12345, offsetString: default),
+                EventHubsModelFactory.EventData(new BinaryData(Array.Empty<byte>()), sequenceNumber: 67890, offsetString: default),
             };
 
             var partition = new EventProcessorPartition { PartitionId = "123" };
@@ -364,7 +364,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = true };
-            var lastEvent = new EventData(new BinaryData(Array.Empty<byte>()), lastPartitionSequenceNumber: 123, lastPartitionOffset: 887, lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastPartitionPropertiesRetrievalTime: DateTimeOffset.Parse("2021-03-04T08:30:00Z"));
+            var lastEvent = new EventData(new BinaryData(Array.Empty<byte>()), lastPartitionSequenceNumber: 123, lastPartitionOffset: "887", lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastPartitionPropertiesRetrievalTime: DateTimeOffset.Parse("2021-03-04T08:30:00Z"));
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockConnection = Mock.Of<EventHubConnection>();
             var mockConsumer = new Mock<SettableTransportConsumer>();
@@ -413,7 +413,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var retryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) };
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = true, RetryOptions = retryOptions };
-            var lastEvent = new EventData(new BinaryData(Array.Empty<byte>()), lastPartitionSequenceNumber: 123, lastPartitionOffset: 887, lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastPartitionPropertiesRetrievalTime: DateTimeOffset.Parse("2021-03-04T08:30:00Z"));
+            var lastEvent = new EventData(new BinaryData(Array.Empty<byte>()), lastPartitionSequenceNumber: 123, lastPartitionOffset: "887", lastPartitionEnqueuedTime: DateTimeOffset.Parse("2015-10-27T12:00:00Z"), lastPartitionPropertiesRetrievalTime: DateTimeOffset.Parse("2021-03-04T08:30:00Z"));
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockConnection = Mock.Of<EventHubConnection>();
             var mockConsumer = new Mock<SettableTransportConsumer>();
@@ -482,7 +482,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partition = new EventProcessorPartition { PartitionId = "99" };
-            var position = EventPosition.FromOffset(12);
+            var position = EventPosition.FromOffset("12");
             var options = new EventProcessorOptions { Identifier = "fake", TrackLastEnqueuedEventProperties = false, PrefetchCount = 37, PrefetchSizeInBytes = 44, LoadBalancingUpdateInterval = TimeSpan.FromMinutes(1) };
             var expectedOwnerLevel = 0;
             var expectedInvalidationOnSteal = true;
@@ -542,7 +542,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partition = new EventProcessorPartition { PartitionId = "99" };
-            var position = EventPosition.FromOffset(12);
+            var position = EventPosition.FromOffset("12");
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockConnection = Mock.Of<EventHubConnection>();
@@ -596,7 +596,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partition = new EventProcessorPartition { PartitionId = "99" };
-            var position = EventPosition.FromOffset(12);
+            var position = EventPosition.FromOffset("12");
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockConnection = Mock.Of<EventHubConnection>();
@@ -644,7 +644,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partition = new EventProcessorPartition { PartitionId = "99" };
-            var position = EventPosition.FromOffset(12);
+            var position = EventPosition.FromOffset("12");
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false };
             var receiveCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var closeCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -754,7 +754,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partition = new EventProcessorPartition { PartitionId = "99" };
-            var position = EventPosition.FromOffset(12);
+            var position = EventPosition.FromOffset("12");
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false };
             var receiveCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var closeCompletionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -846,7 +846,7 @@ namespace Azure.Messaging.EventHubs.Tests
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
 
             var partition = new EventProcessorPartition { PartitionId = "99" };
-            var position = EventPosition.FromOffset(12);
+            var position = EventPosition.FromOffset("12");
             var retryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) };
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = retryOptions };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -903,7 +903,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var startSequenceNumber = "4444";
             var endSequenceNumber = "8888";
             var partition = new EventProcessorPartition { PartitionId = "99" };
-            var position = EventPosition.FromOffset(12);
+            var position = EventPosition.FromOffset("12");
             var retryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) };
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = retryOptions };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -914,8 +914,8 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var eventBatch = new List<EventData>
             {
-                EventHubsModelFactory.EventData(new BinaryData(Array.Empty<byte>()), offset: 0, sequenceNumber: long.Parse(startSequenceNumber)),
-                EventHubsModelFactory.EventData(new BinaryData(Array.Empty<byte>()), offset: 1, sequenceNumber: long.Parse(endSequenceNumber))
+                EventHubsModelFactory.EventData(new BinaryData(Array.Empty<byte>()), offsetString: "0", sequenceNumber: long.Parse(startSequenceNumber)),
+                EventHubsModelFactory.EventData(new BinaryData(Array.Empty<byte>()), offsetString: "1", sequenceNumber: long.Parse(endSequenceNumber))
             };
 
             mockConsumer
@@ -994,7 +994,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedException = new DivideByZeroException();
             var partition = new EventProcessorPartition { PartitionId = "99" };
-            var position = EventPosition.FromOffset(12);
+            var position = EventPosition.FromOffset("12");
             var retryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) };
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = retryOptions };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -1048,7 +1048,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedException = new DivideByZeroException();
             var partition = new EventProcessorPartition { PartitionId = "99" };
-            var position = EventPosition.FromOffset(12);
+            var position = EventPosition.FromOffset("12");
             var retryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) };
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = retryOptions };
             var receiveCompletion = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -1111,7 +1111,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedException = new DivideByZeroException("OMG FAIL!");
             var partition = new EventProcessorPartition { PartitionId = "99" };
-            var position = EventPosition.FromOffset(12);
+            var position = EventPosition.FromOffset("12");
             var retryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) };
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = retryOptions };
             var receiveCompletion = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -1176,7 +1176,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedException = new DivideByZeroException("I'm special!");
             var partition = new EventProcessorPartition { PartitionId = "99" };
-            var position = EventPosition.FromOffset(12);
+            var position = EventPosition.FromOffset("12");
             var retryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) };
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = retryOptions };
             var receiveCompletion = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -1232,7 +1232,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedException = new DeveloperCodeException(new DivideByZeroException());
             var partition = new EventProcessorPartition { PartitionId = "99" };
-            var position = EventPosition.FromOffset(12);
+            var position = EventPosition.FromOffset("12");
             var retryOptions = new EventHubsRetryOptions { MaximumRetries = 1, MaximumDelay = TimeSpan.FromMilliseconds(5) };
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = retryOptions };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -1293,7 +1293,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedException = new DeveloperCodeException(new DivideByZeroException("Yay, I'm on the inside!"));
             var partition = new EventProcessorPartition { PartitionId = "99" };
-            var position = EventPosition.FromOffset(12);
+            var position = EventPosition.FromOffset("12");
             var retryOptions = new EventHubsRetryOptions { MaximumRetries = 1, MaximumDelay = TimeSpan.FromMilliseconds(5) };
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = retryOptions };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -1356,7 +1356,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var expectedException = new InvalidOperationException("BOOM!");
             var developerException = new DeveloperCodeException(expectedException);
             var partition = new EventProcessorPartition { PartitionId = "99" };
-            var position = EventPosition.FromOffset(12);
+            var position = EventPosition.FromOffset("12");
             var retryOptions = new EventHubsRetryOptions { MaximumRetries = 1, MaximumDelay = TimeSpan.FromMilliseconds(5) };
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = retryOptions };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -1403,7 +1403,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var expectedException = new EventHubsException(true, "frank", "BOOM!", EventHubsException.FailureReason.GeneralError);
             var partition = new EventProcessorPartition { PartitionId = "99" };
-            var position = EventPosition.FromOffset(12);
+            var position = EventPosition.FromOffset("12");
             var retryOptions = new EventHubsRetryOptions { MaximumRetries = 2, MaximumDelay = TimeSpan.FromMilliseconds(15) };
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = retryOptions };
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
@@ -1658,7 +1658,7 @@ namespace Azure.Messaging.EventHubs.Tests
             var retryOptions = new EventHubsRetryOptions { MaximumRetries = 0, MaximumDelay = TimeSpan.FromMilliseconds(5) };
             var options = new EventProcessorOptions { TrackLastEnqueuedEventProperties = false, RetryOptions = retryOptions };
             var partition = new EventProcessorPartition { PartitionId = "4" };
-            var lastEventBatch = new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>()), offset: 9987) };
+            var lastEventBatch = new List<EventData> { new EventData(new BinaryData(Array.Empty<byte>())), new EventData(new BinaryData(Array.Empty<byte>()), offset: "9987") };
             var initialStartingPosition = EventPosition.FromSequenceNumber(332);
             var completionSource = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
             var mockConnection = Mock.Of<EventHubConnection>();
@@ -1711,7 +1711,7 @@ namespace Azure.Messaging.EventHubs.Tests
                     mockProcessor.Object.ConsumerGroup,
                     partition.PartitionId,
                     It.IsAny<string>(),
-                    EventPosition.FromOffset(lastEventBatch.Last().Offset, false),
+                    EventPosition.FromOffset(lastEventBatch.Last().OffsetString, false),
                     mockConnection,
                     It.IsAny<EventProcessorOptions>(),
                     It.IsAny<bool>()),
