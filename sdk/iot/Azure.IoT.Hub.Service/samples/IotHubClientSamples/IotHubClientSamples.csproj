@@ -5,12 +5,14 @@
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>Azure.IoT.Hub.Service.Samples</RootNamespace>
     <IsPackable>false</IsPackable>
+    <!-- Transitive dependencies from deprecated storage references are causing errors.
+    This is a samples project so ignore until it can be migrated. -->
+    <WarningsNotAsErrors>NU1901;NU1902;NU1903;NU1904</WarningsNotAsErrors>
   </PropertyGroup>
 
   <!-- NU5104: Using a project reference to the client causes build warning/errors on build agents. -->
-  <!-- NU1903: Dependencies from deprecated storage packages are causing build warnings in the pipelines -->
   <PropertyGroup>
-    <NoWarn>$(NoWarn);NU5104;NU1903</NoWarn>
+    <NoWarn>$(NoWarn);NU5104</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

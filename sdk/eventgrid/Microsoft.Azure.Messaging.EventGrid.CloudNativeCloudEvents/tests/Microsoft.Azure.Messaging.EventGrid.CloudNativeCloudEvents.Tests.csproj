@@ -3,9 +3,10 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <!-- We don't care about XML doc comments on test methods -->
-    <!-- System.Net.Http and System.Net.Security are being picked up as old versions in the pipeline
-     even though they are referenced directly here and the updated versions are used locally -->
-    <NoWarn>$(NoWarn);CS1591;NU1903</NoWarn>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!-- Transitive dependencies from Microsoft.Rest.ClientRuntime are causing warnings.
+    This is a tests project so ignore. -->
+    <WarningsNotAsErrors>NU1901;NU1902;NU1903;NU1904</WarningsNotAsErrors>
   </PropertyGroup>
 
   <!-- Add Test References -->
