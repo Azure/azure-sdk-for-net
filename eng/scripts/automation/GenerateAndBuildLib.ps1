@@ -570,8 +570,9 @@ function Invoke-GenerateAndBuildSDK () {
     if ( $serviceType -eq "resource-manager" ) {
         Write-Host "Generate resource-manager SDK client library."
         $package = $service
-        if ($packageNameHash[$service] -ne "") {
+        if ($null -ne $packageNameHash[$service] -and $packageNameHash[$service] -ne "") {
             $package = $packageNameHash[$service]
+            Write-Host "rename package name to $package"
         }
         $projectFolder = (Join-Path $sdkRootPath "sdk" $package "Azure.ResourceManager.*")
         if (Test-Path -Path $projectFolder) {
