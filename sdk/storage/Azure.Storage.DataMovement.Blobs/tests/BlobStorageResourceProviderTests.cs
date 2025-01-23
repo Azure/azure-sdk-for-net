@@ -12,6 +12,7 @@ using Azure.Storage.Tests;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -104,7 +105,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         [Test]
         [Combinatorial]
-        public void FromContainer(
+        public async Task FromContainer(
             [Values(true, false)] bool withPrefix,
             [Values(CredType.None, CredType.SharedKey, CredType.Token, CredType.Sas)] CredType credType)
         {
@@ -121,7 +122,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 CredType.Sas => new(mockCreds.Sas.Object),
                 _ => throw new ArgumentException("Bad cred type"),
             };
-            BlobStorageResourceContainer resource = provider.FromContainer(uri) as BlobStorageResourceContainer;
+            BlobStorageResourceContainer resource = await provider.FromContainer(uri) as BlobStorageResourceContainer;
 
             Assert.IsNotNull(resource);
             Assert.AreEqual(uri, resource.Uri);
@@ -131,7 +132,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
         [Test]
         [Combinatorial]
-        public void FromBlob(
+        public async Task FromBlob(
             [Values(BlobType.Unspecified, BlobType.Block, BlobType.Page, BlobType.Append)] BlobType blobType,
             [Values(CredType.None, CredType.SharedKey, CredType.Token, CredType.Sas)] CredType credType)
         {
@@ -151,10 +152,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             StorageResource resource = blobType switch
             {
-                BlobType.Unspecified => provider.FromBlob(uri),
-                BlobType.Block => provider.FromBlob(uri, new BlockBlobStorageResourceOptions()),
-                BlobType.Page => provider.FromBlob(uri, new PageBlobStorageResourceOptions()),
-                BlobType.Append => provider.FromBlob(uri, new AppendBlobStorageResourceOptions()),
+                BlobType.Unspecified => await provider.FromBlob(uri),
+                BlobType.Block => await provider.FromBlob(uri, new BlockBlobStorageResourceOptions()),
+                BlobType.Page => await provider.FromBlob(uri, new PageBlobStorageResourceOptions()),
+                BlobType.Append => await provider.FromBlob(uri, new AppendBlobStorageResourceOptions()),
                 _ => throw new ArgumentException("Bad blob type")
             };
 

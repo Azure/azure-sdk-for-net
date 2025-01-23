@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,28 +16,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
     /// </summary>
     public class ShareFilesStorageResourceProvider : StorageResourceProvider
     {
-        /// <summary>
-        /// Delegate for fetching a shared key credential for a given URI.
-        /// </summary>
-        /// <param name="uri">
-        /// URI of resource to fetch credential for.
-        /// </param>
-        /// <param name="readOnly">
-        /// Whether the permission can be read-only.
-        /// </param>
-        public delegate StorageSharedKeyCredential GetStorageSharedKeyCredential(Uri uri, bool readOnly);
-
-        /// <summary>
-        /// Delegate for fetching a SAS credential for a given URI.
-        /// </summary>
-        /// <param name="uri">
-        /// URI of resource to fetch credential for.
-        /// </param>
-        /// <param name="readOnly">
-        /// Whether the permission can be read-only.
-        /// </param>
-        public delegate AzureSasCredential GetAzureSasCredential(Uri uri, bool readOnly);
-
         private enum ResourceType
         {
             Unknown = 0,
@@ -59,9 +36,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
         protected override string ProviderId => "share";
 
         private readonly CredentialType _credentialType;
-        private readonly GetStorageSharedKeyCredential _getStorageSharedKeyCredential;
-        private readonly GetAzureSasCredential _getAzureSasCredential;
         private readonly TokenCredential _tokenCredential;
+        private readonly Func<Uri, ValueTask<StorageSharedKeyCredential>> _getStorageSharedKeyCredential;
+        private readonly Func<Uri, ValueTask<AzureSasCredential>> _getAzureSasCredential;
 
         #region ctors
         /// <summary>
@@ -91,7 +68,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public ShareFilesStorageResourceProvider(StorageSharedKeyCredential credential)
         {
             _credentialType = CredentialType.SharedKey;
-            _getStorageSharedKeyCredential = (_, _) => credential;
+            _getStorageSharedKeyCredential = (_) => new ValueTask<StorageSharedKeyCredential>(credential);
         }
 
         /// <summary>
@@ -137,7 +114,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         public ShareFilesStorageResourceProvider(AzureSasCredential credential)
         {
             _credentialType = CredentialType.Sas;
-            _getAzureSasCredential = (_, _) => credential;
+            _getAzureSasCredential = (_) => new ValueTask<AzureSasCredential>(credential);
         }
 
         /// <summary>
@@ -146,7 +123,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// see cref="StorageResource"/>.
         /// </para>
         /// <para>
-        /// This instance will use the given <see cref="GetStorageSharedKeyCredential"/> to fetch a credential
+        /// This instance will use the given callback to fetch a credential
         /// when constructing the underlying Azure.Storage.Files.Shares client, e.g.
         /// <see cref="ShareFileClient(Uri, StorageSharedKeyCredential, ShareClientOptions)"/>.
         /// The delegate will only be used when the provider needs to construct a client in the first place. It will
@@ -155,9 +132,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// </para>
         /// </summary>
         /// <param name="getStorageSharedKeyCredentialAsync">
-        /// Delegate for acquiring a credential.
+        /// Callback for acquiring a credential for the given Uri.
         /// </param>
-        public ShareFilesStorageResourceProvider(GetStorageSharedKeyCredential getStorageSharedKeyCredentialAsync)
+        public ShareFilesStorageResourceProvider(Func<Uri, ValueTask<StorageSharedKeyCredential>> getStorageSharedKeyCredentialAsync)
         {
             _credentialType = CredentialType.SharedKey;
             _getStorageSharedKeyCredential = getStorageSharedKeyCredentialAsync;
@@ -169,7 +146,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <see cref="StorageResource"/>.
         /// </para>
         /// <para>
-        /// This instance will use the given <see cref="GetAzureSasCredential"/> to fetch a credential
+        /// This instance will use the given callback to fetch a credential
         /// when constructing the underlying Azure.Storage.Files.Shares client, e.g.
         /// <see cref="ShareFileClient(Uri, AzureSasCredential, ShareClientOptions)"/>.
         /// The delegate will only be used when the provider needs to construct a client in the first place. It will
@@ -180,9 +157,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// </para>
         /// </summary>
         /// <param name="getAzureSasCredentialAsync">
-        /// Delegate for acquiring a credential.
+        /// Callback for acquiring a credential for the given Uri.
         /// </param>
-        public ShareFilesStorageResourceProvider(GetAzureSasCredential getAzureSasCredentialAsync)
+        public ShareFilesStorageResourceProvider(Func<Uri, ValueTask<AzureSasCredential>> getAzureSasCredentialAsync)
         {
             _credentialType = CredentialType.Sas;
             _getAzureSasCredential = getAzureSasCredentialAsync;
@@ -191,17 +168,16 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         #region Abstract Class Implementation
         /// <inheritdoc/>
-        protected override Task<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
+        protected override async Task<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
         {
             // Source share file data currently empty, so no specific properties to grab
-
-            return Task.FromResult(properties.IsContainer
-                ? FromDirectory(properties.SourceUri)
-                : FromFile(properties.SourceUri));
+            return properties.IsContainer
+                ? await FromDirectory(properties.SourceUri).ConfigureAwait(false)
+                : await FromFile(properties.SourceUri).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
-        protected override Task<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
+        protected override async Task<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
         {
             ShareFileDestinationCheckpointDetails checkpointDetails;
             using (MemoryStream stream = new(properties.DestinationCheckpointDetails))
@@ -224,9 +200,9 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 DirectoryMetadata = checkpointDetails.DirectoryMetadata,
                 FileMetadata = checkpointDetails.FileMetadata,
             };
-            return Task.FromResult(properties.IsContainer
-                ? FromDirectory(properties.DestinationUri, options)
-                : FromFile(properties.DestinationUri, options));
+            return properties.IsContainer
+                ? await FromDirectory(properties.DestinationUri, options).ConfigureAwait(false)
+                : await FromFile(properties.DestinationUri, options).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -261,17 +237,17 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromDirectory(Uri directoryUri, ShareFileStorageResourceOptions options = default)
+        public async ValueTask<StorageResource> FromDirectory(Uri directoryUri, ShareFileStorageResourceOptions options = default)
         {
             ShareDirectoryClient client = _credentialType switch
             {
                 CredentialType.None => new ShareDirectoryClient(directoryUri),
-                CredentialType.SharedKey => new ShareDirectoryClient(directoryUri, _getStorageSharedKeyCredential(directoryUri, false)),
+                CredentialType.SharedKey => new ShareDirectoryClient(directoryUri, await _getStorageSharedKeyCredential(directoryUri).ConfigureAwait(false)),
                 CredentialType.Token => new ShareDirectoryClient(
                     directoryUri,
                     _tokenCredential,
                     new ShareClientOptions { ShareTokenIntent = ShareTokenIntent.Backup }),
-                CredentialType.Sas => new ShareDirectoryClient(directoryUri, _getAzureSasCredential(directoryUri, false)),
+                CredentialType.Sas => new ShareDirectoryClient(directoryUri, await _getAzureSasCredential(directoryUri).ConfigureAwait(false)),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
             return new ShareDirectoryStorageResourceContainer(client, options);
@@ -289,19 +265,17 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromFile(
-            Uri fileUri,
-            ShareFileStorageResourceOptions options = default)
+        public async ValueTask<StorageResource> FromFile(Uri fileUri, ShareFileStorageResourceOptions options = default)
         {
             ShareFileClient client = _credentialType switch
             {
                 CredentialType.None => new ShareFileClient(fileUri),
-                CredentialType.SharedKey => new ShareFileClient(fileUri, _getStorageSharedKeyCredential(fileUri, false)),
+                CredentialType.SharedKey => new ShareFileClient(fileUri, await _getStorageSharedKeyCredential(fileUri).ConfigureAwait(false)),
                 CredentialType.Token => new ShareFileClient(
                     fileUri,
                     _tokenCredential,
                     new ShareClientOptions { ShareTokenIntent = ShareTokenIntent.Backup }),
-                CredentialType.Sas => new ShareFileClient(fileUri, _getAzureSasCredential(fileUri, false)),
+                CredentialType.Sas => new ShareFileClient(fileUri, await _getAzureSasCredential(fileUri).ConfigureAwait(false)),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
             return new ShareFileStorageResource(client, options);
