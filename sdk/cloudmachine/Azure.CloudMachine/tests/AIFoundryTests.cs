@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.AI.Inference;
 using Azure.AI.Projects;
 using Azure.CloudMachine.OpenAI;
+using Azure.Core.TestFramework;
 using Azure.Search.Documents;
 using Azure.Search.Documents.Indexes;
 using NUnit.Framework;
@@ -17,12 +18,12 @@ using OpenAI.Embeddings;
 
 namespace Azure.CloudMachine.Tests;
 
-internal class AIFoundryTests
+public partial class AIFoundryTests : SamplesBase<CloudMachineTestEnvironment>
 {
     [Test]
     public void AIFoundryScenariosTests()
     {
-        var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         AIFoundryClient client = new AIFoundryClient(connectionString);
 
         // Azure AI Project clients
@@ -38,7 +39,7 @@ internal class AIFoundryTests
         EmbeddingClient openAIEmbeddingsClient = client.GetOpenAIEmbeddingsClient("text-embedding-ada-002");
 
         // Azure AI Search Clients using connections API
-        SearchClient searchClient = client.GetSearchClient("myIndex");
+        SearchClient searchClient = client.GetSearchClient("index");
         SearchIndexClient indexClient = client.GetSearchIndexClient();
         SearchIndexerClient indexerClient = client.GetSearchIndexerClient();
     }
@@ -131,7 +132,7 @@ internal class AIFoundryTests
         ChatCompletion completion = chatClient.CompleteChat(
             [
                 new SystemChatMessage("You are a helpful assistant."),
-                new UserChatMessage("Why Azure SDK is the best?"),
+                new UserChatMessage("List all the colors of the rainbow"),
             ]);
 
         Console.WriteLine($"{completion.Role}: {completion.Content[0].Text}");

@@ -46,7 +46,14 @@ public static class AzureAIProjectsExensions
 
         return evaluationsClient;
     }
-    #endregion AIProjects
+
+    private static AIProjectClient CreateAzureAIClient(this ClientWorkspace workspace)
+    {
+        ClientConnection connection = workspace.GetConnectionOptions(typeof(AIProjectClient).FullName);
+        var connectionString = connection.Locator;
+        return new AIProjectClient(connectionString, workspace.Credential);
+    }
+#endregion AIProjects
 
 #region Inference
     /// <summary>
@@ -137,11 +144,4 @@ public static class AzureAIProjectsExensions
         return new(connection.ToUri(), new AzureKeyCredential(connection.ApiKeyCredential!));
     }
 #endregion Azure AI Search
-
-    private static AIProjectClient CreateAzureAIClient(this ClientWorkspace workspace)
-    {
-        ClientConnection connection = workspace.GetConnectionOptions(typeof(AIProjectClient).FullName);
-        var connectionString = connection.Locator;
-        return new AIProjectClient(connectionString, workspace.Credential);
-    }
 }
