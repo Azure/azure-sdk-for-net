@@ -43,6 +43,11 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag);
+            }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
@@ -152,6 +157,7 @@ namespace Azure.ResourceManager.AppService.Models
                 return null;
             }
             ManagedServiceIdentity identity = default;
+            string etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -183,6 +189,11 @@ namespace Azure.ResourceManager.AppService.Models
                         continue;
                     }
                     identity = JsonSerializer.Deserialize<ManagedServiceIdentity>(property.Value.GetRawText());
+                    continue;
+                }
+                if (property.NameEquals("etag"u8))
+                {
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -391,6 +402,7 @@ namespace Azure.ResourceManager.AppService.Models
                 definition,
                 parameters ?? new ChangeTrackingDictionary<string, WorkflowContent>(),
                 kind,
+                etag,
                 serializedAdditionalRawData);
         }
 
@@ -489,6 +501,29 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     builder.Append("  identity: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Identity, options, 2, false, "  identity: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  etag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    builder.Append("  etag: ");
+                    if (ETag.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ETag}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ETag}'");
+                    }
                 }
             }
 

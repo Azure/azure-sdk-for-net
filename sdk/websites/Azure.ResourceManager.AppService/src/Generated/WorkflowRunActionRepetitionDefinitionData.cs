@@ -81,8 +81,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="retryHistory"> Gets the retry histories. </param>
         /// <param name="iterationCount"></param>
         /// <param name="repetitionIndexes"> The repetition indexes. </param>
+        /// <param name="etag"> Etag is property returned in Create/Update/Get response of the workflow, so that customer can supply it in the header to ensure optimistic updates. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? startOn, DateTimeOffset? endOn, WebAppRunActionCorrelation correlation, WorkflowStatus? status, string code, BinaryData error, string trackingId, BinaryData inputs, WebAppContentLink inputsLink, BinaryData outputs, WebAppContentLink outputsLink, BinaryData trackedProperties, IList<WebAppRetryHistory> retryHistory, int? iterationCount, IList<WorkflowRunActionRepetitionIndex> repetitionIndexes, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal WorkflowRunActionRepetitionDefinitionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DateTimeOffset? startOn, DateTimeOffset? endOn, WebAppRunActionCorrelation correlation, WorkflowStatus? status, string code, BinaryData error, string trackingId, BinaryData inputs, WebAppContentLink inputsLink, BinaryData outputs, WebAppContentLink outputsLink, BinaryData trackedProperties, IList<WebAppRetryHistory> retryHistory, int? iterationCount, IList<WorkflowRunActionRepetitionIndex> repetitionIndexes, string etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -99,6 +100,7 @@ namespace Azure.ResourceManager.AppService
             RetryHistory = retryHistory;
             IterationCount = iterationCount;
             RepetitionIndexes = repetitionIndexes;
+            ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -268,5 +270,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> The repetition indexes. </summary>
         [WirePath("properties.repetitionIndexes")]
         public IList<WorkflowRunActionRepetitionIndex> RepetitionIndexes { get; }
+        /// <summary> Etag is property returned in Create/Update/Get response of the workflow, so that customer can supply it in the header to ensure optimistic updates. </summary>
+        [WirePath("etag")]
+        public string ETag { get; set; }
     }
 }
