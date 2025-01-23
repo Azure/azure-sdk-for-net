@@ -432,6 +432,9 @@
 # ServiceLabel: %CycleCloud
 # ServiceOwners:                                                   @adriankjohnson
 
+# ServiceLabel: %Database Watcher
+# ServiceOwners:                                                   @prgaharw @masree @yixiongren
+
 # ServiceLabel: %Data Bricks
 # ServiceOwners:                                                   @yagupta
 
