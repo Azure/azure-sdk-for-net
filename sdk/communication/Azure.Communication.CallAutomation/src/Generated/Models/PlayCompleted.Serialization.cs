@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class PlayCompletedInternal
+    public partial class PlayCompleted
     {
-        internal static PlayCompletedInternal DeserializePlayCompletedInternal(JsonElement element)
+        internal static PlayCompleted DeserializePlayCompleted(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -54,15 +54,15 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new PlayCompletedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new PlayCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PlayCompletedInternal FromResponse(Response response)
+        internal static PlayCompleted FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializePlayCompletedInternal(document.RootElement);
+            return DeserializePlayCompleted(document.RootElement);
         }
     }
 }

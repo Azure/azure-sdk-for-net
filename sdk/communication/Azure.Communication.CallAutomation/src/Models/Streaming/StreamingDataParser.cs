@@ -16,11 +16,11 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Parsing a MediaStreaming package from BinaryData.
         /// </summary>
-        /// <param name="binaryData"></param>
+        /// <param name="json"></param>
         /// <returns></returns>
-        public static StreamingData Parse(BinaryData binaryData)
+        public static StreamingData Parse(BinaryData json)
         {
-            return Parse(binaryData.ToString());
+            return Parse(json.ToString());
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Azure.Communication.CallAutomation
                         transcriptionDataInternal.Duration,
                         transcriptionDataInternal.Words,
                         transcriptionDataInternal.ParticipantRawID,
-                        transcriptionDataInternal.ResultState
+                        transcriptionDataInternal.ResultStatus
                         );
 
                 #endregion

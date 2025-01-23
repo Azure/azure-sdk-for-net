@@ -9,9 +9,9 @@ using System.Text.Json;
 
 namespace Azure.Communication.CallAutomation
 {
-    internal partial class HoldFailedInternal
+    public partial class HoldFailed
     {
-        internal static HoldFailedInternal DeserializeHoldFailedInternal(JsonElement element)
+        internal static HoldFailed DeserializeHoldFailed(JsonElement element)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -54,15 +54,15 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new HoldFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new HoldFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static HoldFailedInternal FromResponse(Response response)
+        internal static HoldFailed FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeHoldFailedInternal(document.RootElement);
+            return DeserializeHoldFailed(document.RootElement);
         }
     }
 }
