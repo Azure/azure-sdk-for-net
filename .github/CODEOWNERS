@@ -432,9 +432,6 @@
 # ServiceLabel: %CycleCloud
 # ServiceOwners:                                                   @adriankjohnson
 
-# ServiceLabel: %Database Watcher
-# ServiceOwners:                                                   @Renyx1219
-
 # ServiceLabel: %Data Bricks
 # ServiceOwners:                                                   @yagupta
 
@@ -993,6 +990,12 @@
 
 # ServiceLabel: %Container Orchestrator Runtime
 # ServiceOwners:                                                   @HE-Xinyu @ddadaal
+
+# PRLabel: %Database Watcher
+/sdk/databasewatcher/Azure.ResourceManager.DatabaseWatcher/        @Renyx1219
+
+# ServiceLabel: %Database Watcher %Mgmt
+# ServiceOwners:                                                   @Renyx1219
 
 # PRLabel: %Device Registry
 /sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/          @davidemontanari @atastrophic @marcodalessandro @rohankhandelwal @riteshrao
