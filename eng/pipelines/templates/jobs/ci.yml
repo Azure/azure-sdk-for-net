@@ -84,13 +84,15 @@ jobs:
         displayName: "Set SkipDevBuildNumber env variable"
       - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
 
-      - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
-        parameters:
-          LogFilePath: $(Build.ArtifactStagingDirectory)/save-package-props.binlog
-
-      - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
-        parameters:
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
+      - pwsh: >
+          dotnet build /t:ProjectDependsOn ./eng/service.proj
+          /p:TestDependsOnDependency="Azure.Core"
+          /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false
+          /p:IncludePerf=false /p:RunApiCompat=false
+          /p:InheritDocEnabled=false /p:BuildProjectReferences=false
+          /p:OutputProjectFilePath="D:\a\_work\1\s\Azure.Core_dependencylist.txt"
+          /binaryLogger:LogFile=D:\a\_work\1\a\save-package-props.binlog
+          > D:\a\_work\1\s\Azure.Core_dependencylistoutput.txt 2>&1
 
   - job: BuildLinux
     pool:
@@ -129,11 +131,12 @@ jobs:
         displayName: "Set SkipDevBuildNumber env variable"
       - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
 
-      - template: /eng/pipelines/templates/steps/dotnet-diagnostics.yml
-        parameters:
-          LogFilePath: $(Build.ArtifactStagingDirectory)/save-package-props.binlog
-
-      - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
-        parameters:
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
-
+      - pwsh: >
+          dotnet build /t:ProjectDependsOn ./eng/service.proj
+          /p:TestDependsOnDependency="Azure.Core"
+          /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false
+          /p:IncludePerf=false /p:RunApiCompat=false
+          /p:InheritDocEnabled=false /p:BuildProjectReferences=false
+          /p:OutputProjectFilePath="D:\a\_work\1\s\Azure.Core_dependencylist.txt"
+          /binaryLogger:LogFile=D:\a\_work\1\a\save-package-props.binlog
+          > D:\a\_work\1\s\Azure.Core_dependencylistoutput.txt 2>&1
