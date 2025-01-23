@@ -68,7 +68,7 @@ namespace Azure.Identity.Tests
             var clientId = TestEnvironment.ServicePrincipalClientId;
 
 #if NET9_0_OR_GREATER
-            var cert = X509CertificateLoader.LoadCertificateFromFile(TestEnvironment.ServicePrincipalCertificatePfxPath);
+            var cert = X509CertificateLoader.LoadPkcs12FromFile(TestEnvironment.ServicePrincipalCertificatePfxPath, null);
 #else
             var cert = new X509Certificate2(TestEnvironment.ServicePrincipalCertificatePfxPath);
 #endif
@@ -131,7 +131,7 @@ namespace Azure.Identity.Tests
             var options = InstrumentClientOptions(new TokenCredentialOptions());
 
 #if NET9_0_OR_GREATER
-            var cert = X509CertificateLoader.LoadCertificateFromFile(certPath);
+            var cert = X509CertificateLoader.LoadPkcs12FromFile(certPath, null);
 #else
             var cert = new X509Certificate2(certPath);
 #endif

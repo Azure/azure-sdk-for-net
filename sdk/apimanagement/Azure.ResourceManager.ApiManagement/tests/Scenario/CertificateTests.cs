@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Tests
             if (Mode != RecordedTestMode.Playback)
             {
 #if NET9_0_OR_GREATER
-                cert = X509CertificateLoader.LoadCertificate("./Resources/sdktest.cer");
+                cert = X509CertificateLoader.LoadCertificateFromFile("./Resources/sdktest.cer");
 #else
                 cert = new X509Certificate2("./Resources/sdktest.cer");
 #endif

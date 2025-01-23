@@ -1,6 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <!-- System.Net.Http and System.Net.Security are being picked up as old versions
+    in the pipeline, even though they are referenced directly here and the updated
+    versions are used locally -->
+    <NoWarn>$(NoWarn);NU1903</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,8 +15,8 @@
     <PackageReference Include="Microsoft.Azure.Management.EventGrid" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" />
     <PackageReference Include="Microsoft.Rest.ClientRuntime" />
-    <PackageReference Include="System.Net.Http" VersionOverride="4.3.4" />
-    <PackageReference Include="System.Net.Security" VersionOverride="4.3.2" />
+    <PackageReference Include="System.Net.Http" />
+    <PackageReference Include="System.Net.Security" />
     <PackageReference Include="System.Net.WebSockets.Client" />
     <PackageReference Include="System.ValueTuple" />
     <PackageReference Include="NUnit" />

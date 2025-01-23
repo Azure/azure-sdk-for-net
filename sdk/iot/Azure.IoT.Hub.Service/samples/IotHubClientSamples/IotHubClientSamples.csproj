@@ -8,8 +8,9 @@
   </PropertyGroup>
 
   <!-- NU5104: Using a project reference to the client causes build warning/errors on build agents. -->
+  <!-- NU1903: Dependencies from deprecated storage packages are causing build warnings in the pipelines -->
   <PropertyGroup>
-    <NoWarn>$(NoWarn);NU5104</NoWarn>
+    <NoWarn>$(NoWarn);NU5104;NU1903</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

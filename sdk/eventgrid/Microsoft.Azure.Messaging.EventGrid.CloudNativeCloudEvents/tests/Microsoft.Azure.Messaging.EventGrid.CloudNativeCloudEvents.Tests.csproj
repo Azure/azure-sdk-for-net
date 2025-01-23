@@ -3,7 +3,9 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
 
     <!-- We don't care about XML doc comments on test methods -->
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <!-- System.Net.Http and System.Net.Security are being picked up as old versions in the pipeline
+     even though they are referenced directly here and the updated versions are used locally -->
+    <NoWarn>$(NoWarn);CS1591;NU1903</NoWarn>
   </PropertyGroup>
 
   <!-- Add Test References -->
