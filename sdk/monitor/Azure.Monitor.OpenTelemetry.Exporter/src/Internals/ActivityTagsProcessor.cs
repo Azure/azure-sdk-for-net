@@ -99,6 +99,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         case SemanticConventions.AttributeMessagingSystem:
                             activityType = OperationType.Messaging;
                             break;
+                        case SemanticConventions.AttributeRpcSystem:
+                            activityType = OperationType.Rpc;
+                            break;
                         case SemanticConventions.AttributeAzureNameSpace:
                             AzureNamespace = tag.Value.ToString();
                             break;
