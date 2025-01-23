@@ -7,7 +7,7 @@ This sample shows how to call GetSupportedPrebuiltEntitiesAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringPrebuilts client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringPrebuilts client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
 Response<PrebuiltEntities> response = await client.GetSupportedPrebuiltEntitiesAsync();
 ]]></code>
@@ -15,7 +15,7 @@ This sample shows how to call GetSupportedPrebuiltEntitiesAsync with all paramet
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringPrebuilts client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringPrebuilts client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
 Response<PrebuiltEntities> response = await client.GetSupportedPrebuiltEntitiesAsync(language: "<language>", multilingual: "<multilingual>", top: 1234, skip: 1234, maxpagesize: 1234);
 ]]></code></example>
@@ -26,7 +26,7 @@ This sample shows how to call GetSupportedPrebuiltEntities.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringPrebuilts client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringPrebuilts client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
 Response<PrebuiltEntities> response = client.GetSupportedPrebuiltEntities();
 ]]></code>
@@ -34,7 +34,7 @@ This sample shows how to call GetSupportedPrebuiltEntities with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringPrebuilts client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringPrebuilts client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
 Response<PrebuiltEntities> response = client.GetSupportedPrebuiltEntities(language: "<language>", multilingual: "<multilingual>", top: 1234, skip: 1234, maxpagesize: 1234);
 ]]></code></example>
@@ -45,7 +45,7 @@ This sample shows how to call GetSupportedPrebuiltEntitiesAsync and parse the re
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringPrebuilts client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringPrebuilts client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetSupportedPrebuiltEntitiesAsync(null, null, null, null, null, null);
 
@@ -58,7 +58,7 @@ This sample shows how to call GetSupportedPrebuiltEntitiesAsync with all paramet
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringPrebuilts client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringPrebuilts client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
 Response response = await client.GetSupportedPrebuiltEntitiesAsync("<language>", "<multilingual>", 1234, 1234, 1234, null);
 
@@ -75,7 +75,7 @@ This sample shows how to call GetSupportedPrebuiltEntities and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringPrebuilts client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringPrebuilts client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetSupportedPrebuiltEntities(null, null, null, null, null, null);
 
@@ -88,7 +88,7 @@ This sample shows how to call GetSupportedPrebuiltEntities with all parameters a
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringPrebuilts client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringPrebuilts client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
 Response response = client.GetSupportedPrebuiltEntities("<language>", "<multilingual>", 1234, 1234, 1234, null);
 

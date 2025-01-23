@@ -23,7 +23,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Response response = client.GetExportStatus("<projectName>", "<jobId>", null);
 
@@ -40,7 +40,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", null);
 
@@ -57,7 +57,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Response<ExportProjectJobState> response = client.GetExportStatus("<projectName>", "<jobId>");
         }
@@ -68,7 +68,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Response<ExportProjectJobState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
         }
@@ -79,7 +79,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Response response = client.GetExportStatus("<projectName>", "<jobId>", null);
 
@@ -108,7 +108,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", null);
 
@@ -137,7 +137,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Response<ExportProjectJobState> response = client.GetExportStatus("<projectName>", "<jobId>");
         }
@@ -148,7 +148,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Response<ExportProjectJobState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
         }
@@ -159,7 +159,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Response response = client.GetImportStatus("<projectName>", "<jobId>", null);
 
@@ -176,7 +176,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", null);
 
@@ -193,7 +193,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Response<ImportProjectJobState> response = client.GetImportStatus("<projectName>", "<jobId>");
         }
@@ -204,7 +204,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Response<ImportProjectJobState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
         }
@@ -215,7 +215,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Response response = client.GetImportStatus("<projectName>", "<jobId>", null);
 
@@ -243,7 +243,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", null);
 
@@ -271,7 +271,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Response<ImportProjectJobState> response = client.GetImportStatus("<projectName>", "<jobId>");
         }
@@ -282,7 +282,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Response<ImportProjectJobState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
         }
@@ -293,7 +293,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Operation operation = client.Export(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit");
         }
@@ -304,7 +304,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit");
         }
@@ -315,7 +315,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Operation operation = client.Export(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit);
         }
@@ -326,7 +326,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit);
         }
@@ -337,7 +337,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Operation operation = client.Export(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit", exportedProjectFormat: "Conversation", assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
         }
@@ -348,7 +348,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit", exportedProjectFormat: "Conversation", assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
         }
@@ -359,7 +359,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Operation operation = client.Export(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit, exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation, assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
         }
@@ -370,7 +370,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit, exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation, assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
         }
@@ -381,7 +381,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -403,7 +403,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -425,7 +425,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>"));
             Operation operation = client.Import(WaitUntil.Completed, "<projectName>", body);
@@ -437,7 +437,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>"));
             Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", body);
@@ -449,7 +449,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -560,7 +560,7 @@ dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -671,7 +671,7 @@ dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>")
             {
@@ -728,7 +728,7 @@ Dataset = "<dataset>",
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjectFiles client = new AnalyzeConversationAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
+            ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
             ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>")
             {

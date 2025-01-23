@@ -11,7 +11,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     [CodeGenClient("AuthoringClient")]
-    public partial class AnalyzeConversationAuthoringClient
+    public partial class ConversationAnalysisAuthoringClient
     {
         private readonly string _apiVersion;
 
@@ -20,7 +20,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public AnalyzeConversationAuthoringClient(Uri endpoint, AzureKeyCredential credential, AnalyzeConversationAuthoringClientOptions options)
+        public ConversationAnalysisAuthoringClient(Uri endpoint, AzureKeyCredential credential, AnalyzeConversationAuthoringClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
