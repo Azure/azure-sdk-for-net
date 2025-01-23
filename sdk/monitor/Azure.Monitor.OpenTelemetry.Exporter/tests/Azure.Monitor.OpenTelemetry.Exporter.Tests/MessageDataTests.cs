@@ -37,7 +37,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             logger.Log(logLevel, "Log Message");
 
-            var messageData = new MessageData(2, logRecords[0]);
+            var messageData = new MessageData(2, logRecords[0], new ChangeTrackingDictionary<string, string>(), "Log Message");
 
             Assert.Equal("Log Message", messageData.Message);
             Assert.Equal(LogsHelper.GetSeverityLevel(logLevel), messageData.SeverityLevel);

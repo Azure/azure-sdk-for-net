@@ -7,6 +7,7 @@ using System.Linq;
 using Azure.Monitor.OpenTelemetry.Exporter.Models;
 using Azure.Monitor.OpenTelemetry.Exporter.Tests.CommonTestFramework;
 using Microsoft.Extensions.Logging;
+using OpenTelemetry;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Resources;
 using Xunit;
@@ -164,5 +165,64 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedTypeName: "System.Exception",
                 expectedProperties: new Dictionary<string, string> { { "EventId", "1" } });
         }
+
+        [Fact]
+        public void VerifyCustomEvent()
+        {
+            // SETUP
+            var uniqueTestId = Guid.NewGuid();
+
+            var logCategoryName = $"logCategoryName{uniqueTestId}";
+
+            List<TelemetryItem>? telemetryItems = null;
+
+            var loggerFactory = LoggerFactory.Create(builder =>
+            {
+                builder
+                    .AddOpenTelemetry(options =>
+                    {
+                        options.IncludeScopes = true;
+                        options.SetResourceBuilder(ResourceBuilder.CreateDefault().AddAttributes(testResourceAttributes));
+                        options.AddAzureMonitorLogExporterForTest(out telemetryItems);
+                    });
+            });
+
+            // ACT
+            var logger = loggerFactory.CreateLogger(logCategoryName);
+
+            //List<KeyValuePair<string, object>> scope1 = new()
+            //{
+            //    new("microsoft.custom_event.name", "MyCustomEventName"),
+            //};
+
+            //using (logger.BeginScope(scope1))
+            //{
+                //logger.LogInformation("{microsoft.custom_event.name}", "world");
+            //}
+
+            using (logger.BeginScope(new List<KeyValuePair<string, object>> { new("microsoft.custom_event.name", "MyCustomEventName") }))
+            {
+                logger.LogInformation(null);
+            }
+
+            // CLEANUP
+            loggerFactory.Dispose();
+
+            // ASSERT
+            Assert.True(telemetryItems?.Any(), "Unit test failed to collect telemetry.");
+            this.telemetryOutput.Write(telemetryItems);
+            var telemetryItem = telemetryItems?.Where(x => x.Name == "Event").Single();
+        }
+
+        //public partial class MyLoggerMessages
+        //{
+        //    //.. rest of class omitted for brevity.
+
+        //    [LoggerMessage(
+        //        EventId = default,
+        //        Level = LogLevel.Information,
+        //        Message = "Hello from {food} {price}.")]
+        //    public partial void SayHello(string food, double price, Exception ex);
+        //}
     }
 }

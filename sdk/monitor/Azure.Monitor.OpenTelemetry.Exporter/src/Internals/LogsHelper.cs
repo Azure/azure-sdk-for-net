@@ -19,6 +19,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 {
     internal static class LogsHelper
     {
+        private const string CustomEventAttributeName = "microsoft.custom_event.name";
         private const int Version = 2;
         private static readonly Action<LogRecordScope, IDictionary<string, string>> s_processScope = (scope, properties) =>
         {
@@ -49,28 +50,48 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal static List<TelemetryItem> OtelToAzureMonitorLogs(Batch<LogRecord> batchLogRecord, AzureMonitorResource? resource, string instrumentationKey)
         {
-            List<TelemetryItem> telemetryItems = new List<TelemetryItem>();
+            List<TelemetryItem> telemetryItems = new();
             TelemetryItem telemetryItem;
 
             foreach (var logRecord in batchLogRecord)
             {
                 try
                 {
-                    telemetryItem = new TelemetryItem(logRecord, resource, instrumentationKey);
-                    if (logRecord.Exception != null)
+                    var properties = new ChangeTrackingDictionary<string, string>();
+                    //var message = GetMessageAndSetProperties(logRecord, properties);
+                    ProcessLogRecordProperties(logRecord, properties, out string? message, out string? eventName);
+
+                    if (eventName is not null)
                     {
-                        telemetryItem.Data = new MonitorBase
+                        telemetryItem = new TelemetryItem("Event", logRecord, resource, instrumentationKey)
                         {
-                            BaseType = "ExceptionData",
-                            BaseData = new TelemetryExceptionData(Version, logRecord),
+                            Data = new MonitorBase
+                            {
+                                BaseType = "EventData",
+                                BaseData = new TelemetryEventData(Version, eventName, properties, message, logRecord),
+                            }
+                        };
+                    }
+                    else if (logRecord.Exception != null)
+                    {
+                        telemetryItem = new TelemetryItem("Exception", logRecord, resource, instrumentationKey)
+                        {
+                            Data = new MonitorBase
+                            {
+                                BaseType = "ExceptionData",
+                                BaseData = new TelemetryExceptionData(Version, logRecord, properties, message),
+                            }
                         };
                     }
                     else
                     {
-                        telemetryItem.Data = new MonitorBase
+                        telemetryItem = new TelemetryItem("Message", logRecord, resource, instrumentationKey)
                         {
-                            BaseType = "MessageData",
-                            BaseData = new MessageData(Version, logRecord),
+                            Data = new MonitorBase
+                            {
+                                BaseType = "MessageData",
+                                BaseData = new MessageData(Version, logRecord, properties, message),
+                            }
                         };
                     }
 
@@ -141,6 +162,65 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
 
             return message;
+        }
+
+        internal static void ProcessLogRecordProperties(LogRecord logRecord, IDictionary<string, string> properties, out string? message, out string? eventName)
+        {
+            eventName = null;
+            message = logRecord.Exception?.Message ?? logRecord.FormattedMessage;
+
+            foreach (KeyValuePair<string, object?> item in logRecord.Attributes ?? Enumerable.Empty<KeyValuePair<string, object?>>())
+            {
+                // Note: if Key exceeds MaxLength, the entire KVP will be dropped.
+                if (item.Key.Length <= SchemaConstants.MessageData_Properties_MaxKeyLength && item.Value != null)
+                {
+                    try
+                    {
+                        if (item.Key == "{OriginalFormat}")
+                        {
+                            if (logRecord.Exception?.Message != null)
+                            {
+                                properties.Add("OriginalFormat", item.Value.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
+                            }
+                            else if (message == null)
+                            {
+                                message = item.Value.ToString();
+                            }
+                        }
+                        else
+                        {
+                            if (!properties.ContainsKey(item.Key))
+                            {
+                                properties.Add(item.Key, item.Value.ToString().Truncate(SchemaConstants.MessageData_Properties_MaxValueLength)!);
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        AzureMonitorExporterEventSource.Log.FailedToAddLogAttribute(item.Key, ex);
+                    }
+                }
+            }
+
+            logRecord.ForEachScope(s_processScope, properties);
+
+            var categoryName = logRecord.CategoryName;
+            if (!properties.ContainsKey("CategoryName") && !string.IsNullOrEmpty(categoryName))
+            {
+                properties.Add("CategoryName", categoryName.Truncate(SchemaConstants.KVP_MaxValueLength)!);
+            }
+
+            if (!properties.ContainsKey("EventId") && logRecord.EventId.Id != 0)
+            {
+                properties.Add("EventId", logRecord.EventId.Id.ToString(CultureInfo.InvariantCulture));
+            }
+
+            if (!properties.ContainsKey("EventName") && !string.IsNullOrEmpty(logRecord.EventId.Name))
+            {
+                properties.Add("EventName", logRecord.EventId.Name!.Truncate(SchemaConstants.KVP_MaxValueLength));
+            }
+
+            properties.TryGetValue(CustomEventAttributeName, out eventName);
         }
 
         internal static string GetProblemId(Exception exception)

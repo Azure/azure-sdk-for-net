@@ -19,11 +19,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
             // var credential = new DefaultAzureCredential();
             // using var traceDemo = new TraceDemo(ConnectionString, credential);
 
-            using var traceDemo = new TraceDemo(ConnectionString);
-            traceDemo.GenerateTraces();
+            //using var traceDemo = new TraceDemo(ConnectionString);
+            //traceDemo.GenerateTraces();
 
-            using var metricDemo = new MetricDemo(ConnectionString);
-            metricDemo.GenerateMetrics();
+            //using var metricDemo = new MetricDemo(ConnectionString);
+            //metricDemo.GenerateMetrics();
 
             using var logDemo = new LogDemo(ConnectionString);
             logDemo.GenerateLogs();

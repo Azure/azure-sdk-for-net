@@ -11,7 +11,8 @@ using Microsoft.Extensions.Logging;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddOpenTelemetry().UseAzureMonitor();
+builder.Services.AddOpenTelemetry()
+    .UseAzureMonitor();
 
 /*
 builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
@@ -25,7 +26,7 @@ builder.Services.AddOpenTelemetry().UseAzureMonitor(o =>
 var app = builder.Build();
 app.MapGet("/", () =>
 {
-    app.Logger.LogInformation("Hello World!");
+    app.Logger.LogInformation("{microsoft.custom_event.name}", "HelloWorld");
 
     using var client = new HttpClient();
     var response = client.GetAsync("https://www.bing.com/").Result;
