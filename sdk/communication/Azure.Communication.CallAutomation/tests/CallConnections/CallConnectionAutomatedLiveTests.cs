@@ -32,14 +32,14 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             CommunicationUserIdentifier target = await CreateIdentityUserAsync().ConfigureAwait(false);
             CallAutomationClient client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             CallAutomationClient targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
 
             try
             {
                 try
                 {
                     // setup service bus
-                    uniqueId = await ServiceBusWithNewCall(user, target);
+                    var uniqueId = await ServiceBusWithNewCall(user, target);
 
                     // create call and assert response
                     var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
@@ -98,7 +98,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
 
@@ -121,12 +121,12 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             var participantToAdd = await CreateIdentityUserAsync().ConfigureAwait(false);
             var client = CreateInstrumentedCallAutomationClientWithConnectionString(user);
             var targetClient = CreateInstrumentedCallAutomationClientWithConnectionString(target);
-            string? callConnectionId = null, uniqueId = null;
+            string? callConnectionId = null;
 
             try
             {
                 // setup service bus
-                uniqueId = await ServiceBusWithNewCall(user, target);
+                var uniqueId = await ServiceBusWithNewCall(user, target);
 
                 // create call and assert response
                 var createCallOptions = new CreateCallOptions(new CallInvite(target), new Uri(TestEnvironment.DispatcherCallback + $"?q={uniqueId}"));
@@ -182,7 +182,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
             }
             finally
             {
-                await CleanUpCall(client, callConnectionId, uniqueId);
+                await CleanUpCall(client, callConnectionId);
             }
         }
     }
