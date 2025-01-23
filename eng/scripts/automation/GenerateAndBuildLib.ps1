@@ -653,7 +653,7 @@ function Invoke-GenerateAndBuildSDK () {
                         $projectFolder=(Join-Path $sdkRootPath "sdk" $service $folder)
                         if (Test-Path -Path $projectFolder) {
                             Write-Host "Path exists!"
-                            New-DataPlanePackageFolder -service $service -namespace $folder -sdkPath $sdkRootPath -readme $readmeFile -outputJsonFile $newpackageoutput
+                            Update-DataPlanePackageFolder -service $service -namespace $folder -sdkPath $sdkRootPath -readme $readmeFile -outputJsonFile $newpackageoutput
                             if ( !$? ) {
                                 Write-Host "[ERROR] Failed to create sdk project folder.service:$service,namespace:$folder,"
                                 Write-Host "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile. exit code: $?."
