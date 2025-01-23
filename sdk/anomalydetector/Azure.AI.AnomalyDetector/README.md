@@ -245,7 +245,7 @@ These code samples show common scenario operations with the Azure Anomaly Detect
 
 ### Additional documentation
 
-For more extensive documentation on Azure Anomaly Detector, see the [Anomaly Detector documentation](https://learn.microsoft.com/azure/cognitive-services/anomaly-detector/overview) on docs.microsoft.com.
+For more extensive documentation on Azure Anomaly Detector, see the [Anomaly Detector documentation](https://learn.microsoft.com/azure/cognitive-services/anomaly-detector/overview) on learn.microsoft.com.
 
 ## Contributing
 
@@ -257,18 +257,18 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [anomalydetector_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/src
-[anomalydetector_docs]: https://docs.microsoft.com/azure/cognitive-services/anomaly-detector/
+[anomalydetector_docs]: https://learn.microsoft.com/azure/cognitive-services/anomaly-detector/
 [anomalydetector_refdocs]: https://azure.github.io/azure-sdk-for-net/cognitiveservices.html
 [anomalydetector_nuget_package]: https://www.nuget.org/packages/Azure.AI.AnomalyDetector
 [anomaly_detector_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/src/Generated/AnomalyDetectorClient.cs
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
-[register_aad_app]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
-[aad_grant_access]: https://docs.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
-[custom_subdomain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
+[register_aad_app]: https://learn.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+[aad_grant_access]: https://learn.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
+[custom_subdomain]: https://learn.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
-[cognitive_resource_cli]: https://docs.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
+[cognitive_resource_cli]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
 [logging]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/samples/Diagnostics.md
-[azure_cli]: https://docs.microsoft.com/cli/azure
+[azure_cli]: https://learn.microsoft.com/cli/azure
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [nuget]: https://www.nuget.org/
 [azure_portal]: https://portal.azure.com

@@ -53,6 +53,18 @@ namespace Azure.ResourceManager.NetApp.Models
                 writer.WritePropertyName("coolAccess"u8);
                 writer.WriteBooleanValue(IsCoolAccessEnabled.Value);
             }
+            if (Optional.IsDefined(CustomThroughputMibps))
+            {
+                if (CustomThroughputMibps != null)
+                {
+                    writer.WritePropertyName("customThroughputMibps"u8);
+                    writer.WriteNumberValue(CustomThroughputMibps.Value);
+                }
+                else
+                {
+                    writer.WriteNull("customThroughputMibps");
+                }
+            }
             writer.WriteEndObject();
         }
 
@@ -85,6 +97,7 @@ namespace Azure.ResourceManager.NetApp.Models
             long? size = default;
             CapacityPoolQosType? qosType = default;
             bool? coolAccess = default;
+            float? customThroughputMibps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -168,6 +181,16 @@ namespace Azure.ResourceManager.NetApp.Models
                             coolAccess = property0.Value.GetBoolean();
                             continue;
                         }
+                        if (property0.NameEquals("customThroughputMibps"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                customThroughputMibps = null;
+                                continue;
+                            }
+                            customThroughputMibps = property0.Value.GetSingle();
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -187,6 +210,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 size,
                 qosType,
                 coolAccess,
+                customThroughputMibps,
                 serializedAdditionalRawData);
         }
 

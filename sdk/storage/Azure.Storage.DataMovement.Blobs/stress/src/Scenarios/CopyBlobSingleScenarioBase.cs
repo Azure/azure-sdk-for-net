@@ -25,12 +25,12 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
             Uri destinationBlobUri,
             int? blobSize,
             TransferManagerOptions transferManagerOptions,
-            DataTransferOptions dataTransferOptions,
+            TransferOptions transferOptions,
             TokenCredential sourceTokenCredential,
             TokenCredential destinationTokenCredential,
             Metrics metrics,
             string testRunId)
-            : base(destinationBlobUri, blobSize, transferManagerOptions, dataTransferOptions, destinationTokenCredential, metrics, testRunId)
+            : base(destinationBlobUri, blobSize, transferManagerOptions, transferOptions, destinationTokenCredential, metrics, testRunId)
         {
             _sourceServiceClient = new BlobServiceClient(sourceBlobUri, sourceTokenCredential);
         }
@@ -107,7 +107,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                         destinationResource,
                         async cToken => await sourceBaseBlob.OpenReadAsync(default, cToken),
                         async cToken => await destinationBaseBlob.OpenReadAsync(default, cToken),
-                        options: _dataTransferOptions,
+                        options: _transferOptions,
                         cancellationToken: cancellationToken);
                 }
                 catch (TaskCanceledException)

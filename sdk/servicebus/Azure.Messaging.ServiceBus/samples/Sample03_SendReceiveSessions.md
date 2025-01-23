@@ -1,6 +1,6 @@
 # Sending and receiving session messages
 
-This sample demonstrates how to send and receive session messages from a session-enabled Service Bus queues. For concepts related to sessions, please refer to the [Service Bus sessions documentation](https://docs.microsoft.com/azure/service-bus-messaging/message-sessions).
+This sample demonstrates how to send and receive session messages from a session-enabled Service Bus queues. For concepts related to sessions, please refer to the [Service Bus sessions documentation](https://learn.microsoft.com/azure/service-bus-messaging/message-sessions).
 
 ## Receiving from next available session
 

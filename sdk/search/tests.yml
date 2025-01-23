@@ -1,12 +1,11 @@
 trigger: none
 
 extends:
-  template: ../../eng/pipelines/templates/stages/archetype-sdk-tests.yml
+  template: /eng/pipelines/templates/stages/archetype-sdk-tests.yml
   parameters:
     ServiceDirectory: search
     SDKType: client
     TimeoutInMinutes: 240
     MaxParallel: 2
-    SupportedClouds: 'Public,UsGov'
     EnvVars:
       AZURE_SEARCH_TEST_MODE: Live

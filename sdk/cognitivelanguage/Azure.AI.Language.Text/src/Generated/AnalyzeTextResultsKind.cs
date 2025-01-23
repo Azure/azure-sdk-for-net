@@ -28,7 +28,6 @@ namespace Azure.AI.Language.Text
         private const string KeyPhraseExtractionResultsValue = "KeyPhraseExtractionResults";
         private const string LanguageDetectionResultsValue = "LanguageDetectionResults";
         private const string EntityLinkingResultsValue = "EntityLinkingResults";
-        private const string DynamicClassificationResultsValue = "DynamicClassificationResults";
 
         /// <summary> Sentiment analysis results. </summary>
         public static AnalyzeTextResultsKind SentimentAnalysisResults { get; } = new AnalyzeTextResultsKind(SentimentAnalysisResultsValue);
@@ -42,8 +41,6 @@ namespace Azure.AI.Language.Text
         public static AnalyzeTextResultsKind LanguageDetectionResults { get; } = new AnalyzeTextResultsKind(LanguageDetectionResultsValue);
         /// <summary> Entity linking results. </summary>
         public static AnalyzeTextResultsKind EntityLinkingResults { get; } = new AnalyzeTextResultsKind(EntityLinkingResultsValue);
-        /// <summary> Dynamic classification results. </summary>
-        public static AnalyzeTextResultsKind DynamicClassificationResults { get; } = new AnalyzeTextResultsKind(DynamicClassificationResultsValue);
         /// <summary> Determines if two <see cref="AnalyzeTextResultsKind"/> values are the same. </summary>
         public static bool operator ==(AnalyzeTextResultsKind left, AnalyzeTextResultsKind right) => left.Equals(right);
         /// <summary> Determines if two <see cref="AnalyzeTextResultsKind"/> values are not the same. </summary>

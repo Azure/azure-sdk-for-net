@@ -25,7 +25,13 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Defines the transfer type of the storage resource.
         /// </summary>
-        protected internal abstract DataTransferOrder TransferType { get; }
+        protected internal abstract TransferOrder TransferType { get; }
+
+        /// <summary>
+        /// Defines the maximum supported size for the storage resource to be created
+        /// in a single API call.
+        /// </summary>
+        protected internal abstract long MaxSupportedSingleTransferSize { get; }
 
         /// <summary>
         /// Defines the maximum supported size for the storage resource to be created

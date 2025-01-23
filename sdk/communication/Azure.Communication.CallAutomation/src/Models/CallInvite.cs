@@ -12,6 +12,7 @@ namespace Azure.Communication.CallAutomation
     {
         /// <summary>
         /// Creates a new CallInvite object.
+        /// When the source of the call is a Teams App source, callerIdNumber is not supported and should be null.
         /// </summary>
         /// <param name="targetPhoneNumberIdentity"></param>
         /// <param name="callerIdNumber"></param>
@@ -37,6 +38,16 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         /// <param name="targetIdentity"></param>
         public CallInvite(MicrosoftTeamsUserIdentifier targetIdentity)
+        {
+            Target = targetIdentity;
+            CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());
+        }
+
+        /// <summary>
+        /// Creates a new CallInvite object.
+        /// </summary>
+        /// <param name="targetIdentity"></param>
+        public CallInvite(MicrosoftTeamsAppIdentifier targetIdentity)
         {
             Target = targetIdentity;
             CustomCallingContext = new CustomCallingContext(sipHeaders: null, voipHeaders: new Dictionary<string, string>());

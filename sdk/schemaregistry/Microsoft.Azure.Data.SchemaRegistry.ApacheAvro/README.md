@@ -172,9 +172,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 
 <!-- LINKS -->
 [nuget]: https://www.nuget.org/
-[event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-about
-[azure_powershell]: https://docs.microsoft.com/powershell/azure/
-[create_event_hubs_namespace]: https://docs.microsoft.com/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
+[event_hubs_namespace]: https://learn.microsoft.com/azure/event-hubs/event-hubs-about
+[azure_powershell]: https://learn.microsoft.com/powershell/azure/
+[create_event_hubs_namespace]: https://learn.microsoft.com/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
 [quickstart_guide]: https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md
 [schema_registry_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/schemaregistry/Azure.Data.SchemaRegistry/src/SchemaRegistryClient.cs
 [azure_portal]: https://ms.portal.azure.com/
@@ -192,4 +192,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [specific_record]: https://avro.apache.org/docs/++version++/api/csharp/html/interfaceAvro_1_1Specific_1_1ISpecificRecord.html
 [azure_sub]: https://azure.microsoft.com/free/dotnet/
 [azure_schema_registry]: https://aka.ms/schemaregistry
-[request_failed_exception]: https://docs.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet
+[request_failed_exception]: https://learn.microsoft.com/dotnet/api/azure.requestfailedexception?view=azure-dotnet

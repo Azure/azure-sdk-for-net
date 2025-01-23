@@ -55,7 +55,7 @@ ServiceBusClient client = new(fullyQualifiedNamespace, credential, new ServiceBu
 
 ## Using prefetch
 
-The [prefetch feature](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-prefetch?tabs=dotnet) allows the receiver and processor to request messages in the background before an actual receive operation is initiated. This can potentially increase the throughput of your application, but it comes with several large drawbacks that are outlined in this [document](https://docs.microsoft.com/azure/service-bus-messaging/service-bus-prefetch?tabs=dotnet#why-is-prefetch-not-the-default-option). If you determine that prefetch makes sense for your application, here is how you would enable it:
+The [prefetch feature](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-prefetch?tabs=dotnet) allows the receiver and processor to request messages in the background before an actual receive operation is initiated. This can potentially increase the throughput of your application, but it comes with several large drawbacks that are outlined in this [document](https://learn.microsoft.com/azure/service-bus-messaging/service-bus-prefetch?tabs=dotnet#why-is-prefetch-not-the-default-option). If you determine that prefetch makes sense for your application, here is how you would enable it:
 
 ```C# Snippet:ServiceBusConfigurePrefetchReceiver
 string fullyQualifiedNamespace = "<fully_qualified_namespace>";
