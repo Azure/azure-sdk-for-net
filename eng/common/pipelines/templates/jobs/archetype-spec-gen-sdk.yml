@@ -5,7 +5,7 @@ parameters:
     type: string
   - name: SpecRepoCommit
     type: string
-    default: 'HEAD'
+    default: '$(Build.SourceBranch)'
   - name: SdkRepoCommit
     type: string
     default: 'HEAD'
@@ -47,6 +47,15 @@ jobs:
     - checkout: none
 
     - pwsh: |
+        $tspConfigPathPattern = '^specification\/([^\/]+\/)+tspconfig\.yaml$'
+        $readmePathPattern = '^specification\/([^\/]+\/){2,}readme\.md$'
+        if (('${{ parameters.ConfigType }}' -eq 'TypeSpec') -and ('${{ parameters.ConfigPath }}' -notmatch $tspConfigPathPattern)) {
+          Write-Host "##vso[task.logissue type=error]'ConfigPath' must be a valid 'tspconfig.yaml' file path when 'ConfigType' is set to 'TypeSpec'. For example, 'specification/contosowidgetmanager/Contoso.Management/tspconfig.yaml'"
+          Exit 1
+        } elseif (('${{ parameters.ConfigType }}' -eq 'OpenAPI') -and ('${{ parameters.ConfigPath }}' -notmatch $readmePathPattern)) {
+          Write-Host "##vso[task.logissue type=error]'ConfigPath' must be a valid 'readme.md' file path when 'ConfigType' is set to 'OpenAPI'. For example, 'specification/appplatform/resource-manager/readme.md'"
+          Exit 1
+        }
         $urlPattern = '^https://github\.com/(?<organization>[^/]+)/(?<repository>[^/]+)'
         if ('${{ parameters.SpecRepoUrl }}' -match $urlPattern) {
           $specRepoOwner = $Matches['organization']
@@ -64,11 +73,11 @@ jobs:
 
         if ('${{ parameters.SdkRepoUrl }}' -match $urlPattern) {
           if ('${{ parameters.SpecRepoUrl }}'.EndsWith('-pr') -and (-not '${{ parameters.SdkRepoUrl }}'.EndsWith('-pr'))) {
-            Write-Host "SdkRepoUrl must be a private repository if SpecRepoUrl is a private repository."
+            Write-Host "##vso[task.logissue type=error]SdkRepoUrl must be a private repository if SpecRepoUrl is a private repository."
             Exit 1
           }
 
-          $sdkRepoOwner = if ('$(SdkRepoOwner)' -eq '') { $Matches['organization'] } else { '$(SdkRepoOwner)' }
+          $sdkRepoOwner = $Matches['organization']
           Write-Host "##vso[task.setvariable variable=SdkRepoOwner]$sdkRepoOwner"
           Write-Host "SdkRepoOwner variable set to: $sdkRepoOwner"
 
@@ -82,16 +91,10 @@ jobs:
         }
 
         if ([string]::IsNullOrEmpty($SpecRepoOwner) -or [string]::IsNullOrEmpty($SpecRepoName) -or [string]::IsNullOrEmpty($SdkRepoOwner) -or [string]::IsNullOrEmpty($SdkRepoName)) {
-          Write-Host "One or more required variables is empty or invalid. Ensure that SpecRepourl and SdkRepoUrl are set to valid GitHub repository URLs."
+          Write-Host "##vso[task.logissue type=error]One or more required variables is empty or invalid. Ensure that SpecRepoUrl and SdkRepoUrl are set to valid GitHub repository URLs."
           Exit 1
         }
 
-        $sdkRepoNameForSpecGen = $sdkRepoName
-        if ($sdkRepoName.EndsWith('-for-net')) {
-          $sdkRepoNameForSpecGen = $sdkRepoName + "-track2"
-        }
-        Write-Host "##vso[task.setvariable variable=SdkRepoNameForSpecGen]$sdkRepoNameForSpecGen"
-        Write-Host "SdkRepoNameForSpecGen variable set to: $sdkRepoNameForSpecGen"
       displayName: "Create Run Time Variables"
 
     - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
@@ -112,7 +115,7 @@ jobs:
         SkipCheckoutNone: true
 
     - script: |
-        if [ "${{ parameters.SpecRepoCommit }}" = "HEAD" ]; then
+        if [ "${{ parameters.SpecRepoCommit }}" = "$(Build.SourceBranch)" ]; then
           cd $(SpecRepoDirectory)
           default_commit=$(git rev-parse HEAD)
           echo "##vso[task.setvariable variable=SpecRepoCommit]$default_commit"
@@ -148,6 +151,12 @@ jobs:
           sdk_gen_info="$sdk_gen_info '${{ parameters.ConfigPath }}',"
         fi
 
+        if [ "$(Build.Reason)" = "PullRequest" ]; then
+          optional_params="$optional_params --n=$(System.PullRequest.PullRequestNumber)"
+          specPrUrl="${{ parameters.SpecRepoUrl }}/pull/$(System.PullRequest.PullRequestNumber)"
+          sdk_gen_info="$sdk_gen_info spec PR: $specPrUrl"
+        fi
+
         sdk_gen_info="$sdk_gen_info and CommitSHA: '$(SpecRepoCommit)', in SpecRepo: '${{ parameters.SpecRepoUrl }}'"
         echo "##vso[task.setvariable variable=GeneratedSDKInformation]$sdk_gen_info"
         echo "Generated SDK Information : $sdk_gen_info"
@@ -156,7 +165,7 @@ jobs:
           --scp "$(SpecRepoDirectory)" \
           --sdp "$(SdkRepoDirectory)" \
           --wf "$(System.DefaultWorkingDirectory)" \
-          -l "$(SdkRepoNameForSpecGen)" \
+          -l "$(SdkRepoName)" \
           -c "$(SpecRepoCommit)" \
           -t $true \
           $optional_params
@@ -210,7 +219,7 @@ jobs:
 
       - task: PowerShell@2
         displayName: Create pull request
-        condition: and(succeeded(), eq(variables['HasChanges'], 'true'))
+        condition: and(succeeded(), eq(variables['HasChanges'], 'true'), ne(variables['Build.Reason'], 'PullRequest'))
         inputs:
           pwsh: true
           workingDirectory: $(SdkRepoDirectory)
