@@ -236,7 +236,6 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
             BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -288,7 +287,6 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
             BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -356,7 +354,6 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
             BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -414,7 +411,6 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -492,7 +488,6 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -564,7 +559,6 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer blobContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -802,7 +796,6 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
             BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -852,7 +845,6 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -902,7 +894,6 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -958,7 +949,6 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -1044,7 +1034,6 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -1137,7 +1126,6 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
             BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
-            LocalFilesStorageResourceProvider localProvider = new();
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
