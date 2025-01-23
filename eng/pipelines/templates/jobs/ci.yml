@@ -85,13 +85,8 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
 
       - pwsh: >
-          dotnet build /t:ProjectDependsOn ./eng/service.proj
-          /p:TestDependsOnDependency="Azure.Core"
-          /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false
-          /p:IncludePerf=false /p:RunApiCompat=false
-          /p:InheritDocEnabled=false /p:BuildProjectReferences=false
-          /p:OutputProjectFilePath="$(Build.SourcesDirectory)/Azure.Core_dependencylist.txt"
-          /binaryLogger:LogFile=$(Build.ArtifactStagingDirectory)/save-package-props.binlog
+          dotnet restore ./eng/service.proj /p:ServiceDirectory=cloudmachine
+          /binaryLogger:LogFile=$(Build.ArtifactStagingDirectory)/restore.binlog
 
       - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
         parameters:
@@ -136,13 +131,8 @@ jobs:
       - template: /eng/common/pipelines/templates/steps/daily-dev-build-variable.yml
 
       - pwsh: >
-          dotnet build /t:ProjectDependsOn ./eng/service.proj
-          /p:TestDependsOnDependency="Azure.Core"
-          /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false
-          /p:IncludePerf=false /p:RunApiCompat=false
-          /p:InheritDocEnabled=false /p:BuildProjectReferences=false
-          /p:OutputProjectFilePath="$(Build.SourcesDirectory)/Azure.Core_dependencylist.txt"
-          /binaryLogger:LogFile=$(Build.ArtifactStagingDirectory)/save-package-props.binlog
+          dotnet restore ./eng/service.proj /p:ServiceDirectory=cloudmachine
+          /binaryLogger:LogFile=$(Build.ArtifactStagingDirectory)/restore.binlog
 
       - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
         parameters:
