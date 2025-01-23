@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>This is the MgmtTypeSpec client library for developing .NET applications with rich experience.</Description>
     <AssemblyTitle>SDK Code Generation MgmtTypeSpec</AssemblyTitle>
@@ -13,11 +13,17 @@
     <PackageReference Include="System.ClientModel" Version="1.1.0-beta.4" />
     <PackageReference Include="System.Text.Json" Version="8.0.5" />
 		<PackageReference Include="Azure.Core" Version="1.43.0" />
+		<PackageReference Include="Azure.ResourceManager" Version ="1.13.0"/>
   </ItemGroup>
 	
 	<!-- Include shared code from Azure.Core -->
 	<ItemGroup>
 		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
 		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\RawRequestUriBuilder.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\ClientDiagnostics.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\DiagnosticScopeFactory.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\DiagnosticScope.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
 	</ItemGroup>
 </Project>

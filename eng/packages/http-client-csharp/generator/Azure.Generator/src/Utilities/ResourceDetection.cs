@@ -8,16 +8,50 @@ using System;
 using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Text;
 
 namespace Azure.Generator.Utilities
 {
     internal class ResourceDetection
     {
         private const string ProvidersSegment = "/providers/";
+        private const string ResourceGroupScopePrefix = "/subscriptions/{subscriptionId}/resourceGroups";
+        private const string SubscriptionScopePrefix = "/subscriptions";
+        private const string TenantScopePrefix = "/tenants";
+
         private ConcurrentDictionary<string, (string Name, InputModelType? InputModel)?> _resourceDataSchemaCache = new ConcurrentDictionary<string, (string Name, InputModelType? InputModel)?>();
 
         private static InputModelType? FindObjectSchemaWithName(string name)
             => AzureClientPlugin.Instance.InputLibrary.InputNamespace.Models.OfType<InputModelType>().FirstOrDefault(inputModel => inputModel.Name == name);
+
+        internal static string GetResourceTypeFromPath(string requestPath)
+        {
+            var index = requestPath.LastIndexOf(ProvidersSegment);
+            if (index < 0)
+            {
+                if (requestPath.StartsWith(ResourceGroupScopePrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    return "Microsoft.Resources/resourceGroups";
+                }
+                else if (requestPath.StartsWith(SubscriptionScopePrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    return "Microsoft.Resources/subscriptions";
+                }
+                else if (requestPath.StartsWith(TenantScopePrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    return "Microsoft.Resources/tenants";
+                }
+                throw new InvalidOperationException($"Cannot find resource type from path {requestPath}");
+            }
+
+            var segments = requestPath.Substring(index+ProvidersSegment.Length).Split("/", StringSplitOptions.RemoveEmptyEntries);
+            var result = new StringBuilder(segments[0]);
+            for(int i = 1; i < segments.Length; i += 2)
+            {
+                result.Append($"/{segments[i]}");
+            }
+            return result.ToString();
+        }
 
         public bool TryGetResourceDataSchema(OperationSet set, [MaybeNullWhen(false)] out string resourceSpecName, out InputModelType? inputModel)
         {

@@ -5,7 +5,6 @@ using Azure.Generator.Mgmt.Models;
 using Azure.Generator.Providers;
 using Azure.Generator.Utilities;
 using Microsoft.Generator.CSharp.ClientModel;
-using Microsoft.Generator.CSharp.ClientModel.Providers;
 using Microsoft.Generator.CSharp.Input;
 using Microsoft.Generator.CSharp.Providers;
 using System.Collections.Generic;
@@ -18,17 +17,29 @@ namespace Azure.Generator
     {
         private Dictionary<string, OperationSet> _pathToOperationSetMap;
         private Dictionary<string, HashSet<OperationSet>> _specNameToOperationSetsMap;
+        private Dictionary<string, InputModelType> _inputTypeMap;
 
         /// <inheritdoc/>
         public AzureOutputLibrary()
         {
             _pathToOperationSetMap = CategorizeClients();
             _specNameToOperationSetsMap = EnsureOperationsetMap();
+            _inputTypeMap = AzureClientPlugin.Instance.InputLibrary.InputNamespace.Models.OfType<InputModelType>().ToDictionary(model => model.Name);
         }
 
         private IReadOnlyList<ResourceProvider> BuildResources()
         {
             var result = new List<ResourceProvider>();
+            foreach ((var schemaName, var operationSets) in _specNameToOperationSetsMap)
+            {
+                var model = _inputTypeMap[schemaName];
+                var resourceData = (ResourceDataProvider)AzureClientPlugin.Instance.TypeFactory.CreateModel(model)!;
+                foreach (var operationSet in operationSets)
+                {
+                    var requestPath = operationSet.RequestPath;
+                    var resourceType = ResourceDetection.GetResourceTypeFromPath(requestPath);
+                }
+            }
             foreach (var model in AzureClientPlugin.Instance.InputLibrary.InputNamespace.Models)
             {
                 if (IsResource(model.Name))
@@ -36,20 +47,14 @@ namespace Azure.Generator
                     // we are sure that the model is a resource, so we can cast it to ResourceDataProvider
                     var resourceDataProvider = (ResourceDataProvider)AzureClientPlugin.Instance.TypeFactory.CreateModel(model)!;
 
-                    // TODO: set resource type
                     var operationSet = _specNameToOperationSetsMap[model.Name].First();
-                    var client = GetCorrespondingClientForResource(model);
-                    var resource = new ResourceProvider(model.Name, resourceDataProvider, client, "");
+                    var resourceType = ResourceDetection.GetResourceTypeFromPath(operationSet.RequestPath);
+                    var resource = new ResourceProvider(operationSet, model.Name, resourceDataProvider, resourceType);
+                    AzureClientPlugin.Instance.AddTypeToKeep(resource.Name);
                     result.Add(resource);
                 }
             }
             return result;
-        }
-
-        private ClientProvider GetCorrespondingClientForResource(InputModelType inputModel)
-        {
-            var inputClient = AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients.Single(client => client.Name.Contains(inputModel.Name));
-            return AzureClientPlugin.Instance.TypeFactory.CreateClient(inputClient)!;
         }
 
         private Dictionary<string, HashSet<OperationSet>> EnsureOperationsetMap()
@@ -77,11 +82,9 @@ namespace Azure.Generator
             var result = new Dictionary<string, OperationSet>();
             foreach (var inputClient in AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients)
             {
-                var requestPathList = new HashSet<string>();
                 foreach (var operation in inputClient.Operations)
                 {
                     var path = operation.GetHttpPath();
-                    requestPathList.Add(path);
                     if (result.TryGetValue(path, out var operationSet))
                     {
                         operationSet.Add(operation);

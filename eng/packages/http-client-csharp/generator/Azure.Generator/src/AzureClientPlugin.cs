@@ -33,9 +33,6 @@ public class AzureClientPlugin : ClientModelPlugin
 
     internal ResourceDetection ResourceDetection { get; } = new();
 
-    /// <inheritdoc/>
-    public override Lazy<PostProcessor> PostProcessor => new(() => new MgmtPostProcessor());
-
     /// <summary>
     /// The Azure client plugin to generate the Azure client SDK.
     /// </summary>
