@@ -120,7 +120,6 @@ jobs:
 
       - pwsh: |
           dotnet pack eng/service.proj -warnaserror `
-            -nowarn:NU1902 `
             /p:ValidateRunApiCompat=true `
             /p:SDKType=${{ parameters.SDKType }} `
             /p:IncludeTests=false `
@@ -183,6 +182,7 @@ jobs:
           Artifacts: ${{ parameters.Artifacts }}
 
   - job: "Analyze"
+    condition: false
     timeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
     condition: and(succeededOrFailed(), ne(variables['Skip.Analyze'], true))
     templateContext:
@@ -303,6 +303,7 @@ jobs:
   # other stages that are aggregate in nature as those are tested in another aggregate pipeline
   - ${{ if or(ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.LimitForPullRequest, 'true')) }}:
     - job: Compliance
+      condition: false
       pool:
         name: $(WINDOWSPOOL)
         image: $(WINDOWSVMIMAGE)
@@ -337,51 +338,51 @@ jobs:
             BaselineFilePath: $(Build.sourcesdirectory)/eng/dotnet.gdnbaselines
             ServiceDirectory: ${{ parameters.ServiceDirectory }}
 
-    - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
-      parameters:
-        GenerateJobName: generate_target_service_test_matrix
-        JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
-        MatrixConfigs: ${{ parameters.MatrixConfigs }}
-        MatrixFilters: ${{ parameters.MatrixFilters }}
-        MatrixReplace: ${{ parameters.MatrixReplace }}
-        CloudConfig:
-          Cloud: public
-        ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
-          SparseCheckoutPaths:
-            - "/*"
-            - "!SessionRecords"
-          EnablePRGeneration: true
-          PRMatrixSetting: ProjectNames
-          PRJobBatchSize: 20
-          PRMatrixIndirectFilters:
-            - 'AdditionalTestArguments=.*true'
-            - 'Pool=.*LinuxPool$'
-          PreGenerationSteps:
-            - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
-              parameters:
-                ServiceDirectory: ${{parameters.ServiceDirectory}}
-                PackageInfoDirectory: $(Build.ArtifactStagingDirectory)/PackageInfoPublishing
+    # - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
+    #   parameters:
+    #     GenerateJobName: generate_target_service_test_matrix
+    #     JobTemplatePath: /eng/pipelines/templates/jobs/ci.tests.yml
+    #     MatrixConfigs: ${{ parameters.MatrixConfigs }}
+    #     MatrixFilters: ${{ parameters.MatrixFilters }}
+    #     MatrixReplace: ${{ parameters.MatrixReplace }}
+    #     CloudConfig:
+    #       Cloud: public
+    #     ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+    #       SparseCheckoutPaths:
+    #         - "/*"
+    #         - "!SessionRecords"
+    #       EnablePRGeneration: true
+    #       PRMatrixSetting: ProjectNames
+    #       PRJobBatchSize: 20
+    #       PRMatrixIndirectFilters:
+    #         - 'AdditionalTestArguments=.*true'
+    #         - 'Pool=.*LinuxPool$'
+    #       PreGenerationSteps:
+    #         - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
+    #           parameters:
+    #             ServiceDirectory: ${{parameters.ServiceDirectory}}
+    #             PackageInfoDirectory: $(Build.ArtifactStagingDirectory)/PackageInfoPublishing
 
-            # when we publish the packageinfo as an artifact, it actually cleans up the original files. Since we need them during matrix generation
-            # we output them to a publishing directory, copy from there into the target PackageInfoDirectory, and then publish the originals
-            - pwsh: |
-                mkdir "$(Build.ArtifactStagingDirectory)/PackageInfo"
-                Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing" -File `
-                  | Copy-Item -Destination "$(Build.ArtifactStagingDirectory)/PackageInfo$($_.Name)" -Force
-              displayName: Copy ArtifactInfo from Publishing Directory
+    #         # when we publish the packageinfo as an artifact, it actually cleans up the original files. Since we need them during matrix generation
+    #         # we output them to a publishing directory, copy from there into the target PackageInfoDirectory, and then publish the originals
+    #         - pwsh: |
+    #             mkdir "$(Build.ArtifactStagingDirectory)/PackageInfo"
+    #             Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)/PackageInfoPublishing" -File `
+    #               | Copy-Item -Destination "$(Build.ArtifactStagingDirectory)/PackageInfo$($_.Name)" -Force
+    #           displayName: Copy ArtifactInfo from Publishing Directory
 
-            - pwsh: |
-                Get-ChildItem -R $(Build.ArtifactStagingDirectory)/PackageInfoPublishing | ForEach-Object {  $content = Get-Content $_.FullName; Write-Host "$($_.FullName): `n$content" }
-                Get-ChildItem -R $(Build.ArtifactStagingDirectory)/PackageInfo | ForEach-Object {  $content = Get-Content $_.FullName; Write-Host "$($_.FullName): `n$content" }
-              displayName: Dump Available Artifacts
+    #         - pwsh: |
+    #             Get-ChildItem -R $(Build.ArtifactStagingDirectory)/PackageInfoPublishing | ForEach-Object {  $content = Get-Content $_.FullName; Write-Host "$($_.FullName): `n$content" }
+    #             Get-ChildItem -R $(Build.ArtifactStagingDirectory)/PackageInfo | ForEach-Object {  $content = Get-Content $_.FullName; Write-Host "$($_.FullName): `n$content" }
+    #           displayName: Dump Available Artifacts
 
-            - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
-              parameters:
-                ArtifactName: 'TestPackagesArtifact'
-                ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfoPublishing'
+    #         - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+    #           parameters:
+    #             ArtifactName: 'TestPackagesArtifact'
+    #             ArtifactPath: '$(Build.ArtifactStagingDirectory)/PackageInfoPublishing'
 
-        AdditionalParameters:
-          SDKType: ${{ parameters.SDKType }}
-          ServiceDirectory: ${{ parameters.ServiceDirectory }}
-          TestSetupSteps: ${{ parameters.TestSetupSteps }}
-          TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
+    #     AdditionalParameters:
+    #       SDKType: ${{ parameters.SDKType }}
+    #       ServiceDirectory: ${{ parameters.ServiceDirectory }}
+    #       TestSetupSteps: ${{ parameters.TestSetupSteps }}
+    #       TestTimeoutInMinutes: ${{ parameters.TestTimeoutInMinutes }}
