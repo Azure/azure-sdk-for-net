@@ -338,7 +338,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             // Act - Start transfer
             TransferOperation transfer = await transferManager.StartTransferAsync(
-                await blobProvider.FromContainer(source.Container.Uri),
+                await blobProvider.FromContainerAsync(source.Container.Uri),
                 localProvider.FromDirectory(destination.DirectoryPath),
                 transferOptions);
 

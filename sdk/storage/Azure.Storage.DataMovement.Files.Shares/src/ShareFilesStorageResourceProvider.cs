@@ -172,8 +172,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             // Source share file data currently empty, so no specific properties to grab
             return properties.IsContainer
-                ? await FromDirectory(properties.SourceUri).ConfigureAwait(false)
-                : await FromFile(properties.SourceUri).ConfigureAwait(false);
+                ? await FromDirectoryAsync(properties.SourceUri).ConfigureAwait(false)
+                : await FromFileAsync(properties.SourceUri).ConfigureAwait(false);
         }
 
         /// <inheritdoc/>
@@ -201,8 +201,8 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 FileMetadata = checkpointDetails.FileMetadata,
             };
             return properties.IsContainer
-                ? await FromDirectory(properties.DestinationUri, options).ConfigureAwait(false)
-                : await FromFile(properties.DestinationUri, options).ConfigureAwait(false);
+                ? await FromDirectoryAsync(properties.DestinationUri, options).ConfigureAwait(false)
+                : await FromFileAsync(properties.DestinationUri, options).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -237,7 +237,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public async ValueTask<StorageResource> FromDirectory(Uri directoryUri, ShareFileStorageResourceOptions options = default)
+        public async ValueTask<StorageResource> FromDirectoryAsync(Uri directoryUri, ShareFileStorageResourceOptions options = default)
         {
             ShareDirectoryClient client = _credentialType switch
             {
@@ -265,7 +265,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public async ValueTask<StorageResource> FromFile(Uri fileUri, ShareFileStorageResourceOptions options = default)
+        public async ValueTask<StorageResource> FromFileAsync(Uri fileUri, ShareFileStorageResourceOptions options = default)
         {
             ShareFileClient client = _credentialType switch
             {

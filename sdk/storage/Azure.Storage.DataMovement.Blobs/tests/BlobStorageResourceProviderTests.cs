@@ -122,7 +122,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 CredType.Sas => new(mockCreds.Sas.Object),
                 _ => throw new ArgumentException("Bad cred type"),
             };
-            BlobStorageResourceContainer resource = await provider.FromContainer(uri) as BlobStorageResourceContainer;
+            BlobStorageResourceContainer resource = await provider.FromContainerAsync(uri) as BlobStorageResourceContainer;
 
             Assert.IsNotNull(resource);
             Assert.AreEqual(uri, resource.Uri);
@@ -152,10 +152,10 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             StorageResource resource = blobType switch
             {
-                BlobType.Unspecified => await provider.FromBlob(uri),
-                BlobType.Block => await provider.FromBlob(uri, new BlockBlobStorageResourceOptions()),
-                BlobType.Page => await provider.FromBlob(uri, new PageBlobStorageResourceOptions()),
-                BlobType.Append => await provider.FromBlob(uri, new AppendBlobStorageResourceOptions()),
+                BlobType.Unspecified => await provider.FromBlobAsync(uri),
+                BlobType.Block => await provider.FromBlobAsync(uri, new BlockBlobStorageResourceOptions()),
+                BlobType.Page => await provider.FromBlobAsync(uri, new PageBlobStorageResourceOptions()),
+                BlobType.Append => await provider.FromBlobAsync(uri, new AppendBlobStorageResourceOptions()),
                 _ => throw new ArgumentException("Bad blob type")
             };
 

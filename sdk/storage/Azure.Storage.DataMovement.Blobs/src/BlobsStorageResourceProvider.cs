@@ -169,13 +169,13 @@ namespace Azure.Storage.DataMovement.Blobs
         #region Abstract Class Implementation
         /// <inheritdoc/>
         protected override async Task<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
-            => await FromTransferProperties(properties, getSource: true, cancellationToken).ConfigureAwait(false);
+            => await FromTransferPropertiesAsync(properties, getSource: true, cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc/>
         protected override async Task<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
-            => await FromTransferProperties(properties, getSource: false, cancellationToken).ConfigureAwait(false);
+            => await FromTransferPropertiesAsync(properties, getSource: false, cancellationToken).ConfigureAwait(false);
 
-        private async ValueTask<StorageResource> FromTransferProperties(
+        private async ValueTask<StorageResource> FromTransferPropertiesAsync(
             TransferProperties properties,
             bool getSource,
             CancellationToken cancellationToken)
@@ -255,7 +255,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public async ValueTask<StorageResource> FromContainer(Uri containerUri, BlobStorageResourceContainerOptions options = default)
+        public async ValueTask<StorageResource> FromContainerAsync(Uri containerUri, BlobStorageResourceContainerOptions options = default)
         {
             BlobContainerClient client = _credentialType switch
             {
@@ -291,7 +291,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public async ValueTask<StorageResource> FromBlob(Uri blobUri, BlobStorageResourceOptions options = default)
+        public async ValueTask<StorageResource> FromBlobAsync(Uri blobUri, BlobStorageResourceOptions options = default)
         {
             if (options is BlockBlobStorageResourceOptions)
             {
