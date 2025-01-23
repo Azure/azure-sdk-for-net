@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
-    public partial class Sample_ArmDeploymentCollection
+    public partial class Sample_DeploymentExtendedCollection
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -34,14 +34,14 @@ namespace Azure.ResourceManager.Resources.Samples
             ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(scope);
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
-            // get the collection of this ArmDeploymentResource
-            ArmDeploymentCollection collection = subscriptionResource.GetArmDeployments();
+            // get the collection of this DeploymentExtendedResource
+            DeploymentExtendedCollection collection = subscriptionResource.GetDeploymentExtendeds();
 
             // invoke the operation
             string deploymentName = "my-deployment";
-            ArmDeploymentContent content = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
+            Deployment deployment = new Deployment(new DeploymentProperties(DeploymentMode.Incremental)
             {
-                TemplateLink = new ArmDeploymentTemplateLink
+                TemplateLink = new TemplateLink
                 {
                     Uri = new Uri("https://example.com/exampleTemplate.json"),
                 },
@@ -55,12 +55,12 @@ namespace Azure.ResourceManager.Resources.Samples
 ["tagKey2"] = "tag-value-2"
 },
             };
-            ArmOperation<ArmDeploymentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, content);
-            ArmDeploymentResource result = lro.Value;
+            ArmOperation<DeploymentExtendedResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, deploymentName, deployment);
+            DeploymentExtendedResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ArmDeploymentData resourceData = result.Data;
+            DeploymentExtendedData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
