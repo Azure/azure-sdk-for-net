@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using Azure.AI.Inference;
 using Azure.AI.OpenAI;
 using Azure.AI.Projects;
@@ -23,7 +24,17 @@ namespace Azure.CloudMachine
     public class AIFoundryClient : ClientWorkspace
     {
         /// <summary>
-        /// subclient connections.
+        /// Protects the <see cref="Connections"/> collection from concurrent access. Separated from <see cref="_connectionCacheLock"/> to reduce contention.
+        /// </summary>
+        private readonly ReaderWriterLockSlim _connectionsLock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
+
+        /// <summary>
+        /// Protects the <see cref="_connectionCache"/> dictionary from concurrent access. Separated from <see cref="_connectionsLock"/> to improve concurrency in read-heavy scenarios.
+        /// </summary>
+        private readonly ReaderWriterLockSlim _connectionCacheLock = new ReaderWriterLockSlim(LockRecursionPolicy.NoRecursion);
+
+        /// <summary>
+        /// Subclient connections.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ConnectionCollection Connections { get; } = [];
@@ -35,7 +46,8 @@ namespace Azure.CloudMachine
         /// <summary>
         /// Initializes a new instance of the <see cref="AIFoundryClient"/> class for mocking purposes.
         /// </summary>
-        protected AIFoundryClient() : base(BuildCredential(default))
+        protected AIFoundryClient()
+            : base(BuildCredential(default))
         {
         }
 
@@ -54,8 +66,8 @@ namespace Azure.CloudMachine
                 throw new ArgumentException("Connection string cannot be null or empty.", nameof(connectionString));
             }
 
+            // Initialize with a basic connection for AIProjectClient.
             Connections.Add(new ClientConnection(typeof(AIProjectClient).FullName, connectionString));
-
             _connectionsClient = new ConnectionsClient(connectionString, Credential);
         }
 
@@ -66,75 +78,139 @@ namespace Azure.CloudMachine
         /// <returns>The connection options for the specified client type and instance ID.</returns>
         public override ClientConnection GetConnectionOptions(string connectionId)
         {
-            // Check if the connection already exists
-            if (Connections.Contains(connectionId))
+            // First, try to read from the Connections collection with a read lock.
+            _connectionsLock.EnterReadLock();
+            try
             {
-                return Connections[connectionId];
+                if (Connections.Contains(connectionId))
+                {
+                    return Connections[connectionId];
+                }
+            }
+            finally
+            {
+                _connectionsLock.ExitReadLock();
             }
 
-            // Determine the connection type based on the connection ID
+            // Get the connection type based on the Connection ID.
             ConnectionType connectionType = GetConnectionTypeFromId(connectionId);
 
-            // Check if the connection details are already cached
-            if (!_connectionCache.TryGetValue(connectionType, out ConnectionResponse connection))
+            // Check if the connection details are already cached (read lock).
+            ConnectionResponse connection = null;
+            _connectionCacheLock.EnterReadLock();
+            try
             {
-                connection = _connectionsClient.GetDefaultConnection(connectionType, true);
-                _connectionCache[connectionType] = connection;
+                _connectionCache.TryGetValue(connectionType, out connection);
+            }
+            finally
+            {
+                _connectionCacheLock.ExitReadLock();
             }
 
+            // If not in cache, acquire a write lock to populate it.
+            if (connection == null)
+            {
+                _connectionCacheLock.EnterWriteLock();
+                try
+                {
+                    // Double-check in case another thread already added it.
+                    if (!_connectionCache.TryGetValue(connectionType, out connection))
+                    {
+                        connection = _connectionsClient.GetDefaultConnection(connectionType, true);
+                        _connectionCache[connectionType] = connection;
+                    }
+                }
+                finally
+                {
+                    _connectionCacheLock.ExitWriteLock();
+                }
+            }
+
+            // If the connection uses API key auth, validate and add if needed.
             if (connection.Properties is ConnectionPropertiesApiKeyAuth apiKeyAuthProperties)
             {
                 if (string.IsNullOrWhiteSpace(apiKeyAuthProperties.Target))
                 {
-                    throw new ArgumentException($"The API key authentication target URI is missing or invalid for {connectionId}.");
+                    throw new ArgumentException(
+                        $"The API key authentication target URI is missing or invalid for {connectionId}.");
                 }
 
-                if (apiKeyAuthProperties.Credentials == null || string.IsNullOrWhiteSpace(apiKeyAuthProperties.Credentials.Key))
+                if (apiKeyAuthProperties.Credentials == null
+                    || string.IsNullOrWhiteSpace(apiKeyAuthProperties.Credentials.Key))
                 {
-                    throw new ArgumentException($"The API key is missing or invalid {connectionId}.");
+                    throw new ArgumentException($"The API key is missing or invalid for {connectionId}.");
                 }
 
-                Connections.Add(new ClientConnection(connectionId, apiKeyAuthProperties.Target, apiKeyAuthProperties.Credentials.Key));
+                // Build the new connection object.
+                var newConnection = new ClientConnection(connectionId, apiKeyAuthProperties.Target, apiKeyAuthProperties.Credentials.Key
+                );
 
-                return Connections[connectionId];
+                // Now we need to re-check and possibly add to Connections under a write lock.
+                _connectionsLock.EnterUpgradeableReadLock();
+                try
+                {
+                    if (Connections.Contains(connectionId))
+                    {
+                        return Connections[connectionId];
+                    }
+                    else
+                    {
+                        _connectionsLock.EnterWriteLock();
+                        try
+                        {
+                            // Double-check again after acquiring write lock.
+                            if (!Connections.Contains(connectionId))
+                            {
+                                Connections.Add(newConnection);
+                                return newConnection;
+                            }
+                            else
+                            {
+                                return Connections[connectionId]; // Some thread beat us to it.
+                            }
+                        }
+                        finally
+                        {
+                            _connectionsLock.ExitWriteLock();
+                        }
+                    }
+                }
+                finally
+                {
+                    _connectionsLock.ExitUpgradeableReadLock();
+                }
             }
             else
             {
-                throw new ArgumentException($"Cannot connect with {connectionId}! Ensure valid Api Key authentication.");
+                throw new ArgumentException(
+                    $"Cannot connect with {connectionId}! Ensure valid API key authentication."
+                );
             }
         }
 
         private ConnectionType GetConnectionTypeFromId(string connectionId)
         {
-            if (new[]
+            switch (connectionId)
             {
-                typeof(AzureOpenAIClient).FullName,
-                typeof(ChatClient).FullName,
-                typeof(EmbeddingClient).FullName
-            }.Contains(connectionId))
-            {
-                return ConnectionType.AzureOpenAI;
-            }
-            else if (new[]
-            {
-                typeof(ChatCompletionsClient).FullName,
-                typeof(EmbeddingsClient).FullName
-            }.Contains(connectionId))
-            {
-                return ConnectionType.Serverless;
-            }
-            else if (new[]
-            {
-                typeof(SearchClient).FullName,
-                typeof(SearchIndexClient).FullName,
-                typeof(SearchIndexerClient).FullName
-            }.Contains(connectionId))
-            {
-                return ConnectionType.AzureAISearch;
-            }
-            else
-            {
-                throw new ArgumentException($"Unknown connection type for ID: {connectionId}");
+                case var id when
+                    id == typeof(AzureOpenAIClient).FullName ||
+                    id == typeof(ChatClient).FullName ||
+                    id == typeof(EmbeddingClient).FullName:
+                    return ConnectionType.AzureOpenAI;
+
+                case var id when
+                    id == typeof(ChatCompletionsClient).FullName ||
+                    id == typeof(EmbeddingsClient).FullName:
+                    return ConnectionType.Serverless;
+
+                case var id when
+                    id == typeof(SearchClient).FullName ||
+                    id == typeof(SearchIndexClient).FullName ||
+                    id == typeof(SearchIndexerClient).FullName:
+                    return ConnectionType.AzureAISearch;
+
+                default:
+                    throw new ArgumentException($"Unknown connection type for ID: {connectionId}");
             }
         }
 
@@ -144,7 +220,15 @@ namespace Azure.CloudMachine
         /// <returns>All connection options.</returns>
         public override IEnumerable<ClientConnection> GetAllConnectionOptions()
         {
-            return Connections;
+            _connectionsLock.EnterReadLock();
+            try
+            {
+                return Connections;
+            }
+            finally
+            {
+                _connectionsLock.ExitReadLock();
+            }
         }
 
         private static TokenCredential BuildCredential(TokenCredential credential)
