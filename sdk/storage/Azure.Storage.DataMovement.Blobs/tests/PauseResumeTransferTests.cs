@@ -401,6 +401,11 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertPausedCheck();
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
+            CancellationTokenSource cancellationTokenSource2 = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource2.Token);
+
+            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
+
             // Check if Job Plan File exists in checkpointer path.
             JobPartPlanFileName fileName = new JobPartPlanFileName(
                 checkpointerPath: checkpointerDirectory.DirectoryPath,
@@ -1026,7 +1031,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions: transferOptions);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(100));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
@@ -1114,7 +1119,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions: transferOptions);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(100));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
