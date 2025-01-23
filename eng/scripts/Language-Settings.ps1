@@ -98,9 +98,17 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
           /p:OutputProjectFilePath="$outputFilePath" > $buildOutputPath 2>&1
 
         if ($LASTEXITCODE -ne 0) {
-          Write-Host "Something went wrong calculating dependencies for $($pkgProp.Name)"
+          Write-Host "Something went wrong calculating dependencies for $($pkgProp.Name). Exit code $LASTEXITCODE."
           Write-Host "Dumping content from $buildOutputPath"
-          Write-Host (Get-Content $buildOutputPath)
+          Write-Host (Get-Content -Raw $buildOutputPath)
+
+          if (Test-Path $outputFilePath) {
+            Write-Host "We generated the output file though"
+            WRite-Host (Get-Content -Raw $outputFilePath)
+          }
+          else {
+            Write-Host "No output file was generated for $($pkgProp.Name)."
+          }
         }
       }
 
