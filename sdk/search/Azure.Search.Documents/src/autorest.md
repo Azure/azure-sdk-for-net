@@ -58,6 +58,13 @@ directive:
     $["discriminator"] = "@odata.type";
 ```
 
+```yaml
+directive:
+- from: "searchservice.json"
+  where: $.definitions.AIStudioModelCatalogName
+  transform: $["x-ms-enum"].name = "AIFoundryModelCatalogName";
+```
+
 ### Mark definitions as objects
 The modeler warns about models without an explicit type.
 ``` yaml
