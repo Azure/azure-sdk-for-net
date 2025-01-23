@@ -125,7 +125,7 @@ There are more options which can be used when creating a blob storage resource. 
 ```C# Snippet:ResourceConstruction_Blobs_WithOptions_VirtualDirectory
 BlobStorageResourceContainerOptions virtualDirectoryOptions = new()
 {
-    BlobDirectoryPrefix = "blob/directory/prefix"
+    BlobPrefix = "blob/directory/prefix"
 };
 
 StorageResource virtualDirectoryResource = blobs.FromClient(
@@ -136,11 +136,10 @@ StorageResource virtualDirectoryResource = blobs.FromClient(
 ```C# Snippet:ResourceConstruction_Blobs_WithOptions_BlockBlob
 BlockBlobStorageResourceOptions resourceOptions = new()
 {
-    Metadata = new DataTransferProperty<IDictionary<string, string>> (
-        new Dictionary<string, string>
+    Metadata = new Dictionary<string, string>
         {
             { "key", "value" }
-        })
+        }
 };
 StorageResource leasedBlockBlobResource = blobs.FromClient(
     blockBlobClient,
@@ -170,8 +169,8 @@ TransferOperation transferOperation = await transferManager.StartTransferAsync(
         new BlobStorageResourceContainerOptions()
         {
             // Block blobs are the default if not specified
-            BlobType = new(BlobType.Block),
-            BlobDirectoryPrefix = optionalDestinationPrefix,
+            BlobType = BlobType.Block,
+            BlobPrefix = optionalDestinationPrefix,
         }));
 ```
 
@@ -196,7 +195,7 @@ TransferOperation transferOperation = await transferManager.StartTransferAsync(
         blobContainerUri,
         new BlobStorageResourceContainerOptions()
         {
-            BlobDirectoryPrefix = optionalSourcePrefix
+            BlobPrefix = optionalSourcePrefix
         }),
     destinationResource: files.FromDirectory(downloadPath));
 await transferOperation.WaitForCompletionAsync();
@@ -223,7 +222,7 @@ sourceResource: blobs.FromContainer(
     sourceContainerUri,
     new BlobStorageResourceContainerOptions()
     {
-        BlobDirectoryPrefix = sourceDirectoryName
+        BlobPrefix = sourceDirectoryName
     }),
 destinationResource: blobs.FromContainer(
     destinationContainerUri,
@@ -231,8 +230,8 @@ destinationResource: blobs.FromContainer(
     {
         // all source blobs will be copied as a single type of destination blob
         // defaults to block blobs if unspecified
-        BlobType = new(BlobType.Block),
-        BlobDirectoryPrefix = downloadPath
+        BlobType = BlobType.Block,
+        BlobPrefix = downloadPath
     }));
 await transferOperation.WaitForCompletionAsync();
 ```
@@ -268,7 +267,7 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
 {
     BlobContainerOptions = new BlobStorageResourceContainerOptions
     {
-        BlobDirectoryPrefix = blobDirectoryPrefix
+        BlobPrefix = blobDirectoryPrefix
     },
     TransferOptions = new TransferOptions()
     {
@@ -301,7 +300,7 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
 {
     BlobContainerOptions = new BlobStorageResourceContainerOptions
     {
-        BlobDirectoryPrefix = blobDirectoryPrefix
+        BlobPrefix = blobDirectoryPrefix
     },
     TransferOptions = new TransferOptions()
     {

@@ -528,7 +528,7 @@ namespace Azure.Storage.DataMovement.Blobs
                 {
                     return new BlobStorageResourceContainerOptions()
                     {
-                        BlobDirectoryPrefix = GetPrefix(transferProperties, isSource)
+                        BlobPrefix = GetPrefix(transferProperties, isSource)
                     };
                 }
                 else
@@ -734,9 +734,9 @@ namespace Azure.Storage.DataMovement.Blobs
 
             BlobDestinationCheckpointDetails destinationCheckpointDetails = checkpointDetails as BlobDestinationCheckpointDetails;
 
-            if (null != destinationCheckpointDetails && destinationCheckpointDetails.BlobType?.Value != default)
+            if (null != destinationCheckpointDetails && destinationCheckpointDetails.BlobType != default)
             {
-                return destinationCheckpointDetails.BlobType.Value switch
+                return destinationCheckpointDetails.BlobType switch
                 {
                     BlobType.Block => ResourceType.BlockBlob,
                     BlobType.Page => ResourceType.PageBlob,

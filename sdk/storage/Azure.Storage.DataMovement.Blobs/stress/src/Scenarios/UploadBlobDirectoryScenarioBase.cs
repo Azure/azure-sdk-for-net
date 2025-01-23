@@ -62,8 +62,8 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                         destinationContainerClient,
                         new()
                         {
-                            BlobDirectoryPrefix = pathPrefix,
-                            BlobType = new(blobType)
+                            BlobPrefix = pathPrefix,
+                            BlobType = blobType
                         });
 
                     // Upload

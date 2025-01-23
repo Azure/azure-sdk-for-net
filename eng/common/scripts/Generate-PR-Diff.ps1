@@ -48,6 +48,7 @@ $changedFiles = @()
 $changedServices = @()
 
 $changedFiles = Get-ChangedFiles -DiffPath $TargetPath
+$deletedFiles = Get-ChangedFiles -DiffPath $TargetPath -DiffFilterType "D"
 
 if ($changedFiles) {
   $changedServices = Get-ChangedServices -ChangedFiles $changedFiles
@@ -63,6 +64,7 @@ $result = [PSCustomObject]@{
   "ChangedFiles"    = $changedFiles
   "ChangedServices" = $changedServices
   "ExcludePaths"    = $ExcludePaths
+  "DeletedFiles"    = $deletedFiles
   "PRNumber"        = if ($env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER) { $env:SYSTEM_PULLREQUEST_PULLREQUESTNUMBER } else { "-1" }
 }
 

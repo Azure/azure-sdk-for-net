@@ -301,7 +301,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 10 /* fileCount */,
                 transferManagerOptions: transferManagerOptions,
                 transferOptions: transferOptions,
-                waitTime: 30);
+                waitTime: 90);
         }
 
         [LiveOnly]
