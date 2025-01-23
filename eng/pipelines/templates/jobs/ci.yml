@@ -59,13 +59,6 @@ jobs:
       Codeql.SkipTaskAutoInjection: false
       SDKType: ${{ parameters.SDKType }}
 
-    templateContext:
-      outputs:
-        - output: pipelineArtifact
-          targetPath: $(Build.ArtifactStagingDirectory)/*.binlog
-          artifactName: binlog_$(Agent.JobName)
-          sbomEnabled: false
-
     steps:
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
@@ -99,7 +92,11 @@ jobs:
           /p:InheritDocEnabled=false /p:BuildProjectReferences=false
           /p:OutputProjectFilePath="$(Build.SourcesDirectory)/Azure.Core_dependencylist.txt"
           /binaryLogger:LogFile=$(Build.ArtifactStagingDirectory)/save-package-props.binlog
-          > $(Build.SourcesDirectory)/Azure.Core_dependencylistoutput.txt 2>&1
+
+      - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+        parameters:
+          artifactName: BuildWindows
+          artifactPath: $(Build.ArtifactStagingDirectory)
 
   - job: BuildLinux
     pool:
@@ -113,13 +110,6 @@ jobs:
       Codeql.SkipTaskAutoInjection: false
       SDKType: ${{ parameters.SDKType }}
 
-    templateContext:
-      outputs:
-        - output: pipelineArtifact
-          targetPath: $(Build.ArtifactStagingDirectory)/*.binlog
-          artifactName: binlog_$(Agent.JobName)
-          sbomEnabled: false
-
     steps:
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
@@ -153,4 +143,8 @@ jobs:
           /p:InheritDocEnabled=false /p:BuildProjectReferences=false
           /p:OutputProjectFilePath="$(Build.SourcesDirectory)/Azure.Core_dependencylist.txt"
           /binaryLogger:LogFile=$(Build.ArtifactStagingDirectory)/save-package-props.binlog
-          > $(Build.SourcesDirectory)/Azure.Core_dependencylistoutput.txt 2>&1
+
+      - template: /eng/common/pipelines/templates/steps/publish-1es-artifact.yml
+        parameters:
+          artifactName: BuildLinux
+          artifactPath: $(Build.ArtifactStagingDirectory)
