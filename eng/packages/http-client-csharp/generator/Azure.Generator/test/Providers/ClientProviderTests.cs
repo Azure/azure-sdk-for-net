@@ -7,7 +7,6 @@ using Microsoft.Generator.CSharp.Primitives;
 using Microsoft.Generator.CSharp.Providers;
 using NUnit.Framework;
 using System;
-using System.ClientModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
