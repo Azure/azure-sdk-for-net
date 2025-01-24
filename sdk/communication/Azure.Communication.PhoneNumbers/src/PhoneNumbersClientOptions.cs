@@ -5,6 +5,7 @@
 
 using System;
 using Azure.Core;
+using System.ComponentModel;
 
 [assembly: CodeGenSuppressType("PhoneNumbersClientOptions")]
 namespace Azure.Communication.PhoneNumbers
@@ -21,6 +22,7 @@ namespace Azure.Communication.PhoneNumbers
             /// <summary> Service version "2021-03-07". </summary>
             V2021_03_07 = 1,
             /// <summary> Service version "2022-01-11-preview". </summary>
+            [EditorBrowsable(EditorBrowsableState.Never)]
             V2022_01_11_Preview_2 = 2,
             /// <summary> Service version "2022-12-01. </summary>
             V2022_12_01 = 3,
