@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="protocol"> Protocol to use for client connections. </param>
         /// <param name="tls"> TLS server certificate settings for this port. Omit to disable TLS. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BrokerListenerPort(string authenticationRef, string authorizationRef, int? nodePort, int port, BrokerProtocolType? protocol, TlsCertMethod tls, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BrokerListenerPort(string authenticationRef, string authorizationRef, int? nodePort, int port, BrokerProtocolType? protocol, ListenerPortTlsCertMethod tls, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthenticationRef = authenticationRef;
             AuthorizationRef = authorizationRef;
@@ -87,6 +87,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> Protocol to use for client connections. </summary>
         public BrokerProtocolType? Protocol { get; set; }
         /// <summary> TLS server certificate settings for this port. Omit to disable TLS. </summary>
-        public TlsCertMethod Tls { get; set; }
+        public ListenerPortTlsCertMethod Tls { get; set; }
     }
 }

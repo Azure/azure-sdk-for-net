@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="instanceCount"> To manually scale the dataflow profile, specify the maximum number of instances you want to run. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <returns> A new <see cref="Models.IotOperationsDataflowProfileProperties"/> instance for mocking. </returns>
-        public static IotOperationsDataflowProfileProperties IotOperationsDataflowProfileProperties(ProfileDiagnostics diagnostics = null, int? instanceCount = null, IotOperationsProvisioningState? provisioningState = null)
+        public static IotOperationsDataflowProfileProperties IotOperationsDataflowProfileProperties(DataflowProfileDiagnostics diagnostics = null, int? instanceCount = null, IotOperationsProvisioningState? provisioningState = null)
         {
             return new IotOperationsDataflowProfileProperties(diagnostics, instanceCount, provisioningState, serializedAdditionalRawData: null);
         }

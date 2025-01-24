@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> DataflowProfile Diagnostics properties. </summary>
-    public partial class ProfileDiagnostics
+    public partial class DataflowProfileDiagnostics
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ProfileDiagnostics"/>. </summary>
-        public ProfileDiagnostics()
+        /// <summary> Initializes a new instance of <see cref="DataflowProfileDiagnostics"/>. </summary>
+        public DataflowProfileDiagnostics()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProfileDiagnostics"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataflowProfileDiagnostics"/>. </summary>
         /// <param name="logs"> Diagnostic log settings for the resource. </param>
         /// <param name="metrics"> The metrics settings for the resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ProfileDiagnostics(DiagnosticsLogs logs, IotOperationsMetrics metrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DataflowProfileDiagnostics(DiagnosticsLogs logs, IotOperationsMetrics metrics, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Logs = logs;
             Metrics = metrics;

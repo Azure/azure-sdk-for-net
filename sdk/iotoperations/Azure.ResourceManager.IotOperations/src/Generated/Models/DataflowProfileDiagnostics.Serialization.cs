@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    public partial class ProfileDiagnostics : IUtf8JsonSerializable, IJsonModel<ProfileDiagnostics>
+    public partial class DataflowProfileDiagnostics : IUtf8JsonSerializable, IJsonModel<DataflowProfileDiagnostics>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ProfileDiagnostics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataflowProfileDiagnostics>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ProfileDiagnostics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DataflowProfileDiagnostics>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProfileDiagnostics>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataflowProfileDiagnostics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProfileDiagnostics)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DataflowProfileDiagnostics)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(Logs))
@@ -61,19 +61,19 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        ProfileDiagnostics IJsonModel<ProfileDiagnostics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DataflowProfileDiagnostics IJsonModel<DataflowProfileDiagnostics>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProfileDiagnostics>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataflowProfileDiagnostics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProfileDiagnostics)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DataflowProfileDiagnostics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProfileDiagnostics(document.RootElement, options);
+            return DeserializeDataflowProfileDiagnostics(document.RootElement, options);
         }
 
-        internal static ProfileDiagnostics DeserializeProfileDiagnostics(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DataflowProfileDiagnostics DeserializeDataflowProfileDiagnostics(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ProfileDiagnostics(logs, metrics, serializedAdditionalRawData);
+            return new DataflowProfileDiagnostics(logs, metrics, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ProfileDiagnostics>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DataflowProfileDiagnostics>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProfileDiagnostics>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataflowProfileDiagnostics>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProfileDiagnostics)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataflowProfileDiagnostics)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ProfileDiagnostics IPersistableModel<ProfileDiagnostics>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DataflowProfileDiagnostics IPersistableModel<DataflowProfileDiagnostics>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ProfileDiagnostics>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DataflowProfileDiagnostics>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeProfileDiagnostics(document.RootElement, options);
+                        return DeserializeDataflowProfileDiagnostics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProfileDiagnostics)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataflowProfileDiagnostics)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ProfileDiagnostics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DataflowProfileDiagnostics>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

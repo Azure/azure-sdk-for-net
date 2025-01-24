@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.IotOperations.Models
 {
     /// <summary> Collection of different TLS types, NOTE- Enum at a time only one of them needs to be supported. </summary>
-    public partial class TlsCertMethod
+    public partial class ListenerPortTlsCertMethod
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,19 +45,19 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TlsCertMethod"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListenerPortTlsCertMethod"/>. </summary>
         /// <param name="mode"> Mode of TLS server certificate management. </param>
-        public TlsCertMethod(TlsCertMethodMode mode)
+        public ListenerPortTlsCertMethod(TlsCertMethodMode mode)
         {
             Mode = mode;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TlsCertMethod"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ListenerPortTlsCertMethod"/>. </summary>
         /// <param name="mode"> Mode of TLS server certificate management. </param>
         /// <param name="certManagerCertificateSpec"> Option 1 - Automatic TLS server certificate management with cert-manager. </param>
         /// <param name="manual"> Option 2 - Manual TLS server certificate management through a defined secret. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TlsCertMethod(TlsCertMethodMode mode, CertManagerCertificateSpec certManagerCertificateSpec, X509ManualCertificate manual, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ListenerPortTlsCertMethod(TlsCertMethodMode mode, CertManagerCertificateSpec certManagerCertificateSpec, X509ManualCertificate manual, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Mode = mode;
             CertManagerCertificateSpec = certManagerCertificateSpec;
@@ -65,8 +65,8 @@ namespace Azure.ResourceManager.IotOperations.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TlsCertMethod"/> for deserialization. </summary>
-        internal TlsCertMethod()
+        /// <summary> Initializes a new instance of <see cref="ListenerPortTlsCertMethod"/> for deserialization. </summary>
+        internal ListenerPortTlsCertMethod()
         {
         }
 

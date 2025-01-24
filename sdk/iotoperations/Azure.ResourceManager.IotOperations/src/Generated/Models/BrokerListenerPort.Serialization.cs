@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             int? nodePort = default;
             int port = default;
             BrokerProtocolType? protocol = default;
-            TlsCertMethod tls = default;
+            ListenerPortTlsCertMethod tls = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    tls = TlsCertMethod.DeserializeTlsCertMethod(property.Value, options);
+                    tls = ListenerPortTlsCertMethod.DeserializeListenerPortTlsCertMethod(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

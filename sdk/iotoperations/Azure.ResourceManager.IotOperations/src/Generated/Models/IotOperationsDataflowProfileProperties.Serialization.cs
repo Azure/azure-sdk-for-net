@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.IotOperations.Models
             {
                 return null;
             }
-            ProfileDiagnostics diagnostics = default;
+            DataflowProfileDiagnostics diagnostics = default;
             int? instanceCount = default;
             IotOperationsProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.IotOperations.Models
                     {
                         continue;
                     }
-                    diagnostics = ProfileDiagnostics.DeserializeProfileDiagnostics(property.Value, options);
+                    diagnostics = DataflowProfileDiagnostics.DeserializeDataflowProfileDiagnostics(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instanceCount"u8))

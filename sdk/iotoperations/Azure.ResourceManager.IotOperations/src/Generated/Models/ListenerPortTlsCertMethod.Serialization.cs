@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.IotOperations.Models
 {
-    public partial class TlsCertMethod : IUtf8JsonSerializable, IJsonModel<TlsCertMethod>
+    public partial class ListenerPortTlsCertMethod : IUtf8JsonSerializable, IJsonModel<ListenerPortTlsCertMethod>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TlsCertMethod>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ListenerPortTlsCertMethod>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TlsCertMethod>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ListenerPortTlsCertMethod>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TlsCertMethod>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ListenerPortTlsCertMethod>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TlsCertMethod)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ListenerPortTlsCertMethod)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("mode"u8);
@@ -63,19 +63,19 @@ namespace Azure.ResourceManager.IotOperations.Models
             }
         }
 
-        TlsCertMethod IJsonModel<TlsCertMethod>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ListenerPortTlsCertMethod IJsonModel<ListenerPortTlsCertMethod>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TlsCertMethod>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ListenerPortTlsCertMethod>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TlsCertMethod)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ListenerPortTlsCertMethod)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTlsCertMethod(document.RootElement, options);
+            return DeserializeListenerPortTlsCertMethod(document.RootElement, options);
         }
 
-        internal static TlsCertMethod DeserializeTlsCertMethod(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ListenerPortTlsCertMethod DeserializeListenerPortTlsCertMethod(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -119,38 +119,38 @@ namespace Azure.ResourceManager.IotOperations.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TlsCertMethod(mode, certManagerCertificateSpec, manual, serializedAdditionalRawData);
+            return new ListenerPortTlsCertMethod(mode, certManagerCertificateSpec, manual, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<TlsCertMethod>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ListenerPortTlsCertMethod>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TlsCertMethod>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ListenerPortTlsCertMethod>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TlsCertMethod)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListenerPortTlsCertMethod)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TlsCertMethod IPersistableModel<TlsCertMethod>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ListenerPortTlsCertMethod IPersistableModel<ListenerPortTlsCertMethod>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TlsCertMethod>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ListenerPortTlsCertMethod>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeTlsCertMethod(document.RootElement, options);
+                        return DeserializeListenerPortTlsCertMethod(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TlsCertMethod)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ListenerPortTlsCertMethod)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TlsCertMethod>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ListenerPortTlsCertMethod>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="instanceCount"> To manually scale the dataflow profile, specify the maximum number of instances you want to run. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal IotOperationsDataflowProfileProperties(ProfileDiagnostics diagnostics, int? instanceCount, IotOperationsProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal IotOperationsDataflowProfileProperties(DataflowProfileDiagnostics diagnostics, int? instanceCount, IotOperationsProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Diagnostics = diagnostics;
             InstanceCount = instanceCount;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         }
 
         /// <summary> Spec defines the desired identities of NBC diagnostics settings. </summary>
-        public ProfileDiagnostics Diagnostics { get; set; }
+        public DataflowProfileDiagnostics Diagnostics { get; set; }
         /// <summary> To manually scale the dataflow profile, specify the maximum number of instances you want to run. </summary>
         public int? InstanceCount { get; set; }
         /// <summary> The status of the last operation. </summary>

@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static Azure.ResourceManager.IotOperations.IotOperationsDataflowEndpointData IotOperationsDataflowEndpointData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowEndpointProperties properties = null, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation extendedLocation = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowEndpointProperties IotOperationsDataflowEndpointProperties(Azure.ResourceManager.IotOperations.Models.DataflowEndpointType endpointType = default(Azure.ResourceManager.IotOperations.Models.DataflowEndpointType), Azure.ResourceManager.IotOperations.Models.DataflowEndpointDataExplorer dataExplorerSettings = null, Azure.ResourceManager.IotOperations.Models.DataflowEndpointDataLakeStorage dataLakeStorageSettings = null, Azure.ResourceManager.IotOperations.Models.DataflowEndpointFabricOneLake fabricOneLakeSettings = null, Azure.ResourceManager.IotOperations.Models.DataflowEndpointKafka kafkaSettings = null, string localStoragePersistentVolumeClaimRef = null, Azure.ResourceManager.IotOperations.Models.DataflowEndpointMqtt mqttSettings = null, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.IotOperations.IotOperationsDataflowProfileData IotOperationsDataflowProfileData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowProfileProperties properties = null, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation extendedLocation = null) { throw null; }
-        public static Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowProfileProperties IotOperationsDataflowProfileProperties(Azure.ResourceManager.IotOperations.Models.ProfileDiagnostics diagnostics = null, int? instanceCount = default(int?), Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowProfileProperties IotOperationsDataflowProfileProperties(Azure.ResourceManager.IotOperations.Models.DataflowProfileDiagnostics diagnostics = null, int? instanceCount = default(int?), Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowProperties IotOperationsDataflowProperties(Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode? mode = default(Azure.ResourceManager.IotOperations.Models.IotOperationsOperationalMode?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.IotOperations.Models.DataflowOperationProperties> operations = null, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.IotOperations.IotOperationsInstanceData IotOperationsInstanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceProperties properties = null, Azure.ResourceManager.IotOperations.Models.IotOperationsExtendedLocation extendedLocation = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.IotOperations.Models.IotOperationsInstanceProperties IotOperationsInstanceProperties(string description = null, Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? provisioningState = default(Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState?), string version = null, Azure.Core.ResourceIdentifier schemaRegistryRefResourceId = null) { throw null; }
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.IotOperations.Models
         public int? NodePort { get { throw null; } set { } }
         public int Port { get { throw null; } set { } }
         public Azure.ResourceManager.IotOperations.Models.BrokerProtocolType? Protocol { get { throw null; } set { } }
-        public Azure.ResourceManager.IotOperations.Models.TlsCertMethod Tls { get { throw null; } set { } }
+        public Azure.ResourceManager.IotOperations.Models.ListenerPortTlsCertMethod Tls { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.IotOperations.Models.BrokerListenerPort System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.BrokerListenerPort>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.BrokerListenerPort>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1379,6 +1379,18 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static bool operator !=(Azure.ResourceManager.IotOperations.Models.DataflowOperationType left, Azure.ResourceManager.IotOperations.Models.DataflowOperationType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class DataflowProfileDiagnostics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowProfileDiagnostics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowProfileDiagnostics>
+    {
+        public DataflowProfileDiagnostics() { }
+        public string LogsLevel { get { throw null; } set { } }
+        public int? MetricsPrometheusPort { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotOperations.Models.DataflowProfileDiagnostics System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowProfileDiagnostics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowProfileDiagnostics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotOperations.Models.DataflowProfileDiagnostics System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowProfileDiagnostics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowProfileDiagnostics>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowProfileDiagnostics>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class DataflowSourceOperationSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.DataflowSourceOperationSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.DataflowSourceOperationSettings>
     {
         public DataflowSourceOperationSettings(string endpointRef, System.Collections.Generic.IEnumerable<string> dataSources) { }
@@ -1561,7 +1573,7 @@ namespace Azure.ResourceManager.IotOperations.Models
     public partial class IotOperationsDataflowProfileProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowProfileProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.IotOperationsDataflowProfileProperties>
     {
         public IotOperationsDataflowProfileProperties() { }
-        public Azure.ResourceManager.IotOperations.Models.ProfileDiagnostics Diagnostics { get { throw null; } set { } }
+        public Azure.ResourceManager.IotOperations.Models.DataflowProfileDiagnostics Diagnostics { get { throw null; } set { } }
         public int? InstanceCount { get { throw null; } set { } }
         public Azure.ResourceManager.IotOperations.Models.IotOperationsProvisioningState? ProvisioningState { get { throw null; } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -1727,6 +1739,19 @@ namespace Azure.ResourceManager.IotOperations.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.KubernetesReference>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.KubernetesReference>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
+    public partial class ListenerPortTlsCertMethod : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.ListenerPortTlsCertMethod>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.ListenerPortTlsCertMethod>
+    {
+        public ListenerPortTlsCertMethod(Azure.ResourceManager.IotOperations.Models.TlsCertMethodMode mode) { }
+        public Azure.ResourceManager.IotOperations.Models.CertManagerCertificateSpec CertManagerCertificateSpec { get { throw null; } set { } }
+        public string ManualSecretRef { get { throw null; } set { } }
+        public Azure.ResourceManager.IotOperations.Models.TlsCertMethodMode Mode { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotOperations.Models.ListenerPortTlsCertMethod System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.ListenerPortTlsCertMethod>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.ListenerPortTlsCertMethod>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.IotOperations.Models.ListenerPortTlsCertMethod System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.ListenerPortTlsCertMethod>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.ListenerPortTlsCertMethod>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.ListenerPortTlsCertMethod>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class LocalKubernetesReference : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.LocalKubernetesReference>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.LocalKubernetesReference>
     {
         public LocalKubernetesReference(string kind, string name) { }
@@ -1833,18 +1858,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         public static bool operator !=(Azure.ResourceManager.IotOperations.Models.PrivateKeyRotationPolicy left, Azure.ResourceManager.IotOperations.Models.PrivateKeyRotationPolicy right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ProfileDiagnostics : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.ProfileDiagnostics>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.ProfileDiagnostics>
-    {
-        public ProfileDiagnostics() { }
-        public string LogsLevel { get { throw null; } set { } }
-        public int? MetricsPrometheusPort { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotOperations.Models.ProfileDiagnostics System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.ProfileDiagnostics>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.ProfileDiagnostics>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotOperations.Models.ProfileDiagnostics System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.ProfileDiagnostics>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.ProfileDiagnostics>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.ProfileDiagnostics>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
     public partial class SanForCert : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.SanForCert>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.SanForCert>
     {
         public SanForCert(System.Collections.Generic.IEnumerable<string> dns, System.Collections.Generic.IEnumerable<string> ip) { }
@@ -1948,19 +1961,6 @@ namespace Azure.ResourceManager.IotOperations.Models
         Azure.ResourceManager.IotOperations.Models.SubscriberQueueLimit System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.SubscriberQueueLimit>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.SubscriberQueueLimit>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.SubscriberQueueLimit>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class TlsCertMethod : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.TlsCertMethod>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.TlsCertMethod>
-    {
-        public TlsCertMethod(Azure.ResourceManager.IotOperations.Models.TlsCertMethodMode mode) { }
-        public Azure.ResourceManager.IotOperations.Models.CertManagerCertificateSpec CertManagerCertificateSpec { get { throw null; } set { } }
-        public string ManualSecretRef { get { throw null; } set { } }
-        public Azure.ResourceManager.IotOperations.Models.TlsCertMethodMode Mode { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotOperations.Models.TlsCertMethod System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.TlsCertMethod>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.IotOperations.Models.TlsCertMethod>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.IotOperations.Models.TlsCertMethod System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.TlsCertMethod>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.TlsCertMethod>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.IotOperations.Models.TlsCertMethod>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TlsCertMethodMode : System.IEquatable<Azure.ResourceManager.IotOperations.Models.TlsCertMethodMode>

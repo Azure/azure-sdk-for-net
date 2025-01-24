@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.IotOperations.Samples
             {
                 Properties = new IotOperationsDataflowProfileProperties
                 {
-                    Diagnostics = new ProfileDiagnostics
+                    Diagnostics = new DataflowProfileDiagnostics
                     {
                         LogsLevel = "rnmwokumdmebpmfxxxzvvjfdywotav",
                         MetricsPrometheusPort = 7581,

@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.IotOperations.Tests
                         {
                             Protocol = "Mqtt",
                             AuthenticationRef = "default",
-                            Tls = new TlsCertMethod()
+                            Tls = new ListenerPortTlsCertMethod()
                             {
                                 CertManagerCertificateSpec = new CertManagerCertificateSpec()
                                 {

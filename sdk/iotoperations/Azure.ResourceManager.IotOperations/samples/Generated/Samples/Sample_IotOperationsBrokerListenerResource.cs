@@ -112,7 +112,7 @@ new BrokerListenerPort(8443)
 {
 AuthenticationRef = "example-authentication",
 Protocol = BrokerProtocolType.WebSockets,
-Tls = new TlsCertMethod(TlsCertMethodMode.Automatic)
+Tls = new ListenerPortTlsCertMethod(TlsCertMethodMode.Automatic)
 {
 CertManagerCertificateSpec = new CertManagerCertificateSpec(new CertManagerIssuerRef("jtmuladdkpasfpoyvewekmiy", CertManagerIssuerKind.Issuer, "example-issuer")),
 },
@@ -124,7 +124,7 @@ AuthenticationRef = "example-authentication",
 new BrokerListenerPort(8883)
 {
 AuthenticationRef = "example-authentication",
-Tls = new TlsCertMethod(TlsCertMethodMode.Manual)
+Tls = new ListenerPortTlsCertMethod(TlsCertMethodMode.Manual)
 {
 ManualSecretRef = "example-secret",
 },
@@ -177,7 +177,7 @@ AuthenticationRef = "tjvdroaqqy",
 AuthorizationRef = "inxhvxnwswyrvt",
 NodePort = 7281,
 Protocol = BrokerProtocolType.Mqtt,
-Tls = new TlsCertMethod(TlsCertMethodMode.Automatic)
+Tls = new ListenerPortTlsCertMethod(TlsCertMethodMode.Automatic)
 {
 CertManagerCertificateSpec = new CertManagerCertificateSpec(new CertManagerIssuerRef("jtmuladdkpasfpoyvewekmiy", CertManagerIssuerKind.Issuer, "ocwoqpgucvjrsuudtjhb"))
 {
