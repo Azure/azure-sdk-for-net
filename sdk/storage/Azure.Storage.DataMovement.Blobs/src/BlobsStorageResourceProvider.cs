@@ -168,11 +168,11 @@ namespace Azure.Storage.DataMovement.Blobs
 
         #region Abstract Class Implementation
         /// <inheritdoc/>
-        protected override async Task<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
+        protected override async ValueTask<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
             => await FromTransferPropertiesAsync(properties, getSource: true, cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc/>
-        protected override async Task<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
+        protected override async ValueTask<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
             => await FromTransferPropertiesAsync(properties, getSource: false, cancellationToken).ConfigureAwait(false);
 
         private async ValueTask<StorageResource> FromTransferPropertiesAsync(

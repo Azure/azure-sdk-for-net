@@ -168,7 +168,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         #region Abstract Class Implementation
         /// <inheritdoc/>
-        protected override async Task<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
+        protected override async ValueTask<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
         {
             // Source share file data currently empty, so no specific properties to grab
             return properties.IsContainer
@@ -177,7 +177,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         /// <inheritdoc/>
-        protected override async Task<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
+        protected override async ValueTask<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
         {
             ShareFileDestinationCheckpointDetails checkpointDetails;
             using (MemoryStream stream = new(properties.DestinationCheckpointDetails))
