@@ -165,5 +165,38 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Assert.AreEqual(uri, underlyingClient.Uri);
             AssertCredPresent(underlyingClient.ClientConfiguration, credType);
         }
+
+        [Test]
+        public async Task CredentialCallback(
+            [Values(CredType.SharedKey, CredType.Sas)] CredType credType)
+        {
+            const string containerName = "mycontainer";
+            const string blobName = "my/blob.txt";
+            Uri uri = new Uri($"https://myaccount.blob.core.windows.net/{containerName}/{blobName}");
+            (Mock<StorageSharedKeyCredential> SharedKey, Mock<TokenCredential> Token, Mock<AzureSasCredential> Sas) mockCreds = GetMockCreds();
+
+            ValueTask<StorageSharedKeyCredential> GetSharedKeyCredential(Uri _)
+            {
+                return new ValueTask<StorageSharedKeyCredential>(mockCreds.SharedKey.Object);
+            }
+            ValueTask<AzureSasCredential> GetSasCredential(Uri _)
+            {
+                return new ValueTask<AzureSasCredential>(mockCreds.Sas.Object);
+            }
+
+            BlobsStorageResourceProvider provider = credType switch
+            {
+                CredType.SharedKey => new(GetSharedKeyCredential),
+                CredType.Sas => new(GetSasCredential),
+                _ => throw new ArgumentException("Bad cred type"),
+            };
+            StorageResource resource = await provider.FromBlobAsync(uri);
+
+            Assert.IsNotNull(resource);
+            AssertBlobStorageResourceType(resource, BlobType.Block, out BlobBaseClient underlyingClient);
+            Assert.AreEqual(uri, resource.Uri);
+            Assert.AreEqual(uri, underlyingClient.Uri);
+            AssertCredPresent(underlyingClient.ClientConfiguration, credType);
+        }
     }
 }
