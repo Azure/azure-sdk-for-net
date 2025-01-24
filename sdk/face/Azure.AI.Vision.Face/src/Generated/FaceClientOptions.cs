@@ -10,8 +10,8 @@ using Azure.Core;
 
 namespace Azure.AI.Vision.Face
 {
-    /// <summary> Client options for Azure.AI.Vision.Face library clients. </summary>
-    public partial class AzureAIVisionFaceClientOptions : ClientOptions
+    /// <summary> Client options for Face library clients. </summary>
+    public partial class FaceClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V1_2_Preview_1;
 
@@ -26,8 +26,8 @@ namespace Azure.AI.Vision.Face
 
         internal string Version { get; }
 
-        /// <summary> Initializes new instance of AzureAIVisionFaceClientOptions. </summary>
-        public AzureAIVisionFaceClientOptions(ServiceVersion version = LatestVersion)
+        /// <summary> Initializes new instance of FaceClientOptions. </summary>
+        public FaceClientOptions(ServiceVersion version = LatestVersion)
         {
             Version = version switch
             {
