@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.AppConfiguration
             bool? disableLocalAuth = default;
             int? softDeleteRetentionInDays = default;
             bool? enablePurgeProtection = default;
-            DataPlaneProxyProperties dataPlaneProxy = default;
+            AppConfigurationDataPlaneProxyProperties dataPlaneProxy = default;
             AppConfigurationCreateMode? createMode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.AppConfiguration
                             {
                                 continue;
                             }
-                            dataPlaneProxy = DataPlaneProxyProperties.DeserializeDataPlaneProxyProperties(property0.Value, options);
+                            dataPlaneProxy = AppConfigurationDataPlaneProxyProperties.DeserializeAppConfigurationDataPlaneProxyProperties(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("createMode"u8))

@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> The data plane proxy settings for a configuration store. </summary>
-    public partial class DataPlaneProxyProperties
+    public partial class AppConfigurationDataPlaneProxyProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +45,16 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="DataPlaneProxyProperties"/>. </summary>
-        public DataPlaneProxyProperties()
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationDataPlaneProxyProperties"/>. </summary>
+        public AppConfigurationDataPlaneProxyProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataPlaneProxyProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AppConfigurationDataPlaneProxyProperties"/>. </summary>
         /// <param name="authenticationMode"> The data plane proxy authentication mode. This property manages the authentication mode of request to the data plane resources. </param>
         /// <param name="privateLinkDelegation"> The data plane proxy private link delegation. This property manages if a request from delegated Azure Resource Manager (ARM) private link is allowed when the data plane resource requires private link. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DataPlaneProxyProperties(AuthenticationMode? authenticationMode, PrivateLinkDelegation? privateLinkDelegation, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppConfigurationDataPlaneProxyProperties(DataPlaneProxyAuthenticationMode? authenticationMode, DataPlaneProxyPrivateLinkDelegation? privateLinkDelegation, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AuthenticationMode = authenticationMode;
             PrivateLinkDelegation = privateLinkDelegation;
@@ -63,9 +63,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> The data plane proxy authentication mode. This property manages the authentication mode of request to the data plane resources. </summary>
         [WirePath("authenticationMode")]
-        public AuthenticationMode? AuthenticationMode { get; set; }
+        public DataPlaneProxyAuthenticationMode? AuthenticationMode { get; set; }
         /// <summary> The data plane proxy private link delegation. This property manages if a request from delegated Azure Resource Manager (ARM) private link is allowed when the data plane resource requires private link. </summary>
         [WirePath("privateLinkDelegation")]
-        public PrivateLinkDelegation? PrivateLinkDelegation { get; set; }
+        public DataPlaneProxyPrivateLinkDelegation? PrivateLinkDelegation { get; set; }
     }
 }

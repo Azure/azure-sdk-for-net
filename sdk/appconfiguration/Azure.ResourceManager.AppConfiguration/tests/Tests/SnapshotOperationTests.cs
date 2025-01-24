@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
                 {
                     Filters =
                     {
-                        new KeyValueFilter("key1/*")
+                        new SnapshotKeyValueFilter("key1/*")
                         {
                             Label = "app1"
                         }

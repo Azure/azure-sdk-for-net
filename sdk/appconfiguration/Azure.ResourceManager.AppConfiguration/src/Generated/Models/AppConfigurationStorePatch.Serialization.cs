@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             bool? disableLocalAuth = default;
             AppConfigurationPublicNetworkAccess? publicNetworkAccess = default;
             bool? enablePurgeProtection = default;
-            DataPlaneProxyProperties dataPlaneProxy = default;
+            AppConfigurationDataPlaneProxyProperties dataPlaneProxy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                             {
                                 continue;
                             }
-                            dataPlaneProxy = DataPlaneProxyProperties.DeserializeDataPlaneProxyProperties(property0.Value, options);
+                            dataPlaneProxy = AppConfigurationDataPlaneProxyProperties.DeserializeAppConfigurationDataPlaneProxyProperties(property0.Value, options);
                             continue;
                         }
                     }

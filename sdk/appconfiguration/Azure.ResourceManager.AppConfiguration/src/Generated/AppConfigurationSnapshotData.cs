@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Initializes a new instance of <see cref="AppConfigurationSnapshotData"/>. </summary>
         public AppConfigurationSnapshotData()
         {
-            Filters = new ChangeTrackingList<KeyValueFilter>();
+            Filters = new ChangeTrackingList<SnapshotKeyValueFilter>();
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="tags"> The tags of the snapshot. NOTE: These are data plane tags, not Azure Resource Manager (ARM) tags. </param>
         /// <param name="eTag"> A value representing the current state of the snapshot. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string snapshotType, AppConfigurationProvisioningState? provisioningState, SnapshotStatus? status, IList<KeyValueFilter> filters, CompositionType? compositionType, DateTimeOffset? createdOn, DateTimeOffset? expireOn, long? retentionPeriod, long? size, long? itemsCount, IDictionary<string, string> tags, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AppConfigurationSnapshotData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string snapshotType, AppConfigurationProvisioningState? provisioningState, AppConfigurationSnapshotStatus? status, IList<SnapshotKeyValueFilter> filters, SnapshotCompositionType? compositionType, DateTimeOffset? createdOn, DateTimeOffset? expireOn, long? retentionPeriod, long? size, long? itemsCount, IDictionary<string, string> tags, ETag? eTag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             SnapshotType = snapshotType;
             ProvisioningState = provisioningState;
@@ -101,13 +101,13 @@ namespace Azure.ResourceManager.AppConfiguration
         public AppConfigurationProvisioningState? ProvisioningState { get; }
         /// <summary> The current status of the snapshot. </summary>
         [WirePath("properties.status")]
-        public SnapshotStatus? Status { get; }
+        public AppConfigurationSnapshotStatus? Status { get; }
         /// <summary> A list of filters used to filter the key-values included in the snapshot. </summary>
         [WirePath("properties.filters")]
-        public IList<KeyValueFilter> Filters { get; }
+        public IList<SnapshotKeyValueFilter> Filters { get; }
         /// <summary> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </summary>
         [WirePath("properties.compositionType")]
-        public CompositionType? CompositionType { get; set; }
+        public SnapshotCompositionType? CompositionType { get; set; }
         /// <summary> The time that the snapshot was created. </summary>
         [WirePath("properties.created")]
         public DateTimeOffset? CreatedOn { get; }

@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    public partial class KeyValueFilter : IUtf8JsonSerializable, IJsonModel<KeyValueFilter>
+    public partial class SnapshotKeyValueFilter : IUtf8JsonSerializable, IJsonModel<SnapshotKeyValueFilter>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyValueFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SnapshotKeyValueFilter>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<KeyValueFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SnapshotKeyValueFilter>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyValueFilter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotKeyValueFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyValueFilter)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotKeyValueFilter)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("key"u8);
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
         }
 
-        KeyValueFilter IJsonModel<KeyValueFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SnapshotKeyValueFilter IJsonModel<SnapshotKeyValueFilter>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyValueFilter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotKeyValueFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyValueFilter)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotKeyValueFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeKeyValueFilter(document.RootElement, options);
+            return DeserializeSnapshotKeyValueFilter(document.RootElement, options);
         }
 
-        internal static KeyValueFilter DeserializeKeyValueFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SnapshotKeyValueFilter DeserializeSnapshotKeyValueFilter(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new KeyValueFilter(key, label, serializedAdditionalRawData);
+            return new SnapshotKeyValueFilter(key, label, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -165,9 +165,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<KeyValueFilter>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SnapshotKeyValueFilter>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyValueFilter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotKeyValueFilter>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -176,26 +176,26 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(KeyValueFilter)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotKeyValueFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
-        KeyValueFilter IPersistableModel<KeyValueFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SnapshotKeyValueFilter IPersistableModel<SnapshotKeyValueFilter>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<KeyValueFilter>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SnapshotKeyValueFilter>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeKeyValueFilter(document.RootElement, options);
+                        return DeserializeSnapshotKeyValueFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyValueFilter)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotKeyValueFilter)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<KeyValueFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SnapshotKeyValueFilter>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

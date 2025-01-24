@@ -11,13 +11,13 @@ using System.ComponentModel;
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> The data plane proxy authentication mode. This property manages the authentication mode of request to the data plane resources. </summary>
-    public readonly partial struct AuthenticationMode : IEquatable<AuthenticationMode>
+    public readonly partial struct DataPlaneProxyAuthenticationMode : IEquatable<DataPlaneProxyAuthenticationMode>
     {
         private readonly string _value;
 
-        /// <summary> Initializes a new instance of <see cref="AuthenticationMode"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DataPlaneProxyAuthenticationMode"/>. </summary>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AuthenticationMode(string value)
+        public DataPlaneProxyAuthenticationMode(string value)
         {
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
@@ -26,21 +26,21 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         private const string PassThroughValue = "Pass-through";
 
         /// <summary> The local authentication mode. Users are not required to have data plane permissions if local authentication is not disabled. </summary>
-        public static AuthenticationMode Local { get; } = new AuthenticationMode(LocalValue);
+        public static DataPlaneProxyAuthenticationMode Local { get; } = new DataPlaneProxyAuthenticationMode(LocalValue);
         /// <summary> The pass-through authentication mode. User identity will be passed through from Azure Resource Manager (ARM), requiring user to have data plane action permissions (Available via App Configuration Data Owner/ App Configuration Data Reader). </summary>
-        public static AuthenticationMode PassThrough { get; } = new AuthenticationMode(PassThroughValue);
-        /// <summary> Determines if two <see cref="AuthenticationMode"/> values are the same. </summary>
-        public static bool operator ==(AuthenticationMode left, AuthenticationMode right) => left.Equals(right);
-        /// <summary> Determines if two <see cref="AuthenticationMode"/> values are not the same. </summary>
-        public static bool operator !=(AuthenticationMode left, AuthenticationMode right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="AuthenticationMode"/>. </summary>
-        public static implicit operator AuthenticationMode(string value) => new AuthenticationMode(value);
+        public static DataPlaneProxyAuthenticationMode PassThrough { get; } = new DataPlaneProxyAuthenticationMode(PassThroughValue);
+        /// <summary> Determines if two <see cref="DataPlaneProxyAuthenticationMode"/> values are the same. </summary>
+        public static bool operator ==(DataPlaneProxyAuthenticationMode left, DataPlaneProxyAuthenticationMode right) => left.Equals(right);
+        /// <summary> Determines if two <see cref="DataPlaneProxyAuthenticationMode"/> values are not the same. </summary>
+        public static bool operator !=(DataPlaneProxyAuthenticationMode left, DataPlaneProxyAuthenticationMode right) => !left.Equals(right);
+        /// <summary> Converts a <see cref="string"/> to a <see cref="DataPlaneProxyAuthenticationMode"/>. </summary>
+        public static implicit operator DataPlaneProxyAuthenticationMode(string value) => new DataPlaneProxyAuthenticationMode(value);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AuthenticationMode other && Equals(other);
+        public override bool Equals(object obj) => obj is DataPlaneProxyAuthenticationMode other && Equals(other);
         /// <inheritdoc />
-        public bool Equals(AuthenticationMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(DataPlaneProxyAuthenticationMode other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc />
         [EditorBrowsable(EditorBrowsableState.Never)]

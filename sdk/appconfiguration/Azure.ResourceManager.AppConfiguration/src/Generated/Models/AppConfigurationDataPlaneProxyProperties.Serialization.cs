@@ -14,11 +14,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
-    public partial class DataPlaneProxyProperties : IUtf8JsonSerializable, IJsonModel<DataPlaneProxyProperties>
+    public partial class AppConfigurationDataPlaneProxyProperties : IUtf8JsonSerializable, IJsonModel<AppConfigurationDataPlaneProxyProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataPlaneProxyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AppConfigurationDataPlaneProxyProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DataPlaneProxyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AppConfigurationDataPlaneProxyProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataPlaneProxyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationDataPlaneProxyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataPlaneProxyProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AppConfigurationDataPlaneProxyProperties)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsDefined(AuthenticationMode))
@@ -62,19 +62,19 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             }
         }
 
-        DataPlaneProxyProperties IJsonModel<DataPlaneProxyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AppConfigurationDataPlaneProxyProperties IJsonModel<AppConfigurationDataPlaneProxyProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataPlaneProxyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationDataPlaneProxyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataPlaneProxyProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AppConfigurationDataPlaneProxyProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDataPlaneProxyProperties(document.RootElement, options);
+            return DeserializeAppConfigurationDataPlaneProxyProperties(document.RootElement, options);
         }
 
-        internal static DataPlaneProxyProperties DeserializeDataPlaneProxyProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AppConfigurationDataPlaneProxyProperties DeserializeAppConfigurationDataPlaneProxyProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 return null;
             }
-            AuthenticationMode? authenticationMode = default;
-            PrivateLinkDelegation? privateLinkDelegation = default;
+            DataPlaneProxyAuthenticationMode? authenticationMode = default;
+            DataPlaneProxyPrivateLinkDelegation? privateLinkDelegation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         continue;
                     }
-                    authenticationMode = new AuthenticationMode(property.Value.GetString());
+                    authenticationMode = new DataPlaneProxyAuthenticationMode(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("privateLinkDelegation"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                     {
                         continue;
                     }
-                    privateLinkDelegation = new PrivateLinkDelegation(property.Value.GetString());
+                    privateLinkDelegation = new DataPlaneProxyPrivateLinkDelegation(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DataPlaneProxyProperties(authenticationMode, privateLinkDelegation, serializedAdditionalRawData);
+            return new AppConfigurationDataPlaneProxyProperties(authenticationMode, privateLinkDelegation, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)
@@ -160,9 +160,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<DataPlaneProxyProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AppConfigurationDataPlaneProxyProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataPlaneProxyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationDataPlaneProxyProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -171,26 +171,26 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DataPlaneProxyProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppConfigurationDataPlaneProxyProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DataPlaneProxyProperties IPersistableModel<DataPlaneProxyProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AppConfigurationDataPlaneProxyProperties IPersistableModel<AppConfigurationDataPlaneProxyProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DataPlaneProxyProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationDataPlaneProxyProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDataPlaneProxyProperties(document.RootElement, options);
+                        return DeserializeAppConfigurationDataPlaneProxyProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataPlaneProxyProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppConfigurationDataPlaneProxyProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DataPlaneProxyProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AppConfigurationDataPlaneProxyProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

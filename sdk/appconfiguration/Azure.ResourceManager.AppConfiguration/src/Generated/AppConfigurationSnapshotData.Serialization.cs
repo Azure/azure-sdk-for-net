@@ -141,9 +141,9 @@ namespace Azure.ResourceManager.AppConfiguration
             ResourceType type0 = default;
             SystemData systemData = default;
             AppConfigurationProvisioningState? provisioningState = default;
-            SnapshotStatus? status = default;
-            IList<KeyValueFilter> filters = default;
-            CompositionType? compositionType = default;
+            AppConfigurationSnapshotStatus? status = default;
+            IList<SnapshotKeyValueFilter> filters = default;
+            SnapshotCompositionType? compositionType = default;
             DateTimeOffset? created = default;
             DateTimeOffset? expires = default;
             long? retentionPeriod = default;
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppConfiguration
                             {
                                 continue;
                             }
-                            status = new SnapshotStatus(property0.Value.GetString());
+                            status = new AppConfigurationSnapshotStatus(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("filters"u8))
@@ -217,10 +217,10 @@ namespace Azure.ResourceManager.AppConfiguration
                             {
                                 continue;
                             }
-                            List<KeyValueFilter> array = new List<KeyValueFilter>();
+                            List<SnapshotKeyValueFilter> array = new List<SnapshotKeyValueFilter>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(KeyValueFilter.DeserializeKeyValueFilter(item, options));
+                                array.Add(SnapshotKeyValueFilter.DeserializeSnapshotKeyValueFilter(item, options));
                             }
                             filters = array;
                             continue;
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppConfiguration
                             {
                                 continue;
                             }
-                            compositionType = new CompositionType(property0.Value.GetString());
+                            compositionType = new SnapshotCompositionType(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("created"u8))
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 type,
                 provisioningState,
                 status,
-                filters ?? new ChangeTrackingList<KeyValueFilter>(),
+                filters ?? new ChangeTrackingList<SnapshotKeyValueFilter>(),
                 compositionType,
                 created,
                 expires,

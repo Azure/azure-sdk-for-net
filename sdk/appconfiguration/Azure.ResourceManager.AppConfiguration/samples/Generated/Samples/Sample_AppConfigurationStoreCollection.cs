@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             string configStoreName = "contoso";
             AppConfigurationStoreData data = new AppConfigurationStoreData(new AzureLocation("westus"), new AppConfigurationSku("Standard"))
             {
-                DataPlaneProxy = new DataPlaneProxyProperties
+                DataPlaneProxy = new AppConfigurationDataPlaneProxyProperties
                 {
-                    AuthenticationMode = AuthenticationMode.PassThrough,
-                    PrivateLinkDelegation = PrivateLinkDelegation.Enabled,
+                    AuthenticationMode = DataPlaneProxyAuthenticationMode.PassThrough,
+                    PrivateLinkDelegation = DataPlaneProxyPrivateLinkDelegation.Enabled,
                 },
             };
             ArmOperation<AppConfigurationStoreResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, configStoreName, data);

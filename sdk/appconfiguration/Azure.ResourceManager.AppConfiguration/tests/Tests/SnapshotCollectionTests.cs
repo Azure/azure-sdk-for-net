@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             {
                 Filters =
                 {
-                    new KeyValueFilter("key1/*")
+                    new SnapshotKeyValueFilter("key1/*")
                     {
                         Label = "app1"
                     }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             {
                 Filters =
                 {
-                    new KeyValueFilter("key1/*")
+                    new SnapshotKeyValueFilter("key1/*")
                     {
                         Label = "app1"
                     }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             Assert.IsTrue(snapshotName.Equals(snapshot.Data.Name));
             Assert.IsTrue(snapshot.Data.Filters.FirstOrDefault().Key.Equals("key1/*"));
             Assert.IsTrue(snapshot.Data.RetentionPeriod?.Equals((long)3600));
-            Assert.IsTrue(snapshot.Data.Status == SnapshotStatus.Ready);
+            Assert.IsTrue(snapshot.Data.Status == AppConfigurationSnapshotStatus.Ready);
         }
 
         [Test]
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.AppConfiguration.Tests
             {
                 Filters =
                 {
-                    new KeyValueFilter("key1/*")
+                    new SnapshotKeyValueFilter("key1/*")
                     {
                         Label = "app1"
                     }

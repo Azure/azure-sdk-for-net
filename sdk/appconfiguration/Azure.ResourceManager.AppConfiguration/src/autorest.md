@@ -24,16 +24,22 @@ use-model-reader-writer: true
 enable-bicep-serialization: true
 deserialize-null-collection-as-null-value: true
 
+#mgmt-debug:
+#  show-serialized-names: true
+
 no-property-type-replacement: RegenerateKeyContent
 
 rename-mapping:
   ApiKey.lastModified: LastModifiedOn
   ApiKey.readOnly: IsReadOnly
+  AuthenticationMode: DataPlaneProxyAuthenticationMode
+  CompositionType: SnapshotCompositionType
   DeletedConfigurationStore.properties.purgeProtectionEnabled: IsPurgeProtectionEnabled
   DeletedConfigurationStore.properties.configurationStoreId: -|arm-id
   NameAvailabilityStatus.nameAvailable: IsNameAvailable
   KeyValue.properties.lastModified: LastModifiedOn
   KeyValue.properties.locked: IsLocked
+  KeyValueFilter: SnapshotKeyValueFilter
   ApiKey: AppConfigurationStoreApiKey
   ApiKeyListResult: AppConfigurationStoreApiKeyListResult
   CheckNameAvailabilityParameters: AppConfigurationNameAvailabilityContent
@@ -45,21 +51,24 @@ rename-mapping:
   EncryptionProperties: AppConfigurationStoreEncryptionProperties
   NameAvailabilityStatus: AppConfigurationNameAvailabilityResult
   PrivateEndpointConnectionReference: AppConfigurationPrivateEndpointConnectionReference
+  PrivateLinkDelegation: DataPlaneProxyPrivateLinkDelegation
   Replica: AppConfigurationReplica
   ReplicaProvisioningState: AppConfigurationReplicaProvisioningState
-  Snapshot: AppConfigurationSnapshot
   Snapshot.properties.created: CreatedOn
   Snapshot.properties.expires: ExpireOn
 
 prepend-rp-prefix:
   - ActionsRequired
   - CreateMode
+  - DataPlaneProxyProperties
   - KeyValue
   - KeyValueListResult
   - KeyVaultProperties
   - ProvisioningState
   - PublicNetworkAccess
   - RegenerateKeyParameters
+  - Snapshot
+  - SnapshotStatus
 
 format-by-name-rules:
   'tenantId': 'uuid'

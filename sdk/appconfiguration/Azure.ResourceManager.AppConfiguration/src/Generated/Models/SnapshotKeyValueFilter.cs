@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
     /// <summary> Enables filtering of key-values. </summary>
-    public partial class KeyValueFilter
+    public partial class SnapshotKeyValueFilter
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,29 +45,29 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="KeyValueFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotKeyValueFilter"/>. </summary>
         /// <param name="key"> Filters key-values by their key field. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public KeyValueFilter(string key)
+        public SnapshotKeyValueFilter(string key)
         {
             Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyValueFilter"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SnapshotKeyValueFilter"/>. </summary>
         /// <param name="key"> Filters key-values by their key field. </param>
         /// <param name="label"> Filters key-values by their label field. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal KeyValueFilter(string key, string label, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SnapshotKeyValueFilter(string key, string label, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Key = key;
             Label = label;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="KeyValueFilter"/> for deserialization. </summary>
-        internal KeyValueFilter()
+        /// <summary> Initializes a new instance of <see cref="SnapshotKeyValueFilter"/> for deserialization. </summary>
+        internal SnapshotKeyValueFilter()
         {
         }
 

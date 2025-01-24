@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.AppConfiguration.Samples
             {
                 Filters =
 {
-new KeyValueFilter("app1/*")
+new SnapshotKeyValueFilter("app1/*")
 {
 Label = "Production",
 }
