@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.ResourceManager;
 using Azure.Generator.Utilities;
 using Microsoft.CodeAnalysis;
 using Microsoft.Generator.CSharp;
@@ -55,6 +56,8 @@ public class AzureClientPlugin : ClientModelPlugin
         AddSharedSourceDirectory(sharedSourceDirectory);
         if (IsAzureArm.Value)
         {
+            // Include Azure.ResourceManager
+            AddMetadataReference(MetadataReference.CreateFromFile(typeof(ArmClient).Assembly.Location));
             AddVisitor(new AzureArmVisitor());
         }
     }
