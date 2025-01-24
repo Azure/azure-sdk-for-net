@@ -98,7 +98,7 @@ BlobsStorageResourceProvider blobs = new(tokenCredential);
 // Create simple transfer single blob upload job
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
     sourceResource: files.FromFile(sourceLocalPath),
-    destinationResource: blobs.FromBlob(destinationBlobUri));
+    destinationResource: await blobs.FromBlobAsync(destinationBlobUri));
 await transferOperation.WaitForCompletionAsync();
 ```
 
