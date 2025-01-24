@@ -36,8 +36,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
 
             if (options.Format != "W")
             {
-                writer.WritePropertyName("azureResourceId"u8);
-                writer.WriteStringValue(AzureResourceId);
+                writer.WritePropertyName("resourceId"u8);
+                writer.WriteStringValue(ResourceId);
             }
             writer.WritePropertyName("region"u8);
             writer.WriteStringValue(Region);
@@ -78,20 +78,20 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             {
                 return null;
             }
-            string azureResourceId = default;
-            string region = default;
+            ResourceIdentifier resourceId = default;
+            AzureLocation region = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("azureResourceId"u8))
+                if (property.NameEquals("resourceId"u8))
                 {
-                    azureResourceId = property.Value.GetString();
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("region"u8))
                 {
-                    region = property.Value.GetString();
+                    region = new AzureLocation(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +100,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AssignedDeploymentResource(azureResourceId, region, serializedAdditionalRawData);
+            return new AssignedDeploymentResource(resourceId, region, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignedDeploymentResource>.Write(ModelReaderWriterOptions options)

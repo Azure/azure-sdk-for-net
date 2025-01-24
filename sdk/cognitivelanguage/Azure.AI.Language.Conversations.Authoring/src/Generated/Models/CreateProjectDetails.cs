@@ -50,7 +50,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="projectName"> The new project name. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="language"/> is null. </exception>
-        public CreateProjectDetails(ProjectKind projectKind, string projectName, string language)
+        public CreateProjectDetails(AnalyzeConversationAuthoringProjectKind projectKind, string projectName, string language)
         {
             Argument.AssertNotNull(projectName, nameof(projectName));
             Argument.AssertNotNull(language, nameof(language));
@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="description"> The project description. </param>
         /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateProjectDetails(ProjectKind projectKind, ProjectSettings settings, string storageInputContainerName, string projectName, bool? multilingual, string description, string language, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateProjectDetails(AnalyzeConversationAuthoringProjectKind projectKind, ProjectSettings settings, string storageInputContainerName, string projectName, bool? multilingual, string description, string language, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProjectKind = projectKind;
             Settings = settings;
@@ -87,7 +87,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         }
 
         /// <summary> Represents the project kind. </summary>
-        public ProjectKind ProjectKind { get; }
+        public AnalyzeConversationAuthoringProjectKind ProjectKind { get; }
         /// <summary> The project settings. </summary>
         public ProjectSettings Settings { get; set; }
         /// <summary> The storage container name in case of conversation summarization. </summary>
