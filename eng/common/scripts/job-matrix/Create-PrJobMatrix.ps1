@@ -74,7 +74,7 @@ function QueuePop([ref]$queue) {
 function GeneratePRMatrixForBatch {
   param (
     [Parameter(Mandatory = $true)][array] $Packages,
-    [Parameter(Mandatory = $true)][bool] $FullSparseMatrix
+    [Parameter(Mandatory = $false)][bool] $FullSparseMatrix = $false
   )
 
   $OverallResult = @()
@@ -159,7 +159,7 @@ function GeneratePRMatrixForBatch {
             }
 
             if ($batchSuffixNecessary) {
-              $outputItem["name"] = $outputItem["name"] + "$batchPrefix$batchCounter"
+              $outputItem["name"] = $outputItem["name"] + "$batchNamePrefix$batchCounter"
             }
 
             $OverallResult += $outputItem
@@ -184,7 +184,7 @@ function GeneratePRMatrixForBatch {
           }
 
           if ($batchSuffixNecessary) {
-            $outputItem["name"] = $outputItem["name"] + "_ib$batchCounter"
+            $outputItem["name"] = $outputItem["name"]  + "_$batchNamePrefix$batchCounter"
           }
           # now we need to take an item from the front of the matrix results, clone it, and add it to the back of the matrix results
           # we will add the cloned version to OverallResult
