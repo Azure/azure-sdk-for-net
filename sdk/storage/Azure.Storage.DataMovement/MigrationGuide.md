@@ -202,7 +202,7 @@ CloudBlobClient client;
 ```
 ```csharp
 // upload blob
-Task<TransferStatus> task = await TransferManager.UploadDirectoryAsync(
+await TransferManager.UploadDirectoryAsync(
     directoryPath,
     client.GetContainerReference(containerName).GetDirectoryReference(blobDirectoryPath));
 ```
@@ -216,7 +216,7 @@ TransferManager transferManager;
 ```
 
 ```csharp
-// upload blob
+// upload blobs
 TranferOperation operation = await transferManager.StartTransferAsync(
     files.FromDirectory(directoryPath),
     blobs.FromContainer(containerUri, new BlobStorageResourceContainerOptions()
@@ -366,6 +366,94 @@ TransferManager transferManager;
 TranferOperation operation = await transferManager.StartTransferAsync(
     blobs.FromBlob(blobUri),
     files.FromFile(fileUri));
+await operation.WaitForCompletionAsync();
+```
+
+### Progress Reporting
+
+#### Post-transfer report
+
+In the legacy data movement library, it was possible to check a report of how many files
+were or were not transferred in a directory transfer, as shown below. This is no
+longer supported in the modern library. Applications will need to enable progress reporting
+or listen to transfer events, as detailed in the following sections.
+
+```csharp
+TransferStatus status = await TransferManager.UploadDirectoryAsync(
+    directoryPath,
+    client.GetContainerReference(containerName).GetDirectoryReference(blobDirectoryPath));
+// observe status
+// status.NumberOfFilesTransferred
+// status.NumberOfFilesSkipped
+// status.NumberOfFilesFailed
+// status.BytesTransferred
+```
+
+#### IProgress
+
+**Legacy:**
+```csharp
+// progress handler provided by your code
+IProgress<TransferStatus> progress;
+```
+```csharp
+await TransferManager.UploadDirectoryAsync(
+    directoryPath,
+    client.GetContainerReference(containerName).GetDirectoryReference(blobDirectoryPath),
+    options: default,
+    new DirectoryTransferContext()
+    {
+        ProgressHandler = progress,
+    });
+```
+**Modern:**
+```csharp
+// progress handler provided by your code
+IProgress<TransferProgress> progress;
+// if TransferProgress report is desired for
+// each transfer of bytes, set to true.
+bool reportBytes;
+```
+```csharp
+// upload blobs
+TranferOperation operation = await transferManager.StartTransferAsync(
+    files.FromDirectory(directoryPath),
+    blobs.FromContainer(containerUri, new BlobStorageResourceContainerOptions()
+    {
+        BlobDirectoryPrefix = blobDirectoryPath,
+    }),
+    new TransferOptions()
+    {
+        new ProgressHandlerOptions()
+        {
+            ProgressHandler = progress,
+            TrackBytesTransferred = reportBytes;
+        }
+    });
+await operation.WaitForCompletionAsync();
+```
+
+#### Eventing (new to modern library)
+
+**Modern:**
+```csharp
+// callback provided by your code
+Func<TransferItemCompletedEventArgs, Task> onItemCompleted;
+Func<TransferItemSkippedEventArgs, Task> onItemSkipped;
+Func<TransferItemFailedEventArgs, Task> onItemFailed;
+```
+```csharp
+TransferOptions options = new TransferOptions();
+options.ItemTransferCompleted += onItemCompleted;
+options.ItemTransferSkipped += onItemSkipped;
+options.ItemTransferFailed += onItemFailed;
+TranferOperation operation = await transferManager.StartTransferAsync(
+    files.FromDirectory(directoryPath),
+    blobs.FromContainer(containerUri, new BlobStorageResourceContainerOptions()
+    {
+        BlobDirectoryPrefix = blobDirectoryPath,
+    }),
+    options);
 await operation.WaitForCompletionAsync();
 ```
 
