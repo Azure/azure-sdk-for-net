@@ -24,11 +24,13 @@ public static class AzureOpenAIExtensions
     /// <returns></returns>
     public static ChatClient GetOpenAIChatClient(this ClientWorkspace workspace, string? deploymentName = null)
     {
+        string name = deploymentName ?? "default";
+
         ChatClient chatClient = workspace.Subclients.Get(() =>
         {
             AzureOpenAIClient aoiaClient = workspace.Subclients.Get(() => CreateAzureOpenAIClient(workspace));
             return workspace.CreateChatClient(aoiaClient, deploymentName);
-        });
+        }, name);
 
         return chatClient;
     }
@@ -41,11 +43,13 @@ public static class AzureOpenAIExtensions
     /// <returns></returns>
     public static EmbeddingClient GetOpenAIEmbeddingsClient(this ClientWorkspace workspace, string? deploymentName = null)
     {
+        string name = deploymentName ?? "default";
+
         EmbeddingClient embeddingsClient = workspace.Subclients.Get(() =>
         {
             AzureOpenAIClient aoiaClient = workspace.Subclients.Get(() => CreateAzureOpenAIClient(workspace));
             return workspace.CreateEmbeddingsClient(aoiaClient, deploymentName);
-        });
+        }, name);
 
         return embeddingsClient;
     }

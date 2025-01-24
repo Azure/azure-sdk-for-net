@@ -61,7 +61,7 @@ public static class AzureAIProjectsExensions
     /// </summary>
     /// <param name="workspace"></param>
     /// <returns></returns>
-    public static ChatCompletionsClient GetInferenceChatCompletionsClient(this ClientWorkspace workspace)
+    public static ChatCompletionsClient GetChatCompletionsClient(this ClientWorkspace workspace)
     {
         ChatCompletionsClient chatClient = workspace.Subclients.Get(() => CreateChatCompletionsClient(workspace));
         return chatClient;
@@ -78,7 +78,7 @@ public static class AzureAIProjectsExensions
     /// </summary>
     /// <param name="workspace"></param>
     /// <returns></returns>
-    public static EmbeddingsClient GetInferenceEmbeddingsClient(this ClientWorkspace workspace)
+    public static EmbeddingsClient GetEmbeddingsClient(this ClientWorkspace workspace)
     {
         EmbeddingsClient embeddingsClient =  workspace.Subclients.Get(() => CreateEmbeddingsClient(workspace));
         return embeddingsClient;

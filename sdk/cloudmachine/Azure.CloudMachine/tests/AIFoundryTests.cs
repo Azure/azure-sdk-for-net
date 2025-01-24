@@ -31,8 +31,8 @@ public partial class AIFoundryTests : SamplesBase<CloudMachineTestEnvironment>
         EvaluationsClient evaluations = client.GetEvaluationsClient();
 
         // Azure Inference Clients using connections API
-        ChatCompletionsClient infrChatClient = client.GetInferenceChatCompletionsClient();
-        EmbeddingsClient infrEmbeddingsClient = client.GetInferenceEmbeddingsClient();
+        ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
+        EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
 
         // Azure OpenAI Clients using connections API
         ChatClient openAIChatClient = client.GetOpenAIChatClient("gpt-4o-mini");
@@ -106,7 +106,7 @@ public partial class AIFoundryTests : SamplesBase<CloudMachineTestEnvironment>
     {
         var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
         AIFoundryClient client = new AIFoundryClient(connectionString);
-        var chatClient = client.GetInferenceChatCompletionsClient();
+        var chatClient = client.GetChatCompletionsClient();
 
         var requestOptions = new ChatCompletionsOptions()
         {

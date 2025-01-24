@@ -191,21 +191,21 @@ namespace Azure.CloudMachine
         {
             switch (connectionId)
             {
-                case var id when
-                    id == typeof(AzureOpenAIClient).FullName ||
-                    id == typeof(ChatClient).FullName ||
-                    id == typeof(EmbeddingClient).FullName:
+                // AzureOpenAI
+                case "Azure.AI.OpenAI.AzureOpenAIClient":
+                case "OpenAI.Chat.ChatClient":
+                case "OpenAI.Embeddings.EmbeddingClient":
                     return ConnectionType.AzureOpenAI;
 
-                case var id when
-                    id == typeof(ChatCompletionsClient).FullName ||
-                    id == typeof(EmbeddingsClient).FullName:
+                // Inference
+                case "Azure.AI.Inference.ChatCompletionsClient":
+                case "Azure.AI.Inference.EmbeddingsClient":
                     return ConnectionType.Serverless;
 
-                case var id when
-                    id == typeof(SearchClient).FullName ||
-                    id == typeof(SearchIndexClient).FullName ||
-                    id == typeof(SearchIndexerClient).FullName:
+                // AzureAISearch
+                case "Azure.Search.Documents.SearchClient":
+                case "Azure.Search.Documents.Indexes.SearchIndexClient":
+                case "Azure.Search.Documents.Indexes.SearchIndexerClient":
                     return ConnectionType.AzureAISearch;
 
                 default:

@@ -16,9 +16,9 @@ namespace Azure.CloudMachine
     public static partial class AzureAIProjectsExensions
     {
         public static Azure.AI.Projects.AgentsClient GetAgentsClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
+        public static Azure.AI.Inference.ChatCompletionsClient GetChatCompletionsClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
+        public static Azure.AI.Inference.EmbeddingsClient GetEmbeddingsClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
         public static Azure.AI.Projects.EvaluationsClient GetEvaluationsClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
-        public static Azure.AI.Inference.ChatCompletionsClient GetInferenceChatCompletionsClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
-        public static Azure.AI.Inference.EmbeddingsClient GetInferenceEmbeddingsClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
         public static Azure.Search.Documents.SearchClient GetSearchClient(this Azure.Core.ClientWorkspace workspace, string indexName) { throw null; }
         public static Azure.Search.Documents.Indexes.SearchIndexClient GetSearchIndexClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
         public static Azure.Search.Documents.Indexes.SearchIndexerClient GetSearchIndexerClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
