@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class FullBackupOperationError : IUtf8JsonSerializable, IJsonModel<FullBackupOperationError>
+    internal partial class KeyVaultServiceError : IUtf8JsonSerializable, IJsonModel<KeyVaultServiceError>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FullBackupOperationError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<KeyVaultServiceError>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<FullBackupOperationError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<KeyVaultServiceError>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FullBackupOperationError>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultServiceError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FullBackupOperationError)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultServiceError)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W" && Optional.IsDefined(Code))
@@ -73,19 +73,19 @@ namespace Azure.Security.KeyVault.Administration.Models
             }
         }
 
-        FullBackupOperationError IJsonModel<FullBackupOperationError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        KeyVaultServiceError IJsonModel<KeyVaultServiceError>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FullBackupOperationError>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultServiceError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FullBackupOperationError)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultServiceError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFullBackupOperationError(document.RootElement, options);
+            return DeserializeKeyVaultServiceError(document.RootElement, options);
         }
 
-        internal static FullBackupOperationError DeserializeFullBackupOperationError(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static KeyVaultServiceError DeserializeKeyVaultServiceError(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -95,7 +95,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             }
             string code = default;
             string message = default;
-            FullBackupOperationError innererror = default;
+            KeyVaultServiceError innererror = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -117,7 +117,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                         innererror = null;
                         continue;
                     }
-                    innererror = DeserializeFullBackupOperationError(property.Value, options);
+                    innererror = DeserializeKeyVaultServiceError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -126,46 +126,46 @@ namespace Azure.Security.KeyVault.Administration.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new FullBackupOperationError(code, message, innererror, serializedAdditionalRawData);
+            return new KeyVaultServiceError(code, message, innererror, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<FullBackupOperationError>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<KeyVaultServiceError>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FullBackupOperationError>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultServiceError>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FullBackupOperationError)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultServiceError)} does not support writing '{options.Format}' format.");
             }
         }
 
-        FullBackupOperationError IPersistableModel<FullBackupOperationError>.Create(BinaryData data, ModelReaderWriterOptions options)
+        KeyVaultServiceError IPersistableModel<KeyVaultServiceError>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FullBackupOperationError>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<KeyVaultServiceError>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeFullBackupOperationError(document.RootElement, options);
+                        return DeserializeKeyVaultServiceError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FullBackupOperationError)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultServiceError)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<FullBackupOperationError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<KeyVaultServiceError>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static FullBackupOperationError FromResponse(Response response)
+        internal static KeyVaultServiceError FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeFullBackupOperationError(document.RootElement);
+            return DeserializeKeyVaultServiceError(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

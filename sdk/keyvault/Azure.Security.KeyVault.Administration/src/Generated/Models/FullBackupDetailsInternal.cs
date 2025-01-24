@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="jobId"> Identifier for the full backup operation. </param>
         /// <param name="azureStorageBlobContainerUri"> The Azure blob storage container Uri which contains the full backup. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FullBackupDetailsInternal(OperationStatus? status, string statusDetails, FullBackupOperationError error, DateTimeOffset? startTime, DateTimeOffset? endTime, string jobId, string azureStorageBlobContainerUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal FullBackupDetailsInternal(OperationStatus? status, string statusDetails, KeyVaultServiceError error, DateTimeOffset? startTime, DateTimeOffset? endTime, string jobId, string azureStorageBlobContainerUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             StatusDetails = statusDetails;
@@ -76,7 +76,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> The status details of backup operation. </summary>
         public string StatusDetails { get; }
         /// <summary> Error encountered, if any, during the full backup operation. </summary>
-        public FullBackupOperationError Error { get; }
+        public KeyVaultServiceError Error { get; }
         /// <summary> The start time of the backup operation in UTC. </summary>
         public DateTimeOffset? StartTime { get; }
         /// <summary> The end time of the backup operation in UTC. </summary>

@@ -39,7 +39,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public KeyVaultClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new KeyVaultClientOptions())
+        public KeyVaultClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new KeyVaultAdministrationClientOptions())
         {
         }
 
@@ -48,11 +48,11 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public KeyVaultClient(Uri endpoint, TokenCredential credential, KeyVaultClientOptions options)
+        public KeyVaultClient(Uri endpoint, TokenCredential credential, KeyVaultAdministrationClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new KeyVaultClientOptions();
+            options ??= new KeyVaultAdministrationClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;

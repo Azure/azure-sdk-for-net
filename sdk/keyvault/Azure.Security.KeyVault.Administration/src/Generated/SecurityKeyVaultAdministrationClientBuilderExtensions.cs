@@ -17,19 +17,19 @@ namespace Microsoft.Extensions.Azure
         /// <summary> Registers a <see cref="KeyVaultClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        public static IAzureClientBuilder<KeyVaultClient, KeyVaultClientOptions> AddKeyVaultClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<KeyVaultClient, KeyVaultAdministrationClientOptions> AddKeyVaultClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<KeyVaultClient, KeyVaultClientOptions>((options, cred) => new KeyVaultClient(endpoint, cred, options));
+            return builder.RegisterClientFactory<KeyVaultClient, KeyVaultAdministrationClientOptions>((options, cred) => new KeyVaultClient(endpoint, cred, options));
         }
 
         /// <summary> Registers a <see cref="KeyVaultClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<KeyVaultClient, KeyVaultClientOptions> AddKeyVaultClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<KeyVaultClient, KeyVaultAdministrationClientOptions> AddKeyVaultClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<KeyVaultClient, KeyVaultClientOptions>(configuration);
+            return builder.RegisterClientFactory<KeyVaultClient, KeyVaultAdministrationClientOptions>(configuration);
         }
     }
 }

@@ -16,7 +16,6 @@ namespace Azure.Security.KeyVault.Administration
     /// </summary>
     public class KeyVaultSettingsClient
     {
-        private readonly ClientDiagnostics _diagnostics;
         private readonly KeyVaultClient _restClient;
 
         /// <summary>
@@ -71,7 +70,7 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSetting)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSetting)}");
             scope.Start();
             try
             {
@@ -97,7 +96,7 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSetting)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSetting)}");
             scope.Start();
             try
             {
@@ -118,7 +117,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual Response<GetSettingsResult> GetSettings(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSettings)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSettings)}");
             scope.Start();
             try
             {
@@ -139,7 +138,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         public virtual async Task<Response<GetSettingsResult>> GetSettingsAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSettings)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(GetSettings)}");
             scope.Start();
             try
             {
@@ -163,7 +162,7 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNull(setting, nameof(setting));
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(UpdateSetting)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(UpdateSetting)}");
             scope.Start();
             try
             {
@@ -188,7 +187,7 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNull(setting, nameof(setting));
 
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(UpdateSetting)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultSettingsClient)}.{nameof(UpdateSetting)}");
             scope.Start();
             try
             {

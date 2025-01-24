@@ -58,7 +58,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <param name="startTime"> The start time of the restore operation. </param>
         /// <param name="endTime"> The end time of the restore operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestoreDetailsInternal(OperationStatus? status, string statusDetails, FullBackupOperationError error, string jobId, DateTimeOffset? startTime, DateTimeOffset? endTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RestoreDetailsInternal(OperationStatus? status, string statusDetails, KeyVaultServiceError error, string jobId, DateTimeOffset? startTime, DateTimeOffset? endTime, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Status = status;
             StatusDetails = statusDetails;
@@ -74,7 +74,7 @@ namespace Azure.Security.KeyVault.Administration.Models
         /// <summary> The status details of restore operation. </summary>
         public string StatusDetails { get; }
         /// <summary> Error encountered, if any, during the restore operation. </summary>
-        public FullBackupOperationError Error { get; }
+        public KeyVaultServiceError Error { get; }
         /// <summary> Identifier for the restore operation. </summary>
         public string JobId { get; }
         /// <summary> The start time of the restore operation. </summary>

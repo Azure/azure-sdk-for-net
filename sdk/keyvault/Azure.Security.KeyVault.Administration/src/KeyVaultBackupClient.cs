@@ -15,7 +15,6 @@ namespace Azure.Security.KeyVault.Administration
     /// </summary>
     public class KeyVaultBackupClient
     {
-        private readonly ClientDiagnostics _diagnostics;
         private readonly KeyVaultClient _restClient;
 
         /// <summary>
@@ -56,7 +55,6 @@ namespace Azure.Security.KeyVault.Administration
 
             options ??= new KeyVaultAdministrationClientOptions();
 
-            _diagnostics = new ClientDiagnostics(options);
             _restClient = new KeyVaultClient(VaultUri, credential,options);
         }
 
@@ -71,7 +69,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns>A <see cref="KeyVaultBackupOperation"/> to wait on this long-running operation.</returns>
         public virtual async Task<KeyVaultBackupOperation> StartBackupAsync(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartBackup)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartBackup)}");
             scope.Start();
             try
             {
@@ -101,7 +99,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns>A <see cref="KeyVaultBackupOperation"/> to wait on this long-running operation.</returns>
         public virtual KeyVaultBackupOperation StartBackup(Uri blobStorageUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartBackup)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartBackup)}");
             scope.Start();
             try
             {
@@ -135,7 +133,7 @@ namespace Azure.Security.KeyVault.Administration
         [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual async Task<KeyVaultRestoreOperation> StartRestoreAsync(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartRestore)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartRestore)}");
             scope.Start();
             try
             {
@@ -175,7 +173,7 @@ namespace Azure.Security.KeyVault.Administration
         [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual KeyVaultRestoreOperation StartRestore(Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartRestore)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartRestore)}");
             scope.Start();
             try
             {
@@ -216,7 +214,7 @@ namespace Azure.Security.KeyVault.Administration
         [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual async Task<KeyVaultSelectiveKeyRestoreOperation> StartSelectiveKeyRestoreAsync(string keyName, Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartSelectiveKeyRestore)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartSelectiveKeyRestore)}");
             scope.Start();
             try
             {
@@ -260,7 +258,7 @@ namespace Azure.Security.KeyVault.Administration
         [CallerShouldAudit(KeyVaultAdministrationClientOptions.CallerShouldAuditReason)]
         public virtual KeyVaultSelectiveKeyRestoreOperation StartSelectiveKeyRestore(string keyName, Uri folderUri, string sasToken = default, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartSelectiveKeyRestore)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(StartSelectiveKeyRestore)}");
             scope.Start();
             try
             {
@@ -296,7 +294,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         internal virtual async Task<Response<RestoreDetailsInternal>> GetRestoreDetailsAsync(string jobId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(GetRestoreDetails)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(GetRestoreDetails)}");
             scope.Start();
             try
             {
@@ -318,7 +316,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         internal virtual Response<RestoreDetailsInternal> GetRestoreDetails(string jobId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(GetRestoreDetails)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(GetRestoreDetails)}");
             scope.Start();
             try
             {
@@ -340,7 +338,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         internal virtual async Task<Response<SelectiveKeyRestoreDetailsInternal>> GetSelectiveKeyRestoreDetailsAsync(string jobId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(GetRestoreDetails)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(GetRestoreDetails)}");
             scope.Start();
             try
             {
@@ -363,7 +361,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         internal virtual Response<SelectiveKeyRestoreDetailsInternal> GetSelectiveKeyRestoreDetails(string jobId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(GetRestoreDetails)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(GetRestoreDetails)}");
             scope.Start();
             try
             {
@@ -386,7 +384,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         internal virtual async Task<Response<FullBackupDetailsInternal>> GetBackupDetailsAsync(string jobId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(GetBackupDetails)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(GetBackupDetails)}");
             scope.Start();
             try
             {
@@ -408,7 +406,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <exception cref="RequestFailedException">The server returned an error. See <see cref="Exception.Message"/> for details returned from the server.</exception>
         internal virtual Response<FullBackupDetailsInternal> GetBackupDetails(string jobId, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _diagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(GetBackupDetails)}");
+            using DiagnosticScope scope = _restClient.ClientDiagnostics.CreateScope($"{nameof(KeyVaultBackupClient)}.{nameof(GetBackupDetails)}");
             scope.Start();
             try
             {

@@ -122,7 +122,7 @@ namespace Azure.Security.KeyVault.Administration.Models
             }
             OperationStatus? status = default;
             string statusDetails = default;
-            FullBackupOperationError error = default;
+            KeyVaultServiceError error = default;
             DateTimeOffset? startTime = default;
             DateTimeOffset? endTime = default;
             string jobId = default;
@@ -152,7 +152,7 @@ namespace Azure.Security.KeyVault.Administration.Models
                         error = null;
                         continue;
                     }
-                    error = FullBackupOperationError.DeserializeFullBackupOperationError(property.Value, options);
+                    error = KeyVaultServiceError.DeserializeKeyVaultServiceError(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startTime"u8))

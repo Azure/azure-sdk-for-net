@@ -28,7 +28,7 @@ namespace Azure.Security.KeyVault.Administration
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KeyVaultRoleDefinition KeyVaultRoleDefinition(string id, string name, KeyVaultRoleDefinitionType? type, string roleName, string description, KeyVaultRoleType? roleType, IList<KeyVaultPermission> permissions, IList<KeyVaultRoleScope> assignableScopes)
         {
-            return new KeyVaultRoleDefinition(id, name, type, roleName, description, roleType, permissions, assignableScopes);
+            return new KeyVaultRoleDefinition(id, name, type, roleName, description, roleType, permissions, assignableScopes, null);
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="permissions"> Role definition permissions. </param>
         /// <param name="assignableScopes"> Role definition assignable scopes. </param>
         public static KeyVaultRoleDefinition RoleDefinition(string id, string name, string type, string roleName, string description, string roleType, IList<KeyVaultPermission> permissions, IList<KeyVaultRoleScope> assignableScopes) =>
-            new KeyVaultRoleDefinition(id, name, type, roleName, description, roleType, permissions, assignableScopes);
+            new KeyVaultRoleDefinition(id, name, type, roleName, description, roleType, permissions, assignableScopes, null);
 
         /// <summary>
         /// Initializes a new instance of RoleAssignment.
@@ -53,7 +53,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <param name="type"> The role assignment type. </param>
         /// <param name="properties"> Role assignment properties. </param>
         public static KeyVaultRoleAssignment RoleAssignment(string id, string name, string type, KeyVaultRoleAssignmentProperties properties) =>
-            new KeyVaultRoleAssignment(id, name, type, properties);
+            new KeyVaultRoleAssignment(id, name, type, properties, default);
 
         /// <summary>
         /// Initializes a new instance of a <see cref="KeyVaultRestoreOperation"/> for mocking purposes.
@@ -71,7 +71,7 @@ namespace Azure.Security.KeyVault.Administration
                 errorMessage == null ? null : new KeyVaultServiceError(string.Empty, errorMessage, null),
                 id,
                 startTime,
-                endTime), response, client);
+                endTime, default), response, client);
 
         /// <summary>
         /// Initializes a new instance of a <see cref="KeyVaultBackupOperation"/> for mocking purposes.
@@ -91,7 +91,7 @@ namespace Azure.Security.KeyVault.Administration
                 startTime,
                 endTime,
                 id,
-                blobContainerUri.AbsoluteUri), response, client);
+                blobContainerUri.AbsoluteUri, default), response, client);
 
         /// <summary>
         /// Initializes a new instance of a <see cref="KeyVaultBackupResult"/> for mocking purposes.

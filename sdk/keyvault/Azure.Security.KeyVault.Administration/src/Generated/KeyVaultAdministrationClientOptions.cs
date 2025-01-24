@@ -11,10 +11,8 @@ using Azure.Core;
 namespace Azure.Security.KeyVault.Administration
 {
     /// <summary> Client options for KeyVaultClient. </summary>
-    public partial class KeyVaultClientOptions : ClientOptions
+    public partial class KeyVaultAdministrationClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V7_6_Preview_1;
-
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
@@ -22,19 +20,6 @@ namespace Azure.Security.KeyVault.Administration
             V7_5 = 1,
             /// <summary> Service version "7.6-preview.1". </summary>
             V7_6_Preview_1 = 2,
-        }
-
-        internal string Version { get; }
-
-        /// <summary> Initializes new instance of KeyVaultClientOptions. </summary>
-        public KeyVaultClientOptions(ServiceVersion version = LatestVersion)
-        {
-            Version = version switch
-            {
-                ServiceVersion.V7_5 => "7.5",
-                ServiceVersion.V7_6_Preview_1 => "7.6-preview.1",
-                _ => throw new NotSupportedException()
-            };
         }
     }
 }
