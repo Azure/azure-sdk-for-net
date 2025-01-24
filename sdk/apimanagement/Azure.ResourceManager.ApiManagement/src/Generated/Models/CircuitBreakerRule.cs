@@ -54,12 +54,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <param name="name"> The rule name. </param>
         /// <param name="failureCondition"> The conditions for tripping the circuit breaker. </param>
         /// <param name="tripDuration"> The duration for which the circuit will be tripped. </param>
+        /// <param name="acceptRetryAfter"> flag to accept Retry-After header from the backend. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CircuitBreakerRule(string name, CircuitBreakerFailureCondition failureCondition, TimeSpan? tripDuration, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CircuitBreakerRule(string name, CircuitBreakerFailureCondition failureCondition, TimeSpan? tripDuration, bool? acceptRetryAfter, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             FailureCondition = failureCondition;
             TripDuration = tripDuration;
+            AcceptRetryAfter = acceptRetryAfter;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -72,5 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <summary> The duration for which the circuit will be tripped. </summary>
         [WirePath("tripDuration")]
         public TimeSpan? TripDuration { get; set; }
+        /// <summary> flag to accept Retry-After header from the backend. </summary>
+        [WirePath("acceptRetryAfter")]
+        public bool? AcceptRetryAfter { get; set; }
     }
 }
