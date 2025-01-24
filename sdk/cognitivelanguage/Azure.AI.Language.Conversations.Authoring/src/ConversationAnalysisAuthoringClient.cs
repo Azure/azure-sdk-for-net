@@ -83,13 +83,12 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Initializes a new instance of ProjectsAuthoringConversationAnalysis. </summary>
-        /// <param name="projectName"> The project name to use for this subclient. </param>
-        public virtual ProjectsAuthoringConversationAnalysis GetProjects(string projectName)
+        public virtual ProjectsAuthoringConversationAnalysis GetProjects()
         {
             var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new ProjectsAuthoringConversationAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
+            return new ProjectsAuthoringConversationAnalysis(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
         }
 
         /// <summary> Initializes a new instance of TrainingAuthoringConversationAnalysis. </summary>
