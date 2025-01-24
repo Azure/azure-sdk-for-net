@@ -47,6 +47,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringCopyProject.xml" path="doc/members/member[@name='CopyProjectAuthorizationAsync(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)']/*" />
         public virtual async Task<Response<CopyProjectDetails>> CopyProjectAuthorizationAsync(AnalyzeConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+
             CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await CopyProjectAuthorizationAsync(_projectName, copyProjectAuthorizationRequest.ToRequestContent(), context).ConfigureAwait(false);
@@ -61,6 +63,8 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringCopyProject.xml" path="doc/members/member[@name='CopyProjectAuthorization(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)']/*" />
         public virtual Response<CopyProjectDetails> CopyProjectAuthorization(AnalyzeConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
+
             CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = CopyProjectAuthorization(_projectName, copyProjectAuthorizationRequest.ToRequestContent(), context);
@@ -73,6 +77,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringCopyProject.xml" path="doc/members/member[@name='GetCopyProjectStatusAsync(string,string,CancellationToken)']/*" />
         public virtual async Task<Response<CopyProjectJobState>> GetCopyProjectStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -86,6 +91,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringCopyProject.xml" path="doc/members/member[@name='GetCopyProjectStatus(string,string,CancellationToken)']/*" />
         public virtual Response<CopyProjectJobState> GetCopyProjectStatus(string jobId, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
@@ -100,6 +106,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringCopyProject.xml" path="doc/members/member[@name='CopyProjectAsync(WaitUntil,string,CopyProjectDetails,CancellationToken)']/*" />
         public virtual async Task<Operation> CopyProjectAsync(WaitUntil waitUntil, CopyProjectDetails body, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(body, nameof(body));
 
             using RequestContent content = body.ToRequestContent();
@@ -114,6 +121,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <include file="Docs/ConversationAuthoringCopyProject.xml" path="doc/members/member[@name='CopyProject(WaitUntil,string,CopyProjectDetails,CancellationToken)']/*" />
         public virtual Operation CopyProject(WaitUntil waitUntil, CopyProjectDetails body, CancellationToken cancellationToken = default)
         {
+            Argument.AssertNotNullOrEmpty(_projectName, nameof(_projectName));
             Argument.AssertNotNull(body, nameof(body));
 
             using RequestContent content = body.ToRequestContent();
