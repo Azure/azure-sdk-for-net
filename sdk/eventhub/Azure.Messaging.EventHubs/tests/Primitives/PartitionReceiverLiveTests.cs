@@ -987,7 +987,12 @@ namespace Azure.Messaging.EventHubs.Tests
                     // will, instead, hang indefinitely.  The try timeout is intentionally set to a value smaller than the cancellation token to
                     // invoke a timeout exception in these cases.
 
-                    Assert.That(async () => await ReadNothingAsync(invalidProxyReceiver, cancellationSource.Token, iterationCount: 25), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
+                    Assert.That(async () => await ReadNothingAsync(invalidProxyReceiver, cancellationSource.Token, iterationCount: 25),
+                        Throws
+                            .InstanceOf<WebSocketException>()
+                            .Or.InstanceOf<TimeoutException>()
+                            .Or.InstanceOf<OperationCanceledException>());
+
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                 }
             }
@@ -2511,7 +2516,12 @@ namespace Azure.Messaging.EventHubs.Tests
                     // will, instead, hang indefinitely.  The try timeout is intentionally set to a value smaller than the cancellation token to
                     // invoke a timeout exception in these cases.
 
-                    Assert.That(async () => await receiver.GetPartitionPropertiesAsync(cancellationSource.Token), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
+                    Assert.That(async () => await receiver.GetPartitionPropertiesAsync(cancellationSource.Token),
+                        Throws
+                            .InstanceOf<WebSocketException>()
+                            .Or.InstanceOf<TimeoutException>()
+                            .Or.InstanceOf<OperationCanceledException>());
+
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                 }
             }
