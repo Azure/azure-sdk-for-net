@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 return null;
             }
-            IList<DeploymentPreflightResourceInfo> resources = default;
+            IList<DeploymentPreflightResource> resources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     {
                         continue;
                     }
-                    List<DeploymentPreflightResourceInfo> array = new List<DeploymentPreflightResourceInfo>();
+                    List<DeploymentPreflightResource> array = new List<DeploymentPreflightResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeploymentPreflightResourceInfo.DeserializeDeploymentPreflightResourceInfo(item, options));
+                        array.Add(DeploymentPreflightResource.DeserializeDeploymentPreflightResource(item, options));
                     }
                     resources = array;
                     continue;
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeploymentPreflightModel(resources ?? new ChangeTrackingList<DeploymentPreflightResourceInfo>(), serializedAdditionalRawData);
+            return new DeploymentPreflightModel(resources ?? new ChangeTrackingList<DeploymentPreflightResource>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeploymentPreflightModel>.Write(ModelReaderWriterOptions options)

@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class VMwareToAzStackHciPolicyModelCustomProperties : IUtf8JsonSerializable, IJsonModel<VMwareToAzStackHciPolicyModelCustomProperties>
+    public partial class VMwareToAzStackHCIPolicyModelCustomProperties : IUtf8JsonSerializable, IJsonModel<VMwareToAzStackHCIPolicyModelCustomProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareToAzStackHciPolicyModelCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareToAzStackHCIPolicyModelCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VMwareToAzStackHciPolicyModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VMwareToAzStackHCIPolicyModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciPolicyModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHCIPolicyModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareToAzStackHciPolicyModelCustomProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareToAzStackHCIPolicyModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteNumberValue(AppConsistentFrequencyInMinutes);
         }
 
-        VMwareToAzStackHciPolicyModelCustomProperties IJsonModel<VMwareToAzStackHciPolicyModelCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VMwareToAzStackHCIPolicyModelCustomProperties IJsonModel<VMwareToAzStackHCIPolicyModelCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciPolicyModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHCIPolicyModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareToAzStackHciPolicyModelCustomProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareToAzStackHCIPolicyModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVMwareToAzStackHciPolicyModelCustomProperties(document.RootElement, options);
+            return DeserializeVMwareToAzStackHCIPolicyModelCustomProperties(document.RootElement, options);
         }
 
-        internal static VMwareToAzStackHciPolicyModelCustomProperties DeserializeVMwareToAzStackHciPolicyModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static VMwareToAzStackHCIPolicyModelCustomProperties DeserializeVMwareToAzStackHCIPolicyModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -97,38 +97,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VMwareToAzStackHciPolicyModelCustomProperties(instanceType, serializedAdditionalRawData, recoveryPointHistoryInMinutes, crashConsistentFrequencyInMinutes, appConsistentFrequencyInMinutes);
+            return new VMwareToAzStackHCIPolicyModelCustomProperties(instanceType, serializedAdditionalRawData, recoveryPointHistoryInMinutes, crashConsistentFrequencyInMinutes, appConsistentFrequencyInMinutes);
         }
 
-        BinaryData IPersistableModel<VMwareToAzStackHciPolicyModelCustomProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<VMwareToAzStackHCIPolicyModelCustomProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciPolicyModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHCIPolicyModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciPolicyModelCustomProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHCIPolicyModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VMwareToAzStackHciPolicyModelCustomProperties IPersistableModel<VMwareToAzStackHciPolicyModelCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        VMwareToAzStackHCIPolicyModelCustomProperties IPersistableModel<VMwareToAzStackHCIPolicyModelCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciPolicyModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHCIPolicyModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeVMwareToAzStackHciPolicyModelCustomProperties(document.RootElement, options);
+                        return DeserializeVMwareToAzStackHCIPolicyModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciPolicyModelCustomProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHCIPolicyModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VMwareToAzStackHciPolicyModelCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VMwareToAzStackHCIPolicyModelCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

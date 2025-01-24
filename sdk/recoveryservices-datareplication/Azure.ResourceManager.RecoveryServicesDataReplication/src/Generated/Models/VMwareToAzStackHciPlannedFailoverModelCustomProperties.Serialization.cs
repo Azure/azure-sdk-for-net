@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class VMwareToAzStackHciPlannedFailoverModelCustomProperties : IUtf8JsonSerializable, IJsonModel<VMwareToAzStackHciPlannedFailoverModelCustomProperties>
+    public partial class VMwareToAzStackHCIPlannedFailoverModelCustomProperties : IUtf8JsonSerializable, IJsonModel<VMwareToAzStackHCIPlannedFailoverModelCustomProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareToAzStackHciPlannedFailoverModelCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<VMwareToAzStackHCIPlannedFailoverModelCustomProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<VMwareToAzStackHciPlannedFailoverModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<VMwareToAzStackHCIPlannedFailoverModelCustomProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciPlannedFailoverModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHCIPlannedFailoverModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareToAzStackHciPlannedFailoverModelCustomProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareToAzStackHCIPlannedFailoverModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -39,19 +39,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteBooleanValue(ShutdownSourceVm);
         }
 
-        VMwareToAzStackHciPlannedFailoverModelCustomProperties IJsonModel<VMwareToAzStackHciPlannedFailoverModelCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        VMwareToAzStackHCIPlannedFailoverModelCustomProperties IJsonModel<VMwareToAzStackHCIPlannedFailoverModelCustomProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciPlannedFailoverModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHCIPlannedFailoverModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareToAzStackHciPlannedFailoverModelCustomProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareToAzStackHCIPlannedFailoverModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeVMwareToAzStackHciPlannedFailoverModelCustomProperties(document.RootElement, options);
+            return DeserializeVMwareToAzStackHCIPlannedFailoverModelCustomProperties(document.RootElement, options);
         }
 
-        internal static VMwareToAzStackHciPlannedFailoverModelCustomProperties DeserializeVMwareToAzStackHciPlannedFailoverModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static VMwareToAzStackHCIPlannedFailoverModelCustomProperties DeserializeVMwareToAzStackHCIPlannedFailoverModelCustomProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,38 +81,38 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new VMwareToAzStackHciPlannedFailoverModelCustomProperties(instanceType, serializedAdditionalRawData, shutdownSourceVm);
+            return new VMwareToAzStackHCIPlannedFailoverModelCustomProperties(instanceType, serializedAdditionalRawData, shutdownSourceVm);
         }
 
-        BinaryData IPersistableModel<VMwareToAzStackHciPlannedFailoverModelCustomProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<VMwareToAzStackHCIPlannedFailoverModelCustomProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciPlannedFailoverModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHCIPlannedFailoverModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciPlannedFailoverModelCustomProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHCIPlannedFailoverModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        VMwareToAzStackHciPlannedFailoverModelCustomProperties IPersistableModel<VMwareToAzStackHciPlannedFailoverModelCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        VMwareToAzStackHCIPlannedFailoverModelCustomProperties IPersistableModel<VMwareToAzStackHCIPlannedFailoverModelCustomProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciPlannedFailoverModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHCIPlannedFailoverModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeVMwareToAzStackHciPlannedFailoverModelCustomProperties(document.RootElement, options);
+                        return DeserializeVMwareToAzStackHCIPlannedFailoverModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciPlannedFailoverModelCustomProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHCIPlannedFailoverModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<VMwareToAzStackHciPlannedFailoverModelCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<VMwareToAzStackHCIPlannedFailoverModelCustomProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

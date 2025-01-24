@@ -7,12 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> VMwareToAzStackHCI protected disk properties. </summary>
-    public partial class VMwareToAzStackHciProtectedDiskProperties
+    public partial class VMwareToAzStackHCIProtectedDiskProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,12 +45,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciProtectedDiskProperties"/>. </summary>
-        internal VMwareToAzStackHciProtectedDiskProperties()
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHCIProtectedDiskProperties"/>. </summary>
+        internal VMwareToAzStackHCIProtectedDiskProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciProtectedDiskProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHCIProtectedDiskProperties"/>. </summary>
         /// <param name="storageContainerId"> Gets or sets the ARM Id of the storage container. </param>
         /// <param name="storageContainerLocalPath"> Gets or sets the local path of the storage container. </param>
         /// <param name="sourceDiskId"> Gets or sets the source disk Id. </param>
@@ -61,13 +60,13 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="migrateDiskName"> Gets or sets the failover clone disk. </param>
         /// <param name="isOSDisk"> Gets or sets a value indicating whether the disk is the OS disk. </param>
         /// <param name="capacityInBytes"> Gets or sets the disk capacity in bytes. </param>
-        /// <param name="isDynamic">
-        /// Gets or sets a value indicating whether dynamic sizing is enabled on the virtual hard
-        /// disk.
-        /// </param>
+        /// <param name="isDynamic"> Gets or sets a value indicating whether dynamic sizing is enabled on the virtual hard disk. </param>
         /// <param name="diskType"> Gets or sets the disk type. </param>
+        /// <param name="diskBlockSize"> Gets or sets a value of disk block size. </param>
+        /// <param name="diskLogicalSectorSize"> Gets or sets a value of disk logical sector size. </param>
+        /// <param name="diskPhysicalSectorSize"> Gets or sets a value of disk physical sector size. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal VMwareToAzStackHciProtectedDiskProperties(ResourceIdentifier storageContainerId, string storageContainerLocalPath, string sourceDiskId, string sourceDiskName, string seedDiskName, string testMigrateDiskName, string migrateDiskName, bool? isOSDisk, long? capacityInBytes, bool? isDynamic, string diskType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal VMwareToAzStackHCIProtectedDiskProperties(string storageContainerId, string storageContainerLocalPath, string sourceDiskId, string sourceDiskName, string seedDiskName, string testMigrateDiskName, string migrateDiskName, bool? isOSDisk, long? capacityInBytes, bool? isDynamic, string diskType, long? diskBlockSize, long? diskLogicalSectorSize, long? diskPhysicalSectorSize, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageContainerId = storageContainerId;
             StorageContainerLocalPath = storageContainerLocalPath;
@@ -80,11 +79,14 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             CapacityInBytes = capacityInBytes;
             IsDynamic = isDynamic;
             DiskType = diskType;
+            DiskBlockSize = diskBlockSize;
+            DiskLogicalSectorSize = diskLogicalSectorSize;
+            DiskPhysicalSectorSize = diskPhysicalSectorSize;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the ARM Id of the storage container. </summary>
-        public ResourceIdentifier StorageContainerId { get; }
+        public string StorageContainerId { get; }
         /// <summary> Gets or sets the local path of the storage container. </summary>
         public string StorageContainerLocalPath { get; }
         /// <summary> Gets or sets the source disk Id. </summary>
@@ -101,12 +103,15 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         public bool? IsOSDisk { get; }
         /// <summary> Gets or sets the disk capacity in bytes. </summary>
         public long? CapacityInBytes { get; }
-        /// <summary>
-        /// Gets or sets a value indicating whether dynamic sizing is enabled on the virtual hard
-        /// disk.
-        /// </summary>
+        /// <summary> Gets or sets a value indicating whether dynamic sizing is enabled on the virtual hard disk. </summary>
         public bool? IsDynamic { get; }
         /// <summary> Gets or sets the disk type. </summary>
         public string DiskType { get; }
+        /// <summary> Gets or sets a value of disk block size. </summary>
+        public long? DiskBlockSize { get; }
+        /// <summary> Gets or sets a value of disk logical sector size. </summary>
+        public long? DiskLogicalSectorSize { get; }
+        /// <summary> Gets or sets a value of disk physical sector size. </summary>
+        public long? DiskPhysicalSectorSize { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
@@ -15,27 +14,27 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
     public partial class VMwareMigrateFabricModelCustomProperties : FabricModelCustomProperties
     {
         /// <summary> Initializes a new instance of <see cref="VMwareMigrateFabricModelCustomProperties"/>. </summary>
-        /// <param name="vMwareSiteId"> Gets or sets the ARM Id of the VMware site. </param>
+        /// <param name="vmwareSiteId"> Gets or sets the ARM Id of the VMware site. </param>
         /// <param name="migrationSolutionId"> Gets or sets the ARM Id of the migration solution. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vMwareSiteId"/> or <paramref name="migrationSolutionId"/> is null. </exception>
-        public VMwareMigrateFabricModelCustomProperties(ResourceIdentifier vMwareSiteId, ResourceIdentifier migrationSolutionId)
+        /// <exception cref="ArgumentNullException"> <paramref name="vmwareSiteId"/> or <paramref name="migrationSolutionId"/> is null. </exception>
+        public VMwareMigrateFabricModelCustomProperties(string vmwareSiteId, string migrationSolutionId)
         {
-            Argument.AssertNotNull(vMwareSiteId, nameof(vMwareSiteId));
+            Argument.AssertNotNull(vmwareSiteId, nameof(vmwareSiteId));
             Argument.AssertNotNull(migrationSolutionId, nameof(migrationSolutionId));
 
-            VMwareSiteId = vMwareSiteId;
+            VmwareSiteId = vmwareSiteId;
             MigrationSolutionId = migrationSolutionId;
             InstanceType = "VMwareMigrate";
         }
 
         /// <summary> Initializes a new instance of <see cref="VMwareMigrateFabricModelCustomProperties"/>. </summary>
-        /// <param name="instanceType"> Gets or sets the instance type. </param>
+        /// <param name="instanceType"> Discriminator property for FabricModelCustomProperties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="vMwareSiteId"> Gets or sets the ARM Id of the VMware site. </param>
+        /// <param name="vmwareSiteId"> Gets or sets the ARM Id of the VMware site. </param>
         /// <param name="migrationSolutionId"> Gets or sets the ARM Id of the migration solution. </param>
-        internal VMwareMigrateFabricModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier vMwareSiteId, ResourceIdentifier migrationSolutionId) : base(instanceType, serializedAdditionalRawData)
+        internal VMwareMigrateFabricModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string vmwareSiteId, string migrationSolutionId) : base(instanceType, serializedAdditionalRawData)
         {
-            VMwareSiteId = vMwareSiteId;
+            VmwareSiteId = vmwareSiteId;
             MigrationSolutionId = migrationSolutionId;
             InstanceType = instanceType ?? "VMwareMigrate";
         }
@@ -46,8 +45,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         }
 
         /// <summary> Gets or sets the ARM Id of the VMware site. </summary>
-        public ResourceIdentifier VMwareSiteId { get; set; }
+        public string VmwareSiteId { get; set; }
         /// <summary> Gets or sets the ARM Id of the migration solution. </summary>
-        public ResourceIdentifier MigrationSolutionId { get; set; }
+        public string MigrationSolutionId { get; set; }
     }
 }

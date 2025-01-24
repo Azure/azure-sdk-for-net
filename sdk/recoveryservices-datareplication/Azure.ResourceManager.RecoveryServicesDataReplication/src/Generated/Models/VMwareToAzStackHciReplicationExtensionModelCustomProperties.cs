@@ -7,18 +7,17 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
     /// <summary> VMware to AzStackHCI Replication extension model custom properties. </summary>
-    public partial class VMwareToAzStackHciReplicationExtensionModelCustomProperties : ReplicationExtensionModelCustomProperties
+    public partial class VMwareToAzStackHCIReplicationExtensionModelCustomProperties : ReplicationExtensionModelCustomProperties
     {
-        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciReplicationExtensionModelCustomProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHCIReplicationExtensionModelCustomProperties"/>. </summary>
         /// <param name="vmwareFabricArmId"> Gets or sets the ARM Id of the source VMware fabric. </param>
         /// <param name="azStackHciFabricArmId"> Gets or sets the ARM Id of the target AzStackHCI fabric. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmwareFabricArmId"/> or <paramref name="azStackHciFabricArmId"/> is null. </exception>
-        public VMwareToAzStackHciReplicationExtensionModelCustomProperties(ResourceIdentifier vmwareFabricArmId, ResourceIdentifier azStackHciFabricArmId)
+        public VMwareToAzStackHCIReplicationExtensionModelCustomProperties(string vmwareFabricArmId, string azStackHciFabricArmId)
         {
             Argument.AssertNotNull(vmwareFabricArmId, nameof(vmwareFabricArmId));
             Argument.AssertNotNull(azStackHciFabricArmId, nameof(azStackHciFabricArmId));
@@ -28,8 +27,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             InstanceType = "VMwareToAzStackHCI";
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciReplicationExtensionModelCustomProperties"/>. </summary>
-        /// <param name="instanceType"> Gets or sets the instance type. </param>
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHCIReplicationExtensionModelCustomProperties"/>. </summary>
+        /// <param name="instanceType"> Discriminator property for ReplicationExtensionModelCustomProperties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmwareFabricArmId"> Gets or sets the ARM Id of the source VMware fabric. </param>
         /// <param name="vmwareSiteId"> Gets or sets the ARM Id of the VMware site. </param>
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="resourceLocation"> Gets or sets the resource location. </param>
         /// <param name="subscriptionId"> Gets or sets the subscription. </param>
         /// <param name="resourceGroup"> Gets or sets the resource group. </param>
-        internal VMwareToAzStackHciReplicationExtensionModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, ResourceIdentifier vmwareFabricArmId, ResourceIdentifier vmwareSiteId, ResourceIdentifier azStackHciFabricArmId, ResourceIdentifier azStackHciSiteId, ResourceIdentifier storageAccountId, string storageAccountSasSecretName, Uri asrServiceUri, Uri rcmServiceUri, Uri gatewayServiceUri, string sourceGatewayServiceId, string targetGatewayServiceId, string sourceStorageContainerName, string targetStorageContainerName, string resourceLocation, string subscriptionId, string resourceGroup) : base(instanceType, serializedAdditionalRawData)
+        internal VMwareToAzStackHCIReplicationExtensionModelCustomProperties(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string vmwareFabricArmId, string vmwareSiteId, string azStackHciFabricArmId, string azStackHciSiteId, string storageAccountId, string storageAccountSasSecretName, string asrServiceUri, string rcmServiceUri, string gatewayServiceUri, string sourceGatewayServiceId, string targetGatewayServiceId, string sourceStorageContainerName, string targetStorageContainerName, string resourceLocation, string subscriptionId, string resourceGroup) : base(instanceType, serializedAdditionalRawData)
         {
             VmwareFabricArmId = vmwareFabricArmId;
             VmwareSiteId = vmwareSiteId;
@@ -68,29 +67,29 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             InstanceType = instanceType ?? "VMwareToAzStackHCI";
         }
 
-        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHciReplicationExtensionModelCustomProperties"/> for deserialization. </summary>
-        internal VMwareToAzStackHciReplicationExtensionModelCustomProperties()
+        /// <summary> Initializes a new instance of <see cref="VMwareToAzStackHCIReplicationExtensionModelCustomProperties"/> for deserialization. </summary>
+        internal VMwareToAzStackHCIReplicationExtensionModelCustomProperties()
         {
         }
 
         /// <summary> Gets or sets the ARM Id of the source VMware fabric. </summary>
-        public ResourceIdentifier VmwareFabricArmId { get; set; }
+        public string VmwareFabricArmId { get; set; }
         /// <summary> Gets or sets the ARM Id of the VMware site. </summary>
-        public ResourceIdentifier VmwareSiteId { get; }
+        public string VmwareSiteId { get; }
         /// <summary> Gets or sets the ARM Id of the target AzStackHCI fabric. </summary>
-        public ResourceIdentifier AzStackHciFabricArmId { get; set; }
+        public string AzStackHciFabricArmId { get; set; }
         /// <summary> Gets or sets the ARM Id of the AzStackHCI site. </summary>
-        public ResourceIdentifier AzStackHciSiteId { get; }
+        public string AzStackHciSiteId { get; }
         /// <summary> Gets or sets the storage account Id. </summary>
-        public ResourceIdentifier StorageAccountId { get; set; }
+        public string StorageAccountId { get; set; }
         /// <summary> Gets or sets the Sas Secret of storage account. </summary>
         public string StorageAccountSasSecretName { get; set; }
         /// <summary> Gets or sets the Uri of ASR. </summary>
-        public Uri AsrServiceUri { get; }
+        public string AsrServiceUri { get; }
         /// <summary> Gets or sets the Uri of Rcm. </summary>
-        public Uri RcmServiceUri { get; }
+        public string RcmServiceUri { get; }
         /// <summary> Gets or sets the Uri of Gateway. </summary>
-        public Uri GatewayServiceUri { get; }
+        public string GatewayServiceUri { get; }
         /// <summary> Gets or sets the gateway service Id of source. </summary>
         public string SourceGatewayServiceId { get; }
         /// <summary> Gets or sets the gateway service Id of target. </summary>

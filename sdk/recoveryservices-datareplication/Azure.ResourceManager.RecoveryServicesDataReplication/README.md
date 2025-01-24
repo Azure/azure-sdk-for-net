@@ -1,7 +1,6 @@
-# Microsoft Azure RecoveryServicesDataReplication management client library for .NET
+# Microsoft Azure recoveryservices-datareplication management client library for .NET
 
-The Azure RecoveryServicesDataReplication provides VM migration capabilities from Hyper-V and VMware platforms to Azure Stack HCI utilizing Azure Migrate. The data movement that the service provides stays on-premises at all times while using Azure Migrate as the management plane.
-
+The Azure RecoveryServicesDataReplication provides VM migration capabilities from Hyper-V and VMware platforms to Azure Local utilizing Azure Migrate. The data movement that the service provides stays on-premises at all times while using Azure Migrate as the management plane.
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
     - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
@@ -37,7 +36,7 @@ Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azu
 Documentation is available to help you learn how to use this package:
 
 - [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
-- [API References](https://learn.microsoft.com/dotnet/api/?view=azure-dotnet).
+- [API References](https://docs.microsoft.com/dotnet/api/?view=azure-dotnet).
 - [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## Examples

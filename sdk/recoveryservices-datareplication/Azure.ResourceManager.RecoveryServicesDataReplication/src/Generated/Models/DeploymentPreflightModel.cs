@@ -48,19 +48,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <summary> Initializes a new instance of <see cref="DeploymentPreflightModel"/>. </summary>
         public DeploymentPreflightModel()
         {
-            Resources = new ChangeTrackingList<DeploymentPreflightResourceInfo>();
+            Resources = new ChangeTrackingList<DeploymentPreflightResource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DeploymentPreflightModel"/>. </summary>
         /// <param name="resources"> Gets or sets the list of resources. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DeploymentPreflightModel(IList<DeploymentPreflightResourceInfo> resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal DeploymentPreflightModel(IList<DeploymentPreflightResource> resources, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Resources = resources;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the list of resources. </summary>
-        public IList<DeploymentPreflightResourceInfo> Resources { get; }
+        public IList<DeploymentPreflightResource> Resources { get; }
     }
 }

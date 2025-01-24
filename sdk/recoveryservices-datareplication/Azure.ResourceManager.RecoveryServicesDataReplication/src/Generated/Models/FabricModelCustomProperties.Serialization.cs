@@ -77,8 +77,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzStackHCI": return AzStackHciFabricModelCustomProperties.DeserializeAzStackHciFabricModelCustomProperties(element, options);
-                    case "FabricModelCustomProperties": return GeneralFabricModelCustomProperties.DeserializeGeneralFabricModelCustomProperties(element, options);
+                    case "AzStackHCI": return AzStackHCIFabricModelCustomProperties.DeserializeAzStackHCIFabricModelCustomProperties(element, options);
                     case "HyperVMigrate": return HyperVMigrateFabricModelCustomProperties.DeserializeHyperVMigrateFabricModelCustomProperties(element, options);
                     case "VMwareMigrate": return VMwareMigrateFabricModelCustomProperties.DeserializeVMwareMigrateFabricModelCustomProperties(element, options);
                 }

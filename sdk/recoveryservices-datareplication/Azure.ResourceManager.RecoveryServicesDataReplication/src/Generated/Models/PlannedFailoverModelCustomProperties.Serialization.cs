@@ -77,9 +77,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "HyperVToAzStackHCI": return HyperVToAzStackHciPlannedFailoverModelCustomProperties.DeserializeHyperVToAzStackHciPlannedFailoverModelCustomProperties(element, options);
-                    case "PlannedFailoverModelCustomProperties": return GeneralPlannedFailoverModelCustomProperties.DeserializeGeneralPlannedFailoverModelCustomProperties(element, options);
-                    case "VMwareToAzStackHCI": return VMwareToAzStackHciPlannedFailoverModelCustomProperties.DeserializeVMwareToAzStackHciPlannedFailoverModelCustomProperties(element, options);
+                    case "HyperVToAzStackHCI": return HyperVToAzStackHCIPlannedFailoverModelCustomProperties.DeserializeHyperVToAzStackHCIPlannedFailoverModelCustomProperties(element, options);
+                    case "VMwareToAzStackHCI": return VMwareToAzStackHCIPlannedFailoverModelCustomProperties.DeserializeVMwareToAzStackHCIPlannedFailoverModelCustomProperties(element, options);
                 }
             }
             return UnknownPlannedFailoverModelCustomProperties.DeserializeUnknownPlannedFailoverModelCustomProperties(element, options);

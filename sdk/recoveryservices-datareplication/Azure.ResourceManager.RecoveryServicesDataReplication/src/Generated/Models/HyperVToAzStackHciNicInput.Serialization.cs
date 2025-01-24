@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
 {
-    public partial class HyperVToAzStackHciNicInput : IUtf8JsonSerializable, IJsonModel<HyperVToAzStackHciNicInput>
+    public partial class HyperVToAzStackHCINicInput : IUtf8JsonSerializable, IJsonModel<HyperVToAzStackHCINicInput>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVToAzStackHciNicInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HyperVToAzStackHCINicInput>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<HyperVToAzStackHciNicInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<HyperVToAzStackHCINicInput>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHCINicInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVToAzStackHciNicInput)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVToAzStackHCINicInput)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("nicId"u8);
@@ -41,12 +41,28 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
             }
-            writer.WritePropertyName("targetNetworkId"u8);
-            writer.WriteStringValue(TargetNetworkId);
-            writer.WritePropertyName("testNetworkId"u8);
-            writer.WriteStringValue(TestNetworkId);
+            if (Optional.IsDefined(TargetNetworkId))
+            {
+                writer.WritePropertyName("targetNetworkId"u8);
+                writer.WriteStringValue(TargetNetworkId);
+            }
+            if (Optional.IsDefined(TestNetworkId))
+            {
+                writer.WritePropertyName("testNetworkId"u8);
+                writer.WriteStringValue(TestNetworkId);
+            }
             writer.WritePropertyName("selectionTypeForFailover"u8);
             writer.WriteStringValue(SelectionTypeForFailover.ToString());
+            if (Optional.IsDefined(IsStaticIPMigrationEnabled))
+            {
+                writer.WritePropertyName("isStaticIpMigrationEnabled"u8);
+                writer.WriteBooleanValue(IsStaticIPMigrationEnabled.Value);
+            }
+            if (Optional.IsDefined(IsMacMigrationEnabled))
+            {
+                writer.WritePropertyName("isMacMigrationEnabled"u8);
+                writer.WriteBooleanValue(IsMacMigrationEnabled.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -64,19 +80,19 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             }
         }
 
-        HyperVToAzStackHciNicInput IJsonModel<HyperVToAzStackHciNicInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        HyperVToAzStackHCINicInput IJsonModel<HyperVToAzStackHCINicInput>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHCINicInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVToAzStackHciNicInput)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVToAzStackHCINicInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeHyperVToAzStackHciNicInput(document.RootElement, options);
+            return DeserializeHyperVToAzStackHCINicInput(document.RootElement, options);
         }
 
-        internal static HyperVToAzStackHciNicInput DeserializeHyperVToAzStackHciNicInput(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static HyperVToAzStackHCINicInput DeserializeHyperVToAzStackHCINicInput(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -89,6 +105,8 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             string targetNetworkId = default;
             string testNetworkId = default;
             VmNicSelection selectionTypeForFailover = default;
+            bool? isStaticIPMigrationEnabled = default;
+            bool? isMacMigrationEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,50 +136,70 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                     selectionTypeForFailover = new VmNicSelection(property.Value.GetString());
                     continue;
                 }
+                if (property.NameEquals("isStaticIpMigrationEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isStaticIPMigrationEnabled = property.Value.GetBoolean();
+                    continue;
+                }
+                if (property.NameEquals("isMacMigrationEnabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isMacMigrationEnabled = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new HyperVToAzStackHciNicInput(
+            return new HyperVToAzStackHCINicInput(
                 nicId,
                 networkName,
                 targetNetworkId,
                 testNetworkId,
                 selectionTypeForFailover,
+                isStaticIPMigrationEnabled,
+                isMacMigrationEnabled,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<HyperVToAzStackHciNicInput>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<HyperVToAzStackHCINicInput>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHCINicInput>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciNicInput)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHCINicInput)} does not support writing '{options.Format}' format.");
             }
         }
 
-        HyperVToAzStackHciNicInput IPersistableModel<HyperVToAzStackHciNicInput>.Create(BinaryData data, ModelReaderWriterOptions options)
+        HyperVToAzStackHCINicInput IPersistableModel<HyperVToAzStackHCINicInput>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<HyperVToAzStackHCINicInput>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeHyperVToAzStackHciNicInput(document.RootElement, options);
+                        return DeserializeHyperVToAzStackHCINicInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVToAzStackHciNicInput)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVToAzStackHCINicInput)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<HyperVToAzStackHciNicInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<HyperVToAzStackHCINicInput>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
