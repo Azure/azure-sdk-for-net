@@ -56,40 +56,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Gets the details of a trained model. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetTrainedModelAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<ProjectTrainedModel>> GetTrainedModelAsync(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTrainedModelAsync(projectName, trainedModelLabel, context).ConfigureAwait(false);
-            return Response.FromValue(ProjectTrainedModel.FromResponse(response), response);
-        }
-
-        /// <summary> Gets the details of a trained model. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetTrainedModel(string,string,CancellationToken)']/*" />
-        public virtual Response<ProjectTrainedModel> GetTrainedModel(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTrainedModel(projectName, trainedModelLabel, context);
-            return Response.FromValue(ProjectTrainedModel.FromResponse(response), response);
-        }
-
         /// <summary>
         /// [Protocol Method] Gets the details of a trained model.
         /// <list type="bullet">
@@ -250,44 +216,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status for an evaluation job. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetEvaluationStatusAsync(string,string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<EvaluationJobState>> GetEvaluationStatusAsync(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetEvaluationStatusAsync(projectName, trainedModelLabel, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(EvaluationJobState.FromResponse(response), response);
-        }
-
-        /// <summary> Gets the status for an evaluation job. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetEvaluationStatus(string,string,string,CancellationToken)']/*" />
-        public virtual Response<EvaluationJobState> GetEvaluationStatus(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetEvaluationStatus(projectName, trainedModelLabel, jobId, context);
-            return Response.FromValue(EvaluationJobState.FromResponse(response), response);
-        }
-
         /// <summary>
         /// [Protocol Method] Gets the status for an evaluation job.
         /// <list type="bullet">
@@ -376,40 +304,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc. </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetModelEvaluationSummaryAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<EvaluationSummary>> GetModelEvaluationSummaryAsync(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetModelEvaluationSummaryAsync(projectName, trainedModelLabel, context).ConfigureAwait(false);
-            return Response.FromValue(EvaluationSummary.FromResponse(response), response);
-        }
-
-        /// <summary> Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc. </summary>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetModelEvaluationSummary(string,string,CancellationToken)']/*" />
-        public virtual Response<EvaluationSummary> GetModelEvaluationSummary(string projectName, string trainedModelLabel, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetModelEvaluationSummary(projectName, trainedModelLabel, context);
-            return Response.FromValue(EvaluationSummary.FromResponse(response), response);
-        }
-
         /// <summary>
         /// [Protocol Method] Gets the evaluation summary of a trained model. The summary includes high level performance measurements of the model e.g., F1, Precision, Recall, etc.
         /// <list type="bullet">
@@ -492,44 +386,6 @@ namespace Azure.AI.Language.Conversations.Authoring
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets the status for loading a snapshot. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetLoadSnapshotStatusAsync(string,string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<LoadSnapshotJobState>> GetLoadSnapshotStatusAsync(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetLoadSnapshotStatusAsync(projectName, trainedModelLabel, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(LoadSnapshotJobState.FromResponse(response), response);
-        }
-
-        /// <summary> Gets the status for loading a snapshot. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetLoadSnapshotStatus(string,string,string,CancellationToken)']/*" />
-        public virtual Response<LoadSnapshotJobState> GetLoadSnapshotStatus(string projectName, string trainedModelLabel, string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetLoadSnapshotStatus(projectName, trainedModelLabel, jobId, context);
-            return Response.FromValue(LoadSnapshotJobState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -620,44 +476,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Lists the trained models belonging to a project. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetTrainedModelsAsync(string,int?,int?,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<ProjectTrainedModel> GetTrainedModelsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProjectTrainedModel.DeserializeProjectTrainedModel(e), ClientDiagnostics, _pipeline, "ConversationAuthoringModels.GetTrainedModels", "value", "nextLink", maxpagesize, context);
-        }
-
-        /// <summary> Lists the trained models belonging to a project. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetTrainedModels(string,int?,int?,int?,CancellationToken)']/*" />
-        public virtual Pageable<ProjectTrainedModel> GetTrainedModels(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProjectTrainedModel.DeserializeProjectTrainedModel(e), ClientDiagnostics, _pipeline, "ConversationAuthoringModels.GetTrainedModels", "value", "nextLink", maxpagesize, context);
-        }
-
         /// <summary>
         /// [Protocol Method] Lists the trained models belonging to a project.
         /// <list type="bullet">
@@ -724,50 +542,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainedModelsRequest(projectName, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainedModelsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringModels.GetTrainedModels", "value", "nextLink", maxpagesize, context);
-        }
-
-        /// <summary> Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetModelEvaluationResultsAsync(string,string,StringIndexType,int?,int?,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<UtteranceEvaluationResult> GetModelEvaluationResultsAsync(string projectName, string trainedModelLabel, StringIndexType stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => UtteranceEvaluationResult.DeserializeUtteranceEvaluationResult(e), ClientDiagnostics, _pipeline, "ConversationAuthoringModels.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
-        }
-
-        /// <summary> Gets the detailed results of the evaluation for a trained model. This includes the raw inference results for the data included in the evaluation process. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="stringIndexType"> Specifies the method used to interpret string offsets. For additional information see https://aka.ms/text-analytics-offsets. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='GetModelEvaluationResults(string,string,StringIndexType,int?,int?,int?,CancellationToken)']/*" />
-        public virtual Pageable<UtteranceEvaluationResult> GetModelEvaluationResults(string projectName, string trainedModelLabel, StringIndexType stringIndexType, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType.ToString(), maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => UtteranceEvaluationResult.DeserializeUtteranceEvaluationResult(e), ClientDiagnostics, _pipeline, "ConversationAuthoringModels.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -844,48 +618,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetModelEvaluationResultsRequest(projectName, trainedModelLabel, stringIndexType, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetModelEvaluationResultsNextPageRequest(nextLink, projectName, trainedModelLabel, stringIndexType, maxCount, skip, pageSizeHint, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringModels.GetModelEvaluationResults", "value", "nextLink", maxpagesize, context);
-        }
-
-        /// <summary> Triggers evaluation operation on a trained model. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="body"> The training input parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='EvaluateModelAsync(WaitUntil,string,string,EvaluationDetails,CancellationToken)']/*" />
-        public virtual async Task<Operation<EvaluationJobResult>> EvaluateModelAsync(WaitUntil waitUntil, string projectName, string trainedModelLabel, EvaluationDetails body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = await EvaluateModelAsync(waitUntil, projectName, trainedModelLabel, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FetchEvaluationJobResultFromEvaluationJobState, ClientDiagnostics, "ConversationAuthoringModels.EvaluateModel");
-        }
-
-        /// <summary> Triggers evaluation operation on a trained model. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="trainedModelLabel"> The trained model label. </param>
-        /// <param name="body"> The training input parameters. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/>, <paramref name="trainedModelLabel"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="trainedModelLabel"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringModels.xml" path="doc/members/member[@name='EvaluateModel(WaitUntil,string,string,EvaluationDetails,CancellationToken)']/*" />
-        public virtual Operation<EvaluationJobResult> EvaluateModel(WaitUntil waitUntil, string projectName, string trainedModelLabel, EvaluationDetails body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(trainedModelLabel, nameof(trainedModelLabel));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Operation<BinaryData> response = EvaluateModel(waitUntil, projectName, trainedModelLabel, content, context);
-            return ProtocolOperationHelpers.Convert(response, FetchEvaluationJobResultFromEvaluationJobState, ClientDiagnostics, "ConversationAuthoringModels.EvaluateModel");
         }
 
         /// <summary>
