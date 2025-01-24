@@ -36,11 +36,6 @@ namespace Azure.AI.Vision.Face
 
             writer.WritePropertyName("livenessOperationMode"u8);
             writer.WriteStringValue(LivenessOperationMode.ToString());
-            if (Optional.IsDefined(SendResultsToClient))
-            {
-                writer.WritePropertyName("sendResultsToClient"u8);
-                writer.WriteBooleanValue(SendResultsToClient.Value);
-            }
             if (Optional.IsDefined(DeviceCorrelationIdSetInClient))
             {
                 writer.WritePropertyName("deviceCorrelationIdSetInClient"u8);
@@ -51,10 +46,10 @@ namespace Azure.AI.Vision.Face
                 writer.WritePropertyName("enableSessionImage"u8);
                 writer.WriteBooleanValue(EnableSessionImage.Value);
             }
-            if (Optional.IsDefined(LivenessSingleModalModel))
+            if (Optional.IsDefined(LivenessModelVersion))
             {
-                writer.WritePropertyName("livenessSingleModalModel"u8);
-                writer.WriteStringValue(LivenessSingleModalModel.Value.ToString());
+                writer.WritePropertyName("livenessModelVersion"u8);
+                writer.WriteStringValue(LivenessModelVersion.Value.ToString());
             }
             if (Optional.IsDefined(DeviceCorrelationId))
             {
@@ -114,10 +109,9 @@ namespace Azure.AI.Vision.Face
                 return null;
             }
             LivenessOperationMode livenessOperationMode = default;
-            bool? sendResultsToClient = default;
             bool? deviceCorrelationIdSetInClient = default;
             bool? enableSessionImage = default;
-            LivenessModel? livenessSingleModalModel = default;
+            LivenessModel? livenessModelVersion = default;
             string deviceCorrelationId = default;
             int? authTokenTimeToLiveInSeconds = default;
             bool? returnVerifyImageHash = default;
@@ -129,15 +123,6 @@ namespace Azure.AI.Vision.Face
                 if (property.NameEquals("livenessOperationMode"u8))
                 {
                     livenessOperationMode = new LivenessOperationMode(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("sendResultsToClient"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sendResultsToClient = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("deviceCorrelationIdSetInClient"u8))
@@ -158,13 +143,13 @@ namespace Azure.AI.Vision.Face
                     enableSessionImage = property.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("livenessSingleModalModel"u8))
+                if (property.NameEquals("livenessModelVersion"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    livenessSingleModalModel = new LivenessModel(property.Value.GetString());
+                    livenessModelVersion = new LivenessModel(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("deviceCorrelationId"u8))
@@ -207,10 +192,9 @@ namespace Azure.AI.Vision.Face
             serializedAdditionalRawData = rawDataDictionary;
             return new CreateLivenessWithVerifySessionContent(
                 livenessOperationMode,
-                sendResultsToClient,
                 deviceCorrelationIdSetInClient,
                 enableSessionImage,
-                livenessSingleModalModel,
+                livenessModelVersion,
                 deviceCorrelationId,
                 authTokenTimeToLiveInSeconds,
                 returnVerifyImageHash,
