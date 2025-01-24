@@ -100,7 +100,7 @@ namespace Azure.AI.Language.Text
             string id = default;
             IReadOnlyList<DocumentWarning> warnings = default;
             DocumentStatistics statistics = default;
-            IReadOnlyList<NamedEntity> entities = default;
+            IReadOnlyList<NamedEntityWithMetadata> entities = default;
             DetectedLanguage detectedLanguage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -132,10 +132,10 @@ namespace Azure.AI.Language.Text
                 }
                 if (property.NameEquals("entities"u8))
                 {
-                    List<NamedEntity> array = new List<NamedEntity>();
+                    List<NamedEntityWithMetadata> array = new List<NamedEntityWithMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NamedEntity.DeserializeNamedEntity(item, options));
+                        array.Add(NamedEntityWithMetadata.DeserializeNamedEntityWithMetadata(item, options));
                     }
                     entities = array;
                     continue;

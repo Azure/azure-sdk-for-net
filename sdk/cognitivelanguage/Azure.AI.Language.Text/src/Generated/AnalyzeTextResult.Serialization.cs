@@ -77,7 +77,6 @@ namespace Azure.AI.Language.Text
             {
                 switch (discriminator.GetString())
                 {
-                    case "DynamicClassificationResults": return AnalyzeTextDynamicClassificationResult.DeserializeAnalyzeTextDynamicClassificationResult(element, options);
                     case "EntityLinkingResults": return AnalyzeTextEntityLinkingResult.DeserializeAnalyzeTextEntityLinkingResult(element, options);
                     case "EntityRecognitionResults": return AnalyzeTextEntitiesResult.DeserializeAnalyzeTextEntitiesResult(element, options);
                     case "KeyPhraseExtractionResults": return AnalyzeTextKeyPhraseResult.DeserializeAnalyzeTextKeyPhraseResult(element, options);

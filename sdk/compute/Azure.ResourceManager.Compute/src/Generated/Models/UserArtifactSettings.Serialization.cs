@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("configFileName"u8);
                 writer.WriteStringValue(ConfigFileName);
             }
+            if (Optional.IsDefined(ScriptBehaviorAfterReboot))
+            {
+                writer.WritePropertyName("scriptBehaviorAfterReboot"u8);
+                writer.WriteStringValue(ScriptBehaviorAfterReboot.Value.ToString());
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -83,6 +88,7 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string packageFileName = default;
             string configFileName = default;
+            GalleryApplicationScriptRebootBehavior? scriptBehaviorAfterReboot = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,13 +103,22 @@ namespace Azure.ResourceManager.Compute.Models
                     configFileName = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("scriptBehaviorAfterReboot"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scriptBehaviorAfterReboot = new GalleryApplicationScriptRebootBehavior(property.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new UserArtifactSettings(packageFileName, configFileName, serializedAdditionalRawData);
+            return new UserArtifactSettings(packageFileName, configFileName, scriptBehaviorAfterReboot, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UserArtifactSettings>.Write(ModelReaderWriterOptions options)

@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         [WirePath("cassandra-stop-start")]
         public bool? CassandraStopStart { get; set; }
         /// <summary> If true, allows the command to *write* to the cassandra directory, otherwise read-only. </summary>
-        [WirePath("readWrite")]
+        [WirePath("readwrite")]
         public bool? AllowWrite { get; set; }
     }
 }
