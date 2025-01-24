@@ -1139,7 +1139,7 @@ namespace Azure.Storage.Blobs.Test
                 StageBlockFromUriOptions options = new StageBlockFromUriOptions
                 {
                     SourceAuthentication = sourceAuth,
-                    SourceShareTokenIntent = ShareTokenIntent.Backup
+                    SourceShareTokenIntent = FileShareTokenIntent.Backup
                 };
 
                 // Act
@@ -3556,7 +3556,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobSyncUploadFromUriOptions options = new BlobSyncUploadFromUriOptions
                 {
                     SourceAuthentication = sourceAuth,
-                    SourceShareTokenIntent = ShareTokenIntent.Backup
+                    SourceShareTokenIntent = FileShareTokenIntent.Backup
                 };
 
                 // Act

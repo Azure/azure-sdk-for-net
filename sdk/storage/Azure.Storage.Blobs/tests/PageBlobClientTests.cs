@@ -3971,7 +3971,7 @@ namespace Azure.Storage.Blobs.Test
                 PageBlobUploadPagesFromUriOptions options = new PageBlobUploadPagesFromUriOptions
                 {
                     SourceAuthentication = sourceAuth,
-                    SourceShareTokenIntent = ShareTokenIntent.Backup
+                    SourceShareTokenIntent = FileShareTokenIntent.Backup
                 };
 
                 HttpRange range = new HttpRange(0, Constants.KB);

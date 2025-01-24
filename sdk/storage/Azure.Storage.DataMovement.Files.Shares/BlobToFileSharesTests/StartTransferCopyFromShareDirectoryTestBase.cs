@@ -25,7 +25,6 @@ using Azure.Storage.Test.Shared;
 using DMBlob::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;
-using ShareTokenIntent = BaseShares.Azure.Storage.Files.Shares.Models.ShareTokenIntent;
 
 namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
 {

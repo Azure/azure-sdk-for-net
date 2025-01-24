@@ -1889,7 +1889,7 @@ namespace Azure.Storage.Blobs.Test
                 AppendBlobAppendBlockFromUriOptions options = new AppendBlobAppendBlockFromUriOptions
                 {
                     SourceAuthentication = sourceAuth,
-                    SourceShareTokenIntent = ShareTokenIntent.Backup
+                    SourceShareTokenIntent = FileShareTokenIntent.Backup
                 };
 
                 // Act

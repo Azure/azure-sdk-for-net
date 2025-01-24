@@ -3372,7 +3372,7 @@ namespace Azure.Storage.Blobs.Test
                 BlobCopyFromUriOptions options = new BlobCopyFromUriOptions
                 {
                     SourceAuthentication = sourceAuth,
-                    SourceShareTokenIntent = ShareTokenIntent.Backup
+                    SourceShareTokenIntent = FileShareTokenIntent.Backup
                 };
 
                 // Act

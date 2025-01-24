@@ -96,6 +96,6 @@ namespace Azure.Storage.Blobs.Models
         /// Only applicable (but required) when the source is Azure Storage Files and using token authentication.
         /// Used to indicate the intent of the request.
         /// </summary>
-        public ShareTokenIntent? SourceShareTokenIntent { get; set; }
+        public FileShareTokenIntent? SourceShareTokenIntent { get; set; }
     }
 }

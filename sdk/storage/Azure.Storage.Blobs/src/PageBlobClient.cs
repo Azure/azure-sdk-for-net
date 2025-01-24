@@ -3937,7 +3937,7 @@ namespace Azure.Storage.Blobs.Specialized
             PageBlobRequestConditions conditions,
             PageBlobRequestConditions sourceConditions,
             HttpAuthorization sourceAuthentication,
-            ShareTokenIntent? sourceTokenIntent,
+            FileShareTokenIntent? sourceTokenIntent,
             bool async,
             CancellationToken cancellationToken)
         {

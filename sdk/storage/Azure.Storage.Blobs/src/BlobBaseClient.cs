@@ -4084,7 +4084,7 @@ namespace Azure.Storage.Blobs.Specialized
             BlobImmutabilityPolicy destinationImmutabilityPolicy,
             bool? legalHold,
             HttpAuthorization sourceAuthentication,
-            ShareTokenIntent? sourceShareTokenIntent,
+            FileShareTokenIntent? sourceShareTokenIntent,
             BlobCopySourceTagsMode? copySourceTags,
             bool async,
             CancellationToken cancellationToken)
