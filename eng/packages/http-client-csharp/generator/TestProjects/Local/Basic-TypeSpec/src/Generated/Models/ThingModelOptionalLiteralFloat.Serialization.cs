@@ -8,8 +8,8 @@
 namespace BasicTypeSpec.Models
 {
     /// <summary></summary>
-    public readonly partial struct ThingOptionalLiteralInt
+    public readonly partial struct ThingModelOptionalLiteralFloat
     {
-        internal int ToSerialInt32() => _value;
+        internal float ToSerialSingle() => _value;
     }
 }

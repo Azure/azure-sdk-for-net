@@ -110,7 +110,8 @@
   "$id": "12",
   "ApiKey": {
    "$id": "13",
-   "Name": "x-ms-api-key"
+   "Name": "x-ms-api-key",
+   "In": "header"
   },
   "OAuth2": {
    "$id": "14",

@@ -1,8 +1,10 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core;
 using Microsoft.Generator.CSharp;
 using Microsoft.Generator.CSharp.Primitives;
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Generator.Primitives
@@ -26,6 +28,14 @@ namespace Azure.Generator.Primitives
             foreach (var packages in _unbrandedDependencyPackages)
             {
                 builder.PackageReferences.Add(packages);
+            }
+
+			if (AzureClientPlugin.Instance.InputLibrary.InputNamespace.Auth.ApiKey is not null)
+			{
+				//TODO: need to dynamically determine relative position in the repo and add the right number of ".." directories
+				//potentially expose Configuration.OutputFolder and calculate from there
+				builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude("$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/AzureKeyCredentialPolicy.cs", "Shared/Core"));
+                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude("$(MSBuildThisFileDirectory)../../../../../../../../sdk/core/Azure.Core/src/Shared/RawRequestUriBuilder.cs", "Shared/Core"));
             }
 
             return builder.Write();

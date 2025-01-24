@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace BasicTypeSpec.Models
 {
     /// <summary> this is not a friendly model but with a friendly name. </summary>
-    public partial class Friend
+    public partial class FriendModel
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        internal Friend(string name)
+        internal FriendModel(string name)
         {
             Name = name;
         }
 
-        internal Friend(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FriendModel(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

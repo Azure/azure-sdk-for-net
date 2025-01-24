@@ -16,13 +16,13 @@ using BasicTypeSpec;
 namespace BasicTypeSpec.Models
 {
     /// <summary></summary>
-    public partial class Friend : IJsonModel<Friend>
+    public partial class FriendModel : IJsonModel<FriendModel>
     {
-        internal Friend()
+        internal FriendModel()
         {
         }
 
-        void IJsonModel<Friend>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<FriendModel>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -33,10 +33,10 @@ namespace BasicTypeSpec.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Friend>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FriendModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Friend)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(FriendModel)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -57,22 +57,22 @@ namespace BasicTypeSpec.Models
             }
         }
 
-        Friend IJsonModel<Friend>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        FriendModel IJsonModel<FriendModel>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Friend JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual FriendModel JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Friend>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FriendModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Friend)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(FriendModel)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFriend(document.RootElement, options);
+            return DeserializeFriendModel(document.RootElement, options);
         }
 
-        internal static Friend DeserializeFriend(JsonElement element, ModelReaderWriterOptions options)
+        internal static FriendModel DeserializeFriendModel(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -92,63 +92,63 @@ namespace BasicTypeSpec.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new Friend(name, additionalBinaryDataProperties);
+            return new FriendModel(name, additionalBinaryDataProperties);
         }
 
-        BinaryData IPersistableModel<Friend>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<FriendModel>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Friend>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FriendModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Friend)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FriendModel)} does not support writing '{options.Format}' format.");
             }
         }
 
-        Friend IPersistableModel<Friend>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        FriendModel IPersistableModel<FriendModel>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual Friend PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual FriendModel PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<Friend>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FriendModel>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data))
                     {
-                        return DeserializeFriend(document.RootElement, options);
+                        return DeserializeFriendModel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Friend)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FriendModel)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<Friend>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<FriendModel>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="friend"> The <see cref="Friend"/> to serialize into <see cref="RequestContent"/>. </param>
-        public static implicit operator RequestContent(Friend friend)
+        /// <param name="friendModel"> The <see cref="FriendModel"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(FriendModel friendModel)
         {
-            if (friend == null)
+            if (friendModel == null)
             {
                 return null;
             }
             Utf8JsonBinaryContent content = new Utf8JsonBinaryContent();
-            content.JsonWriter.WriteObjectValue(friend, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(friendModel, ModelSerializationExtensions.WireOptions);
             return content;
         }
 
-        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="Friend"/> from. </param>
-        public static explicit operator Friend(Response result)
+        /// <param name="result"> The <see cref="Response"/> to deserialize the <see cref="FriendModel"/> from. </param>
+        public static explicit operator FriendModel(Response result)
         {
             using Response response = result;
             using JsonDocument document = JsonDocument.Parse(response.Content);
-            return DeserializeFriend(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeFriendModel(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
     }
 }

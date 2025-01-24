@@ -4,13 +4,11 @@
     <AssemblyTitle>SDK Code Generation Authentication.OAuth2</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
     <PackageTags>Authentication.OAuth2</PackageTags>
-    <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>latest</LangVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.ClientModel" Version="1.1.0-beta.4" />
-    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+    <PackageReference Include="Azure.Core" />
+    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
 </Project>

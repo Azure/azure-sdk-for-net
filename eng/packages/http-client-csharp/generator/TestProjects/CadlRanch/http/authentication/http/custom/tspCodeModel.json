@@ -169,6 +169,7 @@
   "ApiKey": {
    "$id": "19",
    "Name": "Authorization",
+   "In": "header",
    "Prefix": "SharedAccessKey"
   }
  }

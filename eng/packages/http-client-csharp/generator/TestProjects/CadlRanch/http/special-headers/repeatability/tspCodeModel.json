@@ -7,7 +7,7 @@
    "$id": "2",
    "kind": "enum",
    "name": "ImmediateSuccessResponseRepeatabilityResult",
-   "crossLanguageDefinitionId": "immediateSuccess.ResponseRepeatabilityResult.anonymous",
+   "crossLanguageDefinitionId": "SpecialHeaders.Repeatability.immediateSuccess.ResponseRepeatabilityResult.anonymous",
    "valueType": {
     "$id": "3",
     "kind": "string",

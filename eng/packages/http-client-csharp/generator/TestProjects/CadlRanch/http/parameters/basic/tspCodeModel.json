@@ -29,7 +29,7 @@
      "discriminator": false,
      "flatten": false,
      "decorators": [],
-     "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.Request.anonymous.name"
+     "crossLanguageDefinitionId": "Parameters.Basic.ImplicitBody.simple.name"
     }
    ]
   },

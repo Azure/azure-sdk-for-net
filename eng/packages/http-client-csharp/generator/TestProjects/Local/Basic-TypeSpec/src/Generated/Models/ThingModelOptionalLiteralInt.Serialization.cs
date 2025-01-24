@@ -8,7 +8,7 @@
 namespace BasicTypeSpec.Models
 {
     /// <summary></summary>
-    public readonly partial struct ThingRequiredLiteralInt
+    public readonly partial struct ThingModelOptionalLiteralInt
     {
         internal int ToSerialInt32() => _value;
     }
