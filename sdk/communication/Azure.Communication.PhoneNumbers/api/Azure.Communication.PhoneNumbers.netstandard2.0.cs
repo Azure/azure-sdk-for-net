@@ -187,6 +187,7 @@ namespace Azure.Communication.PhoneNumbers
         public enum ServiceVersion
         {
             V2021_03_07 = 1,
+            [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
             V2022_01_11_Preview_2 = 2,
             V2022_12_01 = 3,
             V2025_02_11 = 4,
