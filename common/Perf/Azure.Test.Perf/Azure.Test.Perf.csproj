@@ -7,6 +7,7 @@
     -->
     <PackageReference Include="Azure.Core" VersionOverride="1.0.0" />
     <PackageReference Include="CommandLineParser" />
+    <PackageReference Include="System.Private.Uri" />
     <PackageReference Include="System.Text.Json" />
     <PackageReference Include="System.Text.Encodings.Web" />
     <PackageReference Include="System.Threading.Channels" />
