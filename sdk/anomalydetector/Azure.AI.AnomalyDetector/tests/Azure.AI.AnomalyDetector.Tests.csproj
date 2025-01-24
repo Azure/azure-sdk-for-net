@@ -1,18 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+    <!--We don't care about XML doc comments on test types and members-->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
-  
-    <ItemGroup>
-    <PackageReference Include="NUnit" />
-    <PackageReference Include="NUnit3TestAdapter" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-    <PackageReference Include="Moq" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="samples\data\*" CopyToOutputDirectory="PreserveNewest" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
@@ -20,6 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="samples\data\" />
+    <PackageReference Include="Azure.Identity" />
+    <PackageReference Include="NUnit" />
+    <PackageReference Include="NUnit3TestAdapter" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="Moq" />
   </ItemGroup>
 </Project>

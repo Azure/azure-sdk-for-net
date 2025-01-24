@@ -1,98 +1,67 @@
-# Azure Cognitive Services Anomaly Detector client library for .NET
+# Azure.AI.AnomalyDetector client library for .NET
 
-[Anomaly Detector](https://learn.microsoft.com/azure/cognitive-services/Anomaly-Detector/overview) is an AI service with a set of APIs, which enables you to monitor and detect anomalies in your time series data with little machine learning (ML) knowledge, either batch validation or real-time inference.
+Azure.AI.AnomalyDetector is a managed service that helps developers get secret simply and securely.
 
-[Source code][anomalydetector_client_src] | [Package (NuGet)][anomalydetector_nuget_package] | [API reference documentation][anomalydetector_refdocs] | [Product documentation][anomalydetector_docs]
+Use the client library for to:
+
+* [Get secret](https://docs.microsoft.com/azure)
+
+[Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
+
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
 
 ## Getting started
 
-### Prerequisites
-
-- You need an [Azure subscription][azure_sub] to use this package.
-- An existing Cognitive Services Anomaly Detector instance.
+This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
 
 ### Install the package
 
-Install the Azure Anomaly Detector client library for .NET with [NuGet][nuget]:
+First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `dotnet add package package-name`, but should enable a developer to successfully install the package from NuGet, npm, or even cloning a GitHub repository.
+
+Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
 dotnet add package Azure.AI.AnomalyDetector --prerelease
 ```
 
-This table shows the relationship between SDK versions and supported API versions of the service:
+### Prerequisites
 
-|SDK version|Supported API version of service |
-|-------------|---------------|
-|3.0.0-preview.6| 1.1|
-|3.0.0-preview.4, 3.0.0-preview.5| 1.1-preview-1|
-|3.0.0-beta.3 | 1.1-preview|
-|3.0.0-preview.1, 3.0.0-preview.2  | 1.0 |
+Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
+
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
 
 ### Authenticate the client
 
-You can find the endpoint for your Anomaly Detector service resource using the
-[Azure Portal](https://ms.portal.azure.com/#create/Microsoft.CognitiveServicesAnomalyDetector)
-or [Azure CLI](https://learn.microsoft.com/cli/azure/):
+If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
 
-```bash
-# Get the endpoint for the Anomaly Detector service resource
-az cognitiveservices account show --name "resource-name" --resource-group "resource-group-name" --query "properties.endpoint"
+For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
+
+### Service API versions
+
+The client library targets the latest service API version by default. A client instance accepts an optional service API version parameter from its options to specify which API version service to communicate.
+
+#### Select a service API version
+
+You have the flexibility to explicitly select a supported service API version when instantiating a client by configuring its associated options. This ensures that the client can communicate with services using the specified API version.
+
+For example,
+
+```C# Snippet:Create<YourService>ClientForSpecificApiVersion
+Uri endpoint = new Uri("<your endpoint>");
+DefaultAzureCredential credential = new DefaultAzureCredential();
+<YourService>ClientOptions options = new <YourService>ClientOptions(<YourService>ClientOptions.ServiceVersion.<API Version>)
+var client = new <YourService>Client(endpoint, credential, options);
 ```
 
-#### Get the API Key
+When selecting an API version, it's important to verify that there are no breaking changes compared to the latest API version. If there are significant differences, API calls may fail due to incompatibility.
 
-You can get the **API Key** from the Anomaly Detector service resource in the Azure Portal.
-Alternatively, you can use **Azure CLI** snippet below to get the API key of your resource.
-
-```PowerShell
-az cognitiveservices account keys list --resource-group <your-resource-group-name> --name <your-resource-name>
-```
-
-#### Create AnomalyDetectorClient with AzureKeyCredential
-
-Once you have the value for the API key, create an `AzureKeyCredential`.  With the endpoint and key credential, you can create the [`AnomalyDetectorClient`][anomaly_detector_client_class]:
-
-```C#
-string endpoint = "<endpoint>";
-string apiKey = "<apiKey>";
-var credential = new AzureKeyCredential(apiKey);
-var client = new AnomalyDetectorClient(new Uri(endpoint), credential);
-```
+Always ensure that the chosen API version is fully supported and operational for your specific use case and that it aligns with the service's versioning policy.
 
 ## Key concepts
 
-With the Anomaly Detector, you can either detect anomalies in one variable using **Univariate Anomaly Detection**, or detect anomalies in multiple variables with **Multivariate Anomaly Detection**.
+The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
 
-|Feature  |Description  |
-|---------|---------|
-|Univariate Anomaly Detection | Detect anomalies in one variable, like revenue, cost, etc. The model was selected automatically based on your data pattern. |
-|Multivariate Anomaly Detection| Detect anomalies in multiple variables with correlations, which are usually gathered from equipment or other complex system. The underlying model used is Graph attention network.|
-
-### Univariate Anomaly Detection
-
-The Univariate Anomaly Detection API enables you to monitor and detect abnormalities in your time series data without having to know machine learning. The algorithms adapt by automatically identifying and applying the best-fitting models to your data, regardless of industry, scenario, or data volume. Using your time series data, the API determines boundaries for anomaly detection, expected values, and which data points are anomalies.
-
-Using the Anomaly Detector doesn't require any prior experience in machine learning, and the REST API enables you to easily integrate the service into your applications and processes.
-
-With the Univariate Anomaly Detection, you can automatically detect anomalies throughout your time series data, or as they occur in real-time.
-
-|Feature  |Description  |
-|---------|---------|
-| Streaming detection| Detect anomalies in your streaming data by using previously seen data points to determine if your latest one is an anomaly. This operation generates a model using the data points you send, and determines if the target point is an anomaly. By calling the API with each new data point you generate, you can monitor your data as it's created. |
-| Batch detection | Use your time series to detect any anomalies that might exist throughout your data. This operation generates a model using your entire time series data, with each point analyzed with the same model.         |
-| Change points detection | Use your time series to detect any trend change points that exist in your data. This operation generates a model using your entire time series data, with each point analyzed with the same model.    |
-
-### Multivariate Anomaly Detection
-
-The **Multivariate Anomaly Detection** APIs further enable developers by easily integrating advanced AI for detecting anomalies from groups of metrics, without the need for machine learning knowledge or labeled data. Dependencies and inter-correlations between up to 300 different signals are now automatically counted as key factors. This new capability helps you to proactively protect your complex systems such as software applications, servers, factory machines, spacecraft, or even your business, from failures.
-
-With the Multivariate Anomaly Detection, you can automatically detect anomalies throughout your time series data, or as they occur in real-time. There are three processes to use Multivariate Anomaly Detection.
-
-- **Training**: Use Train Model API to create and train a model, then use Get Model Status API to get the status and model metadata.
-- **Inference**:
-  - Use Async Inference API to trigger an asynchronous inference process and use Get Inference results API to get detection results on a batch of data.
-  - You could also use Sync Inference API to trigger a detection on one timestamp every time.
-- **Other operations**: List Model API and Delete Model API are supported in Multivariate Anomaly Detection model for model management.
+Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
 
 ### Thread safety
 
@@ -105,174 +74,34 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
 ## Examples
 
-The following section provides several code snippets covering some of the most common Anomaly Detector service tasks, including:
-
-- [Univariate Anomaly Detection - Batch detection](#batch-detection)
-- [Univariate Anomaly Detection - Streaming detection](#streaming-detection)
-- [Univariate Anomaly Detection - Detect change points](#detect-change-points)
-- [Multivariate Anomaly Detection](#multivariate-anomaly-detection-sample)
-
-### Batch detection
-
-```C# Snippet:DetectEntireSeriesAnomaly
-//detect
-Console.WriteLine("Detecting anomalies in the entire time series.");
-
-try
-{
-    Response response = client.GetUnivariateClient().DetectUnivariateEntireSeries(request.ToRequestContent());
-    JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-
-    bool hasAnomaly = false;
-    for (int i = 0; i < request.Series.Count; ++i)
-    {
-        if (result.GetProperty("isAnomaly")[i].GetBoolean())
-        {
-            Console.WriteLine($"An anomaly was detected at index: {i}.");
-            hasAnomaly = true;
-        }
-    }
-    if (!hasAnomaly)
-    {
-        Console.WriteLine("No anomalies detected in the series.");
-    }
-}
-catch (RequestFailedException ex)
-{
-    Console.WriteLine($"Entire detection failed: {ex.Message}");
-    throw;
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Detection error. {ex.Message}");
-    throw;
-}
-```
-
-### Streaming Detection
-
-```C# Snippet:DetectLastPointAnomaly
-//detect
-Console.WriteLine("Detecting the anomaly status of the latest point in the series.");
-
-try
-{
-    UnivariateLastDetectionResult result = client.GetUnivariateClient().DetectUnivariateLastPoint(request);
-
-    if (result.IsAnomaly)
-    {
-        Console.WriteLine("The latest point was detected as an anomaly.");
-    }
-    else
-    {
-        Console.WriteLine("The latest point was not detected as an anomaly.");
-    }
-}
-catch (RequestFailedException ex)
-{
-    Console.WriteLine($"Last detection failed: {ex.Message}");
-    throw;
-}
-catch (Exception ex)
-{
-    Console.WriteLine($"Detection error. {ex.Message}");
-    throw;
-}
-```
-
-### Detect change points
-
-```C# Snippet:DetectChangePoint
-//detect
-Console.WriteLine("Detecting the change point in the series.");
-
-UnivariateChangePointDetectionResult result = client.GetUnivariateClient().DetectUnivariateChangePoint(request);
-
-if (result.IsChangePoint.Contains(true))
-{
-    Console.WriteLine("A change point was detected at index:");
-    for (int i = 0; i < request.Series.Count; ++i)
-    {
-        if (result.IsChangePoint[i])
-        {
-            Console.Write(i);
-            Console.Write(" ");
-        }
-    }
-    Console.WriteLine();
-}
-else
-{
-    Console.WriteLine("No change point detected in the series.");
-}
-```
-
-### Multivariate Anomaly Detection Sample
-
-To see how to use Anomaly Detector library to conduct Multivariate Anomaly Detection, see this [sample](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/Sample4_MultivariateDetect.cs).
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/samples).
 
 ## Troubleshooting
 
-### Setting up console logging
+Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
 
-The simplest way to see the logs is to enable the console logging.
-To create an Azure SDK log listener that outputs messages to console use the AzureEventSourceListener.CreateConsoleLogger method.
+Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
 
-```C#
-// Setup a listener to monitor logged events.
-using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
-```
-
-To learn more about other logging mechanisms see [Diagnostics Samples][logging].
+If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
 
 ## Next steps
 
-These code samples show common scenario operations with the Azure Anomaly Detector library. More samples can be found under the [samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/) directory.
-
-- Univariate Anomaly Detection - Batch Detection: [Sample1_DetectEntireSeriesAnomaly.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/Sample1_DetectEntireSeriesAnomaly.cs)
-
-- Univariate Anomaly Detection - Streaming Detection: [Sample2_DetectLastPointAnomaly.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/Sample2_DetectLastPointAnomaly.cs)
-
-- Univariate Anomaly Detection - Change Point Detection: [Sample3_DetectChangePoint.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/Sample3_DetectChangePoint.cs)
-
-- Multivariate Anomaly Detection: [Sample4_MultivariateDetect.cs](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/tests/samples/Sample4_MultivariateDetect.cs)
-
-### Additional documentation
-
-For more extensive documentation on Azure Anomaly Detector, see the [Anomaly Detector documentation](https://learn.microsoft.com/azure/cognitive-services/anomaly-detector/overview) on learn.microsoft.com.
+* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
+* If appropriate, point users to other packages that might be useful.
+* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
 
 ## Contributing
 
-This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
-
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
+This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
 
 <!-- LINKS -->
-[anomalydetector_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/src
-[anomalydetector_docs]: https://learn.microsoft.com/azure/cognitive-services/anomaly-detector/
-[anomalydetector_refdocs]: https://azure.github.io/azure-sdk-for-net/cognitiveservices.html
-[anomalydetector_nuget_package]: https://www.nuget.org/packages/Azure.AI.AnomalyDetector
-[anomaly_detector_client_class]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/anomalydetector/Azure.AI.AnomalyDetector/src/Generated/AnomalyDetectorClient.cs
-[azure_identity]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity
-[register_aad_app]: https://learn.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
-[aad_grant_access]: https://learn.microsoft.com/azure/cognitive-services/authentication#assign-a-role-to-a-service-principal
-[custom_subdomain]: https://learn.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md
-[cognitive_resource_cli]: https://learn.microsoft.com/azure/cognitive-services/cognitive-services-apis-create-account-cli
-[logging]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/samples/Diagnostics.md
-[azure_cli]: https://learn.microsoft.com/cli/azure
-[azure_sub]: https://azure.microsoft.com/free/dotnet/
-[nuget]: https://www.nuget.org/
-[azure_portal]: https://portal.azure.com
-[cla]: https://cla.microsoft.com
-[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
-[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-[coc_contact]: mailto:opencode@microsoft.com
+[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
+[style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/anomalydetector/Azure.AI.AnomalyDetector/README.png)
