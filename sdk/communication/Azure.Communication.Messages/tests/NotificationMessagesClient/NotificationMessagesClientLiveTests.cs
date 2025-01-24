@@ -227,6 +227,120 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
+
+        public async Task SendInteractiveListMessage_ShouldSucceed()
+        {
+            // Arrange
+            var recipients = new List<string> { TestEnvironment.RecipientIdentifier };
+            var channelRegistrationId = new Guid(TestEnvironment.SenderChannelRegistrationId);
+
+            var actionItemsList1 = new List<ActionGroupItem>
+            {
+                new ActionGroupItem("priority_express", "Priority Mail Express", "Next Day to 2 Days"),
+                new ActionGroupItem("priority_mail", "Priority Mail", "1–3 Days")
+            };
+
+            var actionItemsList2 = new List<ActionGroupItem>
+            {
+                new ActionGroupItem("usps_ground_advantage", "USPS Ground Advantage", "2-5 Days"),
+                new ActionGroupItem("media_mail", "Media Mail", "2-8 Days")
+            };
+
+            var groups = new List<ActionGroup>
+            {
+                new ActionGroup("I want it ASAP!", actionItemsList1),
+                new ActionGroup("I can wait a bit", actionItemsList2)
+            };
+
+            var actionGroupContent = new ActionGroupContent("Shipping Options", groups);
+
+            var interactionMessage = new InteractiveMessage(
+                new TextMessageContent("Test Body"),
+                new WhatsAppListActionBindings(actionGroupContent)
+            );
+            interactionMessage.Header = new TextMessageContent("Test Header");
+            interactionMessage.Footer = new TextMessageContent("Test Footer");
+
+            var interactiveMessageContent = new InteractiveNotificationContent(
+                channelRegistrationId,
+                recipients,
+                interactionMessage
+            );
+
+            NotificationMessagesClient messagesClient = CreateInstrumentedNotificationMessagesClient();
+
+            // Act
+            var response = await messagesClient.SendAsync(interactiveMessageContent);
+
+            // Assert
+            validateResponse(response);
+        }
+
+        [Test]
+        public async Task SendInteractiveReplyButtonMessage_ShouldSucceed()
+        {
+            // Arrange
+            var recipients = new List<string> { TestEnvironment.RecipientIdentifier };
+            var channelRegistrationId = new Guid(TestEnvironment.SenderChannelRegistrationId);
+
+            var replyButtonActionList = new List<ButtonContent>
+            {
+                new ButtonContent("cancel", "Cancel"),
+                new ButtonContent("agree", "Agree")
+            };
+
+            var buttonSet = new ButtonSetContent(replyButtonActionList);
+
+            var interactiveMessage = new InteractiveMessage(
+                new TextMessageContent("Test Body"),
+                new WhatsAppButtonActionBindings(buttonSet)
+            );
+            interactiveMessage.Header = new TextMessageContent("Test Header");
+            interactiveMessage.Footer = new TextMessageContent("Test Footer");
+
+            var interactiveMessageContent = new InteractiveNotificationContent(
+                channelRegistrationId,
+                recipients,
+                interactiveMessage
+            );
+
+            NotificationMessagesClient messagesClient = CreateInstrumentedNotificationMessagesClient();
+
+            // Act
+            var response = await messagesClient.SendAsync(interactiveMessageContent);
+
+            // Assert
+            validateResponse(response);
+        }
+
+        [Test]
+        public async Task SendInteractiveClickToActionMessage_ShouldSucceed()
+        {
+            // Arrange
+            var recipients = new List<string> { TestEnvironment.RecipientIdentifier };
+            var channelRegistrationId = new Guid(TestEnvironment.SenderChannelRegistrationId);
+
+            var urlAction = new LinkContent("Test Url", AudioUrl);
+
+            var interactiveMessage = new InteractiveMessage(
+                new TextMessageContent("Test Body"),
+                new WhatsAppUrlActionBindings(urlAction)
+            );
+            interactiveMessage.Header = new TextMessageContent("Test Header");
+            interactiveMessage.Footer = new TextMessageContent("Test Footer");
+
+            var interactiveMessageContent = new InteractiveNotificationContent(channelRegistrationId, recipients, interactiveMessage);
+
+            NotificationMessagesClient messagesClient = CreateInstrumentedNotificationMessagesClient();
+
+            // Act
+            var response = await messagesClient.SendAsync(interactiveMessageContent);
+
+            // Assert
+            validateResponse(response);
+        }
+
+        [Test]
         public async Task SendShippingConfirmationTemplateMessage_ShouldSucceed()
         {
             // Arrange
