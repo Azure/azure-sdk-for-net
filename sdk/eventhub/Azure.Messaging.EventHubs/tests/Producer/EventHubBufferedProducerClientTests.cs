@@ -5298,7 +5298,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     if (releaseFlag)
                     {
-                        state.PartitionGuard.Release();
+                        state.SafeReleaseGuard();
                     }
 
                     completionSource.TrySetResult(true);
@@ -5366,7 +5366,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     if (releaseFlag)
                     {
-                        state.PartitionGuard.Release();
+                        state.SafeReleaseGuard();
                     }
 
                     if (Interlocked.Increment(ref publishCount) >= validPartitions.Length)
@@ -5452,7 +5452,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     if (releaseFlag)
                     {
-                        state.PartitionGuard.Release();
+                        state.SafeReleaseGuard();
                     }
 
                     if (Interlocked.Increment(ref publishCount) >= expectedPublishCount)
@@ -5542,7 +5542,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     if (releaseFlag)
                     {
-                        state.PartitionGuard.Release();
+                        state.SafeReleaseGuard();
                     }
 
                     if (Interlocked.Increment(ref publishCount) >= expectedPublishCount)
@@ -5633,7 +5633,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     if (releaseFlag)
                     {
-                        state.PartitionGuard.Release();
+                        state.SafeReleaseGuard();
                     }
 
                     if (Interlocked.Increment(ref publishCount) >= expectedPublishCount)
@@ -5735,7 +5735,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     if (releaseFlag)
                     {
-                        state.PartitionGuard.Release();
+                        state.SafeReleaseGuard();
                     }
 
                     if (Interlocked.Increment(ref publishCount) == expectedPublishCount)
@@ -5857,7 +5857,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     if (releaseFlag)
                     {
-                        state.PartitionGuard.Release();
+                        state.SafeReleaseGuard();
                     }
 
                     if (Interlocked.Increment(ref finishCount) >= validPartitions.Length)
