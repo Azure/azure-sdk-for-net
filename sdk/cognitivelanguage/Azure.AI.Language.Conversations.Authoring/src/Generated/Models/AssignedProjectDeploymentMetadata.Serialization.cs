@@ -39,7 +39,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             writer.WritePropertyName("lastDeployedOn"u8);
             writer.WriteStringValue(LastDeployedOn, "O");
             writer.WritePropertyName("deploymentExpirationDate"u8);
-            writer.WriteStringValue(DeploymentExpirationDate, "D");
+            writer.WriteStringValue(DeploymentExpiresOn, "D");
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)

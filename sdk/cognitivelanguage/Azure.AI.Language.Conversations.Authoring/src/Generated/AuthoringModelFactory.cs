@@ -866,11 +866,11 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Initializes a new instance of <see cref="Models.AssignedProjectDeploymentMetadata"/>. </summary>
         /// <param name="deploymentName"> Represents the deployment name. </param>
         /// <param name="lastDeployedOn"> Represents deployment last deployed time. </param>
-        /// <param name="deploymentExpirationDate"> Represents deployment expiration date in the runtime. </param>
+        /// <param name="deploymentExpiresOn"> Represents deployment expiration date in the runtime. </param>
         /// <returns> A new <see cref="Models.AssignedProjectDeploymentMetadata"/> instance for mocking. </returns>
-        public static AssignedProjectDeploymentMetadata AssignedProjectDeploymentMetadata(string deploymentName = null, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpirationDate = default)
+        public static AssignedProjectDeploymentMetadata AssignedProjectDeploymentMetadata(string deploymentName = null, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpiresOn = default)
         {
-            return new AssignedProjectDeploymentMetadata(deploymentName, lastDeployedOn, deploymentExpirationDate, serializedAdditionalRawData: null);
+            return new AssignedProjectDeploymentMetadata(deploymentName, lastDeployedOn, deploymentExpiresOn, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CopyProjectJobState"/>. </summary>
