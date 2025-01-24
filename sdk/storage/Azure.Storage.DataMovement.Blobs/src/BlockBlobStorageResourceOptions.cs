@@ -22,6 +22,10 @@ namespace Azure.Storage.DataMovement.Blobs
         {
         }
 
+        internal BlockBlobStorageResourceOptions(BlobDestinationCheckpointDetails checkpointDetails) : base(checkpointDetails)
+        {
+        }
+
         /// <summary>
         /// Optional. See <see cref="BlobRequestConditions"/>.
         /// Access conditions on the copying of data from this source storage resource blob.

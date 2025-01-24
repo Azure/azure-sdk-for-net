@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `MexicoCentral` and `SpainCentral` locations to `AzureLocation` struct. ([#47862](https://github.com/Azure/azure-sdk-for-net/pull/47862))
+
 ### Breaking Changes
 
 ### Bugs Fixed

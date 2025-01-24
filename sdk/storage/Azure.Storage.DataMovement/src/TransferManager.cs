@@ -71,7 +71,7 @@ namespace Azure.Storage.DataMovement
                 options?.ErrorMode ?? TransferErrorMode.StopOnAnyFailure,
                 new ClientDiagnostics(options?.ClientOptions ?? ClientOptions.Default)),
                 CheckpointerExtensions.BuildCheckpointer(options?.CheckpointStoreOptions),
-                options?.ResumeProviders != null ? new List<StorageResourceProvider>(options.ResumeProviders) : new(),
+                options?.ProvidersForResuming != null ? new List<StorageResourceProvider>(options.ProvidersForResuming) : new(),
                 default)
         {}
 
@@ -92,6 +92,7 @@ namespace Azure.Storage.DataMovement
             _chunksProcessor = chunksProcessor;
             _jobBuilder = jobBuilder;
             _resumeProviders = new(resumeProviders ?? new List<StorageResourceProvider>());
+            _resumeProviders.Add(new LocalFilesStorageResourceProvider());
             _checkpointer = checkpointer;
             _generateTransferId = generateTransferId ?? (() => Guid.NewGuid().ToString());
 

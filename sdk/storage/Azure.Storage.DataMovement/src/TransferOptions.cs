@@ -40,7 +40,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Optional. Options for changing behavior of the ProgressHandler.
         /// </summary>
-        public ProgressHandlerOptions ProgressHandlerOptions { get; set; }
+        public TransferProgressHandlerOptions ProgressHandlerOptions { get; set; }
 
         /// <summary>
         /// Check if two ParallelTransferOptions instances are equal.
