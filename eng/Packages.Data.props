@@ -164,7 +164,6 @@
     <!-- Other approved packages -->
     <PackageReference Update="Microsoft.Azure.Amqp" Version="2.6.9" />
     <PackageReference Update="Microsoft.Azure.WebPubSub.Common" Version="1.4.0" />
-    <PackageReference Update="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.8.0" />
     <PackageReference Update="Microsoft.Identity.Client" Version="4.67.2" />
     <PackageReference Update="Microsoft.Identity.Client.Extensions.Msal" Version="4.67.2" />
     <PackageReference Update="Microsoft.Identity.Client.Broker" Version="4.67.2" />
@@ -259,7 +258,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(IsGeneratorLibrary)' == 'true'">
-    <PackageReference Update="Microsoft.Generator.CSharp.ClientModel" Version="1.0.0-alpha.20250117.1" />
+    <PackageReference Update="Microsoft.Generator.CSharp.ClientModel" Version="1.0.0-alpha.20250123.2" />
   </ItemGroup>
 
   <!--

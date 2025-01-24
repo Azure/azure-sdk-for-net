@@ -99,7 +99,6 @@ namespace Azure.Generator.Utilities
             return true;
         }
 
-
         private static bool IsResourceModel(InputModelType inputModelType)
         {
             var allProperties = inputModelType.GetAllProperties();
