@@ -44,6 +44,7 @@ param (
   [Parameter(Mandatory = $False)][array] $Filters,
   [Parameter(Mandatory = $False)][array] $IndirectFilters,
   [Parameter(Mandatory = $False)][array] $Replace,
+  [Parameter(Mandatory = $False)][bool] $SparseIndirect = $true,
   [Parameter(Mandatory = $False)][int] $PackagesPerPRJob = 10,
   [Parameter()][switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID)
 )
@@ -72,7 +73,8 @@ function QueuePop([ref]$queue) {
 
 function GeneratePRMatrixForBatch {
   param (
-    [Parameter(Mandatory = $true)][array] $Packages
+    [Parameter(Mandatory = $true)][array] $Packages,
+    [Parameter(Mandatory = $true)][bool] $FullSparseMatrix
   )
 
   $OverallResult = @()
@@ -84,6 +86,8 @@ function GeneratePRMatrixForBatch {
   # this check assumes that we have properly separated the direct and indirect package lists
   $directBatch = $Packages[0].IncludedForValidation -eq $false
   Write-Host "Generating matrix for $($directBatch ? 'direct' : 'indirect') packages"
+
+  $batchNamePrefix = $($directBatch ? 'b' : 'ib')
 
   # The key here is that after we group the packages by the matrix config objects, we can use the first item's MatrixConfig
   # to generate the matrix for the group, no reason to have to parse the key value backwards to get the matrix config.
@@ -134,10 +138,10 @@ function GeneratePRMatrixForBatch {
       # we only need to modify the generated job name if there is more than one matrix config + batch
       $matrixSuffixNecessary = $matrixBatchesByConfig.Keys.Count -gt 1
 
-      # if we are doing direct packages, we need to walk the batches and duplicate the matrix config for each batch, fully assigning
+      # if we are doing direct packages (or a full indirect matrix), we need to walk the batches and duplicate the matrix config for each batch, fully assigning
       # the each batch's packages to the matrix config. This will generate a _non-sparse_ matrix for the incoming packages
-      if ($directBatch) {
-        $batchSuffixNecessary = $packageBatches.Length -gt 1
+      if ($directBatch -or $FullSparseMatrix) {
+        $batchSuffixNecessary = $packageBatches.Length -gt $($directBatch ? 1 : 0)
         $batchCounter = 1
 
         foreach ($batch in $packageBatches) {
@@ -155,7 +159,7 @@ function GeneratePRMatrixForBatch {
             }
 
             if ($batchSuffixNecessary) {
-              $outputItem["name"] = $outputItem["name"] + "_b$batchCounter"
+              $outputItem["name"] = $outputItem["name"] + "$batchPrefix$batchCounter"
             }
 
             $OverallResult += $outputItem
@@ -236,7 +240,7 @@ if ($indirectPackages) {
   foreach($artifact in $indirectPackages) {
     Write-Host "-> $($artifact.ArtifactName)"
   }
-  $OverallResult += GeneratePRMatrixForBatch -Packages $indirectPackages
+  $OverallResult += GeneratePRMatrixForBatch -Packages $indirectPackages -FullSparseMatrix !$SparseIndirect
 }
 $serialized = SerializePipelineMatrix $OverallResult
 
