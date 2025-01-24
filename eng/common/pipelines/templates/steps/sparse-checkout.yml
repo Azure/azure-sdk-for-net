@@ -81,7 +81,7 @@ steps:
               if ($repository.Commitish -match '^refs/pull/\d+/merge$') {
                 Retry git clone --no-checkout --filter=tree:0 -c remote.origin.fetch=''+$($repository.Commitish):refs/remotes/origin/$($repository.Commitish)'' https://${ghToken}github.com/$($repository.Name) .
               } else {
-                Retry git clone --no-checkout --filter=tree:0 https://${ghToken)github.com/$($repository.Name) .
+                Retry git clone --no-checkout --filter=tree:0 https://${ghToken}github.com/$($repository.Name) .
               }
 
               # Turn off git GC for sparse checkout. Note: The devops checkout task does this by default
