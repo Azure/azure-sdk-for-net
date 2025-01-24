@@ -222,8 +222,8 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -235,7 +235,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -258,7 +258,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions: transferOptions);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
@@ -273,8 +273,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -286,7 +286,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -309,7 +309,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions: transferOptions);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
@@ -340,8 +340,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.CatchAsync(async () => await transferManager.PauseTransferAsync("bad transfer Id"));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -353,7 +353,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -376,7 +376,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions: transferOptions);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
@@ -396,8 +396,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.IsTrue(File.Exists(fileName.FullPath));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -410,7 +410,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -437,13 +437,13 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource: dResource,
                 transferOptions: transferOptions);
 
-            // Act - Pause Job
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
-            // Assert - Confirm we've paused
-            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
+            // Assert
             await testEventsRaised.AssertPausedCheck();
+            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             // Act - Resume Job
             TransferOptions resumeOptions = new TransferOptions()
@@ -456,7 +456,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferId: transfer.Id,
                 transferOptions: resumeOptions);
 
-            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
 
             // Assert
@@ -473,8 +473,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -487,7 +487,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -514,13 +514,13 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource: dResource,
                 transferOptions: transferOptions);
 
-            // Act - Pause Job
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
-            // Assert - Confirm we've paused
-            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
+            // Assert
             await testEventsRaised.AssertPausedCheck();
+            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
 
             // Act - Resume Job
             TransferOptions resumeOptions = new();
@@ -529,7 +529,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transfer.Id,
                 resumeOptions);
 
-            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
 
             // Assert
@@ -546,7 +546,6 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
         [Test]
         [LiveOnly]
         [TestCase(TransferDirection.Upload)]
@@ -559,7 +558,7 @@ namespace Azure.Storage.DataMovement.Tests
             BlobServiceClient service = GetServiceClient_OAuth();
             await using DisposingBlobContainer blobContainer = await GetTestContainerAsync(service);
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -571,7 +570,7 @@ namespace Azure.Storage.DataMovement.Tests
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions testOptions = new()
             {
-                Metadata = DataProvider.BuildMetadata(),
+                Metadata = metadata,
                 AccessTier = AccessTier.Cool,
                 ContentLanguage = "en-US",
             };
@@ -592,14 +591,17 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOperation transfer = await transferManager.StartTransferAsync(source, destination);
 
-            // Act - Pause Job
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            // Act
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
+
+            // Assert
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
+            await Task.Delay(150);
 
             // Act - Resume Job
             TransferOperation resumeTransfer = await transferManager.ResumeTransferAsync(transfer.Id);
-            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
 
             // Assert
@@ -779,8 +781,8 @@ namespace Azure.Storage.DataMovement.Tests
             return await manager.StartTransferAsync(sourceResource, destinationResource, transferOptions);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -793,7 +795,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync();
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync();
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -819,7 +821,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions: transferOptions);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
@@ -827,8 +829,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -842,7 +844,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -868,7 +870,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions: transferOptions);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
@@ -876,8 +878,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -891,7 +893,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -917,7 +919,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transferOptions: transferOptions);
 
             // Act
-            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
             // Assert
@@ -931,8 +933,8 @@ namespace Azure.Storage.DataMovement.Tests
             Assert.AreEqual(TransferState.Paused, transfer.Status.State);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -946,7 +948,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -980,13 +982,13 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource: dResource,
                 transferOptions: transferOptions);
 
-            // Act - Pause Job
+            // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(100));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
-            // Assert - Confirm we've paused
-            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
+            // Assert
             await testEventsRaised.AssertPausedCheck();
+            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
             int completedBeforePause = testEventsRaised.SingleCompletedEvents.Count;
 
             // Act - Resume Job
@@ -1016,8 +1018,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Download)]
         [TestCase(TransferDirection.Copy)]
@@ -1031,7 +1033,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
@@ -1065,13 +1067,13 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationResource: dResource,
                 transferOptions: transferOptions);
 
-            // Act - Pause Job
+            // Act
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(100));
             await transferManager.PauseTransferAsync(transfer.Id, cancellationTokenSource.Token);
 
-            // Assert - Confirm we've paused
-            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
+            // Assert
             await testEventsRaised.AssertPausedCheck();
+            Assert.AreEqual(TransferState.Paused, transfer.Status.State);
             int completedBeforePause = testEventsRaised.SingleCompletedEvents.Count;
 
             // Act - Resume Job
@@ -1123,7 +1125,7 @@ namespace Azure.Storage.DataMovement.Tests
             await using DisposingBlobContainer sourceContainer = await GetTestContainerAsync(service);
             await using DisposingBlobContainer destinationContainer = await GetTestContainerAsync(service);
 
-            BlobsStorageResourceProvider blobProvider = new(GetSharedKeyCredential());
+            BlobsStorageResourceProvider blobProvider = new(TestEnvironment.Credential);
             TransferManagerOptions options = new TransferManagerOptions()
             {
                 CheckpointStoreOptions = TransferCheckpointStoreOptions.CreateLocalStore(checkpointerDirectory.DirectoryPath),
