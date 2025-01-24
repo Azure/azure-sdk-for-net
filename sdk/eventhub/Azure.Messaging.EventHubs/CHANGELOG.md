@@ -16,6 +16,8 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 - Querying runtime data and other management operations will now correctly guards against the race condition where an AMQP link is in the process of closing as the operation attempts to use it.  These errors will now properly be classified as retriable as they are for producer and consumer operations.
 
+- Fixed an obscure edge case in the `EventHubBufferedProducer` client where an obscure race condition when flushing/enqueuing events concurrently with disposing the producer could cause a semaphore to be released inappropriately.  This error superseded the `TaskCanceledException` that should have been surfaced.
+
 ### Other Changes
 
 - Added annotations to make the package compatible with trimming and native AOT compilation.
