@@ -82,7 +82,7 @@
         - https://github.com/Azure/azure-functions-host/blob/dev/test/WebJobs.Script.Tests/Microsoft.Azure.WebJobs.Script.WebHost.deps.json
   -->
 
-  <ItemGroup Condition="'$(IsClientLibrary)' == 'true' or '$(IsGeneratorLibrary)' == 'true' or '$(IsGeneratedSample)' == 'true' ">
+  <ItemGroup Condition="'$(IsClientLibrary)' == 'true' or '$(IsGeneratorLibrary)' == 'true'">
 
     <!-- BCL packages -->
     <PackageReference Update="System.Buffers" Version="4.5.1" />
