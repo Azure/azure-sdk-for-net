@@ -3,7 +3,9 @@
 ## 1.2.0-beta.1 (Unreleased)
 
 ### Features Added
-
+- Added Interactive Message.
+- Added Reaction Message.
+- Added Sticker Message.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
