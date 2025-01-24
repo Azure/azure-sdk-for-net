@@ -370,7 +370,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// </summary>
         private Task WaitForStatusEventsAsync()
         {
-            return Task.Delay(200);
+            return Task.Delay(150);
         }
     }
 }
