@@ -1,10 +1,6 @@
 # Microsoft Azure NeonPostgres management client library for .NET
 
-Neon is a modern Postgres database service that takes the world’s most-loved database and delivers it as a serverless platform designed to optimize both performance and cost. It eliminates the need for manual server resizing by offering compute and storage autoscaling, including scale-to-zero for inactive databases to save costs. Additionally, Neon supports database branching, enabling iterative CI/CD workflows and instant point-in-time recovery.
-
-Efficient autoscaling for Postgres. Neon’s autoscaling adjusts resources dynamically based on actual usage, boosting performance during traffic spikes.
-Faster developer workflows. Via database branching, developers can instantly create database copies for testing, feature development, and schema migrations.
-Perfect for AI apps and agents. With pgvector for vector embeddings, serverless speed for agentic infrastructure, and optimal price performance due to scale-to-zero.
+**[Describe the service briefly first.]**
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -14,7 +10,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started
+## Getting started 
 
 ### Install the package
 
