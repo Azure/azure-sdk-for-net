@@ -59,7 +59,8 @@
           "SupportsRecording": true,
           "CollectCoverage": true
         }
-      }
+      },
+      "AdditionalTestArguments": "/p:UseProjectReferenceToAzureClients=false"
     }
   ]
 }
