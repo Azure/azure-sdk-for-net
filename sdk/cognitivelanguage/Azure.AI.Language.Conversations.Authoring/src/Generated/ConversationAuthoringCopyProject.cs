@@ -55,44 +55,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Generates a copy project operation authorization to the current target Azure resource. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="projectKind"> Represents the project kind. </param>
-        /// <param name="storageInputContainerName"> The name of the storage container. </param>
-        /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringCopyProject.xml" path="doc/members/member[@name='CopyProjectAuthorizationAsync(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<CopyProjectDetails>> CopyProjectAuthorizationAsync(string projectName, AnalyzeConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CopyProjectAuthorizationAsync(projectName, copyProjectAuthorizationRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(CopyProjectDetails.FromResponse(response), response);
-        }
-
-        /// <summary> Generates a copy project operation authorization to the current target Azure resource. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="projectKind"> Represents the project kind. </param>
-        /// <param name="storageInputContainerName"> The name of the storage container. </param>
-        /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringCopyProject.xml" path="doc/members/member[@name='CopyProjectAuthorization(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)']/*" />
-        public virtual Response<CopyProjectDetails> CopyProjectAuthorization(string projectName, AnalyzeConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CopyProjectAuthorization(projectName, copyProjectAuthorizationRequest.ToRequestContent(), context);
-            return Response.FromValue(CopyProjectDetails.FromResponse(response), response);
-        }
-
         /// <summary>
         /// [Protocol Method] Generates a copy project operation authorization to the current target Azure resource.
         /// <list type="bullet">
@@ -177,40 +139,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status of an existing copy project job. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringCopyProject.xml" path="doc/members/member[@name='GetCopyProjectStatusAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<CopyProjectJobState>> GetCopyProjectStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetCopyProjectStatusAsync(projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(CopyProjectJobState.FromResponse(response), response);
-        }
-
-        /// <summary> Gets the status of an existing copy project job. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringCopyProject.xml" path="doc/members/member[@name='GetCopyProjectStatus(string,string,CancellationToken)']/*" />
-        public virtual Response<CopyProjectJobState> GetCopyProjectStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetCopyProjectStatus(projectName, jobId, context);
-            return Response.FromValue(CopyProjectJobState.FromResponse(response), response);
-        }
-
         /// <summary>
         /// [Protocol Method] Gets the status of an existing copy project job.
         /// <list type="bullet">
@@ -293,42 +221,6 @@ namespace Azure.AI.Language.Conversations.Authoring
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Copies an existing project to another Azure resource. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="body"> The copy project info. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringCopyProject.xml" path="doc/members/member[@name='CopyProjectAsync(WaitUntil,string,CopyProjectDetails,CancellationToken)']/*" />
-        public virtual async Task<Operation> CopyProjectAsync(WaitUntil waitUntil, string projectName, CopyProjectDetails body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            return await CopyProjectAsync(waitUntil, projectName, content, context).ConfigureAwait(false);
-        }
-
-        /// <summary> Copies an existing project to another Azure resource. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="body"> The copy project info. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringCopyProject.xml" path="doc/members/member[@name='CopyProject(WaitUntil,string,CopyProjectDetails,CancellationToken)']/*" />
-        public virtual Operation CopyProject(WaitUntil waitUntil, string projectName, CopyProjectDetails body, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(body, nameof(body));
-
-            using RequestContent content = body.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            return CopyProject(waitUntil, projectName, content, context);
         }
 
         /// <summary>
