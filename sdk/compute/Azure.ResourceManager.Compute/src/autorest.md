@@ -11,7 +11,7 @@ azure-arm: true
 library-name: Compute
 namespace: Azure.ResourceManager.Compute
 require: https://github.com/Azure/azure-rest-api-specs/blob/bf420af156ea90b4226e96582bdb4c9647491ae6/specification/compute/resource-manager/readme.md
-#tag: package-2024-03-03
+#tag: package-2024-11-04
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -300,6 +300,7 @@ rename-mapping:
   SoftDeletedArtifactTypes: GallerySoftDeletedArtifactType
   GalleryImageVersionSafetyProfile.blockDeletionBeforeEndOfLife: IsBlockedDeletionBeforeEndOfLife
   ExecutedValidation: GalleryImageExecutedValidation
+  Placement: VirtualMachinePlacement
 
 directive:
 # copy the systemData from common-types here so that it will be automatically replaced
@@ -422,4 +423,35 @@ directive:
     where: $.definitions.VMSizeProperties
     transform: >
       $.additionalProperties = true;
+  # Enable AnyZone Capability, this is a temporary change, will be removed after service team update the spec
+  - from: virtualMachine.json
+    where: $.definitions
+    transform: >
+      $.Placement = {
+              "properties": {
+                "zonePlacementPolicy": {
+                  "type": "string",
+                  "description": "Specifies policy for auto zone placement."
+                },
+                "includeZones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "List of zones to include for auto zone placement."
+                },
+                "excludeZones": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "description": "List of zones to exclude for auto zone placement."
+                }
+              },
+              "description": "The virtual machine automatic zone placement feature."
+            };
+      $.VirtualMachine.properties.placement = {
+              "$ref": "#/definitions/Placement",
+              "description": "The virtual machine automatic zone placement feature."
+            };
 ```
