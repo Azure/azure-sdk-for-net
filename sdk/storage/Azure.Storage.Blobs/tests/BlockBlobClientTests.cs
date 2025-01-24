@@ -1120,7 +1120,7 @@ namespace Azure.Storage.Blobs.Test
 
             using Stream stream = new MemoryStream(data);
 
-            ShareServiceClient shareServiceClient = GetShareServiceClient_SharedKey();
+            ShareServiceClient shareServiceClient = GetShareServiceClient_OAuthAccount_SharedKey();
             ShareClient shareClient = await shareServiceClient.CreateShareAsync(GetNewContainerName());
             try
             {
@@ -3536,7 +3536,7 @@ namespace Azure.Storage.Blobs.Test
 
             using Stream stream = new MemoryStream(data);
 
-            ShareServiceClient shareServiceClient = GetShareServiceClient_SharedKey();
+            ShareServiceClient shareServiceClient = GetShareServiceClient_OAuthAccount_SharedKey();
             ShareClient shareClient = await shareServiceClient.CreateShareAsync(GetNewContainerName());
 
             try

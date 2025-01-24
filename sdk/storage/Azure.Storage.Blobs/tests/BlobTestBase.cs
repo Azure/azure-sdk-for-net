@@ -224,9 +224,19 @@ namespace Azure.Storage.Test.Shared
                     new Uri($"{Tenants.TestConfigOAuth.BlobServiceEndpoint}?{sasCredentials ?? GetNewBlobServiceIdentitySasCredentialsBlob(containerName: containerName, blobName: blobName, userDelegationKey: userDelegationKey, accountName: Tenants.TestConfigOAuth.AccountName)}"),
                     BlobsClientBuilder.GetOptions()));
 
-        public ShareServiceClient GetShareServiceClient_SharedKey()
+        public ShareServiceClient GetShareServiceClient_OAuthAccount_SharedKey()
         {
-            ShareClientOptions options = new ShareClientOptions();
+            ShareClientOptions options = new ShareClientOptions()
+            {
+                Diagnostics = { IsLoggingEnabled = true },
+                Retry =
+                {
+                    Mode = RetryMode.Exponential,
+                    MaxRetries = Constants.MaxReliabilityRetries,
+                    Delay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.01 : 1),
+                    MaxDelay = TimeSpan.FromSeconds(Mode == RecordedTestMode.Playback ? 0.1 : 60)
+                },
+            };
             if (Mode != RecordedTestMode.Live)
             {
                 options.AddPolicy(new RecordedClientRequestIdPolicy(Recording), HttpPipelinePosition.PerCall);
@@ -234,8 +244,8 @@ namespace Azure.Storage.Test.Shared
             return InstrumentClient(
                 new ShareServiceClient(
                     new Uri(Tenants.TestConfigDefault.FileServiceEndpoint),
-                    new StorageSharedKeyCredential(TestConfigDefault.AccountName, TestConfigDefault.AccountKey),
-                    options));
+                    new StorageSharedKeyCredential(TestConfigurations.DefaultTargetOAuthTenant.AccountName, TestConfigurations.DefaultTargetOAuthTenant.AccountKey),
+                    InstrumentClientOptions(options)));
         }
 
         public BlobSasQueryParameters GetNewBlobServiceSasCredentialsContainer(string containerName, StorageSharedKeyCredential sharedKeyCredentials = default)
