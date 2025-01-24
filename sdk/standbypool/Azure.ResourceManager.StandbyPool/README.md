@@ -1,10 +1,6 @@
 # Microsoft Azure StandbyPool management client library for .NET
 
-Microsoft Azure Standby Pool provides the infrastructure to host a pool standby instances (VMs or Containers).
-
-Standby Pools for Virtual Machine Scale Sets allow you to increase scaling performance by creating a pool of pre-provisioned virtual machines from which the scale set can draw from when scaling out. Standby Pools reduce the time to scale out by performing various initialization steps such as installing applications/ software or loading large amounts of data. These initialization steps are performed on the VMs in the Standby Pool prior to being put into the scale set and before the instances begin taking traffic.
-
-This library supports managing Microsoft Azure Compute resources.
+**[Describe the service briefly first.]**
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -21,7 +17,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 Install the Microsoft Azure StandbyPool management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.StandbyPool
+dotnet add package Azure.ResourceManager.StandbyPool --prerelease
 ```
 
 ### Prerequisites
