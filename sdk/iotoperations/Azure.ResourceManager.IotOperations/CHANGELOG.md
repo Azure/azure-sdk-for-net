@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (2024-11-01)
+## 1.0.0 (2025-01-24)
 
 This release is the first stable release of the IotOperations Management client library.
 
