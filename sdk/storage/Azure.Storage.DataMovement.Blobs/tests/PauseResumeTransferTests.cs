@@ -529,7 +529,7 @@ namespace Azure.Storage.DataMovement.Tests
                 transfer.Id,
                 resumeOptions);
 
-            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
 
             // Assert
@@ -546,8 +546,8 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationContainer: destinationContainer.Container);
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/35439")]
-        [RecordedTest]
+        [Test]
+        [LiveOnly]
         [TestCase(TransferDirection.Upload)]
         [TestCase(TransferDirection.Copy)]
         public async Task ResumeTransferAsync_Options(TransferDirection transferType)
@@ -570,7 +570,7 @@ namespace Azure.Storage.DataMovement.Tests
             Metadata metadata = DataProvider.BuildMetadata();
             BlockBlobStorageResourceOptions testOptions = new()
             {
-                Metadata = DataProvider.BuildMetadata(),
+                Metadata = metadata,
                 AccessTier = AccessTier.Cool,
                 ContentLanguage = "en-US",
             };
@@ -601,7 +601,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Act - Resume Job
             TransferOperation resumeTransfer = await transferManager.ResumeTransferAsync(transfer.Id);
-            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(10));
+            CancellationTokenSource waitTransferCompletion = new CancellationTokenSource(TimeSpan.FromSeconds(20));
             await resumeTransfer.WaitForCompletionAsync(waitTransferCompletion.Token);
 
             // Assert
