@@ -1,30 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <Description>
-      This client library enables working with the Microsoft Azure Communication Messages service.
-    </Description>
-    <AssemblyTitle>Azure Communication Messages Service</AssemblyTitle>
-    <Version>1.2.0-beta.1</Version>
-    <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.1.0</ApiCompatVersion>
-    <PackageTags>Microsoft Azure Communication Messages Service;Microsoft;Azure;Azure Communication Service;Azure Communication Messages Service;Messages;Communication</PackageTags>
+    <Description>This is the Azure.Communication.Messages client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>Azure SDK Code Generation Azure.Communication.Messages for Azure Data Plane</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure.Communication.Messages</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\..\Shared\src\ClientOptionsExtensions.cs" LinkBase="Shared\Communication" />
-    <Compile Include="..\..\Shared\src\HMACAuthenticationPolicy.cs" LinkBase="Shared\Communication" />
-    <Compile Include="$(AzureCoreSharedSources)ConnectionString.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.Text.Json" />
-    <PackageReference Include="Azure.Communication.Common" />
   </ItemGroup>
-
 </Project>

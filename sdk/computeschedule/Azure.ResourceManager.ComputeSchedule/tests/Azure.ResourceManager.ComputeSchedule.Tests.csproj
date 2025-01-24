@@ -1,14 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-  </PropertyGroup>
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup />
+
   <ItemGroup>
+    <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.ResourceManager.ComputeSchedule.csproj" />
-    <PackageReference Include="Azure.ResourceManager.Compute" />
-    <PackageReference Include="Polly" />
-    <PackageReference Include="Polly.Contrib.WaitAndRetry" />
-  </ItemGroup>
-  <ItemGroup>
-   <ProjectReference Include="$(AzureCoreTestFramework)" />
   </ItemGroup>
 </Project>

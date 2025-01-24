@@ -1,17 +1,22 @@
-# Azure Batch client library for .NET
+# Azure.Compute.Batch client library for .NET
 
-Azure Batch allows users to run large-scale parallel and high-performance computing (HPC) batch jobs efficiently in Azure.  
+Azure.Compute.Batch is a managed service that helps developers get secret simply and securely.
 
 Use the client library for to:
 
-* Create and manage Batch jobs and tasks
-* View and perform operations on nodes in a Batch pool
+* [Get secret](https://docs.microsoft.com/azure)
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/batch/Azure.Compute.Batch/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://learn.microsoft.com/dotnet/api/overview/azure/batch?view=azure-dotnet) | [Product documentation](https://learn.microsoft.com/azure/batch/)
+[Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
+
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/batch/Azure.Compute.Batch/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
 
 ## Getting started
 
+This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
+
 ### Install the package
+
+First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `dotnet add package package-name`, but should enable a developer to successfully install the package from NuGet, npm, or even cloning a GitHub repository.
 
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
@@ -21,47 +26,42 @@ dotnet add package Azure.Compute.Batch --prerelease
 
 ### Prerequisites
 
-- An Azure account with an active subscription. If you don't have one, [create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
 
-- A Batch account with a linked Azure Storage account. You can create the accounts by using any of the following methods: [Azure CLI](https://learn.microsoft.com/azure/batch/quick-create-cli) | [Azure portal](https://learn.microsoft.com/azure/batch/quick-create-portal) | [Bicep](https://learn.microsoft.com/azure/batch/quick-create-bicep) | [ARM template](https://learn.microsoft.com/azure/batch/quick-create-template) | [Terraform](https://learn.microsoft.com/azure/batch/quick-create-terraform).
-
-- [Visual Studio 2019](https://www.visualstudio.com/vs) or later, or the [.NET SDK](https://dotnet.microsoft.com/download/dotnet) version 6.0 or later.
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
 
 ### Authenticate the client
 
-Batch account access supports two methods of authentication: Shared Key and Microsoft Entra ID.
+If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
 
-We strongly recommend using Microsoft Entra ID for Batch account authentication. Some Batch capabilities require this method of authentication, including many of the security-related features discussed here. The service API authentication mechanism for a Batch account can be restricted to only Microsoft Entra ID using the [allowedAuthenticationModes](https://learn.microsoft.com/rest/api/batchmanagement/batch-account/create?view=rest-batchmanagement-2024-02-01&tabs=HTTP) property. When this property is set, API calls using Shared Key authentication will be rejected.
+For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
 
-#### Authenticate using Microsoft Entra ID
+### Service API versions
 
-Azure Batch provides integration with Microsoft Entra ID for identity-based authentication of requests. With Azure AD, you can use role-based access control (RBAC) to grant access to your Azure Batch resources to users, groups, or applications. The [Azure Identity library](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/identity/Azure.Identity/README.md) provides easy Microsoft Entra ID support for authentication.
+The client library targets the latest service API version by default. A client instance accepts an optional service API version parameter from its options to specify which API version service to communicate.
 
+#### Select a service API version
 
-```C# Snippet:Batch_Readme_EntraIDCredential
-var credential = new DefaultAzureCredential();
-BatchClient _batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), credential);
+You have the flexibility to explicitly select a supported service API version when instantiating a client by configuring its associated options. This ensures that the client can communicate with services using the specified API version.
+
+For example,
+
+```C# Snippet:Create<YourService>ClientForSpecificApiVersion
+Uri endpoint = new Uri("<your endpoint>");
+DefaultAzureCredential credential = new DefaultAzureCredential();
+<YourService>ClientOptions options = new <YourService>ClientOptions(<YourService>ClientOptions.ServiceVersion.<API Version>)
+var client = new <YourService>Client(endpoint, credential, options);
 ```
 
-#### Authenticate using Shared Key
+When selecting an API version, it's important to verify that there are no breaking changes compared to the latest API version. If there are significant differences, API calls may fail due to incompatibility.
 
-You can also use Shared Key authentication to sign into your Batch account. This method uses your Batch account access keys to authenticate Azure commands for the Batch service.  You can find your batch account shared keys in the portal under the "keys" section or you can run the following [CLI command](https://learn.microsoft.com/cli/azure/batch/account/keys?view=azure-cli-latest) 
-
-```bash
-az batch account keys list --name <your-batch-account> --resource-group <your-resource-group-name>
-```
-
-```C# Snippet:Batch_Readme_AzureNameKeyCredential
-var credential = new AzureNamedKeyCredential("<your account>", "BatchAccountKey");
-BatchClient _batchClient = new BatchClient(
-    new Uri("https://<your account>.eastus.batch.azure.com"),
-    credential);
-```
+Always ensure that the chosen API version is fully supported and operational for your specific use case and that it aligns with the service's versioning policy.
 
 ## Key concepts
 
-[Azure Batch Overview](https://learn.microsoft.com/azure/batch/batch-technical-overview)
+The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+
+Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
 
 ### Thread safety
 
@@ -74,235 +74,34 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking?tabs=csharp) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
 ## Examples
 
-The Azure.Compute.Batch package supports synchronous and asynchronous APIs.
-
-The following section provides several synchronous code snippets covering some of the most common Azure Batch related tasks:
-
-* [Create a pool](#create-a-pool)
-* [Retrieve a pool](#retrieve-a-pool)
-* [List pools ](#list-pools)
-* [Retrieve a node](#retrieve-a-node)
-* [List nodes](#list-nodes)
-* [Create a job](#create-a-job)
-* [Retrieve a job](#retrieve-a-job)
-* [List jobs](#list-jobss)
-* [Create a task](#create-a-task)
-* [Retrieve a task](#retrieve-a-task)
-* [Retrieve an output file from a task](#retrieve-an-output-file-from-a-task)
-
-### Create a Pool
-
-In an Azure Batch workflow, a compute node (or node) is a virtual machine that processes a portion of your application's workload. A pool is a collection of these nodes for your application to runs on. For more information see [Nodes and pools in Azure Batch](https://learn.microsoft.com/azure/batch/nodes-and-pools).
-
-Use the `CreatePool` method with a `BatchPoolCreateContent` instance to create a `BatchPool`. 
-
-```C# Snippet:Batch_Readme_PoolCreation
-BatchClient _batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-string poolID = "HelloWorldPool";
-
-ImageReference imageReference = new ImageReference()
-{
-    Publisher = "MicrosoftWindowsServer",
-    Offer = "WindowsServer",
-    Sku = "2019-datacenter-smalldisk",
-    Version = "latest"
-};
-
-VirtualMachineConfiguration virtualMachineConfiguration = new VirtualMachineConfiguration(imageReference, "batch.node.windows amd64");
-
-BatchPoolCreateContent batchPoolCreateOptions = new BatchPoolCreateContent(
-poolID, "STANDARD_D1_v2")
-{
-    VirtualMachineConfiguration = virtualMachineConfiguration,
-    TargetDedicatedNodes = 2,
-};
-
-// create pool
-_batchClient.CreatePool(batchPoolCreateOptions);
-```
-
-### Retrieve a Pool
-
-`GetPool` can be used to retrieve created pools
-
-```C# Snippet:Batch_Readme_PoolRetreival
-BatchClient _batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-BatchPool batchPool = _batchClient.GetPool("poolID");
-
-Console.WriteLine(batchPool.Id);
-Console.WriteLine(batchPool.Url);
-Console.WriteLine(batchPool.AllocationState);
-```
-
-### List Pools
-
-`GetPools` can be used to list all pools under the Batch account
-
-```C# Snippet:Batch_Readme_ListPools
-BatchClient _batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-foreach (BatchPool item in _batchClient.GetPools())
-{
-    Console.WriteLine(item.Id);
-}
-```
-
-### Retrieve a Node
-
-A node is an Azure virtual machine (VM) that is dedicated to processing a portion of your application's workload. The size of a node determines the number of CPU cores, memory capacity, and local file system size that is allocated to the node. For more information see [Nodes and pools in Azure Batch](https://learn.microsoft.com/azure/batch/nodes-and-pools).
-
-`GetNode` can be used to retrieve an allocated `BatchNode` from a pool.
-
-```C# Snippet:Batch_Readme_NodeRetreival
-BatchClient _batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-BatchNode batchNode = _batchClient.GetNode("<poolId>", "<nodeId>");
-Console.WriteLine(batchNode.Id);
-Console.WriteLine(batchNode.Url);
-Console.WriteLine(batchNode.State);
-```
-
-### List Nodes
-
-`GetNodes` can be used to list all `BatchNode` allocated under a pool
-
-```C# Snippet:Batch_Readme_ListNodes
-BatchClient _batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-foreach (BatchNode item in _batchClient.GetNodes("poolID"))
-{
-    Console.WriteLine(item.Id);
-}
-```
-
-### Create a Job
-A job is a collection of tasks. It manages how computation is performed by its tasks on the compute nodes in a pool.
-
-A job specifies the pool in which the work is to be run. You can create a new pool for each job, or use one pool for many jobs. You can create a pool for each job that is associated with a job schedule, or one pool for all jobs that are associated with a job schedule. For more information see [Jobs and tasks in Azure Batch](https://learn.microsoft.com/azure/batch/jobs-and-tasks).
-
-Use the `CreateJob` method with a `BatchJobCreateContent` instance to create a `BatchJob`. 
-
-```C# Snippet:Batch_Readme_JobCreation
-BatchClient _batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-_batchClient.CreateJob(new BatchJobCreateContent("jobId", new BatchPoolInfo() { PoolId = "poolName" }));
-```
-
-### Retrieve a job
-
-`GetJob` can be used to retrieve a created `BatchJob`
-
-```C# Snippet:Batch_Readme_JobRetreival
-BatchClient _batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-BatchJob batchJob = _batchClient.GetJob("jobID");
-Console.WriteLine(batchJob.Id);
-Console.WriteLine(batchJob.State);
-```
-
-### List jobs
-
-`GetJobs` can be used to list all `BatchJob` allocated under a Batch Account
-
-```C# Snippet:Batch_Readme_ListJobs
-BatchClient _batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-foreach (BatchJob item in _batchClient.GetJobs())
-{
-    Console.WriteLine(item.Id);
-}
-```
-
-### Create a task
-
-A task is a unit of computation that is associated with a job. It runs on a node. Tasks are assigned to a node for execution, or are queued until a node becomes free. Put simply, a task runs one or more programs or scripts on a compute node to perform the work you need done. For more information see [Jobs and tasks in Azure Batch](https://learn.microsoft.com/azure/batch/jobs-and-tasks).
-
-Use the `CreateTask` method with a `BatchTaskCreateContent` instance to create a `BatchTask`. 
-
-```C# Snippet:Batch_Readme_TaskCreation
-BatchClient _batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-_batchClient.CreateTask("jobId", new BatchTaskCreateContent("taskId", $"echo Hello world"));
-```
-
-### Retrieve a task
-
-`GetTask` can be used to retrieve a created `BatchTask`
-
-```C# Snippet:Batch_Readme_TaskRetreival
-BatchClient _batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-BatchTask batchTask = _batchClient.GetTask("<jobId>", "<taskId>");
-Console.WriteLine(batchTask.Id);
-Console.WriteLine(batchTask.State);
-```
-
-### Retrieve an output file from a task
-
-In Azure Batch, each task has a working directory under which it can create files and directories. This working directory can be used for storing the program that is run by the task, the data that it processes, and the output of the processing it performs. All files and directories of a task are owned by the task user.
-
-The Batch service exposes a portion of the file system on a node as the root directory. This root directory is located on the temporary storage drive of the VM, not directly on the OS drive.
-
-Tasks can access the root directory by referencing the AZ_BATCH_NODE_ROOT_DIR environment variable. For more information see [Files and directories in Azure Batch](https://learn.microsoft.com/azure/batch/files-and-directories).
-
-
-`GetTasks` can be used to list all `BatchTask` allocated under a `BatchJob`.  `GetTaskFile` can be used to retrive files from a `BatchTask`
-
-```C# Snippet:Batch_Readme_ListTasks
-BatchClient _batchClient = new BatchClient(
-new Uri("https://<your account>.eastus.batch.azure.com"), new DefaultAzureCredential());
-
-var completedTasks = _batchClient.GetTasks("jobId", filter: "state eq 'completed'");
-foreach (BatchTask t in completedTasks)
-{
-    var outputFileName = t.ExecutionInfo.ExitCode == 0 ? "stdout.txt" : "stderr.txt";
-
-    Console.WriteLine("Task {0} exited with code {1}. Output ({2}):",
-        t.Id, t.ExecutionInfo.ExitCode, outputFileName);
-
-    BinaryData fileContents = _batchClient.GetTaskFile("jobId", t.Id, outputFileName);
-    using (var reader = new StreamReader(fileContents.ToStream()))
-    {
-        Console.WriteLine(reader.ReadLine());
-    }
-}
-```
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/batch/Azure.Compute.Batch/samples).
 
 ## Troubleshooting
 
-Please see [Troubleshooting common batch issues](https://learn.microsoft.com/troubleshoot/azure/hpc/batch/welcome-hpc-batch).
+Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
+
+Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
+
+If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
 
 ## Next steps
 
-View more https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/batch/Azure.Compute.Batch/samples here for common usages of the Batch client library: [Batch Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/batch/Azure.Compute.Batch/samples).
+* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
+* If appropriate, point users to other packages that might be useful.
+* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
 
 ## Contributing
 
-This project welcomes contributions and suggestions.
-Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution.
-For details, visit [Contributor License Agreements](https://opensource.microsoft.com/cla/).
+This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
 
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment).
-Simply follow the instructions provided by the bot.
-You will only need to do this once across all repos using our CLA.
+<!-- LINKS -->
+[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
+[style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/batch/Azure.Compute.Batch/README.png)

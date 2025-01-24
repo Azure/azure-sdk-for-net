@@ -45,7 +45,7 @@ namespace Azure.AI.Vision.Face
         /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public FaceSessionClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new AzureAIVisionFaceClientOptions())
+        public FaceSessionClient(Uri endpoint, AzureKeyCredential credential) : this(endpoint, credential, new FaceClientOptions())
         {
         }
 
@@ -56,7 +56,7 @@ namespace Azure.AI.Vision.Face
         /// </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public FaceSessionClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new AzureAIVisionFaceClientOptions())
+        public FaceSessionClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new FaceClientOptions())
         {
         }
 
@@ -68,11 +68,11 @@ namespace Azure.AI.Vision.Face
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public FaceSessionClient(Uri endpoint, AzureKeyCredential credential, AzureAIVisionFaceClientOptions options)
+        public FaceSessionClient(Uri endpoint, AzureKeyCredential credential, FaceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzureAIVisionFaceClientOptions();
+            options ??= new FaceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
@@ -89,11 +89,11 @@ namespace Azure.AI.Vision.Face
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public FaceSessionClient(Uri endpoint, TokenCredential credential, AzureAIVisionFaceClientOptions options)
+        public FaceSessionClient(Uri endpoint, TokenCredential credential, FaceClientOptions options)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new AzureAIVisionFaceClientOptions();
+            options ??= new FaceClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _tokenCredential = credential;

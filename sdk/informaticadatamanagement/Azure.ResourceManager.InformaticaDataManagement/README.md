@@ -1,6 +1,6 @@
-# Microsoft Azure Informatica data management client library for .NET
+# Microsoft Azure InformaticaDataManagement management client library for .NET
 
-The service provides seamless experience for discovering, subscribing, provisioning, and managing Informatica’s Intelligent Data Management Cloud Services from Azure.
+**[Describe the service briefly first.]**
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -14,7 +14,7 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 ### Install the package
 
-Install the Microsoft Azure Informatica data management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure InformaticaDataManagement management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.InformaticaDataManagement --prerelease

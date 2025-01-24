@@ -146,6 +146,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "Azure.Communication.MessagesService",
    "doc": "The type of message.",
    "isFixed": false,
    "isFlags": false,
@@ -274,6 +275,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "Azure.Communication.MessagesService",
    "doc": "The type of the template parameter.",
    "isFixed": false,
    "isFlags": false,
@@ -312,6 +314,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "Azure.Communication.MessagesService",
    "doc": "The type of the message template.",
    "isFixed": false,
    "isFlags": false,
@@ -368,6 +371,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "Azure.Communication.MessagesService",
    "doc": "The WhatsApp button sub type.",
    "isFixed": false,
    "isFlags": false,
@@ -424,6 +428,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "Azure.Communication.MessagesService",
    "doc": "Azure Communication Messages Versions",
    "isFixed": true,
    "isFlags": false,
@@ -516,6 +521,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "Azure.Communication.MessagesService",
    "doc": "The aggregated template status.",
    "isFixed": false,
    "isFlags": false,
@@ -554,6 +560,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "Azure.Communication.MessagesService",
    "doc": "The type of the communication messages channel.",
    "isFixed": false,
    "isFlags": false,
@@ -610,6 +617,7 @@
      "decorators": []
     }
    ],
+   "clientNamespace": "Azure.Core",
    "doc": "Repeatability Result header options",
    "isFixed": true,
    "isFlags": false,
@@ -622,6 +630,7 @@
    "$id": "68",
    "kind": "model",
    "name": "NotificationContent",
+   "clientNamespace": "Azure.Communication.MessagesService",
    "crossLanguageDefinitionId": "Azure.Communication.MessagesService.NotificationContent",
    "usage": "Input,Json",
    "doc": "Details of the message to send.",
@@ -707,6 +716,7 @@
      "$id": "77",
      "kind": "model",
      "name": "TextNotificationContent",
+     "clientNamespace": "Azure.Communication.MessagesService",
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.TextNotificationContent",
      "usage": "Input,Json",
      "doc": "A request to send a text notification.",
@@ -768,6 +778,7 @@
      "$id": "83",
      "kind": "model",
      "name": "MediaNotificationContent",
+     "clientNamespace": "Azure.Communication.MessagesService",
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MediaNotificationContent",
      "usage": "Input,Json",
      "deprecation": "`MediaNotificationContent` is being deprecated, we encourage you to use the new `ImageNotificationContent` for sending images instead.",
@@ -850,6 +861,7 @@
      "$id": "91",
      "kind": "model",
      "name": "ImageNotificationContent",
+     "clientNamespace": "Azure.Communication.MessagesService",
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.ImageNotificationContent",
      "usage": "Input,Json",
      "doc": "A request to send an image notification.",
@@ -931,6 +943,7 @@
      "$id": "99",
      "kind": "model",
      "name": "DocumentNotificationContent",
+     "clientNamespace": "Azure.Communication.MessagesService",
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.DocumentNotificationContent",
      "usage": "Input,Json",
      "doc": "A request to send a document notification.",
@@ -1032,6 +1045,7 @@
      "$id": "109",
      "kind": "model",
      "name": "VideoNotificationContent",
+     "clientNamespace": "Azure.Communication.MessagesService",
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.VideoNotificationContent",
      "usage": "Input,Json",
      "doc": "A request to send a video notification.",
@@ -1113,6 +1127,7 @@
      "$id": "117",
      "kind": "model",
      "name": "AudioNotificationContent",
+     "clientNamespace": "Azure.Communication.MessagesService",
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.AudioNotificationContent",
      "usage": "Input,Json",
      "doc": "A request to send an audio notification.",
@@ -1174,6 +1189,7 @@
      "$id": "123",
      "kind": "model",
      "name": "TemplateNotificationContent",
+     "clientNamespace": "Azure.Communication.MessagesService",
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.TemplateNotificationContent",
      "usage": "Input,Json",
      "doc": "A request to send a template notification.",
@@ -1219,6 +1235,7 @@
         "$id": "128",
         "kind": "model",
         "name": "MessageTemplate",
+        "clientNamespace": "Azure.Communication.MessagesService",
         "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplate",
         "usage": "Input,Json",
         "doc": "The template object used to create templates.",
@@ -1278,6 +1295,7 @@
             "$id": "135",
             "kind": "model",
             "name": "MessageTemplateValue",
+            "clientNamespace": "Azure.Communication.MessagesService",
             "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateValue",
             "usage": "Input,Json",
             "doc": "The class describes a parameter of a template.",
@@ -1329,6 +1347,7 @@
               "$id": "140",
               "kind": "model",
               "name": "MessageTemplateText",
+              "clientNamespace": "Azure.Communication.MessagesService",
               "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateText",
               "usage": "Input,Json",
               "doc": "The message template's text value information.",
@@ -1390,6 +1409,7 @@
               "$id": "146",
               "kind": "model",
               "name": "MessageTemplateImage",
+              "clientNamespace": "Azure.Communication.MessagesService",
               "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateImage",
               "usage": "Input,Json",
               "doc": "The message template's image value information.",
@@ -1491,6 +1511,7 @@
               "$id": "156",
               "kind": "model",
               "name": "MessageTemplateDocument",
+              "clientNamespace": "Azure.Communication.MessagesService",
               "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateDocument",
               "usage": "Input,Json",
               "doc": "The message template's document value information.",
@@ -1592,6 +1613,7 @@
               "$id": "166",
               "kind": "model",
               "name": "MessageTemplateVideo",
+              "clientNamespace": "Azure.Communication.MessagesService",
               "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateVideo",
               "usage": "Input,Json",
               "doc": "The message template's video value information.",
@@ -1693,6 +1715,7 @@
               "$id": "176",
               "kind": "model",
               "name": "MessageTemplateLocation",
+              "clientNamespace": "Azure.Communication.MessagesService",
               "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateLocation",
               "usage": "Input,Json",
               "doc": "The message template's location value information.",
@@ -1814,6 +1837,7 @@
               "$id": "188",
               "kind": "model",
               "name": "MessageTemplateQuickAction",
+              "clientNamespace": "Azure.Communication.MessagesService",
               "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateQuickAction",
               "usage": "Input,Json",
               "doc": "The message template's quick action value information.",
@@ -1913,6 +1937,7 @@
            "$id": "197",
            "kind": "model",
            "name": "MessageTemplateBindings",
+           "clientNamespace": "Azure.Communication.MessagesService",
            "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateBindings",
            "usage": "Input,Json",
            "doc": "The binding object to link values to the template specific locations",
@@ -1944,6 +1969,7 @@
              "$id": "200",
              "kind": "model",
              "name": "WhatsAppMessageTemplateBindings",
+             "clientNamespace": "Azure.Communication.MessagesService",
              "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindings",
              "usage": "Input,Json",
              "doc": "The template bindings for WhatsApp",
@@ -1993,6 +2019,7 @@
                  "$id": "206",
                  "kind": "model",
                  "name": "WhatsAppMessageTemplateBindingsComponent",
+                 "clientNamespace": "Azure.Communication.MessagesService",
                  "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsComponent",
                  "usage": "Input,Json",
                  "doc": "The template bindings component for WhatsApp",
@@ -2090,6 +2117,7 @@
                  "$id": "215",
                  "kind": "model",
                  "name": "WhatsAppMessageTemplateBindingsButton",
+                 "clientNamespace": "Azure.Communication.MessagesService",
                  "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateBindingsButton",
                  "usage": "Input,Json",
                  "doc": "The template bindings component button for WhatsApp",
@@ -2228,6 +2256,7 @@
    "$id": "219",
    "kind": "model",
    "name": "SendMessageResult",
+   "clientNamespace": "Azure.Communication.MessagesService",
    "crossLanguageDefinitionId": "Azure.Communication.MessagesService.SendMessageResult",
    "usage": "Output,Json",
    "doc": "Result of the send message operation.",
@@ -2247,6 +2276,7 @@
        "$id": "222",
        "kind": "model",
        "name": "MessageReceipt",
+       "clientNamespace": "Azure.Communication.MessagesService",
        "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageReceipt",
        "usage": "Output,Json",
        "doc": "Receipt of the sending one message.",
@@ -2313,6 +2343,7 @@
    "$id": "227",
    "kind": "model",
    "name": "MessageTemplateItem",
+   "clientNamespace": "Azure.Communication.MessagesService",
    "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateItem",
    "usage": "Output,Json",
    "doc": "The message template as returned from the service.",
@@ -2400,6 +2431,7 @@
      "$id": "235",
      "kind": "model",
      "name": "WhatsAppMessageTemplateItem",
+     "clientNamespace": "Azure.Communication.MessagesService",
      "crossLanguageDefinitionId": "Azure.Communication.MessagesService.WhatsAppMessageTemplateItem",
      "usage": "Output,Json",
      "doc": "The WhatsApp-specific template response contract",
@@ -2466,6 +2498,7 @@
    "$id": "241",
    "kind": "model",
    "name": "PagedMessageTemplateItem",
+   "clientNamespace": "Azure.Core.Foundations",
    "crossLanguageDefinitionId": "Azure.Core.Foundations.CustomPage",
    "usage": "Output,Json",
    "doc": "Paged collection of MessageTemplateItem items",
@@ -2528,6 +2561,7 @@
   {
    "$id": "247",
    "Name": "NotificationMessagesClient",
+   "ClientNamespace": "ClientForAcsMessages",
    "Operations": [
     {
      "$id": "248",
@@ -3060,6 +3094,7 @@
   {
    "$id": "304",
    "Name": "MessageTemplateClient",
+   "ClientNamespace": "ClientForAcsMessages",
    "Operations": [
     {
      "$id": "305",

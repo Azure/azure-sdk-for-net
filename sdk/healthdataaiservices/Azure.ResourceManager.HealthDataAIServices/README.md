@@ -1,6 +1,6 @@
 # Microsoft Azure HealthDataAIServices management client library for .NET
 
-> Azure Health Deidentification is a managed service that enables users to tag, redact, or surrogate health data.
+**[Describe the service briefly first.]**
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -10,14 +10,14 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started
+## Getting started 
 
 ### Install the package
 
 Install the Microsoft Azure HealthDataAIServices management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.HealthDataAIServices
+dotnet add package Azure.ResourceManager.HealthDataAIServices --prerelease
 ```
 
 ### Prerequisites
