@@ -46,6 +46,24 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
+        /// <summary> Initializes a new instance of <see cref="AssignedDeploymentResource"/>. </summary>
+        /// <param name="region"> The resource region. </param>
+        internal AssignedDeploymentResource(AzureLocation region)
+        {
+            Region = region;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AssignedDeploymentResource"/>. </summary>
+        /// <param name="resourceId"> The resource ID. </param>
+        /// <param name="region"> The resource region. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AssignedDeploymentResource(ResourceIdentifier resourceId, AzureLocation region, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            ResourceId = resourceId;
+            Region = region;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
         /// <summary> Initializes a new instance of <see cref="AssignedDeploymentResource"/> for deserialization. </summary>
         internal AssignedDeploymentResource()
         {

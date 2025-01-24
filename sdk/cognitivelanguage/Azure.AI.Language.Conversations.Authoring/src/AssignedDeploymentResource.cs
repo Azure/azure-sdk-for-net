@@ -7,8 +7,8 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring.Models
 {
-    [CodeGenSuppress("AssignedDeploymentResource", typeof(AzureLocation))]
-    [CodeGenSuppress("AssignedDeploymentResource", typeof(ResourceIdentifier), typeof(AzureLocation), typeof(IDictionary<string, BinaryData>))]
+    //[CodeGenSuppress("AssignedDeploymentResource", typeof(AzureLocation))]
+    //[CodeGenSuppress("AssignedDeploymentResource", typeof(ResourceIdentifier), typeof(AzureLocation), typeof(IDictionary<string, BinaryData>))]
     public partial class AssignedDeploymentResource
     {
         /// <summary> The resource ID. </summary>
