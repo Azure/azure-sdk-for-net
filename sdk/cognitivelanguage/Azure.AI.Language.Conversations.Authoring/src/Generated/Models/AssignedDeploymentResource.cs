@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring.Models
 {
@@ -45,35 +46,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AssignedDeploymentResource"/>. </summary>
-        /// <param name="region"> The resource region. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
-        internal AssignedDeploymentResource(string region)
-        {
-            Argument.AssertNotNull(region, nameof(region));
-
-            Region = region;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="AssignedDeploymentResource"/>. </summary>
-        /// <param name="resourceId"> The resource ID. </param>
-        /// <param name="region"> The resource region. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssignedDeploymentResource(string resourceId, string region, IDictionary<string, BinaryData> serializedAdditionalRawData)
-        {
-            ResourceId = resourceId;
-            Region = region;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
         /// <summary> Initializes a new instance of <see cref="AssignedDeploymentResource"/> for deserialization. </summary>
         internal AssignedDeploymentResource()
         {
         }
-
-        /// <summary> The resource ID. </summary>
-        public string ResourceId { get; }
-        /// <summary> The resource region. </summary>
-        public string Region { get; }
     }
 }

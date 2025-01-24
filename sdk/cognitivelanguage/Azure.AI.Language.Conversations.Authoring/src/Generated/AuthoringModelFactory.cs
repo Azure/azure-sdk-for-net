@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.AI.Language.Conversations.Authoring.Models;
+using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring
 {
@@ -836,7 +837,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="resourceId"> The resource ID. </param>
         /// <param name="region"> The resource region. </param>
         /// <returns> A new <see cref="Models.AssignedDeploymentResource"/> instance for mocking. </returns>
-        public static AssignedDeploymentResource AssignedDeploymentResource(string resourceId = null, string region = null)
+        public static AssignedDeploymentResource AssignedDeploymentResource(ResourceIdentifier resourceId = null, AzureLocation region = default)
         {
             return new AssignedDeploymentResource(resourceId, region, serializedAdditionalRawData: null);
         }
