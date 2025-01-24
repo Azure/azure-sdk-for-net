@@ -1,22 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>Azure Event Grid is a publish-subscribe service that allows cloud events to be passed from producers to consumers.
-      This library contains the system event models used by Azure Event Grid. For more information about Event Grid, see https://azure.microsoft.com/services/event-grid.</Description>
-    <AssemblyTitle>Azure EventGrid System Events client library</AssemblyTitle>
-    <Version>1.0.0-beta.2</Version>
-    <PackageTags>Azure;Event Grid;CloudEvent;$(PackageCommonTags)</PackageTags>
+    <Description>This is the Azure.Messaging.EventGrid.SystemEvents client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>Azure SDK Code Generation Azure.Messaging.EventGrid.SystemEvents for Azure Data Plane</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure.Messaging.EventGrid.SystemEvents</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
-    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\Azure.Messaging.EventGrid\EventGridSourceGenerator\src\EventGridSourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-  </ItemGroup>
-
 </Project>
