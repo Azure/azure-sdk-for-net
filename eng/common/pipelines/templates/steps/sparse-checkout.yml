@@ -68,8 +68,9 @@ steps:
             Push-Location $dir
 
             $ghToken = ""
-            if ($repository.Name.EndsWith("-pr") {
+            if ($repository.Name.EndsWith("-pr")) {
               $ghToken = "$(azuresdk-github-pat)@"
+            }
 
             if (Test-Path .git/info/sparse-checkout) {
               $hasInitialized = $true
