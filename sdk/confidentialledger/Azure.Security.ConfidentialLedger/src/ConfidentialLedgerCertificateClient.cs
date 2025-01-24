@@ -38,7 +38,7 @@ namespace Azure.Security.ConfidentialLedger.Certificate
             options ??= new ConfidentialLedgerCertificateClientOptions();
             ClientDiagnostics = new ClientDiagnostics(options);
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), Array.Empty<HttpPipelinePolicy>(), new ResponseClassifier());
-            _certificateEndpoint = certificateEndpoint;
+            _endpoint = certificateEndpoint;
             _apiVersion = options.Version;
         }
 

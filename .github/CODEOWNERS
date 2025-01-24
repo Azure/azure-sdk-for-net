@@ -80,11 +80,20 @@
 # ServiceLabel: %AAD
 # ServiceOwners:                                                   @adamedx
 
+# PRLabel: %AI Model Inference %AI Projects
+/sdk/ai/                                                           @trangevi @dargilco @jhakulin @glharper @jhakulin @nick863
+
 # PRLabel: %AI Model Inference
-/sdk/ai/                                                           @trangevi @dargilco @jhakulin @glharper
+/sdk/ai/Azure.AI.Inference                                         @trangevi @dargilco @jhakulin @glharper
 
 # ServiceLabel: %AI Model Inference
 # ServiceOwners:                                                   @trangevi @dargilco @jhakulin @glharper
+
+# PRLabel: %AI Projects
+/sdk/ai/Azure.AI.Projects                                          @jhakulin @nick863
+
+# ServiceLabel: %AI Projects
+# ServiceOwners:                                                   @dargilco @jhakulin @nick863
 
 # ServiceLabel: %AKS
 # ServiceOwners:                                                   @Azure/aks-pm
@@ -544,10 +553,10 @@
 # ServiceOwners:                                                   @aim-for-better @idear1203 @deshriva
 
 # PRLabel: %Health Deidentification
-/sdk/healthdataaiservices/                                         @alexathomases
+/sdk/healthdataaiservices/                                         @alexathomases @Azure/healthdatadeidentification
 
 # ServiceLabel: %Health Deidentification
-# ServiceOwners:                                                   @alexathomases
+# ServiceOwners:                                                   @alexathomases @Azure/healthdatadeidentification
 
 # ServiceLabel: %HPC Cache
 # ServiceOwners:                                                   @romahamu @omzevall
@@ -572,7 +581,7 @@
 
 # ServiceLabel: %KeyVault
 # AzureSdkOwners:                                                  @JonathanCrd
-# ServiceOwners:                                                   @RandalliLama @jlichwa
+# ServiceOwners:                                                   @RandalliLama
 
 # ServiceLabel: %Kubernetes Configuration
 # ServiceOwners:                                                   @NarayanThiru
@@ -591,9 +600,6 @@
 
 # ServiceLabel: %Logic App
 # ServiceOwners:                                                   @Azure/azure-logicapps-team
-
-# ServiceLabel: %LOUIS
-# ServiceOwners:                                                   @minamnmik
 
 # ServiceLabel: %Managed Identity
 # ServiceOwners:                                                   @varunkch
@@ -974,10 +980,10 @@
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Compute - Fleet
-/sdk/computefleet/Azure.ResourceManager.*/                         @sahilarora92 @dhruvil009 @rahuls-microsoft
+/sdk/computefleet/Azure.ResourceManager.*/                         @sahilarora92 @rahuls-microsoft
 
 # ServiceLabel: %Compute - Fleet %Mgmt
-# ServiceOwners:                                                   @sahilarora92 @dhruvil009 @rahuls-microsoft
+# ServiceOwners:                                                   @sahilarora92 @rahuls-microsoft
 
 # PRLael: %Container Orchestrator Runtime
 /sdk/containerorchestratorruntime/Azure.ResourceManager.*/         @HE-Xinyu @ddadaal
@@ -1040,10 +1046,10 @@
 # ServiceOwners:                                                   @jamesvoongms @jotrivet
 
 # PRLabel: %New Relic
-/sdk/newrelicobservability/Azure.ResourceManager.*/                @dipeshbhakat-microsoft @vipray-ms
+/sdk/newrelicobservability/Azure.ResourceManager.*/                @vipray-ms
 
 # ServiceLabel: %New Relic %Mgmt
-# ServiceOwners:                                                   @dipeshbhakat-microsoft @vipray-ms
+# ServiceOwners:                                                   @vipray-ms
 
 # PRLabel: %Nginx
 /sdk/nginx/Azure.ResourceManager.*/                                @jamesfan1 @bangbingsyb @spencerofwiti

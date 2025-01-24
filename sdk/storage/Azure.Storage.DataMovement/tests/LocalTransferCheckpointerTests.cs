@@ -14,8 +14,8 @@ namespace Azure.Storage.DataMovement.Tests
 {
     public class LocalTransferCheckpointerTests : DataMovementTestBase
     {
-        private static DataTransferStatus SuccessfulCompletedStatus => new DataTransferStatus(DataTransferState.Completed, false, false);
-        private static DataTransferStatus PausedStatus => new DataTransferStatus(DataTransferState.Paused, false, false);
+        private static TransferStatus SuccessfulCompletedStatus => new TransferStatus(TransferState.Completed, false, false);
+        private static TransferStatus PausedStatus => new TransferStatus(TransferState.Paused, false, false);
 
         public LocalTransferCheckpointerTests(bool async)
             : base(async, null)
@@ -644,11 +644,11 @@ namespace Azure.Storage.DataMovement.Tests
                 actualTransferId = new Guid(transferIdBytes).ToString();
             }
 
-            DataTransferStatus actualJobStatus = await transferCheckpointer.GetJobStatusAsync(transferId);
+            TransferStatus actualJobStatus = await transferCheckpointer.GetJobStatusAsync(transferId);
 
             // Assert
             Assert.AreEqual(transferId, actualTransferId);
-            Assert.AreEqual(actualJobStatus, new DataTransferStatus());
+            Assert.AreEqual(actualJobStatus, new TransferStatus());
         }
 
         [Test]
@@ -768,7 +768,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Arrange
             string transferId = GetNewTransferId();
-            DataTransferStatus newStatus = PausedStatus;
+            TransferStatus newStatus = PausedStatus;
 
             SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
             await AddJobToCheckpointer(transferCheckpointer, transferId);
@@ -785,7 +785,7 @@ namespace Azure.Storage.DataMovement.Tests
                 BinaryReader reader = new BinaryReader(stream);
                 JobPlanStatus jobPlanStatus = (JobPlanStatus)reader.ReadInt32();
 
-                Assert.That(jobPlanStatus.ToDataTransferStatus(), Is.EqualTo(newStatus));
+                Assert.That(jobPlanStatus.ToTransferStatus(), Is.EqualTo(newStatus));
             }
         }
 
@@ -796,7 +796,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Arrange
             string transferId = GetNewTransferId();
-            DataTransferStatus newStatus = SuccessfulCompletedStatus;
+            TransferStatus newStatus = SuccessfulCompletedStatus;
 
             SerializerTransferCheckpointer transferCheckpointer = new LocalTransferCheckpointer(test.DirectoryPath);
 
@@ -814,7 +814,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
             int partNumber = 0;
             // originally the default is set to Queued
-            DataTransferStatus newStatus = SuccessfulCompletedStatus;
+            TransferStatus newStatus = SuccessfulCompletedStatus;
             JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);
@@ -844,7 +844,7 @@ namespace Azure.Storage.DataMovement.Tests
             string transferId = GetNewTransferId();
             int partNumber = 0;
             // originally the default is set to Queued
-            DataTransferStatus newStatus = SuccessfulCompletedStatus;
+            TransferStatus newStatus = SuccessfulCompletedStatus;
             JobPartPlanHeader header = CheckpointerTesting.CreateDefaultJobPartHeader(
                     transferId: transferId,
                     partNumber: partNumber);
