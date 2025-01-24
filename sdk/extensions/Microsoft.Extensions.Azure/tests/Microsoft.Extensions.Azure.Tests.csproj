@@ -6,6 +6,7 @@
   <ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection" VersionOverride="8.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="System.Net.Security" />
     <PackageReference Include="System.Net.WebSockets.Client" />
     <PackageReference Include="System.ValueTuple" />
     <PackageReference Include="NUnit" />

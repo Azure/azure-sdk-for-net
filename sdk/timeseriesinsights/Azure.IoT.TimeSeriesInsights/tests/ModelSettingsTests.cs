@@ -77,7 +77,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
         }
 
         [Test]
-        public void UpdateModelSettingsWithInvalidType_ThrowsBadRequestException()
+        public async Task UpdateModelSettingsWithInvalidType_ThrowsBadRequestException()
         {
             // arrange
             TimeSeriesInsightsClient client = GetClient();
@@ -87,7 +87,7 @@ namespace Azure.IoT.TimeSeriesInsights.Tests
             Func<Task> act = async () => await modelSettingsClient.UpdateDefaultTypeIdAsync("testId").ConfigureAwait(false);
 
             // assert
-            act.Should().Throw<RequestFailedException>()
+            (await act.Should().ThrowAsync<RequestFailedException>())
                 .And.Status.Should().Be((int)HttpStatusCode.BadRequest);
         }
 

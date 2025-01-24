@@ -106,7 +106,7 @@ namespace Azure.DigitalTwins.Core.Tests
         }
 
         [Test]
-        public void Models_ModelNotExists_ThrowsNotFoundException()
+        public async Task Models_ModelNotExists_ThrowsNotFoundException()
         {
             // arrange
             DigitalTwinsClient client = GetClient();
@@ -115,12 +115,12 @@ namespace Azure.DigitalTwins.Core.Tests
             Func<Task> act = async () => await client.GetModelAsync("dtmi:doesnotexist:fakemodel;1000").ConfigureAwait(false);
 
             // assert
-            act.Should().Throw<RequestFailedException>()
+            (await act.Should().ThrowAsync<RequestFailedException>())
                 .And.Status.Should().Be((int)HttpStatusCode.NotFound);
         }
 
         [Test]
-        public void Models_MalformedModelId_ThrowsBadRequestException()
+        public async Task Models_MalformedModelId_ThrowsBadRequestException()
         {
             // arrange
             DigitalTwinsClient client = GetClient();
@@ -129,7 +129,7 @@ namespace Azure.DigitalTwins.Core.Tests
             Func<Task> act = async () => await client.GetModelAsync("thisIsNotAValidModelId").ConfigureAwait(false);
 
             // assert
-            act.Should().Throw<RequestFailedException>()
+            (await act.Should().ThrowAsync<RequestFailedException>())
                 .And.Status.Should().Be((int)HttpStatusCode.BadRequest);
         }
 
@@ -153,7 +153,7 @@ namespace Azure.DigitalTwins.Core.Tests
             Func<Task> act = async () => await client.CreateModelsAsync(modelsList).ConfigureAwait(false);
 
             // assert
-            act.Should().Throw<RequestFailedException>()
+            (await act.Should().ThrowAsync<RequestFailedException>())
                 .And.Status.Should().Be((int)HttpStatusCode.Conflict);
         }
     }

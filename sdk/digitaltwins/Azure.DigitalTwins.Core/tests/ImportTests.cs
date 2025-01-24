@@ -84,7 +84,7 @@ namespace Azure.DigitalTwins.Core.Tests
 
                 // validate GET job after deletion - should fail
                 Func<Task> act = async () => await client.GetImportJobAsync(jobId).ConfigureAwait(false);
-                act.Should().Throw<RequestFailedException>()
+                (await act.Should().ThrowAsync<RequestFailedException>())
                     .And.Status.Should().Be((int)HttpStatusCode.NotFound);
             }
             catch (Exception ex)
@@ -121,7 +121,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 var tooManyRequestsCode = 429;
 
                 // Second request should fail - either with job id exists or because other job is running.
-                act.Should().Throw<RequestFailedException>()
+                (await act.Should().ThrowAsync<RequestFailedException>())
                     .And.Status.Should().BeOneOf(new List<int> { (int)HttpStatusCode.Conflict, tooManyRequestsCode });
             }
             catch (Exception ex)
@@ -131,7 +131,7 @@ namespace Azure.DigitalTwins.Core.Tests
         }
 
         [Test]
-        public void Import_JobIdNotExists_ThrowsNotFoundException()
+        public async Task Import_JobIdNotExists_ThrowsNotFoundException()
         {
             // arrange
             DigitalTwinsClient client = GetClient();
@@ -142,7 +142,7 @@ namespace Azure.DigitalTwins.Core.Tests
                 Func<Task> act = async () => await client.GetImportJobAsync("doesnotexistid").ConfigureAwait(false);
 
                 // assert
-                act.Should().Throw<RequestFailedException>()
+                (await act.Should().ThrowAsync<RequestFailedException>())
                     .And.Status.Should().Be((int)HttpStatusCode.NotFound);
             }
             catch (Exception ex)

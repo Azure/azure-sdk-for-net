@@ -92,7 +92,7 @@ namespace Azure.Storage.Tests
             var readTest = new byte[bufferSize];
             foreach (var _ in Enumerable.Range(0, 10))
             {
-                await readStream.ReadAsync(readTest, 0, readTest.Length);
+                int numBytesRead = await readStream.ReadAsync(readTest, 0, readTest.Length);
                 // seek back to exact start of current buffer
                 readStream.Position = offset;
             }
