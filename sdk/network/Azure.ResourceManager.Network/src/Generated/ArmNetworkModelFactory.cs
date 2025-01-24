@@ -19,6 +19,339 @@ namespace Azure.ResourceManager.Network.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ArmNetworkModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Network.NetworkSecurityPerimeterData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
+        /// <param name="perimeterGuid"> perimeter guid of the network security perimeter. </param>
+        /// <returns> A new <see cref="Network.NetworkSecurityPerimeterData"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterData NetworkSecurityPerimeterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NspProvisioningState? provisioningState = null, Guid? perimeterGuid = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new NetworkSecurityPerimeterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                perimeterGuid,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkTrackedResourceData"/>. </summary>
+        /// <param name="id"> Resource ID. </param>
+        /// <param name="name"> Resource name. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="location"> Resource location. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.NetworkTrackedResourceData"/> instance for mocking. </returns>
+        public static NetworkTrackedResourceData NetworkTrackedResourceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new NetworkTrackedResourceData(
+                id,
+                name,
+                resourceType,
+                location,
+                tags,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NetworkSecurityPerimeterPatch"/>. </summary>
+        /// <param name="id"> Network security perimeter identifier. </param>
+        /// <param name="tags"> List of tags for Network Security Perimeter. </param>
+        /// <returns> A new <see cref="Models.NetworkSecurityPerimeterPatch"/> instance for mocking. </returns>
+        public static NetworkSecurityPerimeterPatch NetworkSecurityPerimeterPatch(string id = null, IDictionary<string, string> tags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new NetworkSecurityPerimeterPatch(id, tags, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NspProfileData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="accessRulesVersion"> Version number that increases with every update to access rules within the profile. </param>
+        /// <param name="diagnosticSettingsVersion"> Version number that increases with every update to diagnostic settings within the profile. </param>
+        /// <returns> A new <see cref="Network.NspProfileData"/> instance for mocking. </returns>
+        public static NspProfileData NspProfileData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string accessRulesVersion = null, string diagnosticSettingsVersion = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new NspProfileData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                accessRulesVersion,
+                diagnosticSettingsVersion,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NspAccessRuleData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The provisioning state of the scope assignment resource. </param>
+        /// <param name="direction"> Direction that specifies whether the access rules is inbound/outbound. </param>
+        /// <param name="addressPrefixes"> Inbound address prefixes (IPv4/IPv6). </param>
+        /// <param name="fullyQualifiedDomainNames"> Outbound rules fully qualified domain name format. </param>
+        /// <param name="subscriptions"> List of subscription ids. </param>
+        /// <param name="networkSecurityPerimeters"> Rule specified by the perimeter id. </param>
+        /// <param name="emailAddresses"> Outbound rules email address format. </param>
+        /// <param name="phoneNumbers"> Outbound rules phone number format. </param>
+        /// <param name="serviceTags"> Inbound rules service tag names. </param>
+        /// <returns> A new <see cref="Network.NspAccessRuleData"/> instance for mocking. </returns>
+        public static NspAccessRuleData NspAccessRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NspProvisioningState? provisioningState = null, AccessRuleDirection? direction = null, IEnumerable<string> addressPrefixes = null, IEnumerable<string> fullyQualifiedDomainNames = null, IEnumerable<WritableSubResource> subscriptions = null, IEnumerable<PerimeterBasedAccessRule> networkSecurityPerimeters = null, IEnumerable<string> emailAddresses = null, IEnumerable<string> phoneNumbers = null, IEnumerable<string> serviceTags = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            addressPrefixes ??= new List<string>();
+            fullyQualifiedDomainNames ??= new List<string>();
+            subscriptions ??= new List<WritableSubResource>();
+            networkSecurityPerimeters ??= new List<PerimeterBasedAccessRule>();
+            emailAddresses ??= new List<string>();
+            phoneNumbers ??= new List<string>();
+            serviceTags ??= new List<string>();
+
+            return new NspAccessRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                direction,
+                addressPrefixes?.ToList(),
+                fullyQualifiedDomainNames?.ToList(),
+                subscriptions?.ToList(),
+                networkSecurityPerimeters?.ToList(),
+                emailAddresses?.ToList(),
+                phoneNumbers?.ToList(),
+                serviceTags?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PerimeterBasedAccessRule"/>. </summary>
+        /// <param name="id"> NSP id in the ARM id format. </param>
+        /// <param name="perimeterGuid"> Resource guid of the NSP supplied. </param>
+        /// <param name="location"> Location of the NSP supplied. </param>
+        /// <returns> A new <see cref="Models.PerimeterBasedAccessRule"/> instance for mocking. </returns>
+        public static PerimeterBasedAccessRule PerimeterBasedAccessRule(string id = null, Guid? perimeterGuid = null, AzureLocation? location = null)
+        {
+            return new PerimeterBasedAccessRule(id, perimeterGuid, location, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NspAssociationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The provisioning state of the resource  association resource. </param>
+        /// <param name="privateLinkResourceId"> The PaaS resource to be associated. </param>
+        /// <param name="profileId"> Profile id to which the PaaS resource is associated. </param>
+        /// <param name="accessMode"> Access mode on the association. </param>
+        /// <param name="hasProvisioningIssues"> Specifies if there are provisioning issues. </param>
+        /// <returns> A new <see cref="Network.NspAssociationData"/> instance for mocking. </returns>
+        public static NspAssociationData NspAssociationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, NspProvisioningState? provisioningState = null, ResourceIdentifier privateLinkResourceId = null, ResourceIdentifier profileId = null, AssociationAccessMode? accessMode = null, string hasProvisioningIssues = null)
+        {
+            tags ??= new Dictionary<string, string>();
+
+            return new NspAssociationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                provisioningState,
+                privateLinkResourceId != null ? ResourceManagerModelFactory.WritableSubResource(privateLinkResourceId) : null,
+                profileId != null ? ResourceManagerModelFactory.WritableSubResource(profileId) : null,
+                accessMode,
+                hasProvisioningIssues,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PerimeterAssociableResource"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="displayName"> A friendly name for the properties of perimeter associable resources. </param>
+        /// <param name="publicDnsZones"> Public DNS zone names of the resources. </param>
+        /// <returns> A new <see cref="Models.PerimeterAssociableResource"/> instance for mocking. </returns>
+        public static PerimeterAssociableResource PerimeterAssociableResource(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, string displayName = null, IEnumerable<string> publicDnsZones = null)
+        {
+            tags ??= new Dictionary<string, string>();
+            publicDnsZones ??= new List<string>();
+
+            return new PerimeterAssociableResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                displayName,
+                publicDnsZones?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NspLinkData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The provisioning state of the NSP Link resource. </param>
+        /// <param name="autoApprovedRemotePerimeterResourceId"> Perimeter ARM Id for the remote NSP with which the link gets created in Auto-approval mode. It should be used when the NSP admin have Microsoft.Network/networkSecurityPerimeters/linkPerimeter/action permission on the remote NSP resource. </param>
+        /// <param name="remotePerimeterGuid"> Remote NSP Guid with which the link gets created. </param>
+        /// <param name="remotePerimeterLocation"> Remote NSP location with which the link gets created. </param>
+        /// <param name="localInboundProfiles"> Local Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. </param>
+        /// <param name="localOutboundProfiles"> Local Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
+        /// <param name="remoteInboundProfiles"> Remote Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. This property can only be updated in auto-approval mode. </param>
+        /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
+        /// <param name="description"> A message passed to the owner of the remote NSP link resource with this connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. Restricted to 140 chars. </param>
+        /// <param name="status"> The NSP link state. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.NspLinkData"/> instance for mocking. </returns>
+        public static NspLinkData NspLinkData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NspLinkProvisioningState? provisioningState = null, string autoApprovedRemotePerimeterResourceId = null, Guid? remotePerimeterGuid = null, string remotePerimeterLocation = null, IEnumerable<string> localInboundProfiles = null, IEnumerable<string> localOutboundProfiles = null, IEnumerable<string> remoteInboundProfiles = null, IEnumerable<string> remoteOutboundProfiles = null, string description = null, NspLinkStatus? status = null, ETag? etag = null)
+        {
+            localInboundProfiles ??= new List<string>();
+            localOutboundProfiles ??= new List<string>();
+            remoteInboundProfiles ??= new List<string>();
+            remoteOutboundProfiles ??= new List<string>();
+
+            return new NspLinkData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                autoApprovedRemotePerimeterResourceId,
+                remotePerimeterGuid,
+                remotePerimeterLocation,
+                localInboundProfiles?.ToList(),
+                localOutboundProfiles?.ToList(),
+                remoteInboundProfiles?.ToList(),
+                remoteOutboundProfiles?.ToList(),
+                description,
+                status,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NspLinkReferenceData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="provisioningState"> The provisioning state of the NSP LinkReference resource. </param>
+        /// <param name="remotePerimeterResourceId"> Perimeter ARM Id for the remote NSP with which the link is created. </param>
+        /// <param name="remotePerimeterGuid"> Remote NSP Guid with which the link is created. </param>
+        /// <param name="remotePerimeterLocation"> Remote NSP location with which the link gets created. </param>
+        /// <param name="localInboundProfiles"> Local Inbound profile names to which Inbound is allowed. Use ['*'] to allow inbound to all profiles. </param>
+        /// <param name="localOutboundProfiles"> Local Outbound profile names from which Outbound is allowed. In current version, it is readonly property and it's value is set to ['*'] to allow outbound from all profiles. In later version, user will be able to modify it. </param>
+        /// <param name="remoteInboundProfiles"> Remote Inbound profile names to which Inbound is allowed. ['*'] value implies inbound is allowed to all profiles at remote perimeter. This property can only be updated from corresponding link resource present in remote perimeter. </param>
+        /// <param name="remoteOutboundProfiles"> Remote Outbound profile names from which Outbound is allowed. ['*'] value implies outbound is allowed from all profiles at remote perimeter. This property can only be updated from corresponding link resource present in remote perimeter. </param>
+        /// <param name="description"> A message sent by the remote NSP link admin for connection request. In case of Auto-approved flow, it is default to 'Auto Approved'. </param>
+        /// <param name="status"> The NSP linkReference state. It cannot be changed if link is created in auto-approval mode. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.NspLinkReferenceData"/> instance for mocking. </returns>
+        public static NspLinkReferenceData NspLinkReferenceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NspLinkProvisioningState? provisioningState = null, string remotePerimeterResourceId = null, Guid? remotePerimeterGuid = null, string remotePerimeterLocation = null, IEnumerable<string> localInboundProfiles = null, IEnumerable<string> localOutboundProfiles = null, IEnumerable<string> remoteInboundProfiles = null, IEnumerable<string> remoteOutboundProfiles = null, string description = null, NspLinkStatus? status = null, ETag? etag = null)
+        {
+            localInboundProfiles ??= new List<string>();
+            localOutboundProfiles ??= new List<string>();
+            remoteInboundProfiles ??= new List<string>();
+            remoteOutboundProfiles ??= new List<string>();
+
+            return new NspLinkReferenceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                remotePerimeterResourceId,
+                remotePerimeterGuid,
+                remotePerimeterLocation,
+                localInboundProfiles?.ToList(),
+                localOutboundProfiles?.ToList(),
+                remoteInboundProfiles?.ToList(),
+                remoteOutboundProfiles?.ToList(),
+                description,
+                status,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.NspLoggingConfigurationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="properties"> Properties of the NSP logging configuration. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <returns> A new <see cref="Network.NspLoggingConfigurationData"/> instance for mocking. </returns>
+        public static NspLoggingConfigurationData NspLoggingConfigurationData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, NspLoggingConfigurationProperties properties = null, ETag? etag = null)
+        {
+            return new NspLoggingConfigurationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                etag,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Network.OperationStatusResultData"/>. </summary>
+        /// <param name="id"> Fully qualified ID for the async operation. </param>
+        /// <param name="resourceId"> Fully qualified ID of the resource against which the original async operation was started. </param>
+        /// <param name="name"> Name of the async operation. </param>
+        /// <param name="status"> Operation status. </param>
+        /// <param name="percentComplete"> Percent of the operation that is complete. </param>
+        /// <param name="startOn"> The start time of the operation. </param>
+        /// <param name="endOn"> The end time of the operation. </param>
+        /// <param name="operations"> The operations list. </param>
+        /// <param name="error"> If present, details of the operation error. </param>
+        /// <returns> A new <see cref="Network.OperationStatusResultData"/> instance for mocking. </returns>
+        public static OperationStatusResultData OperationStatusResultData(ResourceIdentifier id = null, ResourceIdentifier resourceId = null, string name = null, string status = null, float? percentComplete = null, DateTimeOffset? startOn = null, DateTimeOffset? endOn = null, IEnumerable<OperationStatusResultData> operations = null, ResponseError error = null)
+        {
+            operations ??= new List<OperationStatusResultData>();
+
+            return new OperationStatusResultData(
+                id,
+                resourceId,
+                name,
+                status,
+                percentComplete,
+                startOn,
+                endOn,
+                operations?.ToList(),
+                error,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Network.ApplicationGatewayData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
@@ -698,26 +1031,6 @@ namespace Azure.ResourceManager.Network.Models
                 etag,
                 resourceGuid,
                 provisioningState);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkTrackedResourceData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.NetworkTrackedResourceData"/> instance for mocking. </returns>
-        public static NetworkTrackedResourceData NetworkTrackedResourceData(ResourceIdentifier id = null, string name = null, ResourceType? resourceType = null, AzureLocation? location = null, IDictionary<string, string> tags = null)
-        {
-            tags ??= new Dictionary<string, string>();
-
-            return new NetworkTrackedResourceData(
-                id,
-                name,
-                resourceType,
-                location,
-                tags,
-                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Network.NetworkInterfaceData"/>. </summary>
