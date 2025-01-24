@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Core.TestFramework;
 using System;
 using System.Diagnostics;
 using System.IO;
