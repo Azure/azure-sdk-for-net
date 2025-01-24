@@ -25,7 +25,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>", null);
+            Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("label").ToString());
@@ -45,7 +45,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>", null);
+            Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("label").ToString());
@@ -87,7 +87,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>", null);
+            Response response = client.GetTrainedModel("<projectName>", "<trainedModelLabel>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("label").ToString());
@@ -107,7 +107,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>", null);
+            Response response = await client.GetTrainedModelAsync("<projectName>", "<trainedModelLabel>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("label").ToString());
@@ -201,7 +201,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+            Response response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -222,7 +222,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+            Response response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -265,7 +265,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+            Response response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -299,7 +299,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+            Response response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -355,7 +355,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>", null);
+            Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
@@ -398,7 +398,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>", null);
+            Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
@@ -463,7 +463,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>", null);
+            Response response = client.GetModelEvaluationSummary("<projectName>", "<trainedModelLabel>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
@@ -509,7 +509,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>", null);
+            Response response = await client.GetModelEvaluationSummaryAsync("<projectName>", "<trainedModelLabel>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("entitiesEvaluation").GetProperty("confusionMatrix").GetProperty("<key>").GetProperty("<key>").GetProperty("normalizedValue").ToString());
@@ -577,7 +577,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+            Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -594,7 +594,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+            Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -633,7 +633,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+            Response response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -661,7 +661,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", null);
+            Response response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -711,7 +711,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            foreach (BinaryData item in client.GetTrainedModels("<projectName>", null, null, null, null))
+            foreach (BinaryData item in client.GetTrainedModels("<projectName>", (int?)null, (int?)null, (int?)null, (RequestContext)null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("label").ToString());
@@ -732,7 +732,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            await foreach (BinaryData item in client.GetTrainedModelsAsync("<projectName>", null, null, null, null))
+            await foreach (BinaryData item in client.GetTrainedModelsAsync("<projectName>", (int?)null, (int?)null, (int?)null, (RequestContext)null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("label").ToString());
@@ -779,7 +779,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            foreach (BinaryData item in client.GetTrainedModels("<projectName>", 1234, 1234, 1234, null))
+            foreach (BinaryData item in client.GetTrainedModels("<projectName>", 1234, 1234, 1234, (RequestContext)null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("label").ToString());
@@ -800,7 +800,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            await foreach (BinaryData item in client.GetTrainedModelsAsync("<projectName>", 1234, 1234, 1234, null))
+            await foreach (BinaryData item in client.GetTrainedModelsAsync("<projectName>", 1234, 1234, 1234, (RequestContext)null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("label").ToString());

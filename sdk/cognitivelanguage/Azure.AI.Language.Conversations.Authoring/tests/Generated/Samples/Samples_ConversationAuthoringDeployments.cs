@@ -25,7 +25,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetDeployment("<projectName>", "<deploymentName>", null);
+            Response response = client.GetDeployment("<projectName>", "<deploymentName>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("deploymentName").ToString());
@@ -46,7 +46,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>", null);
+            Response response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("deploymentName").ToString());
@@ -89,7 +89,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetDeployment("<projectName>", "<deploymentName>", null);
+            Response response = client.GetDeployment("<projectName>", "<deploymentName>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("deploymentName").ToString());
@@ -110,7 +110,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>", null);
+            Response response = await client.GetDeploymentAsync("<projectName>", "<deploymentName>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("deploymentName").ToString());
@@ -153,7 +153,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>", null);
+            Response response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -170,7 +170,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>", null);
+            Response response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -209,7 +209,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>", null);
+            Response response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -237,7 +237,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>", null);
+            Response response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -287,7 +287,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>", null);
+            Response response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -304,7 +304,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>", null);
+            Response response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -343,7 +343,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>", null);
+            Response response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -371,7 +371,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>", null);
+            Response response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -421,7 +421,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>", null);
+            Response response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -438,7 +438,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>", null);
+            Response response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -477,7 +477,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>", null);
+            Response response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -505,7 +505,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>", null);
+            Response response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -555,7 +555,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            foreach (BinaryData item in client.GetDeployments("<projectName>", null, null, null, null))
+            foreach (BinaryData item in client.GetDeployments("<projectName>", (int?)null, (int?)null, (int?)null, (RequestContext)null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("deploymentName").ToString());
@@ -577,7 +577,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>", null, null, null, null))
+            await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>", (int?)null, (int?)null, (int?)null, (RequestContext)null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("deploymentName").ToString());
@@ -625,7 +625,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            foreach (BinaryData item in client.GetDeployments("<projectName>", 1234, 1234, 1234, null))
+            foreach (BinaryData item in client.GetDeployments("<projectName>", 1234, 1234, 1234, (RequestContext)null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("deploymentName").ToString());
@@ -647,7 +647,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>", 1234, 1234, 1234, null))
+            await foreach (BinaryData item in client.GetDeploymentsAsync("<projectName>", 1234, 1234, 1234, (RequestContext)null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("deploymentName").ToString());

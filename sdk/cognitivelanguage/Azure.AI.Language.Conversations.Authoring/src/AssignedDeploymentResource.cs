@@ -37,5 +37,5 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             Region = new AzureLocation(region);
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-
     }
+}

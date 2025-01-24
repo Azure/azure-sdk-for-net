@@ -25,7 +25,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetExportStatus("<projectName>", "<jobId>", null);
+            Response response = client.GetExportStatus("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -42,7 +42,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", null);
+            Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -81,7 +81,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetExportStatus("<projectName>", "<jobId>", null);
+            Response response = client.GetExportStatus("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -110,7 +110,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", null);
+            Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -161,7 +161,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetImportStatus("<projectName>", "<jobId>", null);
+            Response response = client.GetImportStatus("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -178,7 +178,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", null);
+            Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -217,7 +217,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetImportStatus("<projectName>", "<jobId>", null);
+            Response response = client.GetImportStatus("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -245,7 +245,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", null);
+            Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", (RequestContext)null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("jobId").ToString());
