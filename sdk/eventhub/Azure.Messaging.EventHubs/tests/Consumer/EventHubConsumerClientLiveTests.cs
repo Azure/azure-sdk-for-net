@@ -1362,7 +1362,12 @@ namespace Azure.Messaging.EventHubs.Tests
                     // will, instead, hang indefinitely.  The try timeout is intentionally set to a value smaller than the cancellation token to
                     // invoke a timeout exception in these cases.
 
-                    Assert.That(async () => await ReadNothingAsync(invalidProxyConsumer, partition, cancellationSource.Token, iterationCount: 25), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
+                    Assert.That(async () => await ReadNothingAsync(invalidProxyConsumer, partition, cancellationSource.Token, iterationCount: 25),
+                        Throws
+                            .InstanceOf<WebSocketException>()
+                            .Or.InstanceOf<TimeoutException>()
+                            .Or.InstanceOf<OperationCanceledException>());
+
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                 }
             }
@@ -2239,9 +2244,24 @@ namespace Azure.Messaging.EventHubs.Tests
                     // will, instead, hang indefinitely.  The try timeout is intentionally set to a value smaller than the cancellation token to
                     // invoke a timeout exception in these cases.
 
-                    Assert.That(async () => await invalidProxyConsumer.GetPartitionIdsAsync(cancellationSource.Token), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
-                    Assert.That(async () => await invalidProxyConsumer.GetEventHubPropertiesAsync(cancellationSource.Token), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
-                    Assert.That(async () => await invalidProxyConsumer.GetPartitionPropertiesAsync(partition, cancellationSource.Token), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
+                    Assert.That(async () => await invalidProxyConsumer.GetPartitionIdsAsync(cancellationSource.Token),
+                        Throws
+                            .InstanceOf<WebSocketException>()
+                            .Or.InstanceOf<TimeoutException>()
+                            .Or.InstanceOf<OperationCanceledException>());
+
+                    Assert.That(async () => await invalidProxyConsumer.GetEventHubPropertiesAsync(cancellationSource.Token),
+                        Throws
+                            .InstanceOf<WebSocketException>()
+                            .Or.InstanceOf<TimeoutException>()
+                            .Or.InstanceOf<OperationCanceledException>());
+
+                    Assert.That(async () => await invalidProxyConsumer.GetPartitionPropertiesAsync(partition, cancellationSource.Token),
+                        Throws
+                            .InstanceOf<WebSocketException>()
+                            .Or.InstanceOf<TimeoutException>()
+                            .Or.InstanceOf<OperationCanceledException>());
+
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                 }
             }

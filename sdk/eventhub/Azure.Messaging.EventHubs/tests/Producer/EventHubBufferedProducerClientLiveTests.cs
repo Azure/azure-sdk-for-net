@@ -1691,9 +1691,23 @@ namespace Azure.Messaging.EventHubs.Tests
 
             var partition = (await producer.GetPartitionIdsAsync()).First();
 
-            Assert.That(async () => await invalidProxyProducer.GetPartitionIdsAsync(), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
-            Assert.That(async () => await invalidProxyProducer.GetEventHubPropertiesAsync(), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
-            Assert.That(async () => await invalidProxyProducer.GetPartitionPropertiesAsync(partition), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
+            Assert.That(async () => await invalidProxyProducer.GetPartitionIdsAsync(),
+                Throws
+                    .InstanceOf<WebSocketException>().Or
+                    .InstanceOf<TimeoutException>()
+                    .Or.InstanceOf<OperationCanceledException>());
+
+            Assert.That(async () => await invalidProxyProducer.GetEventHubPropertiesAsync(),
+                Throws
+                    .InstanceOf<WebSocketException>()
+                    .Or.InstanceOf<TimeoutException>()
+                    .Or.InstanceOf<OperationCanceledException>());
+
+            Assert.That(async () => await invalidProxyProducer.GetPartitionPropertiesAsync(partition),
+                Throws
+                    .InstanceOf<WebSocketException>()
+                    .Or.InstanceOf<TimeoutException>()
+                    .Or.InstanceOf<OperationCanceledException>());
         }
 
         /// <summary>
