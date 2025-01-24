@@ -15,6 +15,7 @@ parameters:
 steps:
   - ${{ if not(parameters.SkipCheckoutNone) }}:
       - checkout: none
+        persistCredentials: true
 
   - task: PowerShell@2
     ${{ if eq(length(parameters.Repositories), 1) }}:
