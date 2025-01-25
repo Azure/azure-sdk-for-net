@@ -75,7 +75,7 @@ MapsClientOptions options = new()
 };
 ```
 
-By default, only URI and headers are logged. To enable content logging, set the logging level to `LogLevel.Debug` and set the `ClientLoggingOptions.EnableMessageContentLogging` client option:
+By default, only URI and header names are logged. To enable content logging, set the logging level to `LogLevel.Debug` and set the `ClientLoggingOptions.EnableMessageContentLogging` client option:
 
 
 ```C# Snippet:EnableContentLoggingILogger
