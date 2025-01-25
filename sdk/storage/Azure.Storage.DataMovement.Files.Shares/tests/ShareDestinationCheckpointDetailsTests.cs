@@ -38,144 +38,177 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
         private ShareFileDestinationCheckpointDetails CreateDefaultValues()
         => new ShareFileDestinationCheckpointDetails(
+                false,
+                default,
+                false,
+                default,
+                false,
+                default,
+                false,
+                default,
+                false,
+                default,
+                false,
                 default,
                 default,
+                false,
                 default,
+                false,
                 default,
+                false,
                 default,
+                false,
                 default,
-                default,
-                default,
-                default,
-                default,
-                default,
+                false,
                 default);
 
         private ShareFileDestinationCheckpointDetails CreateNoPreserveValues()
         => new ShareFileDestinationCheckpointDetails(
-                new(false),
-                new(false),
-                new(false),
-                new(false),
-                new(false),
-                new(false),
-                false,
-                new(false),
-                new(false),
-                new(false),
-                new(false),
-                new(false));
+                true,
+                default,
+                true,
+                default,
+                true,
+                default,
+                true,
+                default,
+                true,
+                default,
+                true,
+                default,
+                default,
+                true,
+                default,
+                true,
+                default,
+                true,
+                default,
+                true,
+                default,
+                true,
+                default);
 
         private ShareFileDestinationCheckpointDetails CreatePreserveValues()
         => new ShareFileDestinationCheckpointDetails(
-                new(true),
-                new(true),
-                new(true),
-                new(true),
-                new(true),
-                new(true),
+                false,
+                default,
+                false,
+                default,
+                false,
+                default,
+                false,
+                default,
+                false,
+                default,
+                false,
+                default,
                 true,
-                new(true),
-                new(true),
-                new(true),
-                new(true),
-                new(true));
+                false,
+                default,
+                false,
+                default,
+                false,
+                default,
+                false,
+                default,
+                false,
+                default);
 
         private ShareFileDestinationCheckpointDetails CreateSetSampleValues()
         => new ShareFileDestinationCheckpointDetails(
-                contentType: new(DefaultContentType),
-                contentEncoding: new(DefaultContentEncoding),
-                contentLanguage: new(DefaultContentLanguage),
-                contentDisposition: new(DefaultContentDisposition),
-                cacheControl: new(DefaultCacheControl),
-                fileAttributes: new(DefaultFileAttributes.Value),
-                preserveFilePermission: false,
-                fileCreatedOn: new(DefaultFileCreatedOn.Value),
-                fileLastWrittenOn: new(DefaultFileLastWrittenOn.Value),
-                fileChangedOn: new(DefaultFileChangedOn.Value),
-                fileMetadata: new(DefaultFileMetadata),
-                directoryMetadata: new(DefaultDirectoryMetadata));
+                isContentTypeSet: true,
+                contentType: DefaultContentType,
+                isContentEncodingSet: true,
+                contentEncoding: DefaultContentEncoding,
+                isContentLanguageSet: true,
+                contentLanguage: DefaultContentLanguage,
+                isContentDispositionSet: true,
+                contentDisposition: DefaultContentDisposition,
+                isCacheControlSet: true,
+                cacheControl: DefaultCacheControl,
+                isFileAttributesSet: true,
+                fileAttributes: DefaultFileAttributes,
+                filePermissions: false,
+                isFileCreatedOnSet: true,
+                fileCreatedOn: DefaultFileCreatedOn,
+                isFileLastWrittenOnSet: true,
+                fileLastWrittenOn: DefaultFileLastWrittenOn,
+                isFileChangedOnSet: true,
+                fileChangedOn: DefaultFileChangedOn,
+                isFileMetadataSet: true,
+                fileMetadata: DefaultFileMetadata,
+                isDirectoryMetadataSet: true,
+                directoryMetadata: DefaultDirectoryMetadata);
 
         private void AssertEquals(ShareFileDestinationCheckpointDetails left, ShareFileDestinationCheckpointDetails right)
         {
             Assert.That(left.Version, Is.EqualTo(right.Version));
 
-            Assert.That(left.PreserveFileAttributes, Is.EqualTo(right.PreserveFileAttributes));
-            Assert.That(left.FileAttributes.Preserve, Is.EqualTo(right.FileAttributes.Preserve));
-            if (!left.PreserveFileAttributes && left.FileAttributes != default)
+            Assert.That(left.IsFileAttributesSet, Is.EqualTo(right.IsFileAttributesSet));
+            if (left.IsFileAttributesSet && left.FileAttributes != default)
             {
-                Assert.That(left.FileAttributes.Value, Is.EqualTo(right.FileAttributes.Value));
+                Assert.That(left.FileAttributes, Is.EqualTo(right.FileAttributes));
             }
 
-            Assert.That(left.PreserveFilePermission, Is.EqualTo(right.PreserveFilePermission));
-            Assert.That(left.PreserveFileCreatedOn, Is.EqualTo(right.PreserveFileCreatedOn));
-            Assert.That(left.FileCreatedOn.Preserve, Is.EqualTo(right.FileCreatedOn.Preserve));
-            if (!left.PreserveFileCreatedOn && left.FileCreatedOn != default)
+            Assert.That(left.FilePermission, Is.EqualTo(right.FilePermission));
+            Assert.That(left.IsFileCreatedOnSet, Is.EqualTo(right.IsFileCreatedOnSet));
+            if (!left.IsFileCreatedOnSet && left.FileCreatedOn != default)
             {
-                Assert.That(left.FileCreatedOn.Value, Is.EqualTo(right.FileCreatedOn.Value));
+                Assert.That(left.FileCreatedOn, Is.EqualTo(right.FileCreatedOn));
             }
 
-            Assert.That(left.PreserveFileLastWrittenOn, Is.EqualTo(right.PreserveFileLastWrittenOn));
-            Assert.That(left.FileLastWrittenOn.Preserve, Is.EqualTo(right.FileLastWrittenOn.Preserve));
-            if (!left.PreserveFileLastWrittenOn && left.FileLastWrittenOn != default)
+            Assert.That(left.IsFileLastWrittenOnSet, Is.EqualTo(right.IsFileLastWrittenOnSet));
+            if (!left.IsFileLastWrittenOnSet && left.FileLastWrittenOn != default)
             {
-                Assert.That(left.FileLastWrittenOn.Value, Is.EqualTo(right.FileLastWrittenOn.Value));
+                Assert.That(left.FileLastWrittenOn, Is.EqualTo(right.FileLastWrittenOn));
             }
 
-            Assert.That(left.PreserveFileChangedOn, Is.EqualTo(right.PreserveFileChangedOn));
-            Assert.That(left.FileChangedOn.Preserve, Is.EqualTo(right.FileChangedOn.Preserve));
-            if (!left.PreserveFileChangedOn && left.FileChangedOn != default)
+            Assert.That(left.IsFileChangedOnSet, Is.EqualTo(right.IsFileChangedOnSet));
+            if (!left.IsFileChangedOnSet && left.FileChangedOn != default)
             {
-                Assert.That(left.FileChangedOn.Value, Is.EqualTo(right.FileChangedOn.Value));
+                Assert.That(left.FileChangedOn, Is.EqualTo(right.FileChangedOn));
             }
 
-            Assert.That(left.PreserveContentType, Is.EqualTo(right.PreserveContentType));
-            Assert.That(left.ContentType.Preserve, Is.EqualTo(right.ContentType.Preserve));
-            if (!left.PreserveContentType && left.ContentType != default)
+            Assert.That(left.IsContentTypeSet, Is.EqualTo(right.IsContentTypeSet));
+            if (!left.IsContentTypeSet && left.ContentType != default)
             {
-                Assert.That(left.ContentType.Value, Is.EqualTo(right.ContentType.Value));
+                Assert.That(left.ContentType, Is.EqualTo(right.ContentType));
             }
 
-            Assert.That(left.PreserveContentEncoding, Is.EqualTo(right.PreserveContentEncoding));
-            Assert.That(left.ContentEncoding.Preserve, Is.EqualTo(right.ContentEncoding.Preserve));
-            if (!left.PreserveContentEncoding && left.ContentEncoding != default)
+            Assert.That(left.IsContentEncodingSet, Is.EqualTo(right.IsContentEncodingSet));
+            if (!left.IsContentEncodingSet && left.ContentEncoding != default)
             {
-                Assert.That(left.ContentEncoding.Value, Is.EqualTo(right.ContentEncoding.Value));
+                Assert.That(left.ContentEncoding, Is.EqualTo(right.ContentEncoding));
             }
 
-            Assert.That(left.PreserveContentLanguage, Is.EqualTo(right.PreserveContentLanguage));
-            Assert.That(left.ContentLanguage.Preserve, Is.EqualTo(right.ContentLanguage.Preserve));
-            if (!left.PreserveContentLanguage && left.ContentLanguage != default)
+            Assert.That(left.IsContentLanguageSet, Is.EqualTo(right.IsContentLanguageSet));
+            if (!left.IsContentLanguageSet && left.ContentLanguage != default)
             {
-                Assert.That(left.ContentLanguage.Value, Is.EqualTo(right.ContentLanguage.Value));
+                Assert.That(left.ContentLanguage, Is.EqualTo(right.ContentLanguage));
             }
 
-            Assert.That(left.PreserveContentDisposition, Is.EqualTo(right.PreserveContentDisposition));
-            Assert.That(left.ContentDisposition.Preserve, Is.EqualTo(right.ContentDisposition.Preserve));
-            if (!left.PreserveContentDisposition && left.ContentDisposition != default)
+            Assert.That(left.IsContentDispositionSet, Is.EqualTo(right.IsContentDispositionSet));
+            if (!left.IsContentDispositionSet && left.ContentDisposition != default)
             {
-                Assert.That(left.ContentDisposition.Value, Is.EqualTo(right.ContentDisposition.Value));
+                Assert.That(left.ContentDisposition, Is.EqualTo(right.ContentDisposition));
             }
 
-            Assert.That(left.PreserveCacheControl, Is.EqualTo(right.PreserveCacheControl));
-            Assert.That(left.CacheControl.Preserve, Is.EqualTo(right.CacheControl.Preserve));
-            if (!left.PreserveCacheControl && left.CacheControl != default)
+            Assert.That(left.IsCacheControlSet, Is.EqualTo(right.IsCacheControlSet));
+            if (!left.IsCacheControlSet && left.CacheControl != default)
             {
-                Assert.That(left.CacheControl.Value, Is.EqualTo(right.CacheControl.Value));
+                Assert.That(left.CacheControl, Is.EqualTo(right.CacheControl));
             }
 
-            Assert.That(left.PreserveFileMetadata, Is.EqualTo(right.PreserveFileMetadata));
-            Assert.That(left.FileMetadata.Preserve, Is.EqualTo(right.FileMetadata.Preserve));
-            if (!left.PreserveFileMetadata && left.FileMetadata != default && left.FileMetadata.Value.Count > 0)
+            Assert.That(left.IsFileMetadataSet, Is.EqualTo(right.IsFileMetadataSet));
+            if (!left.IsFileMetadataSet && left.FileMetadata != default && left.FileMetadata.Count > 0)
             {
-                Assert.That(left.FileMetadata.Value, Is.EqualTo(right.FileMetadata.Value));
+                Assert.That(left.FileMetadata, Is.EqualTo(right.FileMetadata));
             }
 
-            Assert.That(left.PreserveDirectoryMetadata, Is.EqualTo(right.PreserveDirectoryMetadata));
-            Assert.That(left.DirectoryMetadata.Preserve, Is.EqualTo(right.DirectoryMetadata.Preserve));
-            if (!left.PreserveDirectoryMetadata && left.DirectoryMetadata != default && left.DirectoryMetadata.Value.Count > 0)
+            Assert.That(left.IsDirectoryMetadataSet, Is.EqualTo(right.IsDirectoryMetadataSet));
+            if (!left.IsDirectoryMetadataSet && left.DirectoryMetadata != default && left.DirectoryMetadata.Count > 0)
             {
-                Assert.That(left.DirectoryMetadata.Value, Is.EqualTo(right.DirectoryMetadata.Value));
+                Assert.That(left.DirectoryMetadata, Is.EqualTo(right.DirectoryMetadata));
             }
         }
 
@@ -186,20 +219,21 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
             writer.Write(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion);
-            writer.WritePreservablePropertyOffset(true, DataMovementConstants.IntSizeInBytes, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(false, DataMovementConstants.IntSizeInBytes, ref currentVariableLengthIndex);
+            writer.Write(true);
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
 
             return stream.ToArray();
         }
@@ -211,21 +245,21 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
             writer.Write(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
             writer.Write(false);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, 0, ref currentVariableLengthIndex);
 
             return stream.ToArray();
         }
@@ -249,18 +283,18 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
 
             int currentVariableLengthIndex = DataMovementShareConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
             writer.Write(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion);
-            writer.WritePreservablePropertyOffset(false, DataMovementConstants.IntSizeInBytes, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, DataMovementConstants.IntSizeInBytes, ref currentVariableLengthIndex);
             writer.Write(preserveFilePermission);
-            writer.WritePreservablePropertyOffset(false, fileCreatedOn.Length, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, fileLastWrittenOn.Length, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, fileChangedOn.Length, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, contentType.Length, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, contentEncoding.Length, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, contentLanguage.Length, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, contentDisposition.Length, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, cacheControl.Length, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, fileMetadata.Length, ref currentVariableLengthIndex);
-            writer.WritePreservablePropertyOffset(false, directoryMetadata.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, fileCreatedOn.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, fileLastWrittenOn.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, fileChangedOn.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, contentType.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, contentEncoding.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, contentLanguage.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, contentDisposition.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, cacheControl.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, fileMetadata.Length, ref currentVariableLengthIndex);
+            writer.WritePreservablePropertyOffset(true, directoryMetadata.Length, ref currentVariableLengthIndex);
             writer.Write((int)DefaultFileAttributes);
             writer.Write(fileCreatedOn);
             writer.Write(fileLastWrittenOn);
@@ -282,28 +316,28 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareFileDestinationCheckpointDetails data = CreateDefaultValues();
 
             Assert.AreEqual(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion, data.Version);
-            Assert.IsTrue(data.PreserveFileAttributes);
+            Assert.IsFalse(data.IsFileAttributesSet);
             Assert.IsNull(data.FileAttributes);
-            Assert.IsFalse(data.PreserveFilePermission);
-            Assert.IsTrue(data.PreserveFileCreatedOn);
+            Assert.IsFalse(data.FilePermission);
+            Assert.IsFalse(data.IsFileCreatedOnSet);
             Assert.IsNull(data.FileCreatedOn);
-            Assert.IsTrue(data.PreserveFileLastWrittenOn);
+            Assert.IsFalse(data.IsFileLastWrittenOnSet);
             Assert.IsNull(data.FileLastWrittenOn);
-            Assert.IsTrue(data.PreserveFileChangedOn);
+            Assert.IsFalse(data.IsFileChangedOnSet);
             Assert.IsNull(data.FileChangedOn);
-            Assert.IsTrue(data.PreserveContentType);
+            Assert.IsFalse(data.IsContentTypeSet);
             Assert.IsEmpty(data.ContentTypeBytes);
-            Assert.IsTrue(data.PreserveContentEncoding);
+            Assert.IsFalse(data.IsContentEncodingSet);
             Assert.IsEmpty(data.ContentEncodingBytes);
-            Assert.IsTrue(data.PreserveContentLanguage);
+            Assert.IsFalse(data.IsContentLanguageSet);
             Assert.IsEmpty(data.ContentLanguageBytes);
-            Assert.IsTrue(data.PreserveContentDisposition);
+            Assert.IsFalse(data.IsContentDispositionSet);
             Assert.IsEmpty(data.ContentDispositionBytes);
-            Assert.IsTrue(data.PreserveCacheControl);
+            Assert.IsFalse(data.IsCacheControlSet);
             Assert.IsEmpty(data.CacheControlBytes);
-            Assert.IsTrue(data.PreserveFileMetadata);
+            Assert.IsFalse(data.IsFileMetadataSet);
             Assert.IsNull(data.FileMetadata);
-            Assert.IsTrue(data.PreserveDirectoryMetadata);
+            Assert.IsFalse(data.IsDirectoryMetadataSet);
             Assert.IsNull(data.DirectoryMetadata);
         }
 
@@ -313,29 +347,29 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareFileDestinationCheckpointDetails data = CreateSetSampleValues();
 
             Assert.That(data.Version, Is.EqualTo(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion));
-            Assert.IsFalse(data.PreserveFileAttributes);
-            Assert.That(data.FileAttributes.Value, Is.EqualTo(DefaultFileAttributes));
-            Assert.IsFalse(data.PreserveFilePermission);
-            Assert.IsFalse(data.PreserveFileCreatedOn);
+            Assert.IsTrue(data.IsFileAttributesSet);
+            Assert.That(data.FileAttributes, Is.EqualTo(DefaultFileAttributes));
+            Assert.IsFalse(data.FilePermission);
+            Assert.IsTrue(data.IsFileCreatedOnSet);
             Assert.That(data.FileCreatedOn.Value, Is.EqualTo(DefaultFileCreatedOn));
-            Assert.IsFalse(data.PreserveFileLastWrittenOn);
+            Assert.IsTrue(data.IsFileLastWrittenOnSet);
             Assert.That(data.FileLastWrittenOn.Value, Is.EqualTo(DefaultFileLastWrittenOn));
-            Assert.IsFalse(data.PreserveFileChangedOn);
+            Assert.IsTrue(data.IsFileChangedOnSet);
             Assert.That(data.FileChangedOn.Value, Is.EqualTo(DefaultFileChangedOn));
-            Assert.IsFalse(data.PreserveContentType);
-            Assert.That(data.ContentType.Value, Is.EqualTo(DefaultContentType));
-            Assert.IsFalse(data.PreserveContentEncoding);
-            Assert.That(data.ContentEncoding.Value, Is.EqualTo(DefaultContentEncoding));
-            Assert.IsFalse(data.PreserveContentLanguage);
-            Assert.That(data.ContentLanguage.Value, Is.EqualTo(DefaultContentLanguage));
-            Assert.IsFalse(data.PreserveContentDisposition);
-            Assert.That(data.ContentDisposition.Value, Is.EqualTo(DefaultContentDisposition));
-            Assert.IsFalse(data.PreserveCacheControl);
-            Assert.That(data.CacheControl.Value, Is.EqualTo(DefaultCacheControl));
-            Assert.IsFalse(data.PreserveFileMetadata);
-            Assert.That(data.FileMetadata.Value, Is.EqualTo(DefaultFileMetadata));
-            Assert.IsFalse(data.PreserveDirectoryMetadata);
-            Assert.That(data.DirectoryMetadata.Value, Is.EqualTo(DefaultDirectoryMetadata));
+            Assert.IsTrue(data.IsContentTypeSet);
+            Assert.That(data.ContentType, Is.EqualTo(DefaultContentType));
+            Assert.IsTrue(data.IsContentEncodingSet);
+            Assert.That(data.ContentEncoding, Is.EqualTo(DefaultContentEncoding));
+            Assert.IsTrue(data.IsContentLanguageSet);
+            Assert.That(data.ContentLanguage, Is.EqualTo(DefaultContentLanguage));
+            Assert.IsTrue(data.IsContentDispositionSet);
+            Assert.That(data.ContentDisposition, Is.EqualTo(DefaultContentDisposition));
+            Assert.IsTrue(data.IsCacheControlSet);
+            Assert.That(data.CacheControl, Is.EqualTo(DefaultCacheControl));
+            Assert.IsTrue(data.IsFileMetadataSet);
+            Assert.That(data.FileMetadata, Is.EqualTo(DefaultFileMetadata));
+            Assert.IsTrue(data.IsDirectoryMetadataSet);
+            Assert.That(data.DirectoryMetadata, Is.EqualTo(DefaultDirectoryMetadata));
         }
 
         [Test]
@@ -344,40 +378,29 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             ShareFileDestinationCheckpointDetails data = CreatePreserveValues();
 
             Assert.AreEqual(DataMovementShareConstants.DestinationCheckpointDetails.SchemaVersion, data.Version);
-            Assert.IsTrue(data.PreserveFileAttributes);
-            Assert.IsTrue(data.FileAttributes.Preserve);
-            Assert.IsNull(data.FileAttributes.Value);
-            Assert.IsTrue(data.PreserveFilePermission);
-            Assert.IsTrue(data.PreserveFileCreatedOn);
-            Assert.IsTrue(data.FileCreatedOn.Preserve);
-            Assert.IsNull(data.FileCreatedOn.Value);
-            Assert.IsTrue(data.PreserveFileLastWrittenOn);
-            Assert.IsTrue(data.FileLastWrittenOn.Preserve);
-            Assert.IsNull(data.FileLastWrittenOn.Value);
-            Assert.IsTrue(data.PreserveFileChangedOn);
-            Assert.IsTrue(data.FileChangedOn.Preserve);
-            Assert.IsNull(data.FileChangedOn.Value);
-            Assert.IsTrue(data.PreserveContentType);
-            Assert.IsTrue(data.ContentType.Preserve);
-            Assert.IsNull(data.ContentType.Value);
-            Assert.IsTrue(data.PreserveContentEncoding);
-            Assert.IsTrue(data.ContentEncoding.Preserve);
-            Assert.IsNull(data.ContentEncoding.Value);
-            Assert.IsTrue(data.PreserveContentLanguage);
-            Assert.IsTrue(data.ContentLanguage.Preserve);
-            Assert.IsNull(data.ContentLanguage.Value);
-            Assert.IsTrue(data.PreserveContentDisposition);
-            Assert.IsTrue(data.ContentDisposition.Preserve);
-            Assert.IsNull(data.ContentDisposition.Value);
-            Assert.IsTrue(data.PreserveCacheControl);
-            Assert.IsTrue(data.CacheControl.Preserve);
-            Assert.IsNull(data.CacheControl.Value);
-            Assert.IsTrue(data.PreserveFileMetadata);
-            Assert.IsTrue(data.FileMetadata.Preserve);
-            Assert.IsNull(data.FileMetadata.Value);
-            Assert.IsTrue(data.PreserveDirectoryMetadata);
-            Assert.IsTrue(data.DirectoryMetadata.Preserve);
-            Assert.IsNull(data.DirectoryMetadata.Value);
+            Assert.IsFalse(data.IsFileAttributesSet);
+            Assert.IsNull(data.FileAttributes);
+            Assert.IsTrue(data.FilePermission);
+            Assert.IsFalse(data.IsFileCreatedOnSet);
+            Assert.IsNull(data.FileCreatedOn);
+            Assert.IsFalse(data.IsFileLastWrittenOnSet);
+            Assert.IsNull(data.FileLastWrittenOn);
+            Assert.IsFalse(data.IsFileChangedOnSet);
+            Assert.IsNull(data.FileChangedOn);
+            Assert.IsFalse(data.IsContentTypeSet);
+            Assert.IsNull(data.ContentType);
+            Assert.IsFalse(data.IsContentEncodingSet);
+            Assert.IsNull(data.ContentEncoding);
+            Assert.IsFalse(data.IsContentLanguageSet);
+            Assert.IsNull(data.ContentLanguage);
+            Assert.IsFalse(data.IsContentDispositionSet);
+            Assert.IsNull(data.ContentDisposition);
+            Assert.IsFalse(data.IsCacheControlSet);
+            Assert.IsNull(data.CacheControl);
+            Assert.IsFalse(data.IsFileMetadataSet);
+            Assert.IsNull(data.FileMetadata);
+            Assert.IsFalse(data.IsDirectoryMetadataSet);
+            Assert.IsNull(data.DirectoryMetadata);
         }
 
         [Test]

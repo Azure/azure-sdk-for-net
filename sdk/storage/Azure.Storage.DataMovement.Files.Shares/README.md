@@ -102,9 +102,8 @@ StorageResource file = await shares.FromFileAsync(
 Storage resources can also be initialized with the appropriate client object from Azure.Storage.Files.Shares. Since these resources will use the credential already present in the client object, no credential is required in the provider when using `FromClient()`. **However**, a `ShareFilesStorageResourceProvider` must still have a credential if it is to be used in `TransferManagerOptions` for resuming a transfer.
 
 ```C# Snippet:ResourceConstruction_FromClients_Shares
-ShareFilesStorageResourceProvider shares = new();
-StorageResource shareDirectoryResource = shares.FromClient(directoryClient);
-StorageResource shareFileResource = shares.FromClient(fileClient);
+StorageResource shareDirectoryResource = ShareFilesStorageResourceProvider.FromClient(directoryClient);
+StorageResource shareFileResource = ShareFilesStorageResourceProvider.FromClient(fileClient);
 ```
 
 ### Upload
@@ -115,7 +114,7 @@ Upload a file.
 
 ```C# Snippet:SimplefileUpload_Shares
 TransferOperation fileTransfer = await transferManager.StartTransferAsync(
-    sourceResource: files.FromFile(sourceLocalFile),
+    sourceResource: LocalFilesStorageResourceProvider.FromFile(sourceLocalFile),
     destinationResource: await shares.FromFileAsync(destinationFileUri));
 await fileTransfer.WaitForCompletionAsync();
 ```
@@ -124,7 +123,7 @@ Upload a directory.
 
 ```C# Snippet:SimpleDirectoryUpload_Shares
 TransferOperation folderTransfer = await transferManager.StartTransferAsync(
-    sourceResource: files.FromDirectory(sourceLocalDirectory),
+    sourceResource: LocalFilesStorageResourceProvider.FromDirectory(sourceLocalDirectory),
     destinationResource: await shares.FromDirectoryAsync(destinationFolderUri));
 await folderTransfer.WaitForCompletionAsync();
 ```
@@ -138,7 +137,7 @@ Download a file.
 ```C# Snippet:SimpleFileDownload_Shares
 TransferOperation fileTransfer = await transferManager.StartTransferAsync(
     sourceResource: await shares.FromFileAsync(sourceFileUri),
-    destinationResource: files.FromFile(destinationLocalFile));
+    destinationResource: LocalFilesStorageResourceProvider.FromFile(destinationLocalFile));
 await fileTransfer.WaitForCompletionAsync();
 ```
 
@@ -147,7 +146,7 @@ Download a Directory.
 ```C# Snippet:SimpleDirectoryDownload_Shares
 TransferOperation directoryTransfer = await transferManager.StartTransferAsync(
     sourceResource: await shares.FromDirectoryAsync(sourceDirectoryUri),
-    destinationResource: files.FromDirectory(destinationLocalDirectory));
+    destinationResource: LocalFilesStorageResourceProvider.FromDirectory(destinationLocalDirectory));
 await directoryTransfer.WaitForCompletionAsync();
 ```
 

@@ -373,11 +373,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             => new BlobStorageResourceOptions
             {
                 AccessTier = _defaultAccessTier,
-                ContentDisposition = new(_defaultContentDisposition),
-                ContentLanguage = new(_defaultContentLanguage),
-                CacheControl = new(_defaultCacheControl),
-                ContentType = new(_defaultContentType),
-                Metadata = new(_defaultMetadata),
+                ContentDisposition = _defaultContentDisposition,
+                ContentLanguage = _defaultContentLanguage,
+                CacheControl = _defaultCacheControl,
+                ContentType = _defaultContentType,
+                Metadata = _defaultMetadata,
             };
     }
 }

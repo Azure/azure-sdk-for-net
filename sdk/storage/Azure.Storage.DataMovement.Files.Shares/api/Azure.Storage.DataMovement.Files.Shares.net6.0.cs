@@ -8,15 +8,14 @@ namespace Azure.Storage.DataMovement.Files.Shares
     }
     public partial class ShareFilesStorageResourceProvider : Azure.Storage.DataMovement.StorageResourceProvider
     {
-        public ShareFilesStorageResourceProvider() { }
         public ShareFilesStorageResourceProvider(Azure.AzureSasCredential credential) { }
         public ShareFilesStorageResourceProvider(Azure.Core.TokenCredential credential) { }
         public ShareFilesStorageResourceProvider(Azure.Storage.StorageSharedKeyCredential credential) { }
         public ShareFilesStorageResourceProvider(System.Func<System.Uri, System.Threading.Tasks.ValueTask<Azure.AzureSasCredential>> getAzureSasCredentialAsync) { }
         public ShareFilesStorageResourceProvider(System.Func<System.Uri, System.Threading.Tasks.ValueTask<Azure.Storage.StorageSharedKeyCredential>> getStorageSharedKeyCredentialAsync) { }
         protected override string ProviderId { get { throw null; } }
-        public Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Files.Shares.ShareDirectoryClient client, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null) { throw null; }
-        public Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Files.Shares.ShareFileClient client, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null) { throw null; }
+        public static Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Files.Shares.ShareDirectoryClient client, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null) { throw null; }
+        public static Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Files.Shares.ShareFileClient client, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null) { throw null; }
         protected override System.Threading.Tasks.ValueTask<Azure.Storage.DataMovement.StorageResource> FromDestinationAsync(Azure.Storage.DataMovement.TransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
         public System.Threading.Tasks.ValueTask<Azure.Storage.DataMovement.StorageResource> FromDirectoryAsync(System.Uri directoryUri, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null) { throw null; }
         public System.Threading.Tasks.ValueTask<Azure.Storage.DataMovement.StorageResource> FromFileAsync(System.Uri fileUri, Azure.Storage.DataMovement.Files.Shares.ShareFileStorageResourceOptions options = null) { throw null; }
@@ -25,19 +24,19 @@ namespace Azure.Storage.DataMovement.Files.Shares
     public partial class ShareFileStorageResourceOptions
     {
         public ShareFileStorageResourceOptions() { }
-        public Azure.Storage.DataMovement.DataTransferProperty<string> CacheControl { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty<string> ContentDisposition { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty<string[]> ContentEncoding { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty<string[]> ContentLanguage { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty<string> ContentType { get { throw null; } set { } }
+        public string CacheControl { get { throw null; } set { } }
+        public string ContentDisposition { get { throw null; } set { } }
+        public string[] ContentEncoding { get { throw null; } set { } }
+        public string[] ContentLanguage { get { throw null; } set { } }
+        public string ContentType { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions DestinationConditions { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty<System.Collections.Generic.IDictionary<string, string>> DirectoryMetadata { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty<Azure.Storage.Files.Shares.Models.NtfsFileAttributes?> FileAttributes { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty<System.DateTimeOffset?> FileChangedOn { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty<System.DateTimeOffset?> FileCreatedOn { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty<System.DateTimeOffset?> FileLastWrittenOn { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty<System.Collections.Generic.IDictionary<string, string>> FileMetadata { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty FilePermissions { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> DirectoryMetadata { get { throw null; } set { } }
+        public Azure.Storage.Files.Shares.Models.NtfsFileAttributes? FileAttributes { get { throw null; } set { } }
+        public System.DateTimeOffset? FileChangedOn { get { throw null; } set { } }
+        public System.DateTimeOffset? FileCreatedOn { get { throw null; } set { } }
+        public System.DateTimeOffset? FileLastWrittenOn { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> FileMetadata { get { throw null; } set { } }
+        public bool? FilePermissions { get { throw null; } set { } }
         public Azure.Storage.Files.Shares.Models.ShareFileRequestConditions SourceConditions { get { throw null; } set { } }
     }
 }

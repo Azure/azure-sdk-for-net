@@ -1,0 +1,6 @@
+{
+  "output-folder": ".",
+  "namespace": "Server.Path.Single",
+  "library-name": "Server.Path.Single",
+  "use-model-reader-writer": true
+}

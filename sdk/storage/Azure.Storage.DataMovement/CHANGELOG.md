@@ -5,6 +5,7 @@
 ### Features Added
 
 ### Breaking Changes
+- Removed `DataTransferProperty` and `DataTransferProperty<T>`
 - Renamed the following types/properties:
     - `DataTransfer` -> `TransferOperation`
         - Addtionally renamed the `TransferStatus` property to `Status`
@@ -34,6 +35,10 @@
     - `TransferCheckpointStoreOptions.Disabled` -> `TransferCheckpointStoreOptions.DisableCheckpoint`
 - Removed properties from `StorageResourceItemProperties` constructor since properties are settable.
 - Changed type of `StorageResourceItemProperties.RawProperties` to `IDictionary`.
+- Changed `List<StorageResourceProvider> TransferManagerOptions.ResumeProviders` to `IList<StorageResourceProvider> TransferManagerOptions.ProvidersForResuming`
+- Changed the following `LocalFilesStorageResourceProvider` methods to `static` methods:
+    - `FromFile(string)`
+    - `FromDirectory(string)`
 
 ### Bugs Fixed
 - Fixed bug where adding multiple transfers in parallel could cause a collision (`InvalidOperationException`) in the data transfers stored within the `TransferManager`.

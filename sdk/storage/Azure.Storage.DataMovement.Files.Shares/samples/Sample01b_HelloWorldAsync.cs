@@ -37,9 +37,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
 
                     TransferManager transferManager = new TransferManager();
 
-                    // Get local filesystem provider
-                    LocalFilesStorageResourceProvider files = new();
-
                     // Get shares provider with credential
                     #region Snippet:MakeProvider_TokenCredential_Shares
                     ShareFilesStorageResourceProvider shares = new(tokenCredential);
@@ -59,9 +56,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
                     ShareDirectoryClient directoryClient = shareClient.GetRootDirectoryClient();
                     ShareFileClient fileClient = directoryClient.GetFileClient("example.txt");
                     #region Snippet:ResourceConstruction_FromClients_Shares
-                    ShareFilesStorageResourceProvider shares = new();
-                    StorageResource shareDirectoryResource = shares.FromClient(directoryClient);
-                    StorageResource shareFileResource = shares.FromClient(fileClient);
+                    StorageResource shareDirectoryResource = ShareFilesStorageResourceProvider.FromClient(directoryClient);
+                    StorageResource shareFileResource = ShareFilesStorageResourceProvider.FromClient(fileClient);
                     #endregion
                 }
                 {
@@ -103,7 +99,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
             try
             {
                 ShareFilesStorageResourceProvider shares = new(new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey));
-                LocalFilesStorageResourceProvider files = new();
 
                 // Get a reference to a destination share file/directory
                 Uri destinationFolderUri = share.GetDirectoryClient("sample-directory").Uri;
@@ -113,7 +108,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
                 // Create simple transfer single share file upload job
                 #region Snippet:SimplefileUpload_Shares
                 TransferOperation fileTransfer = await transferManager.StartTransferAsync(
-                    sourceResource: files.FromFile(sourceLocalFile),
+                    sourceResource: LocalFilesStorageResourceProvider.FromFile(sourceLocalFile),
                     destinationResource: await shares.FromFileAsync(destinationFileUri));
                 await fileTransfer.WaitForCompletionAsync();
                 #endregion
@@ -121,7 +116,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
                 // Create simple transfer single share directory upload job
                 #region Snippet:SimpleDirectoryUpload_Shares
                 TransferOperation folderTransfer = await transferManager.StartTransferAsync(
-                    sourceResource: files.FromDirectory(sourceLocalDirectory),
+                    sourceResource: LocalFilesStorageResourceProvider.FromDirectory(sourceLocalDirectory),
                     destinationResource: await shares.FromDirectoryAsync(destinationFolderUri));
                 await folderTransfer.WaitForCompletionAsync();
                 #endregion
@@ -147,7 +142,6 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
             try
             {
                 ShareFilesStorageResourceProvider shares = new(new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey));
-                LocalFilesStorageResourceProvider files = new();
 
                 // Get a reference to a destination share file/directory
                 Uri sourceDirectoryUri = share.GetDirectoryClient("sample-directory").Uri;
@@ -158,7 +152,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
                 #region Snippet:SimpleFileDownload_Shares
                 TransferOperation fileTransfer = await transferManager.StartTransferAsync(
                     sourceResource: await shares.FromFileAsync(sourceFileUri),
-                    destinationResource: files.FromFile(destinationLocalFile));
+                    destinationResource: LocalFilesStorageResourceProvider.FromFile(destinationLocalFile));
                 await fileTransfer.WaitForCompletionAsync();
                 #endregion
 
@@ -166,7 +160,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
                 #region Snippet:SimpleDirectoryDownload_Shares
                 TransferOperation directoryTransfer = await transferManager.StartTransferAsync(
                     sourceResource: await shares.FromDirectoryAsync(sourceDirectoryUri),
-                    destinationResource: files.FromDirectory(destinationLocalDirectory));
+                    destinationResource: LocalFilesStorageResourceProvider.FromDirectory(destinationLocalDirectory));
                 await directoryTransfer.WaitForCompletionAsync();
                 #endregion
             }

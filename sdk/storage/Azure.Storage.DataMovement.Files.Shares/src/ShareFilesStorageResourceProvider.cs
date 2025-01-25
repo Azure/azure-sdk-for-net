@@ -42,14 +42,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         #region ctors
         /// <summary>
-        /// Default constrctor.
-        /// </summary>
-        public ShareFilesStorageResourceProvider()
-        {
-            _credentialType = CredentialType.None;
-        }
-
-        /// <summary>
         /// <para>
         /// Constructs this provider to use the given credential when making a new File Share
         /// <see cref="StorageResource"/>.
@@ -188,17 +180,28 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileStorageResourceOptions options = new()
             {
                 FileAttributes = checkpointDetails.FileAttributes,
-                FilePermissions = new(checkpointDetails.PreserveFilePermission),
+                _isFileAttributesSet = checkpointDetails.IsFileAttributesSet,
+                FilePermissions = checkpointDetails.FilePermission,
                 CacheControl = checkpointDetails.CacheControl,
+                _isCacheControlSet = checkpointDetails.IsCacheControlSet,
                 ContentDisposition = checkpointDetails.ContentDisposition,
+                _isContentDispositionSet = checkpointDetails.IsContentDispositionSet,
                 ContentEncoding = checkpointDetails.ContentEncoding,
+                _isContentEncodingSet = checkpointDetails.IsContentEncodingSet,
                 ContentLanguage = checkpointDetails.ContentLanguage,
+                _isContentLanguageSet = checkpointDetails.IsContentLanguageSet,
                 ContentType = checkpointDetails.ContentType,
+                _isContentTypeSet = checkpointDetails.IsContentTypeSet,
                 FileCreatedOn = checkpointDetails.FileCreatedOn,
+                _isFileCreatedOnSet = checkpointDetails.IsFileCreatedOnSet,
                 FileLastWrittenOn = checkpointDetails.FileLastWrittenOn,
+                _isFileLastWrittenOnSet = checkpointDetails.IsFileLastWrittenOnSet,
                 FileChangedOn = checkpointDetails.FileChangedOn,
+                _isFileChangedOnSet = checkpointDetails.IsFileChangedOnSet,
                 DirectoryMetadata = checkpointDetails.DirectoryMetadata,
+                _isDirectoryMetadataSet = checkpointDetails.IsDirectoryMetadataSet,
                 FileMetadata = checkpointDetails.FileMetadata,
+                _isFileMetadataSet = checkpointDetails.IsFileMetadataSet,
             };
             return properties.IsContainer
                 ? await FromDirectoryAsync(properties.DestinationUri, options).ConfigureAwait(false)
@@ -297,7 +300,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromClient(
+        public static StorageResource FromClient(
             ShareDirectoryClient client,
             ShareFileStorageResourceOptions options = default)
         {
@@ -318,7 +321,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromClient(
+        public static StorageResource FromClient(
             ShareFileClient client,
             ShareFileStorageResourceOptions options = default)
         {
