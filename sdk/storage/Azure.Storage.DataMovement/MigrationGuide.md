@@ -146,6 +146,153 @@ TODO
 
 ## Migration Samples
 
+This section contains side-by-side samples of legacy vs modern library usage of various features.
+These samples are not meant to be exhaustive, but demonstrate a wide variety of uses that may need migration.
+
+- Upload
+  - Upload single file to blob storage
+  - Upload directory to blob storage
+- Download
+  - Download single blob
+  - Download blob directory
+- Service to service copy
+  - Copy blob to blob
+  - Copy share file to blob
+
+### Upload
+
+#### Upload single file to blob storage
+
+**Legacy:**
+```csharp
+// these values provided by your code
+string filePath, containerName, blobName;
+CloudBlobClient client;
+```
+```csharp
+// upload blob
+await TransferManager.UploadAsync(
+    filePath,
+    client.GetContainerReference(containerName).GetBlockBlobReference(blobName));
+```
+**Modern:**
+```csharp
+// these values provided by your code
+string filePath, blobUri;
+LocalFilesStorageResourceProvider files;
+BlobsStorageResourceProvider blobs;
+TransferManager transferManager;
+```
+
+```csharp
+// upload blob
+TranferOperation operation = await transferManager.StartTransferAsync(
+    files.FromFile(filePath),
+    blobs.FromBlob(blobUri));
+await operation.WaitForCompletionAsync();
+```
+
+#### Upload directory to blob storage
+
+**Legacy:**
+```csharp
+// these values provided by your code
+string directoryPath, containerName, blobDirectoryPath;
+CloudBlobClient client;
+```
+```csharp
+// upload blob
+await TransferManager.UploadDirectoryAsync(
+    directoryPath,
+    client.GetContainerReference(containerName).GetDirectoryReference(blobDirectoryPath));
+```
+**Modern:**
+```csharp
+// these values provided by your code
+string directoryPath, containerUri, blobDirectoryPath;
+LocalFilesStorageResourceProvider files;
+BlobsStorageResourceProvider blobs;
+TransferManager transferManager;
+```
+
+```csharp
+// upload blobs
+TranferOperation operation = await transferManager.StartTransferAsync(
+    files.FromDirectory(directoryPath),
+    blobs.FromContainer(containerUri, new BlobStorageResourceContainerOptions()
+    {
+        BlobDirectoryPrefix = blobDirectoryPath,
+    }));
+await operation.WaitForCompletionAsync();
+```
+
+### Download
+
+#### Download single blob
+
+**Legacy:**
+```csharp
+// these values provided by your code
+string filePath, containerName, blobName;
+CloudBlobClient client;
+```
+```csharp
+// download blob
+await TransferManager.DownloadAsync(
+    client.GetContainerReference(containerName).GetBlockBlobReference(blobName),
+    filePath);
+```
+**Modern:**
+```csharp
+// these values provided by your code
+string filePath, blobUri;
+LocalFilesStorageResourceProvider files;
+BlobsStorageResourceProvider blobs;
+TransferManager transferManager;
+```
+```csharp
+// download blob
+TranferOperation operation = await transferManager.StartTransferAsync(
+    blobs.FromBlob(blobUri),
+    files.FromFile(filePath));
+await operation.WaitForCompletionAsync();
+```
+
+#### Download blob directory
+
+**Legacy:**
+```csharp
+// these values provided by your code
+string directoryPath, containerName, blobDirectoryPath;
+CloudBlobClient client;
+```
+```csharp
+// download blob directory
+await TransferManager.DownloadDirectoryAsync(
+    client.GetContainerReference(containerName).GetDirectoryReference(blobDirectoryPath),
+    filePath,
+    options: null,
+    context: null);
+```
+**Modern:**
+```csharp
+// these values provided by your code
+string directoryPath, containerUri, blobDirectoryPath;
+LocalFilesStorageResourceProvider files;
+BlobsStorageResourceProvider blobs;
+TransferManager transferManager;
+```
+```csharp
+// download blob directory
+TranferOperation operation = await transferManager.StartTransferAsync(
+    blobs.FromContainer(containerUri, new BlobStorageResourceContainerOptions()
+    {
+        BlobDirectoryPrefix = blobDirectoryPath,
+    }),
+    files.FromDirectory(directoryPath));
+await operation.WaitForCompletionAsync();
+```
+
 TODO
 - Upload
 - Download
@@ -153,6 +300,162 @@ TODO
 - Progress reporting
 - Error reporting
 - Pause/Resume
+
+### Copy
+
+#### Copy blob to blob
+
+Note: The modern data movement library only supports service side sync copy.
+
+**Legacy:**
+```csharp
+// these values provided by your code
+string srcContainerName, srcBlobName, dstContainerName, dstBlobName;
+CloudBlobClient client;
+```
+```csharp
+// copy blob
+await TransferManager.DownloadAsync(
+    client.GetContainerReference(srcContainerName).GetBlockBlobReference(srcBlobName),
+    client.GetContainerReference(dstContainerName).GetBlockBlobReference(dstBlobName),
+    CopyMethod.ServiceSideSyncCopy);
+```
+**Modern:**
+```csharp
+// these values provided by your code
+string srcBlobUri, dstBlobUri;
+BlobsStorageResourceProvider blobs;
+TransferManager transferManager;
+```
+```csharp
+// copy blob
+TranferOperation operation = await transferManager.StartTransferAsync(
+    blobs.FromBlob(srcBlobUri),
+    blobs.FromBlob(dstBlobUri));
+await operation.WaitForCompletionAsync();
+```
+
+#### Copy share file to blob
+
+Note: File shares requires the Azure.Storage.DataMovement.Files.Shares package.
+
+**Legacy:**
+```csharp
+// these values provided by your code
+string containerName, blobName, shareName, filePath;
+CloudBlobClient blobClient;
+CloudFileClient fileClient;
+```
+```csharp
+// copy file
+await TransferManager.DownloadAsync(
+    blobClient.GetContainerReference(srcContainerName).GetBlockBlobReference(srcBlobName),
+    fileClient.GetShareReference(dstContainerName).GetRootDirectoryReference().GetBlockBlobReference(dstBlobName),
+    CopyMethod.ServiceSideSyncCopy);
+```
+**Modern:**
+```csharp
+// these values provided by your code
+string blobUri, fileUri;
+BlobsStorageResourceProvider blobs;
+ShareFilesStorageResourceProvider files;
+TransferManager transferManager;
+```
+```csharp
+// copy file
+TranferOperation operation = await transferManager.StartTransferAsync(
+    blobs.FromBlob(blobUri),
+    files.FromFile(fileUri));
+await operation.WaitForCompletionAsync();
+```
+
+### Progress Reporting
+
+#### Post-transfer report
+
+In the legacy data movement library, it was possible to check a report of how many files
+were or were not transferred in a directory transfer, as shown below. This is no
+longer supported in the modern library. Applications will need to enable progress reporting
+or listen to transfer events, as detailed in the following sections.
+
+```csharp
+TransferStatus status = await TransferManager.UploadDirectoryAsync(
+    directoryPath,
+    client.GetContainerReference(containerName).GetDirectoryReference(blobDirectoryPath));
+// observe status
+// status.NumberOfFilesTransferred
+// status.NumberOfFilesSkipped
+// status.NumberOfFilesFailed
+// status.BytesTransferred
+```
+
+#### IProgress
+
+**Legacy:**
+```csharp
+// progress handler provided by your code
+IProgress<TransferStatus> progress;
+```
+```csharp
+await TransferManager.UploadDirectoryAsync(
+    directoryPath,
+    client.GetContainerReference(containerName).GetDirectoryReference(blobDirectoryPath),
+    options: default,
+    new DirectoryTransferContext()
+    {
+        ProgressHandler = progress,
+    });
+```
+**Modern:**
+```csharp
+// progress handler provided by your code
+IProgress<TransferProgress> progress;
+// if TransferProgress report is desired for
+// each transfer of bytes, set to true.
+bool reportBytes;
+```
+```csharp
+// upload blobs
+TranferOperation operation = await transferManager.StartTransferAsync(
+    files.FromDirectory(directoryPath),
+    blobs.FromContainer(containerUri, new BlobStorageResourceContainerOptions()
+    {
+        BlobDirectoryPrefix = blobDirectoryPath,
+    }),
+    new TransferOptions()
+    {
+        new ProgressHandlerOptions()
+        {
+            ProgressHandler = progress,
+            TrackBytesTransferred = reportBytes;
+        }
+    });
+await operation.WaitForCompletionAsync();
+```
+
+#### Eventing (new to modern library)
+
+**Modern:**
+```csharp
+// callback provided by your code
+Func<TransferItemCompletedEventArgs, Task> onItemCompleted;
+Func<TransferItemSkippedEventArgs, Task> onItemSkipped;
+Func<TransferItemFailedEventArgs, Task> onItemFailed;
+```
+```csharp
+TransferOptions options = new TransferOptions();
+options.ItemTransferCompleted += onItemCompleted;
+options.ItemTransferSkipped += onItemSkipped;
+options.ItemTransferFailed += onItemFailed;
+TranferOperation operation = await transferManager.StartTransferAsync(
+    files.FromDirectory(directoryPath),
+    blobs.FromContainer(containerUri, new BlobStorageResourceContainerOptions()
+    {
+        BlobDirectoryPrefix = blobDirectoryPath,
+    }),
+    options);
+await operation.WaitForCompletionAsync();
+```
 
 ## Additional information
 
