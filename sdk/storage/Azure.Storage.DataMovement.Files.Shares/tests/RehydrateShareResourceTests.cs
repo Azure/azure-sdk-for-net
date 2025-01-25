@@ -11,11 +11,14 @@ using Azure.Storage.Test;
 using Azure.Storage.Tests;
 using Moq;
 using NUnit.Framework;
+using Azure.Core;
+using Azure.Identity;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Tests
 {
     public class RehydrateShareResourceTests
     {
+        private TokenCredential _tokenCredential = new DefaultAzureCredential();
         public const string ShareProviderId = "share";
 
         private static byte[] GetBytes(StorageResourceCheckpointDetailsInternal checkpointDetails)
@@ -67,8 +70,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new ShareFileDestinationCheckpointDetails(false, null, false, null, false, null, false, null, false, null, false, null, false, false, null, false, null, false, null, false,  null, false, null)).Object;
 
             StorageResource storageResource = isSource
-                ? await new ShareFilesStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
-                : await new ShareFilesStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties);
+                ? await new ShareFilesStorageResourceProvider(_tokenCredential).FromSourceInternalHookAsync(transferProperties)
+                : await new ShareFilesStorageResourceProvider(_tokenCredential).FromDestinationInternalHookAsync(transferProperties);
 
             Assert.That(originalPath, Is.EqualTo(storageResource.Uri.AbsoluteUri));
             Assert.That(storageResource, Is.TypeOf<ShareFileStorageResource>());
@@ -123,7 +126,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 originalDestinationData).Object;
 
             ShareFileStorageResource storageResource = (ShareFileStorageResource)
-                await new ShareFilesStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties);
+                await new ShareFilesStorageResourceProvider(_tokenCredential).FromDestinationInternalHookAsync(transferProperties);
 
             Assert.That(destinationPath, Is.EqualTo(storageResource.Uri.AbsoluteUri));
             Assert.That(storageResource, Is.TypeOf<ShareFileStorageResource>());
@@ -181,8 +184,8 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
                 new ShareFileDestinationCheckpointDetails(false, null, false, null, false, null, false, null, false, null, false, null, false, false, null, false, null, false, null, false, null, false, null)).Object;
 
             StorageResource storageResource = isSource
-                ? await new ShareFilesStorageResourceProvider().FromSourceInternalHookAsync(transferProperties)
-                : await new ShareFilesStorageResourceProvider().FromDestinationInternalHookAsync(transferProperties);
+                ? await new ShareFilesStorageResourceProvider(_tokenCredential).FromSourceInternalHookAsync(transferProperties)
+                : await new ShareFilesStorageResourceProvider(_tokenCredential).FromDestinationInternalHookAsync(transferProperties);
 
             Assert.That(originalPath, Is.EqualTo(storageResource.Uri.AbsoluteUri));
             Assert.That(storageResource, Is.TypeOf<ShareDirectoryStorageResourceContainer>());

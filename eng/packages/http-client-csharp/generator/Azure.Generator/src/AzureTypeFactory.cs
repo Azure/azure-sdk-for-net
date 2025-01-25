@@ -78,7 +78,9 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
+#pragma warning disable AZC0014 // Avoid using banned types in public API
         public override ValueExpression DeserializeJsonValue(Type valueType, ScopedApi<JsonElement> element, SerializationFormat format)
+#pragma warning restore AZC0014 // Avoid using banned types in public API
         {
             var expression = DeserializeJsonValueCore(valueType, element, format);
             return expression ?? base.DeserializeJsonValue(valueType, element, format);
@@ -142,6 +144,12 @@ namespace Azure.Generator
                 return new ResourceDataProvider(model);
             }
             return base.CreateModelCore(model);
+        }
+
+        /// <inheritdoc/>
+        public override NewProjectScaffolding CreateNewProjectScaffolding()
+        {
+            return new NewAzureProjectScaffolding();
         }
     }
 }

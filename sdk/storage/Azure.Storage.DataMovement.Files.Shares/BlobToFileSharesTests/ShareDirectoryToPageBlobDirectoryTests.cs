@@ -97,7 +97,7 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             }
             return new BlobStorageResourceContainer(sourceContainerClient, new BlobStorageResourceContainerOptions()
             {
-                BlobDirectoryPrefix = directoryPath,
+                BlobPrefix = directoryPath,
                 BlobType = BlobType.Page,
                 BlobOptions = options
             });

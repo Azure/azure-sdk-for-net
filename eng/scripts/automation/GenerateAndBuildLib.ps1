@@ -570,8 +570,9 @@ function Invoke-GenerateAndBuildSDK () {
     if ( $serviceType -eq "resource-manager" ) {
         Write-Host "Generate resource-manager SDK client library."
         $package = $service
-        if ($packageNameHash[$service] -ne "") {
+        if ($null -ne $packageNameHash[$service] -and $packageNameHash[$service] -ne "") {
             $package = $packageNameHash[$service]
+            Write-Host "rename package name to $package"
         }
         $projectFolder = (Join-Path $sdkRootPath "sdk" $package "Azure.ResourceManager.*")
         if (Test-Path -Path $projectFolder) {
@@ -653,7 +654,7 @@ function Invoke-GenerateAndBuildSDK () {
                         $projectFolder=(Join-Path $sdkRootPath "sdk" $service $folder)
                         if (Test-Path -Path $projectFolder) {
                             Write-Host "Path exists!"
-                            New-DataPlanePackageFolder -service $service -namespace $folder -sdkPath $sdkRootPath -readme $readmeFile -outputJsonFile $newpackageoutput
+                            Update-DataPlanePackageFolder -service $service -namespace $folder -sdkPath $sdkRootPath -readme $readmeFile -outputJsonFile $newpackageoutput
                             if ( !$? ) {
                                 Write-Host "[ERROR] Failed to create sdk project folder.service:$service,namespace:$folder,"
                                 Write-Host "[ERROR] sdkPath:$sdkRootPath,readme:$readmeFile. exit code: $?."
