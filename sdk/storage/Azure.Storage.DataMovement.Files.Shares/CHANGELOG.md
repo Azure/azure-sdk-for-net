@@ -22,13 +22,13 @@
      - `ShareFileStorageResourceOptions.FileChangedOn`
 - Changed `ShareDirectoryClient.StartUploadDirectoryAsync` to `ShareDirectoryClient.UploadDirectoryAsync` and added a required `waitUntil` parameter.
 - Changed `ShareDirectoryClient.StartDownloadToDirectoryAsync` to `ShareDirectoryClient.DownloadToDirectoryAsync` and added a required `waitUntil` parameter.
-- Removed `ShareFilesStorageResourceProvider()` empty default constructor
-- Changed `ShareFilesStorageResourceProvider.FromClient` methods to `static` method
 - Several refactors to `ShareFilesStorageResourceProvider`:
   - Removed nested delegates `GetStorageSharedKeyCredential`, `GetTokenCredential`, and `GetAzureSasCredential`.
+  - Removed default constructor.
   - Removed constructor overload for `GetTokenCredential` entirely.
   - Changed constructor overloads for `GetStorageSharedKeyCredential` and `GetAzureSasCredential` to use `Func`. These callbacks are also now async, returning a `ValueTask`, and the `readOnly` parameter was removed.
-  - `FromFile` and `FromDirectory` were made async, returning a `ValueTask`, and renamed to `FromFileAsync` and `FromDirectoryAsync` respectively.
+  - Changed `FromFile` and `FromDirectory` to async, returning a `ValueTask`, and renamed to `FromFileAsync` and `FromDirectoryAsync` respectively.
+  - Changed `FromClient` methods to `static` methods.
 
 ### Bugs Fixed
 
