@@ -992,7 +992,7 @@
 # ServiceOwners:                                                   @HE-Xinyu @ddadaal
 
 # PRLabel: %Database Watcher
-/sdk/databasewatcher/Azure.ResourceManager.DatabaseWatcher/        @Renyx1219
+/sdk/databasewatcher/Azure.ResourceManager.*/                      @Renyx1219
 
 # ServiceLabel: %Database Watcher %Mgmt
 # ServiceOwners:                                                   @Renyx1219
