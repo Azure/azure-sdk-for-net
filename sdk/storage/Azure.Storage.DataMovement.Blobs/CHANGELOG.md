@@ -16,8 +16,13 @@
 - Renamed `BlobStorageResourceContainerOptions.BlobDirectoryPrefix` to `BlobPrefix`
 - Changed `BlobContainerClient.StartUploadDirectoryAsync` to `BlobContainerClient.UploadDirectoryAsync` and added a required `waitUntil` parameter.
 - Changed `BlobContainerClient.StartDownloadToDirectoryAsync` to `BlobContainerClient.DownloadToDirectoryAsync` and added a required `waitUntil` parameter.
-- Removed `BlobsStorageResourceProvider()` empty default constructor
-- Changed `BlobsStorageResourceProvider.FromClient` methods to `static` method
+- Several refactors to `BlobsStorageResourceProvider`:
+  - Removed nested delegates `GetStorageSharedKeyCredential`, `GetTokenCredential`, and `GetAzureSasCredential`.
+  - Removed default constructor.
+  - Removed constructor overload for `GetTokenCredential` entirely.
+  - Changed constructor overloads for `GetStorageSharedKeyCredential` and `GetAzureSasCredential` to use `Func`. These callbacks are also now async, returning a `ValueTask`, and the `readOnly` parameter was removed.
+  - Changed `FromBlob` and `FromContainer` to async, returning a `ValueTask`, and renamed to `FromBlobAsync` and `FromContainerAsync` respectively.
+  - Changed `FromClient` methods to `static` methods.
 
 ### Bugs Fixed
 
