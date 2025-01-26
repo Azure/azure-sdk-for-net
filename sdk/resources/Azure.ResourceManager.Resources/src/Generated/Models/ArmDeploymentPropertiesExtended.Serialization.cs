@@ -155,6 +155,16 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Diagnostics))
+            {
+                writer.WritePropertyName("diagnostics"u8);
+                writer.WriteStartArray();
+                foreach (var item in Diagnostics)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -209,6 +219,7 @@ namespace Azure.ResourceManager.Resources.Models
             IReadOnlyList<SubResource> outputResources = default;
             IReadOnlyList<SubResource> validatedResources = default;
             ResponseError error = default;
+            IReadOnlyList<DeploymentDiagnosticsDefinition> diagnostics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -378,6 +389,20 @@ namespace Azure.ResourceManager.Resources.Models
                     error = JsonSerializer.Deserialize<ResponseError>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("diagnostics"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DeploymentDiagnosticsDefinition> array = new List<DeploymentDiagnosticsDefinition>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DeploymentDiagnosticsDefinition.DeserializeDeploymentDiagnosticsDefinition(item, options));
+                    }
+                    diagnostics = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -402,6 +427,7 @@ namespace Azure.ResourceManager.Resources.Models
                 outputResources ?? new ChangeTrackingList<SubResource>(),
                 validatedResources ?? new ChangeTrackingList<SubResource>(),
                 error,
+                diagnostics ?? new ChangeTrackingList<DeploymentDiagnosticsDefinition>(),
                 serializedAdditionalRawData);
         }
 
@@ -721,6 +747,29 @@ namespace Azure.ResourceManager.Resources.Models
                 {
                     builder.Append("  error: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Error, options, 2, false, "  error: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Diagnostics), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  diagnostics: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsCollectionDefined(Diagnostics))
+                {
+                    if (Diagnostics.Any())
+                    {
+                        builder.Append("  diagnostics: ");
+                        builder.AppendLine("[");
+                        foreach (var item in Diagnostics)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  diagnostics: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
                 }
             }
 

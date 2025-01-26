@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.Resources.Samples
 {
-    public partial class Sample_ArmDeploymentResource
+    public partial class Sample_DeploymentExtendedResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,17 +28,17 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmDeploymentResource created on azure
-            // for more information of creating ArmDeploymentResource, please refer to the document of ArmDeploymentResource
+            // this example assumes you already have this DeploymentExtendedResource created on azure
+            // for more information of creating DeploymentExtendedResource, please refer to the document of DeploymentExtendedResource
             string scope = "providers/Microsoft.Management/managementGroups/my-management-group-id";
             string deploymentName = "my-deployment";
-            ResourceIdentifier armDeploymentResourceId = ArmDeploymentResource.CreateResourceIdentifier(scope, deploymentName);
-            ArmDeploymentResource armDeployment = client.GetArmDeploymentResource(armDeploymentResourceId);
+            ResourceIdentifier deploymentExtendedResourceId = DeploymentExtendedResource.CreateResourceIdentifier(scope, deploymentName);
+            DeploymentExtendedResource deploymentExtended = client.GetDeploymentExtendedResource(deploymentExtendedResourceId);
 
             // invoke the operation
-            ArmDeploymentContent content = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
+            Deployment deployment = new Deployment(new DeploymentProperties(DeploymentMode.Incremental)
             {
-                TemplateLink = new ArmDeploymentTemplateLink
+                TemplateLink = new TemplateLink
                 {
                     Uri = new Uri("https://example.com/exampleTemplate.json"),
                 },
@@ -52,12 +52,12 @@ namespace Azure.ResourceManager.Resources.Samples
 ["tagKey2"] = "tag-value-2"
 },
             };
-            ArmOperation<ArmDeploymentResource> lro = await armDeployment.UpdateAsync(WaitUntil.Completed, content);
-            ArmDeploymentResource result = lro.Value;
+            ArmOperation<DeploymentExtendedResource> lro = await deploymentExtended.UpdateAsync(WaitUntil.Completed, deployment);
+            DeploymentExtendedResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ArmDeploymentData resourceData = result.Data;
+            DeploymentExtendedData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -74,29 +74,29 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmDeploymentResource created on azure
-            // for more information of creating ArmDeploymentResource, please refer to the document of ArmDeploymentResource
+            // this example assumes you already have this DeploymentExtendedResource created on azure
+            // for more information of creating DeploymentExtendedResource, please refer to the document of DeploymentExtendedResource
             string scope = "subscriptions/00000000-0000-0000-0000-000000000001/resourceGroups/my-resource-group";
             string deploymentName = "my-deployment";
-            ResourceIdentifier armDeploymentResourceId = ArmDeploymentResource.CreateResourceIdentifier(scope, deploymentName);
-            ArmDeploymentResource armDeployment = client.GetArmDeploymentResource(armDeploymentResourceId);
+            ResourceIdentifier deploymentExtendedResourceId = DeploymentExtendedResource.CreateResourceIdentifier(scope, deploymentName);
+            DeploymentExtendedResource deploymentExtended = client.GetDeploymentExtendedResource(deploymentExtendedResourceId);
 
             // invoke the operation
-            ArmDeploymentContent content = new ArmDeploymentContent(new ArmDeploymentProperties(ArmDeploymentMode.Incremental)
+            Deployment deployment = new Deployment(new DeploymentProperties(DeploymentMode.Incremental)
             {
-                TemplateLink = new ArmDeploymentTemplateLink
+                TemplateLink = new TemplateLink
                 {
                     Uri = new Uri("https://example.com/exampleTemplate.json"),
                     QueryString = "sv=2019-02-02&st=2019-04-29T22%3A18%3A26Z&se=2019-04-30T02%3A23%3A26Z&sr=b&sp=rw&sip=168.1.5.60-168.1.5.70&spr=https&sig=xxxxxxxx0xxxxxxxxxxxxx%2bxxxxxxxxxxxxxxxxxxxx%3d",
                 },
                 Parameters = BinaryData.FromObjectAsJson(new object()),
             });
-            ArmOperation<ArmDeploymentResource> lro = await armDeployment.ValidateAsync(WaitUntil.Completed, content);
-            ArmDeploymentResource result = lro.Value;
+            ArmOperation<DeploymentExtendedResource> lro = await deploymentExtended.ValidateAsync(WaitUntil.Completed, deployment);
+            DeploymentExtendedResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ArmDeploymentData resourceData = result.Data;
+            DeploymentExtendedData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -113,17 +113,17 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmDeploymentResource created on azure
-            // for more information of creating ArmDeploymentResource, please refer to the document of ArmDeploymentResource
+            // this example assumes you already have this DeploymentExtendedResource created on azure
+            // for more information of creating DeploymentExtendedResource, please refer to the document of DeploymentExtendedResource
             string scope = $"/";
             string deploymentName = "exampleDeploymentName";
-            ResourceIdentifier armDeploymentResourceId = ArmDeploymentResource.CreateResourceIdentifier(scope, deploymentName);
-            ArmDeploymentResource armDeployment = client.GetArmDeploymentResource(armDeploymentResourceId);
+            ResourceIdentifier deploymentExtendedResourceId = DeploymentExtendedResource.CreateResourceIdentifier(scope, deploymentName);
+            DeploymentExtendedResource deploymentExtended = client.GetDeploymentExtendedResource(deploymentExtendedResourceId);
 
             // invoke the operation
-            ArmDeploymentWhatIfContent content = new ArmDeploymentWhatIfContent(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)
+            DeploymentWhatIf deploymentWhatIf = new DeploymentWhatIf(new DeploymentWhatIfProperties(DeploymentMode.Incremental)
             {
-                TemplateLink = new ArmDeploymentTemplateLink
+                TemplateLink = new TemplateLink
                 {
                     Uri = new Uri("https://example.com/exampleTemplate.json"),
                 },
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Resources.Samples
             {
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<WhatIfOperationResult> lro = await armDeployment.WhatIfAsync(WaitUntil.Completed, content);
+            ArmOperation<WhatIfOperationResult> lro = await deploymentExtended.WhatIfAsync(WaitUntil.Completed, deploymentWhatIf);
             WhatIfOperationResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -150,18 +150,18 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmDeploymentResource created on azure
-            // for more information of creating ArmDeploymentResource, please refer to the document of ArmDeploymentResource
+            // this example assumes you already have this DeploymentExtendedResource created on azure
+            // for more information of creating DeploymentExtendedResource, please refer to the document of DeploymentExtendedResource
             string groupId = "myManagementGruop";
             string scope = $"/providers/Microsoft.Management/managementGroups/{groupId}";
             string deploymentName = "exampleDeploymentName";
-            ResourceIdentifier armDeploymentResourceId = ArmDeploymentResource.CreateResourceIdentifier(scope, deploymentName);
-            ArmDeploymentResource armDeployment = client.GetArmDeploymentResource(armDeploymentResourceId);
+            ResourceIdentifier deploymentExtendedResourceId = DeploymentExtendedResource.CreateResourceIdentifier(scope, deploymentName);
+            DeploymentExtendedResource deploymentExtended = client.GetDeploymentExtendedResource(deploymentExtendedResourceId);
 
             // invoke the operation
-            ArmDeploymentWhatIfContent content = new ArmDeploymentWhatIfContent(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)
+            DeploymentWhatIf deploymentWhatIf = new DeploymentWhatIf(new DeploymentWhatIfProperties(DeploymentMode.Incremental)
             {
-                TemplateLink = new ArmDeploymentTemplateLink
+                TemplateLink = new TemplateLink
                 {
                     Uri = new Uri("https://example.com/exampleTemplate.json"),
                 },
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources.Samples
             {
                 Location = new AzureLocation("eastus"),
             };
-            ArmOperation<WhatIfOperationResult> lro = await armDeployment.WhatIfAsync(WaitUntil.Completed, content);
+            ArmOperation<WhatIfOperationResult> lro = await deploymentExtended.WhatIfAsync(WaitUntil.Completed, deploymentWhatIf);
             WhatIfOperationResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -188,18 +188,18 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmDeploymentResource created on azure
-            // for more information of creating ArmDeploymentResource, please refer to the document of ArmDeploymentResource
+            // this example assumes you already have this DeploymentExtendedResource created on azure
+            // for more information of creating DeploymentExtendedResource, please refer to the document of DeploymentExtendedResource
             string subscriptionId = "00000000-0000-0000-0000-000000000001";
             string scope = $"/subscriptions/{subscriptionId}";
             string deploymentName = "my-deployment";
-            ResourceIdentifier armDeploymentResourceId = ArmDeploymentResource.CreateResourceIdentifier(scope, deploymentName);
-            ArmDeploymentResource armDeployment = client.GetArmDeploymentResource(armDeploymentResourceId);
+            ResourceIdentifier deploymentExtendedResourceId = DeploymentExtendedResource.CreateResourceIdentifier(scope, deploymentName);
+            DeploymentExtendedResource deploymentExtended = client.GetDeploymentExtendedResource(deploymentExtendedResourceId);
 
             // invoke the operation
-            ArmDeploymentWhatIfContent content = new ArmDeploymentWhatIfContent(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)
+            DeploymentWhatIf deploymentWhatIf = new DeploymentWhatIf(new DeploymentWhatIfProperties(DeploymentMode.Incremental)
             {
-                TemplateLink = new ArmDeploymentTemplateLink
+                TemplateLink = new TemplateLink
                 {
                     Uri = new Uri("https://example.com/exampleTemplate.json"),
                 },
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Resources.Samples
             {
                 Location = new AzureLocation("westus"),
             };
-            ArmOperation<WhatIfOperationResult> lro = await armDeployment.WhatIfAsync(WaitUntil.Completed, content);
+            ArmOperation<WhatIfOperationResult> lro = await deploymentExtended.WhatIfAsync(WaitUntil.Completed, deploymentWhatIf);
             WhatIfOperationResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");
@@ -226,25 +226,25 @@ namespace Azure.ResourceManager.Resources.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ArmDeploymentResource created on azure
-            // for more information of creating ArmDeploymentResource, please refer to the document of ArmDeploymentResource
+            // this example assumes you already have this DeploymentExtendedResource created on azure
+            // for more information of creating DeploymentExtendedResource, please refer to the document of DeploymentExtendedResource
             string subscriptionId = "00000000-0000-0000-0000-000000000001";
             string resourceGroupName = "my-resource-group";
             string scope = $"/subscriptions/{subscriptionId}/resourcegroups/{resourceGroupName}";
             string deploymentName = "my-deployment";
-            ResourceIdentifier armDeploymentResourceId = ArmDeploymentResource.CreateResourceIdentifier(scope, deploymentName);
-            ArmDeploymentResource armDeployment = client.GetArmDeploymentResource(armDeploymentResourceId);
+            ResourceIdentifier deploymentExtendedResourceId = DeploymentExtendedResource.CreateResourceIdentifier(scope, deploymentName);
+            DeploymentExtendedResource deploymentExtended = client.GetDeploymentExtendedResource(deploymentExtendedResourceId);
 
             // invoke the operation
-            ArmDeploymentWhatIfContent content = new ArmDeploymentWhatIfContent(new ArmDeploymentWhatIfProperties(ArmDeploymentMode.Incremental)
+            DeploymentWhatIf deploymentWhatIf = new DeploymentWhatIf(new DeploymentWhatIfProperties(DeploymentMode.Incremental)
             {
-                TemplateLink = new ArmDeploymentTemplateLink
+                TemplateLink = new TemplateLink
                 {
                     Uri = new Uri("https://example.com/exampleTemplate.json"),
                 },
                 Parameters = BinaryData.FromObjectAsJson(new object()),
             });
-            ArmOperation<WhatIfOperationResult> lro = await armDeployment.WhatIfAsync(WaitUntil.Completed, content);
+            ArmOperation<WhatIfOperationResult> lro = await deploymentExtended.WhatIfAsync(WaitUntil.Completed, deploymentWhatIf);
             WhatIfOperationResult result = lro.Value;
 
             Console.WriteLine($"Succeeded: {result}");

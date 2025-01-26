@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -55,6 +56,15 @@ namespace Azure.ResourceManager.Resources.Models
         public static TemplateSpecVersionInfo TemplateSpecVersionInfo(string description = null, DateTimeOffset? timeCreated = null, DateTimeOffset? timeModified = null)
         {
             return new TemplateSpecVersionInfo(description, timeCreated, timeModified, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ErrorAdditionalInfo"/>. </summary>
+        /// <param name="errorAdditionalInfoType"> The additional info type. </param>
+        /// <param name="info"> The additional info. </param>
+        /// <returns> A new <see cref="Models.ErrorAdditionalInfo"/> instance for mocking. </returns>
+        public static ErrorAdditionalInfo ErrorAdditionalInfo(string errorAdditionalInfoType = null, BinaryData info = null)
+        {
+            return new ErrorAdditionalInfo(errorAdditionalInfoType, info, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TemplateSpecPatch"/>. </summary>
@@ -284,13 +294,15 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="outputResources"> Array of provisioned resources. </param>
         /// <param name="validatedResources"> Array of validated resources. </param>
         /// <param name="error"> The deployment error. </param>
+        /// <param name="diagnostics"> Contains diagnostic information collected during validation process. </param>
         /// <returns> A new <see cref="Models.ArmDeploymentPropertiesExtended"/> instance for mocking. </returns>
-        public static ArmDeploymentPropertiesExtended ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState = null, string correlationId = null, DateTimeOffset? timestamp = null, TimeSpan? duration = null, BinaryData outputs = null, IEnumerable<ResourceProviderData> providers = null, IEnumerable<ArmDependency> dependencies = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, ArmDeploymentParametersLink parametersLink = null, ArmDeploymentMode? mode = null, string debugSettingDetailLevel = null, ErrorDeploymentExtended errorDeployment = null, string templateHash = null, IEnumerable<SubResource> outputResources = null, IEnumerable<SubResource> validatedResources = null, ResponseError error = null)
+        public static ArmDeploymentPropertiesExtended ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState = null, string correlationId = null, DateTimeOffset? timestamp = null, TimeSpan? duration = null, BinaryData outputs = null, IEnumerable<ResourceProviderData> providers = null, IEnumerable<ArmDependency> dependencies = null, ArmDeploymentTemplateLink templateLink = null, BinaryData parameters = null, ArmDeploymentParametersLink parametersLink = null, ArmDeploymentMode? mode = null, string debugSettingDetailLevel = null, ErrorDeploymentExtended errorDeployment = null, string templateHash = null, IEnumerable<SubResource> outputResources = null, IEnumerable<SubResource> validatedResources = null, ResponseError error = null, IEnumerable<DeploymentDiagnosticsDefinition> diagnostics = null)
         {
             providers ??= new List<ResourceProviderData>();
             dependencies ??= new List<ArmDependency>();
             outputResources ??= new List<SubResource>();
             validatedResources ??= new List<SubResource>();
+            diagnostics ??= new List<DeploymentDiagnosticsDefinition>();
 
             return new ArmDeploymentPropertiesExtended(
                 provisioningState,
@@ -310,6 +322,7 @@ namespace Azure.ResourceManager.Resources.Models
                 outputResources?.ToList(),
                 validatedResources?.ToList(),
                 error,
+                diagnostics?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
@@ -346,13 +359,24 @@ namespace Azure.ResourceManager.Resources.Models
             return new ErrorDeploymentExtended(provisioningState, deploymentType, deploymentName, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentValidateResult"/>. </summary>
-        /// <param name="error"> The deployment validation error. </param>
-        /// <param name="properties"> The template deployment properties. </param>
-        /// <returns> A new <see cref="Models.ArmDeploymentValidateResult"/> instance for mocking. </returns>
-        public static ArmDeploymentValidateResult ArmDeploymentValidateResult(ResponseError error = null, ArmDeploymentPropertiesExtended properties = null)
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentDiagnosticsDefinition"/>. </summary>
+        /// <param name="level"> Denotes the additional response level. </param>
+        /// <param name="code"> The error code. </param>
+        /// <param name="message"> The error message. </param>
+        /// <param name="target"> The error target. </param>
+        /// <param name="additionalInfo"> The error additional info. </param>
+        /// <returns> A new <see cref="Models.DeploymentDiagnosticsDefinition"/> instance for mocking. </returns>
+        public static DeploymentDiagnosticsDefinition DeploymentDiagnosticsDefinition(Level level = default, string code = null, string message = null, string target = null, IEnumerable<ErrorAdditionalInfo> additionalInfo = null)
         {
-            return new ArmDeploymentValidateResult(error, properties, serializedAdditionalRawData: null);
+            additionalInfo ??= new List<ErrorAdditionalInfo>();
+
+            return new DeploymentDiagnosticsDefinition(
+                level,
+                code,
+                message,
+                target,
+                additionalInfo?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ArmDeploymentExportResult"/>. </summary>
@@ -402,12 +426,22 @@ namespace Azure.ResourceManager.Resources.Models
         /// <param name="status"> Status of the What-If operation. </param>
         /// <param name="error"> Error when What-If operation fails. </param>
         /// <param name="changes"> List of resource changes predicted by What-If operation. </param>
+        /// <param name="potentialChanges"> List of resource changes predicted by What-If operation. </param>
+        /// <param name="diagnostics"> List of resource diagnostics detected by What-If operation. </param>
         /// <returns> A new <see cref="Models.WhatIfOperationResult"/> instance for mocking. </returns>
-        public static WhatIfOperationResult WhatIfOperationResult(string status = null, ResponseError error = null, IEnumerable<WhatIfChange> changes = null)
+        public static WhatIfOperationResult WhatIfOperationResult(string status = null, ResponseError error = null, IEnumerable<WhatIfChange> changes = null, IEnumerable<WhatIfChange> potentialChanges = null, IEnumerable<DeploymentDiagnosticsDefinition> diagnostics = null)
         {
             changes ??= new List<WhatIfChange>();
+            potentialChanges ??= new List<WhatIfChange>();
+            diagnostics ??= new List<DeploymentDiagnosticsDefinition>();
 
-            return new WhatIfOperationResult(status, error, changes?.ToList(), serializedAdditionalRawData: null);
+            return new WhatIfOperationResult(
+                status,
+                error,
+                changes?.ToList(),
+                potentialChanges?.ToList(),
+                diagnostics?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.WhatIfChange"/>. </summary>
@@ -1132,6 +1166,42 @@ namespace Azure.ResourceManager.Resources.Models
                 retentionInterval,
                 timeout,
                 azCliVersion);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended" />. </summary>
+        /// <param name="provisioningState"> Denotes the state of provisioning. </param>
+        /// <param name="correlationId"> The correlation ID of the deployment. </param>
+        /// <param name="timestamp"> The timestamp of the template deployment. </param>
+        /// <param name="duration"> The duration of the template deployment. </param>
+        /// <param name="outputs"> Key/value pairs that represent deployment output. </param>
+        /// <param name="providers"> The list of resource providers needed for the deployment. </param>
+        /// <param name="dependencies"> The list of deployment dependencies. </param>
+        /// <param name="templateLink"> The URI referencing the template. </param>
+        /// <param name="parameters"> Deployment parameters. </param>
+        /// <param name="parametersLink"> The URI referencing the parameters. </param>
+        /// <param name="mode"> The deployment mode. Possible values are Incremental and Complete. </param>
+        /// <param name="debugSettingDetailLevel"> The debug setting of the deployment. </param>
+        /// <param name="errorDeployment"> The deployment on error behavior. </param>
+        /// <param name="templateHash"> The hash produced for the template. </param>
+        /// <param name="outputResources"> Array of provisioned resources. </param>
+        /// <param name="validatedResources"> Array of validated resources. </param>
+        /// <param name="error"> The deployment error. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ArmDeploymentPropertiesExtended ArmDeploymentPropertiesExtended(ResourcesProvisioningState? provisioningState, string correlationId, DateTimeOffset? timestamp, TimeSpan? duration, BinaryData outputs, IEnumerable<ResourceProviderData> providers, IEnumerable<ArmDependency> dependencies, ArmDeploymentTemplateLink templateLink, BinaryData parameters, ArmDeploymentParametersLink parametersLink, ArmDeploymentMode? mode, string debugSettingDetailLevel, ErrorDeploymentExtended errorDeployment, string templateHash, IEnumerable<SubResource> outputResources, IEnumerable<SubResource> validatedResources, ResponseError error)
+        {
+            return ArmDeploymentPropertiesExtended(provisioningState: provisioningState, correlationId: correlationId, timestamp: timestamp, duration: duration, outputs: outputs, providers: providers, dependencies: dependencies, templateLink: templateLink, parameters: parameters, parametersLink: parametersLink, mode: mode, debugSettingDetailLevel: debugSettingDetailLevel, errorDeployment: errorDeployment, templateHash: templateHash, outputResources: outputResources, validatedResources: validatedResources, error: error, diagnostics: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.Resources.Models.WhatIfOperationResult" />. </summary>
+        /// <param name="status"> Status of the What-If operation. </param>
+        /// <param name="error"> Error when What-If operation fails. </param>
+        /// <param name="changes"> List of resource changes predicted by What-If operation. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.Resources.Models.WhatIfOperationResult" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WhatIfOperationResult WhatIfOperationResult(string status, ResponseError error, IEnumerable<WhatIfChange> changes)
+        {
+            return WhatIfOperationResult(status: status, error: error, changes: changes, potentialChanges: default, diagnostics: default);
         }
     }
 }
