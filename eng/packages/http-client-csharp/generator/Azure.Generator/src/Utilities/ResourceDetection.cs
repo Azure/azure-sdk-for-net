@@ -46,7 +46,7 @@ namespace Azure.Generator.Utilities
 
             var segments = requestPath.Substring(index+ProvidersSegment.Length).Split("/", StringSplitOptions.RemoveEmptyEntries);
             var result = new StringBuilder(segments[0]);
-            for(int i = 1; i < segments.Length; i += 2)
+            for (int i = 1; i < segments.Length; i += 2)
             {
                 result.Append($"/{segments[i]}");
             }
@@ -132,7 +132,6 @@ namespace Azure.Generator.Utilities
             inputModel = responseType;
             return true;
         }
-
 
         private static bool IsResourceModel(InputModelType inputModelType)
         {

@@ -24,7 +24,6 @@ namespace Azure.Storage.DataMovement.Blobs
     }
     public partial class BlobsStorageResourceProvider : Azure.Storage.DataMovement.StorageResourceProvider
     {
-        public BlobsStorageResourceProvider() { }
         public BlobsStorageResourceProvider(Azure.AzureSasCredential credential) { }
         public BlobsStorageResourceProvider(Azure.Core.TokenCredential credential) { }
         public BlobsStorageResourceProvider(Azure.Storage.DataMovement.Blobs.BlobsStorageResourceProvider.GetAzureSasCredential getAzureSasCredentialAsync) { }
@@ -33,10 +32,10 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobsStorageResourceProvider(Azure.Storage.StorageSharedKeyCredential credential) { }
         protected override string ProviderId { get { throw null; } }
         public Azure.Storage.DataMovement.StorageResource FromBlob(System.Uri blobUri, Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions options = null) { throw null; }
-        public Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Blobs.BlobContainerClient client, Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions options = null) { throw null; }
-        public Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Blobs.Specialized.AppendBlobClient client, Azure.Storage.DataMovement.Blobs.AppendBlobStorageResourceOptions options = null) { throw null; }
-        public Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Blobs.Specialized.BlockBlobClient client, Azure.Storage.DataMovement.Blobs.BlockBlobStorageResourceOptions options = null) { throw null; }
-        public Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Blobs.Specialized.PageBlobClient client, Azure.Storage.DataMovement.Blobs.PageBlobStorageResourceOptions options = null) { throw null; }
+        public static Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Blobs.BlobContainerClient client, Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions options = null) { throw null; }
+        public static Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Blobs.Specialized.AppendBlobClient client, Azure.Storage.DataMovement.Blobs.AppendBlobStorageResourceOptions options = null) { throw null; }
+        public static Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Blobs.Specialized.BlockBlobClient client, Azure.Storage.DataMovement.Blobs.BlockBlobStorageResourceOptions options = null) { throw null; }
+        public static Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Blobs.Specialized.PageBlobClient client, Azure.Storage.DataMovement.Blobs.PageBlobStorageResourceOptions options = null) { throw null; }
         public Azure.Storage.DataMovement.StorageResource FromContainer(System.Uri containerUri, Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions options = null) { throw null; }
         protected override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromDestinationAsync(Azure.Storage.DataMovement.TransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromSourceAsync(Azure.Storage.DataMovement.TransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
@@ -47,20 +46,20 @@ namespace Azure.Storage.DataMovement.Blobs
     public partial class BlobStorageResourceContainerOptions
     {
         public BlobStorageResourceContainerOptions() { }
-        public string BlobDirectoryPrefix { get { throw null; } set { } }
         public Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions BlobOptions { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty<Azure.Storage.Blobs.Models.BlobType?> BlobType { get { throw null; } set { } }
+        public string BlobPrefix { get { throw null; } set { } }
+        public Azure.Storage.Blobs.Models.BlobType? BlobType { get { throw null; } set { } }
     }
     public partial class BlobStorageResourceOptions
     {
         public BlobStorageResourceOptions() { }
         public Azure.Storage.Blobs.Models.AccessTier? AccessTier { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty<string> CacheControl { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty<string> ContentDisposition { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty<string> ContentEncoding { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty<string> ContentLanguage { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty<string> ContentType { get { throw null; } set { } }
-        public Azure.Storage.DataMovement.DataTransferProperty<System.Collections.Generic.IDictionary<string, string>> Metadata { get { throw null; } set { } }
+        public string CacheControl { get { throw null; } set { } }
+        public string ContentDisposition { get { throw null; } set { } }
+        public string ContentEncoding { get { throw null; } set { } }
+        public string ContentLanguage { get { throw null; } set { } }
+        public string ContentType { get { throw null; } set { } }
+        public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } set { } }
     }
     public partial class BlockBlobStorageResourceOptions : Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions
     {

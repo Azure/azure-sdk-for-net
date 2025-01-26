@@ -174,7 +174,6 @@ namespace Azure.Generator.Providers
             foreach (var operation in _operationSet)
             {
                 var convenienceMethod = GetCorrespondingConvenienceMethod(operation, false);
-
             }
 
             return [BuildValidateResourceIdMethod()];

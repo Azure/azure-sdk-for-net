@@ -1,6 +1,6 @@
 ﻿Import-Module Az.Kusto
 
-$SubscriptionId = "fbccad30-f0ed-4ac4-9497-93bf6141062f" # Kusto_Dev_Kusto_Ilay_00 // or "e8257c73-24c5-4791-94dc-8b7901c90dbf" # Kusto_Dev_Kusto_Ilay_04_Test (production)
+$SubscriptionId = "e8257c73-24c5-4791-94dc-8b7901c90dbf" # fbccad30-f0ed-4ac4-9497-93bf6141062f Kusto_Dev_Kusto_Ilay_00 // or "e8257c73-24c5-4791-94dc-8b7901c90dbf" # Kusto_Dev_Kusto_Ilay_04_Test (production)
 $ResourseGroupPrefix = 'CSharpSDKRG'
 $Location = 'australiaeast'
 $DeleteAfterHours = 1 # currently this is just a tag that is added to the RG, there no actual delete
