@@ -1,5 +1,11 @@
 # Release History
 
+## 1.8.0-beta.1 (Unreleased)
+
+### Features Added
+
+- Enable AnyZone Capability preview. 
+
 ## 1.8.0 (2025-02-05)
 
 ### Features Added
