@@ -13,7 +13,7 @@ namespace Azure.AI.TextAnalytics.Samples
         public void ExtractiveSummarizeConvenience()
         {
             Uri endpoint = new(TestEnvironment.Endpoint);
-            AzureKeyCredential credential = new(TestEnvironment.ApiKey);
+            var credential = TestEnvironment.Credential;
             TextAnalyticsClient client = new(endpoint, credential, CreateSampleOptions());
 
             string document =
