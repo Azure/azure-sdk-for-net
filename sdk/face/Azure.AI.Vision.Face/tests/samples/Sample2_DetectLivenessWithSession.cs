@@ -18,7 +18,7 @@ namespace Azure.AI.Vision.Face.Samples
 
             #region Snippet:CreateLivenessSession
             var createContent = new CreateLivenessSessionContent(LivenessOperationMode.Passive) {
-                SendResultsToClient = true,
+                //SendResultsToClient = true,
                 DeviceCorrelationId = Guid.NewGuid().ToString(),
             };
 
@@ -46,24 +46,24 @@ namespace Azure.AI.Vision.Face.Samples
             #region Snippet:GetLivenessSessionResult
             var getResultResponse = sessionClient.GetLivenessSessionResult(sessionId);
             var sessionResult = getResultResponse.Value;
-            Console.WriteLine($"Id: {sessionResult.Id}");
-            Console.WriteLine($"CreatedDateTime: {sessionResult.CreatedDateTime}");
-            Console.WriteLine($"SessionExpired: {sessionResult.SessionExpired}");
-            Console.WriteLine($"DeviceCorrelationId: {sessionResult.DeviceCorrelationId}");
-            Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {sessionResult.AuthTokenTimeToLiveInSeconds}");
-            Console.WriteLine($"Status: {sessionResult.Status}");
-            Console.WriteLine($"SessionStartDateTime: {sessionResult.SessionStartDateTime}");
-            if (sessionResult.Result != null) {
-                WriteLivenessSessionAuditEntry(sessionResult.Result);
-            }
+            // Console.WriteLine($"Id: {sessionResult.Id}");
+            // Console.WriteLine($"CreatedDateTime: {sessionResult.CreatedDateTime}");
+            // Console.WriteLine($"SessionExpired: {sessionResult.SessionExpired}");
+            // Console.WriteLine($"DeviceCorrelationId: {sessionResult.DeviceCorrelationId}");
+            // Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {sessionResult.AuthTokenTimeToLiveInSeconds}");
+            // Console.WriteLine($"Status: {sessionResult.Status}");
+            // Console.WriteLine($"SessionStartDateTime: {sessionResult.SessionStartDateTime}");
+            // if (sessionResult.Result != null) {
+            //     WriteLivenessSessionAuditEntry(sessionResult.Result);
+            // }
             #endregion
 
             #region Snippet:GetLivenessSessionAuditEntries
-            var getAuditEntriesResponse = sessionClient.GetLivenessSessionAuditEntries(sessionId);
-            foreach (var auditEntry in getAuditEntriesResponse.Value)
-            {
-                WriteLivenessSessionAuditEntry(auditEntry);
-            }
+            // var getAuditEntriesResponse = sessionClient.GetLivenessSessionAuditEntries(sessionId);
+            // foreach (var auditEntry in getAuditEntriesResponse.Value)
+            // {
+            //     WriteLivenessSessionAuditEntry(auditEntry);
+            // }
             #endregion
         }
 
@@ -72,44 +72,44 @@ namespace Azure.AI.Vision.Face.Samples
             var sessionClient = CreateSessionClient();
 
             #region Snippet:GetLivenessSessions
-            var listResponse = sessionClient.GetLivenessSessions();
-            foreach (var session in listResponse.Value)
-            {
-                Console.WriteLine($"SessionId: {session.Id}");
-                Console.WriteLine($"CreatedDateTime: {session.CreatedDateTime}");
-                Console.WriteLine($"SessionExpired: {session.SessionExpired}");
-                Console.WriteLine($"DeviceCorrelationId: {session.DeviceCorrelationId}");
-                Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {session.AuthTokenTimeToLiveInSeconds}");
-                Console.WriteLine($"SessionStartDateTime: {session.SessionStartDateTime}");
-            }
+            // var listResponse = sessionClient.GetLivenessSessions();
+            // foreach (var session in listResponse.Value)
+            // {
+            //     Console.WriteLine($"SessionId: {session.Id}");
+            //     Console.WriteLine($"CreatedDateTime: {session.CreatedDateTime}");
+            //     Console.WriteLine($"SessionExpired: {session.SessionExpired}");
+            //     Console.WriteLine($"DeviceCorrelationId: {session.DeviceCorrelationId}");
+            //     Console.WriteLine($"AuthTokenTimeToLiveInSeconds: {session.AuthTokenTimeToLiveInSeconds}");
+            //     Console.WriteLine($"SessionStartDateTime: {session.SessionStartDateTime}");
+            // }
             #endregion
         }
 
         #region Snippet:WriteLivenessSessionAuditEntry
-        public void WriteLivenessSessionAuditEntry(LivenessSessionAuditEntry auditEntry)
-        {
-            Console.WriteLine($"Id: {auditEntry.Id}");
-            Console.WriteLine($"SessionId: {auditEntry.SessionId}");
-            Console.WriteLine($"RequestId: {auditEntry.RequestId}");
-            Console.WriteLine($"ClientRequestId: {auditEntry.ClientRequestId}");
-            Console.WriteLine($"ReceivedDateTime: {auditEntry.ReceivedDateTime}");
-            Console.WriteLine($"Digest: {auditEntry.Digest}");
+        // public void WriteLivenessSessionAuditEntry(LivenessSessionAuditEntry auditEntry)
+        // {
+        //     Console.WriteLine($"Id: {auditEntry.Id}");
+        //     Console.WriteLine($"SessionId: {auditEntry.SessionId}");
+        //     Console.WriteLine($"RequestId: {auditEntry.RequestId}");
+        //     Console.WriteLine($"ClientRequestId: {auditEntry.ClientRequestId}");
+        //     Console.WriteLine($"ReceivedDateTime: {auditEntry.ReceivedDateTime}");
+        //     Console.WriteLine($"Digest: {auditEntry.Digest}");
 
-            Console.WriteLine($"    Request Url: {auditEntry.Request.Url}");
-            Console.WriteLine($"    Request Method: {auditEntry.Request.Method}");
-            Console.WriteLine($"    Request ContentLength: {auditEntry.Request.ContentLength}");
-            Console.WriteLine($"    Request ContentType: {auditEntry.Request.ContentType}");
-            Console.WriteLine($"    Request UserAgent: {auditEntry.Request.UserAgent}");
+        //     Console.WriteLine($"    Request Url: {auditEntry.Request.Url}");
+        //     Console.WriteLine($"    Request Method: {auditEntry.Request.Method}");
+        //     Console.WriteLine($"    Request ContentLength: {auditEntry.Request.ContentLength}");
+        //     Console.WriteLine($"    Request ContentType: {auditEntry.Request.ContentType}");
+        //     Console.WriteLine($"    Request UserAgent: {auditEntry.Request.UserAgent}");
 
-            Console.WriteLine($"    Response StatusCode: {auditEntry.Response.StatusCode}");
-            Console.WriteLine($"    Response LatencyInMilliseconds: {auditEntry.Response.LatencyInMilliseconds}");
-            Console.WriteLine($"        Response Body LivenessDecision: {auditEntry.Response.Body.LivenessDecision}");
-            Console.WriteLine($"        Response Body ModelVersionUsed: {auditEntry.Response.Body.ModelVersionUsed}");
-            Console.WriteLine($"        Response Body Target FaceRectangle: {auditEntry.Response.Body.Target.FaceRectangle.Top}, {auditEntry.Response.Body.Target.FaceRectangle.Left}, {auditEntry.Response.Body.Target.FaceRectangle.Width}, {auditEntry.Response.Body.Target.FaceRectangle.Height}");
-            Console.WriteLine($"        Response Body Target FileName: {auditEntry.Response.Body.Target.FileName}");
-            Console.WriteLine($"        Response Body Target TimeOffsetWithinFile: {auditEntry.Response.Body.Target.TimeOffsetWithinFile}");
-            Console.WriteLine($"        Response Body Target FaceImageType: {auditEntry.Response.Body.Target.ImageType}");
-        }
+        //     Console.WriteLine($"    Response StatusCode: {auditEntry.Response.StatusCode}");
+        //     Console.WriteLine($"    Response LatencyInMilliseconds: {auditEntry.Response.LatencyInMilliseconds}");
+        //     Console.WriteLine($"        Response Body LivenessDecision: {auditEntry.Response.Body.LivenessDecision}");
+        //     Console.WriteLine($"        Response Body ModelVersionUsed: {auditEntry.Response.Body.ModelVersionUsed}");
+        //     Console.WriteLine($"        Response Body Target FaceRectangle: {auditEntry.Response.Body.Target.FaceRectangle.Top}, {auditEntry.Response.Body.Target.FaceRectangle.Left}, {auditEntry.Response.Body.Target.FaceRectangle.Width}, {auditEntry.Response.Body.Target.FaceRectangle.Height}");
+        //     Console.WriteLine($"        Response Body Target FileName: {auditEntry.Response.Body.Target.FileName}");
+        //     Console.WriteLine($"        Response Body Target TimeOffsetWithinFile: {auditEntry.Response.Body.Target.TimeOffsetWithinFile}");
+        //     Console.WriteLine($"        Response Body Target FaceImageType: {auditEntry.Response.Body.Target.ImageType}");
+        // }
         #endregion
     }
 }
