@@ -7,6 +7,7 @@ using Azure.Generator.Mgmt.Models;
 using Azure.ResourceManager;
 using Microsoft.Generator.CSharp.ClientModel.Providers;
 using Microsoft.Generator.CSharp.Expressions;
+using Microsoft.Generator.CSharp.Input;
 using Microsoft.Generator.CSharp.Primitives;
 using Microsoft.Generator.CSharp.Providers;
 using Microsoft.Generator.CSharp.Snippets;
@@ -14,6 +15,8 @@ using Microsoft.Generator.CSharp.Statements;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Threading;
 using static Microsoft.Generator.CSharp.Snippets.Snippet;
 
 namespace Azure.Generator.Providers
@@ -31,6 +34,7 @@ namespace Azure.Generator.Providers
         private PropertyProvider _dataProperty;
         private ClientProvider _clientProvider;
         private string _resrouceType;
+        private static readonly HashSet<string> paramtersToSkip = new HashSet<string> { "subscriptionId", "resourceGroupName" };
 
         public ResourceProvider(OperationSet operationSet, string specName, ResourceDataProvider resourceData, string resrouceType)
         {
@@ -169,11 +173,81 @@ namespace Azure.Generator.Providers
             // TODO: build operation methods
             foreach (var operation in _operationSet)
             {
-                var operationMethods = AzureClientPlugin.Instance.TypeFactory.CreateMethods(operation, _clientProvider);
+                var convenienceMethod = GetCorrespondingConvenienceMethod(operation, false);
+
             }
 
             return [BuildValidateResourceIdMethod()];
         }
+
+        private MethodProvider BuildOperationMethod(InputOperation operation, MethodProvider convenienceMethod)
+        {
+            var passthroughParameters = convenienceMethod.Signature.Parameters.Where(p => !paramtersToSkip.Contains(p.Name)).ToArray();
+            var signature = new MethodSignature(
+                convenienceMethod.Signature.Name,
+                convenienceMethod.Signature.Description,
+                convenienceMethod.Signature.Modifiers,
+                convenienceMethod.Signature.ReturnType,
+                convenienceMethod.Signature.ReturnDescription,
+                passthroughParameters,
+                convenienceMethod.Signature.Attributes,
+                convenienceMethod.Signature.GenericArguments,
+                convenienceMethod.Signature.GenericParameterConstraints,
+                convenienceMethod.Signature.ExplicitInterface,
+                convenienceMethod.Signature.NonDocumentComment);
+
+            var bodyStatements = new MethodBodyStatement[]
+            {
+                UsingDeclare("scope", typeof(DiagnosticScope), ((MemberExpression)_clientDiagonosticsField).Invoke(nameof(ClientDiagnostics.CreateScope), Literal($"{Namespace}.{operation.Name}")), out var scopeVariable),
+                scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate(),
+                //new TryCatchFinallyStatement
+                //()
+            };
+
+            return new MethodProvider(signature, bodyStatements, this);
+
+            //MethodBodyStatement BuildTryStatement()
+            //{
+            //    var tryStatement = new TryStatement();
+            //    var responseDeclaration = Declare("response", convenienceMethod.Signature.ReturnType, ((MemberExpression)_restClientField).Invoke(convenienceMethod.Signature.Name, [pra]))
+            //    tryStatement.Add()
+            //}
+        }
+
+        private IReadOnlyList<ValueExpression> PopulateArguments(InputOperation operation, MethodProvider convenienceMethod)
+        {
+            var parameters = convenienceMethod.Signature.Parameters;
+            var arguments = new List<ValueExpression>();
+            foreach (var parameter in parameters)
+            {
+                if (!paramtersToSkip.Contains(parameter.Name))
+                {
+                    arguments.Add(parameter);
+                    continue;
+                }
+
+                if (parameter.Name.Equals("subscriptionId"))
+                {
+                    arguments.Add(This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.SubscriptionId)));
+                }
+                else if (parameter.Name.Equals("resourceGroupName"))
+                {
+                    arguments.Add(This.Property(nameof(ArmResource.Id)).Property(nameof(ResourceIdentifier.ResourceGroupName)));
+                }
+                if (operation.Parameters.Any(p => p.Name.Equals(parameter.Name, StringComparison.OrdinalIgnoreCase)))
+                {
+                    arguments.Add(new ParameterProvider(parameter.Name, parameter.Description, parameter.Type));
+                }
+                else
+                {
+                    arguments.Add(new ParameterProvider(parameter.Name, parameter.Description, parameter.Type, parameter.DefaultValue));
+                }
+            }
+            return arguments;
+        }
+
+        private MethodProvider GetCorrespondingConvenienceMethod(InputOperation operation, bool isAsync)
+            => _clientProvider.Methods.Single(m => m.Signature.Name.Equals(isAsync ? $"{operation.Name}Async" : operation.Name, StringComparison.OrdinalIgnoreCase) && m.Signature.Parameters.Any(p => p.Type.Equals(typeof(CancellationToken))));
 
         public ScopedApi<bool> TryGetApiVersion(out ScopedApi<string> apiVersion)
         {
