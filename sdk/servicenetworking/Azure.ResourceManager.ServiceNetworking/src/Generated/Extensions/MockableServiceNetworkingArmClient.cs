@@ -69,5 +69,17 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
             FrontendResource.ValidateResourceId(id);
             return new FrontendResource(Client, id);
         }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="SecurityPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="SecurityPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SecurityPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="SecurityPolicyResource"/> object. </returns>
+        public virtual SecurityPolicyResource GetSecurityPolicyResource(ResourceIdentifier id)
+        {
+            SecurityPolicyResource.ValidateResourceId(id);
+            return new SecurityPolicyResource(Client, id);
+        }
     }
 }

@@ -9,15 +9,16 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 using Azure.ResourceManager.ServiceNetworking.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
-    /// A class representing the Frontend data model.
-    /// Frontend Sub Resource of Traffic Controller.
+    /// A class representing the SecurityPolicy data model.
+    /// SecurityPolicy Subresource of Traffic Controller.
     /// </summary>
-    public partial class FrontendData : TrackedResourceData
+    public partial class SecurityPolicyData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,37 +52,53 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="FrontendData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public FrontendData(AzureLocation location) : base(location)
+        public SecurityPolicyData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontendData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
         /// <param name="systemData"> The systemData. </param>
         /// <param name="tags"> The tags. </param>
         /// <param name="location"> The location. </param>
-        /// <param name="fqdn"> The Fully Qualified Domain Name of the DNS record associated to a Traffic Controller frontend. </param>
-        /// <param name="provisioningState"> Provisioning State of Traffic Controller Frontend Resource. </param>
+        /// <param name="policyType"> Type of the Traffic Controller Security Policy. </param>
+        /// <param name="wafPolicy"> Web Application Firewall Policy of the Traffic Controller Security Policy. </param>
+        /// <param name="provisioningState"> Provisioning State of Traffic Controller SecurityPolicy Resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal FrontendData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string fqdn, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal SecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.PolicyType? policyType, WritableSubResource wafPolicy, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
-            Fqdn = fqdn;
+            PolicyType = policyType;
+            WafPolicy = wafPolicy;
             ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="FrontendData"/> for deserialization. </summary>
-        internal FrontendData()
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyData"/> for deserialization. </summary>
+        internal SecurityPolicyData()
         {
         }
 
-        /// <summary> The Fully Qualified Domain Name of the DNS record associated to a Traffic Controller frontend. </summary>
-        public string Fqdn { get; }
-        /// <summary> Provisioning State of Traffic Controller Frontend Resource. </summary>
+        /// <summary> Type of the Traffic Controller Security Policy. </summary>
+        public Models.PolicyType? PolicyType { get; }
+        /// <summary> Web Application Firewall Policy of the Traffic Controller Security Policy. </summary>
+        internal WritableSubResource WafPolicy { get; set; }
+        /// <summary> Gets or sets Id. </summary>
+        public ResourceIdentifier WafPolicyId
+        {
+            get => WafPolicy is null ? default : WafPolicy.Id;
+            set
+            {
+                if (WafPolicy is null)
+                    WafPolicy = new WritableSubResource();
+                WafPolicy.Id = value;
+            }
+        }
+
+        /// <summary> Provisioning State of Traffic Controller SecurityPolicy Resource. </summary>
         public ProvisioningState? ProvisioningState { get; }
     }
 }

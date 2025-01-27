@@ -10,14 +10,15 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    public partial class TrafficControllerPatch : IUtf8JsonSerializable, IJsonModel<TrafficControllerPatch>
+    public partial class SecurityPolicyPatch : IUtf8JsonSerializable, IJsonModel<SecurityPolicyPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TrafficControllerPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityPolicyPatch>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<TrafficControllerPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SecurityPolicyPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +29,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrafficControllerPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficControllerPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityPolicyPatch)} does not support writing '{format}' format.");
             }
 
             if (Optional.IsCollectionDefined(Tags))
@@ -47,10 +48,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Optional.IsDefined(SecurityPolicyConfigurations))
+            if (Optional.IsDefined(WafPolicy))
             {
-                writer.WritePropertyName("securityPolicyConfigurations"u8);
-                writer.WriteObjectValue(SecurityPolicyConfigurations, options);
+                writer.WritePropertyName("wafPolicy"u8);
+                JsonSerializer.Serialize(writer, WafPolicy);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -70,19 +71,19 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             }
         }
 
-        TrafficControllerPatch IJsonModel<TrafficControllerPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SecurityPolicyPatch IJsonModel<SecurityPolicyPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrafficControllerPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficControllerPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityPolicyPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeTrafficControllerPatch(document.RootElement, options);
+            return DeserializeSecurityPolicyPatch(document.RootElement, options);
         }
 
-        internal static TrafficControllerPatch DeserializeTrafficControllerPatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SecurityPolicyPatch DeserializeSecurityPolicyPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -91,7 +92,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            SecurityPolicyConfigurationsUpdate securityPolicyConfigurations = default;
+            WritableSubResource wafPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,13 +120,13 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     }
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        if (property0.NameEquals("securityPolicyConfigurations"u8))
+                        if (property0.NameEquals("wafPolicy"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
                             {
                                 continue;
                             }
-                            securityPolicyConfigurations = SecurityPolicyConfigurationsUpdate.DeserializeSecurityPolicyConfigurationsUpdate(property0.Value, options);
+                            wafPolicy = JsonSerializer.Deserialize<WritableSubResource>(property0.Value.GetRawText());
                             continue;
                         }
                     }
@@ -137,38 +138,38 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new TrafficControllerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), securityPolicyConfigurations, serializedAdditionalRawData);
+            return new SecurityPolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), wafPolicy, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<TrafficControllerPatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SecurityPolicyPatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrafficControllerPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrafficControllerPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityPolicyPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        TrafficControllerPatch IPersistableModel<TrafficControllerPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SecurityPolicyPatch IPersistableModel<SecurityPolicyPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<TrafficControllerPatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeTrafficControllerPatch(document.RootElement, options);
+                        return DeserializeSecurityPolicyPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrafficControllerPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityPolicyPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<TrafficControllerPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SecurityPolicyPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
