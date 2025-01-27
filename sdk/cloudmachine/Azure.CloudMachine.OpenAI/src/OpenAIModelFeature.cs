@@ -118,7 +118,7 @@ public class OpenAIModelFeature : CloudMachineFeature
             },
             Sku = new CognitiveServicesSku
             {
-                Capacity = 120,
+                Capacity = 10,
                 Name = "Standard"
             },
         };

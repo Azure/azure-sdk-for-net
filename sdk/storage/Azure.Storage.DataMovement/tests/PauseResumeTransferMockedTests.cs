@@ -249,7 +249,7 @@ public class PauseResumeTransferMockedTests
         // Issue Pause for all of the transfers
         foreach (TransferOperation transfer in transfers)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
             Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
@@ -399,7 +399,7 @@ public class PauseResumeTransferMockedTests
         // Issue Pause for all of the transfers
         foreach (TransferOperation transfer in transfers)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
             Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
@@ -544,7 +544,7 @@ public class PauseResumeTransferMockedTests
         // Issue Pause for all of the transfers
         foreach (TransferOperation transfer in transfers)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
             if (pauseLocation == PauseLocation.PauseProcessStart)
             {
                 Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
@@ -679,7 +679,7 @@ public class PauseResumeTransferMockedTests
         // Issue Pause for all of the transfers
         foreach (TransferOperation transfer in transfers)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
             Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
@@ -833,7 +833,7 @@ public class PauseResumeTransferMockedTests
         // Issue Pause for all of the transfers
         foreach (TransferOperation transfer in transfers)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
             Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
@@ -979,7 +979,7 @@ public class PauseResumeTransferMockedTests
         // Issue Pause for all transfers
         foreach (TransferOperation transfer in transfers)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
             if (pauseLocation == PauseLocation.PauseProcessStart)
             {
                 Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
@@ -1111,7 +1111,7 @@ public class PauseResumeTransferMockedTests
         // Pause transfers #1
         foreach (TransferOperation transfer in transfers)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
             Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
@@ -1149,7 +1149,7 @@ public class PauseResumeTransferMockedTests
         // Pause transfers #2
         foreach (TransferOperation transfer in resumedTransfers1)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
             Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
@@ -1190,7 +1190,7 @@ public class PauseResumeTransferMockedTests
         // Pause transfers #3
         foreach (TransferOperation transfer in resumedTransfers2)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
             Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
@@ -1286,7 +1286,7 @@ public class PauseResumeTransferMockedTests
         // Pause transfers #1
         foreach (TransferOperation transfer in transfers)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
             Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
@@ -1324,7 +1324,7 @@ public class PauseResumeTransferMockedTests
         // Pause transfers #2
         foreach (TransferOperation transfer in resumedTransfers1)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
             Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 
@@ -1365,7 +1365,7 @@ public class PauseResumeTransferMockedTests
         // Pause transfers #3
         foreach (TransferOperation transfer in resumedTransfers2)
         {
-            Task pauseTask = transferManager.PauseTransferIfRunningAsync(transfer.Id);
+            Task pauseTask = transferManager.PauseTransferAsync(transfer.Id);
             Assert.That(TransferState.Pausing, Is.EqualTo(transfer.Status.State), "Error in transitioning to Pausing state");
         }
 

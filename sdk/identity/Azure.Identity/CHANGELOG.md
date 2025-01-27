@@ -3,17 +3,24 @@
 ## 1.14.0-beta.1 (Unreleased)
 
 ### Features Added
+- Added a `Subscription` property to `AzureCliCredentialOptions` to allow specifying the Azure subscription ID or name to use when authenticating with the Azure CLI.
 
 ### Breaking Changes
+
+### Bugs Fixed
+- Null or empty responses from IMDS probe attempts will now fall through to the next credential in the chain ([#47844](https://github.com/Azure/azure-sdk-for-net/issues/47844))
+
+### Other Changes
+- `AzurePowerShellCredential` no longer relies on APIs that are not available in Constrained Language Mode.
+
+## 1.13.2 (2025-01-14)
 
 ### Bugs Fixed
 
 - Fixed an issue where setting `DefaultAzureCredentialOptions.TenantId` twice throws an `InvalidOperationException` ([#47035](https://github.com/Azure/azure-sdk-for-net/issues/47035))
 - Fixed an issue where `ManagedIdentityCredential` does not honor the `CancellationToken` passed to `GetToken` and `GetTokenAsync`. ([#47156](https://github.com/Azure/azure-sdk-for-net/issues/47156))
 - Fixed an issue where some credentials in `DefaultAzureCredential` would not fall through to the next credential in the chain under certain exception conditions.
-
-### Other Changes
-- `AzurePowerShellCredential` no longer relies on APIs that are not available in Constrained Language Mode.
+- Fixed a regression in `ManagedIdentityCredential` when used in a `ChainedTokenCredential` where the invalid json responses do not fall through to the next credential in the chain. ([#47470](https://github.com/Azure/azure-sdk-for-net/issues/47470))
 
 ## 1.13.1 (2024-10-24)
 

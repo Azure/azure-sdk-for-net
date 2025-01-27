@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
+
 using System;
 using System.Threading;
-using Azure.Core;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
@@ -15,12 +15,12 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Gets the <see cref="StorageResource"/> that was the source resource for the transfer.
         /// </summary>
-        public StorageResource SourceResource { get; }
+        public StorageResource Source { get; }
 
         /// <summary>
         /// Gets the <see cref="StorageResource"/> that was the destination resource for the transfer.
         /// </summary>
-        public StorageResource DestinationResource { get; }
+        public StorageResource Destination { get; }
 
         /// <summary>
         /// Gets the <see cref="Exception"/> that was thrown during the job.
@@ -47,7 +47,7 @@ namespace Azure.Storage.DataMovement
         /// default value is <see cref="CancellationToken.None"/>.
         /// </param>
         /// <exception cref="System.ArgumentNullException">
-        /// Trhown if <paramref name="transferId"/> is empty or null.
+        /// Thrown if <paramref name="transferId"/> is empty or null.
         /// Thrown if <paramref name="sourceResource"/> is empty or null.
         /// Thrown if <paramref name="destinationResource"/> is empty or null.
         /// </exception>
@@ -63,8 +63,8 @@ namespace Azure.Storage.DataMovement
             Argument.AssertNotNull(sourceResource, nameof(sourceResource));
             Argument.AssertNotNull(destinationResource, nameof(destinationResource));
             Argument.AssertNotNull(exception, nameof(exception));
-            SourceResource = sourceResource;
-            DestinationResource = destinationResource;
+            Source = sourceResource;
+            Destination = destinationResource;
             Exception = exception;
         }
     }
