@@ -293,14 +293,6 @@ TranferOperation operation = await transferManager.StartTransferAsync(
 await operation.WaitForCompletionAsync();
 ```
 
-TODO
-- Upload
-- Download
-- S2S
-- Progress reporting
-- Error reporting
-- Pause/Resume
-
 ### Copy
 
 #### Copy blob to blob
@@ -453,6 +445,73 @@ TranferOperation operation = await transferManager.StartTransferAsync(
     }),
     options);
 await operation.WaitForCompletionAsync();
+```
+
+### Pause and resume
+
+#### Pause
+
+In the legacy library, transfers were paused by invoking a cancellation token.
+In the modern library, transfers are paused by calling the pause method on a given `TransferOperation`.
+
+**Legacy:**
+```csharp
+CancellationTokenSource cts = new();
+Task uploadTask = TransferManager.UploadAsync(source, destination, cts.Token);
+cts.Cancel();
+```
+**Modern:**
+```csharp
+TransferOperation transfer = await transferManager.StartTransferAsync(source, destination);
+await transfer.PauseAsync();
+```
+
+#### Resume
+
+In the legacy library, transfers were resumed by starting a transfer that matched an existing transfer in the context's journal.
+In the modern library, a separate resume API exists to resume a transfer by ID.
+
+For resume, the transfer manager must be configured with a provider for each service involved in a transfer to be resumed.
+This allows for the appropriate credential to be supplied, as credentials are not stored in the checkpointer.
+
+No provider is needed for local files.
+
+No checkpointer is needed to be supplied; it is enabled by default to write to a temporary directory on the local machine.
+Checkpointer options may be supplied to the transfer manager to configure the directory or to disable checkpointing entirely.
+
+**Legacy:**
+```csharp
+SingleTransferContext context = new(journalStream);
+Task uploadTask = TransferManager.UploadAsync(
+    source,
+    destination,
+    options: default,
+    context);
+```
+**Modern:**
+```csharp
+TransferManager transferManager = new(new TransferManagerOptions()
+{
+    // enable to resume transfers involving blob storage
+    ResumeProviders = new() { new BlobsStorageResourceProvider(myCredential) },
+});
+TransferOperation transfer = await transferManager.ResumeTransferAsync(transferId);
+```
+
+The modern `TransferManager` also has methods to enumerate resumable transfers.
+
+```csharp
+List<TranferOperation> operations = new();
+await foreach (TransferProperties transferProperties in transferManager.GetResumableTransfersAsync())
+{
+    operations.Add(await transferManager.ResumeTransferAsync());
+}
+```
+
+The above sample is a simplified version of `TransferManager.ResumeAllTransfersAsync()` and can be simplified to the following.
+
+```csharp
+List<TranferOperation> operations = await transferManager.ResumeAllTransfersAsync();
 ```
 
 ## Additional information
