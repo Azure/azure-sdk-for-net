@@ -12,6 +12,7 @@ using Azure.Identity;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Azure.Storage.DataMovement.Blobs.Samples
 {
@@ -70,7 +71,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 {
                     StorageSharedKeyCredential sharedKeyCredential = new(StorageAccountName, StorageAccountKey);
                     // Get blobs provider with credential
-                    ValueTask<AzureSasCredential> GenerateSas(Uri uri)
+                    ValueTask<AzureSasCredential> GenerateSas(Uri uri, CancellationToken cancellationToken)
                     {
                         // Construct your SAS according to your needs
                         BlobUriBuilder blobUri = new(uri);

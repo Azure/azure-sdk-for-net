@@ -39,8 +39,8 @@ namespace Azure.Storage.DataMovement.Blobs
 
         private readonly CredentialType _credentialType;
         private readonly TokenCredential _tokenCredential;
-        private readonly Func<Uri, ValueTask<StorageSharedKeyCredential>> _getStorageSharedKeyCredential;
-        private readonly Func<Uri, ValueTask<AzureSasCredential>> _getAzureSasCredential;
+        private readonly Func<Uri, CancellationToken, ValueTask<StorageSharedKeyCredential>> _getStorageSharedKeyCredential;
+        private readonly Func<Uri, CancellationToken, ValueTask<AzureSasCredential>> _getAzureSasCredential;
 
         /// <summary>
         /// <para>
@@ -61,7 +61,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobsStorageResourceProvider(StorageSharedKeyCredential credential)
         {
             _credentialType = CredentialType.SharedKey;
-            _getStorageSharedKeyCredential = (_) => new ValueTask<StorageSharedKeyCredential>(credential);
+            _getStorageSharedKeyCredential = (_, _) => new ValueTask<StorageSharedKeyCredential>(credential);
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobsStorageResourceProvider(AzureSasCredential credential)
         {
             _credentialType = CredentialType.Sas;
-            _getAzureSasCredential = (_) => new ValueTask<AzureSasCredential>(credential);
+            _getAzureSasCredential = (_, _) => new ValueTask<AzureSasCredential>(credential);
         }
 
         /// <summary>
@@ -127,7 +127,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="getStorageSharedKeyCredentialAsync">
         /// Callback for acquiring a credential for the given Uri.
         /// </param>
-        public BlobsStorageResourceProvider(Func<Uri, ValueTask<StorageSharedKeyCredential>> getStorageSharedKeyCredentialAsync)
+        public BlobsStorageResourceProvider(Func<Uri, CancellationToken, ValueTask<StorageSharedKeyCredential>> getStorageSharedKeyCredentialAsync)
         {
             _credentialType = CredentialType.SharedKey;
             _getStorageSharedKeyCredential = getStorageSharedKeyCredentialAsync;
@@ -152,7 +152,7 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="getAzureSasCredentialAsync">
         /// Callback for acquiring a credential for the given Uri and required set of permissions.
         /// </param>
-        public BlobsStorageResourceProvider(Func<Uri, ValueTask<AzureSasCredential>> getAzureSasCredentialAsync)
+        public BlobsStorageResourceProvider(Func<Uri, CancellationToken, ValueTask<AzureSasCredential>> getAzureSasCredentialAsync)
         {
             _credentialType = CredentialType.Sas;
             _getAzureSasCredential = getAzureSasCredentialAsync;
@@ -172,6 +172,7 @@ namespace Azure.Storage.DataMovement.Blobs
             bool getSource,
             CancellationToken cancellationToken)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             StorageResourceCheckpointDetails checkpointDetails = properties.GetCheckpointDetails(getSource);
 
             ResourceType type = GetType(checkpointDetails, properties.IsContainer);
@@ -197,7 +198,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     properties,
                     checkpointDetails as BlobDestinationCheckpointDetails,
                     getSource,
-                    await _getStorageSharedKeyCredential(uri).ConfigureAwait(false),
+                    await _getStorageSharedKeyCredential(uri, cancellationToken).ConfigureAwait(false),
                     cancellationToken),
                 CredentialType.Token => rehydrator.Rehydrate(
                     properties,
@@ -209,7 +210,7 @@ namespace Azure.Storage.DataMovement.Blobs
                     properties,
                     checkpointDetails as BlobDestinationCheckpointDetails,
                     getSource,
-                    await _getAzureSasCredential(uri).ConfigureAwait(false),
+                    await _getAzureSasCredential(uri, cancellationToken).ConfigureAwait(false),
                     cancellationToken),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
@@ -244,17 +245,22 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <param name="options">
         /// Options for creating the storage resource.
         /// </param>
+        /// <param name="cancellationToken"></param>
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public async ValueTask<StorageResource> FromContainerAsync(Uri containerUri, BlobStorageResourceContainerOptions options = default)
+        public async ValueTask<StorageResource> FromContainerAsync(
+            Uri containerUri,
+            BlobStorageResourceContainerOptions options = default,
+            CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             BlobContainerClient client = _credentialType switch
             {
                 CredentialType.None => new BlobContainerClient(containerUri),
-                CredentialType.SharedKey => new BlobContainerClient(containerUri, await _getStorageSharedKeyCredential(containerUri).ConfigureAwait(false)),
+                CredentialType.SharedKey => new BlobContainerClient(containerUri, await _getStorageSharedKeyCredential(containerUri, cancellationToken).ConfigureAwait(false)),
                 CredentialType.Token => new BlobContainerClient(containerUri, _tokenCredential),
-                CredentialType.Sas => new BlobContainerClient(containerUri, await _getAzureSasCredential(containerUri).ConfigureAwait(false)),
+                CredentialType.Sas => new BlobContainerClient(containerUri, await _getAzureSasCredential(containerUri, cancellationToken).ConfigureAwait(false)),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
             return new BlobStorageResourceContainer(client, options);
@@ -280,19 +286,24 @@ namespace Azure.Storage.DataMovement.Blobs
         /// blob type of the destination. If only the base options type is
         /// provided, block blob will be the default used.
         /// </param>
+        /// <param name="cancellationToken"></param>
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public async ValueTask<StorageResource> FromBlobAsync(Uri blobUri, BlobStorageResourceOptions options = default)
+        public async ValueTask<StorageResource> FromBlobAsync(
+            Uri blobUri,
+            BlobStorageResourceOptions options = default,
+            CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             if (options is BlockBlobStorageResourceOptions)
             {
                 BlockBlobClient blockClient = _credentialType switch
                 {
                     CredentialType.None => new BlockBlobClient(blobUri),
-                    CredentialType.SharedKey => new BlockBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri).ConfigureAwait(false)),
+                    CredentialType.SharedKey => new BlockBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri, cancellationToken).ConfigureAwait(false)),
                     CredentialType.Token => new BlockBlobClient(blobUri, _tokenCredential),
-                    CredentialType.Sas => new BlockBlobClient(blobUri, await _getAzureSasCredential(blobUri).ConfigureAwait(false)),
+                    CredentialType.Sas => new BlockBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false)),
                     _ => throw BadCredentialTypeException(_credentialType),
                 };
                 return new BlockBlobStorageResource(blockClient, options as BlockBlobStorageResourceOptions);
@@ -302,9 +313,9 @@ namespace Azure.Storage.DataMovement.Blobs
                 PageBlobClient pageClient = _credentialType switch
                 {
                     CredentialType.None => new PageBlobClient(blobUri),
-                    CredentialType.SharedKey => new PageBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri).ConfigureAwait(false)),
+                    CredentialType.SharedKey => new PageBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri, cancellationToken).ConfigureAwait(false)),
                     CredentialType.Token => new PageBlobClient(blobUri, _tokenCredential),
-                    CredentialType.Sas => new PageBlobClient(blobUri, await _getAzureSasCredential(blobUri).ConfigureAwait(false)),
+                    CredentialType.Sas => new PageBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false)),
                     _ => throw BadCredentialTypeException(_credentialType),
                 };
                 return new PageBlobStorageResource(pageClient, options as PageBlobStorageResourceOptions);
@@ -314,9 +325,9 @@ namespace Azure.Storage.DataMovement.Blobs
                 AppendBlobClient appendClient = _credentialType switch
                 {
                     CredentialType.None => new AppendBlobClient(blobUri),
-                    CredentialType.SharedKey => new AppendBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri).ConfigureAwait(false)),
+                    CredentialType.SharedKey => new AppendBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri, cancellationToken).ConfigureAwait(false)),
                     CredentialType.Token => new AppendBlobClient(blobUri, _tokenCredential),
-                    CredentialType.Sas => new AppendBlobClient(blobUri, await _getAzureSasCredential(blobUri).ConfigureAwait(false)),
+                    CredentialType.Sas => new AppendBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false)),
                     _ => throw BadCredentialTypeException(_credentialType),
                 };
                 return new AppendBlobStorageResource(appendClient, options as AppendBlobStorageResourceOptions);
@@ -324,9 +335,9 @@ namespace Azure.Storage.DataMovement.Blobs
             BlockBlobClient client = _credentialType switch
             {
                 CredentialType.None => new BlockBlobClient(blobUri),
-                CredentialType.SharedKey => new BlockBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri).ConfigureAwait(false)),
+                CredentialType.SharedKey => new BlockBlobClient(blobUri, await _getStorageSharedKeyCredential(blobUri, cancellationToken).ConfigureAwait(false)),
                 CredentialType.Token => new BlockBlobClient(blobUri, _tokenCredential),
-                CredentialType.Sas => new BlockBlobClient(blobUri, await _getAzureSasCredential(blobUri).ConfigureAwait(false)),
+                CredentialType.Sas => new BlockBlobClient(blobUri, await _getAzureSasCredential(blobUri, cancellationToken).ConfigureAwait(false)),
                 _ => throw BadCredentialTypeException(_credentialType),
             };
             return new BlockBlobStorageResource(client, options as BlockBlobStorageResourceOptions);

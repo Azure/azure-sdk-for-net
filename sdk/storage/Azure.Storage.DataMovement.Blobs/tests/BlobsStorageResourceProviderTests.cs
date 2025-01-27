@@ -13,6 +13,7 @@ using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using Moq;
 using NUnit.Framework;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace Azure.Storage.DataMovement.Blobs.Tests
 {
@@ -167,11 +168,11 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             Uri uri = new Uri($"https://myaccount.blob.core.windows.net/{containerName}/{blobName}");
             (Mock<StorageSharedKeyCredential> SharedKey, Mock<TokenCredential> Token, Mock<AzureSasCredential> Sas) mockCreds = GetMockCreds();
 
-            ValueTask<StorageSharedKeyCredential> GetSharedKeyCredential(Uri _)
+            ValueTask<StorageSharedKeyCredential> GetSharedKeyCredential(Uri uri, CancellationToken cancellationToken)
             {
                 return new ValueTask<StorageSharedKeyCredential>(mockCreds.SharedKey.Object);
             }
-            ValueTask<AzureSasCredential> GetSasCredential(Uri _)
+            ValueTask<AzureSasCredential> GetSasCredential(Uri _, CancellationToken cancellationToken)
             {
                 return new ValueTask<AzureSasCredential>(mockCreds.Sas.Object);
             }

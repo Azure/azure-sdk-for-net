@@ -9,6 +9,7 @@ using Azure.Core;
 using Azure.Identity;
 using Azure.Storage.Files.Shares;
 using Azure.Storage.Sas;
+using System.Threading;
 
 namespace Azure.Storage.DataMovement.Files.Shares.Samples
 {
@@ -63,7 +64,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
                 {
                     StorageSharedKeyCredential sharedKeyCredential = new(StorageAccountName, StorageAccountKey);
                     // Get shares provider with credential
-                    ValueTask<AzureSasCredential> GenerateSas(Uri uri)
+                    ValueTask<AzureSasCredential> GenerateSas(Uri uri, CancellationToken cancellationToken)
                     {
                         // Quick sample demonstrating minimal steps
                         // Construct your SAS according to your needs

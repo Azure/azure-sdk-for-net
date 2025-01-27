@@ -27,15 +27,15 @@ namespace Azure.Storage.DataMovement.Blobs
         public BlobsStorageResourceProvider(Azure.AzureSasCredential credential) { }
         public BlobsStorageResourceProvider(Azure.Core.TokenCredential credential) { }
         public BlobsStorageResourceProvider(Azure.Storage.StorageSharedKeyCredential credential) { }
-        public BlobsStorageResourceProvider(System.Func<System.Uri, System.Threading.Tasks.ValueTask<Azure.AzureSasCredential>> getAzureSasCredentialAsync) { }
-        public BlobsStorageResourceProvider(System.Func<System.Uri, System.Threading.Tasks.ValueTask<Azure.Storage.StorageSharedKeyCredential>> getStorageSharedKeyCredentialAsync) { }
+        public BlobsStorageResourceProvider(System.Func<System.Uri, System.Threading.CancellationToken, System.Threading.Tasks.ValueTask<Azure.AzureSasCredential>> getAzureSasCredentialAsync) { }
+        public BlobsStorageResourceProvider(System.Func<System.Uri, System.Threading.CancellationToken, System.Threading.Tasks.ValueTask<Azure.Storage.StorageSharedKeyCredential>> getStorageSharedKeyCredentialAsync) { }
         protected override string ProviderId { get { throw null; } }
-        public System.Threading.Tasks.ValueTask<Azure.Storage.DataMovement.StorageResource> FromBlobAsync(System.Uri blobUri, Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions options = null) { throw null; }
+        public System.Threading.Tasks.ValueTask<Azure.Storage.DataMovement.StorageResource> FromBlobAsync(System.Uri blobUri, Azure.Storage.DataMovement.Blobs.BlobStorageResourceOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Blobs.BlobContainerClient client, Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions options = null) { throw null; }
         public static Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Blobs.Specialized.AppendBlobClient client, Azure.Storage.DataMovement.Blobs.AppendBlobStorageResourceOptions options = null) { throw null; }
         public static Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Blobs.Specialized.BlockBlobClient client, Azure.Storage.DataMovement.Blobs.BlockBlobStorageResourceOptions options = null) { throw null; }
         public static Azure.Storage.DataMovement.StorageResource FromClient(Azure.Storage.Blobs.Specialized.PageBlobClient client, Azure.Storage.DataMovement.Blobs.PageBlobStorageResourceOptions options = null) { throw null; }
-        public System.Threading.Tasks.ValueTask<Azure.Storage.DataMovement.StorageResource> FromContainerAsync(System.Uri containerUri, Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions options = null) { throw null; }
+        public System.Threading.Tasks.ValueTask<Azure.Storage.DataMovement.StorageResource> FromContainerAsync(System.Uri containerUri, Azure.Storage.DataMovement.Blobs.BlobStorageResourceContainerOptions options = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         protected override System.Threading.Tasks.ValueTask<Azure.Storage.DataMovement.StorageResource> FromDestinationAsync(Azure.Storage.DataMovement.TransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
         protected override System.Threading.Tasks.ValueTask<Azure.Storage.DataMovement.StorageResource> FromSourceAsync(Azure.Storage.DataMovement.TransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
