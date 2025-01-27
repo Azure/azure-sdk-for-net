@@ -124,6 +124,23 @@ namespace Azure.Communication.Messages.Tests
         }
 
         [Test]
+        public async Task SendReactionMessage_ShouldSucceed()
+        {
+            // Arrange
+            NotificationMessagesClient notificationMessagesClient = CreateInstrumentedNotificationMessagesClient();
+            TextNotificationContent textContent = new(new Guid(TestEnvironment.SenderChannelRegistrationId), new List<string> { TestEnvironment.RecipientIdentifier }, "LiveTest");
+            Response<SendMessageResult> textResponse = await notificationMessagesClient.SendAsync(textContent);
+            var messageId = textResponse.Value.Receipts[0].MessageId;
+            ReactionNotificationContent reactionContent = new(new Guid(TestEnvironment.SenderChannelRegistrationId), new List<string> { TestEnvironment.RecipientIdentifier }, "\uD83D\uDE00", messageId);
+
+            // Act
+            Response<SendMessageResult> response = await notificationMessagesClient.SendAsync(reactionContent);
+
+            // Assert
+            validateResponse(textResponse);
+        }
+
+        [Test]
         public async Task SendInteractiveMessageWithButtonAction_ShouldSucceed()
         {
             // Arrange
