@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         {
                             Language = "es"
                         }),
-                new ConversationActionContent(projectName, deploymentName)
+                new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
                 {
                     // Use Utf16CodeUnit for strings in .NET.
                     StringIndexType = StringIndexType.Utf16CodeUnit,
@@ -105,7 +105,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                         {
                             Language = "es"
                         }),
-                new ConversationActionContent(projectName, deploymentName)
+                new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
                 {
                     // Use Utf16CodeUnit for strings in .NET.
                     StringIndexType = StringIndexType.Utf16CodeUnit,

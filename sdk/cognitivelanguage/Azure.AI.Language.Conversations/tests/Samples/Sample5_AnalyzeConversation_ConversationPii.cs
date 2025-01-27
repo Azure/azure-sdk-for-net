@@ -35,7 +35,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 {
                     new PiiOperationAction()
                     {
-                        ActionContent = new PiiActionContent(),
+                        ActionContent = new ConversationPiiActionContent(),
                         Name = "Conversation PII",
                     }
                 };
@@ -120,7 +120,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 {
                     new PiiOperationAction()
                     {
-                        ActionContent = new PiiActionContent(),
+                        ActionContent = new ConversationPiiActionContent(),
                         Name = "Conversation PII",
                     }
                 };
