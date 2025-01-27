@@ -243,7 +243,7 @@ namespace Azure.Communication.CallAutomation
             // Add CallIntelligenceOptions such as custom cognitive service domain name
             string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
             string backupCognitiveServicesEndpoint = options.CallIntelligenceOptions?.BackupCognitiveServicesEndpoint?.AbsoluteUri;
-            if (cognitiveServicesEndpoint != null || backupCognitiveServicesEndpoint != null)
+            if (cognitiveServicesEndpoint != null)
             {
                 request.CallIntelligenceOptions = new()
                 {
@@ -718,7 +718,7 @@ namespace Azure.Communication.CallAutomation
             // Add CallIntelligenceOptions such as custom cognitive service domain name
             string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
             string backupCognitiveServicesEndpoint = options.CallIntelligenceOptions?.BackupCognitiveServicesEndpoint?.AbsoluteUri;
-            if (cognitiveServicesEndpoint != null || backupCognitiveServicesEndpoint != null)
+            if (cognitiveServicesEndpoint != null)
             {
                 request.CallIntelligenceOptions = new()
                 {
@@ -750,7 +750,7 @@ namespace Azure.Communication.CallAutomation
             // Add CallIntelligenceOptions such as custom cognitive service domain name
             string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
             string backupCognitiveServicesEndpoint = options.CallIntelligenceOptions?.BackupCognitiveServicesEndpoint?.AbsoluteUri;
-            if (cognitiveServicesEndpoint != null || backupCognitiveServicesEndpoint != null)
+            if (cognitiveServicesEndpoint != null)
             {
                 request.CallIntelligenceOptions = new()
                 {
@@ -777,7 +777,7 @@ namespace Azure.Communication.CallAutomation
             // Add CallIntelligenceOptions such as custom cognitive service domain name
             string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
             string backupCognitiveServicesEndpoint = options.CallIntelligenceOptions?.BackupCognitiveServicesEndpoint?.AbsoluteUri;
-            if (cognitiveServicesEndpoint != null || backupCognitiveServicesEndpoint != null)
+            if (cognitiveServicesEndpoint != null)
             {
                 connectRequest.CallIntelligenceOptions = new()
                 {
