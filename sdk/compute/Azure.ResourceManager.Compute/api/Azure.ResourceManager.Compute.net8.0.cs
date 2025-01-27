@@ -4031,6 +4031,7 @@ namespace Azure.ResourceManager.Compute.Models
     {
         public CloudServiceVaultCertificate() { }
         public System.Uri CertificateUri { get { throw null; } set { } }
+        public bool? IsBootstrapCertificate { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.Compute.Models.CloudServiceVaultCertificate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultCertificate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Compute.Models.CloudServiceVaultCertificate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

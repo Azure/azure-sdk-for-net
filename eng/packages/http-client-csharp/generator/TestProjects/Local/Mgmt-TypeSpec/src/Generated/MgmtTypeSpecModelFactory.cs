@@ -25,12 +25,12 @@ namespace MgmtTypeSpec.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="extendedLocation"></param>
-        /// <returns> A new <see cref="Models.Foo"/> instance for mocking. </returns>
-        public static Foo Foo(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, FooProperties properties = default, ExtendedLocation extendedLocation = default)
+        /// <returns> A new <see cref="Models.FooData"/> instance for mocking. </returns>
+        public static FooData FooData(ResourceIdentifier id = default, string name = default, string @type = default, SystemData systemData = default, IDictionary<string, string> tags = default, string location = default, FooProperties properties = default, ExtendedLocation extendedLocation = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new Foo(
+            return new FooData(
                 id,
                 name,
                 @type,
@@ -130,9 +130,9 @@ namespace MgmtTypeSpec.Models
         /// <param name="value"> The Foo items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <returns> A new <see cref="Models.FooListResult"/> instance for mocking. </returns>
-        public static FooListResult FooListResult(IEnumerable<Foo> value = default, Uri nextLink = default)
+        public static FooListResult FooListResult(IEnumerable<FooData> value = default, Uri nextLink = default)
         {
-            value ??= new ChangeTrackingList<Foo>();
+            value ??= new ChangeTrackingList<FooData>();
 
             return new FooListResult(value?.ToList(), nextLink, additionalBinaryDataProperties: null);
         }

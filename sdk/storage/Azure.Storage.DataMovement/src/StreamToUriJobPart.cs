@@ -26,7 +26,7 @@ namespace Azure.Storage.DataMovement
         /// Creating job part based on a single transfer job
         /// </summary>
         private StreamToUriJobPart(TransferJobInternal job, int partNumber)
-            : base(dataTransfer: job._dataTransfer,
+            : base(transferOperation: job._transferOperation,
                   partNumber: partNumber,
                   sourceResource: job._sourceResource,
                   destinationResource: job._destinationResource,
@@ -56,7 +56,7 @@ namespace Azure.Storage.DataMovement
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
             long? length = default)
-            : base(dataTransfer: job._dataTransfer,
+            : base(transferOperation: job._transferOperation,
                   partNumber: partNumber,
                   sourceResource: sourceResource,
                   destinationResource: destinationResource,
@@ -87,11 +87,11 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            DataTransferStatus jobPartStatus,
+            TransferStatus jobPartStatus,
             long initialTransferSize,
             long transferChunkSize,
-            StorageResourceCreationPreference createPreference)
-            : base(dataTransfer: job._dataTransfer,
+            StorageResourceCreationMode createPreference)
+            : base(transferOperation: job._transferOperation,
                   partNumber: partNumber,
                   sourceResource: sourceResource,
                   destinationResource: destinationResource,
@@ -162,10 +162,10 @@ namespace Azure.Storage.DataMovement
             int partNumber,
             StorageResourceItem sourceResource,
             StorageResourceItem destinationResource,
-            DataTransferStatus jobPartStatus,
+            TransferStatus jobPartStatus,
             long initialTransferSize,
             long transferChunkSize,
-            StorageResourceCreationPreference createPreference)
+            StorageResourceCreationMode createPreference)
         {
             return new StreamToUriJobPart(
                 job: job,
@@ -194,7 +194,7 @@ namespace Azure.Storage.DataMovement
                 {
                     return;
                 }
-                await OnTransferStateChangedAsync(DataTransferState.InProgress).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(TransferState.InProgress).ConfigureAwait(false);
                 long? fileLength = default;
                 StorageResourceItemProperties properties = await _sourceResource.GetPropertiesAsync(_cancellationToken).ConfigureAwait(false);
                 fileLength = properties.ResourceLength;
@@ -232,7 +232,7 @@ namespace Azure.Storage.DataMovement
                     {
                         // If we cannot upload in one shot, initiate the parallel block uploader
                         IEnumerable<(long Offset, long Length)> ranges = GetRanges(length, blockSize);
-                        if (_destinationResource.TransferType == DataTransferOrder.Unordered)
+                        if (_destinationResource.TransferType == TransferOrder.Unordered)
                         {
                             await QueueStageBlockRequests(ranges, length, properties).ConfigureAwait(false);
                         }
@@ -280,12 +280,12 @@ namespace Azure.Storage.DataMovement
                 return !singleCall;
             }
             catch (RequestFailedException r)
-            when (r.ErrorCode == "BlobAlreadyExists" && _createMode == StorageResourceCreationPreference.SkipIfExists)
+            when (r.ErrorCode == "BlobAlreadyExists" && _createMode == StorageResourceCreationMode.SkipIfExists)
             {
                 await InvokeSkippedArgAsync().ConfigureAwait(false);
             }
             catch (InvalidOperationException i)
-            when (i.Message.Contains("Cannot overwrite file.") && _createMode == StorageResourceCreationPreference.SkipIfExists)
+            when (i.Message.Contains("Cannot overwrite file.") && _createMode == StorageResourceCreationMode.SkipIfExists)
             {
                 await InvokeSkippedArgAsync().ConfigureAwait(false);
             }
@@ -317,7 +317,7 @@ namespace Azure.Storage.DataMovement
                 {
                     await _destinationResource.CopyFromStreamAsync(
                         stream: stream,
-                        overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                        overwrite: _createMode == StorageResourceCreationMode.OverwriteIfExists,
                         streamLength: blockSize,
                         completeLength: expectedLength,
                         options: new()
@@ -331,7 +331,7 @@ namespace Azure.Storage.DataMovement
                 await ReportBytesWrittenAsync(blockSize).ConfigureAwait(false);
 
                 // Set completion status to completed
-                await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
             }
             else
             {
@@ -351,7 +351,7 @@ namespace Azure.Storage.DataMovement
                     await _destinationResource.CopyFromStreamAsync(
                         stream: slicedStream,
                         streamLength: blockSize,
-                        overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                        overwrite: _createMode == StorageResourceCreationMode.OverwriteIfExists,
                         completeLength: expectedLength,
                         options: new()
                         {
@@ -402,7 +402,7 @@ namespace Azure.Storage.DataMovement
                     await _destinationResource.CopyFromStreamAsync(
                         stream: slicedStream,
                         streamLength: blockLength,
-                        overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                        overwrite: _createMode == StorageResourceCreationMode.OverwriteIfExists,
                         completeLength: completeLength,
                         options: new StorageResourceWriteToOffsetOptions()
                         {
@@ -436,7 +436,7 @@ namespace Azure.Storage.DataMovement
 
             // Apply necessary transfer completions on the destination.
             await _destinationResource.CompleteTransferAsync(
-                overwrite: _createMode == StorageResourceCreationPreference.OverwriteIfExists,
+                overwrite: _createMode == StorageResourceCreationMode.OverwriteIfExists,
                 completeTransferOptions: new() { SourceProperties = sourceProperties },
                 cancellationToken: _cancellationToken).ConfigureAwait(false);
 
@@ -444,7 +444,7 @@ namespace Azure.Storage.DataMovement
             await DisposeHandlersAsync().ConfigureAwait(false);
 
             // Set completion status to completed
-            await OnTransferStateChangedAsync(DataTransferState.Completed).ConfigureAwait(false);
+            await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
         }
 
         private async Task QueueStageBlockRequests(
