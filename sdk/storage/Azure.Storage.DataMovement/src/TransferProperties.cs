@@ -14,13 +14,11 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Contains the transfer ID which to rehydrate the StorageResource from.
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual string TransferId { get; internal set; }
 
         /// <summary>
         /// Contains the Source uri of the Storage Resource.
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Uri SourceUri { get; internal set; }
 
         /// <summary>
@@ -38,7 +36,6 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Contains the Destination uri of the Storage Resource.
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual Uri DestinationUri { get; internal set; }
 
         /// <summary>
@@ -56,7 +53,6 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Defines whether or not this was a container transfer, in order to rehydrate the StorageResource.
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual bool IsContainer { get; internal set; }
 
         /// <summary>

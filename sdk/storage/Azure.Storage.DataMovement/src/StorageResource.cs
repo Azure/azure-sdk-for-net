@@ -27,7 +27,6 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Gets the Uri of the Storage Resource.
         /// </summary>
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public abstract Uri Uri { get; }
 
         /// <summary>
