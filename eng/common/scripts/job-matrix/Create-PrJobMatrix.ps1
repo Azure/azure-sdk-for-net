@@ -240,7 +240,7 @@ if ($indirectPackages) {
   foreach($artifact in $indirectPackages) {
     Write-Host "-> $($artifact.ArtifactName)"
   }
-  $OverallResult += GeneratePRMatrixForBatch -Packages $indirectPackages -FullSparseMatrix !$SparseIndirect
+  $OverallResult += GeneratePRMatrixForBatch -Packages $indirectPackages -FullSparseMatrix (-not $SparseIndirect)
 }
 $serialized = SerializePipelineMatrix $OverallResult
 
