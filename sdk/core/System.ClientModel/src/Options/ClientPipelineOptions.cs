@@ -2,9 +2,6 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using Microsoft.Extensions.Logging;
 
 namespace System.ClientModel.Primitives;
 
@@ -225,30 +222,22 @@ public class ClientPipelineOptions
 
     internal HttpClientPipelineTransport GetHttpClientPipelineTransport()
     {
-        // If client-wide logging is enabled via ILogger, the shared client pipeline transport instance cannot be used. The transport will need the
-        // logger factory instance from the logging options.
-        // If client-wide logging is disabled, the shared client pipeline transport instance cannot be used. By default, client-wide logging is
-        // enabled.
-        if (_loggingOptions != null && (_loggingOptions.ClientWideLoggingIsDisabled || _loggingOptions.ClientWideLoggingIsEnabledViaILogger))
+        if (_loggingOptions == null || _loggingOptions.UseDefaultClientWideLogging)
         {
-            return new HttpClientPipelineTransport(null, _loggingOptions.EnableLogging ?? ClientLoggingOptions.DefaultEnableLogging, _loggingOptions.LoggerFactory);
+            return HttpClientPipelineTransport.Shared;
         }
-        return HttpClientPipelineTransport.Shared;
+        return new HttpClientPipelineTransport(null, _loggingOptions.EnableLogging ?? ClientLoggingOptions.DefaultEnableLogging, _loggingOptions.LoggerFactory);
     }
 
     internal ClientRetryPolicy GetClientRetryPolicy()
     {
-        // If client-wide logging is enabled via ILogger, the default retry policy cannot be used. The policy will need the
-        // logger factory instance from the logging options.
-        // If client-wide logging is disabled, the default retry policy cannot be used. By default, client-wide logging is
-        // enabled.
-        if (_loggingOptions != null && (_loggingOptions.ClientWideLoggingIsDisabled || _loggingOptions.ClientWideLoggingIsEnabledViaILogger))
+        if (_loggingOptions == null || _loggingOptions.UseDefaultClientWideLogging)
         {
-            return new ClientRetryPolicy(ClientRetryPolicy.DefaultMaxRetries,
+            return ClientRetryPolicy.Default;
+        }
+        return new ClientRetryPolicy(ClientRetryPolicy.DefaultMaxRetries,
                                          _loggingOptions.EnableLogging ?? ClientLoggingOptions.DefaultEnableLogging,
                                          _loggingOptions.LoggerFactory);
-        }
-        return ClientRetryPolicy.Default;
     }
 
     internal bool AddMessageLoggingPolicy => _loggingOptions?.AddMessageLoggingPolicy ?? true;

@@ -264,8 +264,9 @@ public class ClientLoggingOptions
     }
 
     internal bool AddMessageLoggingPolicy => EnableMessageLogging ?? EnableLogging ?? DefaultEnableLogging;
-    internal bool ClientWideLoggingIsEnabledViaILogger => LoggerFactory != null && (EnableLogging == null || EnableLogging == true);
-    internal bool ClientWideLoggingIsDisabled => EnableLogging == false;
+
+    internal bool UseDefaultClientWideLogging => LoggerFactory == null
+                                                 && EnableLogging == null;
 
     internal bool AddDefaultMessageLoggingPolicy => EnableLogging == null
                                                     && MessageContentSizeLimit == null
