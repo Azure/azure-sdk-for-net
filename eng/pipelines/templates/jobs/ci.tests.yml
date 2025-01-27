@@ -80,7 +80,7 @@ jobs:
           parameters:
             # we only need to checkout all sdk directories for All PR builds OR the
             # deprecating AdditionalDependency leg of the core/resource builds. ProjectListOverrideFilePropertyName will be set in the latter case.
-            ${{ if and(ne(parameters.ServiceDirectory, 'auto'), eq(parameters.ProjectListOverrideFilePropertyName, '') }}:
+            ${{ if and(ne(parameters.ServiceDirectory, 'auto'), eq(parameters.ProjectListOverrideFilePropertyName, '')) }}:
               Paths:
                 - "/*"
                 - "!SessionRecords"
