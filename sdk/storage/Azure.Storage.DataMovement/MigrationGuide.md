@@ -322,7 +322,7 @@ TranferOperation operation = await transferManager.StartTransferAsync(
 await operation.WaitForCompletionAsync();
 ```
 
-#### Copy share file to blob
+#### Copy blob to share file
 
 Note: File shares requires the Azure.Storage.DataMovement.Files.Shares package.
 
@@ -345,13 +345,14 @@ await TransferManager.DownloadAsync(
 // these values provided by your code
 string blobUri, fileUri;
 BlobsStorageResourceProvider blobs;
+ShareFilesStorageResourceProvider files;
 TransferManager transferManager;
 ```
 ```csharp
 // copy file
 TranferOperation operation = await transferManager.StartTransferAsync(
     blobs.FromBlob(blobUri),
-    LocalFilesStorageResourceProvider.FromFile(fileUri));
+    files.FromFile(fileUri));
 await operation.WaitForCompletionAsync();
 ```
 
