@@ -237,7 +237,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <param name="options">
         /// Options for creating the storage resource.
         /// </param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>
         /// The configured storage resource.
         /// </returns>
@@ -270,7 +273,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <param name="options">
         /// Options for creating the storage resource.
         /// </param>
-        /// <param name="cancellationToken"></param>
+        /// <param name="cancellationToken">
+        /// Optional <see cref="CancellationToken"/> to propagate
+        /// notifications that the operation should be cancelled.
+        /// </param>
         /// <returns>
         /// The configured storage resource.
         /// </returns>
