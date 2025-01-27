@@ -246,6 +246,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileStorageResourceOptions options = default,
             CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             ShareDirectoryClient client = _credentialType switch
             {
                 CredentialType.None => new ShareDirectoryClient(directoryUri),
@@ -278,6 +279,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             ShareFileStorageResourceOptions options = default,
             CancellationToken cancellationToken = default)
         {
+            CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
             ShareFileClient client = _credentialType switch
             {
                 CredentialType.None => new ShareFileClient(fileUri),
