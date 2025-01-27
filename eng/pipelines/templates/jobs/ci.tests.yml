@@ -78,7 +78,9 @@ jobs:
       - ${{ if not(contains(variables['Build.DefinitionName'], '-pr - ')) }}:
         - template: /eng/common/pipelines/templates/steps/sparse-checkout.yml
           parameters:
-            ${{ if ne(parameters.ServiceDirectory, 'auto') }}:
+            # we only need to checkout all sdk directories for All PR builds OR the
+            # deprecating AdditionalDependency leg of the core/resource builds. ProjectListOverrideFilePropertyName will be set in the latter case.
+            ${{ if and(ne(parameters.ServiceDirectory, 'auto'), eq(parameters.ProjectListOverrideFilePropertyName, '') }}:
               Paths:
                 - "/*"
                 - "!SessionRecords"
@@ -141,9 +143,9 @@ jobs:
 
       # ProjectListOverrideFile is set by the customization within dependency.tests.yml
       # OR it is set by the PR built to target a set of packages outside of a single target service directory.
-      # that occurs within `set-artifact-packages.yml`
+      # if it is unset, then we are in a traditional service directory build.
       - pwsh: |
-          if ("${{ parameters.ProjectListOverrideFilePropertyName }}" -ne '' -or "${{ parameters.ServiceDirectory }}" -eq 'auto') {
+          if ($env:PROJECTLISTOVERRIDEFILE) {
             Write-Host "##vso[task.setvariable variable=CodeCoverageFilePattern]$(Build.SourcesDirectory)/sdk/**/coverage.cobertura.xml"
           }
           else
