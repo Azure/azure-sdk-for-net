@@ -98,12 +98,11 @@ The modern library introduces a new and unified `StorageResource` type. While th
 `StorageResource` instances are obtained through providers. Providers are often scoped to a single storage service and will have unique APIs to acquire `StorageResource` instances as well as properly authenticate them. Here is an example using providers to create an upload to an Azure blob. Further examples can be found in our [migration samples](#migration-samples).
 
 ```csharp
-LocalFilesStorageResourceProvider files = new();
 BlobsStorageResourceProvider blobs = new(myTokenCredential);
 TransferManager transferManager = new TransferManager();
 
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
-    sourceResource: files.FromFile(sourceLocalPath),
+    sourceResource: LocalFilesStorageResourceProvider.FromFile(sourceLocalPath),
     destinationResource: blobs.FromBlob(destinationBlobUri));
 ```
 
@@ -179,7 +178,6 @@ await TransferManager.UploadAsync(
 ```csharp
 // these values provided by your code
 string filePath, blobUri;
-LocalFilesStorageResourceProvider files;
 BlobsStorageResourceProvider blobs;
 TransferManager transferManager;
 ```
@@ -187,7 +185,7 @@ TransferManager transferManager;
 ```csharp
 // upload blob
 TranferOperation operation = await transferManager.StartTransferAsync(
-    files.FromFile(filePath),
+    LocalFilesStorageResourceProvider.FromFile(filePath),
     blobs.FromBlob(blobUri));
 await operation.WaitForCompletionAsync();
 ```
@@ -210,7 +208,6 @@ await TransferManager.UploadDirectoryAsync(
 ```csharp
 // these values provided by your code
 string directoryPath, containerUri, blobDirectoryPath;
-LocalFilesStorageResourceProvider files;
 BlobsStorageResourceProvider blobs;
 TransferManager transferManager;
 ```
@@ -218,7 +215,7 @@ TransferManager transferManager;
 ```csharp
 // upload blobs
 TranferOperation operation = await transferManager.StartTransferAsync(
-    files.FromDirectory(directoryPath),
+    LocalFilesStorageResourceProvider.FromDirectory(directoryPath),
     blobs.FromContainer(containerUri, new BlobStorageResourceContainerOptions()
     {
         BlobDirectoryPrefix = blobDirectoryPath,
@@ -246,7 +243,6 @@ await TransferManager.DownloadAsync(
 ```csharp
 // these values provided by your code
 string filePath, blobUri;
-LocalFilesStorageResourceProvider files;
 BlobsStorageResourceProvider blobs;
 TransferManager transferManager;
 ```
@@ -254,7 +250,7 @@ TransferManager transferManager;
 // download blob
 TranferOperation operation = await transferManager.StartTransferAsync(
     blobs.FromBlob(blobUri),
-    files.FromFile(filePath));
+    LocalFilesStorageResourceProvider.FromFile(filePath));
 await operation.WaitForCompletionAsync();
 ```
 
@@ -278,7 +274,6 @@ await TransferManager.DownloadDirectoryAsync(
 ```csharp
 // these values provided by your code
 string directoryPath, containerUri, blobDirectoryPath;
-LocalFilesStorageResourceProvider files;
 BlobsStorageResourceProvider blobs;
 TransferManager transferManager;
 ```
@@ -289,7 +284,7 @@ TranferOperation operation = await transferManager.StartTransferAsync(
     {
         BlobDirectoryPrefix = blobDirectoryPath,
     }),
-    files.FromDirectory(directoryPath));
+    LocalFilesStorageResourceProvider.FromDirectory(directoryPath));
 await operation.WaitForCompletionAsync();
 ```
 
@@ -350,14 +345,13 @@ await TransferManager.DownloadAsync(
 // these values provided by your code
 string blobUri, fileUri;
 BlobsStorageResourceProvider blobs;
-ShareFilesStorageResourceProvider files;
 TransferManager transferManager;
 ```
 ```csharp
 // copy file
 TranferOperation operation = await transferManager.StartTransferAsync(
     blobs.FromBlob(blobUri),
-    files.FromFile(fileUri));
+    LocalFilesStorageResourceProvider.FromFile(fileUri));
 await operation.WaitForCompletionAsync();
 ```
 
@@ -407,7 +401,7 @@ bool reportBytes;
 ```csharp
 // upload blobs
 TranferOperation operation = await transferManager.StartTransferAsync(
-    files.FromDirectory(directoryPath),
+    LocalFilesStorageResourceProvider.FromDirectory(directoryPath),
     blobs.FromContainer(containerUri, new BlobStorageResourceContainerOptions()
     {
         BlobDirectoryPrefix = blobDirectoryPath,
@@ -438,7 +432,7 @@ options.ItemTransferCompleted += onItemCompleted;
 options.ItemTransferSkipped += onItemSkipped;
 options.ItemTransferFailed += onItemFailed;
 TranferOperation operation = await transferManager.StartTransferAsync(
-    files.FromDirectory(directoryPath),
+    LocalFilesStorageResourceProvider.FromDirectory(directoryPath),
     blobs.FromContainer(containerUri, new BlobStorageResourceContainerOptions()
     {
         BlobDirectoryPrefix = blobDirectoryPath,
