@@ -107,7 +107,7 @@ public static class AzureAIProjectsExensions
     private static SearchClient CreateSearchClient(this ClientWorkspace workspace, string indexName)
     {
         ClientConnection connection = workspace.GetConnectionOptions(typeof(SearchClient).FullName);
-        return new(connection.ToUri(), "indexName", new AzureKeyCredential(connection.ApiKeyCredential!));
+        return new(connection.ToUri(), indexName, new AzureKeyCredential(connection.ApiKeyCredential!));
     }
 
     /// <summary>
