@@ -54,11 +54,13 @@ namespace Azure.Storage.DataMovement.Tests
                 { DataMovementConstants.ResourceProperties.Metadata, metadata },
                 { DataMovementConstants.ResourceProperties.SourceFilePermissionKey, DefaultSourcePermissionKey }
             };
-            return new(
-                    resourceLength: length,
-                    eTag: new("ETag"),
-                    lastModifiedTime: DateTimeOffset.UtcNow.AddHours(-1),
-                    properties: sourceProperties);
+            return new StorageResourceItemProperties()
+            {
+                ResourceLength = length,
+                ETag = new ETag("ETag"),
+                LastModifiedTime = DateTimeOffset.UtcNow.AddHours(-1),
+                RawProperties = sourceProperties
+            };
         }
 
         private Mock<StorageResourceItem> GetStorageResourceItem(int length = Constants.KB)

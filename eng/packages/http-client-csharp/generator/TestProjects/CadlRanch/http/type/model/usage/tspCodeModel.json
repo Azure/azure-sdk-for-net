@@ -1,0 +1,390 @@
+{
+ "$id": "1",
+ "Name": "Type.Model.Usage",
+ "ApiVersions": [],
+ "Enums": [],
+ "Models": [
+  {
+   "$id": "2",
+   "kind": "model",
+   "name": "InputRecord",
+   "crossLanguageDefinitionId": "Type.Model.Usage.InputRecord",
+   "usage": "Input,Json",
+   "doc": "Record used in operation parameters",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "3",
+     "kind": "property",
+     "name": "requiredProp",
+     "serializedName": "requiredProp",
+     "type": {
+      "$id": "4",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Model.Usage.InputRecord.requiredProp"
+    }
+   ]
+  },
+  {
+   "$id": "5",
+   "kind": "model",
+   "name": "OutputRecord",
+   "crossLanguageDefinitionId": "Type.Model.Usage.OutputRecord",
+   "usage": "Output,Json",
+   "doc": "Record used in operation return type",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "6",
+     "kind": "property",
+     "name": "requiredProp",
+     "serializedName": "requiredProp",
+     "type": {
+      "$id": "7",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Model.Usage.OutputRecord.requiredProp"
+    }
+   ]
+  },
+  {
+   "$id": "8",
+   "kind": "model",
+   "name": "InputOutputRecord",
+   "crossLanguageDefinitionId": "Type.Model.Usage.InputOutputRecord",
+   "usage": "Input,Output,Json",
+   "doc": "Record used both as operation parameter and return type",
+   "decorators": [],
+   "properties": [
+    {
+     "$id": "9",
+     "kind": "property",
+     "name": "requiredProp",
+     "serializedName": "requiredProp",
+     "type": {
+      "$id": "10",
+      "kind": "string",
+      "name": "string",
+      "crossLanguageDefinitionId": "TypeSpec.string",
+      "decorators": []
+     },
+     "optional": false,
+     "readOnly": false,
+     "discriminator": false,
+     "flatten": false,
+     "decorators": [],
+     "crossLanguageDefinitionId": "Type.Model.Usage.InputOutputRecord.requiredProp"
+    }
+   ]
+  }
+ ],
+ "Clients": [
+  {
+   "$id": "11",
+   "Name": "UsageClient",
+   "Doc": "Illustrates usage of Record in different places(Operation parameters, return type or both).",
+   "Operations": [
+    {
+     "$id": "12",
+     "Name": "input",
+     "ResourceName": "Usage",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "13",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Doc": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "14",
+        "kind": "constant",
+        "valueType": {
+         "$id": "15",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "16",
+       "Name": "input",
+       "NameInRequest": "input",
+       "Type": {
+        "$ref": "2"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "17",
+       "StatusCodes": [
+        204
+       ],
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}",
+     "Path": "/type/model/usage/input",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Type.Model.Usage.input",
+     "Decorators": []
+    },
+    {
+     "$id": "18",
+     "Name": "output",
+     "ResourceName": "Usage",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "19",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "20",
+        "kind": "constant",
+        "valueType": {
+         "$id": "21",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "22",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "5"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "GET",
+     "RequestBodyMediaType": "None",
+     "Uri": "{endpoint}",
+     "Path": "/type/model/usage/output",
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Type.Model.Usage.output",
+     "Decorators": []
+    },
+    {
+     "$id": "23",
+     "Name": "inputAndOutput",
+     "ResourceName": "Usage",
+     "Accessibility": "public",
+     "Parameters": [
+      {
+       "$id": "24",
+       "Name": "contentType",
+       "NameInRequest": "Content-Type",
+       "Doc": "Body parameter's content type. Known values are application/json",
+       "Type": {
+        "$id": "25",
+        "kind": "constant",
+        "valueType": {
+         "$id": "26",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": true,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "27",
+       "Name": "accept",
+       "NameInRequest": "Accept",
+       "Type": {
+        "$id": "28",
+        "kind": "constant",
+        "valueType": {
+         "$id": "29",
+         "kind": "string",
+         "name": "string",
+         "crossLanguageDefinitionId": "TypeSpec.string",
+         "decorators": []
+        },
+        "value": "application/json",
+        "decorators": []
+       },
+       "Location": "Header",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Constant",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      },
+      {
+       "$id": "30",
+       "Name": "body",
+       "NameInRequest": "body",
+       "Type": {
+        "$ref": "8"
+       },
+       "Location": "Body",
+       "IsApiVersion": false,
+       "IsContentType": false,
+       "IsEndpoint": false,
+       "Explode": false,
+       "IsRequired": true,
+       "Kind": "Method",
+       "Decorators": [],
+       "SkipUrlEncoding": false
+      }
+     ],
+     "Responses": [
+      {
+       "$id": "31",
+       "StatusCodes": [
+        200
+       ],
+       "BodyType": {
+        "$ref": "8"
+       },
+       "BodyMediaType": "Json",
+       "Headers": [],
+       "IsErrorResponse": false,
+       "ContentTypes": [
+        "application/json"
+       ]
+      }
+     ],
+     "HttpMethod": "POST",
+     "RequestBodyMediaType": "Json",
+     "Uri": "{endpoint}",
+     "Path": "/type/model/usage/input-output",
+     "RequestMediaTypes": [
+      "application/json"
+     ],
+     "BufferResponse": true,
+     "GenerateProtocolMethod": true,
+     "GenerateConvenienceMethod": true,
+     "CrossLanguageDefinitionId": "Type.Model.Usage.inputAndOutput",
+     "Decorators": []
+    }
+   ],
+   "Protocol": {
+    "$id": "32"
+   },
+   "Parameters": [
+    {
+     "$id": "33",
+     "Name": "endpoint",
+     "NameInRequest": "endpoint",
+     "Doc": "Service host",
+     "Type": {
+      "$id": "34",
+      "kind": "url",
+      "name": "url",
+      "crossLanguageDefinitionId": "TypeSpec.url"
+     },
+     "Location": "Uri",
+     "IsApiVersion": false,
+     "IsResourceParameter": false,
+     "IsContentType": false,
+     "IsRequired": true,
+     "IsEndpoint": true,
+     "SkipUrlEncoding": false,
+     "Explode": false,
+     "Kind": "Client",
+     "DefaultValue": {
+      "$id": "35",
+      "Type": {
+       "$id": "36",
+       "kind": "string",
+       "name": "string",
+       "crossLanguageDefinitionId": "TypeSpec.string"
+      },
+      "Value": "http://localhost:3000"
+     }
+    }
+   ],
+   "Decorators": []
+  }
+ ]
+}

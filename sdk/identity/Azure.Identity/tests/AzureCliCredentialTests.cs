@@ -45,11 +45,16 @@ namespace Azure.Identity.Tests
         [Test]
         public async Task AuthenticateWithCliCredential(
             [Values(null, TenantIdHint)] string tenantId,
+            [Values(null, "1a7eed92-726e-46c0-b21d-a3db74b3b58c", "My Subscription Name -_")] string subscription,
             [Values(true)] bool allowMultiTenantAuthentication,
             [Values(null, TenantId)] string explicitTenantId)
         {
-            var context = new TokenRequestContext(new[] { Scope }, tenantId: tenantId);
+            var context = new TokenRequestContext([Scope], tenantId: tenantId);
             var options = new AzureCliCredentialOptions { TenantId = explicitTenantId, AdditionallyAllowedTenants = { TenantIdHint } };
+            if (subscription != null)
+            {
+                options.Subscription = subscription;
+            }
             string expectedTenantId = TenantIdResolverBase.Default.Resolve(explicitTenantId, context, TenantIdResolverBase.AllTenants);
             var (expectedToken, expectedExpiresOn, processOutput) = CredentialTestHelpers.CreateTokenForAzureCli();
 
@@ -70,6 +75,23 @@ namespace Azure.Identity.Tests
             {
                 Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("-tenant"));
             }
+
+            if (subscription != null)
+            {
+                Assert.That(testProcess.StartInfo.Arguments, Does.Contain($"--subscription \"{subscription}\""));
+            }
+            else
+            {
+                Assert.That(testProcess.StartInfo.Arguments, Does.Not.Contain("--subscription"));
+            }
+        }
+
+        [Test]
+        public void AzureCliCredentialOptionsValidatesSubscriptionOption()
+        {
+            Assert.Throws<ArgumentException>(() => new AzureCliCredentialOptions { Subscription = "My Subscription Name with a quote \"" });
+            new AzureCliCredentialOptions { Subscription = "My Subscription Name -_" };
+            new AzureCliCredentialOptions { Subscription = Guid.NewGuid().ToString() };
         }
 
         [Test]
