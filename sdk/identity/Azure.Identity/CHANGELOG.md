@@ -13,6 +13,7 @@
 - Fixed an issue where some credentials in `DefaultAzureCredential` would not fall through to the next credential in the chain under certain exception conditions.
 
 ### Other Changes
+- `AzurePowerShellCredential` no longer relies on APIs that are not available in Constrained Language Mode.
 
 ## 1.13.1 (2024-10-24)
 
