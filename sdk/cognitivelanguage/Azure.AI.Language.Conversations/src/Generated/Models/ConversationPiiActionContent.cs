@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Models
 {
     /// <summary> Supported parameters for a conversational pii task. </summary>
-    public partial class PiiActionContent
+    public partial class ConversationPiiActionContent
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,14 +45,14 @@ namespace Azure.AI.Language.Conversations.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PiiActionContent"/>. </summary>
-        public PiiActionContent()
+        /// <summary> Initializes a new instance of <see cref="ConversationPiiActionContent"/>. </summary>
+        public ConversationPiiActionContent()
         {
             PiiCategories = new ChangeTrackingList<ConversationPiiCategories>();
             ExcludePiiCategories = new ChangeTrackingList<ConversationPiiCategoryExclusions>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PiiActionContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConversationPiiActionContent"/>. </summary>
         /// <param name="loggingOptOut"> logging opt out. </param>
         /// <param name="modelVersion"> model version. </param>
         /// <param name="piiCategories"> Array of ConversationPIICategories. </param>
@@ -66,7 +66,7 @@ namespace Azure.AI.Language.Conversations.Models
         /// The available derived classes include <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskTypePolicyType"/> and <see cref="NoMaskPolicyType"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PiiActionContent(bool? loggingOptOut, string modelVersion, IList<ConversationPiiCategories> piiCategories, bool? redactAudioTiming, TranscriptContentType? redactionSource, RedactionCharacter? redactionCharacter, IList<ConversationPiiCategoryExclusions> excludePiiCategories, BaseRedactionPolicy redactionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ConversationPiiActionContent(bool? loggingOptOut, string modelVersion, IList<ConversationPiiCategories> piiCategories, bool? redactAudioTiming, TranscriptContentType? redactionSource, RedactionCharacter? redactionCharacter, IList<ConversationPiiCategoryExclusions> excludePiiCategories, BaseRedactionPolicy redactionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;
