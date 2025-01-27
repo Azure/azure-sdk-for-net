@@ -81,9 +81,10 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <param name="disableLocalAuth"> Disables all authentication methods other than AAD authentication. </param>
         /// <param name="softDeleteRetentionInDays"> The amount of time in days that the configuration store will be retained when it is soft deleted. </param>
         /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this configuration store. </param>
+        /// <param name="dataPlaneProxy"> Property specifying the configuration of data plane proxy for Azure Resource Manager (ARM). </param>
         /// <param name="createMode"> Indicates whether the configuration store need to be recovered. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, AppConfigurationSku sku, AppConfigurationProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, AppConfigurationStoreEncryptionProperties encryption, IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, bool? enablePurgeProtection, AppConfigurationCreateMode? createMode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AppConfigurationStoreData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, AppConfigurationSku sku, AppConfigurationProvisioningState? provisioningState, DateTimeOffset? createdOn, string endpoint, AppConfigurationStoreEncryptionProperties encryption, IReadOnlyList<AppConfigurationPrivateEndpointConnectionReference> privateEndpointConnections, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? disableLocalAuth, int? softDeleteRetentionInDays, bool? enablePurgeProtection, AppConfigurationDataPlaneProxyProperties dataPlaneProxy, AppConfigurationCreateMode? createMode, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Sku = sku;
@@ -96,6 +97,7 @@ namespace Azure.ResourceManager.AppConfiguration
             DisableLocalAuth = disableLocalAuth;
             SoftDeleteRetentionInDays = softDeleteRetentionInDays;
             EnablePurgeProtection = enablePurgeProtection;
+            DataPlaneProxy = dataPlaneProxy;
             CreateMode = createMode;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -157,6 +159,9 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <summary> Property specifying whether protection against purge is enabled for this configuration store. </summary>
         [WirePath("properties.enablePurgeProtection")]
         public bool? EnablePurgeProtection { get; set; }
+        /// <summary> Property specifying the configuration of data plane proxy for Azure Resource Manager (ARM). </summary>
+        [WirePath("properties.dataPlaneProxy")]
+        public AppConfigurationDataPlaneProxyProperties DataPlaneProxy { get; set; }
         /// <summary> Indicates whether the configuration store need to be recovered. </summary>
         [WirePath("properties.createMode")]
         public AppConfigurationCreateMode? CreateMode { get; set; }

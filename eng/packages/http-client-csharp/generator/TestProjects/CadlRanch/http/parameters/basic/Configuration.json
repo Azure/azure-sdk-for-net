@@ -1,0 +1,6 @@
+{
+  "output-folder": ".",
+  "namespace": "Parameters.Basic",
+  "library-name": "Parameters.Basic",
+  "use-model-reader-writer": true
+}

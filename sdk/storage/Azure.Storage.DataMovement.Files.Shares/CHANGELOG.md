@@ -22,6 +22,8 @@
      - `ShareFileStorageResourceOptions.FileChangedOn`
 - Changed `ShareDirectoryClient.StartUploadDirectoryAsync` to `ShareDirectoryClient.UploadDirectoryAsync` and added a required `waitUntil` parameter.
 - Changed `ShareDirectoryClient.StartDownloadToDirectoryAsync` to `ShareDirectoryClient.DownloadToDirectoryAsync` and added a required `waitUntil` parameter.
+- Removed `ShareFilesStorageResourceProvider()` empty default constructor
+- Changed `ShareFilesStorageResourceProvider.FromClient` methods to `static` method
 
 ### Bugs Fixed
 

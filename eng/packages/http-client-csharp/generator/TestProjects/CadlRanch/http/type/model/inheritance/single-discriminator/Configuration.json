@@ -1,0 +1,6 @@
+{
+  "output-folder": ".",
+  "namespace": "Type.Model.Inheritance.SingleDiscriminator",
+  "library-name": "Type.Model.Inheritance.SingleDiscriminator",
+  "use-model-reader-writer": true
+}

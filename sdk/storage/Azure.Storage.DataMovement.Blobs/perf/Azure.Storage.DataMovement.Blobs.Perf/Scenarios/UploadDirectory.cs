@@ -45,7 +45,7 @@ namespace Azure.Storage.DataMovement.Blobs.Perf
 
         public override async Task RunAsync(CancellationToken cancellationToken)
         {
-            StorageResource source = LocalFileResourceProvider.FromDirectory(_sourceDirectory);
+            StorageResource source = LocalFilesStorageResourceProvider.FromDirectory(_sourceDirectory);
             StorageResource destination = BlobResourceProvider.FromContainer(_destinationContainer.Uri);
 
             await RunAndVerifyTransferAsync(source, destination, cancellationToken);

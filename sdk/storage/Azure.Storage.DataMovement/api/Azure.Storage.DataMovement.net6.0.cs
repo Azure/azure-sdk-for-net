@@ -2,13 +2,13 @@ namespace Azure.Storage.DataMovement
 {
     public partial class LocalFilesStorageResourceProvider : Azure.Storage.DataMovement.StorageResourceProvider
     {
-        public LocalFilesStorageResourceProvider() { }
+        internal LocalFilesStorageResourceProvider() { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal override string ProviderId { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromDestinationAsync(Azure.Storage.DataMovement.TransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
-        public Azure.Storage.DataMovement.StorageResourceContainer FromDirectory(string directoryPath) { throw null; }
-        public Azure.Storage.DataMovement.StorageResourceItem FromFile(string filePath) { throw null; }
+        public static Azure.Storage.DataMovement.StorageResourceContainer FromDirectory(string directoryPath) { throw null; }
+        public static Azure.Storage.DataMovement.StorageResourceItem FromFile(string filePath) { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         protected internal override System.Threading.Tasks.Task<Azure.Storage.DataMovement.StorageResource> FromSourceAsync(Azure.Storage.DataMovement.TransferProperties properties, System.Threading.CancellationToken cancellationToken) { throw null; }
     }
@@ -213,7 +213,7 @@ namespace Azure.Storage.DataMovement
         public Azure.Core.DiagnosticsOptions Diagnostics { get { throw null; } }
         public Azure.Storage.DataMovement.TransferErrorMode ErrorMode { get { throw null; } set { } }
         public int? MaximumConcurrency { get { throw null; } set { } }
-        public System.Collections.Generic.List<Azure.Storage.DataMovement.StorageResourceProvider> ResumeProviders { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.Storage.DataMovement.StorageResourceProvider> ProvidersForResuming { get { throw null; } set { } }
     }
     public partial class TransferOperation
     {

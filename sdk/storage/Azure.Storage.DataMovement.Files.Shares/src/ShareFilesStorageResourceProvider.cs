@@ -77,14 +77,6 @@ namespace Azure.Storage.DataMovement.Files.Shares
 
         #region ctors
         /// <summary>
-        /// Default constrctor.
-        /// </summary>
-        public ShareFilesStorageResourceProvider()
-        {
-            _credentialType = CredentialType.None;
-        }
-
-        /// <summary>
         /// <para>
         /// Constructs this provider to use the given credential when making a new File Share
         /// <see cref="StorageResource"/>.
@@ -371,7 +363,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromClient(
+        public static StorageResource FromClient(
             ShareDirectoryClient client,
             ShareFileStorageResourceOptions options = default)
         {
@@ -392,7 +384,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         /// <returns>
         /// The configured storage resource.
         /// </returns>
-        public StorageResource FromClient(
+        public static StorageResource FromClient(
             ShareFileClient client,
             ShareFileStorageResourceOptions options = default)
         {

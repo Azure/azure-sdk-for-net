@@ -40,6 +40,7 @@ extends:
   parameters:
     SparseCheckoutPaths:
       - /sdk/core/Azure.Core/src/Shared
+      - /sdk/core/Azure.Core.TestFramework/src
     BuildPrereleaseVersion: ${{ parameters.BuildPrereleaseVersion }}
     UseTypeSpecNext: ${{ parameters.UseTypeSpecNext }}
     ${{ if eq(variables['System.TeamProject'], 'internal') }}:

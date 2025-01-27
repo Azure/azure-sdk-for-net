@@ -1,14 +1,9 @@
 # Release History
 
-## 1.4.2-beta.1 (Unreleased)
+## 1.4.1-beta.1 (2025-01-27)
 
 ### Features Added
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added the ability to list users and roles.
 
 ## 1.3.0 (2023-12-05)
 
