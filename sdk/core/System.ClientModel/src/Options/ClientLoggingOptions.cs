@@ -25,6 +25,8 @@ public class ClientLoggingOptions
     private ChangeTrackingStringList? _allowedHeaderNames;
     private ChangeTrackingStringList? _allowedQueryParameters;
 
+    // These values are similar to the default values in Azure.Core.DiagnosticsOptions and both
+    // should be kept in sync. When updating, update the default values in both classes.
     private static readonly HashSet<string> s_defaultAllowedHeaderNames = ["traceparent",
                                                                           "Accept",
                                                                           "Cache-Control",
@@ -40,7 +42,6 @@ public class ClientLoggingOptions
                                                                           "If-Unmodified-Since",
                                                                           "Last-Modified",
                                                                           "Pragma",
-                                                                          "Request-Id",
                                                                           "Retry-After",
                                                                           "Server",
                                                                           "Transfer-Encoding",
@@ -89,7 +90,7 @@ public class ClientLoggingOptions
     }
 
     /// <summary>
-    /// Gets or sets value indicating if request and response content should be logged.
+    /// Gets or sets value indicating if request and response uri and header information should be logged.
     /// </summary>
     /// <value>Defaults to <c>null</c>. If <c>null</c>, the value
     /// of <see cref="EnableLogging"/> will be used instead.</value>
@@ -148,7 +149,6 @@ public class ClientLoggingOptions
                 if (_allowedHeaderNames is null)
                 {
                     var changeList = new ChangeTrackingStringList(s_defaultAllowedHeaderNames);
-                    changeList.StartTracking();
                     _allowedHeaderNames = changeList;
                 }
                 return _allowedHeaderNames;
@@ -182,7 +182,6 @@ public class ClientLoggingOptions
                 if (_allowedQueryParameters is null)
                 {
                     var changeList = new ChangeTrackingStringList(s_defaultAllowedQueryParameters);
-                    changeList.StartTracking();
                     _allowedQueryParameters = changeList;
                 }
                 return _allowedQueryParameters;
@@ -213,12 +212,10 @@ public class ClientLoggingOptions
         if (_allowedHeaderNames is not null)
         {
             _allowedHeaderNames.Freeze();
-            _allowedHeaderNames.StopTracking();
         }
         if (_allowedQueryParameters is not null)
         {
             _allowedQueryParameters.Freeze();
-            _allowedQueryParameters.StopTracking();
         }
     }
 

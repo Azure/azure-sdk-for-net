@@ -11,7 +11,7 @@ internal class ChangeTrackingStringList : IList<string>
 {
     private IList<string> _list;
     private bool _frozen = false;
-    private bool _tracking = false;
+    private bool _tracking = true;
 
     public ChangeTrackingStringList()
     {
@@ -23,15 +23,11 @@ internal class ChangeTrackingStringList : IList<string>
         _list = new List<string>(collection);
     }
 
-    public void StartTracking() => _tracking = true;
-    public void StopTracking() => _tracking = false;
-
     public bool HasChanged { get; private set; }
 
     public void Freeze()
     {
         _frozen = true;
-        _list = new ReadOnlyCollection<string>(_list);
     }
 
     public void AssertNotFrozen()

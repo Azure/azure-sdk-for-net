@@ -73,7 +73,7 @@ public class MessageLoggingPolicy : PipelinePolicy
 
         PipelineRequest request = message.Request;
 
-        string requestId = message.Request.ClientRequestId ?? string.Empty;
+        string requestId = Activity.Current?.Id ?? string.Empty;
 
         _messageLogger.LogRequest(requestId, request, _clientAssembly);
 
@@ -116,17 +116,17 @@ public class MessageLoggingPolicy : PipelinePolicy
         var after = Stopwatch.GetTimestamp();
 
         PipelineResponse response = message.Response!;
-        response.ClientRequestId = requestId;
+        string responseId = Activity.Current?.Id ?? string.Empty;
 
         double elapsed = (after - before) / (double)Stopwatch.Frequency;
 
         if (response.IsError)
         {
-            _messageLogger.LogErrorResponse(requestId, response, elapsed);
+            _messageLogger.LogErrorResponse(responseId, response, elapsed);
         }
         else
         {
-            _messageLogger.LogResponse(requestId, response, elapsed);
+            _messageLogger.LogResponse(responseId, response, elapsed);
         }
 
         if (_enableMessageContentLogging && response.ContentStream != null && _messageLogger.IsEnabled(LogLevel.Information, EventLevel.Informational))
@@ -157,16 +157,16 @@ public class MessageLoggingPolicy : PipelinePolicy
 
                 if (response.IsError)
                 {
-                    _messageLogger.LogErrorResponseContent(requestId, responseBytes, responseTextEncoding);
+                    _messageLogger.LogErrorResponseContent(responseId, responseBytes, responseTextEncoding);
                 }
                 else
                 {
-                    _messageLogger.LogResponseContent(requestId, responseBytes, responseTextEncoding);
+                    _messageLogger.LogResponseContent(responseId, responseBytes, responseTextEncoding);
                 }
             }
             else
             {
-                response.ContentStream = new LoggingStream(_messageLogger, requestId, _maxLength, response.ContentStream, response.IsError, responseTextEncoding);
+                response.ContentStream = new LoggingStream(_messageLogger, responseId, _maxLength, response.ContentStream, response.IsError, responseTextEncoding);
             }
         }
     }

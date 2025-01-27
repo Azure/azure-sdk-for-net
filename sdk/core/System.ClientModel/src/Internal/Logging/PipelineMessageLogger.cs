@@ -238,21 +238,4 @@ internal partial class PipelineMessageLogger
     private static partial void ErrorResponseContentTextBlock(ILogger logger, string requestId, int blockNumber, string content);
 
     #endregion
-
-    #region Helpers
-
-    private string FormatHeaders(IEnumerable<KeyValuePair<string, string>> headers)
-    {
-        var stringBuilder = new StringBuilder();
-        foreach (var header in headers)
-        {
-            stringBuilder.Append(header.Key);
-            stringBuilder.Append(':');
-            stringBuilder.Append(_sanitizer.SanitizeHeader(header.Key, header.Value));
-            stringBuilder.Append(Environment.NewLine);
-        }
-        return stringBuilder.ToString();
-    }
-
-    #endregion
 }
