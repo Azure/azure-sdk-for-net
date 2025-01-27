@@ -373,10 +373,8 @@ await operation.WaitForCompletionAsync();
 
 #### Post-transfer report
 
-In the legacy data movement library, it was possible to check a report of how many files
-were or were not transferred in a directory transfer, as shown below. This is no
-longer supported in the modern library. Applications will need to enable progress reporting
-or listen to transfer events, as detailed in the following sections.
+In the legacy data movement library, it was possible to check a report of how many files were or were not transferred in a directory transfer, as shown below.
+With the modern library, applications must instead enable progress reporting or listen to transfer events, as detailed in the following sections.
 
 ```csharp
 TransferStatus status = await TransferManager.UploadDirectoryAsync(
