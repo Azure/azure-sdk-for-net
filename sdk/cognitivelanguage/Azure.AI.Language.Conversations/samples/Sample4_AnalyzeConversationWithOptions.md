@@ -35,7 +35,7 @@ AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
             id: "1",
             participantId: "participant1",
             text: "Send an email to Carol about tomorrow's demo")),
-    new ConversationActionContent(projectName, deploymentName)
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
 {
     // Use Utf16CodeUnit for strings in .NET.
     StringIndexType = StringIndexType.Utf16CodeUnit,

@@ -34,7 +34,7 @@ AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
             id: "1",
             participantId: "participant1",
             text: "How are you?")),
-    new ConversationActionContent(projectName, deploymentName)
+    new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
     {
         StringIndexType = StringIndexType.Utf16CodeUnit,
     });

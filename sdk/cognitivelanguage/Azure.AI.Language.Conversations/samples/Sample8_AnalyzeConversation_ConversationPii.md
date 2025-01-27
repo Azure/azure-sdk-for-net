@@ -38,7 +38,7 @@ List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationO
     {
         new PiiOperationAction()
         {
-            ActionContent = new PiiActionContent(),
+            ActionContent = new ConversationPiiActionContent(),
             Name = "Conversation PII",
         }
     };
