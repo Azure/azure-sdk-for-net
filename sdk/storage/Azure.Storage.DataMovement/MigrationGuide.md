@@ -95,7 +95,11 @@ The modern library introduces a new and unified `StorageResource` type. While th
 
 **Important:** a transfer **must** be between two items or two containers. An exception will be thrown when attempting to transfer an item to a container and vice versa.
 
-`StorageResource` instances are obtained through providers. Providers are often scoped to a single storage service and will have unique APIs to acquire `StorageResource` instances as well as properly authenticate them. Here is an example using providers to create an upload to an Azure blob. Further examples can be found in our [migration samples](#migration-samples).
+`StorageResource` instances are obtained through providers.
+Providers are often scoped to a single storage service and will have unique APIs to acquire `StorageResource` instances as well as properly authenticate them.
+Here is an example using providers to create an upload to an Azure blob.
+Note that local files use a static provider, while blobs (and every other provider in our packages) must be instantiated.
+Further examples can be found in our [migration samples](#migration-samples).
 
 ```csharp
 BlobsStorageResourceProvider blobs = new(myTokenCredential);
