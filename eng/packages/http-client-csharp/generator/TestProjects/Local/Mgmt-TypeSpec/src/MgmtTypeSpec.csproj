@@ -25,5 +25,6 @@
 		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\DiagnosticScope.cs" LinkBase="Shared/Core" />
 		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\HttpMessageSanitizer.cs" LinkBase="Shared/Core" />
 		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\AppContextSwitchHelper.cs" LinkBase="Shared/Core" />
+		<Compile Include="$(MSBuildThisFileDirectory)..\..\..\..\..\..\..\..\sdk\core\Azure.Core\src\Shared\OperationFinalStateVia.cs" LinkBase="Shared/Core" />
 	</ItemGroup>
 </Project>

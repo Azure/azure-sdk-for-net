@@ -7,6 +7,7 @@ using Azure.Generator.Utilities;
 using Microsoft.Generator.CSharp.ClientModel;
 using Microsoft.Generator.CSharp.Input;
 using Microsoft.Generator.CSharp.Providers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -106,9 +107,11 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
-        // TODO: generate resources and collections
+        // TODO: generate collections
         protected override TypeProvider[] BuildTypeProviders() => [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition(), .. BuildResources()];
 
         internal bool IsResource(string name) => _specNameToOperationSetsMap.ContainsKey(name);
+
+        internal Lazy<IEnumerable<OperationSet>> ResourceOperationSets => new(() => _specNameToOperationSetsMap.Values.SelectMany(x => x));
     }
 }

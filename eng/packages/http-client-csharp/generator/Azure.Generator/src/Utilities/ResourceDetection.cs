@@ -21,6 +21,8 @@ namespace Azure.Generator.Utilities
 
         private ConcurrentDictionary<string, (string Name, InputModelType? InputModel)?> _resourceDataSchemaCache = new ConcurrentDictionary<string, (string Name, InputModelType? InputModel)?>();
 
+        public bool IsResource(OperationSet set) => TryGetResourceDataSchema(set, out _, out _);
+
         private static InputModelType? FindObjectSchemaWithName(string name)
             => AzureClientPlugin.Instance.InputLibrary.InputNamespace.Models.OfType<InputModelType>().FirstOrDefault(inputModel => inputModel.Name == name);
 
@@ -44,7 +46,7 @@ namespace Azure.Generator.Utilities
                 throw new InvalidOperationException($"Cannot find resource type from path {requestPath}");
             }
 
-            var segments = requestPath.Substring(index+ProvidersSegment.Length).Split("/", StringSplitOptions.RemoveEmptyEntries);
+            var segments = RequestPathUtils.GetPathSegments(requestPath.Substring(index+ProvidersSegment.Length));
             var result = new StringBuilder(segments[0]);
             for (int i = 1; i < segments.Length; i += 2)
             {
@@ -105,7 +107,7 @@ namespace Azure.Generator.Utilities
                 return true;
             // get whatever following the providers
             var following = requestPath.Substring(index);
-            var segments = following.Split("/", StringSplitOptions.RemoveEmptyEntries);
+            var segments = RequestPathUtils.GetPathSegments(following);
             return segments.Length % 2 == 0;
         }
 

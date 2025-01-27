@@ -32,6 +32,9 @@ public class AzureClientPlugin : ClientModelPlugin
     public override AzureOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
 
     internal ResourceDetection ResourceDetection { get; } = new();
+    internal ParentDetection ParentDetection { get; } = new();
+    internal ScopeDetection ScopeDetection { get; } = new();
+    internal SingletonDetection SingletonDetection { get; } = new();
 
     /// <summary>
     /// The Azure client plugin to generate the Azure client SDK.
