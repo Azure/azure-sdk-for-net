@@ -5,26 +5,60 @@ using Azure.Generator.Mgmt.Models;
 using Azure.Generator.Providers;
 using Azure.Generator.Utilities;
 using Microsoft.Generator.CSharp.ClientModel;
+using Microsoft.Generator.CSharp.Input;
 using Microsoft.Generator.CSharp.Providers;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.Generator
 {
     /// <inheritdoc/>
     public class AzureOutputLibrary : ScmOutputLibrary
     {
-        // TODO: categorize clients into operationSets, which contains operations sharing the same Path
         private Dictionary<string, OperationSet> _pathToOperationSetMap;
-        private Dictionary<string, HashSet<OperationSet>> _resourceDataBySpecNameMap;
+        private Dictionary<string, HashSet<OperationSet>> _specNameToOperationSetsMap;
+        private Dictionary<string, InputModelType> _inputTypeMap;
 
         /// <inheritdoc/>
         public AzureOutputLibrary()
         {
             _pathToOperationSetMap = CategorizeClients();
-            _resourceDataBySpecNameMap = EnsureResourceDataMap();
+            _specNameToOperationSetsMap = EnsureOperationsetMap();
+            _inputTypeMap = AzureClientPlugin.Instance.InputLibrary.InputNamespace.Models.OfType<InputModelType>().ToDictionary(model => model.Name);
         }
 
-        private Dictionary<string, HashSet<OperationSet>> EnsureResourceDataMap()
+        private IReadOnlyList<ResourceProvider> BuildResources()
+        {
+            var result = new List<ResourceProvider>();
+            foreach ((var schemaName, var operationSets) in _specNameToOperationSetsMap)
+            {
+                var model = _inputTypeMap[schemaName];
+                var resourceData = (ResourceDataProvider)AzureClientPlugin.Instance.TypeFactory.CreateModel(model)!;
+                foreach (var operationSet in operationSets)
+                {
+                    var requestPath = operationSet.RequestPath;
+                    var resourceType = ResourceDetection.GetResourceTypeFromPath(requestPath);
+                }
+            }
+            foreach (var model in AzureClientPlugin.Instance.InputLibrary.InputNamespace.Models)
+            {
+                if (IsResource(model.Name))
+                {
+                    // we are sure that the model is a resource, so we can cast it to ResourceDataProvider
+                    var resourceDataProvider = (ResourceDataProvider)AzureClientPlugin.Instance.TypeFactory.CreateModel(model)!;
+
+                    var operationSet = _specNameToOperationSetsMap[model.Name].First();
+                    var resourceType = ResourceDetection.GetResourceTypeFromPath(operationSet.RequestPath);
+                    var resource = new ResourceProvider(operationSet, model.Name, resourceDataProvider, resourceType);
+                    AzureClientPlugin.Instance.AddTypeToKeep(resource.Name);
+                    result.Add(resource);
+                }
+            }
+            return result;
+        }
+
+        private Dictionary<string, HashSet<OperationSet>> EnsureOperationsetMap()
         {
             var result = new Dictionary<string, HashSet<OperationSet>>();
             foreach (var operationSet in _pathToOperationSetMap.Values)
@@ -49,11 +83,9 @@ namespace Azure.Generator
             var result = new Dictionary<string, OperationSet>();
             foreach (var inputClient in AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients)
             {
-                var requestPathList = new HashSet<string>();
                 foreach (var operation in inputClient.Operations)
                 {
                     var path = operation.GetHttpPath();
-                    requestPathList.Add(path);
                     if (result.TryGetValue(path, out var operationSet))
                     {
                         operationSet.Add(operation);
@@ -75,9 +107,11 @@ namespace Azure.Generator
         }
 
         /// <inheritdoc/>
-        // TODO: generate resources and collections
-        protected override TypeProvider[] BuildTypeProviders() => [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
+        // TODO: generate collections
+        protected override TypeProvider[] BuildTypeProviders() => [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition(), .. BuildResources()];
 
-        internal bool IsResource(string name) => _resourceDataBySpecNameMap.ContainsKey(name);
+        internal bool IsResource(string name) => _specNameToOperationSetsMap.ContainsKey(name);
+
+        internal Lazy<IEnumerable<OperationSet>> ResourceOperationSets => new(() => _specNameToOperationSetsMap.Values.SelectMany(x => x));
     }
 }
