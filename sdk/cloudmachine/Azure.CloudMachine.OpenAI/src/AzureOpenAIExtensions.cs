@@ -20,14 +20,17 @@ public static class AzureOpenAIExtensions
     /// Gets the OpenAI chat client.
     /// </summary>
     /// <param name="workspace"></param>
+    /// <param name="deploymentName"></param>
     /// <returns></returns>
-    public static ChatClient GetOpenAIChatClient(this ClientWorkspace workspace)
+    public static ChatClient GetOpenAIChatClient(this ClientWorkspace workspace, string? deploymentName = null)
     {
+        string name = deploymentName ?? "default";
+
         ChatClient chatClient = workspace.Subclients.Get(() =>
         {
             AzureOpenAIClient aoiaClient = workspace.Subclients.Get(() => CreateAzureOpenAIClient(workspace));
-            return workspace.CreateChatClient(aoiaClient);
-        });
+            return workspace.CreateChatClient(aoiaClient, deploymentName);
+        }, name);
 
         return chatClient;
     }
@@ -36,14 +39,17 @@ public static class AzureOpenAIExtensions
     /// Gets the OpenAI embeddings client.
     /// </summary>
     /// <param name="workspace"></param>
+    /// <param name="deploymentName"></param>
     /// <returns></returns>
-    public static EmbeddingClient GetOpenAIEmbeddingsClient(this ClientWorkspace workspace)
+    public static EmbeddingClient GetOpenAIEmbeddingsClient(this ClientWorkspace workspace, string? deploymentName = null)
     {
+        string name = deploymentName ?? "default";
+
         EmbeddingClient embeddingsClient = workspace.Subclients.Get(() =>
         {
             AzureOpenAIClient aoiaClient = workspace.Subclients.Get(() => CreateAzureOpenAIClient(workspace));
-            return workspace.CreateEmbeddingsClient(aoiaClient);
-        });
+            return workspace.CreateEmbeddingsClient(aoiaClient, deploymentName);
+        }, name);
 
         return embeddingsClient;
     }
@@ -99,17 +105,17 @@ public static class AzureOpenAIExtensions
         }
     }
 
-    private static ChatClient CreateChatClient(this ClientWorkspace workspace, AzureOpenAIClient client)
+    private static ChatClient CreateChatClient(this ClientWorkspace workspace, AzureOpenAIClient client, string? deploymentName = null)
     {
         ClientConnection connection = workspace.GetConnectionOptions(typeof(ChatClient).FullName);
-        ChatClient chat = client.GetChatClient(connection.Locator);
+        ChatClient chat = client.GetChatClient(deploymentName ?? connection.Locator);
         return chat;
     }
 
-    private static EmbeddingClient CreateEmbeddingsClient(this ClientWorkspace workspace, AzureOpenAIClient client)
+    private static EmbeddingClient CreateEmbeddingsClient(this ClientWorkspace workspace, AzureOpenAIClient client, string? deploymentName = null)
     {
         ClientConnection connection = workspace.GetConnectionOptions(typeof(EmbeddingClient).FullName);
-        EmbeddingClient embeddings = client.GetEmbeddingClient(connection.Locator);
+        EmbeddingClient embeddings = client.GetEmbeddingClient(deploymentName ?? connection.Locator);
         return embeddings;
     }
 
