@@ -11,8 +11,8 @@
 		<PackageReference Include="NUnit" />
 		<PackageReference Include="NUnit3TestAdapter" />
 		<PackageReference Include="Moq" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" />
-  </ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" />
+	</ItemGroup>
 
 	<ItemGroup>
 	  <None Update="TestHelpers\Configuration.json">

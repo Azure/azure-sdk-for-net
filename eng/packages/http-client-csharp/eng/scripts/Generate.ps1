@@ -2,7 +2,8 @@
 param(
     $filter,
     [bool]$Stubbed = $true,
-    [bool]$LaunchOnly = $false
+    [bool]$LaunchOnly = $false,
+    [switch]$ForceNewProject = $false
 )
 
 Import-Module "$PSScriptRoot\Generation.psm1" -DisableNameChecking -Force;
@@ -20,7 +21,7 @@ if (-not $LaunchOnly) {
         $unbrandedTypespecTestProject = Join-Path $testProjectsLocalDir "Basic-TypeSpec"
         $unbrandedTypespecTestProject = $unbrandedTypespecTestProject
 
-        Invoke (Get-TspCommand "$unbrandedTypespecTestProject/Basic-TypeSpec.tsp" $unbrandedTypespecTestProject)
+        Invoke (Get-TspCommand "$unbrandedTypespecTestProject/Basic-TypeSpec.tsp" $unbrandedTypespecTestProject -forceNewProject $ForceNewProject)
 
         # exit if the generation failed
         if ($LASTEXITCODE -ne 0) {
@@ -159,7 +160,7 @@ foreach ($directory in $directories) {
     }
     
     Write-Host "Generating $subPath" -ForegroundColor Cyan
-    Invoke (Get-TspCommand $specFile $generationDir $stubbed)
+    Invoke (Get-TspCommand $specFile $generationDir $stubbed -forceNewProject $ForceNewProject)
 
     # exit if the generation failed
     if ($LASTEXITCODE -ne 0) {
@@ -207,5 +208,5 @@ if ($null -eq $filter) {
     # Write the launch settings to the launchSettings.json file
     $launchSettingsPath = Join-Path $solutionDir "Azure.Generator" "src" "Properties" "launchSettings.json"
     # Write the settings to JSON and normalize line endings to Unix style (LF)
-    $sortedLaunchSettings | ConvertTo-Json | ForEach-Object { $_ -replace "`r`n", "`n" } | Set-Content $launchSettingsPath
+    $sortedLaunchSettings | ConvertTo-Json | ForEach-Object { ($_ -replace "`r`n", "`n") + "`n" } | Out-String -Stream | Set-Content -NoNewline $launchSettingsPath
 }
