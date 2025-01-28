@@ -32,9 +32,9 @@ When calling `*StorageResourceProvider.FromClient` with a Storage Client (e.g. `
 
 There is currently no support to specify an encryption scope for operations such as uploads, downloads, or copies.
 
-### Recursive Directory Support
+### Recursive Directory Disable Support
 
-Currently there is support for transferring entire directories, including all subdirectories and files within them. However, we do not offer an option to disable recursion. This means that users cannot copy only the files in a folder without also copying its subdirectories.
+Currently there is support for transferring entire directories, including all subdirectories and files within them. However, we do not offer an option to disable directory recursion. This means that users cannot copy only the files in a folder without also copying its subdirectories.
 
 ### Blob to Share File with OAuth/Entra ID
 
