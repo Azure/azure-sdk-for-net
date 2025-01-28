@@ -53,6 +53,15 @@ try {
             New-Item -ItemType Directory -Force -Path $testResultsPath | Out-Null
             Copy-Item -Path $testResultsFile -Destination $testResultsPath -Force
         }
+
+        $testResultsFile = "$packageRoot/generator/artifacts/coverage/tsp-spector-coverage-standard.json"
+
+        # copy test results to the artifacts directory
+        if(Test-Path $testResultsFile)
+        {
+            New-Item -ItemType Directory -Force -Path $testResultsPath | Out-Null
+            Copy-Item -Path $testResultsFile -Destination $testResultsPath -Force
+        }
     }
 
     if ($GenerationChecks) {
