@@ -19,33 +19,31 @@ using Azure.ResourceManager.Resources;
 namespace Azure.ResourceManager.Chaos
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ChaosTargetTypeResource"/> and their operations.
-    /// Each <see cref="ChaosTargetTypeResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
-    /// To get a <see cref="ChaosTargetTypeCollection"/> instance call the GetChaosTargetTypes method from an instance of <see cref="SubscriptionResource"/>.
+    /// A class representing a collection of <see cref="ChaosTargetMetadataResource"/> and their operations.
+    /// Each <see cref="ChaosTargetMetadataResource"/> in the collection will belong to the same instance of <see cref="SubscriptionResource"/>.
+    /// To get a <see cref="ChaosTargetMetadataCollection"/> instance call the GetChaosTargetMetadata method from an instance of <see cref="SubscriptionResource"/>.
     /// </summary>
-    public partial class ChaosTargetTypeCollection : ArmCollection, IEnumerable<ChaosTargetTypeResource>, IAsyncEnumerable<ChaosTargetTypeResource>
+    public partial class ChaosTargetMetadataCollection : ArmCollection, IEnumerable<ChaosTargetMetadataResource>, IAsyncEnumerable<ChaosTargetMetadataResource>
     {
-        private readonly ClientDiagnostics _chaosTargetTypeTargetTypesClientDiagnostics;
-        private readonly TargetTypesRestOperations _chaosTargetTypeTargetTypesRestClient;
-        private readonly string _locationName;
+        private readonly ClientDiagnostics _chaosTargetMetadataTargetTypesClientDiagnostics;
+        private readonly TargetTypesRestOperations _chaosTargetMetadataTargetTypesRestClient;
+        private readonly AzureLocation _location;
 
-        /// <summary> Initializes a new instance of the <see cref="ChaosTargetTypeCollection"/> class for mocking. </summary>
-        protected ChaosTargetTypeCollection()
+        /// <summary> Initializes a new instance of the <see cref="ChaosTargetMetadataCollection"/> class for mocking. </summary>
+        protected ChaosTargetMetadataCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ChaosTargetTypeCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="ChaosTargetMetadataCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        /// <param name="locationName"> String that represents a Location resource name. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="locationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
-        internal ChaosTargetTypeCollection(ArmClient client, ResourceIdentifier id, string locationName) : base(client, id)
+        /// <param name="location"> The name of the Azure region. </param>
+        internal ChaosTargetMetadataCollection(ArmClient client, ResourceIdentifier id, AzureLocation location) : base(client, id)
         {
-            _locationName = locationName;
-            _chaosTargetTypeTargetTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosTargetTypeResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ChaosTargetTypeResource.ResourceType, out string chaosTargetTypeTargetTypesApiVersion);
-            _chaosTargetTypeTargetTypesRestClient = new TargetTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, chaosTargetTypeTargetTypesApiVersion);
+            _location = location;
+            _chaosTargetMetadataTargetTypesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosTargetMetadataResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ChaosTargetMetadataResource.ResourceType, out string chaosTargetMetadataTargetTypesApiVersion);
+            _chaosTargetMetadataTargetTypesRestClient = new TargetTypesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, chaosTargetMetadataTargetTypesApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -62,19 +60,19 @@ namespace Azure.ResourceManager.Chaos
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TargetTypes_Get</description>
+        /// <description>TargetType_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetTypeResource"/></description>
+        /// <description><see cref="ChaosTargetMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -82,18 +80,18 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
-        public virtual async Task<Response<ChaosTargetTypeResource>> GetAsync(string targetTypeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ChaosTargetMetadataResource>> GetAsync(string targetTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
-            using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeCollection.Get");
+            using var scope = _chaosTargetMetadataTargetTypesClientDiagnostics.CreateScope("ChaosTargetMetadataCollection.Get");
             scope.Start();
             try
             {
-                var response = await _chaosTargetTypeTargetTypesRestClient.GetAsync(Id.SubscriptionId, _locationName, targetTypeName, cancellationToken).ConfigureAwait(false);
+                var response = await _chaosTargetMetadataTargetTypesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), targetTypeName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ChaosTargetTypeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ChaosTargetMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -107,19 +105,19 @@ namespace Azure.ResourceManager.Chaos
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TargetTypes_Get</description>
+        /// <description>TargetType_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetTypeResource"/></description>
+        /// <description><see cref="ChaosTargetMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,18 +125,18 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
-        public virtual Response<ChaosTargetTypeResource> Get(string targetTypeName, CancellationToken cancellationToken = default)
+        public virtual Response<ChaosTargetMetadataResource> Get(string targetTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
-            using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeCollection.Get");
+            using var scope = _chaosTargetMetadataTargetTypesClientDiagnostics.CreateScope("ChaosTargetMetadataCollection.Get");
             scope.Start();
             try
             {
-                var response = _chaosTargetTypeTargetTypesRestClient.Get(Id.SubscriptionId, _locationName, targetTypeName, cancellationToken);
+                var response = _chaosTargetMetadataTargetTypesRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), targetTypeName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ChaosTargetTypeResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ChaosTargetMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -152,30 +150,30 @@ namespace Azure.ResourceManager.Chaos
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TargetTypes_List</description>
+        /// <description>TargetType_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetTypeResource"/></description>
+        /// <description><see cref="ChaosTargetMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ChaosTargetTypeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ChaosTargetTypeResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="ChaosTargetMetadataResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ChaosTargetMetadataResource> GetAllAsync(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosTargetTypeTargetTypesRestClient.CreateListRequest(Id.SubscriptionId, _locationName, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosTargetTypeTargetTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _locationName, continuationToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ChaosTargetTypeResource(Client, ChaosTargetTypeData.DeserializeChaosTargetTypeData(e)), _chaosTargetTypeTargetTypesClientDiagnostics, Pipeline, "ChaosTargetTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosTargetMetadataTargetTypesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location), continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosTargetMetadataTargetTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), continuationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ChaosTargetMetadataResource(Client, ChaosTargetMetadataData.DeserializeChaosTargetMetadataData(e)), _chaosTargetMetadataTargetTypesClientDiagnostics, Pipeline, "ChaosTargetMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -183,30 +181,30 @@ namespace Azure.ResourceManager.Chaos
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TargetTypes_List</description>
+        /// <description>TargetType_List</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetTypeResource"/></description>
+        /// <description><see cref="ChaosTargetMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="continuationToken"> String that sets the continuation token. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ChaosTargetTypeResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ChaosTargetTypeResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ChaosTargetMetadataResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ChaosTargetMetadataResource> GetAll(string continuationToken = null, CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosTargetTypeTargetTypesRestClient.CreateListRequest(Id.SubscriptionId, _locationName, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosTargetTypeTargetTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, _locationName, continuationToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ChaosTargetTypeResource(Client, ChaosTargetTypeData.DeserializeChaosTargetTypeData(e)), _chaosTargetTypeTargetTypesClientDiagnostics, Pipeline, "ChaosTargetTypeCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _chaosTargetMetadataTargetTypesRestClient.CreateListRequest(Id.SubscriptionId, new AzureLocation(_location), continuationToken);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _chaosTargetMetadataTargetTypesRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, new AzureLocation(_location), continuationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ChaosTargetMetadataResource(Client, ChaosTargetMetadataData.DeserializeChaosTargetMetadataData(e)), _chaosTargetMetadataTargetTypesClientDiagnostics, Pipeline, "ChaosTargetMetadataCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -214,19 +212,19 @@ namespace Azure.ResourceManager.Chaos
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TargetTypes_Get</description>
+        /// <description>TargetType_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetTypeResource"/></description>
+        /// <description><see cref="ChaosTargetMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -238,11 +236,11 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
-            using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeCollection.Exists");
+            using var scope = _chaosTargetMetadataTargetTypesClientDiagnostics.CreateScope("ChaosTargetMetadataCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _chaosTargetTypeTargetTypesRestClient.GetAsync(Id.SubscriptionId, _locationName, targetTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _chaosTargetMetadataTargetTypesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), targetTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -257,19 +255,19 @@ namespace Azure.ResourceManager.Chaos
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TargetTypes_Get</description>
+        /// <description>TargetType_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetTypeResource"/></description>
+        /// <description><see cref="ChaosTargetMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -281,11 +279,11 @@ namespace Azure.ResourceManager.Chaos
         {
             Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
-            using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeCollection.Exists");
+            using var scope = _chaosTargetMetadataTargetTypesClientDiagnostics.CreateScope("ChaosTargetMetadataCollection.Exists");
             scope.Start();
             try
             {
-                var response = _chaosTargetTypeTargetTypesRestClient.Get(Id.SubscriptionId, _locationName, targetTypeName, cancellationToken: cancellationToken);
+                var response = _chaosTargetMetadataTargetTypesRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), targetTypeName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -300,19 +298,19 @@ namespace Azure.ResourceManager.Chaos
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TargetTypes_Get</description>
+        /// <description>TargetType_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetTypeResource"/></description>
+        /// <description><see cref="ChaosTargetMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -320,18 +318,18 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
-        public virtual async Task<NullableResponse<ChaosTargetTypeResource>> GetIfExistsAsync(string targetTypeName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ChaosTargetMetadataResource>> GetIfExistsAsync(string targetTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
-            using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeCollection.GetIfExists");
+            using var scope = _chaosTargetMetadataTargetTypesClientDiagnostics.CreateScope("ChaosTargetMetadataCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _chaosTargetTypeTargetTypesRestClient.GetAsync(Id.SubscriptionId, _locationName, targetTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _chaosTargetMetadataTargetTypesRestClient.GetAsync(Id.SubscriptionId, new AzureLocation(_location), targetTypeName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<ChaosTargetTypeResource>(response.GetRawResponse());
-                return Response.FromValue(new ChaosTargetTypeResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ChaosTargetMetadataResource>(response.GetRawResponse());
+                return Response.FromValue(new ChaosTargetMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -345,19 +343,19 @@ namespace Azure.ResourceManager.Chaos
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{locationName}/targetTypes/{targetTypeName}</description>
+        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/locations/{location}/targetTypes/{targetTypeName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>TargetTypes_Get</description>
+        /// <description>TargetType_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-01-01</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ChaosTargetTypeResource"/></description>
+        /// <description><see cref="ChaosTargetMetadataResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -365,18 +363,18 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="targetTypeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="targetTypeName"/> is null. </exception>
-        public virtual NullableResponse<ChaosTargetTypeResource> GetIfExists(string targetTypeName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ChaosTargetMetadataResource> GetIfExists(string targetTypeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(targetTypeName, nameof(targetTypeName));
 
-            using var scope = _chaosTargetTypeTargetTypesClientDiagnostics.CreateScope("ChaosTargetTypeCollection.GetIfExists");
+            using var scope = _chaosTargetMetadataTargetTypesClientDiagnostics.CreateScope("ChaosTargetMetadataCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _chaosTargetTypeTargetTypesRestClient.Get(Id.SubscriptionId, _locationName, targetTypeName, cancellationToken: cancellationToken);
+                var response = _chaosTargetMetadataTargetTypesRestClient.Get(Id.SubscriptionId, new AzureLocation(_location), targetTypeName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<ChaosTargetTypeResource>(response.GetRawResponse());
-                return Response.FromValue(new ChaosTargetTypeResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<ChaosTargetMetadataResource>(response.GetRawResponse());
+                return Response.FromValue(new ChaosTargetMetadataResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -385,7 +383,7 @@ namespace Azure.ResourceManager.Chaos
             }
         }
 
-        IEnumerator<ChaosTargetTypeResource> IEnumerable<ChaosTargetTypeResource>.GetEnumerator()
+        IEnumerator<ChaosTargetMetadataResource> IEnumerable<ChaosTargetMetadataResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -395,7 +393,7 @@ namespace Azure.ResourceManager.Chaos
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<ChaosTargetTypeResource> IAsyncEnumerable<ChaosTargetTypeResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ChaosTargetMetadataResource> IAsyncEnumerable<ChaosTargetMetadataResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

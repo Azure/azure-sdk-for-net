@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Chaos.Models
 
         private const string SimpleValue = "Simple";
 
-        /// <summary> Simple. </summary>
+        /// <summary> Simple filter type. </summary>
         public static FilterType Simple { get; } = new FilterType(SimpleValue);
         /// <summary> Determines if two <see cref="FilterType"/> values are the same. </summary>
         public static bool operator ==(FilterType left, FilterType right) => left.Equals(right);
