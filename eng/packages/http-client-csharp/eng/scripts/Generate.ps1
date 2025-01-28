@@ -28,7 +28,7 @@ if (-not $LaunchOnly) {
             exit $LASTEXITCODE
         }
 
-        Write-Host "Building UnbrandedTypeSpec" -ForegroundColor Cyan
+        Write-Host "Building BasicTypeSpec" -ForegroundColor Cyan
         Invoke "dotnet build $packageRoot/generator/TestProjects/Local/Basic-TypeSpec/src/BasicTypeSpec.csproj"
 
         # exit if the generation failed

@@ -3,7 +3,7 @@
 param($filter)
 
 Import-Module "$PSScriptRoot\Generation.psm1" -DisableNameChecking -Force;
-Import-Module "$PSScriptRoot\Spector.psm1" -DisableNameChecking -Force;
+Import-Module "$PSScriptRoot\Spector-Helper.psm1" -DisableNameChecking -Force;
 
 $packageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
 
