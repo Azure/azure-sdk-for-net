@@ -142,17 +142,17 @@ jobs:
           displayName: "Build and Package"
       - ${{ else }}:
         - script: >-
-          dotnet pack eng/service.proj -warnaserror
-          /p:ValidateRunApiCompat=true
-          /p:SDKType=${{ parameters.SDKType }}
-          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-          /p:IncludeTests=false
-          /p:PublicSign=false $(VersioningProperties)
-          /p:Configuration=$(BuildConfiguration)
-          /p:CommitSHA=$(Build.SourceVersion)
-          /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
-          $(DiagnosticArguments)
-        displayName: "Build and Package"
+            dotnet pack eng/service.proj -warnaserror
+            /p:ValidateRunApiCompat=true
+            /p:SDKType=${{ parameters.SDKType }}
+            /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+            /p:IncludeTests=false
+            /p:PublicSign=false $(VersioningProperties)
+            /p:Configuration=$(BuildConfiguration)
+            /p:CommitSHA=$(Build.SourceVersion)
+            /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
+            $(DiagnosticArguments)
+          displayName: "Build and Package"
 
       - task: Powershell@2
         inputs:
