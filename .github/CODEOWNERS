@@ -680,6 +680,9 @@
 # ServiceLabel: %Monitor - LiveMetrics
 # ServiceOwners:                                                   @rajkumar-rangaraj @TimothyMothra @xiang17
 
+# ServiceLabel: %Monitor - Monitor
+# ServiceOwners:                                                   @thomasp98296 @ritwik8119
+
 # ServiceLabel: %MySQL
 # ServiceOwners:                                                   @ajlam @ambhatna @kummanish
 
@@ -1026,6 +1029,9 @@
 
 # ServiceLabel: %Large Instance %Mgmt
 # ServiceOwners:                                                   @8Gitbrix
+
+# PRLabel: %Monitor
+/sdk/monitor/Azure.ResourceManager.Monitor/                        @thomasp98296 @ritwik8119
 
 # PRLabel: %Neon Postgres
 /sdk/neonpostgres/Azure.ResourceManager.*/                         @archerzz @ArcturusZhang @ArthurMa1978
