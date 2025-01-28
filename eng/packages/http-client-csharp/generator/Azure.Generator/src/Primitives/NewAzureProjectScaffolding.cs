@@ -18,8 +18,8 @@ namespace Azure.Generator.Primitives
 		private const string RelativeCoreSegment = "sdk/core/Azure.Core/src/Shared/";
 		private const string ParentDirectory = "../";
 
-        /// <inheritdoc/>
-        protected override string GetSourceProjectFileContent()
+		/// <inheritdoc/>
+		protected override string GetSourceProjectFileContent()
 		{
 			var builder = new CSharpProjectWriter()
 			{
@@ -42,25 +42,25 @@ namespace Azure.Generator.Primitives
 				if (beginning == -1)
 				{
 					beginning = text.IndexOf("sdk");
-                }
-                text = text.Slice(beginning);
+				}
+				text = text.Slice(beginning);
 				// starting with 2 to include eng at the beginning and src at the end
 				int pathSegmentCount = 2 + text.Count('/');
 				// count both path separators to normalize
 				pathSegmentCount += text.Count('\\');
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), "Shared/Core"));
+				builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("AzureKeyCredentialPolicy.cs", pathSegmentCount), "Shared/Core"));
 				builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("RawRequestUriBuilder.cs", pathSegmentCount), "Shared/Core"));
 			}
 
 			return builder.Write();
 		}
 
-        private string GetCompileInclude(string fileName, int pathSegmentCount)
-        {
-            return $"{MSBuildThisFileDirectory}{string.Concat(Enumerable.Repeat(ParentDirectory, pathSegmentCount))}{RelativeCoreSegment}{fileName}";
-        }
+		private string GetCompileInclude(string fileName, int pathSegmentCount)
+		{
+			return $"{MSBuildThisFileDirectory}{string.Concat(Enumerable.Repeat(ParentDirectory, pathSegmentCount))}{RelativeCoreSegment}{fileName}";
+		}
 
-        private static readonly IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> _unbrandedDependencyPackages =
+		private static readonly IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> _unbrandedDependencyPackages =
 		[
 			new("Azure.Core"),
 			new("System.Text.Json")
