@@ -68,11 +68,5 @@ namespace BasicTypeSpec
                     return new ErrorResult<bool>(response, new RequestFailedException(response));
             }
         }
-
-        private static Response ExtractResponseContent(HttpMessage message)
-        {
-            message.ExtractResponseContent();
-            return message.Response;
-        }
     }
 }

@@ -61,7 +61,7 @@
      "name": "image_v0",
      "value": "image_v0",
      "valueType": {
-      "$id": "17",
+      "$id": "9",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -92,7 +92,7 @@
      "decorators": []
     },
     {
-     "$id": "20",
+     "$id": "12",
      "kind": "enumvalue",
      "name": "video",
      "value": "video",
@@ -220,12 +220,12 @@
      "decorators": []
     },
     {
-     "$id": "34",
+     "$id": "26",
      "kind": "enumvalue",
      "name": "video",
      "value": "video",
      "valueType": {
-      "$id": "35",
+      "$id": "27",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -256,12 +256,12 @@
      "decorators": []
     },
     {
-     "$id": "38",
+     "$id": "30",
      "kind": "enumvalue",
      "name": "quickAction",
      "value": "quickAction",
      "valueType": {
-      "$id": "39",
+      "$id": "31",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -310,24 +310,6 @@
      },
      "doc": "The WhatsApp template type.",
      "decorators": []
-    },
-    {
-     "$id": "46",
-     "kind": "enumvalue",
-     "name": "c2024_08_30",
-     "value": "2024-08-30",
-     "valueType": {
-      "$id": "47",
-      "kind": "string",
-      "name": "string",
-      "crossLanguageDefinitionId": "TypeSpec.string",
-      "decorators": []
-     },
-     "enumType": {
-      "$ref": "42"
-     },
-     "description": "Azure Communication Messages 2024-08-30 api version",
-     "decorators": []
     }
    ],
    "doc": "The type of the message template.",
@@ -373,7 +355,7 @@
      "name": "url",
      "value": "url",
      "valueType": {
-      "$id": "51",
+      "$id": "41",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -406,12 +388,12 @@
    },
    "values": [
     {
-     "$id": "54",
+     "$id": "44",
      "kind": "enumvalue",
      "name": "c2024_02_01",
      "value": "2024-02-01",
      "valueType": {
-      "$id": "55",
+      "$id": "45",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -424,12 +406,12 @@
      "decorators": []
     },
     {
-     "$id": "56",
+     "$id": "46",
      "kind": "enumvalue",
      "name": "c2024_08_30",
      "value": "2024-08-30",
      "valueType": {
-      "$id": "57",
+      "$id": "47",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -449,12 +431,12 @@
    "decorators": []
   },
   {
-   "$id": "58",
+   "$id": "48",
    "kind": "enum",
    "name": "MessageTemplateStatus",
    "crossLanguageDefinitionId": "Azure.Communication.MessagesService.MessageTemplateStatus",
    "valueType": {
-    "$id": "59",
+    "$id": "49",
     "kind": "string",
     "name": "string",
     "crossLanguageDefinitionId": "TypeSpec.string",
@@ -462,19 +444,19 @@
    },
    "values": [
     {
-     "$id": "60",
+     "$id": "50",
      "kind": "enumvalue",
      "name": "approved",
      "value": "approved",
      "valueType": {
-      "$id": "61",
+      "$id": "51",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
       "decorators": []
      },
      "enumType": {
-      "$ref": "58"
+      "$ref": "48"
      },
      "doc": "Message template is approved.",
      "decorators": []
@@ -498,12 +480,12 @@
      "decorators": []
     },
     {
-     "$id": "64",
+     "$id": "54",
      "kind": "enumvalue",
      "name": "pending",
      "value": "pending",
      "valueType": {
-      "$id": "65",
+      "$id": "55",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",
@@ -516,12 +498,12 @@
      "decorators": []
     },
     {
-     "$id": "66",
+     "$id": "56",
      "kind": "enumvalue",
      "name": "paused",
      "value": "paused",
      "valueType": {
-      "$id": "67",
+      "$id": "57",
       "kind": "string",
       "name": "string",
       "crossLanguageDefinitionId": "TypeSpec.string",

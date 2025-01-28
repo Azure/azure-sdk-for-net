@@ -338,10 +338,10 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             return connectionCollection;
         }
 
-        // protected async Task<MachineRunCommandData> createRunCommand()
-        // {
-        //     HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
-        //     MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
+        protected async Task<MachineRunCommandData> createRunCommand()
+        {
+            HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
+            MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
 
             MachineRunCommandData data = new MachineRunCommandData(new AzureLocation("eastus"))
             {
@@ -363,13 +363,13 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             ArmOperation<MachineRunCommandResource> lro = await runCommandCollection.CreateOrUpdateAsync(WaitUntil.Completed, runCommandName, data);
             MachineRunCommandResource result = lro.Value;
 
-        //     return result.Data;
-        // }
+            return result.Data;
+        }
 
-        // protected async Task<MachineRunCommandData> updateRunCommand()
-        // {
-        //     ResourceIdentifier machineRunCommandResourceId = MachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName, runCommandName);
-        //     MachineRunCommandResource machineRunCommand = ArmClient.GetMachineRunCommandResource(machineRunCommandResourceId);
+        protected async Task<MachineRunCommandData> updateRunCommand()
+        {
+            ResourceIdentifier machineRunCommandResourceId = MachineRunCommandResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, machineName, runCommandName);
+            MachineRunCommandResource machineRunCommand = ArmClient.GetMachineRunCommandResource(machineRunCommandResourceId);
 
             MachineRunCommandData data = new MachineRunCommandData(new AzureLocation("eastus"))
             {
@@ -396,32 +396,32 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             ArmOperation<MachineRunCommandResource> lro = await machineRunCommand.UpdateAsync(WaitUntil.Completed, data);
             MachineRunCommandResource result = lro.Value;
 
-        //     return result.Data;
-        // }
+            return result.Data;
+        }
 
-        // protected async Task<MachineRunCommandData> getRunCommand()
-        // {
-        //     HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
-        //     MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
+        protected async Task<MachineRunCommandData> getRunCommand()
+        {
+            HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
+            MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
 
-        //     MachineRunCommandResource result = await runCommandCollection.GetAsync(runCommandName);
+            MachineRunCommandResource result = await runCommandCollection.GetAsync(runCommandName);
 
-        //     return result.Data;
-        // }
+            return result.Data;
+        }
 
-        // protected async Task<MachineRunCommandCollection> getRunCommandCollection()
-        // {
-        //     HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
-        //     MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
+        protected async Task<MachineRunCommandCollection> getRunCommandCollection()
+        {
+            HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
+            MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
 
-        //     await foreach (MachineRunCommandResource item in runCommandCollection.GetAllAsync())
-        //     {
-        //         MachineRunCommandData resourceData = item.Data;
-        //         Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-        //     }
+            await foreach (MachineRunCommandResource item in runCommandCollection.GetAllAsync())
+            {
+                MachineRunCommandData resourceData = item.Data;
+                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
+            }
 
-        //     return runCommandCollection;
-        // }
+            return runCommandCollection;
+        }
 
         protected async Task<HybridComputeLicenseData> createEsuLicense()
        {
@@ -606,16 +606,16 @@ namespace Azure.ResourceManager.HybridCompute.Tests
             Console.WriteLine($"Delete ESU License Succeeded");
         }
 
-        // protected async Task deleteRunCommand()
-        // {
-        //     HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
-        //     MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
+        protected async Task deleteRunCommand()
+        {
+            HybridComputeMachineResource hybridComputeMachine = await collection.GetAsync(machineName);
+            MachineRunCommandCollection runCommandCollection = hybridComputeMachine.GetMachineRunCommands();
 
-        //     MachineRunCommandResource result = await runCommandCollection.GetAsync(runCommandName);
+            MachineRunCommandResource result = await runCommandCollection.GetAsync(runCommandName);
 
-        //     await result.DeleteAsync(WaitUntil.Completed);
-        //     Console.WriteLine($"Delete Machine Run Command Succeeded");
-        // }
+            await result.DeleteAsync(WaitUntil.Completed);
+            Console.WriteLine($"Delete Machine Run Command Succeeded");
+        }
 
         protected async Task deletePrivateLinkScope()
         {

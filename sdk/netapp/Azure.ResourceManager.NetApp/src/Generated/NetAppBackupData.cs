@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.NetApp
     /// <summary>
     /// A class representing the NetAppBackup data model.
     /// Backup under a Backup Vault
-    /// Serialized Name: Backup
     /// </summary>
     public partial class NetAppBackupData : ResourceData
     {
@@ -53,10 +52,7 @@ namespace Azure.ResourceManager.NetApp
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppBackupData"/>. </summary>
-        /// <param name="volumeResourceId">
-        /// ResourceId used to identify the Volume
-        /// Serialized Name: Backup.properties.volumeResourceId
-        /// </param>
+        /// <param name="volumeResourceId"> ResourceId used to identify the Volume. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="volumeResourceId"/> is null. </exception>
         public NetAppBackupData(ResourceIdentifier volumeResourceId)
         {
@@ -105,60 +101,27 @@ namespace Azure.ResourceManager.NetApp
         {
         }
 
-        /// <summary>
-        /// UUID v4 used to identify the Backup
-        /// Serialized Name: Backup.properties.backupId
-        /// </summary>
+        /// <summary> UUID v4 used to identify the Backup. </summary>
         public string BackupId { get; }
-        /// <summary>
-        /// The creation date of the backup
-        /// Serialized Name: Backup.properties.creationDate
-        /// </summary>
+        /// <summary> The creation date of the backup. </summary>
         public DateTimeOffset? CreatedOn { get; }
-        /// <summary>
-        /// Azure lifecycle management
-        /// Serialized Name: Backup.properties.provisioningState
-        /// </summary>
+        /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// Size of backup in bytes
-        /// Serialized Name: Backup.properties.size
-        /// </summary>
+        /// <summary> Size of backup in bytes. </summary>
         public long? Size { get; }
-        /// <summary>
-        /// Label for backup
-        /// Serialized Name: Backup.properties.label
-        /// </summary>
+        /// <summary> Label for backup. </summary>
         public string Label { get; set; }
-        /// <summary>
-        /// Type of backup Manual or Scheduled
-        /// Serialized Name: Backup.properties.backupType
-        /// </summary>
+        /// <summary> Type of backup Manual or Scheduled. </summary>
         public NetAppBackupType? BackupType { get; }
-        /// <summary>
-        /// Failure reason
-        /// Serialized Name: Backup.properties.failureReason
-        /// </summary>
+        /// <summary> Failure reason. </summary>
         public string FailureReason { get; }
-        /// <summary>
-        /// ResourceId used to identify the Volume
-        /// Serialized Name: Backup.properties.volumeResourceId
-        /// </summary>
+        /// <summary> ResourceId used to identify the Volume. </summary>
         public ResourceIdentifier VolumeResourceId { get; set; }
-        /// <summary>
-        /// Manual backup an already existing snapshot. This will always be false for scheduled backups and true/false for manual backups
-        /// Serialized Name: Backup.properties.useExistingSnapshot
-        /// </summary>
+        /// <summary> Manual backup an already existing snapshot. This will always be false for scheduled backups and true/false for manual backups. </summary>
         public bool? UseExistingSnapshot { get; set; }
-        /// <summary>
-        /// The name of the snapshot
-        /// Serialized Name: Backup.properties.snapshotName
-        /// </summary>
+        /// <summary> The name of the snapshot. </summary>
         public string SnapshotName { get; set; }
-        /// <summary>
-        /// ResourceId used to identify the backup policy
-        /// Serialized Name: Backup.properties.backupPolicyResourceId
-        /// </summary>
+        /// <summary> ResourceId used to identify the backup policy. </summary>
         public ResourceIdentifier BackupPolicyArmResourceId { get; }
         /// <summary> Specifies if the backup is for a large volume. </summary>
         public bool? IsLargeVolume { get; }

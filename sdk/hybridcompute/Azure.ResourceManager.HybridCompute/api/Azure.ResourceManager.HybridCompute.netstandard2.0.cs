@@ -91,6 +91,7 @@ namespace Azure.ResourceManager.HybridCompute
         public static Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeCollection GetHybridComputePrivateLinkScopes(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScopes(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource> GetHybridComputePrivateLinkScopesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.MachineRunCommandResource GetMachineRunCommandResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.HybridCompute.NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails> GetValidationDetailsPrivateLinkScope(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string privateLinkScopeId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails>> GetValidationDetailsPrivateLinkScopeAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation location, string privateLinkScopeId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -116,7 +117,7 @@ namespace Azure.ResourceManager.HybridCompute
     }
     public partial class HybridComputeExtensionValueData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.HybridComputeExtensionValueData>
     {
-        internal HybridComputeExtensionValueData() { }
+        public HybridComputeExtensionValueData() { }
         public string ExtensionType { get { throw null; } }
         public string Publisher { get { throw null; } }
         public string Version { get { throw null; } }
@@ -387,6 +388,9 @@ namespace Azure.ResourceManager.HybridCompute
         public virtual Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionResource> GetHybridComputeMachineExtension(string extensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionResource>> GetHybridComputeMachineExtensionAsync(string extensionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.HybridCompute.HybridComputeMachineExtensionCollection GetHybridComputeMachineExtensions() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.MachineRunCommandResource> GetMachineRunCommand(string runCommandName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.MachineRunCommandResource>> GetMachineRunCommandAsync(string runCommandName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.HybridCompute.MachineRunCommandCollection GetMachineRunCommands() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkProfile> GetNetworkProfile(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.Models.HybridComputeNetworkProfile>> GetNetworkProfileAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails> GetValidationDetailsForMachinePrivateLinkScope(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -557,6 +561,71 @@ namespace Azure.ResourceManager.HybridCompute
         public virtual Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource> Update(Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource>> UpdateAsync(Azure.ResourceManager.HybridCompute.Models.HybridComputePrivateLinkScopePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class MachineRunCommandCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridCompute.MachineRunCommandResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.MachineRunCommandResource>, System.Collections.IEnumerable
+    {
+        protected MachineRunCommandCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.MachineRunCommandResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string runCommandName, Azure.ResourceManager.HybridCompute.MachineRunCommandData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.MachineRunCommandResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string runCommandName, Azure.ResourceManager.HybridCompute.MachineRunCommandData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string runCommandName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string runCommandName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.MachineRunCommandResource> Get(string runCommandName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.HybridCompute.MachineRunCommandResource> GetAll(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.HybridCompute.MachineRunCommandResource> GetAllAsync(string expand = null, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.MachineRunCommandResource>> GetAsync(string runCommandName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.HybridCompute.MachineRunCommandResource> GetIfExists(string runCommandName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.HybridCompute.MachineRunCommandResource>> GetIfExistsAsync(string runCommandName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.HybridCompute.MachineRunCommandResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridCompute.MachineRunCommandResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.HybridCompute.MachineRunCommandResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.MachineRunCommandResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class MachineRunCommandData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.MachineRunCommandData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.MachineRunCommandData>
+    {
+        public MachineRunCommandData(Azure.Core.AzureLocation location) { }
+        public bool? AsyncExecution { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity ErrorBlobManagedIdentity { get { throw null; } set { } }
+        public System.Uri ErrorBlobUri { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView InstanceView { get { throw null; } }
+        public Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity OutputBlobManagedIdentity { get { throw null; } set { } }
+        public System.Uri OutputBlobUri { get { throw null; } set { } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter> Parameters { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter> ProtectedParameters { get { throw null; } }
+        public string ProvisioningState { get { throw null; } }
+        public string RunAsPassword { get { throw null; } set { } }
+        public string RunAsUser { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource Source { get { throw null; } set { } }
+        public int? TimeoutInSeconds { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.MachineRunCommandData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.MachineRunCommandData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.MachineRunCommandData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.MachineRunCommandData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.MachineRunCommandData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.MachineRunCommandData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.MachineRunCommandData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MachineRunCommandResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.MachineRunCommandData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.MachineRunCommandData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected MachineRunCommandResource() { }
+        public virtual Azure.ResourceManager.HybridCompute.MachineRunCommandData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.MachineRunCommandResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.MachineRunCommandResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string machineName, string runCommandName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.MachineRunCommandResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.MachineRunCommandResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.MachineRunCommandResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.MachineRunCommandResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.HybridCompute.MachineRunCommandResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.HybridCompute.MachineRunCommandResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.HybridCompute.MachineRunCommandData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.MachineRunCommandData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.MachineRunCommandData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.MachineRunCommandData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.MachineRunCommandData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.MachineRunCommandData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.MachineRunCommandData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.MachineRunCommandResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.MachineRunCommandData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.HybridCompute.MachineRunCommandResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.HybridCompute.MachineRunCommandData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public partial class NetworkSecurityPerimeterConfigurationCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.HybridCompute.NetworkSecurityPerimeterConfigurationResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.NetworkSecurityPerimeterConfigurationResource>, System.Collections.IEnumerable
     {
         protected NetworkSecurityPerimeterConfigurationCollection() { }
@@ -619,6 +688,7 @@ namespace Azure.ResourceManager.HybridCompute.Mocking
         public virtual Azure.ResourceManager.HybridCompute.HybridComputePrivateEndpointConnectionResource GetHybridComputePrivateEndpointConnectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkResource GetHybridComputePrivateLinkResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HybridCompute.HybridComputePrivateLinkScopeResource GetHybridComputePrivateLinkScopeResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.HybridCompute.MachineRunCommandResource GetMachineRunCommandResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.HybridCompute.NetworkSecurityPerimeterConfigurationResource GetNetworkSecurityPerimeterConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableHybridComputeResourceGroupResource : Azure.ResourceManager.ArmResource
@@ -785,6 +855,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.ArcSettings ArcSettings(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Guid? tenantId = default(System.Guid?), Azure.Core.ResourceIdentifier gatewayResourceId = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.AvailablePatchCountByClassification AvailablePatchCountByClassification(int? security = default(int?), int? critical = default(int?), int? definition = default(int?), int? updateRollup = default(int?), int? featurePack = default(int?), int? servicePack = default(int?), int? tools = default(int?), int? updates = default(int?), int? other = default(int?)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.EsuKey EsuKey(string sku = null, int? licenseStatus = default(int?)) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus ExtensionsResourceStatus(string code = null, Azure.ResourceManager.HybridCompute.Models.ExtensionsStatusLevelType? level = default(Azure.ResourceManager.HybridCompute.Models.ExtensionsStatusLevelType?), string displayStatus = null, string message = null, System.DateTimeOffset? time = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRule HybridComputeAccessRule(string name = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection? direction = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeAccessRuleDirection?), System.Collections.Generic.IEnumerable<string> addressPrefixes = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeConfigurationExtension HybridComputeConfigurationExtension(string publisher = null, string configurationExtensionType = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.HybridComputeConnectionDetail HybridComputeConnectionDetail(Azure.Core.ResourceIdentifier id = null, string privateIPAddress = null, string linkIdentifier = null, string groupId = null, string memberName = null) { throw null; }
@@ -827,6 +898,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static Azure.ResourceManager.HybridCompute.Models.MachineExtensionProperties MachineExtensionProperties(string forceUpdateTag = null, string publisher = null, string machineExtensionPropertiesType = null, string typeHandlerVersion = null, bool? enableAutomaticUpgrade = default(bool?), bool? autoUpgradeMinorVersion = default(bool?), System.Collections.Generic.IDictionary<string, System.BinaryData> settings = null, System.Collections.Generic.IDictionary<string, System.BinaryData> protectedSettings = null, string provisioningState = null, Azure.ResourceManager.HybridCompute.Models.MachineExtensionInstanceView instanceView = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesContent MachineInstallPatchesContent(System.TimeSpan maximumDuration = default(System.TimeSpan), Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting rebootSetting = default(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootSetting), Azure.ResourceManager.HybridCompute.Models.HybridComputeWindowsParameters windowsParameters = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeLinuxParameters linuxParameters = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.MachineInstallPatchesResult MachineInstallPatchesResult(Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus? status = default(Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus?), string installationActivityId = null, Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus? rebootStatus = default(Azure.ResourceManager.HybridCompute.Models.VmGuestPatchRebootStatus?), bool? maintenanceWindowExceeded = default(bool?), int? excludedPatchCount = default(int?), int? notSelectedPatchCount = default(int?), int? pendingPatchCount = default(int?), int? installedPatchCount = default(int?), int? failedPatchCount = default(int?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy? startedBy = default(Azure.ResourceManager.HybridCompute.Models.PatchOperationStartedBy?), Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed? patchServiceUsed = default(Azure.ResourceManager.HybridCompute.Models.PatchServiceUsed?), Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType? osType = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeOSType?), Azure.ResponseError errorDetails = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.MachineRunCommandData MachineRunCommandData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource source = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter> parameters = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter> protectedParameters = null, bool? asyncExecution = default(bool?), string runAsUser = null, string runAsPassword = null, int? timeoutInSeconds = default(int?), System.Uri outputBlobUri = null, System.Uri errorBlobUri = null, Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity outputBlobManagedIdentity = null, Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity errorBlobManagedIdentity = null, string provisioningState = null, Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView instanceView = null) { throw null; }
+        public static Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView MachineRunCommandInstanceView(Azure.ResourceManager.HybridCompute.Models.HybridComputeExecutionState? executionState = default(Azure.ResourceManager.HybridCompute.Models.HybridComputeExecutionState?), string executionMessage = null, int? exitCode = default(int?), string output = null, string error = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus> statuses = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeter NetworkSecurityPerimeter(string id = null, string perimeterGuid = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
         public static Azure.ResourceManager.HybridCompute.NetworkSecurityPerimeterConfigurationData NetworkSecurityPerimeterConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string provisioningState = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.HybridCompute.Models.HybridComputeProvisioningIssue> provisioningIssues = null, Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeter networkSecurityPerimeter = null, Azure.ResourceManager.HybridCompute.Models.HybridComputeResourceAssociation resourceAssociation = null, Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterProfile profile = null) { throw null; }
         public static Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeterConfigurationReconcileResult NetworkSecurityPerimeterConfigurationReconcileResult(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) { throw null; }
@@ -937,6 +1010,27 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static implicit operator Azure.ResourceManager.HybridCompute.Models.EsuServerType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.EsuServerType left, Azure.ResourceManager.HybridCompute.Models.EsuServerType right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ExtensionsResourceStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus>
+    {
+        internal ExtensionsResourceStatus() { }
+        public string Code { get { throw null; } }
+        public string DisplayStatus { get { throw null; } }
+        public Azure.ResourceManager.HybridCompute.Models.ExtensionsStatusLevelType? Level { get { throw null; } }
+        public string Message { get { throw null; } }
+        public System.DateTimeOffset? Time { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public enum ExtensionsStatusLevelType
+    {
+        Info = 0,
+        Warning = 1,
+        Error = 2,
     }
     public partial class ExtensionTargetProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.ExtensionTargetProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.ExtensionTargetProperties>
     {
@@ -2044,6 +2138,38 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public static bool operator !=(Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus left, Azure.ResourceManager.HybridCompute.Models.MachineOperationStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class MachineRunCommandInstanceView : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView>
+    {
+        internal MachineRunCommandInstanceView() { }
+        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public string Error { get { throw null; } }
+        public string ExecutionMessage { get { throw null; } }
+        public Azure.ResourceManager.HybridCompute.Models.HybridComputeExecutionState? ExecutionState { get { throw null; } }
+        public int? ExitCode { get { throw null; } }
+        public string Output { get { throw null; } }
+        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.HybridCompute.Models.ExtensionsResourceStatus> Statuses { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandInstanceView>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MachineRunCommandScriptSource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource>
+    {
+        public MachineRunCommandScriptSource() { }
+        public string CommandId { get { throw null; } set { } }
+        public string Script { get { throw null; } set { } }
+        public System.Uri ScriptUri { get { throw null; } set { } }
+        public Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity ScriptUriManagedIdentity { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.MachineRunCommandScriptSource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class NetworkSecurityPerimeter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.NetworkSecurityPerimeter>
     {
         internal NetworkSecurityPerimeter() { }
@@ -2166,6 +2292,30 @@ namespace Azure.ResourceManager.HybridCompute.Models
         Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.PrivateLinkScopeValidationDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RunCommandInputParameter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter>
+    {
+        public RunCommandInputParameter(string name, string value) { }
+        public string Name { get { throw null; } set { } }
+        public string Value { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.RunCommandInputParameter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class RunCommandManagedIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity>
+    {
+        public RunCommandManagedIdentity() { }
+        public System.Guid? ClientId { get { throw null; } set { } }
+        public System.Guid? ObjectId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HybridCompute.Models.RunCommandManagedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct VmGuestPatchClassificationLinux : System.IEquatable<Azure.ResourceManager.HybridCompute.Models.VmGuestPatchClassificationLinux>

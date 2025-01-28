@@ -19,11 +19,6 @@
 ### Bugs Fixed
 * Fixed the issue that the function return value from isolated-worker process is not handled correctly.
 
-## 1.15.0 (2024-10-14)
-
-### Bugs Fixed
-* Fixed the issue that the function return value from isolated-worker process is not handled correctly.
-
 ## 1.14.0 (2024-05-24)
 
 ### Other Changes

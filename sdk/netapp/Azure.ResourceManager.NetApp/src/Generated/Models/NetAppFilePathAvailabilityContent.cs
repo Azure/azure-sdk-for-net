@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// File path availability request content - availability is based on the name and the subnetId.
-    /// Serialized Name: FilePathAvailabilityRequest
-    /// </summary>
+    /// <summary> File path availability request content - availability is based on the name and the subnetId. </summary>
     public partial class NetAppFilePathAvailabilityContent
     {
         /// <summary>
@@ -50,14 +47,8 @@ namespace Azure.ResourceManager.NetApp.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="NetAppFilePathAvailabilityContent"/>. </summary>
-        /// <param name="name">
-        /// File path to verify.
-        /// Serialized Name: FilePathAvailabilityRequest.name
-        /// </param>
-        /// <param name="subnetId">
-        /// The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes
-        /// Serialized Name: FilePathAvailabilityRequest.subnetId
-        /// </param>
+        /// <param name="name"> File path to verify. </param>
+        /// <param name="subnetId"> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="subnetId"/> is null. </exception>
         public NetAppFilePathAvailabilityContent(string name, ResourceIdentifier subnetId)
         {
@@ -86,15 +77,9 @@ namespace Azure.ResourceManager.NetApp.Models
         {
         }
 
-        /// <summary>
-        /// File path to verify.
-        /// Serialized Name: FilePathAvailabilityRequest.name
-        /// </summary>
+        /// <summary> File path to verify. </summary>
         public string Name { get; }
-        /// <summary>
-        /// The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes
-        /// Serialized Name: FilePathAvailabilityRequest.subnetId
-        /// </summary>
+        /// <summary> The Azure Resource URI for a delegated subnet. Must have the delegation Microsoft.NetApp/volumes. </summary>
         public ResourceIdentifier SubnetId { get; }
         /// <summary> The Azure Resource logical availability zone which is used within zone mapping lookup for the subscription and region. The lookup will retrieve the physical zone where volume is placed. </summary>
         public string AvailabilityZone { get; set; }

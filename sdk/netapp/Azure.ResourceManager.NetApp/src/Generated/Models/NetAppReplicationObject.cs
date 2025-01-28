@@ -11,10 +11,7 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Replication properties
-    /// Serialized Name: ReplicationObject
-    /// </summary>
+    /// <summary> Replication properties. </summary>
     public partial class NetAppReplicationObject
     {
         /// <summary>
@@ -77,10 +74,7 @@ namespace Azure.ResourceManager.NetApp.Models
         }
         /// <summary> Indicates whether the local volume is the source or destination for the Volume Replication. </summary>
         public NetAppEndpointType? EndpointType { get; set; }
-        /// <summary>
-        /// Schedule
-        /// Serialized Name: ReplicationObject.replicationSchedule
-        /// </summary>
+        /// <summary> Schedule. </summary>
         public NetAppReplicationSchedule? ReplicationSchedule { get; set; }
         /// <summary> The resource ID of the remote volume. Required for cross region and cross zone replication. </summary>
         public ResourceIdentifier RemoteVolumeResourceId { get; set; }

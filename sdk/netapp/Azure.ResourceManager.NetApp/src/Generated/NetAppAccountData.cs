@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.NetApp
     /// <summary>
     /// A class representing the NetAppAccount data model.
     /// NetApp account resource
-    /// Serialized Name: NetAppAccount
     /// </summary>
     public partial class NetAppAccountData : TrackedResourceData
     {
@@ -93,35 +92,17 @@ namespace Azure.ResourceManager.NetApp
         {
         }
 
-        /// <summary>
-        /// A unique read-only string that changes whenever the resource is updated.
-        /// Serialized Name: NetAppAccount.etag
-        /// </summary>
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
-        /// <summary>
-        /// The identity used for the resource.
-        /// Serialized Name: NetAppAccount.identity
-        /// </summary>
+        /// <summary> The identity used for the resource. </summary>
         public ManagedServiceIdentity Identity { get; set; }
-        /// <summary>
-        /// Azure lifecycle management
-        /// Serialized Name: NetAppAccount.properties.provisioningState
-        /// </summary>
+        /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// Active Directories
-        /// Serialized Name: NetAppAccount.properties.activeDirectories
-        /// </summary>
+        /// <summary> Active Directories. </summary>
         public IList<NetAppAccountActiveDirectory> ActiveDirectories { get; }
-        /// <summary>
-        /// Encryption settings
-        /// Serialized Name: NetAppAccount.properties.encryption
-        /// </summary>
+        /// <summary> Encryption settings. </summary>
         public NetAppAccountEncryption Encryption { get; set; }
-        /// <summary>
-        /// Shows the status of disableShowmount for all volumes under the subscription, null equals false
-        /// Serialized Name: NetAppAccount.properties.disableShowmount
-        /// </summary>
+        /// <summary> Shows the status of disableShowmount for all volumes under the subscription, null equals false. </summary>
         public bool? DisableShowmount { get; }
         /// <summary> Domain for NFSv4 user ID mapping. This property will be set for all NetApp accounts in the subscription and region and only affect non ldap NFSv4 volumes. </summary>
         public string NfsV4IdDomain { get; set; }

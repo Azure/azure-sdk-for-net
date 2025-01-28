@@ -1045,12 +1045,6 @@
 # ServiceLabel: %Network - DNS Private Resolver %Mgmt
 # ServiceOwners:                                                   @jamesvoongms @jotrivet
 
-# PRLabel: %Network - DNS Private Resolver
-/sdk/dnsresolver/Azure.ResourceManager.*/                          @jamesvoongms @jotrivet
-
-# ServiceLabel: %Network - DNS Private Resolver %Mgmt
-# ServiceOwners:                                                   @jamesvoongms @jotrivet
-
 # PRLabel: %New Relic
 /sdk/newrelicobservability/Azure.ResourceManager.*/                @vipray-ms
 

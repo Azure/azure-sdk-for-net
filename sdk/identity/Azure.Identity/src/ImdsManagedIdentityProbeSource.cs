@@ -198,8 +198,7 @@ namespace Azure.Identity
         public static bool IsProbRequest(HttpMessage message)
             => message.Request.Uri.Host == s_imdsEndpoint.Host &&
                 message.Request.Uri.Path == s_imdsEndpoint.AbsolutePath &&
-                !message.Request.Headers.TryGetValue(metadataHeaderName, out _) &&
-                (message.Response.Content?.ToString().IndexOf("Identity not found", StringComparison.InvariantCulture) < 0);
+                !message.Request.Headers.TryGetValue(metadataHeaderName, out _);
 
         private class ImdsRequestFailedDetailsParser : RequestFailedDetailsParser
         {

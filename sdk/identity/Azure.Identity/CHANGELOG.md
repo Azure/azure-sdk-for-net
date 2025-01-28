@@ -6,11 +6,6 @@
 - Added a `Subscription` property to `AzureCliCredentialOptions` to allow specifying the Azure subscription ID or name to use when authenticating with the Azure CLI.
 
 ### Breaking Changes
-- Previously, if a clientID or ResourceID was specified for Cloud Shell managed identity, which is not supported, the clientID or resourceID would be silently ignored. Now, an exception will be thrown if a clientID or resourceID is specified for Cloud Shell managed identity.
-- Previously, if a clientID or ResourceID was specified for Service Fabric managed identity, which is not supported, the clientID or resourceID would be silently ignored. Now, an exception will be thrown if a clientID or resourceID is specified for Service Fabric managed identity.
-
-### Features Added
-- `ManagedIdentityCredential` now supports specifying a user-assigned managed identity by object ID.
 
 ### Bugs Fixed
 - Null or empty responses from IMDS probe attempts will now fall through to the next credential in the chain ([#47844](https://github.com/Azure/azure-sdk-for-net/issues/47844))

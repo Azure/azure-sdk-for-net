@@ -19,7 +19,6 @@ namespace Azure.Monitor.Query
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [CodeGenMember("TimeSpan")]
-        // TODO: https://github.com/Azure/azure-sdk-for-net/issues/46454
         public QueryTimeRange? TimeRange { get; set; }
 
         /// <summary>

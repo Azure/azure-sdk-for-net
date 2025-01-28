@@ -30,10 +30,6 @@ namespace Azure.Storage.DataMovement
 
         private readonly CreateJobPartMultiAsync _createJobPartMultiAsync;
 
-        private readonly CreateJobPartSingleAsync _createJobPartSingleAsync;
-
-        private readonly CreateJobPartMultiAsync _createJobPartMultiAsync;
-
         /// <summary>
         /// Plan file writer for the respective job
         /// </summary>

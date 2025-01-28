@@ -2789,10 +2789,10 @@
        "Name": "accept",
        "NameInRequest": "Accept",
        "Type": {
-        "$id": "214",
+        "$id": "275",
         "kind": "constant",
         "valueType": {
-         "$id": "215",
+         "$id": "276",
          "kind": "string",
          "name": "string",
          "crossLanguageDefinitionId": "TypeSpec.string",
@@ -2831,7 +2831,7 @@
      ],
      "Responses": [
       {
-       "$id": "217",
+       "$id": "278",
        "StatusCodes": [
         200
        ],

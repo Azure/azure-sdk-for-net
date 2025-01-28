@@ -16,7 +16,6 @@ namespace Azure.ResourceManager.NetApp
     /// <summary>
     /// A class representing the CapacityPool data model.
     /// Capacity pool resource
-    /// Serialized Name: CapacityPool
     /// </summary>
     public partial class CapacityPoolData : TrackedResourceData
     {
@@ -54,14 +53,8 @@ namespace Azure.ResourceManager.NetApp
 
         /// <summary> Initializes a new instance of <see cref="CapacityPoolData"/>. </summary>
         /// <param name="location"> The location. </param>
-        /// <param name="size">
-        /// Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776).
-        /// Serialized Name: CapacityPool.properties.size
-        /// </param>
-        /// <param name="serviceLevel">
-        /// The service level of the file system
-        /// Serialized Name: CapacityPool.properties.serviceLevel
-        /// </param>
+        /// <param name="size"> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </param>
+        /// <param name="serviceLevel"> The service level of the file system. </param>
         public CapacityPoolData(AzureLocation location, long size, NetAppFileServiceLevel serviceLevel) : base(location)
         {
             Size = size;
@@ -108,54 +101,27 @@ namespace Azure.ResourceManager.NetApp
         {
         }
 
-        /// <summary>
-        /// A unique read-only string that changes whenever the resource is updated.
-        /// Serialized Name: CapacityPool.etag
-        /// </summary>
+        /// <summary> A unique read-only string that changes whenever the resource is updated. </summary>
         public ETag? ETag { get; }
-        /// <summary>
-        /// UUID v4 used to identify the Pool
-        /// Serialized Name: CapacityPool.properties.poolId
-        /// </summary>
+        /// <summary> UUID v4 used to identify the Pool. </summary>
         public Guid? PoolId { get; }
-        /// <summary>
-        /// Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776).
-        /// Serialized Name: CapacityPool.properties.size
-        /// </summary>
+        /// <summary> Provisioned size of the pool (in bytes). Allowed values are in 1TiB chunks (value must be multiple of 1099511627776). </summary>
         public long Size { get; set; }
-        /// <summary>
-        /// The service level of the file system
-        /// Serialized Name: CapacityPool.properties.serviceLevel
-        /// </summary>
+        /// <summary> The service level of the file system. </summary>
         public NetAppFileServiceLevel ServiceLevel { get; set; }
-        /// <summary>
-        /// Azure lifecycle management
-        /// Serialized Name: CapacityPool.properties.provisioningState
-        /// </summary>
+        /// <summary> Azure lifecycle management. </summary>
         public string ProvisioningState { get; }
-        /// <summary>
-        /// Total throughput of pool in MiB/s
-        /// Serialized Name: CapacityPool.properties.totalThroughputMibps
-        /// </summary>
+        /// <summary> Total throughput of pool in MiB/s. </summary>
         public float? TotalThroughputMibps { get; }
-        /// <summary>
-        /// Utilized throughput of pool in MiB/s
-        /// Serialized Name: CapacityPool.properties.utilizedThroughputMibps
-        /// </summary>
+        /// <summary> Utilized throughput of pool in MiB/s. </summary>
         public float? UtilizedThroughputMibps { get; }
         /// <summary> Maximum throughput in MiB/s that can be achieved by this pool and this will be accepted as input only for manual qosType pool with Flexible service level. </summary>
         public float? CustomThroughputMibps { get; set; }
         /// <summary> The qos type of the pool. </summary>
         public CapacityPoolQosType? QosType { get; set; }
-        /// <summary>
-        /// If enabled (true) the pool can contain cool Access enabled volumes.
-        /// Serialized Name: CapacityPool.properties.coolAccess
-        /// </summary>
+        /// <summary> If enabled (true) the pool can contain cool Access enabled volumes. </summary>
         public bool? IsCoolAccessEnabled { get; set; }
-        /// <summary>
-        /// Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool.
-        /// Serialized Name: CapacityPool.properties.encryptionType
-        /// </summary>
+        /// <summary> Encryption type of the capacity pool, set encryption type for data at rest for this pool and all volumes in it. This value can only be set when creating new pool. </summary>
         public CapacityPoolEncryptionType? EncryptionType { get; set; }
     }
 }

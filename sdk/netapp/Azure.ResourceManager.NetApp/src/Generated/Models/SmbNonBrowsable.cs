@@ -10,10 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.NetApp.Models
 {
-    /// <summary>
-    /// Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume
-    /// Serialized Name: SmbNonBrowsable
-    /// </summary>
+    /// <summary> Enables non-browsable property for SMB Shares. Only applicable for SMB/DualProtocol volume. </summary>
     public readonly partial struct SmbNonBrowsable : IEquatable<SmbNonBrowsable>
     {
         private readonly string _value;
@@ -28,15 +25,9 @@ namespace Azure.ResourceManager.NetApp.Models
         private const string DisabledValue = "Disabled";
         private const string EnabledValue = "Enabled";
 
-        /// <summary>
-        /// smbNonBrowsable share setting is disabled
-        /// Serialized Name: SmbNonBrowsable.Disabled
-        /// </summary>
+        /// <summary> smbNonBrowsable share setting is disabled. </summary>
         public static SmbNonBrowsable Disabled { get; } = new SmbNonBrowsable(DisabledValue);
-        /// <summary>
-        /// smbNonBrowsable share setting is enabled
-        /// Serialized Name: SmbNonBrowsable.Enabled
-        /// </summary>
+        /// <summary> smbNonBrowsable share setting is enabled. </summary>
         public static SmbNonBrowsable Enabled { get; } = new SmbNonBrowsable(EnabledValue);
         /// <summary> Determines if two <see cref="SmbNonBrowsable"/> values are the same. </summary>
         public static bool operator ==(SmbNonBrowsable left, SmbNonBrowsable right) => left.Equals(right);

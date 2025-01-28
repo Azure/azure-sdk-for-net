@@ -309,7 +309,6 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
 
             // invoke the operation
             ConnectivityCheckContent content = new ConnectivityCheckContent(new ConnectivityCheckRequestSource("northeurope"), new ConnectivityCheckRequestDestination("https://microsoft.com", 3306L))
-            ConnectivityCheckContent content = new ConnectivityCheckContent(new ConnectivityCheckRequestSource("northeurope"), new ConnectivityCheckRequestDestination("https://microsoft.com", 3306L))
             {
                 Protocol = ConnectivityCheckProtocol.Https,
                 ProtocolHttpConfiguration = new ConnectivityCheckRequestHttpConfiguration
@@ -346,7 +345,6 @@ SubnetResourceId = new ResourceIdentifier("/subscriptions/00000000-0000-0000-000
             ApiManagementServiceResource apiManagementService = client.GetApiManagementServiceResource(apiManagementServiceResourceId);
 
             // invoke the operation
-            ConnectivityCheckContent content = new ConnectivityCheckContent(new ConnectivityCheckRequestSource("northeurope"), new ConnectivityCheckRequestDestination("8.8.8.8", 53L))
             ConnectivityCheckContent content = new ConnectivityCheckContent(new ConnectivityCheckRequestSource("northeurope"), new ConnectivityCheckRequestDestination("8.8.8.8", 53L))
             {
                 PreferredIPVersion = PreferredIPVersion.IPv4,
