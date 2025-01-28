@@ -119,40 +119,51 @@ jobs:
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/pack.binlog
 
-        # only use the project list override file if the service directory is not auto
-        - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
-          - pwsh: |
-              if (!"$(ProjectNames)") {
-                Write-Host "No packages to build."
-                exit 0
-              }
-              else {
-                dotnet pack eng/service.proj -warnaserror `
-                  /p:ValidateRunApiCompat=true `
-                  /p:SDKType=${{ parameters.SDKType }} `
-                  /p:IncludeTests=false `
-                  /p:PublicSign=false $(VersioningProperties) `
-                  /p:Configuration=$(BuildConfiguration) `
-                  /p:CommitSHA=$(Build.SourceVersion) `
-                  /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory) `
-                  /p:ServiceDirectory=* `
-                  /p:ProjectListOverrideFile=$(ProjectListOverrideFile) `
-                  $(DiagnosticArguments)
-              }
-            displayName: "Build and Package"
-        - ${{ else }}:
-          - script: >-
-            dotnet pack eng/service.proj -warnaserror
-            /p:ValidateRunApiCompat=true
-            /p:SDKType=${{ parameters.SDKType }}
-            /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
-            /p:IncludeTests=false
-            /p:PublicSign=false $(VersioningProperties)
-            /p:Configuration=$(BuildConfiguration)
-            /p:CommitSHA=$(Build.SourceVersion)
-            /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
-            $(DiagnosticArguments)
+      - task: Powershell@2
+        inputs:
+          filePath: $(Build.SourcesDirectory)/eng/common/scripts/Save-Package-Properties.ps1
+          arguments: >
+            -ServiceDirectory ${{parameters.ServiceDirectory}}
+            -OutDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
+            -AddDevVersion:$$(SetDevVersion)
+          pwsh: true
+          workingDirectory: $(Pipeline.Workspace)
+        displayName: Update package properties with dev version
+
+      # only use the project list override file if the service directory is not auto
+      - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
+        - pwsh: |
+            if (!"$(ProjectNames)") {
+              Write-Host "No packages to build."
+              exit 0
+            }
+            else {
+              dotnet pack eng/service.proj -warnaserror `
+                /p:ValidateRunApiCompat=true `
+                /p:SDKType=${{ parameters.SDKType }} `
+                /p:IncludeTests=false `
+                /p:PublicSign=false $(VersioningProperties) `
+                /p:Configuration=$(BuildConfiguration) `
+                /p:CommitSHA=$(Build.SourceVersion) `
+                /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory) `
+                /p:ServiceDirectory=* `
+                /p:ProjectListOverrideFile=$(ProjectListOverrideFile) `
+                $(DiagnosticArguments)
+            }
           displayName: "Build and Package"
+      - ${{ else }}:
+        - script: >-
+          dotnet pack eng/service.proj -warnaserror
+          /p:ValidateRunApiCompat=true
+          /p:SDKType=${{ parameters.SDKType }}
+          /p:ServiceDirectory=${{ parameters.ServiceDirectory }}
+          /p:IncludeTests=false
+          /p:PublicSign=false $(VersioningProperties)
+          /p:Configuration=$(BuildConfiguration)
+          /p:CommitSHA=$(Build.SourceVersion)
+          /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory)
+          $(DiagnosticArguments)
+        displayName: "Build and Package"
 
       - task: Powershell@2
         inputs:
