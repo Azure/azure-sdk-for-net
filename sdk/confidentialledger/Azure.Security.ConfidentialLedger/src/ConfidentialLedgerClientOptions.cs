@@ -30,7 +30,7 @@ namespace Azure.Security.ConfidentialLedger
         {
             /// <summary> Service version "2022-05-13". </summary>
             V2022_05_13 = 1,
-            /// <summary> Service version "2024-08-22-preview". </summary>
+            /// <summary> Service version "2024-01-26-preview". </summary>
             V2024_01_26_Preview = 2,
         }
 

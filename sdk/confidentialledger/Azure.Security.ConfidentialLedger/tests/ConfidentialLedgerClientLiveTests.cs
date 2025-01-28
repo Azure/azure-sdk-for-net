@@ -219,7 +219,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             // Create a user, test that it shows up in the users list
             var userId = Recording.Random.NewGuid().ToString();
-            var result = await Client.CreateOrUpdateUserAsync(
+            Response result = await Client.CreateOrUpdateUserAsync(
                 userId,
                 RequestContent.Create(new { assignedRole = "Reader" }));
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
