@@ -91,7 +91,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// Determines how files are created or if they should be overwritten if they already exists
         /// </summary>
-        internal StorageResourceCreationPreference _creationPreference;
+        internal StorageResourceCreationMode _creationPreference;
 
         /// <summary>
         /// Event handler for tracking status changes in job parts.
@@ -111,7 +111,7 @@ namespace Azure.Storage.DataMovement
 
         /// <summary>
         /// Number of single transfers skipped during Transfer due to no overwrite allowed as specified in
-        /// <see cref="StorageResourceCreationPreference.SkipIfExists"/>
+        /// <see cref="StorageResourceCreationMode.SkipIfExists"/>
         /// </summary>
         public SyncAsyncEventHandler<TransferItemSkippedEventArgs> TransferSkippedEventHandler { get; internal set; }
 
@@ -151,7 +151,7 @@ namespace Azure.Storage.DataMovement
             TransferErrorMode errorHandling,
             long? initialTransferSize,
             long? maximumTransferChunkSize,
-            StorageResourceCreationPreference creationPreference,
+            StorageResourceCreationMode creationPreference,
             ArrayPool<byte> arrayPool,
             SyncAsyncEventHandler<TransferStatusEventArgs> statusEventHandler,
             SyncAsyncEventHandler<TransferItemFailedEventArgs> failedEventHandler,
@@ -300,7 +300,6 @@ namespace Azure.Storage.DataMovement
                     {
                         // Single resource transfer, we can skip to chunking the job.
                         part = await _createJobPartSingleAsync(this, partNumber).ConfigureAwait(false);
-                        AppendJobPart(part);
                         await OnAllResourcesEnumeratedAsync().ConfigureAwait(false);
                     }
                     catch (Exception ex)
@@ -308,6 +307,7 @@ namespace Azure.Storage.DataMovement
                         await InvokeFailedArgAsync(ex).ConfigureAwait(false);
                         yield break;
                     }
+                    AppendJobPart(part);
                     yield return part;
                 }
                 else
@@ -342,7 +342,7 @@ namespace Azure.Storage.DataMovement
                     yield break;
                 }
 
-                if (!isEnumerationComplete)
+                if (!isEnumerationComplete && !_isSingleResource)
                 {
                     await foreach (JobPartInternal jobPartInternal in EnumerateAndCreateJobPartsAsync().ConfigureAwait(false))
                     {

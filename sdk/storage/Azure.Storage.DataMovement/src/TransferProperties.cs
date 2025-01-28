@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 
 namespace Azure.Storage.DataMovement
 {
@@ -23,12 +24,14 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// A string ID for the source resource provider that should be used for rehydration.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual string SourceProviderId { get; internal set; }
 
         /// <summary>
         /// The additional checkpoint data specific to the source resource.
         /// </summary>
-        public virtual byte[] SourceCheckpointData { get; internal set; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual byte[] SourceCheckpointDetails { get; internal set; }
 
         /// <summary>
         /// Contains the Destination uri of the Storage Resource.
@@ -38,12 +41,14 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// A string ID for the destination resource provider that should be used for rehydration.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual string DestinationProviderId { get; internal set; }
 
         /// <summary>
         /// The additional checkpoint data specific to the destination resource.
         /// </summary>
-        public virtual byte[] DestinationCheckpointData { get; internal set; }
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public virtual byte[] DestinationCheckpointDetails { get; internal set; }
 
         /// <summary>
         /// Defines whether or not this was a container transfer, in order to rehydrate the StorageResource.
@@ -53,6 +58,7 @@ namespace Azure.Storage.DataMovement
         /// <summary>
         /// For mocking.
         /// </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal TransferProperties() { }
     }
 }

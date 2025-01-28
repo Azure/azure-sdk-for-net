@@ -19,7 +19,7 @@ namespace Azure.Storage.DataMovement
             }
             else
             {
-                return new LocalTransferCheckpointer(options?.CheckpointerPath);
+                return new LocalTransferCheckpointer(options?.CheckpointPath);
             }
         }
 
@@ -73,10 +73,10 @@ namespace Azure.Storage.DataMovement
                 TransferId = transferId,
                 SourceUri = new Uri(header.ParentSourcePath),
                 SourceProviderId = header.SourceProviderId,
-                SourceCheckpointData = header.SourceCheckpointData,
+                SourceCheckpointDetails = header.SourceCheckpointDetails,
                 DestinationUri = new Uri(header.ParentDestinationPath),
                 DestinationProviderId = header.DestinationProviderId,
-                DestinationCheckpointData = header.DestinationCheckpointData,
+                DestinationCheckpointDetails = header.DestinationCheckpointDetails,
                 IsContainer = header.IsContainer,
             };
         }

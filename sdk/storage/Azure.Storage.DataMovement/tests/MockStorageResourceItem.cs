@@ -77,11 +77,12 @@ namespace Azure.Storage.DataMovement.Tests
 
         protected internal override Task<StorageResourceItemProperties> GetPropertiesAsync(CancellationToken token = default)
         {
-            return Task.FromResult(new StorageResourceItemProperties(
-                resourceLength: Length ?? 0,
-                eTag: new ETag("etag"),
-                lastModifiedTime: DateTimeOffset.UtcNow,
-                properties: default));
+            return Task.FromResult(new StorageResourceItemProperties()
+            {
+                ResourceLength = Length ?? 0,
+                ETag = new ETag("etag"),
+                LastModifiedTime = DateTimeOffset.UtcNow
+            });
         }
 
         protected internal override Task<HttpAuthorization> GetCopyAuthorizationHeaderAsync(CancellationToken cancellationToken = default)
@@ -103,14 +104,14 @@ namespace Azure.Storage.DataMovement.Tests
             return Task.FromResult(new StorageResourceReadStreamResult(result));
         }
 
-        protected internal override StorageResourceCheckpointData GetSourceCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetSourceCheckpointDetails()
         {
-            return new MockResourceCheckpointData();
+            return new MockResourceCheckpointDetails();
         }
 
-        protected internal override StorageResourceCheckpointData GetDestinationCheckpointData()
+        protected internal override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
-            return new MockResourceCheckpointData();
+            return new MockResourceCheckpointDetails();
         }
 
         protected internal override Task CopyFromStreamAsync(Stream stream, long streamLength, bool overwrite, long completeLength, StorageResourceWriteToOffsetOptions options = null, CancellationToken cancellationToken = default)

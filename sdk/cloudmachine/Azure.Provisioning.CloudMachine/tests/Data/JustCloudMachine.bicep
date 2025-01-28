@@ -18,6 +18,7 @@ resource cm_storage 'Microsoft.Storage/storageAccounts@2023-01-01' = {
   }
   properties: {
     allowBlobPublicAccess: false
+    allowSharedKeyAccess: false
     isHnsEnabled: true
   }
   identity: {

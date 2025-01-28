@@ -1,6 +1,6 @@
 # Microsoft Azure DeviceRegistry management client library for .NET
 
-Azure Device Registry (ADR) is a unified registry projecting assets and devices as Azure resources. ADR creates a single source of truth for asset  metadata across Azure, partner, and customer applications running in the cloud or on the edge. ADR streamlines and simplifies end-to-end IoT architectures built on top of widely adopted Azure constructs.
+Azure Device Registry (ADR) is a unified registry projecting assets and devices as Azure resources. ADR creates a single source of truth for asset metadata across Azure, partner, and customer applications running in the cloud or on the edge. ADR streamlines and simplifies end-to-end IoT architectures built on top of widely adopted Azure constructs.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 

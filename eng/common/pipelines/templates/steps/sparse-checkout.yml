@@ -86,7 +86,10 @@ steps:
 
               # Set non-cone mode otherwise path filters will not work in git >= 2.37.0
               # See https://github.blog/2022-06-27-highlights-from-git-2-37/#tidbits
-              git sparse-checkout set --no-cone '/*' '!/*/' '/eng'
+              # '/*' '!/*/' -> only checkout files in top level directory
+              # '/eng' -> checkout required eng/ scripts/configs
+              # '.config' -> required for files like .config/1espt/PipelineAutobaseliningConfig.yml and .config/guardian/.gdnbaselines used by 1es PT scripts
+              git sparse-checkout set --no-cone '/*' '!/*/' '/eng' '/.config'
             }
 
             # Prevent wildcard expansion in Invoke-Expression (e.g. for checkout path '/*')
