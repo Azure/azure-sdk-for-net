@@ -39,24 +39,19 @@ namespace Azure.Health.Deidentification
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("sourceLocation"u8);
-            writer.WriteObjectValue(SourceLocation, options);
-            writer.WritePropertyName("targetLocation"u8);
-            writer.WriteObjectValue(TargetLocation, options);
             if (Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation.Value.ToString());
             }
-            if (Optional.IsDefined(DataType))
+            writer.WritePropertyName("sourceLocation"u8);
+            writer.WriteObjectValue(SourceLocation, options);
+            writer.WritePropertyName("targetLocation"u8);
+            writer.WriteObjectValue(TargetLocation, options);
+            if (Optional.IsDefined(Customizations))
             {
-                writer.WritePropertyName("dataType"u8);
-                writer.WriteStringValue(DataType.Value.ToString());
-            }
-            if (Optional.IsDefined(RedactionFormat))
-            {
-                writer.WritePropertyName("redactionFormat"u8);
-                writer.WriteStringValue(RedactionFormat);
+                writer.WritePropertyName("customizations"u8);
+                writer.WriteObjectValue(Customizations, options);
             }
             if (options.Format != "W")
             {
@@ -126,17 +121,16 @@ namespace Azure.Health.Deidentification
                 return null;
             }
             string name = default;
+            DeidentificationOperationType? operation = default;
             SourceStorageLocation sourceLocation = default;
             TargetStorageLocation targetLocation = default;
-            OperationType? operation = default;
-            DocumentDataType? dataType = default;
-            string redactionFormat = default;
-            JobStatus status = default;
+            DeidentificationJobCustomizationOptions customizations = default;
+            OperationState status = default;
             ResponseError error = default;
             DateTimeOffset lastUpdatedAt = default;
             DateTimeOffset createdAt = default;
             DateTimeOffset? startedAt = default;
-            JobSummary summary = default;
+            DeidentificationJobSummary summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,6 +138,15 @@ namespace Azure.Health.Deidentification
                 if (property.NameEquals("name"u8))
                 {
                     name = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("operation"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    operation = new DeidentificationOperationType(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("sourceLocation"u8))
@@ -156,32 +159,18 @@ namespace Azure.Health.Deidentification
                     targetLocation = TargetStorageLocation.DeserializeTargetStorageLocation(property.Value, options);
                     continue;
                 }
-                if (property.NameEquals("operation"u8))
+                if (property.NameEquals("customizations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    operation = new OperationType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("dataType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    dataType = new DocumentDataType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("redactionFormat"u8))
-                {
-                    redactionFormat = property.Value.GetString();
+                    customizations = DeidentificationJobCustomizationOptions.DeserializeDeidentificationJobCustomizationOptions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new JobStatus(property.Value.GetString());
+                    status = new OperationState(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -218,7 +207,7 @@ namespace Azure.Health.Deidentification
                     {
                         continue;
                     }
-                    summary = JobSummary.DeserializeJobSummary(property.Value, options);
+                    summary = DeidentificationJobSummary.DeserializeDeidentificationJobSummary(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -229,11 +218,10 @@ namespace Azure.Health.Deidentification
             serializedAdditionalRawData = rawDataDictionary;
             return new DeidentificationJob(
                 name,
+                operation,
                 sourceLocation,
                 targetLocation,
-                operation,
-                dataType,
-                redactionFormat,
+                customizations,
                 status,
                 error,
                 lastUpdatedAt,

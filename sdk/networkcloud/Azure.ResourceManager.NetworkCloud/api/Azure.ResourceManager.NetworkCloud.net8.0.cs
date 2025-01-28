@@ -2645,7 +2645,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
     public partial class CommandOutputSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings>
     {
         public CommandOutputSettings() { }
-        public Azure.ResourceManager.NetworkCloud.Models.IdentitySelector AssociatedIdentity { get { throw null; } set { } }
+        public Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector AssociatedIdentity { get { throw null; } set { } }
         public System.Uri ContainerUri { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.CommandOutputSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -2988,18 +2988,6 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         public static implicit operator Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType (string value) { throw null; }
         public static bool operator !=(Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType left, Azure.ResourceManager.NetworkCloud.Models.HybridAksPluginType right) { throw null; }
         public override string ToString() { throw null; }
-    }
-    public partial class IdentitySelector : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.IdentitySelector>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.IdentitySelector>
-    {
-        public IdentitySelector() { }
-        public Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelectorType? IdentityType { get { throw null; } set { } }
-        public Azure.Core.ResourceIdentifier UserAssignedIdentityResourceId { get { throw null; } set { } }
-        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetworkCloud.Models.IdentitySelector System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.IdentitySelector>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.IdentitySelector>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.NetworkCloud.Models.IdentitySelector System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.IdentitySelector>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.IdentitySelector>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.IdentitySelector>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ImageRepositoryCredentials : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ImageRepositoryCredentials>
     {
@@ -3575,6 +3563,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ManagedResourceGroupConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ManagedServiceIdentitySelector : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector>
+    {
+        public ManagedServiceIdentitySelector() { }
+        public Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelectorType? IdentityType { get { throw null; } set { } }
+        public Azure.Core.ResourceIdentifier UserAssignedIdentityResourceId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelector>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ManagedServiceIdentitySelectorType : System.IEquatable<Azure.ResourceManager.NetworkCloud.Models.ManagedServiceIdentitySelectorType>

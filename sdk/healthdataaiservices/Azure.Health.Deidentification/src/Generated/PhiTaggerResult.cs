@@ -58,14 +58,10 @@ namespace Azure.Health.Deidentification
 
         /// <summary> Initializes a new instance of <see cref="PhiTaggerResult"/>. </summary>
         /// <param name="entities"> List of entities detected in the input. </param>
-        /// <param name="path"> Path to the document in storage. </param>
-        /// <param name="etag"> The entity tag for this resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PhiTaggerResult(IReadOnlyList<PhiEntity> entities, string path, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PhiTaggerResult(IReadOnlyList<PhiEntity> entities, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Entities = entities;
-            Path = path;
-            Etag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -76,9 +72,5 @@ namespace Azure.Health.Deidentification
 
         /// <summary> List of entities detected in the input. </summary>
         public IReadOnlyList<PhiEntity> Entities { get; }
-        /// <summary> Path to the document in storage. </summary>
-        public string Path { get; }
-        /// <summary> The entity tag for this resource. </summary>
-        public ETag? Etag { get; }
     }
 }

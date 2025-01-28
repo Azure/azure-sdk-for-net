@@ -58,7 +58,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
         protected override StorageResourceContainer GetStorageResourceContainer(BlobContainerClient containerClient)
         {
             BlobStorageResourceContainerOptions options = new();
-            options.BlobType = new(GetBlobType());
+            options.BlobType = GetBlobType();
             return new BlobStorageResourceContainer(containerClient, options);
         }
     }

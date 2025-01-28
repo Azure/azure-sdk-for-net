@@ -15,7 +15,6 @@ using Azure.Storage.DataMovement.Tests.Shared;
 using Moq;
 using NUnit.Framework;
 using NUnit.Framework.Constraints;
-using NUnit.Framework.Interfaces;
 
 namespace Azure.Storage.DataMovement.Tests;
 
@@ -140,12 +139,12 @@ public class TransferManagerTests
             checkpointer,
             default);
 
-        List<DataTransfer> transfers = new();
+        List<TransferOperation> transfers = new();
 
         // queue jobs
         foreach ((Mock<StorageResourceItem> srcResource, Mock<StorageResourceItem> dstResource) in resources)
         {
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 srcResource.Object,
                 dstResource.Object,
                 new()
@@ -178,10 +177,10 @@ public class TransferManagerTests
         foreach (MemoryTransferCheckpointer.Job job in checkpointer.Jobs.Values)
         {
             Assert.That(job.Parts.Count, Is.EqualTo(1), "Items should be single-part.");
-            Assert.That(job.Parts.Values.First().Status.State, Is.EqualTo(DataTransferState.Queued), "Bad part status.");
+            Assert.That(job.Parts.Values.First().Status.State, Is.EqualTo(TransferState.Queued), "Bad part status.");
             Assert.That(job.Parts.Keys.First(), Is.EqualTo(0), "Parts should be zero-indexed.");
             Assert.That(job.EnumerationComplete, "Enumeration not marked comlete.");
-            Assert.That(job.Status.State, Is.EqualTo(DataTransferState.InProgress), "Transfer state not updated.");
+            Assert.That(job.Status.State, Is.EqualTo(TransferState.InProgress), "Transfer state not updated.");
         }
 
         // process parts
@@ -199,7 +198,7 @@ public class TransferManagerTests
         {
             foreach (MemoryTransferCheckpointer.JobPart part in job.Parts.Values)
             {
-                Assert.That(part.Status.State, Is.EqualTo(DataTransferState.InProgress), "Part state not updated.");
+                Assert.That(part.Status.State, Is.EqualTo(TransferState.InProgress), "Part state not updated.");
             }
         }
 
@@ -219,7 +218,7 @@ public class TransferManagerTests
 
         await Task.Delay(50); // TODO flaky that we need this; a random one will often fail without
 
-        foreach (DataTransfer transfer in transfers)
+        foreach (TransferOperation transfer in transfers)
         {
             Assert.That(transfer.HasCompleted);
         }
@@ -227,9 +226,9 @@ public class TransferManagerTests
         {
             foreach (MemoryTransferCheckpointer.JobPart part in job.Parts.Values)
             {
-                Assert.That(part.Status.State, Is.EqualTo(DataTransferState.Completed), "Part state not updated.");
+                Assert.That(part.Status.State, Is.EqualTo(TransferState.Completed), "Part state not updated.");
             }
-            Assert.That(job.Status.State, Is.EqualTo(DataTransferState.Completed), "Job state not updated.");
+            Assert.That(job.Status.State, Is.EqualTo(TransferState.Completed), "Job state not updated.");
         }
     }
 
@@ -263,14 +262,14 @@ public class TransferManagerTests
             checkpointer,
             default);
 
-        List<(DataTransfer Transfer, int ExpectedPartCount, Mock<StorageResourceContainer> Source, Mock<StorageResourceContainer> Destination)> transfers = new();
+        List<(TransferOperation Transfer, int ExpectedPartCount, Mock<StorageResourceContainer> Source, Mock<StorageResourceContainer> Destination)> transfers = new();
 
         foreach (int i in Enumerable.Range(1, numJobs))
         {
             Mock<StorageResourceContainer> srcResource = new(MockBehavior.Strict);
             Mock<StorageResourceContainer> dstResource = new(MockBehavior.Strict);
             (srcResource, dstResource).BasicSetup(srcUri, dstUri, GetItemCountFromContainerIndex(i), itemSize);
-            DataTransfer transfer = await transferManager.StartTransferAsync(
+            TransferOperation transfer = await transferManager.StartTransferAsync(
                 srcResource.Object,
                 dstResource.Object,
                 new()
@@ -293,13 +292,13 @@ public class TransferManagerTests
         Assert.That(await jobsProcessor.StepAll(), Is.EqualTo(numJobs), "Failed to step through jobs queue.");
         Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(0), "Failed to step through jobs queue.");
         Assert.That(partsProcessor.ItemsInQueue, Is.EqualTo(totalJobParts), "Error during Job => Part processing.");
-        foreach ((DataTransfer transfer, int parts, Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in transfers)
+        foreach ((TransferOperation transfer, int parts, Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in transfers)
         {
             Assert.That(checkpointer.Jobs[transfer.Id].Parts.Count, Is.EqualTo(parts), "Containers should have several parts.");
             Assert.That(checkpointer.Jobs[transfer.Id].Parts.Keys, Is.EquivalentTo(Enumerable.Range(0, checkpointer.Jobs[transfer.Id].Parts.Count).ToList()),
                 "Part nums should be sequential and zero-indexed.");
             Assert.That(checkpointer.Jobs[transfer.Id].EnumerationComplete, "Enumeration not marked comlete.");
-            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.InProgress), "Transfer state not updated.");
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(TransferState.InProgress), "Transfer state not updated.");
             srcResource.VerifySourceResourceOnJobProcess();
             dstResource.VerifyDestinationResourceOnJobProcess();
             srcResource.VerifyNoOtherCalls();
@@ -310,11 +309,11 @@ public class TransferManagerTests
         Assert.That(await partsProcessor.StepAll(), Is.EqualTo(totalJobParts), "Failed to step through parts queue.");
         Assert.That(partsProcessor.ItemsInQueue, Is.EqualTo(0), "Failed to step through parts queue.");
         Assert.That(chunksProcessor.ItemsInQueue, Is.EqualTo(numChunks), "Error during Part => Chunk processing.");
-        foreach ((DataTransfer transfer, int parts, Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in transfers)
+        foreach ((TransferOperation transfer, int parts, Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in transfers)
         {
             foreach (MemoryTransferCheckpointer.JobPart part in checkpointer.Jobs[transfer.Id].Parts.Values)
             {
-                Assert.That(part.Status.State, Is.EqualTo(DataTransferState.InProgress), "Part state not updated.");
+                Assert.That(part.Status.State, Is.EqualTo(TransferState.InProgress), "Part state not updated.");
             }
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
@@ -326,7 +325,7 @@ public class TransferManagerTests
             numChunks,
             totalJobParts);
 
-        foreach ((DataTransfer transfer, int parts, Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in transfers)
+        foreach ((TransferOperation transfer, int parts, Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in transfers)
         {
             srcResource.VerifyNoOtherCalls();
             dstResource.VerifyNoOtherCalls();
@@ -334,14 +333,14 @@ public class TransferManagerTests
 
         await Task.Delay(10); // TODO flaky that we need this; a random one will often fail without
 
-        foreach ((DataTransfer transfer, int parts, Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in transfers)
+        foreach ((TransferOperation transfer, int parts, Mock<StorageResourceContainer> srcResource, Mock<StorageResourceContainer> dstResource) in transfers)
         {
             Assert.That(transfer.HasCompleted);
             foreach (MemoryTransferCheckpointer.JobPart part in checkpointer.Jobs[transfer.Id].Parts.Values)
             {
-                Assert.That(part.Status.State, Is.EqualTo(DataTransferState.Completed), "Part state not updated.");
+                Assert.That(part.Status.State, Is.EqualTo(TransferState.Completed), "Part state not updated.");
             }
-            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(DataTransferState.Completed), "Job state not updated.");
+            Assert.That(checkpointer.Jobs[transfer.Id].Status.State, Is.EqualTo(TransferState.Completed), "Job state not updated.");
         }
     }
 
@@ -375,7 +374,7 @@ public class TransferManagerTests
         {
             case 0:
                 jobBuilder.Setup(b => b.BuildJobAsync(It.IsAny<StorageResource>(), It.IsAny<StorageResource>(),
-                    It.IsAny<DataTransferOptions>(), It.IsAny<ITransferCheckpointer>(), It.IsAny<string>(),
+                    It.IsAny<TransferOptions>(), It.IsAny<ITransferCheckpointer>(), It.IsAny<string>(),
                     It.IsAny<bool>(), It.IsAny<CancellationToken>())
                 ).Throws(expectedException);
                 break;
@@ -400,7 +399,7 @@ public class TransferManagerTests
             checkpointer.Object,
             default);
 
-        DataTransfer transfer = null;
+        TransferOperation transfer = null;
         IConstraint throwsConstraint = throwCleanup
             ? Throws.TypeOf<AggregateException>().And.Property(nameof(AggregateException.InnerExceptions))
                 .EquivalentTo(new List<Exception>() { expectedException, cleanupException })
@@ -430,7 +429,7 @@ public class TransferManagerTests
         JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new(ClientOptions.Default));
 
         List<string> capturedTransferIds = new();
-        List<DataTransferStatus> capturedTransferStatuses = new();
+        List<TransferStatus> capturedTransferStatuses = new();
         Mock<ITransferCheckpointer> checkpointer = new(MockBehavior.Loose);
         checkpointer.Setup(c => c.AddNewJobAsync(Capture.In(capturedTransferIds),
             It.IsAny<StorageResource>(), It.IsAny<StorageResource>(), It.IsAny<CancellationToken>()));
@@ -450,10 +449,10 @@ public class TransferManagerTests
 
         // need to listen to events to get exception that takes place in processing
         List<TransferItemFailedEventArgs> failures = new();
-        DataTransferOptions options = new();
+        TransferOptions options = new();
         options.ItemTransferFailed += e => { failures.Add(e); return Task.CompletedTask; };
 
-        DataTransfer transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
+        TransferOperation transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
 
         using (srcThrowScope())
         {
@@ -461,20 +460,20 @@ public class TransferManagerTests
         }
         Assert.That(jobsProcessor.ItemsInQueue, Is.Zero);
         Assert.That(partsProcessor.ItemsInQueue, Is.Zero); // because of failure
-        Assert.That(transfer.TransferStatus.HasFailedItems);
+        Assert.That(transfer.Status.HasFailedItems);
         Assert.That(failures, Is.Not.Empty);
 
         string transferId = capturedTransferIds.First();
         checkpointer.Verify(c => c.AddNewJobAsync(transferId, It.IsAny<StorageResource>(), It.IsAny<StorageResource>(),
             It.IsAny<CancellationToken>()));
-        checkpointer.Verify(c => c.SetJobStatusAsync(transferId, It.IsAny<DataTransferStatus>(),
+        checkpointer.Verify(c => c.SetJobStatusAsync(transferId, It.IsAny<TransferStatus>(),
             It.IsAny<CancellationToken>()), Times.Exactly(3));
         if (!isContainer)
         {
             checkpointer.Verify(c => c.GetCurrentJobPartCountAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Once);
         }
-        Assert.That(capturedTransferStatuses[0].State, Is.EqualTo(DataTransferState.InProgress));
-        Assert.That(capturedTransferStatuses[1].State, Is.EqualTo(DataTransferState.Stopping));
+        Assert.That(capturedTransferStatuses[0].State, Is.EqualTo(TransferState.InProgress));
+        Assert.That(capturedTransferStatuses[1].State, Is.EqualTo(TransferState.Stopping));
         Assert.That(capturedTransferStatuses[2].IsCompletedWithFailedItems);
         checkpointer.VerifyNoOtherCalls();
 
@@ -496,7 +495,7 @@ public class TransferManagerTests
         {
             CallBase = true
         };
-        List<DataTransferStatus> capturedTransferStatuses = new();
+        List<TransferStatus> capturedTransferStatuses = new();
         checkpointer.Setup(c => c.SetJobStatusAsync(It.IsAny<string>(), CaptureTransferStatus(capturedTransferStatuses),
             It.IsAny<CancellationToken>()));
 
@@ -513,10 +512,10 @@ public class TransferManagerTests
 
         // need to listen to events to get exception that takes place in processing
         List<TransferItemFailedEventArgs> failures = new();
-        DataTransferOptions options = new();
+        TransferOptions options = new();
         options.ItemTransferFailed += e => { failures.Add(e); return Task.CompletedTask; };
 
-        DataTransfer transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
+        TransferOperation transfer = await transferManager.StartTransferAsync(srcResource, dstResource, options);
 
         Assert.That(await jobsProcessor.TryStepAsync(), Is.True);
         Assert.That(jobsProcessor.ItemsInQueue, Is.Zero);
@@ -529,13 +528,13 @@ public class TransferManagerTests
         Assert.That(partsProcessor.ItemsInQueue, Is.Zero);
         Assert.That(chunksProcessor.ItemsInQueue, Is.Zero); // because of failure
 
-        Assert.That(transfer.TransferStatus.HasFailedItems);
+        Assert.That(transfer.Status.HasFailedItems);
         Assert.That(failures, Is.Not.Empty);
 
         Assert.That(capturedTransferStatuses.Count, Is.EqualTo(4));
-        Assert.That(capturedTransferStatuses[0].State, Is.EqualTo(DataTransferState.InProgress));
-        Assert.That(capturedTransferStatuses[1].State, Is.EqualTo(DataTransferState.InProgress));
-        Assert.That(capturedTransferStatuses[2].State, Is.EqualTo(DataTransferState.Stopping));
+        Assert.That(capturedTransferStatuses[0].State, Is.EqualTo(TransferState.InProgress));
+        Assert.That(capturedTransferStatuses[1].State, Is.EqualTo(TransferState.InProgress));
+        Assert.That(capturedTransferStatuses[2].State, Is.EqualTo(TransferState.Stopping));
         Assert.That(capturedTransferStatuses[3].IsCompletedWithFailedItems);
     }
 
@@ -566,17 +565,50 @@ public class TransferManagerTests
         // Add jobs on separate Tasks
         var loopResult = Parallel.For(0, numJobs, i =>
         {
-            Task<DataTransfer> task = transferManager.StartTransferAsync(srcResource, dstResource);
+            Task<TransferOperation> task = transferManager.StartTransferAsync(srcResource, dstResource);
         });
         Assert.That(jobsProcessor.ItemsInQueue, Is.EqualTo(numJobs), "Error during initial Job queueing.");
     }
 
+    [Test]
+    public async Task BasicTransfer_NoOptions()
+    {
+        Uri srcUri = new("file:///foo/bar");
+        Uri dstUri = new("https://example.com/fizz/buzz");
+
+        (var jobsProcessor, var partsProcessor, var chunksProcessor) = StepProcessors();
+        JobBuilder jobBuilder = new(ArrayPool<byte>.Shared, default, new ClientDiagnostics(ClientOptions.Default));
+        MemoryTransferCheckpointer checkpointer = new();
+
+        await using TransferManager transferManager = new(
+            jobsProcessor,
+            partsProcessor,
+            chunksProcessor,
+            jobBuilder,
+            checkpointer,
+            default);
+
+        int numFiles = 3;
+        Mock<StorageResourceContainer> srcResource = new(MockBehavior.Strict);
+        Mock<StorageResourceContainer> dstResource = new(MockBehavior.Strict);
+        (srcResource, dstResource).BasicSetup(srcUri, dstUri, numFiles);
+
+        // Don't pass options to test default options
+        TransferOperation transfer = await transferManager.StartTransferAsync(srcResource.Object, dstResource.Object);
+
+        Assert.That(await jobsProcessor.StepAll(), Is.EqualTo(1), "Failed to step through jobs queue.");
+        Assert.That(await partsProcessor.StepAll(), Is.EqualTo(numFiles), "Failed to step through parts queue.");
+        await ProcessChunksAssert(chunksProcessor, 1, numFiles, numFiles);
+
+        Assert.That(transfer.Status.HasCompletedSuccessfully);
+    }
+
     /// <summary>
-    /// DataTransferStatus is stateful across transfer. This makes it difficult to verify mocks, as verifications
+    /// <see cref="TransferStatus"/> is stateful across transfer. This makes it difficult to verify mocks, as verifications
     /// are lazily performed. This captures deep copies of statuses for custom assertion.
     /// </summary>
-    private static DataTransferStatus CaptureTransferStatus(ICollection<DataTransferStatus> statuses)
-        => Match.Create<DataTransferStatus>(status =>
+    private static TransferStatus CaptureTransferStatus(ICollection<TransferStatus> statuses)
+        => Match.Create<TransferStatus>(status =>
         {
             statuses.Add(status.DeepCopy());
             return true;
@@ -610,7 +642,7 @@ internal static partial class MockExtensions
 
         items.Source.SetupGet(r => r.Length).Returns(itemSize);
 
-        items.Destination.SetupGet(r => r.TransferType).Returns(default(DataTransferOrder));
+        items.Destination.SetupGet(r => r.TransferType).Returns(default(TransferOrder));
         items.Destination.SetupGet(r => r.MaxSupportedSingleTransferSize).Returns(Constants.GB);
         items.Destination.SetupGet(r => r.MaxSupportedChunkSize).Returns(Constants.GB);
 
@@ -618,11 +650,10 @@ internal static partial class MockExtensions
             .Returns((CancellationToken cancellationToken) =>
             {
                 CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-                return Task.FromResult(new StorageResourceItemProperties(
-                    resourceLength: itemSize,
-                    default,
-                    default,
-                    default));
+                return Task.FromResult(new StorageResourceItemProperties()
+                {
+                    ResourceLength = itemSize
+                });
             });
 
         items.Source.Setup(r => r.ReadStreamAsync(It.IsAny<long>(), It.IsAny<long?>(), It.IsAny<CancellationToken>()))
@@ -632,7 +663,7 @@ internal static partial class MockExtensions
                 return Task.FromResult(new StorageResourceReadStreamResult(
                     new Mock<Stream>().Object,
                     new HttpRange(position, length),
-                    new(itemSize, default, default, new())));
+                    new() { ResourceLength = itemSize }));
             });
 
         items.Source.Setup(r => r.IsContainer).Returns(false);

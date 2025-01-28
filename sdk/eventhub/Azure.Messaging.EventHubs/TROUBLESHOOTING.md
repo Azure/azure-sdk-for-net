@@ -418,6 +418,7 @@ When filing GitHub issues, the following details are requested for all scenarios
   - 45 (EventProcessorClaimOwnershipError)
   - 103 (EventProcessorLoadBalancingCycleSlowWarning)
   - 104 (EventProcessorHighPartitionOwnershipWarning)
+  - 105 (EventProcessorPartitionProcessingEventPositionDetermined)
   - 123 (EventProcessorProcessingHandlerStart)
   - 124 (EventProcessorProcessingHandlerComplete)
   - 125 (EventProcessorProcessingHandlerError)
