@@ -145,7 +145,7 @@ The diff object that contains the set of changed and deleted files in the PR.
 The entire set of package properties for the repository.
 
 #>
-function Get-python-AdditionalValidationPackagesFromPackageSet {
+function Get-dotnet-AdditionalValidationPackagesFromPackageSet {
   param(
     [Parameter(Mandatory=$true)]
     $LocatedPackages,
