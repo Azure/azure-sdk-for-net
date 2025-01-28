@@ -15,7 +15,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2024_05_01)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2024_11_01)]
         public void AnalyzeConversation_ConversationPii_WithCharacterMaskPolicy()
         {
             // Arrange: Initialize client and input
