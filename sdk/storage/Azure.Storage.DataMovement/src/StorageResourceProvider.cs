@@ -22,12 +22,12 @@ namespace Azure.Storage.DataMovement
         /// Gets a source resource from the given transfer properties.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        protected internal abstract Task<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken);
+        protected internal abstract ValueTask<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken);
 
         /// <summary>
         /// Gets a source resource from the given transfer properties.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        protected internal abstract Task<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken);
+        protected internal abstract ValueTask<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken);
     }
 }
