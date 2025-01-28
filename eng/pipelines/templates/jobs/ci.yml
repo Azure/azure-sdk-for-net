@@ -120,17 +120,23 @@ jobs:
           LogFilePath: $(Build.ArtifactStagingDirectory)/pack.binlog
 
       - pwsh: |
-          dotnet pack eng/service.proj -warnaserror `
-            /p:ValidateRunApiCompat=true `
-            /p:SDKType=${{ parameters.SDKType }} `
-            /p:IncludeTests=false `
-            /p:PublicSign=false $(VersioningProperties) `
-            /p:Configuration=$(BuildConfiguration) `
-            /p:CommitSHA=$(Build.SourceVersion) `
-            /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory) `
-            /p:ServiceDirectory=* `
-            /p:ProjectListOverrideFile=$(ProjectListOverrideFile) `
-            $(DiagnosticArguments)
+          if (!"$(ProjectNames)") {
+            Write-Host "No packages to build."
+            exit 0
+          }
+          else {
+            dotnet pack eng/service.proj -warnaserror `
+              /p:ValidateRunApiCompat=true `
+              /p:SDKType=${{ parameters.SDKType }} `
+              /p:IncludeTests=false `
+              /p:PublicSign=false $(VersioningProperties) `
+              /p:Configuration=$(BuildConfiguration) `
+              /p:CommitSHA=$(Build.SourceVersion) `
+              /p:ArtifactsPackagesDir=$(Build.ArtifactStagingDirectory) `
+              /p:ServiceDirectory=* `
+              /p:ProjectListOverrideFile=$(ProjectListOverrideFile) `
+              $(DiagnosticArguments)
+          }
         displayName: "Build and Package"
 
       - task: Powershell@2
@@ -242,21 +248,26 @@ jobs:
 
       - pwsh: |
           $failed = $false
-          $serviceDirectories = "$(ChangedServices)" -split ","
-          $ScanPaths = @()
-          foreach ($ServiceDirectory in $serviceDirectories) {
-            ./eng/scripts/CodeChecks.ps1 `
-              -ServiceDirectory $ServiceDirectory `
-              -SDKType ${{ parameters.SDKType }} `
-              -SpellCheckPublicApiSurface `
+          if ("$(ProjectNames)") {
+            $serviceDirectories = "$(ChangedServices)" -split ","
+            $ScanPaths = @()
+            foreach ($ServiceDirectory in $serviceDirectories) {
+              ./eng/scripts/CodeChecks.ps1 `
+                -ServiceDirectory $ServiceDirectory `
+                -SDKType ${{ parameters.SDKType }} `
+                -SpellCheckPublicApiSurface `
 
-            if ($LASTEXITCODE -ne 0) {
-              $failed = $true
+              if ($LASTEXITCODE -ne 0) {
+                $failed = $true
+              }
+            }
+
+            if ($failed) {
+              exit 1
             }
           }
-
-          if ($failed) {
-            exit 1
+          else {
+            Write-Host "No services were directly changed. Skipping code checks."
           }
         displayName: Verify Generated Code
         env:
@@ -266,6 +277,7 @@ jobs:
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/rebuild.binlog
 
+      # todo, refactor to using the projectlistoverridefile
       - pwsh: |
           $services = "$(ChangedServices)" -split ","
 

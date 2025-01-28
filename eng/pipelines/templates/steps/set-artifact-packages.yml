@@ -32,6 +32,10 @@ steps:
       $setting = $pkgNames -join ","
       Write-Host "Setting ProjectNames to: `n$setting"
       Write-Host "##vso[task.setvariable variable=ProjectNames;]$setting"
+
+      if (!$pkgNames) {
+        Write-Host "No packages were identified for this build."
+      }
     displayName: Resolve Targeted Packages
     condition: eq(variables['ProjectNames'], '')
 
