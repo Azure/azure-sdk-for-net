@@ -3,17 +3,17 @@
 
 using System.Threading.Tasks;
 
-namespace TestProjects.CadlRanch.Tests
+namespace TestProjects.Spector.Tests
 {
-    public class CadlRanchServerSession : TestServerSessionBase<CadlRanchServer>
+    public class SpectorServerSession : TestServerSessionBase<SpectorServer>
     {
-        private CadlRanchServerSession() : base()
+        private SpectorServerSession() : base()
         {
         }
 
-        public static CadlRanchServerSession Start()
+        public static SpectorServerSession Start()
         {
-            var server = new CadlRanchServerSession();
+            var server = new SpectorServerSession();
             return server;
         }
 

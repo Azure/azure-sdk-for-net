@@ -8,7 +8,7 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace TestProjects.CadlRanch.Tests
+namespace TestProjects.Spector.Tests
 {
     public class TestServerBase : IDisposable
     {
@@ -78,7 +78,7 @@ namespace TestProjects.CadlRanch.Tests
                 return nodeModulesDirectory;
             }
 
-            throw new InvalidOperationException($"Cannot find 'node_modules' in parent directories of {typeof(CadlRanchServer).Assembly.Location}.");
+            throw new InvalidOperationException($"Cannot find 'node_modules' in parent directories of {typeof(SpectorServer).Assembly.Location}.");
         }
 
         private void ReadOutput()

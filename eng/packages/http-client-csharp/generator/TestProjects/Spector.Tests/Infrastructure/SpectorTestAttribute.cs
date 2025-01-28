@@ -12,10 +12,10 @@ using NUnit.Framework;
 using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 
-namespace TestProjects.CadlRanch.Tests
+namespace TestProjects.Spector.Tests
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-    internal partial class CadlRanchTestAttribute : TestAttribute, IApplyToTest
+    internal partial class SpectorTestAttribute : TestAttribute, IApplyToTest
     {
         [GeneratedRegex("(?<=[a-z])([A-Z])")]
         private static partial Regex ToKebabCase();
@@ -26,7 +26,7 @@ namespace TestProjects.CadlRanch.Tests
 
             if (!Directory.Exists(clientCodeDirectory))
             {
-                // Not all cadl-ranch scenarios use kebab-case directories, so try again without kebab-case.
+                // Not all spector scenarios use kebab-case directories, so try again without kebab-case.
                 clientCodeDirectory = GetGeneratedDirectory(test, false);
             }
 
@@ -79,7 +79,7 @@ namespace TestProjects.CadlRanch.Tests
         {
             var namespaceParts = test.FullName.Split('.').Skip(3);
             namespaceParts = namespaceParts.Take(namespaceParts.Count() - 2);
-            var clientCodeDirectory = Path.Combine(TestContext.CurrentContext.TestDirectory, "..", "..", "..", "..", "..", "eng", "packages", "http-client-csharp", "generator", "TestProjects", "CadlRanch");
+            var clientCodeDirectory = Path.Combine(TestContext.CurrentContext.TestDirectory, "..", "..", "..", "..", "..", "eng", "packages", "http-client-csharp", "generator", "TestProjects", "Spector");
             foreach (var part in namespaceParts)
             {
                 clientCodeDirectory = Path.Combine(clientCodeDirectory, FixName(part, kebabCaseDirectories));

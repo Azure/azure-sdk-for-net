@@ -3,7 +3,7 @@
 param($filter)
 
 Import-Module "$PSScriptRoot\Generation.psm1" -DisableNameChecking -Force;
-Import-Module "$PSScriptRoot\CadlRanch-Helper.psm1" -DisableNameChecking -Force;
+Import-Module "$PSScriptRoot\Spector.psm1" -DisableNameChecking -Force;
 
 $packageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
 
@@ -11,10 +11,10 @@ Refresh-Build
 
 $specsDirectory = Join-Path $packageRoot 'node_modules' '@typespec' 'http-specs' 'specs'
 $azureSpecsDirectory = Join-Path $packageRoot 'node_modules' '@azure-tools' 'azure-http-specs' 'specs'
-$cadlRanchRoot = Join-Path $packageRoot 'generator' 'TestProjects' 'CadlRanch' 
-$cadlRanchRootHttp = Join-Path $cadlRanchRoot 'http'
-$directories = Get-ChildItem -Path "$cadlRanchRootHttp" -Directory -Recurse
-$cadlRanchCsproj = Join-Path $packageRoot 'generator' 'TestProjects' 'CadlRanch.Tests' 'TestProjects.CadlRanch.Tests.csproj'
+$spectorRoot = Join-Path $packageRoot 'generator' 'TestProjects' 'Spector' 
+$spectorRootHttp = Join-Path $spectorRoot 'http'
+$directories = Get-ChildItem -Path "$spectorRootHttp" -Directory -Recurse
+$spectorCsproj = Join-Path $packageRoot 'generator' 'TestProjects' 'Spector.Tests' 'TestProjects.Spector.Tests.csproj'
 
 $coverageDir = Join-Path $packageRoot 'generator' 'artifacts' 'coverage'
 
@@ -28,15 +28,15 @@ foreach ($directory in $directories) {
     }
 
     $outputDir = $directory.FullName.Substring(0, $directory.FullName.IndexOf("src") - 1)
-    $subPath = $outputDir.Substring($cadlRanchRootHttp.Length + 1)
+    $subPath = $outputDir.Substring($spectorRootHttp.Length + 1)
     $folders = $subPath.Split([System.IO.Path]::DirectorySeparatorChar)
 
     if (-not (Compare-Paths $subPath $filter)) {
         continue
     }
 
-    $testPath = Join-Path "$cadlRanchRoot.Tests" "Http"
-    $testFilter = "TestProjects.CadlRanch.Tests.Http"
+    $testPath = Join-Path "$spectorRoot.Tests" "Http"
+    $testFilter = "TestProjects.Spector.Tests.Http"
     foreach ($folder in $folders) {
         $segment = "$(Get-Namespace $folder)"
         
@@ -87,7 +87,7 @@ foreach ($directory in $directories) {
     }
 
     Write-Host "Testing $subPath" -ForegroundColor Cyan
-    $command  = "dotnet test $cadlRanchCsproj --filter `"FullyQualifiedName~$testFilter`""
+    $command  = "dotnet test $spectorCsproj --filter `"FullyQualifiedName~$testFilter`""
     Invoke $command
     # exit if the testing failed
     if ($LASTEXITCODE -ne 0) {

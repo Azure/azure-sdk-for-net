@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
-namespace TestProjects.CadlRanch.Tests
+namespace TestProjects.Spector.Tests
 {
-    public class CadlRanchServer : TestServerBase
+    public class SpectorServer : TestServerBase
     {
-        public CadlRanchServer() : base(GetProcessPath(), $"serve {string.Join(" ", GetScenariosPaths())} --port 0 --coverageFile {GetCoverageFilePath()}")
+        public SpectorServer() : base(GetProcessPath(), $"serve {string.Join(" ", GetScenariosPaths())} --port 0 --coverageFile {GetCoverageFilePath()}")
         {
         }
 

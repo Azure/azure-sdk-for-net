@@ -4,13 +4,13 @@
 using System.Threading.Tasks;
 using System;
 
-namespace TestProjects.CadlRanch.Tests
+namespace TestProjects.Spector.Tests
 {
-    public abstract class CadlRanchTestBase
+    public abstract class SpectorTestBase
     {
         public async Task Test(Func<Uri, Task> test)
         {
-            var server = CadlRanchServerSession.Start();
+            var server = SpectorServerSession.Start();
 
             try
             {

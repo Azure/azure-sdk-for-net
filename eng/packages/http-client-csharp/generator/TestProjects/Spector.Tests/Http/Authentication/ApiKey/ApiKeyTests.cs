@@ -6,18 +6,18 @@ using Azure;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
-namespace TestProjects.CadlRanch.Tests.Http.Authentication.ApiKey
+namespace TestProjects.Spector.Tests.Http.Authentication.ApiKey
 {
-    public class ApiKeyTests : CadlRanchTestBase
+    public class ApiKeyTests : SpectorTestBase
     {
-        [CadlRanchTest]
+        [SpectorTest]
         public Task Valid() => Test(async (host) =>
         {
             Response response = await new ApiKeyClient(host, new AzureKeyCredential("valid-key"), null).ValidAsync();
             Assert.AreEqual(204, response.Status);
         });
 
-        [CadlRanchTest]
+        [SpectorTest]
         public Task Invalid() => Test((host) =>
         {
             var exception = Assert.ThrowsAsync<RequestFailedException>(() => new ApiKeyClient(host, new AzureKeyCredential("invalid-key"), null).InvalidAsync());

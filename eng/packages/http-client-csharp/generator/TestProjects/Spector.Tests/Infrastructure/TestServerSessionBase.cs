@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace TestProjects.CadlRanch.Tests
+namespace TestProjects.Spector.Tests
 {
     public abstract class TestServerSessionBase<T> : IAsyncDisposable where T : TestServerBase
     {

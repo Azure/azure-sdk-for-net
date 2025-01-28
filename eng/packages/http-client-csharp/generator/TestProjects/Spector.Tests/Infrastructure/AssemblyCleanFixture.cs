@@ -3,7 +3,7 @@
 
 using NUnit.Framework;
 
-namespace TestProjects.CadlRanch.Tests
+namespace TestProjects.Spector.Tests
 {
     [SetUpFixture]
     public static class AssemblyCleanFixture
@@ -11,7 +11,7 @@ namespace TestProjects.CadlRanch.Tests
         [OneTimeTearDown]
         public static void RunOnAssemblyCleanUp()
         {
-            CadlRanchServerSession.Start().Server?.Dispose();
+            SpectorServerSession.Start().Server?.Dispose();
         }
     }
 }

@@ -1,7 +1,7 @@
 #Requires -Version 7.0
 
 Import-Module "$PSScriptRoot\Generation.psm1" -DisableNameChecking -Force;
-Import-Module "$PSScriptRoot\CadlRanch-Helper.psm1" -DisableNameChecking -Force;
+Import-Module "$PSScriptRoot\Spector.psm1" -DisableNameChecking -Force;
 
 $packageRoot = Resolve-Path (Join-Path $PSScriptRoot '..' '..')
 
@@ -9,9 +9,9 @@ Refresh-Build
 
 $specsDirectory = Join-Path $packageRoot 'node_modules' '@typespec' 'http-specs' 'specs'
 $azureSpecsDirectory = Join-Path $packageRoot 'node_modules' '@azure-tools' 'azure-http-specs' 'specs'
-$cadlRanchRoot = Join-Path $packageRoot 'generator' 'TestProjects' 'CadlRanch' 'http'
-$directories = Get-ChildItem -Path "$cadlRanchRoot" -Directory -Recurse
-$cadlRanchCsproj = Join-Path $packageRoot 'generator' 'TestProjects' 'CadlRanch.Tests' 'TestProjects.CadlRanch.Tests.csproj'
+$spectorRoot = Join-Path $packageRoot 'generator' 'TestProjects' 'Spector' 'http'
+$directories = Get-ChildItem -Path "$spectorRoot" -Directory -Recurse
+$spectorCsproj = Join-Path $packageRoot 'generator' 'TestProjects' 'Spector.Tests' 'TestProjects.Spector.Tests.csproj'
 
 $coverageDir = Join-Path $packageRoot 'generator' 'artifacts' 'coverage'
 
@@ -26,7 +26,7 @@ foreach ($directory in $directories) {
     }
 
     $outputDir = $directory.FullName.Substring(0, $directory.FullName.IndexOf("src") - 1)
-    $subPath = $outputDir.Substring($cadlRanchRoot.Length + 1)
+    $subPath = $outputDir.Substring($spectorRoot.Length + 1)
 
     Write-Host "Regenerating $subPath" -ForegroundColor Cyan
 
@@ -66,8 +66,8 @@ foreach ($directory in $directories) {
 }
 
 # test all
-Write-Host "Generating CadlRanch coverage" -ForegroundColor Cyan
-$command  = "dotnet test $cadlRanchCsproj"
+Write-Host "Generating Spector coverage" -ForegroundColor Cyan
+$command  = "dotnet test $spectorCsproj"
 Invoke $command
 # exit if the testing failed
 if ($LASTEXITCODE -ne 0) {
@@ -81,7 +81,7 @@ foreach ($directory in $directories) {
     }
 
     $outputDir = $directory.FullName.Substring(0, $directory.FullName.IndexOf("src") - 1)
-    $subPath = $outputDir.Substring($cadlRanchRoot.Length + 1)
+    $subPath = $outputDir.Substring($spectorRoot.Length + 1)
 
     Write-Host "Restoring $subPath" -ForegroundColor Cyan
     $command = "git clean -xfd $outputDir"

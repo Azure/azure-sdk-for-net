@@ -16,11 +16,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="../CadlRanch/**/*.cs" Exclude="../CadlRanch/**/Properties/**/*.cs" Link="Projects/%(RecursiveDir)/%(Filename)%(Extension)" />
+    <Compile Include="../Spector/**/*.cs" Exclude="../Spector/**/Properties/**/*.cs" Link="Projects/%(RecursiveDir)/%(Filename)%(Extension)" />
   </ItemGroup>
 
   <ItemGroup>
-    <AssemblyAttribute Include="TestProjects.CadlRanch.Tests.BuildProperties">
+    <AssemblyAttribute Include="TestProjects.Spector.Tests.BuildProperties">
       <_Parameter1>$(RepoRoot)</_Parameter1>
       <_Parameter2>$(RepoRoot)\eng\packages\http-client-csharp\generator\artifacts</_Parameter2>
     </AssemblyAttribute>

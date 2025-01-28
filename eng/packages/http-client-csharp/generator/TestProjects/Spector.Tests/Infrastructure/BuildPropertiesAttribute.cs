@@ -3,7 +3,7 @@
 
 using System;
 
-namespace TestProjects.CadlRanch.Tests
+namespace TestProjects.Spector.Tests
 {
     [AttributeUsage(AttributeTargets.Assembly)]
     internal sealed class BuildPropertiesAttribute : Attribute
