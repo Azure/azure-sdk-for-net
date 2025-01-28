@@ -111,6 +111,17 @@ namespace Azure.Messaging.EventHubs.Processor
         }
 
         /// <summary>
+        ///   Initializes an empty <see cref="CheckpointPosition"/> which can be used
+        ///   to clear existing checkpoint data.
+        /// </summary>
+        ///
+        public CheckpointPosition()
+        {
+            SequenceNumber = long.MinValue;
+            OffsetString = null;
+        }
+
+        /// <summary>
         ///   Initializes a new instance of the <see cref="CheckpointPosition"/> from an <see cref="EventData"/> instance.
         /// </summary>
         ///
