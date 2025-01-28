@@ -15,6 +15,8 @@ using Xunit.Abstractions;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 {
+#if !NET6_0
+
     /// <summary>
     /// The purpose of these tests is to validate the <see cref="TelemetryItem"/> that is created
     /// based on interacting with <see cref="LoggerFactory"/> and <see cref="Logger"/>.
@@ -197,13 +199,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
 
             //using (logger.BeginScope(scope1))
             //{
-                //logger.LogInformation("{microsoft.custom_event.name}", "world");
+            //logger.LogInformation("{microsoft.custom_event.name}", "world");
             //}
 
-            using (logger.BeginScope(new List<KeyValuePair<string, object>> { new("microsoft.custom_event.name", "MyCustomEventName") }))
-            {
-                logger.LogInformation(null);
-            }
+            //using (logger.BeginScope(new List<KeyValuePair<string, object>> { new("microsoft.custom_event.name", "MyCustomEventName") }))
+            //{
+            //    logger.LogInformation(null);
+            //}
+
+            logger.TestCustomEvent("helloWorld");
 
             // CLEANUP
             loggerFactory.Dispose();
@@ -213,16 +217,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
             this.telemetryOutput.Write(telemetryItems);
             var telemetryItem = telemetryItems?.Where(x => x.Name == "Event").Single();
         }
-
-        //public partial class MyLoggerMessages
-        //{
-        //    //.. rest of class omitted for brevity.
-
-        //    [LoggerMessage(
-        //        EventId = default,
-        //        Level = LogLevel.Information,
-        //        Message = "Hello from {food} {price}.")]
-        //    public partial void SayHello(string food, double price, Exception ex);
-        //}
     }
+
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1402:File may only contain a single type", Justification = "<Pending>")]
+    public static partial class CustomEventLoggerExtensions
+    {
+        [LoggerMessage(LogLevel.Error, "{microsoft.custom_event.name}")]
+        public static partial void TestCustomEvent(
+            this ILogger logger,
+#pragma warning disable EXTEXP0003 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+            [TagName("microsoft.custom_event.name")] string name);
+#pragma warning restore EXTEXP0003 // Type is for evaluation purposes only and is subject to change or removal in future updates. Suppress this diagnostic to proceed.
+    }
+
+#endif
 }
