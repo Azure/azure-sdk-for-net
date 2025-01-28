@@ -18,7 +18,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         {
         }
 
-        //[Ignore (reason: "Recording is currently broken with error Removing modality controller as this conversation has ended. Waiting on fix for this")]
         [RecordedTest]
         public async Task RecordingOperationsTest()
         {
@@ -115,7 +114,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             }
         }
 
-        [Ignore(reason: "Recording is currently broken with error Removing modality controller as this conversation has ended. Waiting on fix for this")]
         [RecordedTest]
         public async Task CreateACSCallAndUnmixedAudioTest()
         {
@@ -312,7 +310,6 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
             }
         }
 
-        [Ignore(reason: "Recording is currently broken with error Removing modality controller as this conversation has ended. Waiting on fix for this")]
         [RecordedTest]
         public async Task StartRecordingWithCallConnectionIdTest()
         {

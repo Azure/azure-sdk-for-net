@@ -257,6 +257,7 @@ namespace Azure.Communication.CallAutomation
         public static Azure.Communication.CallAutomation.SendDtmfTonesFailed SendDtmfTonesFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.SendDtmfTonesResult SendDtmfTonesResult(string operationContext = null) { throw null; }
         public static Azure.Communication.CallAutomation.SpeechResult SpeechResult(string speech = null) { throw null; }
+        public static Azure.Communication.CallAutomation.StartRecordingFailed StartRecordingFailed(string callConnectionId = null, string correlationId = null, string recordingId = null) { throw null; }
         public static Azure.Communication.CallAutomation.TranscriptionFailed TranscriptionFailed(Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.TranscriptionStarted TranscriptionStarted(Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
         public static Azure.Communication.CallAutomation.TranscriptionStopped TranscriptionStopped(Azure.Communication.CallAutomation.TranscriptionUpdate transcriptionUpdate = null, string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, Azure.Communication.CallAutomation.ResultInformation resultInformation = null) { throw null; }
@@ -1775,9 +1776,17 @@ namespace Azure.Communication.CallAutomation
         public bool IsSuccess { get { throw null; } }
         public Azure.Communication.CallAutomation.RecognizeCompleted SuccessResult { get { throw null; } }
     }
+    public partial class StartRecordingFailed : Azure.Communication.CallAutomation.CallAutomationEventBase
+    {
+        internal StartRecordingFailed() { }
+        public Azure.Communication.CallAutomation.MediaEventReasonCode ReasonCode { get { throw null; } }
+        public string RecordingId { get { throw null; } }
+        public static Azure.Communication.CallAutomation.StartRecordingFailed Deserialize(string content) { throw null; }
+    }
     public partial class StartRecordingOptions
     {
         public StartRecordingOptions(Azure.Communication.CallAutomation.CallLocator callLocator) { }
+        public StartRecordingOptions(string callConnectionId) { }
         public System.Collections.Generic.IList<Azure.Communication.CommunicationIdentifier> AudioChannelParticipantOrdering { get { throw null; } }
         public System.Collections.Generic.IList<Azure.Communication.CallAutomation.ChannelAffinity> ChannelAffinity { get { throw null; } set { } }
         public bool PauseOnStart { get { throw null; } set { } }

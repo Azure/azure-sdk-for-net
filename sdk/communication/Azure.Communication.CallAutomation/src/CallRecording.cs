@@ -55,7 +55,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var request = new StartCallRecordingRequestInternal()
+                StartCallRecordingRequestInternal request = new StartCallRecordingRequestInternal()
                 {
                     RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
                     RecordingChannelType = options.RecordingChannel,
@@ -126,7 +126,7 @@ namespace Azure.Communication.CallAutomation
             scope.Start();
             try
             {
-                var request = new StartCallRecordingRequestInternal()
+                StartCallRecordingRequestInternal request = new StartCallRecordingRequestInternal()
                 {
                     RecordingStateCallbackUri = options.RecordingStateCallbackUri?.AbsoluteUri,
                     RecordingChannelType = options.RecordingChannel,
