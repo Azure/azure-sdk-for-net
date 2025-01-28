@@ -149,6 +149,7 @@ jobs:
           pwsh: true
           workingDirectory: $(Pipeline.Workspace)
         displayName: Update package properties with namespaces
+        condition: and(succeeded(), ne(variables['ProjectNames'], ''))
 
       - template: ../steps/archetype-sdk-docs.yml
         parameters:
@@ -279,22 +280,28 @@ jobs:
 
       # todo, refactor to using the projectlistoverridefile
       - pwsh: |
-          $services = "$(ChangedServices)" -split ","
+          $failed = $false
+          if ("$(ProjectNames)") {
+            $services = "$(ChangedServices)" -split ","
 
-          foreach ($service in $services) {
-            Write-Host "building $service"
-            dotnet build eng/service.proj -warnaserror `
-              /t:rebuild `
-              /p:DebugType=none `
-              /p:SDKType=${{ parameters.SDKType }} `
-              /p:ServiceDirectory=$service `
-              /p:IncludePerf=false `
-              /p:IncludeStress=false `
-              /p:PublicSign=false `
-              /p:Configuration=$(BuildConfiguration) `
-              /p:EnableSourceLink=false `
-              /p:BuildSnippets=true `
-              $(DiagnosticArguments)
+            foreach ($service in $services) {
+              Write-Host "building $service"
+              dotnet build eng/service.proj -warnaserror `
+                /t:rebuild `
+                /p:DebugType=none `
+                /p:SDKType=${{ parameters.SDKType }} `
+                /p:ServiceDirectory=$service `
+                /p:IncludePerf=false `
+                /p:IncludeStress=false `
+                /p:PublicSign=false `
+                /p:Configuration=$(BuildConfiguration) `
+                /p:EnableSourceLink=false `
+                /p:BuildSnippets=true `
+                $(DiagnosticArguments)
+            }
+          }
+          else {
+            Write-Host "No services were directly changed. Skipping snippet build."
           }
         displayName: Build snippets
         condition: and(succeeded(), eq(${{ parameters.BuildSnippets }}, true))
