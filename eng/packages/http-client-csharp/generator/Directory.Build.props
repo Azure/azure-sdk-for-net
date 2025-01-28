@@ -2,6 +2,7 @@
   <PropertyGroup>
     <Nullable>enable</Nullable>
     <ImportDefaultReferences>false</ImportDefaultReferences>
+    <IsShippingLibrary>false</IsShippingLibrary>
     <NoWarn>$(NoWarn);CS8002</NoWarn>
   </PropertyGroup>
   <!--
