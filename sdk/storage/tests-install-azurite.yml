@@ -5,9 +5,6 @@ parameters:
 - name: AzuriteVersion
   type: string
   default: 3.11.0
-- name: Condition
-  type: boolean
-  default: true
 
 steps:
   - task: Cache@2
