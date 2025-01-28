@@ -34,19 +34,19 @@ There is currently no support to specify an encryption scope for operations such
 
 ### Recursive Directory Support
 
-There is currently no support to handle operations that involve processing an entire directory, including all its subdirectories and files, automatically in a single command.
+Currently there is support for transferring entire directories, including all subdirectories and files within them. However, we do not offer an option to disable recursion. This means that users cannot copy only the files in a folder without also copying its subdirectories.
 
-### Blob to File with OAuth/Entra ID
+### Blob to Share File with OAuth/Entra ID
 
-There is currently no support for transferring data from an Azure Blob Storage to a file system using authentication based on Microsoft Entra ID.
+There is currently no support for transferring data from an Azure Storage Blob to Azure Storage Shares using authentication based on Microsoft Entra ID.
 
-### Resume Transfers started from any Beta version
+### Resume Transfers started from any Beta version/Deprecated package
 
-Transfers initiated with any beta version cannot be resumed due to a schema version change from string to int, which may lead to unexpected errors.
+Transfers initiated with any beta version of the DataMovement library cannot be resumed due to a schema version change from string to int, which may lead to unexpected errors. Additionally, transfers from the deprecated Microsoft.Azure.Storage.DataMovement package also cannot be resumed.
 
-### Tag Support
+### Blob Tag Support
 
-There is currently no support for managing or utilizing tags. This means users cannot add, retrieve, or manage blob tags during a transfer.
+There is currently no support for managing or utilizing blob tags. This means users cannot add, retrieve, or manage blob tags during a transfer.
 
 ### Public URL Copying
 
@@ -54,12 +54,11 @@ There is currently no support for copying blobs via Public URLs. However, the li
 
 ### Copy with a AzureSasCredential
 
-There is currently no support for service-to-service copy given a client that was initialized with a AzureSasCredential from BlobStorageResourceProvider.FromClient and/or ShareStorageResourceProvider.FromClient.
+There is currently no support for service-to-service copy given a client that was initialized with a AzureSasCredential from `BlobStorageResourceProvider.FromClient` and/or `ShareStorageResourceProvider.FromClient`.
+Here are two alternatives:
+1. Use `BlobsStorageResourceProvider(AzureSasCredential)` / `ShareFilesStorageResourceProvider(AzureSasCredential)` to authenticate and then create StorageResource.
+2. Initialize a client with a Uri that has a SAS included in the Uri if you still want to use `BlobStorageResourceProvider.FromClient` and/or `ShareStorageResourceProvider.FromClient`.
 
 ### Fresh transfer vs Resumed transfer Performance
 
 The performance of resumed transfers is currently lower than that of fresh transfers. This is due to fetching source properties on Resume.
-
-### Last Written Time preservation for Share Files
-
-There is currently a bug where Last Written Time is not preserved for Share Files.
