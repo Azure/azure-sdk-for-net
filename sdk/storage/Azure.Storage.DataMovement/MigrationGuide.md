@@ -181,14 +181,13 @@ await TransferManager.UploadAsync(
     client.GetContainerReference(containerName).GetBlockBlobReference(blobName));
 ```
 **Modern:**
-```csharp
+```C# Snippet:DataMovementMigration_UploadSingleFile_VarDeclaration
 // these values provided by your code
 string filePath, blobUri;
 BlobsStorageResourceProvider blobs;
 TransferManager transferManager;
 ```
-
-```csharp
+```C# Snippet:DataMovementMigration_UploadSingleFile
 // upload blob
 TranferOperation operation = await transferManager.StartTransferAsync(
     LocalFilesStorageResourceProvider.FromFile(filePath),
