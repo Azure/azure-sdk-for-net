@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateUpdateACapabilityThatExtendsAVirtualMachineTargetResource()
         {
-            // Generated from example definition: 2024-11-01-preview/Capabilities_CreateOrUpdate.json
+            // Generated from example definition: 2025-01-01/Capabilities_CreateOrUpdate.json
             // this example is just showing the usage of "Capability_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetACapabilityThatExtendsAVirtualMachineTargetResource()
         {
-            // Generated from example definition: 2024-11-01-preview/Capabilities_Get.json
+            // Generated from example definition: 2025-01-01/Capabilities_Get.json
             // this example is just showing the usage of "Capability_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllCapabilitiesThatExtendAVirtualMachineTargetResource()
         {
-            // Generated from example definition: 2024-11-01-preview/Capabilities_List.json
+            // Generated from example definition: 2025-01-01/Capabilities_List.json
             // this example is just showing the usage of "Capability_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetACapabilityThatExtendsAVirtualMachineTargetResource()
         {
-            // Generated from example definition: 2024-11-01-preview/Capabilities_Get.json
+            // Generated from example definition: 2025-01-01/Capabilities_Get.json
             // this example is just showing the usage of "Capability_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetACapabilityThatExtendsAVirtualMachineTargetResource()
         {
-            // Generated from example definition: 2024-11-01-preview/Capabilities_Get.json
+            // Generated from example definition: 2025-01-01/Capabilities_Get.json
             // this example is just showing the usage of "Capability_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

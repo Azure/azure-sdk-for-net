@@ -20,8 +20,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
     {
         private ClientDiagnostics _chaosExperimentExperimentsClientDiagnostics;
         private ExperimentsRestOperations _chaosExperimentExperimentsRestClient;
-        private ClientDiagnostics _privateAccessClientDiagnostics;
-        private PrivateAccessesRestOperations _privateAccessRestClient;
         private ClientDiagnostics _operationStatusesClientDiagnostics;
         private OperationStatusesRestOperations _operationStatusesRestClient;
 
@@ -39,8 +37,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
 
         private ClientDiagnostics ChaosExperimentExperimentsClientDiagnostics => _chaosExperimentExperimentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos", ChaosExperimentResource.ResourceType.Namespace, Diagnostics);
         private ExperimentsRestOperations ChaosExperimentExperimentsRestClient => _chaosExperimentExperimentsRestClient ??= new ExperimentsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(ChaosExperimentResource.ResourceType));
-        private ClientDiagnostics PrivateAccessClientDiagnostics => _privateAccessClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos", PrivateAccessResource.ResourceType.Namespace, Diagnostics);
-        private PrivateAccessesRestOperations PrivateAccessRestClient => _privateAccessRestClient ??= new PrivateAccessesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(PrivateAccessResource.ResourceType));
         private ClientDiagnostics OperationStatusesClientDiagnostics => _operationStatusesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Chaos", ProviderConstants.DefaultProviderNamespace, Diagnostics);
         private OperationStatusesRestOperations OperationStatusesRestClient => _operationStatusesRestClient ??= new OperationStatusesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 
@@ -71,7 +67,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -103,7 +99,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -135,7 +131,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -167,7 +163,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -187,68 +183,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         }
 
         /// <summary>
-        /// Get a list of private access resources in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/privateAccesses</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateAccess_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PrivateAccessResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="continuationToken"> String that sets the continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="PrivateAccessResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<PrivateAccessResource> GetPrivateAccessesAsync(string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateAccessRestClient.CreateListAllRequest(Id.SubscriptionId, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateAccessRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new PrivateAccessResource(Client, PrivateAccessData.DeserializePrivateAccessData(e)), PrivateAccessClientDiagnostics, Pipeline, "MockableChaosSubscriptionResource.GetPrivateAccesses", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
-        /// Get a list of private access resources in a subscription.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/providers/Microsoft.Chaos/privateAccesses</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>PrivateAccess_ListAll</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="PrivateAccessResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="continuationToken"> String that sets the continuation token. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="PrivateAccessResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<PrivateAccessResource> GetPrivateAccesses(string continuationToken = null, CancellationToken cancellationToken = default)
-        {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => PrivateAccessRestClient.CreateListAllRequest(Id.SubscriptionId, continuationToken);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => PrivateAccessRestClient.CreateListAllNextPageRequest(nextLink, Id.SubscriptionId, continuationToken);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new PrivateAccessResource(Client, PrivateAccessData.DeserializePrivateAccessData(e)), PrivateAccessClientDiagnostics, Pipeline, "MockableChaosSubscriptionResource.GetPrivateAccesses", "value", "nextLink", cancellationToken);
-        }
-
-        /// <summary>
         /// Returns the current status of an async operation.
         /// <list type="bullet">
         /// <item>
@@ -261,7 +195,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -302,7 +236,7 @@ namespace Azure.ResourceManager.Chaos.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-11-01-preview</description>
+        /// <description>2025-01-01</description>
         /// </item>
         /// </list>
         /// </summary>

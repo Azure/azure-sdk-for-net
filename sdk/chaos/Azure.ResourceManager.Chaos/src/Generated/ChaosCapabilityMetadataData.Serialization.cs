@@ -94,6 +94,16 @@ namespace Azure.ResourceManager.Chaos
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredAzureRoleDefinitionIds))
+            {
+                writer.WritePropertyName("requiredAzureRoleDefinitionIds"u8);
+                writer.WriteStartArray();
+                foreach (var item in RequiredAzureRoleDefinitionIds)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && Optional.IsDefined(RuntimeProperties))
             {
                 writer.WritePropertyName("runtimeProperties"u8);
@@ -135,6 +145,7 @@ namespace Azure.ResourceManager.Chaos
             string kind = default;
             IReadOnlyList<string> azureRbacActions = default;
             IReadOnlyList<string> azureRbacDataActions = default;
+            IReadOnlyList<string> requiredAzureRoleDefinitionIds = default;
             ChaosCapabilityMetadataRuntimeProperties runtimeProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -236,6 +247,20 @@ namespace Azure.ResourceManager.Chaos
                             azureRbacDataActions = array;
                             continue;
                         }
+                        if (property0.NameEquals("requiredAzureRoleDefinitionIds"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            List<string> array = new List<string>();
+                            foreach (var item in property0.Value.EnumerateArray())
+                            {
+                                array.Add(item.GetString());
+                            }
+                            requiredAzureRoleDefinitionIds = array;
+                            continue;
+                        }
                         if (property0.NameEquals("runtimeProperties"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -268,6 +293,7 @@ namespace Azure.ResourceManager.Chaos
                 kind,
                 azureRbacActions ?? new ChangeTrackingList<string>(),
                 azureRbacDataActions ?? new ChangeTrackingList<string>(),
+                requiredAzureRoleDefinitionIds ?? new ChangeTrackingList<string>(),
                 runtimeProperties,
                 serializedAdditionalRawData);
         }

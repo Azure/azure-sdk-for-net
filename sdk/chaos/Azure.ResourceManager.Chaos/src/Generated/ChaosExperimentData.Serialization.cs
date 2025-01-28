@@ -64,11 +64,6 @@ namespace Azure.ResourceManager.Chaos
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(CustomerDataStorage))
-            {
-                writer.WritePropertyName("customerDataStorage"u8);
-                writer.WriteObjectValue(CustomerDataStorage, options);
-            }
             writer.WriteEndObject();
         }
 
@@ -102,7 +97,6 @@ namespace Azure.ResourceManager.Chaos
             ChaosProvisioningState? provisioningState = default;
             IList<ChaosExperimentStep> steps = default;
             IList<ChaosTargetSelector> selectors = default;
-            CustomerDataStorageProperties customerDataStorage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -198,15 +192,6 @@ namespace Azure.ResourceManager.Chaos
                             selectors = array;
                             continue;
                         }
-                        if (property0.NameEquals("customerDataStorage"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            customerDataStorage = CustomerDataStorageProperties.DeserializeCustomerDataStorageProperties(property0.Value, options);
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -227,7 +212,6 @@ namespace Azure.ResourceManager.Chaos
                 provisioningState,
                 steps,
                 selectors,
-                customerDataStorage,
                 serializedAdditionalRawData);
         }
 

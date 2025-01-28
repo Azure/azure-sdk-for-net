@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task CreateOrUpdate_CreateUpdateAExperimentInAResourceGroup()
         {
-            // Generated from example definition: 2024-11-01-preview/Experiments_CreateOrUpdate.json
+            // Generated from example definition: 2025-01-01/Experiments_CreateOrUpdate.json
             // this example is just showing the usage of "Experiment_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Get_GetAExperimentInAResourceGroup()
         {
-            // Generated from example definition: 2024-11-01-preview/Experiments_Get.json
+            // Generated from example definition: 2025-01-01/Experiments_Get.json
             // this example is just showing the usage of "Experiment_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetAll_ListAllExperimentsInAResourceGroup()
         {
-            // Generated from example definition: 2024-11-01-preview/Experiments_List.json
+            // Generated from example definition: 2025-01-01/Experiments_List.json
             // this example is just showing the usage of "Experiment_List" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Exists_GetAExperimentInAResourceGroup()
         {
-            // Generated from example definition: 2024-11-01-preview/Experiments_Get.json
+            // Generated from example definition: 2025-01-01/Experiments_Get.json
             // this example is just showing the usage of "Experiment_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Chaos.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetIfExists_GetAExperimentInAResourceGroup()
         {
-            // Generated from example definition: 2024-11-01-preview/Experiments_Get.json
+            // Generated from example definition: 2025-01-01/Experiments_Get.json
             // this example is just showing the usage of "Experiment_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

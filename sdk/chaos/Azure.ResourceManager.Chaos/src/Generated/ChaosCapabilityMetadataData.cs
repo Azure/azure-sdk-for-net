@@ -56,6 +56,7 @@ namespace Azure.ResourceManager.Chaos
         {
             AzureRbacActions = new ChangeTrackingList<string>();
             AzureRbacDataActions = new ChangeTrackingList<string>();
+            RequiredAzureRoleDefinitionIds = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ChaosCapabilityMetadataData"/>. </summary>
@@ -72,9 +73,10 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="kind"> String of the kind of this Capability Type. </param>
         /// <param name="azureRbacActions"> Control plane actions necessary to execute capability type. </param>
         /// <param name="azureRbacDataActions"> Data plane actions necessary to execute capability type. </param>
+        /// <param name="requiredAzureRoleDefinitionIds"> Required Azure Role Definition Ids to execute capability type. </param>
         /// <param name="runtimeProperties"> Runtime properties of this Capability Type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosCapabilityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string targetType, string displayName, string description, string parametersSchema, string urn, string kind, IReadOnlyList<string> azureRbacActions, IReadOnlyList<string> azureRbacDataActions, ChaosCapabilityMetadataRuntimeProperties runtimeProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal ChaosCapabilityMetadataData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string publisher, string targetType, string displayName, string description, string parametersSchema, string urn, string kind, IReadOnlyList<string> azureRbacActions, IReadOnlyList<string> azureRbacDataActions, IReadOnlyList<string> requiredAzureRoleDefinitionIds, ChaosCapabilityMetadataRuntimeProperties runtimeProperties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             Publisher = publisher;
             TargetType = targetType;
@@ -85,6 +87,7 @@ namespace Azure.ResourceManager.Chaos
             Kind = kind;
             AzureRbacActions = azureRbacActions;
             AzureRbacDataActions = azureRbacDataActions;
+            RequiredAzureRoleDefinitionIds = requiredAzureRoleDefinitionIds;
             RuntimeProperties = runtimeProperties;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -107,6 +110,8 @@ namespace Azure.ResourceManager.Chaos
         public IReadOnlyList<string> AzureRbacActions { get; }
         /// <summary> Data plane actions necessary to execute capability type. </summary>
         public IReadOnlyList<string> AzureRbacDataActions { get; }
+        /// <summary> Required Azure Role Definition Ids to execute capability type. </summary>
+        public IReadOnlyList<string> RequiredAzureRoleDefinitionIds { get; }
         /// <summary> Runtime properties of this Capability Type. </summary>
         internal ChaosCapabilityMetadataRuntimeProperties RuntimeProperties { get; }
         /// <summary> String of the kind of the resource's action type (continuous or discrete). </summary>

@@ -95,30 +95,6 @@ namespace Azure.ResourceManager.Chaos.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="PrivateAccessResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="PrivateAccessResource.CreateResourceIdentifier" /> to create a <see cref="PrivateAccessResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="PrivateAccessResource"/> object. </returns>
-        public virtual PrivateAccessResource GetPrivateAccessResource(ResourceIdentifier id)
-        {
-            PrivateAccessResource.ValidateResourceId(id);
-            return new PrivateAccessResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="ChaosPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="ChaosPrivateEndpointConnectionResource.CreateResourceIdentifier" /> to create a <see cref="ChaosPrivateEndpointConnectionResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ChaosPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual ChaosPrivateEndpointConnectionResource GetChaosPrivateEndpointConnectionResource(ResourceIdentifier id)
-        {
-            ChaosPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new ChaosPrivateEndpointConnectionResource(Client, id);
-        }
-
-        /// <summary>
         /// Gets an object representing a <see cref="ChaosTargetMetadataResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ChaosTargetMetadataResource.CreateResourceIdentifier" /> to create a <see cref="ChaosTargetMetadataResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

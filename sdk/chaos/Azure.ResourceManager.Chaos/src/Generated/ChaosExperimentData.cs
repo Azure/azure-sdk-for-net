@@ -85,15 +85,13 @@ namespace Azure.ResourceManager.Chaos
         /// Please note <see cref="ChaosTargetSelector"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="ChaosTargetListSelector"/> and <see cref="ChaosTargetQuerySelector"/>.
         /// </param>
-        /// <param name="customerDataStorage"> Optional customer-managed Storage account where Experiment schema will be stored. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ChaosProvisioningState? provisioningState, IList<ChaosExperimentStep> steps, IList<ChaosTargetSelector> selectors, CustomerDataStorageProperties customerDataStorage, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ChaosExperimentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ChaosProvisioningState? provisioningState, IList<ChaosExperimentStep> steps, IList<ChaosTargetSelector> selectors, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             ProvisioningState = provisioningState;
             Steps = steps;
             Selectors = selectors;
-            CustomerDataStorage = customerDataStorage;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -114,7 +112,5 @@ namespace Azure.ResourceManager.Chaos
         /// The available derived classes include <see cref="ChaosTargetListSelector"/> and <see cref="ChaosTargetQuerySelector"/>.
         /// </summary>
         public IList<ChaosTargetSelector> Selectors { get; }
-        /// <summary> Optional customer-managed Storage account where Experiment schema will be stored. </summary>
-        public CustomerDataStorageProperties CustomerDataStorage { get; set; }
     }
 }
