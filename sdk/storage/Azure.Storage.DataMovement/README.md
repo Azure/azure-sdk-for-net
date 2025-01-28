@@ -87,62 +87,19 @@ TransferManager transferManager = new TransferManager(new TransferManagerOptions
 
 Transfers are defined by a source and destination `StorageResource`. There are two kinds of `StorageResource`: `StorageResourceSingle` and `StorageResourceContainer`. Source and destination of a given transfer must be of the same kind.
 
-`StorageResource` instances are obtained from `StorageResourceProvider` instances. See [Initializing Local File `StorageResource`](#initializing-local-file-storageresource) for more information on the resource provider for local files and directories. See the documentation for other DataMovement extension packages for more info on their `StorageResourceProvider` types.
+`StorageResource` instances are obtained from `StorageResourceProvider` instances. See [Initializing Local File StorageResource(s)](#initializing-local-file-storageresource) for more information on the resource provider for local files and directories. See the [Next Steps](#next-steps) for our DataMovement extension packages for more info on their respective `StorageResourceProvider` types.
 
-The below sample demonstrates `StorageResourceProvider` use to start transfers by uploading a file to Azure Blob Storage, using the Azure.Storage.DataMovement.Blobs package. It uses an Azure.Core token credential with permission to write to the blob.
+The sample below demonstrates `StorageResourceProvider` use to start transfers by uploading a file to Azure Blob Storage, using the Azure.Storage.DataMovement.Blobs package. It uses an Azure.Core `TokenCredential` generated from Azure.Identity's `DefaultAzureCredential()` with permission to write to the blob.
 
 ```C# Snippet:SimpleBlobUpload_BasePackage
-BlobsStorageResourceProvider blobs = new(tokenCredential);
+TokenCredential defaultTokenCredential = new DefaultAzureCredential();
+BlobsStorageResourceProvider blobs = new BlobsStorageResourceProvider(defaultTokenCredential);
 
 // Create simple transfer single blob upload job
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
     sourceResource: LocalFilesStorageResourceProvider.FromFile(sourceLocalPath),
     destinationResource: blobs.FromBlob(destinationBlobUri));
 await transferOperation.WaitForCompletionAsync();
-```
-
-### Resuming Existing Transfers
-
-By persisting transfer progress to disk, DataMovement allows resuming of transfers that failed partway through, or were otherwise paused. To resume a transfer, the transfer manager needs to be setup in the first place with `StorageResourceProvider` instances (the same ones used above in [Starting New Transfers](#starting-new-transfers)) which are capable of reassembling the transfer components from persisted data.
-
-To pause see [Pausing Transfers](#pausing-transfers).
-
-The below sample initializes the `TransferManager` such that it's capable of resuming transfers between the local filesystem and Azure Blob Storage, using the Azure.Storage.DataMovement.Blobs package.
-
-**Important:** Credentials to storage providers are not persisted. Storage access which requires credentials will need its appropriate `StorageResourceProvider` to be configured with those credentials. Below uses an `Azure.Core` token credential with permission to the appropriate resources.
-
-```C# Snippet:SetupTransferManagerForResume
-BlobsStorageResourceProvider blobs = new(tokenCredential);
-TransferManager transferManager = new(new TransferManagerOptions()
-{
-    ProvidersForResuming = new List<StorageResourceProvider>() { blobs },
-});
-```
-
-To resume a transfer, provide the transfer's ID, as shown below. In the case where your application does not have the desired transfer ID available, use `TransferManager.GetTransfersAsync()` to find that transfer and it's ID.
-
-```C# Snippet:DataMovement_ResumeSingle
-TransferOperation resumedTransfer = await transferManager.ResumeTransferAsync(transferId);
-```
-
-#### Pause and Resume Checkpointing
-
-The location of persisted transfer data will be different than the default location if `TransferCheckpointStoreOptions` were set in `TransferManagerOptions`. To resume transfers recorded in a non-default location, the transfer manager resuming the transfer will also need the appropriate checkpoint store options.
-
-To specify the checkpoint folder directory:
-```csharp
-TransferManagerOptions options = new TransferManagerOptions()
-{
-    CheckpointerOptions = TransferCheckpointStoreOptions.Local(<directory path location>)
-};
-```
-
-To disable checkpointing:
-```csharp
-TransferManagerOptions options = new TransferManagerOptions()
-{
-    CheckpointerOptions = TransferCheckpointStoreOptions.Disabled()
-};
 ```
 
 ### Monitoring Transfers
@@ -218,18 +175,6 @@ async Task<TransferOperation> ListenToProgressAsync(TransferManager transferMana
         destination,
         transferOptions);
 }
-```
-
-### Pausing transfers
-
-Transfers can be paused either by a given `DataTransfer` or through the `TransferManager` handling the transfer by referencing the transfer ID. The ID can be found on the `DataTransfer` object you received upon transfer start.
-
-```C# Snippet:PauseFromTransfer
-await transferOperation.PauseAsync();
-```
-
-```C# Snippet:PauseFromManager
-await transferManager.PauseTransferAsync(transferId);
 ```
 
 ### Handling Failed Transfers

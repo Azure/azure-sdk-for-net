@@ -193,8 +193,11 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 // Get a reference to a destination blobs
                 Uri destinationBlobUri = container.GetBlockBlobClient("sample-blob").Uri;
 
+                // Should be the same token credential as above, but for demonstration/sample purposes
+                // we include how we would get the token credential.
                 #region Snippet:SimpleBlobUpload_BasePackage
-                BlobsStorageResourceProvider blobs = new(tokenCredential);
+                TokenCredential defaultTokenCredential = new DefaultAzureCredential();
+                BlobsStorageResourceProvider blobs = new BlobsStorageResourceProvider(defaultTokenCredential);
 
                 // Create simple transfer single blob upload job
                 #region Snippet:SimpleBlobUpload
@@ -863,10 +866,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
 
                 // Create a token credential that can use our Azure Active
                 // Directory application to authenticate with Azure Storage
-                TokenCredential tokenCredential = new DefaultAzureCredential();
 
                 // Create transfer manager
                 #region Snippet:SetupTransferManagerForResume
+                TokenCredential tokenCredential = new DefaultAzureCredential();
                 BlobsStorageResourceProvider blobs = new(tokenCredential);
                 TransferManager transferManager = new(new TransferManagerOptions()
                 {
@@ -1118,6 +1121,17 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 string logFile = CreateTempPath();
 
                 #region Snippet:EnumerateTransfers
+                async Task CheckTransfersAsync(TransferManager transferManager)
+                {
+                    await foreach (TransferOperation transfer in transferManager.GetTransfersAsync())
+                    {
+                        using StreamWriter logStream = File.AppendText(logFile);
+                        logStream.WriteLine(Enum.GetName(typeof(TransferStatus), transfer.Status));
+                    }
+                }
+                #endregion
+
+                #region Snippet:EnumerateTransfersStatus
                 async Task CheckTransfersAsync(TransferManager transferManager)
                 {
                     await foreach (TransferOperation transfer in transferManager.GetTransfersAsync())
