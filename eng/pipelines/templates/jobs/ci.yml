@@ -119,17 +119,6 @@ jobs:
         parameters:
           LogFilePath: $(Build.ArtifactStagingDirectory)/pack.binlog
 
-      - task: Powershell@2
-        inputs:
-          filePath: $(Build.SourcesDirectory)/eng/common/scripts/Save-Package-Properties.ps1
-          arguments: >
-            -ServiceDirectory ${{parameters.ServiceDirectory}}
-            -OutDirectory $(Build.ArtifactStagingDirectory)/PackageInfo
-            -AddDevVersion:$$(SetDevVersion)
-          pwsh: true
-          workingDirectory: $(Pipeline.Workspace)
-        displayName: Update package properties with dev version
-
       # only use the project list override file if the service directory is not auto
       - ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
         - pwsh: |
