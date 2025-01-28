@@ -15,20 +15,20 @@ using Azure.ResourceManager.ServiceNetworking.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
-    internal partial class FrontendsInterfaceRestOperations
+    internal partial class SecurityPoliciesInterfaceRestOperations
     {
         private readonly TelemetryDetails _userAgent;
         private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
 
-        /// <summary> Initializes a new instance of FrontendsInterfaceRestOperations. </summary>
+        /// <summary> Initializes a new instance of SecurityPoliciesInterfaceRestOperations. </summary>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> server parameter. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public FrontendsInterfaceRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        public SecurityPoliciesInterfaceRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ServiceNetworking/trafficControllers/", false);
             uri.AppendPath(trafficControllerName, true);
-            uri.AppendPath("/frontends", false);
+            uri.AppendPath("/securityPolicies", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ServiceNetworking/trafficControllers/", false);
             uri.AppendPath(trafficControllerName, true);
-            uri.AppendPath("/frontends", false);
+            uri.AppendPath("/securityPolicies", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.ServiceNetworking
             return message;
         }
 
-        /// <summary> List Frontend resources by TrafficController. </summary>
+        /// <summary> List SecurityPolicy resources by TrafficController. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="trafficControllerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="trafficControllerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FrontendListResult>> ListByTrafficControllerAsync(string subscriptionId, string resourceGroupName, string trafficControllerName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityPolicyListResult>> ListByTrafficControllerAsync(string subscriptionId, string resourceGroupName, string trafficControllerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 case 200:
                     {
-                        FrontendListResult value = default;
+                        SecurityPolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FrontendListResult.DeserializeFrontendListResult(document.RootElement);
+                        value = SecurityPolicyListResult.DeserializeSecurityPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
-        /// <summary> List Frontend resources by TrafficController. </summary>
+        /// <summary> List SecurityPolicy resources by TrafficController. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="trafficControllerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="trafficControllerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FrontendListResult> ListByTrafficController(string subscriptionId, string resourceGroupName, string trafficControllerName, CancellationToken cancellationToken = default)
+        public Response<SecurityPolicyListResult> ListByTrafficController(string subscriptionId, string resourceGroupName, string trafficControllerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -120,9 +120,9 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 case 200:
                     {
-                        FrontendListResult value = default;
+                        SecurityPolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FrontendListResult.DeserializeFrontendListResult(document.RootElement);
+                        value = SecurityPolicyListResult.DeserializeSecurityPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName)
+        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string trafficControllerName, string securityPolicyName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -140,13 +140,13 @@ namespace Azure.ResourceManager.ServiceNetworking
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ServiceNetworking/trafficControllers/", false);
             uri.AppendPath(trafficControllerName, true);
-            uri.AppendPath("/frontends/", false);
-            uri.AppendPath(frontendName, true);
+            uri.AppendPath("/securityPolicies/", false);
+            uri.AppendPath(securityPolicyName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName)
+        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string trafficControllerName, string securityPolicyName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -159,8 +159,8 @@ namespace Azure.ResourceManager.ServiceNetworking
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ServiceNetworking/trafficControllers/", false);
             uri.AppendPath(trafficControllerName, true);
-            uri.AppendPath("/frontends/", false);
-            uri.AppendPath(frontendName, true);
+            uri.AppendPath("/securityPolicies/", false);
+            uri.AppendPath(securityPolicyName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -168,73 +168,73 @@ namespace Azure.ResourceManager.ServiceNetworking
             return message;
         }
 
-        /// <summary> Get a Frontend. </summary>
+        /// <summary> Get a SecurityPolicy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
-        /// <param name="frontendName"> Frontends. </param>
+        /// <param name="securityPolicyName"> SecurityPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="frontendName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="frontendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FrontendData>> GetAsync(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="securityPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SecurityPolicyData>> GetAsync(string subscriptionId, string resourceGroupName, string trafficControllerName, string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(trafficControllerName, nameof(trafficControllerName));
-            Argument.AssertNotNullOrEmpty(frontendName, nameof(frontendName));
+            Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, trafficControllerName, frontendName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, trafficControllerName, securityPolicyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        FrontendData value = default;
+                        SecurityPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FrontendData.DeserializeFrontendData(document.RootElement);
+                        value = SecurityPolicyData.DeserializeSecurityPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FrontendData)null, message.Response);
+                    return Response.FromValue((SecurityPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        /// <summary> Get a Frontend. </summary>
+        /// <summary> Get a SecurityPolicy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
-        /// <param name="frontendName"> Frontends. </param>
+        /// <param name="securityPolicyName"> SecurityPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="frontendName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="frontendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FrontendData> Get(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="securityPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SecurityPolicyData> Get(string subscriptionId, string resourceGroupName, string trafficControllerName, string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(trafficControllerName, nameof(trafficControllerName));
-            Argument.AssertNotNullOrEmpty(frontendName, nameof(frontendName));
+            Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, trafficControllerName, frontendName);
+            using var message = CreateGetRequest(subscriptionId, resourceGroupName, trafficControllerName, securityPolicyName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        FrontendData value = default;
+                        SecurityPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FrontendData.DeserializeFrontendData(document.RootElement);
+                        value = SecurityPolicyData.DeserializeSecurityPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 case 404:
-                    return Response.FromValue((FrontendData)null, message.Response);
+                    return Response.FromValue((SecurityPolicyData)null, message.Response);
                 default:
                     throw new RequestFailedException(message.Response);
             }
         }
 
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName, FrontendData data)
+        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string trafficControllerName, string securityPolicyName, SecurityPolicyData data)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -244,13 +244,13 @@ namespace Azure.ResourceManager.ServiceNetworking
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ServiceNetworking/trafficControllers/", false);
             uri.AppendPath(trafficControllerName, true);
-            uri.AppendPath("/frontends/", false);
-            uri.AppendPath(frontendName, true);
+            uri.AppendPath("/securityPolicies/", false);
+            uri.AppendPath(securityPolicyName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName, FrontendData data)
+        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string trafficControllerName, string securityPolicyName, SecurityPolicyData data)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -263,8 +263,8 @@ namespace Azure.ResourceManager.ServiceNetworking
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ServiceNetworking/trafficControllers/", false);
             uri.AppendPath(trafficControllerName, true);
-            uri.AppendPath("/frontends/", false);
-            uri.AppendPath(frontendName, true);
+            uri.AppendPath("/securityPolicies/", false);
+            uri.AppendPath(securityPolicyName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -276,24 +276,24 @@ namespace Azure.ResourceManager.ServiceNetworking
             return message;
         }
 
-        /// <summary> Create a Frontend. </summary>
+        /// <summary> Create a SecurityPolicy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
-        /// <param name="frontendName"> Frontends. </param>
+        /// <param name="securityPolicyName"> SecurityPolicy. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/>, <paramref name="frontendName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="frontendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName, FrontendData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/>, <paramref name="securityPolicyName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string trafficControllerName, string securityPolicyName, SecurityPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(trafficControllerName, nameof(trafficControllerName));
-            Argument.AssertNotNullOrEmpty(frontendName, nameof(frontendName));
+            Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, trafficControllerName, frontendName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, trafficControllerName, securityPolicyName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -305,24 +305,24 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
-        /// <summary> Create a Frontend. </summary>
+        /// <summary> Create a SecurityPolicy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
-        /// <param name="frontendName"> Frontends. </param>
+        /// <param name="securityPolicyName"> SecurityPolicy. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/>, <paramref name="frontendName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="frontendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName, FrontendData data, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/>, <paramref name="securityPolicyName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string trafficControllerName, string securityPolicyName, SecurityPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(trafficControllerName, nameof(trafficControllerName));
-            Argument.AssertNotNullOrEmpty(frontendName, nameof(frontendName));
+            Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, trafficControllerName, frontendName, data);
+            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, trafficControllerName, securityPolicyName, data);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName, FrontendPatch patch)
+        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string trafficControllerName, string securityPolicyName, SecurityPolicyPatch patch)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -344,13 +344,13 @@ namespace Azure.ResourceManager.ServiceNetworking
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ServiceNetworking/trafficControllers/", false);
             uri.AppendPath(trafficControllerName, true);
-            uri.AppendPath("/frontends/", false);
-            uri.AppendPath(frontendName, true);
+            uri.AppendPath("/securityPolicies/", false);
+            uri.AppendPath(securityPolicyName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName, FrontendPatch patch)
+        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string trafficControllerName, string securityPolicyName, SecurityPolicyPatch patch)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -363,8 +363,8 @@ namespace Azure.ResourceManager.ServiceNetworking
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ServiceNetworking/trafficControllers/", false);
             uri.AppendPath(trafficControllerName, true);
-            uri.AppendPath("/frontends/", false);
-            uri.AppendPath(frontendName, true);
+            uri.AppendPath("/securityPolicies/", false);
+            uri.AppendPath(securityPolicyName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -376,32 +376,32 @@ namespace Azure.ResourceManager.ServiceNetworking
             return message;
         }
 
-        /// <summary> Update a Frontend. </summary>
+        /// <summary> Update a SecurityPolicy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
-        /// <param name="frontendName"> Frontends. </param>
+        /// <param name="securityPolicyName"> SecurityPolicy. </param>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/>, <paramref name="frontendName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="frontendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FrontendData>> UpdateAsync(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName, FrontendPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/>, <paramref name="securityPolicyName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response<SecurityPolicyData>> UpdateAsync(string subscriptionId, string resourceGroupName, string trafficControllerName, string securityPolicyName, SecurityPolicyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(trafficControllerName, nameof(trafficControllerName));
-            Argument.AssertNotNullOrEmpty(frontendName, nameof(frontendName));
+            Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, trafficControllerName, frontendName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, trafficControllerName, securityPolicyName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        FrontendData value = default;
+                        SecurityPolicyData value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FrontendData.DeserializeFrontendData(document.RootElement);
+                        value = SecurityPolicyData.DeserializeSecurityPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -409,32 +409,32 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
-        /// <summary> Update a Frontend. </summary>
+        /// <summary> Update a SecurityPolicy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
-        /// <param name="frontendName"> Frontends. </param>
+        /// <param name="securityPolicyName"> SecurityPolicy. </param>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/>, <paramref name="frontendName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="frontendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FrontendData> Update(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName, FrontendPatch patch, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/>, <paramref name="securityPolicyName"/> or <paramref name="patch"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response<SecurityPolicyData> Update(string subscriptionId, string resourceGroupName, string trafficControllerName, string securityPolicyName, SecurityPolicyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(trafficControllerName, nameof(trafficControllerName));
-            Argument.AssertNotNullOrEmpty(frontendName, nameof(frontendName));
+            Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, trafficControllerName, frontendName, patch);
+            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, trafficControllerName, securityPolicyName, patch);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        FrontendData value = default;
+                        SecurityPolicyData value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FrontendData.DeserializeFrontendData(document.RootElement);
+                        value = SecurityPolicyData.DeserializeSecurityPolicyData(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName)
+        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string trafficControllerName, string securityPolicyName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -452,13 +452,13 @@ namespace Azure.ResourceManager.ServiceNetworking
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ServiceNetworking/trafficControllers/", false);
             uri.AppendPath(trafficControllerName, true);
-            uri.AppendPath("/frontends/", false);
-            uri.AppendPath(frontendName, true);
+            uri.AppendPath("/securityPolicies/", false);
+            uri.AppendPath(securityPolicyName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             return uri;
         }
 
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName)
+        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string trafficControllerName, string securityPolicyName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -471,8 +471,8 @@ namespace Azure.ResourceManager.ServiceNetworking
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ServiceNetworking/trafficControllers/", false);
             uri.AppendPath(trafficControllerName, true);
-            uri.AppendPath("/frontends/", false);
-            uri.AppendPath(frontendName, true);
+            uri.AppendPath("/securityPolicies/", false);
+            uri.AppendPath(securityPolicyName, true);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -480,22 +480,22 @@ namespace Azure.ResourceManager.ServiceNetworking
             return message;
         }
 
-        /// <summary> Delete a Frontend. </summary>
+        /// <summary> Delete a SecurityPolicy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
-        /// <param name="frontendName"> Frontends. </param>
+        /// <param name="securityPolicyName"> SecurityPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="frontendName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="frontendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="securityPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string trafficControllerName, string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(trafficControllerName, nameof(trafficControllerName));
-            Argument.AssertNotNullOrEmpty(frontendName, nameof(frontendName));
+            Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, trafficControllerName, frontendName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, trafficControllerName, securityPolicyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -507,22 +507,22 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
-        /// <summary> Delete a Frontend. </summary>
+        /// <summary> Delete a SecurityPolicy. </summary>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="trafficControllerName"> traffic controller name for path. </param>
-        /// <param name="frontendName"> Frontends. </param>
+        /// <param name="securityPolicyName"> SecurityPolicy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="frontendName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="frontendName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string trafficControllerName, string frontendName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="securityPolicyName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="trafficControllerName"/> or <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
+        public Response Delete(string subscriptionId, string resourceGroupName, string trafficControllerName, string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(trafficControllerName, nameof(trafficControllerName));
-            Argument.AssertNotNullOrEmpty(frontendName, nameof(frontendName));
+            Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, trafficControllerName, frontendName);
+            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, trafficControllerName, securityPolicyName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             return message;
         }
 
-        /// <summary> List Frontend resources by TrafficController. </summary>
+        /// <summary> List SecurityPolicy resources by TrafficController. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -564,7 +564,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="trafficControllerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="trafficControllerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<FrontendListResult>> ListByTrafficControllerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string trafficControllerName, CancellationToken cancellationToken = default)
+        public async Task<Response<SecurityPolicyListResult>> ListByTrafficControllerNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string trafficControllerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -577,9 +577,9 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 case 200:
                     {
-                        FrontendListResult value = default;
+                        SecurityPolicyListResult value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = FrontendListResult.DeserializeFrontendListResult(document.RootElement);
+                        value = SecurityPolicyListResult.DeserializeSecurityPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
-        /// <summary> List Frontend resources by TrafficController. </summary>
+        /// <summary> List SecurityPolicy resources by TrafficController. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="trafficControllerName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="trafficControllerName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<FrontendListResult> ListByTrafficControllerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string trafficControllerName, CancellationToken cancellationToken = default)
+        public Response<SecurityPolicyListResult> ListByTrafficControllerNextPage(string nextLink, string subscriptionId, string resourceGroupName, string trafficControllerName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(nextLink, nameof(nextLink));
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
@@ -608,9 +608,9 @@ namespace Azure.ResourceManager.ServiceNetworking
             {
                 case 200:
                     {
-                        FrontendListResult value = default;
+                        SecurityPolicyListResult value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = FrontendListResult.DeserializeFrontendListResult(document.RootElement);
+                        value = SecurityPolicyListResult.DeserializeSecurityPolicyListResult(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:

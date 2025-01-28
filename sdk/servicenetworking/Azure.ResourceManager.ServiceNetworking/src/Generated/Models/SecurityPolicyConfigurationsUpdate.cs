@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    /// <summary> The type used for update operations of the TrafficController. </summary>
-    public partial class TrafficControllerPatch
+    /// <summary> SecurityPolicyConfigurations Subresource of Traffic Controller. </summary>
+    internal partial class SecurityPolicyConfigurationsUpdate
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,36 +47,31 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TrafficControllerPatch"/>. </summary>
-        public TrafficControllerPatch()
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyConfigurationsUpdate"/>. </summary>
+        public SecurityPolicyConfigurationsUpdate()
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrafficControllerPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="securityPolicyConfigurations"> Security Policy Configuration. </param>
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyConfigurationsUpdate"/>. </summary>
+        /// <param name="wafSecurityPolicy"> Contains reference to a WAF-type security policy that is applied at the Traffic Controller level. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficControllerPatch(IDictionary<string, string> tags, SecurityPolicyConfigurationsUpdate securityPolicyConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecurityPolicyConfigurationsUpdate(WritableSubResource wafSecurityPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
-            SecurityPolicyConfigurations = securityPolicyConfigurations;
+            WafSecurityPolicy = wafSecurityPolicy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> Security Policy Configuration. </summary>
-        internal SecurityPolicyConfigurationsUpdate SecurityPolicyConfigurations { get; set; }
+        /// <summary> Contains reference to a WAF-type security policy that is applied at the Traffic Controller level. </summary>
+        internal WritableSubResource WafSecurityPolicy { get; set; }
         /// <summary> Gets or sets Id. </summary>
         public ResourceIdentifier WafSecurityPolicyId
         {
-            get => SecurityPolicyConfigurations is null ? default : SecurityPolicyConfigurations.WafSecurityPolicyId;
+            get => WafSecurityPolicy is null ? default : WafSecurityPolicy.Id;
             set
             {
-                if (SecurityPolicyConfigurations is null)
-                    SecurityPolicyConfigurations = new SecurityPolicyConfigurationsUpdate();
-                SecurityPolicyConfigurations.WafSecurityPolicyId = value;
+                if (WafSecurityPolicy is null)
+                    WafSecurityPolicy = new WritableSubResource();
+                WafSecurityPolicy.Id = value;
             }
         }
     }

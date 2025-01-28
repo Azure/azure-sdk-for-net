@@ -109,10 +109,66 @@ namespace Azure.ResourceManager.ServiceNetworking
         public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.FrontendResource> Update(Azure.ResourceManager.ServiceNetworking.Models.FrontendPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.FrontendResource>> UpdateAsync(Azure.ResourceManager.ServiceNetworking.Models.FrontendPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
+    public partial class SecurityPolicyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource>, System.Collections.IEnumerable
+    {
+        protected SecurityPolicyCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource> CreateOrUpdate(Azure.WaitUntil waitUntil, string securityPolicyName, Azure.ResourceManager.ServiceNetworking.SecurityPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string securityPolicyName, Azure.ResourceManager.ServiceNetworking.SecurityPolicyData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource> Get(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource>> GetAsync(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource> GetIfExists(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource>> GetIfExistsAsync(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class SecurityPolicyData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.SecurityPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.SecurityPolicyData>
+    {
+        public SecurityPolicyData(Azure.Core.AzureLocation location) { }
+        public Azure.ResourceManager.ServiceNetworking.Models.PolicyType? PolicyType { get { throw null; } }
+        public Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.Core.ResourceIdentifier WafPolicyId { get { throw null; } set { } }
+        protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceNetworking.SecurityPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.SecurityPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.SecurityPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceNetworking.SecurityPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.SecurityPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.SecurityPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.SecurityPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class SecurityPolicyResource : Azure.ResourceManager.ArmResource, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.SecurityPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.SecurityPolicyData>
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected SecurityPolicyResource() { }
+        public virtual Azure.ResourceManager.ServiceNetworking.SecurityPolicyData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource> AddTag(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource>> AddTagAsync(string key, string value, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string trafficControllerName, string securityPolicyName) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation Delete(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> DeleteAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource>> SetTagsAsync(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        Azure.ResourceManager.ServiceNetworking.SecurityPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.SecurityPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.SecurityPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceNetworking.SecurityPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.SecurityPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.SecurityPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.SecurityPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource> Update(Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource>> UpdateAsync(Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public static partial class ServiceNetworkingExtensions
     {
         public static Azure.ResourceManager.ServiceNetworking.AssociationResource GetAssociationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.ServiceNetworking.FrontendResource GetFrontendResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource GetSecurityPolicyResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Response<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> GetTrafficController(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string trafficControllerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource>> GetTrafficControllerAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string trafficControllerName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.ServiceNetworking.TrafficControllerResource GetTrafficControllerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
@@ -144,6 +200,8 @@ namespace Azure.ResourceManager.ServiceNetworking
         public System.Collections.Generic.IReadOnlyList<string> ConfigurationEndpoints { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> Frontends { get { throw null; } }
         public Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? ProvisioningState { get { throw null; } }
+        public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> SecurityPolicies { get { throw null; } }
+        public Azure.Core.ResourceIdentifier WafSecurityPolicyId { get { throw null; } set { } }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceNetworking.TrafficControllerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.TrafficControllerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.TrafficControllerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -170,6 +228,9 @@ namespace Azure.ResourceManager.ServiceNetworking
         public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.FrontendResource> GetFrontend(string frontendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.FrontendResource>> GetFrontendAsync(string frontendName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ServiceNetworking.FrontendCollection GetFrontends() { throw null; }
+        public virtual Azure.ResourceManager.ServiceNetworking.SecurityPolicyCollection GetSecurityPolicies() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource> GetSecurityPolicy(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource>> GetSecurityPolicyAsync(string securityPolicyName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.ServiceNetworking.TrafficControllerResource> SetTags(System.Collections.Generic.IDictionary<string, string> tags, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -190,6 +251,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
         protected MockableServiceNetworkingArmClient() { }
         public virtual Azure.ResourceManager.ServiceNetworking.AssociationResource GetAssociationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ServiceNetworking.FrontendResource GetFrontendResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.ServiceNetworking.SecurityPolicyResource GetSecurityPolicyResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.ServiceNetworking.TrafficControllerResource GetTrafficControllerResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
     public partial class MockableServiceNetworkingResourceGroupResource : Azure.ResourceManager.ArmResource
@@ -212,7 +274,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
     {
         public static Azure.ResourceManager.ServiceNetworking.AssociationData AssociationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ServiceNetworking.Models.AssociationType? associationType = default(Azure.ResourceManager.ServiceNetworking.Models.AssociationType?), Azure.Core.ResourceIdentifier subnetId = null, Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.ServiceNetworking.FrontendData FrontendData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string fqdn = null, Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.ServiceNetworking.TrafficControllerData TrafficControllerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> configurationEndpoints = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> frontends = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> associations = null, Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ServiceNetworking.SecurityPolicyData SecurityPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.ServiceNetworking.Models.PolicyType? policyType = default(Azure.ResourceManager.ServiceNetworking.Models.PolicyType?), Azure.Core.ResourceIdentifier wafPolicyId = null, Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.ServiceNetworking.TrafficControllerData TrafficControllerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IEnumerable<string> configurationEndpoints = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> frontends = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> associations = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> securityPolicies = null, Azure.Core.ResourceIdentifier wafSecurityPolicyId = null, Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? provisioningState = default(Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState?)) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public static Azure.ResourceManager.ServiceNetworking.TrafficControllerData TrafficControllerData(Azure.Core.ResourceIdentifier id, string name, Azure.Core.ResourceType resourceType, Azure.ResourceManager.Models.SystemData systemData, System.Collections.Generic.IDictionary<string, string> tags, Azure.Core.AzureLocation location, System.Collections.Generic.IEnumerable<string> configurationEndpoints, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> frontends, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> associations, Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState? provisioningState) { throw null; }
     }
     public partial class AssociationPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.Models.AssociationPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.Models.AssociationPatch>
     {
@@ -256,6 +321,23 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.Models.FrontendPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct PolicyType : System.IEquatable<Azure.ResourceManager.ServiceNetworking.Models.PolicyType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public PolicyType(string value) { throw null; }
+        public static Azure.ResourceManager.ServiceNetworking.Models.PolicyType WAF { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.ServiceNetworking.Models.PolicyType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.ServiceNetworking.Models.PolicyType left, Azure.ResourceManager.ServiceNetworking.Models.PolicyType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.ServiceNetworking.Models.PolicyType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.ServiceNetworking.Models.PolicyType left, Azure.ResourceManager.ServiceNetworking.Models.PolicyType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ProvisioningState : System.IEquatable<Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState>
     {
         private readonly object _dummy;
@@ -278,10 +360,23 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         public static bool operator !=(Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState left, Azure.ResourceManager.ServiceNetworking.Models.ProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class SecurityPolicyPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyPatch>
+    {
+        public SecurityPolicyPatch() { }
+        public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public Azure.Core.ResourceIdentifier WafPolicyId { get { throw null; } set { } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.Models.SecurityPolicyPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class TrafficControllerPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerPatch>
     {
         public TrafficControllerPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        public Azure.Core.ResourceIdentifier WafSecurityPolicyId { get { throw null; } set { } }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ServiceNetworking.Models.TrafficControllerPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
