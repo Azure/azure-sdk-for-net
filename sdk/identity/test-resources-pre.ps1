@@ -25,13 +25,18 @@ $sshKey = Get-Content $PSScriptRoot/sshKey.pub
 $templateFileParameters['sshPubKey'] = $sshKey
 
 az cloud set --name $Environment
-az login --service-principal -u $TestApplicationId --tenant $TenantId --allow-no-subscriptions --federated-token $env:ARM_OIDC_TOKEN
+# if $env:ARM_OIDC_TOKEN is not set, skip login
+if ($null -ne $env:ARM_OIDC_TOKEN) {
+    az login --service-principal -u $TestApplicationId --tenant $TenantId --allow-no-subscriptions --federated-token $env:ARM_OIDC_TOKEN
+}
+else {
+    Write-Host "Skipping login because ARM_OIDC_TOKEN is not set"
+}
+
 # Get the max version that is not preview and then get the name of the patch version with the max value
 $region = if ($Environment -eq 'AzureUSGovernment') { 'usgovvirginia' } elseif ($Environment -eq 'AzureChinaCloud') { 'chinanorth3' } else { 'westus' }
 $versions = az aks get-versions -l $region -o json | ConvertFrom-Json
-Write-Host "AKS versions: $($versions | ConvertTo-Json -Depth 100)"
 $patchVersions = $versions.values | Where-Object { $_.isPreview -eq $null } | Select-Object -ExpandProperty patchVersions
-Write-Host "AKS patch versions: $($patchVersions | ConvertTo-Json -Depth 100)"
 $latestAksVersion = $patchVersions | Get-Member -MemberType NoteProperty | Select-Object -ExpandProperty Name | Sort-Object -Descending | Select-Object -First 1
 Write-Host "Latest AKS version: $latestAksVersion"
 $templateFileParameters['latestAksVersion'] = $latestAksVersion
