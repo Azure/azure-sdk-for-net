@@ -54,7 +54,7 @@ try {
 
         Invoke-LoggedCommand "$packageRoot/eng/scripts/Get-Spector-Coverage.ps1" -GroupOutput
 
-        $testResultsFile = "$packageRoot/generator/artifacts/coverage/tsp-spector-coverage-standard.json"
+        $testResultsFile = "$packageRoot/generator/artifacts/coverage/tsp-spector-coverage-azure.json"
 
         # copy test results to the artifacts directory
         if (Test-Path $testResultsFile) {
