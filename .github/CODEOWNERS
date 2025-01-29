@@ -1004,10 +1004,10 @@
 # ServiceOwners:                                                   @8Gitbrix
 
 # PRLabel: %Monitor
-/sdk/monitor/Azure.ResourceManager.Monitor/                        @thomasp98296 @ritwik8119
+/sdk/monitor/Azure.ResourceManager.Monitor/                        @thomasp98296
 
 # ServiceLabel: %Monitor
-# ServiceOwners:                                                   @thomasp98296 @ritwik8119
+# ServiceOwners:                                                   @thomasp98296
 
 # PRLabel: %Neon Postgres
 /sdk/neonpostgres/Azure.ResourceManager.*/                         @archerzz @ArcturusZhang @ArthurMa1978
