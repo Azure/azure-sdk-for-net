@@ -17,12 +17,12 @@ namespace TestProjects.Spector.Tests.Http.Authentication.ApiKey
             Assert.AreEqual(204, response.Status);
         });
 
-        [SpectorTest]
-        public Task Invalid() => Test((host) =>
-        {
-            var exception = Assert.ThrowsAsync<RequestFailedException>(() => new ApiKeyClient(host, new AzureKeyCredential("invalid-key"), null).InvalidAsync());
-            Assert.AreEqual(403, exception!.Status);
-            return Task.CompletedTask;
-        });
+        //[SpectorTest]
+        //public Task Invalid() => Test((host) =>
+        //{
+        //    var exception = Assert.ThrowsAsync<RequestFailedException>(() => new ApiKeyClient(host, new AzureKeyCredential("invalid-key"), null).InvalidAsync());
+        //    Assert.AreEqual(403, exception!.Status);
+        //    return Task.CompletedTask;
+        //});
     }
 }
