@@ -451,7 +451,7 @@ extends:
           - ${{ if and(eq(variables['System.TeamProject'], 'internal'), ne(variables['Build.Reason'], 'PullRequest')) }}:
               - task: AzureCLI@2
                 displayName: "Upload Spector Standard Coverage Report"
-                condition: and(ne('$(SpectorName)', ''), succeeded())
+                condition: and(ne(variables['SpectorName'], ''), succeeded())
                 inputs:
                   azureSubscription: "TypeSpec Storage"
                   scriptType: "bash"
