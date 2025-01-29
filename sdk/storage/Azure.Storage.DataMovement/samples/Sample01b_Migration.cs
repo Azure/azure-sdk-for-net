@@ -55,7 +55,7 @@ namespace Azure.Storage.DataMovement.Samples
             #endregion
 
             // Create a temporary Lorem Ipsum file on disk to upload
-            filePath = CreateTempFile(SampleFileContent);
+            filePath = CreateTempFile();
 
             // Get account and shared key access
             // (see implementation for details)
@@ -86,6 +86,60 @@ namespace Azure.Storage.DataMovement.Samples
                 TransferOperation operation = await transferManager.StartTransferAsync(
                     files.FromFile(filePath), // TODO static on merge
                     blobs.FromBlob(blobUri));
+                await operation.WaitForCompletionAsync();
+                #endregion
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        [Test]
+        public async Task UploadBlobDirectory()
+        {
+            #region Snippet:DataMovementMigration_UploadBlobDirectory_VarDeclaration
+            // these values provided by your code
+            string directoryPath, blobDirectoryPath;
+            Uri containerUri;
+            BlobsStorageResourceProvider blobs;
+            TransferManager transferManager;
+            #endregion
+
+            // Create a temporary populated directory on disk to upload
+            directoryPath = CreateLocalTestDirectory(3);
+
+            // Get account and shared key access
+            // (see implementation for details)
+            (Uri accountUri, StorageSharedKeyCredential credential) = GetSharedKeyAccessAccount();
+
+            // generate a container and blob name for purposes of sample
+            string containerName = Randomize("sample-container");
+            blobDirectoryPath = Randomize("sample-blob-dir");
+            containerUri = new BlobUriBuilder(accountUri)
+            {
+                BlobContainerName = containerName,
+            }.ToUri();
+
+            // Create the container for this sample to upload a file to
+            BlobContainerClient container = new BlobServiceClient(accountUri, credential)
+                .GetBlobContainerClient(containerName);
+            await container.CreateIfNotExistsAsync();
+
+            try
+            {
+                transferManager = new TransferManager();
+                blobs = new BlobsStorageResourceProvider(credential);
+                LocalFilesStorageResourceProvider files = new(); // TODO static on merge
+
+                #region Snippet:DataMovementMigration_UploadBlobDirectory
+                // upload blobs
+                TransferOperation operation = await transferManager.StartTransferAsync(
+                    files.FromDirectory(directoryPath),// TODO static on merge
+                    blobs.FromContainer(containerUri, new BlobStorageResourceContainerOptions()
+                    {
+                        BlobDirectoryPrefix = blobDirectoryPath,
+                    }));
                 await operation.WaitForCompletionAsync();
                 #endregion
             }
@@ -129,7 +183,7 @@ namespace Azure.Storage.DataMovement.Samples
         {
             basePath = basePath ?? Path.GetTempPath();
 
-            var dirPath = Path.Combine(basePath, Path.GetTempFileName());
+            var dirPath = Path.Combine(basePath, Randomize("sample-dir"));
 
             Directory.CreateDirectory(dirPath);
 

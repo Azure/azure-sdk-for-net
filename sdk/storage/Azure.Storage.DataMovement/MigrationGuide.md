@@ -210,14 +210,13 @@ await TransferManager.UploadDirectoryAsync(
     client.GetContainerReference(containerName).GetDirectoryReference(blobDirectoryPath));
 ```
 **Modern:**
-```csharp
+```csharp Snippet:DataMovementMigration_UploadBlobDirectory_VarDeclaration
 // these values provided by your code
 string directoryPath, containerUri, blobDirectoryPath;
 BlobsStorageResourceProvider blobs;
 TransferManager transferManager;
 ```
-
-```csharp
+```csharp Snippet:DataMovementMigration_UploadBlobDirectory
 // upload blobs
 TranferOperation operation = await transferManager.StartTransferAsync(
     LocalFilesStorageResourceProvider.FromDirectory(directoryPath),
