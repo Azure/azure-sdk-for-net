@@ -136,7 +136,7 @@
 
 ### Features Added
 
-- Added support for [anonymous pull access](https://docs.microsoft.com/azure/container-registry/anonymous-pull-access#configure-anonymous-pull-access) using the `ContainerRegistryBlobClient`
+- Added support for [anonymous pull access](https://learn.microsoft.com/azure/container-registry/anonymous-pull-access#configure-anonymous-pull-access) using the `ContainerRegistryBlobClient`
 
 ## 1.1.0-beta.2 (2021-10-13)
 

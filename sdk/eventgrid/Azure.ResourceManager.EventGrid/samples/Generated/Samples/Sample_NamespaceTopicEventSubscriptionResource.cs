@@ -100,12 +100,12 @@ namespace Azure.ResourceManager.EventGrid.Samples
             NamespaceTopicEventSubscriptionResource namespaceTopicEventSubscription = client.GetNamespaceTopicEventSubscriptionResource(namespaceTopicEventSubscriptionResourceId);
 
             // invoke the operation
-            NamespaceTopicEventSubscriptionPatch patch = new NamespaceTopicEventSubscriptionPatch()
+            NamespaceTopicEventSubscriptionPatch patch = new NamespaceTopicEventSubscriptionPatch
             {
-                DeliveryConfiguration = new DeliveryConfiguration()
+                DeliveryConfiguration = new DeliveryConfiguration
                 {
                     DeliveryMode = DeliveryMode.Queue,
-                    Queue = new QueueInfo()
+                    Queue = new QueueInfo
                     {
                         ReceiveLockDurationInSeconds = 60,
                         MaxDeliveryCount = 3,

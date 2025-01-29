@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Quota
             {
                 return null;
             }
-            GroupQuotaEntityBase properties = default;
+            GroupQuotasEntityProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Quota
                     {
                         continue;
                     }
-                    properties = GroupQuotaEntityBase.DeserializeGroupQuotaEntityBase(property.Value, options);
+                    properties = GroupQuotasEntityProperties.DeserializeGroupQuotasEntityProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))

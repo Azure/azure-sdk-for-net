@@ -47,7 +47,7 @@ namespace Azure.Communication.CallAutomation.Tests.EventProcessors
             SendAndProcessEvent(handler, new CallConnected(CallConnectionId, ServerCallId, CorelationId, null, null));
 
             // Wait for Event after
-            CallAutomationEventBase returnedBaseEvent = await  handler.WaitForEventProcessorAsync(ev
+            CallAutomationEventBase returnedBaseEvent = await handler.WaitForEventProcessorAsync(ev
                 => ev.CallConnectionId == CallConnectionId
                 && ev.GetType() == typeof(CallConnected));
 

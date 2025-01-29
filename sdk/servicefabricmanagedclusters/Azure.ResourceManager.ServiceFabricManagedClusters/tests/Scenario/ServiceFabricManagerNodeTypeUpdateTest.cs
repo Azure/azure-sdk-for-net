@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Tests
         }
 
         [Test]
+        [Ignore("Nee re-record")]
         public async Task UpdateTest()
         {
             //Update

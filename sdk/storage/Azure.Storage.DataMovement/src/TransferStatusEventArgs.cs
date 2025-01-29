@@ -7,12 +7,12 @@ namespace Azure.Storage.DataMovement
     /// <summary>
     /// Event Argument for a change in the Transfer Status
     /// </summary>
-    public class TransferStatusEventArgs : DataTransferEventArgs
+    public class TransferStatusEventArgs : TransferEventArgs
     {
         /// <summary>
-        /// Gets the <see cref="Storage.DataMovement.DataTransferStatus"/> of the job.
+        /// Gets the <see cref="Storage.DataMovement.TransferStatus"/> of the job.
         /// </summary>
-        public DataTransferStatus TransferStatus { get; }
+        public TransferStatus TransferStatus { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TransferStatusEventArgs"/>.
@@ -23,7 +23,7 @@ namespace Azure.Storage.DataMovement
         /// <param name="cancellationToken"></param>
         public TransferStatusEventArgs(
             string transferId,
-            DataTransferStatus transferStatus,
+            TransferStatus transferStatus,
             bool isRunningSynchronously,
             CancellationToken cancellationToken)
             : base (transferId, isRunningSynchronously, cancellationToken)

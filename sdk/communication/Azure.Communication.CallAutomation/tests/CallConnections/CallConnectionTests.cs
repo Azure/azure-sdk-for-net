@@ -529,7 +529,7 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
 
         private void verifyAddParticipantsResult(AddParticipantResult result)
         {
-            var identifier = (CommunicationUserIdentifier) result.Participant.Identifier;
+            var identifier = (CommunicationUserIdentifier)result.Participant.Identifier;
             Assert.AreEqual(ParticipantUserId, identifier.Id);
             Assert.IsFalse(result.Participant.IsMuted);
             Assert.AreEqual(OperationContext, result.OperationContext);

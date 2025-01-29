@@ -15,12 +15,18 @@ namespace Azure.Storage.Files.Shares.Tests
 
         public ShareClient Container { get; private set; }
 
-        public static async Task<DisposingShare> CreateAsync(ShareClient share, IDictionary<string, string> metadata)
+        public static async Task<DisposingShare> CreateAsync(ShareClient share, IDictionary<string, string> metadata, bool nfs = false)
         {
             ShareCreateOptions options = new ShareCreateOptions
             {
                 Metadata = metadata
             };
+
+            if (nfs)
+            {
+                options.Protocols = ShareProtocols.Nfs;
+            }
+
             await share.CreateIfNotExistsAsync(options);
             return new DisposingShare(share);
         }

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
@@ -19,10 +18,10 @@ namespace Azure.ResourceManager.Compute.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_VirtualMachineScaleSetExtensionUpdateMaximumSetGen()
+        public async Task Get_VirtualMachineScaleSetExtensionGetMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtension_Update_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineScaleSetExtensions_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtension_Get_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineScaleSetExtensions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -33,34 +32,14 @@ namespace Azure.ResourceManager.Compute.Samples
             // for more information of creating VirtualMachineScaleSetExtensionResource, please refer to the document of VirtualMachineScaleSetExtensionResource
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
-            string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-            string vmssExtensionName = "aaaa";
+            string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaa";
+            string vmssExtensionName = "aaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetExtensionResourceId = VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, vmssExtensionName);
             VirtualMachineScaleSetExtensionResource virtualMachineScaleSetExtension = client.GetVirtualMachineScaleSetExtensionResource(virtualMachineScaleSetExtensionResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetExtensionPatch patch = new VirtualMachineScaleSetExtensionPatch()
-            {
-                ForceUpdateTag = "aaaaaaaaa",
-                Publisher = "{extension-Publisher}",
-                ExtensionType = "{extension-Type}",
-                TypeHandlerVersion = "{handler-version}",
-                AutoUpgradeMinorVersion = true,
-                EnableAutomaticUpgrade = true,
-                Settings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-                {
-                }),
-                ProtectedSettings = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
-                {
-                }),
-                ProvisionAfterExtensions =
-{
-"aa"
-},
-                SuppressFailures = true,
-            };
-            ArmOperation<VirtualMachineScaleSetExtensionResource> lro = await virtualMachineScaleSetExtension.UpdateAsync(WaitUntil.Completed, patch);
-            VirtualMachineScaleSetExtensionResource result = lro.Value;
+            string expand = "aaaaaaa";
+            VirtualMachineScaleSetExtensionResource result = await virtualMachineScaleSetExtension.GetAsync(expand: expand);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -71,10 +50,10 @@ namespace Azure.ResourceManager.Compute.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Update_VirtualMachineScaleSetExtensionUpdateMinimumSetGen()
+        public async Task Get_VirtualMachineScaleSetExtensionGetMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtension_Update_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineScaleSetExtensions_Update" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtension_Get_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineScaleSetExtensions_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -85,15 +64,13 @@ namespace Azure.ResourceManager.Compute.Samples
             // for more information of creating VirtualMachineScaleSetExtensionResource, please refer to the document of VirtualMachineScaleSetExtensionResource
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
-            string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaa";
-            string vmssExtensionName = "aa";
+            string virtualMachineScaleSetName = "a";
+            string vmssExtensionName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
             ResourceIdentifier virtualMachineScaleSetExtensionResourceId = VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, vmssExtensionName);
             VirtualMachineScaleSetExtensionResource virtualMachineScaleSetExtension = client.GetVirtualMachineScaleSetExtensionResource(virtualMachineScaleSetExtensionResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetExtensionPatch patch = new VirtualMachineScaleSetExtensionPatch();
-            ArmOperation<VirtualMachineScaleSetExtensionResource> lro = await virtualMachineScaleSetExtension.UpdateAsync(WaitUntil.Completed, patch);
-            VirtualMachineScaleSetExtensionResource result = lro.Value;
+            VirtualMachineScaleSetExtensionResource result = await virtualMachineScaleSetExtension.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -158,10 +135,10 @@ namespace Azure.ResourceManager.Compute.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_VirtualMachineScaleSetExtensionGetMaximumSetGen()
+        public async Task Update_VirtualMachineScaleSetExtensionUpdateMaximumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtension_Get_MaximumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineScaleSetExtensions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtension_Update_MaximumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineScaleSetExtensions_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -172,14 +149,27 @@ namespace Azure.ResourceManager.Compute.Samples
             // for more information of creating VirtualMachineScaleSetExtensionResource, please refer to the document of VirtualMachineScaleSetExtensionResource
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
-            string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaa";
-            string vmssExtensionName = "aaaaaaaaaaaaaaaaaaaa";
+            string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            string vmssExtensionName = "aaaa";
             ResourceIdentifier virtualMachineScaleSetExtensionResourceId = VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, vmssExtensionName);
             VirtualMachineScaleSetExtensionResource virtualMachineScaleSetExtension = client.GetVirtualMachineScaleSetExtensionResource(virtualMachineScaleSetExtensionResourceId);
 
             // invoke the operation
-            string expand = "aaaaaaa";
-            VirtualMachineScaleSetExtensionResource result = await virtualMachineScaleSetExtension.GetAsync(expand: expand);
+            VirtualMachineScaleSetExtensionPatch patch = new VirtualMachineScaleSetExtensionPatch
+            {
+                ForceUpdateTag = "aaaaaaaaa",
+                Publisher = "{extension-Publisher}",
+                ExtensionType = "{extension-Type}",
+                TypeHandlerVersion = "{handler-version}",
+                AutoUpgradeMinorVersion = true,
+                EnableAutomaticUpgrade = true,
+                Settings = BinaryData.FromObjectAsJson(new object()),
+                ProtectedSettings = BinaryData.FromObjectAsJson(new object()),
+                ProvisionAfterExtensions = { "aa" },
+                SuppressFailures = true,
+            };
+            ArmOperation<VirtualMachineScaleSetExtensionResource> lro = await virtualMachineScaleSetExtension.UpdateAsync(WaitUntil.Completed, patch);
+            VirtualMachineScaleSetExtensionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
@@ -190,10 +180,10 @@ namespace Azure.ResourceManager.Compute.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Get_VirtualMachineScaleSetExtensionGetMinimumSetGen()
+        public async Task Update_VirtualMachineScaleSetExtensionUpdateMinimumSetGen()
         {
-            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtension_Get_MinimumSet_Gen.json
-            // this example is just showing the usage of "VirtualMachineScaleSetExtensions_Get" operation, for the dependent resources, they will have to be created separately.
+            // Generated from example definition: specification/compute/resource-manager/Microsoft.Compute/ComputeRP/stable/2024-07-01/examples/virtualMachineScaleSetExamples/VirtualMachineScaleSetExtension_Update_MinimumSet_Gen.json
+            // this example is just showing the usage of "VirtualMachineScaleSetExtensions_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
             TokenCredential cred = new DefaultAzureCredential();
@@ -204,13 +194,15 @@ namespace Azure.ResourceManager.Compute.Samples
             // for more information of creating VirtualMachineScaleSetExtensionResource, please refer to the document of VirtualMachineScaleSetExtensionResource
             string subscriptionId = "{subscription-id}";
             string resourceGroupName = "rgcompute";
-            string virtualMachineScaleSetName = "a";
-            string vmssExtensionName = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            string virtualMachineScaleSetName = "aaaaaaaaaaaaaaaaaaaaaaaaaa";
+            string vmssExtensionName = "aa";
             ResourceIdentifier virtualMachineScaleSetExtensionResourceId = VirtualMachineScaleSetExtensionResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, virtualMachineScaleSetName, vmssExtensionName);
             VirtualMachineScaleSetExtensionResource virtualMachineScaleSetExtension = client.GetVirtualMachineScaleSetExtensionResource(virtualMachineScaleSetExtensionResourceId);
 
             // invoke the operation
-            VirtualMachineScaleSetExtensionResource result = await virtualMachineScaleSetExtension.GetAsync();
+            VirtualMachineScaleSetExtensionPatch patch = new VirtualMachineScaleSetExtensionPatch();
+            ArmOperation<VirtualMachineScaleSetExtensionResource> lro = await virtualMachineScaleSetExtension.UpdateAsync(WaitUntil.Completed, patch);
+            VirtualMachineScaleSetExtensionResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance

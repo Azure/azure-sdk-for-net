@@ -18,11 +18,11 @@ namespace Azure.Communication.CallAutomation.Tests.CallRecordings
         {
         }
 
-        [Ignore (reason: "Recording is currently broken with error Removing modality controller as this conversation has ended. Waiting on fix for this")]
+        [Ignore(reason: "Recording is currently broken with error Removing modality controller as this conversation has ended. Waiting on fix for this")]
         [RecordedTest]
         public async Task RecordingOperationsTest()
         {
-             // create caller and receiver
+            // create caller and receiver
             var target = await CreateIdentityUserAsync().ConfigureAwait(false);
             var user = await CreateIdentityUserAsync().ConfigureAwait(false);
 

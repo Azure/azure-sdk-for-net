@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Support.Samples
             SupportTicketNoSubFileResource supportTicketNoSubFile = client.GetSupportTicketNoSubFileResource(supportTicketNoSubFileResourceId);
 
             // invoke the operation
-            SupportFileDetailData data = new SupportFileDetailData()
+            SupportFileDetailData data = new SupportFileDetailData
             {
                 ChunkSize = 41423,
                 FileSize = 41423,
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Support.Samples
             SupportTicketNoSubFileResource supportTicketNoSubFile = client.GetSupportTicketNoSubFileResource(supportTicketNoSubFileResourceId);
 
             // invoke the operation
-            UploadFileContent content = new UploadFileContent()
+            UploadFileContent content = new UploadFileContent
             {
                 Content = "iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABd",
                 ChunkIndex = 0,

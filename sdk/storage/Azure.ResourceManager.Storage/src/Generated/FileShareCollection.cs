@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fileShareRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fileShareRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter, expand);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FileShareResource(Client, FileShareData.DeserializeFileShareData(e)), _fileShareClientDiagnostics, Pipeline, "FileShareCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new FileShareResource(Client, FileShareData.DeserializeFileShareData(e)), _fileShareClientDiagnostics, Pipeline, "FileShareCollection.GetAll", "value", "nextLink", maxpagesize, cancellationToken);
         }
 
         /// <summary>
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Storage
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _fileShareRestClient.CreateListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter, expand);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _fileShareRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, pageSizeHint, filter, expand);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FileShareResource(Client, FileShareData.DeserializeFileShareData(e)), _fileShareClientDiagnostics, Pipeline, "FileShareCollection.GetAll", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new FileShareResource(Client, FileShareData.DeserializeFileShareData(e)), _fileShareClientDiagnostics, Pipeline, "FileShareCollection.GetAll", "value", "nextLink", maxpagesize, cancellationToken);
         }
 
         /// <summary>

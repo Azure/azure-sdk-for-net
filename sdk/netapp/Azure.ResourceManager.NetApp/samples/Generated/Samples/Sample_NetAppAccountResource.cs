@@ -10,7 +10,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
 using Azure.ResourceManager.NetApp.Models;
-using Azure.ResourceManager.Resources;
 using NUnit.Framework;
 
 namespace Azure.ResourceManager.NetApp.Samples
@@ -19,40 +18,9 @@ namespace Azure.ResourceManager.NetApp.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task GetNetAppAccounts_AccountsList()
-        {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Accounts_List.json
-            // this example is just showing the usage of "Accounts_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
-
-            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
-            TokenCredential cred = new DefaultAzureCredential();
-            // authenticate your client
-            ArmClient client = new ArmClient(cred);
-
-            // this example assumes you already have this SubscriptionResource created on azure
-            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
-            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
-            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
-            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
-
-            // invoke the operation and iterate over the result
-            await foreach (NetAppAccountResource item in subscriptionResource.GetNetAppAccountsAsync())
-            {
-                // the variable item is a resource, you could call other operations on this instance as well
-                // but just for demo, we get its data from this resource instance
-                NetAppAccountData resourceData = item.Data;
-                // for demo we just print out the id
-                Console.WriteLine($"Succeeded on id: {resourceData.Id}");
-            }
-
-            Console.WriteLine("Succeeded");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public async Task Get_AccountsGet()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Accounts_Get.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/Accounts_Get.json
             // this example is just showing the usage of "Accounts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -82,7 +50,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Delete_AccountsDelete()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Accounts_Delete.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/Accounts_Delete.json
             // this example is just showing the usage of "Accounts_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -108,7 +76,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task Update_AccountsUpdate()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Accounts_Update.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/Accounts_Update.json
             // this example is just showing the usage of "Accounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -125,11 +93,11 @@ namespace Azure.ResourceManager.NetApp.Samples
             NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
 
             // invoke the operation
-            NetAppAccountPatch patch = new NetAppAccountPatch(new AzureLocation("placeholder"))
+            NetAppAccountPatch patch = new NetAppAccountPatch(default)
             {
                 Tags =
 {
-["Tag1"] = "Value1",
+["Tag1"] = "Value1"
 },
             };
             ArmOperation<NetAppAccountResource> lro = await netAppAccount.UpdateAsync(WaitUntil.Completed, patch);
@@ -146,7 +114,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task RenewCredentials_AccountsRenewCredentials()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/Accounts_RenewCredentials.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/Accounts_RenewCredentials.json
             // this example is just showing the usage of "Accounts_RenewCredentials" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -170,9 +138,99 @@ namespace Azure.ResourceManager.NetApp.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public async Task TransitionToCmk_AccountsMigrateEncryptionKey()
+        {
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/Accounts_TransitionEncryptionKey.json
+            // this example is just showing the usage of "Accounts_TransitionToCmk" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetAppAccountResource created on azure
+            // for more information of creating NetAppAccountResource, please refer to the document of NetAppAccountResource
+            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string resourceGroupName = "myRG";
+            string accountName = "account1";
+            ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
+
+            // invoke the operation
+            NetAppEncryptionTransitionContent content = new NetAppEncryptionTransitionContent(new ResourceIdentifier("/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.Network/virtualNetworks/vnet1"), new ResourceIdentifier("/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.Network/privateEndpoints/privip1"));
+            await netAppAccount.TransitionToCmkAsync(WaitUntil.Completed, content: content);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task GetChangeKeyVaultInformation_AccountsGetChangeKeyVaultInformation()
+        {
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/Accounts_GetChangeKeyVaultInformation.json
+            // this example is just showing the usage of "Accounts_GetChangeKeyVaultInformation" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetAppAccountResource created on azure
+            // for more information of creating NetAppAccountResource, please refer to the document of NetAppAccountResource
+            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string resourceGroupName = "myRG";
+            string accountName = "account1";
+            ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
+
+            // invoke the operation
+            await netAppAccount.GetChangeKeyVaultInformationAsync(WaitUntil.Completed);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task ChangeKeyVault_AccountsChangeKeyVault()
+        {
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/Accounts_ChangeKeyVault.json
+            // this example is just showing the usage of "Accounts_ChangeKeyVault" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this NetAppAccountResource created on azure
+            // for more information of creating NetAppAccountResource, please refer to the document of NetAppAccountResource
+            string subscriptionId = "D633CC2E-722B-4AE1-B636-BBD9E4C60ED9";
+            string resourceGroupName = "myRG";
+            string accountName = "account1";
+            ResourceIdentifier netAppAccountResourceId = NetAppAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
+            NetAppAccountResource netAppAccount = client.GetNetAppAccountResource(netAppAccountResourceId);
+
+            // invoke the operation
+            NetAppChangeKeyVault body = new NetAppChangeKeyVault(new Uri("https://my-key-vault.managedhsm.azure.net"), "rsakey", new NetAppKeyVaultPrivateEndpoint[]
+            {
+new NetAppKeyVaultPrivateEndpoint
+{
+VirtualNetworkId = "/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.Network/virtualNetworks/vnet1",
+PrivateEndpointId = "/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.Network/privateEndpoints/privip1",
+}
+            })
+            {
+                KeyVaultResourceId = new ResourceIdentifier("/subscriptions/D633CC2E-722B-4AE1-B636-BBD9E4C60ED9/resourceGroups/myRG/providers/Microsoft.KeyVault/managedHSMs/my-hsm"),
+            };
+            await netAppAccount.ChangeKeyVaultAsync(WaitUntil.Completed, body: body);
+
+            Console.WriteLine("Succeeded");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public async Task GetVolumeGroups_VolumeGroupsListOracle()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeGroups_List_Oracle.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/VolumeGroups_List_Oracle.json
             // this example is just showing the usage of "VolumeGroups_ListByNetAppAccount" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -201,7 +259,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task GetVolumeGroups_VolumeGroupsListSapHana()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/VolumeGroups_List_SapHana.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/VolumeGroups_List_SapHana.json
             // this example is just showing the usage of "VolumeGroups_ListByNetAppAccount" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -230,7 +288,7 @@ namespace Azure.ResourceManager.NetApp.Samples
         [Ignore("Only validating compilation of examples")]
         public async Task MigrateBackupsBackupsUnderAccount_BackupsUnderAccountMigrate()
         {
-            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/stable/2024-07-01/examples/BackupsUnderAccount_Migrate.json
+            // Generated from example definition: specification/netapp/resource-manager/Microsoft.NetApp/preview/2024-07-01-preview/examples/BackupsUnderAccount_Migrate.json
             // this example is just showing the usage of "BackupsUnderAccount_MigrateBackups" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
