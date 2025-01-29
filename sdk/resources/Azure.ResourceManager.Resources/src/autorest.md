@@ -407,7 +407,7 @@ directive:
           "description": "Exports the template used to create the Deployment stack.",
           "parameters": [
             {
-              "$ref": "./resources.json#/parameters/ScopeParameter"
+              "$ref": "../2024-11-01/resources.json#/parameters/ScopeParameter"
             },
             {
               "$ref": "#/parameters/DeploymentStackNameParameter"
@@ -445,7 +445,7 @@ directive:
           },
           "parameters": [
             {
-              "$ref": "./resources.json#/parameters/ScopeParameter"
+              "$ref": "../2024-11-01/resources.json#/parameters/ScopeParameter"
             },
             {
               "$ref": "#/parameters/DeploymentStackNameParameter"
@@ -507,7 +507,7 @@ directive:
           "description": "Lists all the Deployment stacks within the specified scope.",
           "parameters": [
             {
-              "$ref": "./resources.json#/parameters/ScopeParameter"
+              "$ref": "../2024-11-01/resources.json#/parameters/ScopeParameter"
             },
             {
               "$ref": "../../../../../common-types/resource-management/v5/types.json#/parameters/ApiVersionParameter"
@@ -545,7 +545,7 @@ directive:
           "description": "Creates or updates a Deployment stack at specific scope.",
           "parameters": [
             {
-              "$ref": "./resources.json#/parameters/ScopeParameter"
+              "$ref": "../2024-11-01/resources.json#/parameters/ScopeParameter"
             },
             {
               "$ref": "#/parameters/DeploymentStackNameParameter"
@@ -592,7 +592,7 @@ directive:
           "description": "Gets a Deployment stack with a given name at specific scope.",
           "parameters": [
             {
-              "$ref": "./resources.json#/parameters/ScopeParameter"
+              "$ref": "../2024-11-01/resources.json#/parameters/ScopeParameter"
             },
             {
               "$ref": "#/parameters/DeploymentStackNameParameter"
@@ -628,7 +628,7 @@ directive:
           },
           "parameters": [
             {
-              "$ref": "./resources.json#/parameters/ScopeParameter"
+              "$ref": "../2024-11-01/resources.json#/parameters/ScopeParameter"
             },
             {
               "$ref": "#/parameters/DeploymentStackNameParameter"
@@ -682,11 +682,11 @@ These settings apply only when `--tag=package-resources-2022-04` is specified on
 
 ```yaml $(tag) == 'package-resources-2022-04'
 input-file:
-    - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Resources/stable/2021-05-01/templateSpecs.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/deploymentScripts.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Resources/stable/2024-03-01/resources.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/managedapplications.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Resources/stable/2023-11-01/bicepClient.json#
-    - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Resources/stable/2024-03-01/deploymentStacks.json
-    - https://github.com/Azure/azure-rest-api-specs/blob/a6074b7654c388dec49c9969d0136cfeb03575c9/specification/resources/resource-manager/Microsoft.Resources/stable/2024-08-01/dataBoundaries.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/5e5d8196f6ba69545a9c4882ab4769d108b513c9/specification/resources/resource-manager/Microsoft.Resources/stable/2021-05-01/templateSpecs.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/5e5d8196f6ba69545a9c4882ab4769d108b513c9/specification/resources/resource-manager/Microsoft.Resources/stable/2020-10-01/deploymentScripts.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/5e5d8196f6ba69545a9c4882ab4769d108b513c9/specification/resources/resource-manager/Microsoft.Resources/stable/2024-11-01/resources.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/5e5d8196f6ba69545a9c4882ab4769d108b513c9/specification/resources/resource-manager/Microsoft.Solutions/stable/2019-07-01/managedapplications.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/5e5d8196f6ba69545a9c4882ab4769d108b513c9/specification/resources/resource-manager/Microsoft.Resources/stable/2023-11-01/bicepClient.json#
+    - https://github.com/Azure/azure-rest-api-specs/blob/5e5d8196f6ba69545a9c4882ab4769d108b513c9/specification/resources/resource-manager/Microsoft.Resources/stable/2024-03-01/deploymentStacks.json
+    - https://github.com/Azure/azure-rest-api-specs/blob/5e5d8196f6ba69545a9c4882ab4769d108b513c9/specification/resources/resource-manager/Microsoft.Resources/stable/2024-08-01/dataBoundaries.json
 ```
