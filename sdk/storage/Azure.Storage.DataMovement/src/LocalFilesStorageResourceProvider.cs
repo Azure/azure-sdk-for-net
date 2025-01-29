@@ -2,9 +2,9 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Storage.Common;
 
 namespace Azure.Storage.DataMovement
@@ -15,6 +15,7 @@ namespace Azure.Storage.DataMovement
     public class LocalFilesStorageResourceProvider : StorageResourceProvider
     {
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal override string ProviderId => "local";
 
         /// <summary>
@@ -25,10 +26,12 @@ namespace Azure.Storage.DataMovement
         }
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal override ValueTask<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
             => new(FromTransferProperties(properties, getSource: true));
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected internal override ValueTask<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
             => new(FromTransferProperties(properties, getSource: false));
 

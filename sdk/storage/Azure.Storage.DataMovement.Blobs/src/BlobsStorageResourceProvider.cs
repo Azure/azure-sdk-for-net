@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -160,10 +161,12 @@ namespace Azure.Storage.DataMovement.Blobs
 
         #region Abstract Class Implementation
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected override async ValueTask<StorageResource> FromSourceAsync(TransferProperties properties, CancellationToken cancellationToken)
             => await FromTransferPropertiesAsync(properties, getSource: true, cancellationToken).ConfigureAwait(false);
 
         /// <inheritdoc/>
+        [EditorBrowsable(EditorBrowsableState.Never)]
         protected override async ValueTask<StorageResource> FromDestinationAsync(TransferProperties properties, CancellationToken cancellationToken)
             => await FromTransferPropertiesAsync(properties, getSource: false, cancellationToken).ConfigureAwait(false);
 
