@@ -35,6 +35,102 @@ namespace Azure.ResourceManager.Network.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="NetworkSecurityPerimeterResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NetworkSecurityPerimeterResource.CreateResourceIdentifier" /> to create a <see cref="NetworkSecurityPerimeterResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NetworkSecurityPerimeterResource"/> object. </returns>
+        public virtual NetworkSecurityPerimeterResource GetNetworkSecurityPerimeterResource(ResourceIdentifier id)
+        {
+            NetworkSecurityPerimeterResource.ValidateResourceId(id);
+            return new NetworkSecurityPerimeterResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NspProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NspProfileResource.CreateResourceIdentifier" /> to create a <see cref="NspProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NspProfileResource"/> object. </returns>
+        public virtual NspProfileResource GetNspProfileResource(ResourceIdentifier id)
+        {
+            NspProfileResource.ValidateResourceId(id);
+            return new NspProfileResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NspAccessRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NspAccessRuleResource.CreateResourceIdentifier" /> to create a <see cref="NspAccessRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NspAccessRuleResource"/> object. </returns>
+        public virtual NspAccessRuleResource GetNspAccessRuleResource(ResourceIdentifier id)
+        {
+            NspAccessRuleResource.ValidateResourceId(id);
+            return new NspAccessRuleResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NspAssociationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NspAssociationResource.CreateResourceIdentifier" /> to create a <see cref="NspAssociationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NspAssociationResource"/> object. </returns>
+        public virtual NspAssociationResource GetNspAssociationResource(ResourceIdentifier id)
+        {
+            NspAssociationResource.ValidateResourceId(id);
+            return new NspAssociationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NspLinkResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NspLinkResource.CreateResourceIdentifier" /> to create a <see cref="NspLinkResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NspLinkResource"/> object. </returns>
+        public virtual NspLinkResource GetNspLinkResource(ResourceIdentifier id)
+        {
+            NspLinkResource.ValidateResourceId(id);
+            return new NspLinkResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NspLinkReferenceResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NspLinkReferenceResource.CreateResourceIdentifier" /> to create a <see cref="NspLinkReferenceResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NspLinkReferenceResource"/> object. </returns>
+        public virtual NspLinkReferenceResource GetNspLinkReferenceResource(ResourceIdentifier id)
+        {
+            NspLinkReferenceResource.ValidateResourceId(id);
+            return new NspLinkReferenceResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="NspLoggingConfigurationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="NspLoggingConfigurationResource.CreateResourceIdentifier" /> to create a <see cref="NspLoggingConfigurationResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="NspLoggingConfigurationResource"/> object. </returns>
+        public virtual NspLoggingConfigurationResource GetNspLoggingConfigurationResource(ResourceIdentifier id)
+        {
+            NspLoggingConfigurationResource.ValidateResourceId(id);
+            return new NspLoggingConfigurationResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="OperationStatusResultResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="OperationStatusResultResource.CreateResourceIdentifier" /> to create an <see cref="OperationStatusResultResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="OperationStatusResultResource"/> object. </returns>
+        public virtual OperationStatusResultResource GetOperationStatusResultResource(ResourceIdentifier id)
+        {
+            OperationStatusResultResource.ValidateResourceId(id);
+            return new OperationStatusResultResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing an <see cref="ApplicationGatewayResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="ApplicationGatewayResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
