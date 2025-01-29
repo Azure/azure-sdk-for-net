@@ -320,8 +320,14 @@ try {
     # Make sure the provisioner OID is set so we can pass it through to the deployment.
     if (!$ProvisionerApplicationId -and !$ProvisionerApplicationOid) {
         if ($context.Account.Type -eq 'User') {
-            # Use -Mail as the lookup works in both corp and TME tenants
+            # Support corp tenant and TME tenant user id lookups
             $user = Get-AzADUser -Mail $context.Account.Id
+            if ($user -eq $null -or !$user.Id) {
+                $user = Get-AzADUser -UserPrincipalName $context.Account.Id
+            }
+            if ($user -eq $null -or !$user.Id) {
+                throw "Failed to find entra object ID for the current user"
+            }
             $ProvisionerApplicationOid = $user.Id
         } elseif ($context.Account.Type -eq 'ServicePrincipal') {
             $sp = Get-AzADServicePrincipal -ApplicationId $context.Account.Id
@@ -391,8 +397,14 @@ try {
             Write-Warning "The specified TestApplicationId '$TestApplicationId' will be ignored when -ServicePrincipalAutth is not set."
         }
 
-        # Use -Mail as the lookup works in both corp and TME tenants
+        # Support corp tenant and TME tenant user id lookups
         $userAccount = (Get-AzADUser -Mail (Get-AzContext).Account.Id)
+        if ($userAccount -eq $null -or !$userAccount.Id) {
+            $userAccount = (Get-AzADUser -UserPrincipalName (Get-AzContext).Account)
+        }
+        if ($userAccount -eq $null -or !$userAccount.Id) {
+            throw "Failed to find entra object ID for the current user"
+        }
         $TestApplicationOid = $userAccount.Id
         $TestApplicationId = $testApplicationOid
         $userAccountName = $userAccount.UserPrincipalName
