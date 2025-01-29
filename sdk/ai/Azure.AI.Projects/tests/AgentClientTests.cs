@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Metrics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -1145,7 +1144,11 @@ namespace Azure.AI.Projects.Tests
         private AgentsClient GetClient()
         {
             var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-            var storageQueueUri = TestEnvironment.STORAGE_QUEUE_URI;
+            // If we are in the Playback, do not ask for authentication.
+            if (Mode == RecordedTestMode.Playback)
+            {
+                return InstrumentClient(new AgentsClient(connectionString, new MockCredential(), InstrumentClientOptions(new AIProjectClientOptions())));
+            }
             // For local testing if you are using non default account
             // add USE_CLI_CREDENTIAL into the .runsettings and set it to true,
             // also provide the PATH variable.
