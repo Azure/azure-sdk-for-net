@@ -170,10 +170,6 @@ namespace Azure.Communication.CallAutomation
             {
                 options = new TransferToParticipantOptions(targetParticipant as MicrosoftTeamsUserIdentifier);
             }
-            else if (targetParticipant is MicrosoftTeamsAppIdentifier)
-            {
-                options = new TransferToParticipantOptions(targetParticipant as MicrosoftTeamsAppIdentifier);
-            }
             else
             {
                 throw new ArgumentException("targetParticipant type is invalid.", nameof(targetParticipant));
