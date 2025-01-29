@@ -42,7 +42,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Gets an RSA1_5 <see cref="EncryptionAlgorithm"/>.
         /// </para><para>
         /// Microsoft recommends using <see cref="EncryptionAlgorithm.RsaOaep256"/> or stronger algorithms for enhanced security.
-        /// Microsoft does <b>not</b> recommend <see cref="EncryptionAlgorithm.Rsa15">, which is included solely for backwards compatibility.
+        /// Microsoft does <b>not</b> recommend <see cref="EncryptionAlgorithm.Rsa15"/>, which is included solely for backwards compatibility.
         /// Cryptographic standards no longer consider RSA with the PKCS#1 v1.5 padding scheme secure for encryption.
         /// </para>
         /// </summary>
@@ -54,7 +54,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Gets an RSA-OAEP <see cref="EncryptionAlgorithm"/>.
         /// </para><para>
         /// Microsoft recommends using <see cref="EncryptionAlgorithm.RsaOaep256"/> or stronger algorithms for enhanced security.
-        /// Microsoft does <b>not</b> recommend <see cref="EncryptionAlgorithm.RsaOaep">, which is included solely for backwards compatibility.
+        /// Microsoft does <b>not</b> recommend <see cref="EncryptionAlgorithm.RsaOaep"/>, which is included solely for backwards compatibility.
         /// RSA_OAEP utilizes SHA1, which has known collision problems.
         /// </para>
         /// </summary>
