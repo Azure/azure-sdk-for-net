@@ -42,6 +42,16 @@ internal class PipelineMessageSanitizer
         return _redactedPlaceholder;
     }
 
+    public bool ShouldSanitizeHeaderValue(string name)
+    {
+        if (_logAllHeaders || _allowedHeaders.Contains(name))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public string SanitizeUrl(string url)
     {
         if (_logFullQueries)

@@ -289,6 +289,7 @@ public class MessageLoggingPolicy : PipelinePolicy
 
         public override void Flush()
         {
+            _originalStream.Flush();
         }
 
         public override void Close()

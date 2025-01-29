@@ -39,7 +39,6 @@ namespace System.ClientModel.Tests.Options
             "If-Unmodified-Since",
             "Last-Modified",
             "Pragma",
-            "Request-Id",
             "Retry-After",
             "Server",
             "Transfer-Encoding",

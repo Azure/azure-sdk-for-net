@@ -41,7 +41,7 @@ internal partial class PipelineMessageLogger
         {
             if (_logger.IsEnabled(LogLevel.Information))
             {
-                Request(_logger, requestId, request.Method, _sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), FormatHeaders(request.Headers), clientAssembly);
+                Request(_logger, requestId, request.Method, _sanitizer.SanitizeUrl(request.Uri!.AbsoluteUri), new PipelineMessageHeadersLogValue(request.Headers, _sanitizer), clientAssembly);
             }
         }
         else
@@ -51,7 +51,7 @@ internal partial class PipelineMessageLogger
     }
 
     [LoggerMessage(LoggingEventIds.RequestEvent, LogLevel.Information, "Request [{requestId}] {method} {uri}\r\n{headers}client assembly: {clientAssembly}", SkipEnabledCheck = true, EventName = "Request")]
-    private static partial void Request(ILogger logger, string requestId, string method, string uri, string headers, string? clientAssembly);
+    private static partial void Request(ILogger logger, string requestId, string method, string uri, PipelineMessageHeadersLogValue headers, string? clientAssembly);
 
     public void LogRequestContent(string requestId, byte[] content, Encoding? textEncoding)
     {
@@ -91,7 +91,7 @@ internal partial class PipelineMessageLogger
         {
             if (_logger.IsEnabled(LogLevel.Information))
             {
-                Response(_logger, requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), seconds);
+                Response(_logger, requestId, response.Status, response.ReasonPhrase, new PipelineMessageHeadersLogValue(response.Headers, _sanitizer), seconds);
             }
         }
         else
@@ -101,7 +101,7 @@ internal partial class PipelineMessageLogger
     }
 
     [LoggerMessage(LoggingEventIds.ResponseEvent, LogLevel.Information, "Response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", SkipEnabledCheck = true, EventName = "Response")]
-    private static partial void Response(ILogger logger, string requestId, int status, string reasonPhrase, string headers, double seconds);
+    private static partial void Response(ILogger logger, string requestId, int status, string reasonPhrase, PipelineMessageHeadersLogValue headers, double seconds);
 
     public void LogResponseContent(string requestId, byte[] content, Encoding? textEncoding)
     {
@@ -169,7 +169,7 @@ internal partial class PipelineMessageLogger
         {
             if (_logger.IsEnabled(LogLevel.Warning))
             {
-                ErrorResponse(_logger, requestId, response.Status, response.ReasonPhrase, FormatHeaders(response.Headers), seconds);
+                ErrorResponse(_logger, requestId, response.Status, response.ReasonPhrase, new PipelineMessageHeadersLogValue(response.Headers, _sanitizer), seconds);
             }
         }
         else
@@ -179,7 +179,7 @@ internal partial class PipelineMessageLogger
     }
 
     [LoggerMessage(LoggingEventIds.ErrorResponseEvent, LogLevel.Warning, "Error response [{requestId}] {status} {reasonPhrase} ({seconds:00.0}s)\r\n{headers}", SkipEnabledCheck = true, EventName = "ErrorResponse")]
-    private static partial void ErrorResponse(ILogger logger, string requestId, int status, string reasonPhrase, string headers, double seconds);
+    private static partial void ErrorResponse(ILogger logger, string requestId, int status, string reasonPhrase, PipelineMessageHeadersLogValue headers, double seconds);
 
     public void LogErrorResponseContent(string requestId, byte[] content, Encoding? textEncoding)
     {

@@ -10,39 +10,9 @@ namespace System.ClientModel.Tests.Internal;
 internal class ChangeTrackingStringListTests
 {
     [Test]
-    public void ChangesPriorToTrackingAreNotDetected()
-    {
-        ChangeTrackingStringList list = ["a"];
-
-        Assert.IsFalse(list.HasChanged);
-
-        list.Add("b");
-
-        Assert.IsFalse(list.HasChanged);
-    }
-
-    [Test]
-    public void ChangesAfterTrackingAreNotDetected()
-    {
-        ChangeTrackingStringList list = ["a"];
-
-        Assert.IsFalse(list.HasChanged);
-
-        list.StartTracking();
-        list.StopTracking();
-
-        Assert.IsFalse(list.HasChanged);
-
-        list.Add("b");
-
-        Assert.IsFalse(list.HasChanged);
-    }
-
-    [Test]
     public void CanDetectAddChange()
     {
-        ChangeTrackingStringList list = ["a"];
-        list.StartTracking();
+        ChangeTrackingStringList list = new(["a"]);
 
         Assert.IsFalse(list.HasChanged);
 
@@ -54,8 +24,7 @@ internal class ChangeTrackingStringListTests
     [Test]
     public void CanDetectSetChange()
     {
-        ChangeTrackingStringList list = ["a"];
-        list.StartTracking();
+        ChangeTrackingStringList list = new(["a"]);
 
         Assert.IsFalse(list.HasChanged);
 
@@ -67,8 +36,7 @@ internal class ChangeTrackingStringListTests
     [Test]
     public void CanDetectClearChange()
     {
-        ChangeTrackingStringList list = ["a"];
-        list.StartTracking();
+        ChangeTrackingStringList list = new(["a"]);
 
         Assert.IsFalse(list.HasChanged);
 
@@ -81,7 +49,6 @@ internal class ChangeTrackingStringListTests
     public void ClearNotAChangeForEmptyList()
     {
         ChangeTrackingStringList list = new();
-        list.StartTracking();
 
         Assert.IsFalse(list.HasChanged);
 
@@ -93,8 +60,7 @@ internal class ChangeTrackingStringListTests
     [Test]
     public void CanDetectInsertChange()
     {
-        ChangeTrackingStringList list = ["a"];
-        list.StartTracking();
+        ChangeTrackingStringList list = new(["a"]);
 
         Assert.IsFalse(list.HasChanged);
 
@@ -106,8 +72,7 @@ internal class ChangeTrackingStringListTests
     [Test]
     public void CanDetectRemoveChange()
     {
-        ChangeTrackingStringList list = ["a"];
-        list.StartTracking();
+        ChangeTrackingStringList list = new(["a"]);
 
         Assert.IsFalse(list.HasChanged);
 
@@ -119,8 +84,7 @@ internal class ChangeTrackingStringListTests
     [Test]
     public void RemoveNotAChangeIfNotRemoved()
     {
-        ChangeTrackingStringList list = ["a"];
-        list.StartTracking();
+        ChangeTrackingStringList list = new(["a"]);
 
         Assert.IsFalse(list.HasChanged);
 
@@ -133,8 +97,7 @@ internal class ChangeTrackingStringListTests
     [Test]
     public void CanDetectRemoveAtChange()
     {
-        ChangeTrackingStringList list = ["a"];
-        list.StartTracking();
+        ChangeTrackingStringList list = new(["a"]);
 
         Assert.IsFalse(list.HasChanged);
 
@@ -146,8 +109,7 @@ internal class ChangeTrackingStringListTests
     [Test]
     public void RemoveAtNotAChangeIfNotRemoved()
     {
-        ChangeTrackingStringList list = ["a"];
-        list.StartTracking();
+        ChangeTrackingStringList list = new(["a"]);
 
         Assert.IsFalse(list.HasChanged);
 
@@ -173,7 +135,6 @@ internal class ChangeTrackingStringListTests
     {
         List<string> originalList = ["a", "b", "c"];
         ChangeTrackingStringList changeTrackingList = new(originalList);
-        changeTrackingList.StartTracking();
 
         changeTrackingList.Add("d");
 
@@ -184,7 +145,6 @@ internal class ChangeTrackingStringListTests
     public void CannotModifyFrozenList()
     {
         ChangeTrackingStringList list = ["a"];
-        list.StartTracking();
 
         list.Add("b");
         list.Add("c");
@@ -197,6 +157,5 @@ internal class ChangeTrackingStringListTests
         Assert.Throws<InvalidOperationException>(() => list.Insert(0, "d"));
         Assert.Throws<InvalidOperationException>(() => list.Remove("a"));
         Assert.Throws<InvalidOperationException>(() => list.RemoveAt(0));
-        Assert.IsTrue(list.IsReadOnly);
     }
 }

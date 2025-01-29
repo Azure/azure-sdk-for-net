@@ -27,7 +27,6 @@ namespace System.ClientModel.Tests.Internal
             "If-Unmodified-Since",
             "Last-Modified",
             "Pragma",
-            "Request-Id",
             "Retry-After",
             "Server",
             "Transfer-Encoding",

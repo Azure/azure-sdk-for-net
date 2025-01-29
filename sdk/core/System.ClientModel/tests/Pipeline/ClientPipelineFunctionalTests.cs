@@ -463,12 +463,12 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         await pipeline.SendSyncOrAsync(message, IsAsync);
 
         // Request
-        EventWrittenEventArgs args = eventListener.SingleEventById(1, e => e.EventSource.Name == "System-ClientModel");
+        EventWrittenEventArgs args = eventListener.SingleEventById(1, e => e.EventSource.Name == "System.ClientModel");
         Assert.AreEqual(EventLevel.Informational, args.Level);
         Assert.AreEqual("Request", args.EventName);
 
         // Response
-        args = eventListener.SingleEventById(5, e => e.EventSource.Name == "System-ClientModel");
+        args = eventListener.SingleEventById(5, e => e.EventSource.Name == "System.ClientModel");
         Assert.AreEqual(EventLevel.Informational, args.Level);
         Assert.AreEqual("Response", args.EventName);
         Assert.AreEqual(201, args.GetProperty<int>("status"));

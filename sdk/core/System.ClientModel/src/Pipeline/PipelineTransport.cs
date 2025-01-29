@@ -64,8 +64,6 @@ public abstract class PipelineTransport : PipelinePolicy
             throw new InvalidOperationException("Response should not be set before transport is invoked.");
         }
 
-        message.Request.ClientRequestId = Guid.NewGuid().ToString();
-
         return message;
     }
 
@@ -96,7 +94,7 @@ public abstract class PipelineTransport : PipelinePolicy
         }
         catch (Exception ex)
         {
-            _pipelineTransportLogger?.LogExceptionResponse(message.Request.ClientRequestId ?? string.Empty, ex);
+            _pipelineTransportLogger?.LogExceptionResponse(Activity.Current?.Id ?? string.Empty, ex);
             throw;
         }
     }
@@ -115,7 +113,7 @@ public abstract class PipelineTransport : PipelinePolicy
         }
         catch (Exception ex)
         {
-            _pipelineTransportLogger?.LogExceptionResponse(message.Request.ClientRequestId ?? string.Empty, ex);
+            _pipelineTransportLogger?.LogExceptionResponse(Activity.Current?.Id ?? string.Empty, ex);
             throw;
         }
     }
@@ -160,12 +158,11 @@ public abstract class PipelineTransport : PipelinePolicy
         double elapsed = (after - before) / (double)Stopwatch.Frequency;
 
         message.AssertResponse();
-        message.Response!.ClientRequestId = message.Request.ClientRequestId;
         message.Response!.IsErrorCore = ClassifyResponse(message);
 
         if (elapsed > ClientLoggingOptions.RequestTooLongSeconds)
         {
-            _pipelineTransportLogger?.LogResponseDelay(message.Response!.ClientRequestId ?? string.Empty, elapsed);
+            _pipelineTransportLogger?.LogResponseDelay(Activity.Current?.Id ?? string.Empty, elapsed);
         }
 
         // The remainder of the method handles response content according to

@@ -60,7 +60,6 @@ namespace ClientModel.Tests
             EventWrittenEventArgs args = SingleEventById(eventId);
             Assert.AreEqual(expectedEventName, args.EventName);
             Assert.AreEqual(expectedEventLevel, args.Level);
-            Guid.Parse(args.GetProperty<string>("requestId")); // Request id should be a guid
             Assert.AreEqual(expectedEventSourceName, args.EventSource.Name);
             return args;
         }

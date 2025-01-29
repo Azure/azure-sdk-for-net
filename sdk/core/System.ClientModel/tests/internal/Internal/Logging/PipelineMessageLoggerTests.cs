@@ -272,7 +272,7 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         // Assert that headers on the request are sanitized
 
         LoggerEvent log = logger.GetAndValidateSingleEvent(LoggingEventIds.RequestEvent, "Request", LogLevel.Information);
-        string headers = log.GetValueFromArguments<string>("headers");
+        string headers = (log.GetValueFromArguments<PipelineMessageHeadersLogValue>("headers")).ToString();
         StringAssert.Contains($"Date:08/16/2024{Environment.NewLine}", headers);
         StringAssert.Contains($"Custom-Header:custom-header-value{Environment.NewLine}", headers);
         StringAssert.Contains($"Secret-Custom-Header:REDACTED{Environment.NewLine}", headers);
@@ -281,7 +281,7 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         // Assert that headers on the response are sanitized
 
         log = logger.GetAndValidateSingleEvent(LoggingEventIds.ResponseEvent, "Response", LogLevel.Information);
-        headers = log.GetValueFromArguments<string>("headers");
+        headers = (log.GetValueFromArguments<PipelineMessageHeadersLogValue>("headers")).ToString();
         StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", headers);
         StringAssert.Contains($"Secret-Response-Header:REDACTED{Environment.NewLine}", headers);
         StringAssert.DoesNotContain("Very secret", headers);
@@ -340,7 +340,7 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         // Assert that headers on the response are sanitized
 
         LoggerEvent log = logger.GetAndValidateSingleEvent(LoggingEventIds.ErrorResponseEvent, "ErrorResponse", LogLevel.Warning);
-        string headers = log.GetValueFromArguments<string>("headers");
+        string headers = (log.GetValueFromArguments<PipelineMessageHeadersLogValue>("headers")).ToString();
         StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", headers);
         StringAssert.Contains($"Secret-Response-Header:REDACTED{Environment.NewLine}", headers);
         StringAssert.DoesNotContain("Very Secret", headers);
@@ -407,13 +407,13 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         TestLogger logger = factory.GetLogger(LoggingPolicyCategoryName);
 
         LoggerEvent log = logger.GetAndValidateSingleEvent(LoggingEventIds.RequestEvent, "Request", LogLevel.Information);
-        string headers = log.GetValueFromArguments<string>("headers");
+        string headers = (log.GetValueFromArguments<PipelineMessageHeadersLogValue>("headers")).ToString();
         StringAssert.Contains($"Date:08/16/2024{Environment.NewLine}", headers);
         StringAssert.Contains($"Custom-Header:Value{Environment.NewLine}", headers);
         StringAssert.Contains($"Secret-Custom-Header:Value{Environment.NewLine}", headers);
 
         log = logger.GetAndValidateSingleEvent(LoggingEventIds.ResponseEvent, "Response", LogLevel.Information);
-        headers = log.GetValueFromArguments<string>("headers");
+        headers = (log.GetValueFromArguments<PipelineMessageHeadersLogValue>("headers")).ToString();
         StringAssert.Contains($"Custom-Response-Header:Improved value{Environment.NewLine}", headers);
         StringAssert.Contains($"Secret-Response-Header:Very secret{Environment.NewLine}", headers);
     }
@@ -474,14 +474,14 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
         LoggerEvent log = logger.GetAndValidateSingleEvent(LoggingEventIds.RequestEvent, "Request", LogLevel.Information);
         Assert.AreEqual("http://example.com/", log.GetValueFromArguments<string>("uri"));
         Assert.AreEqual("GET", log.GetValueFromArguments<string>("method"));
-        StringAssert.Contains($"Date:08/16/2024{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
-        StringAssert.Contains($"Custom-Header:custom-header-value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
+        StringAssert.Contains($"Date:08/16/2024{Environment.NewLine}", (log.GetValueFromArguments<PipelineMessageHeadersLogValue>("headers")).ToString());
+        StringAssert.Contains($"Custom-Header:custom-header-value{Environment.NewLine}", (log.GetValueFromArguments<PipelineMessageHeadersLogValue>("headers")).ToString());
 
         // Assert that the response log message is written and formatted correctly
 
         log = logger.GetAndValidateSingleEvent(LoggingEventIds.ResponseEvent, "Response", LogLevel.Information);
         Assert.AreEqual(log.GetValueFromArguments<int>("status"), 200);
-        StringAssert.Contains($"Custom-Response-Header:custom-response-header-value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
+        StringAssert.Contains($"Custom-Response-Header:custom-response-header-value{Environment.NewLine}", (log.GetValueFromArguments<PipelineMessageHeadersLogValue>("headers")).ToString());
 
         // Assert that no other log messages were written
         Assert.AreEqual(logger.Logs.Count(), 2);
@@ -542,7 +542,7 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
 
         LoggerEvent log = logger.GetAndValidateSingleEvent(LoggingEventIds.ErrorResponseEvent, "ErrorResponse", LogLevel.Warning);
         Assert.AreEqual(log.GetValueFromArguments<int>("status"), 400);
-        StringAssert.Contains($"Custom-Response-Header:custom-response-header-value{Environment.NewLine}", log.GetValueFromArguments<string>("headers"));
+        StringAssert.Contains($"Custom-Response-Header:custom-response-header-value{Environment.NewLine}", (log.GetValueFromArguments<PipelineMessageHeadersLogValue>("headers")).ToString());
 
         // Assert that the error response content log message is written and formatted correctly
 
@@ -960,7 +960,7 @@ public class PipelineMessageLoggerTests : SyncAsyncPolicyTestBase
     {
         protected override void OnEventSourceCreated(EventSource eventSource)
         {
-            if (eventSource.Name == "System-ClientModel")
+            if (eventSource.Name == "System.ClientModel")
             {
                 Console.WriteLine("Warning");
                 EnableEvents(eventSource, EventLevel.Warning);

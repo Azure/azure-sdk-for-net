@@ -49,7 +49,6 @@ public class PipelineTransportLoggerTests : SyncAsyncPolicyTestBase
     {
         using TestClientEventListener listener = new();
         using TestLoggingFactory factory = new(LogLevel.Debug);
-        string requestId = new Guid().ToString();
 
         PipelineTransportLogger transportLogger = new(factory);
 
