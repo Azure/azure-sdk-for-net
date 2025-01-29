@@ -840,7 +840,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Create blob with properties
             TSourceObjectClient sourceClient = await GetSourceObjectClientAsync(
                 container: sourceContainer,
-                objectLength: 0,
+                objectLength: Constants.KB,
                 createResource: true);
             // Set preserve properties
             StorageResourceItem sourceResource = GetSourceStorageResourceItem(sourceClient);

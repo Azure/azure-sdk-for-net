@@ -90,13 +90,20 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
-        protected override Task CompleteTransferAsync(
+        protected override async Task CompleteTransferAsync(
             bool overwrite,
             StorageResourceCompleteTransferOptions completeTransferOptions,
             CancellationToken cancellationToken = default)
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
-            return Task.CompletedTask;
+
+            StorageResourceItemProperties sourceProperties = completeTransferOptions?.SourceProperties;
+            ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(sourceProperties?.RawProperties);
+            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties);
+            await ShareFileClient.SetHttpHeadersAsync(
+                httpHeaders: httpHeaders,
+                smbProperties: smbProperties,
+                cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
         protected override async Task CopyBlockFromUriAsync(
