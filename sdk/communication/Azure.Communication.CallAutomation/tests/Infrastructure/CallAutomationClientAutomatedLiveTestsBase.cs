@@ -41,7 +41,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
         private HttpPipeline _pipeline;
 
 #pragma warning disable CS8618
-        public CallAutomationClientAutomatedLiveTestsBase(bool isAsync, RecordedTestMode? mode = null) : base(isAsync, mode)
+        public CallAutomationClientAutomatedLiveTestsBase(bool isAsync, RecordedTestMode? mode = RecordedTestMode.Playback) : base(isAsync, mode)
 #pragma warning restore CS8618
         {
             SanitizedHeaders.Add("x-ms-content-sha256");
@@ -57,8 +57,8 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
             BodyKeySanitizers.Add(new BodyKeySanitizer("..sourceDisplayName") { Value = SanitizeValue });
             BodyKeySanitizers.Add(new BodyKeySanitizer("..incomingCallContext") { Value = SanitizeValue });
             BodyKeySanitizers.Add(new BodyKeySanitizer("..callbackUri") { Value = @"https://sanitized.skype.com/api/servicebuscallback/events?q=SanitizedSanitized" });
-            BodyKeySanitizers.Add(new BodyKeySanitizer("..callbackUri") { Value = @"https://sanitized.skype.com/api/servicebuscallback/events" });
-            BodyKeySanitizers.Add(new BodyKeySanitizer("..recordingStateCallbackUri") { Value = @"wss://sanitized.skype.com" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..recordingStateCallbackUri") { Value = @"https://sanitized.skype.com/api/servicebuscallback/events" });
+            BodyKeySanitizers.Add(new BodyKeySanitizer("..transportUrl") { Value = @"wss://sanitized.skype.com" });
             BodyKeySanitizers.Add(new BodyKeySanitizer("..cognitiveServicesEndpoint") { Value = @"https://sanitized.skype.com" });
                 BodyKeySanitizers.Add(new BodyKeySanitizer("$..file.uri") { Value = @"https://sanitized.skype.com/prompt.wav" });
                 BodyRegexSanitizers.Add(new BodyRegexSanitizer(TestDispatcherRegEx) { Value = "https://sanitized.skype.com" });
