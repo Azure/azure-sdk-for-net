@@ -60,3 +60,4 @@ extends:
     TestMatrix:
       All:
         TestArguments: -UnitTests -GenerationChecks -Filter .NET
+        SpectorName: "http-client-csharp"
