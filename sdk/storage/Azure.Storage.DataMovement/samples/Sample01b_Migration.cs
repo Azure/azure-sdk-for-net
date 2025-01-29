@@ -149,6 +149,61 @@ namespace Azure.Storage.DataMovement.Samples
             }
         }
 
+        [Test]
+        public async Task DownloadBlob()
+        {
+            #region Snippet:DataMovementMigration_DownloadBlob_VarDeclaration
+            // these values provided by your code
+            string filePath;
+            Uri blobUri;
+            BlobsStorageResourceProvider blobs;
+            TransferManager transferManager;
+            #endregion
+
+            // Create a temporary populated directory on disk to upload
+            filePath = CreateTempPath();
+
+            // Get account and shared key access
+            // (see implementation for details)
+            (Uri accountUri, StorageSharedKeyCredential credential) = GetSharedKeyAccessAccount();
+
+            // generate a container and blob name for purposes of sample
+            string containerName = Randomize("sample-container");
+            string blobName = Randomize("sample-blob");
+            blobUri = new BlobUriBuilder(accountUri)
+            {
+                BlobContainerName = containerName,
+                BlobName = blobName,
+            }.ToUri();
+
+            BlobContainerClient container = null;
+            try
+            {
+                // Create the container & blob for this sample download
+                container = new BlobServiceClient(accountUri, credential)
+                    .GetBlobContainerClient(containerName);
+                await container.CreateIfNotExistsAsync();
+                await container.GetBlobClient(blobName)
+                    .UploadAsync(BinaryData.FromString(SampleFileContent));
+
+                transferManager = new TransferManager();
+                blobs = new BlobsStorageResourceProvider(credential);
+                LocalFilesStorageResourceProvider files = new(); // TODO static on merge
+
+                #region Snippet:DataMovementMigration_DownloadBlob
+                // download blob
+                TransferOperation operation = await transferManager.StartTransferAsync(
+                    blobs.FromBlob(blobUri),
+                    files.FromFile(filePath)); // TODO static on merge
+                await operation.WaitForCompletionAsync();
+                #endregion
+            }
+            finally
+            {
+                await container?.DeleteIfExistsAsync();
+            }
+        }
+
         public async Task<string> CreateBlobContainerTestDirectory(BlobContainerClient client, int depth = 0, string basePath = default)
         {
             basePath = basePath ?? Path.GetTempFileName();
