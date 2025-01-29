@@ -47,11 +47,6 @@ namespace Azure.Communication.CallAutomation
         public bool InterruptHoldAudio { get; set; }
 
         /// <summary>
-        /// If set, the hold audio will be paused, the announcement will be played, and the hold audio will be resumed.
-        /// </summary>
-        public bool InterruptHoldAudio { get; set; }
-
-        /// <summary>
         /// Creates a new PlayOptions object.
         /// </summary>
         public PlayOptions(IEnumerable<PlaySource> playSources, IEnumerable<CommunicationIdentifier> playTo)

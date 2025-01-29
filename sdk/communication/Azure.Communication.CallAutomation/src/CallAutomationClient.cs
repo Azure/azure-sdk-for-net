@@ -244,7 +244,7 @@ namespace Azure.Communication.CallAutomation
             // Add CallIntelligenceOptions such as custom cognitive service domain name
             string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
             string backupCognitiveServicesEndpoint = options.CallIntelligenceOptions?.BackupCognitiveServicesEndpoint?.AbsoluteUri;
-            if (cognitiveServicesEndpoint != null)
+            if (!string.IsNullOrWhiteSpace(cognitiveServicesEndpoint))
             {
                 request.CallIntelligenceOptions = new()
                 {
@@ -735,7 +735,7 @@ namespace Azure.Communication.CallAutomation
             // Add CallIntelligenceOptions such as custom cognitive service domain name
             string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
             string backupCognitiveServicesEndpoint = options.CallIntelligenceOptions?.BackupCognitiveServicesEndpoint?.AbsoluteUri;
-            if (cognitiveServicesEndpoint != null)
+            if (!string.IsNullOrWhiteSpace(cognitiveServicesEndpoint))
             {
                 request.CallIntelligenceOptions = new()
                 {
@@ -772,7 +772,7 @@ namespace Azure.Communication.CallAutomation
             // Add CallIntelligenceOptions such as custom cognitive service domain name
             string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
             string backupCognitiveServicesEndpoint = options.CallIntelligenceOptions?.BackupCognitiveServicesEndpoint?.AbsoluteUri;
-            if (cognitiveServicesEndpoint != null)
+            if (!string.IsNullOrWhiteSpace(cognitiveServicesEndpoint))
             {
                 request.CallIntelligenceOptions = new()
                 {
@@ -798,7 +798,7 @@ namespace Azure.Communication.CallAutomation
 
             string cognitiveServicesEndpoint = options.CallIntelligenceOptions?.CognitiveServicesEndpoint?.AbsoluteUri;
             string backupCognitiveServicesEndpoint = options.CallIntelligenceOptions?.BackupCognitiveServicesEndpoint?.AbsoluteUri;
-            if (cognitiveServicesEndpoint != null)
+            if (!string.IsNullOrWhiteSpace(cognitiveServicesEndpoint))
             {
                 connectRequest.CallIntelligenceOptions = new()
                 {
