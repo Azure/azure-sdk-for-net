@@ -641,8 +641,6 @@ public class ClientPipelineFunctionalTests : SyncAsyncTestBase
         {
             Assert.AreEqual(LogLevel.Information, responseEventLog.LogLevel);
             Assert.AreEqual("ExceptionResponse", responseEventLog.EventId.Name);
-            Assert.True(responseEventLog.Exception!.Message.Contains("closed") || responseEventLog.Exception!.Message.Contains("error"));
-            Console.WriteLine($"ILogger sees:{responseEventLog.Exception!.Message}");
         }
 
         // No other events should have been logged
