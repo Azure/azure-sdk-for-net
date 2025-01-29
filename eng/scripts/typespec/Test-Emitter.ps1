@@ -52,6 +52,8 @@ try {
             LogWarning "No test results file found at $testResultsFile"
         }
 
+        Invoke-LoggedCommand "$packageRoot/eng/scripts/Get-Spector-Coverage.ps1" -GroupOutput
+
         $testResultsFile = "$packageRoot/generator/artifacts/coverage/tsp-spector-coverage-standard.json"
 
         # copy test results to the artifacts directory
