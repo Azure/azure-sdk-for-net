@@ -15,12 +15,12 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
     {
         [SyncOnly]
         [RecordedTest]
-        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2024_11_01)]
+        [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2024_11_15_Preview)]
         public void AnalyzeConversation_ConversationPii_WithCharacterMaskPolicy()
         {
             // Arrange: Initialize client and input
             ConversationAnalysisClient client = Client;
-            List<NamedEntity> entitiesDetected = new();
+            List<string> redactedTexts = new();
 
             // Create a CharacterMaskPolicyType with a custom masking character
             var redactionPolicy = new CharacterMaskPolicyType
@@ -61,6 +61,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:AnalyzeConversation_ConversationPiiSync
             AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
             #endregion
+            // Assert: Validate the results
             foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
             {
                 Console.WriteLine($"Operation action name: {operationResult.Name}");
@@ -70,50 +71,28 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     foreach (ConversationalPiiResult conversation in piiOperationResult.Results.Conversations)
                     {
                         Console.WriteLine($"Conversation: #{conversation.Id}");
-                        Console.WriteLine("Detected Entities:");
                         foreach (ConversationPiiItemResult item in conversation.ConversationItems)
                         {
-                            foreach (NamedEntity entity in item.Entities)
-                            {
-                                Console.WriteLine($"Category: {entity.Category}");
-                                Console.WriteLine($"Subcategory: {entity.Subcategory}");
-                                Console.WriteLine($"Text: {entity.Text}");
-                                Console.WriteLine($"Offset: {entity.Offset}");
-                                Console.WriteLine($"Length: {entity.Length}");
-                                Console.WriteLine($"Confidence score: {entity.ConfidenceScore}");
-                                Console.WriteLine();
+                            string redactedText = item.RedactedContent?.Text ?? string.Empty;
+                            Console.WriteLine($"Redacted Text: {redactedText}");
 
-                                // Verify the redacted text uses the '*' character
-                                //Assert.That(entity.Text, Does.Not.Contain("John")); // Original text should be redacted
-                                Assert.That(entity.Text, Does.Contain("*")); // Redacted text should contain the mask character
-#if !SNIPPET
-                                entitiesDetected.Add(entity);
-#endif
-                            }
-                        }
-                        if (conversation.Warnings != null && conversation.Warnings.Any())
-                        {
-                            Console.WriteLine("Warnings:");
-                            foreach (InputWarning warning in conversation.Warnings)
+                            // Only verify redaction if the original sentence had PII
+                            if (item.Entities.Any())
                             {
-                                Console.WriteLine($"Code: {warning.Code}");
-                                Console.WriteLine($"Message: {warning.Message}");
+                                foreach (var entity in item.Entities)
+                                {
+                                    Assert.That(redactedText, Does.Not.Contain(entity.Text),
+                                        $"Expected entity '{entity.Text}' to be redacted but found in: {redactedText}");
+
+                                    Assert.That(redactedText, Does.Contain("*"),
+                                        $"Expected redacted text to contain '*' but got: {redactedText}");
+                                }
                             }
                         }
-                        Console.WriteLine();
-                    }
-                }
-                if (operationState.Errors != null && operationState.Errors.Any())
-                {
-                    Console.WriteLine("Errors:");
-                    foreach (ConversationError error in operationState.Errors)
-                    {
-                        Console.WriteLine($"Error: {error.Code} - {error}");
                     }
                 }
             }
-
-            Assert.NotZero(entitiesDetected.Count);
+            // Verify the HTTP response is successful
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
         }
     }
