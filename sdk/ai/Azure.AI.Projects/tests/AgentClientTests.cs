@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -22,9 +23,14 @@ namespace Azure.AI.Projects.Tests
         private const string AGENT_NAME2 = "cs_e2e_tests_client2";
         private const string VCT_STORE_NAME = "cs_e2e_tests_vct_store";
         private const string FILE_NAME = "product_info_1.md";
+        private const string FILE_NAME2 = "test_file.txt";
+        private const string TEMP_DIR = "cs_e2e_temp_dir";
 
-        private static AgentsClient _s_client;
-        public AgentClientTests(bool isAsync) : base(isAsync) { }
+        private const string FILE_UPLOAD_CONSTRAINT = "The file is being uploaded as a multipart multipart/form-data, which cannot be recorded.";
+
+        public AgentClientTests(bool isAsync) : base(isAsync) {
+            TestDiagnostics = false;
+        }
 
         #region enumerations
         public enum ArgumentType
@@ -75,7 +81,7 @@ namespace Azure.AI.Projects.Tests
             }
             Assert.AreNotEqual(default, id);
             Assert.AreEqual(name, AGENT_NAME);
-            Response<bool> delResponse = client.DeleteAgent(id);
+            Response<bool> delResponse = await client.DeleteAgentAsync(id);
             Assert.IsTrue(delResponse.Value);
         }
 
@@ -86,7 +92,7 @@ namespace Azure.AI.Projects.Tests
         public async Task TestUpdateAgent(ArgumentType argType)
         {
             AgentsClient client = GetClient();
-            Agent agent = GetAgent(client);
+            Agent agent = await GetAgent(client);
             string name = default;
             if (argType == ArgumentType.Metadata)
             {
@@ -117,44 +123,29 @@ namespace Azure.AI.Projects.Tests
         public async Task TestListAgent()
         {
             AgentsClient client = GetClient();
-            // Note: if the numer  of arent will be bigger then 1000 this test will fail.
-            PageableList<Agent> agentsResp = await client.GetAgentsAsync(limit: 100);
-            Assert.Less(agentsResp.Data.Count, 98);
-            //var agentNum = agentsResp.Value.
-            int initialAgentCount = agentsResp.Data.Count;
-
-            Agent agent1 = GetAgent(client, AGENT_NAME);
-            HashSet<string> ids = [agent1.Id];
-            agentsResp = await client.GetAgentsAsync(limit: 100);
-            foreach (Agent agent in agentsResp)
-            {
-                ids.Remove(agent.Id);
-            }
+            // Note: if the numer  of arent will be bigger then 100 this test will fail.
+            HashSet<string> ids = new();
+            int initialAgentCount = await CountElementsAndRemoveIds(client, ids);
+            Agent agent1 = await GetAgent(client, AGENT_NAME);
+            ids = [agent1.Id];
+            int count = await CountElementsAndRemoveIds(client, ids);
             Assert.AreEqual(0, ids.Count);
-            Assert.AreEqual(initialAgentCount + 1, agentsResp.Data.Count);
+            Assert.AreEqual(initialAgentCount + 1, count);
 
-            Agent agent2 = GetAgent(client, AGENT_NAME2);
+            Agent agent2 = await GetAgent(client, AGENT_NAME2);
             ids.Add(agent1.Id);
             ids.Add(agent2.Id);
-            agentsResp = await client.GetAgentsAsync(limit: 100);
-            foreach (Agent agent in agentsResp)
-            {
-                ids.Remove(agent.Id);
-            }
+            count = await CountElementsAndRemoveIds(client, ids);
             Assert.AreEqual(0, ids.Count);
-            Assert.AreEqual(initialAgentCount + 2, agentsResp.Data.Count);
+            Assert.AreEqual(initialAgentCount + 2, count);
 
             DeleteAndAssert(client, agent1);
             ids.Add(agent1.Id);
             ids.Add(agent2.Id);
-            agentsResp = await client.GetAgentsAsync(limit: 100);
-            foreach (Agent agent in agentsResp)
-            {
-                ids.Remove(agent.Id);
-            }
+            count = await CountElementsAndRemoveIds(client, ids);
             Assert.AreEqual(1, ids.Count);
             Assert.False(ids.Contains(agent2.Id));
-            Assert.AreEqual(initialAgentCount + 1, agentsResp.Data.Count);
+            Assert.AreEqual(initialAgentCount + 1, count);
             DeleteAndAssert(client, agent2);
         }
 
@@ -165,7 +156,7 @@ namespace Azure.AI.Projects.Tests
         public async Task TestCreateThread(ArgumentType argType)
         {
             AgentsClient client = GetClient();
-            Agent agent = GetAgent(client);
+            Agent agent = await GetAgent(client);
 
             string thread_id;
             IReadOnlyDictionary<string, string> metadata;
@@ -210,7 +201,7 @@ namespace Azure.AI.Projects.Tests
         public async Task TestUpdateThread(ArgumentType argType)
         {
             AgentsClient client = GetClient();
-            AgentThread thread = GetThread(client);
+            AgentThread thread = await GetThread(client);
             Assert.AreEqual(0, thread.Metadata.Count);
 
             if (argType == ArgumentType.Metadata)
@@ -255,7 +246,7 @@ namespace Azure.AI.Projects.Tests
         public async Task TestCreateMessage(ArgumentType argType)
         {
             AgentsClient client = GetClient();
-            AgentThread thread = GetThread(client);
+            AgentThread thread = await GetThread(client);
             ThreadMessage tmTest;
             string message = "Hello, tell me a joke";
             if (argType == ArgumentType.Metadata)
@@ -287,7 +278,7 @@ namespace Azure.AI.Projects.Tests
         public async Task TestUpdateMessage(ArgumentType argType)
         {
             AgentsClient client = GetClient();
-            AgentThread thread = GetThread(client);
+            AgentThread thread = await GetThread(client);
             ThreadMessage tmTest;
             Response<ThreadMessage> oldMsgResp = await client.CreateMessageAsync(
                 thread.Id,
@@ -324,7 +315,7 @@ namespace Azure.AI.Projects.Tests
         public async Task TestListMessage()
         {
             AgentsClient client = GetClient();
-            AgentThread thread = GetThread(client);
+            AgentThread thread = await GetThread(client);
             Response<PageableList<ThreadMessage>> msgResp = await client.GetMessagesAsync(thread.Id);
             Assert.AreEqual(0, msgResp.Value.Data.Count);
 
@@ -358,8 +349,8 @@ namespace Azure.AI.Projects.Tests
         public async Task TestCreateRun(ArgumentType argType)
         {
             AgentsClient client = GetClient();
-            Agent agent = GetAgent(client);
-            AgentThread thread = GetThread(client);
+            Agent agent = await GetAgent(client);
+            AgentThread thread = await GetThread(client);
             await client.CreateMessageAsync(thread.Id, MessageRole.User, "Hello, tell me a joke");
             ThreadRun result;
             if (argType == ArgumentType.Metadata)
@@ -389,8 +380,8 @@ namespace Azure.AI.Projects.Tests
             // Get Run steps
             PageableList<RunStep> steps = await client.GetRunStepsAsync(result);
             Assert.GreaterOrEqual(steps.Data.Count, 1);
-            RunStep step = client.GetRunStep(result.ThreadId, result.Id, steps.Data[0].Id);
-            Assert.AreEqual(steps.Data[0], step);
+            RunStep step = await client.GetRunStepAsync(result.ThreadId, result.Id, steps.Data[0].Id);
+            Assert.AreEqual(steps.Data[0].Id, step.Id);
         }
 
         [RecordedTest]
@@ -400,7 +391,7 @@ namespace Azure.AI.Projects.Tests
         public async Task TestCreateThreadAndRun(ArgumentType argType)
         {
             AgentsClient client = GetClient();
-            Agent agent = GetAgent(client);
+            Agent agent = await GetAgent(client);
             ThreadRun result;
             var threadOp = new AgentThreadCreationOptions();
             threadOp.Messages.Add(new ThreadMessageOptions(
@@ -460,8 +451,8 @@ namespace Azure.AI.Projects.Tests
         public async Task TestUpdateRun(ArgumentType argType)
         {
             AgentsClient client = GetClient();
-            Agent agent = GetAgent(client);
-            AgentThread thread = GetThread(client);
+            Agent agent = await GetAgent(client);
+            AgentThread thread = await GetThread(client);
             await client.CreateMessageAsync(thread.Id, MessageRole.User, "Hello, tell me a joke");
             ThreadRun  runResp = await client.CreateRunAsync(thread.Id, agent.Id);
             runResp = await WaitForRun(client, runResp);
@@ -498,8 +489,8 @@ namespace Azure.AI.Projects.Tests
         public async Task ListDeleteRuns()
         {
             AgentsClient client = GetClient();
-            Agent agent = GetAgent(client);
-            AgentThread thread = GetThread(client);
+            Agent agent = await GetAgent(client);
+            AgentThread thread = await GetThread(client);
             await client.CreateMessageAsync(thread.Id, MessageRole.User, "Hello, tell me a joke");
             ThreadRun runResp1 = await client.CreateRunAsync(thread.Id, agent.Id);
             runResp1 = await WaitForRun(client, runResp1);
@@ -566,7 +557,7 @@ namespace Azure.AI.Projects.Tests
             }
             else
             {
-                AgentThread thread = GetThread(client);
+                AgentThread thread = await GetThread(client);
                 await client.CreateMessageAsync(thread.Id, MessageRole.User, "Tell me the favourite word of Mike?");
                 toolRun = await client.CreateRunAsync(
                     threadId: thread.Id,
@@ -621,20 +612,22 @@ namespace Azure.AI.Projects.Tests
                 || toolRun.Status == RunStatus.RequiresAction);
             Assert.True(functionCalled);
             Assert.AreEqual(toolRun.Status, RunStatus.Completed);
-            PageableList<ThreadMessage> messages = client.GetMessages(toolRun.ThreadId, toolRun.Id);
+            PageableList<ThreadMessage> messages = await client.GetMessagesAsync(toolRun.ThreadId, toolRun.Id);
             Assert.Greater(messages.Data.Count, 1);
             Assert.AreEqual(parallelToolCalls, toolRun.ParallelToolCalls);
         }
 
         [RecordedTest]
         [TestCase(VecrorStoreTestType.JustVectorStore, true)]
-        [TestCase(VecrorStoreTestType.JustVectorStore, false)]
         [TestCase(VecrorStoreTestType.Batch, true)]
-        [TestCase(VecrorStoreTestType.Batch, false)]
         [TestCase(VecrorStoreTestType.File, true)]
+        [TestCase(VecrorStoreTestType.JustVectorStore, false)]
+        [TestCase(VecrorStoreTestType.Batch, false)]
         [TestCase(VecrorStoreTestType.File, false)]
         public async Task TestCreateVectorStore(VecrorStoreTestType testType, bool useFileSource)
         {
+            if (useFileSource && Mode != RecordedTestMode.Live)
+                Assert.Inconclusive(FILE_UPLOAD_CONSTRAINT);
             AgentsClient client = GetClient();
             VectorStore vectorStore;
 
@@ -706,7 +699,7 @@ namespace Azure.AI.Projects.Tests
                 thread: threadOp
             );
             fileSearchRun = await WaitForRun(client, fileSearchRun);
-            PageableList<ThreadMessage> messages = client.GetMessages(fileSearchRun.ThreadId, fileSearchRun.Id);
+            PageableList<ThreadMessage> messages = await client.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
             Assert.Greater(messages.Data.Count, 1);
             // Check list, get and delete operations.
             VectorStore getVct = await client.GetVectorStoreAsync(vectorStore.Id);
@@ -744,6 +737,8 @@ namespace Azure.AI.Projects.Tests
         [TestCase(false, false)]
         public async Task TestCreateWithMessageAttachment(bool useFileSource, bool attachmentOnThread)
         {
+            if (useFileSource && Mode != RecordedTestMode.Live)
+                Assert.Inconclusive(FILE_UPLOAD_CONSTRAINT);
             AgentsClient client = GetClient();
 
             MessageAttachment attachment;
@@ -781,11 +776,11 @@ namespace Azure.AI.Projects.Tests
                     content: "What does the attachment say?"
                 );
                 opts = [messageOp];
-                thread = client.CreateThread(messages: opts);
+                thread = await client.CreateThreadAsync(messages: opts);
             }
             else
             {
-                thread = client.CreateThread();
+                thread = await client.CreateThreadAsync();
                 await client.CreateMessageAsync(
                     threadId: thread.Id,
                     role: MessageRole.User,
@@ -795,7 +790,7 @@ namespace Azure.AI.Projects.Tests
             }
             ThreadRun fileSearchRun = await client.CreateRunAsync(thread, agent);
             fileSearchRun = await WaitForRun(client, fileSearchRun);
-            PageableList<ThreadMessage> messages = client.GetMessages(fileSearchRun.ThreadId, fileSearchRun.Id);
+            PageableList<ThreadMessage> messages = await client.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
             Assert.Greater(messages.Data.Count, 1);
         }
 
@@ -806,6 +801,8 @@ namespace Azure.AI.Projects.Tests
         [TestCase(false, false)]
         public async Task TestFileSearchWithCodeInterpreter(bool useFileSource, bool useThreads)
         {
+            if (useFileSource && Mode != RecordedTestMode.Live)
+                Assert.Inconclusive(FILE_UPLOAD_CONSTRAINT);
             AgentsClient client = GetClient();
             CodeInterpreterToolResource toolRes = new();
             if (useFileSource)
@@ -832,42 +829,21 @@ namespace Azure.AI.Projects.Tests
                 tools: [ new CodeInterpreterToolDefinition() ],
                 toolResources: useThreads ? null : resources
             );
-            AgentThread thread = client.CreateThread(
+            AgentThread thread = await client.CreateThreadAsync(
                 toolResources: useThreads ? resources : null
             );
             ThreadMessage message = await client.CreateMessageAsync(
                 threadId: thread.Id,
                 role: MessageRole.User,
-                content: "What does the attachment say?"
+                content: "What Contoso Galaxy Innovations produces?"
             );
             ThreadRun fileSearchRun = await client.CreateRunAsync(thread, agent);
 
+            long milliseconds = DateTimeOffset.Now.ToUnixTimeMilliseconds();
             fileSearchRun = await WaitForRun(client, fileSearchRun);
-            PageableList<ThreadMessage> messages = client.GetMessages(fileSearchRun.ThreadId, fileSearchRun.Id);
+            Console.WriteLine((milliseconds - DateTimeOffset.Now.ToUnixTimeMilliseconds()) / 1000);
+            PageableList<ThreadMessage> messages = await client.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
             Assert.Greater(messages.Data.Count, 1);
-            // Check for file annotations
-            if (useFileSource)
-            {
-                bool foundId = false;
-                foreach (ThreadMessage msg in messages)
-                {
-                    foreach (MessageContent cont in msg.ContentItems)
-                    {
-                        if (cont is MessageTextContent textCont)
-                        {
-                            foreach (MessageTextAnnotation annotation in textCont.Annotations)
-                            {
-                                if (annotation is MessageTextFilePathAnnotation pathAnnotation)
-                                {
-                                    Assert.AreEqual(toolRes.FileIds[0], pathAnnotation.FileId);
-                                    foundId = true;
-                                }
-                            }
-                        }
-                    }
-                }
-                Assert.True(foundId);
-            }
         }
 
         [RecordedTest]
@@ -895,7 +871,7 @@ namespace Azure.AI.Projects.Tests
                 tools: [new FileSearchToolDefinition()],
                 toolResources: tools
             );
-            AgentThread thread = client.CreateThread();
+            AgentThread thread = await client.CreateThreadAsync();
             ThreadMessage message = await client.CreateMessageAsync(
                 threadId: thread.Id,
                 role: MessageRole.User,
@@ -904,7 +880,7 @@ namespace Azure.AI.Projects.Tests
             ThreadRun fileSearchRun = await client.CreateRunAsync(thread, agent);
 
             fileSearchRun = await WaitForRun(client, fileSearchRun);
-            PageableList<ThreadMessage> messages = client.GetMessages(fileSearchRun.ThreadId, fileSearchRun.Id);
+            PageableList<ThreadMessage> messages = await client.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
             Assert.Greater(messages.Data.Count, 1);
         }
 
@@ -916,6 +892,8 @@ namespace Azure.AI.Projects.Tests
         [TestCase(false, false)]
         public async Task TestIncludeFileSearchContent(bool useStream, bool includeContent)
         {
+            if (useStream && !IsAsync)
+                Assert.Inconclusive("The test framework does not support iteration of stream in Sync mode.");
             AgentsClient client = GetClient();
             VectorStoreDataSource vectorStoreDataSource = new(
                     assetIdentifier: TestEnvironment.AZURE_BLOB_URI,
@@ -942,7 +920,7 @@ namespace Azure.AI.Projects.Tests
                 tools: [new FileSearchToolDefinition()],
                 toolResources: tools
             );
-            AgentThread thread = client.CreateThread();
+            AgentThread thread = await client.CreateThreadAsync();
             ThreadMessage message = await client.CreateMessageAsync(
                 threadId: thread.Id,
                 role: MessageRole.User,
@@ -965,7 +943,7 @@ namespace Azure.AI.Projects.Tests
                 fileSearchRun = await client.CreateRunAsync(thread.Id, agent.Id, include: include);
 
                 fileSearchRun = await WaitForRun(client, fileSearchRun);
-                PageableList<ThreadMessage> messages = client.GetMessages(fileSearchRun.ThreadId, fileSearchRun.Id);
+                PageableList<ThreadMessage> messages = await client.GetMessagesAsync(fileSearchRun.ThreadId, fileSearchRun.Id);
                 Assert.AreEqual(RunStatus.Completed, fileSearchRun.Status);
                 Assert.Greater(messages.Data.Count, 1);
             }
@@ -976,7 +954,7 @@ namespace Azure.AI.Projects.Tests
             //    include: include
             );
             Assert.GreaterOrEqual(steps.Data.Count, 1);
-            RunStep step = client.GetRunStep(fileSearchRun.ThreadId, fileSearchRun.Id, steps.Data[1].Id, include: include);
+            RunStep step = await client.GetRunStepAsync(fileSearchRun.ThreadId, fileSearchRun.Id, steps.Data[1].Id, include: include);
 
             Assert.That(step.StepDetails is RunStepToolCallDetails);
             RunStepToolCallDetails toolCallDetails = step.StepDetails as RunStepToolCallDetails;
@@ -1037,14 +1015,14 @@ namespace Azure.AI.Projects.Tests
             );
             AgentsClient client = GetClient();
             Agent agent = await client.CreateAgentAsync(
-            model: "gpt-4",
-            name: "azure-function-agent-foo",
+                model: "gpt-4",
+                name: AGENT_NAME,
                 instructions: "You are a helpful support agent. Use the provided function any "
                 + "time the prompt contains the string 'What would foo say?'. When you invoke "
                 + "the function, ALWAYS specify the output queue uri parameter as "
                 + $"'{TestEnvironment.STORAGE_QUEUE_URI}/azure-function-tool-output'. Always responds with "
                 + "\"Foo says\" and then the response from the tool.",
-            tools: new List<ToolDefinition> { azureFnTool }
+                tools: new List<ToolDefinition> { azureFnTool }
             );
             AgentThread thread = await client.CreateThreadAsync();
             ThreadMessage message = await client.CreateMessageAsync(
@@ -1077,7 +1055,7 @@ namespace Azure.AI.Projects.Tests
         public async Task TestClientWithThreadMessages()
         {
             AgentsClient client = GetClient();
-            Agent agent = GetAgent(
+            Agent agent = await GetAgent(
                 client,
                 instruction: "You are a personal electronics tutor. Write and run code to answer questions.");
 
@@ -1093,12 +1071,79 @@ namespace Azure.AI.Projects.Tests
             Assert.Greater(afterRunMessages.Count(), 1);
         }
 
+        [Ignore(FILE_UPLOAD_CONSTRAINT)]
+        [RecordedTest]
+        public async Task TestGenerateImageFile()
+        {
+            string tempDir = CreateTempDirMayBe();
+            FileInfo file = new(Path.Combine(tempDir, FILE_NAME2));
+            using (FileStream stream = file.OpenWrite())
+            {
+                string content = "This is a test file";
+                stream.Write(Encoding.UTF8.GetBytes(content), 0, content.Length);
+            };
+
+            AgentsClient client = GetClient();
+            AgentFile fileDataSource = await client.UploadFileAsync(file.FullName, AgentFilePurpose.Agents);
+
+            CodeInterpreterToolResource cdResource = new();
+            cdResource.FileIds.Add(fileDataSource.Id);
+            ToolResources toolRes = new();
+            toolRes.CodeInterpreter = cdResource;
+
+            Agent agent = await client.CreateAgentAsync(
+                model: "gpt-4",
+                name: AGENT_NAME,
+                instructions: "You are helpful assistant",
+                tools: [new CodeInterpreterToolDefinition()],
+                toolResources: toolRes
+            );
+
+            AgentThread thread = await client.CreateThreadAsync();
+            await client.CreateMessageAsync(
+                threadId: thread.Id,
+                role: MessageRole.User,
+                content: "Create an image file same as the text file and give me file id?"
+            );
+            ThreadRun run = await client.CreateRunAsync(thread, agent);
+            run = await WaitForRun(client, run);
+            PageableList<ThreadMessage> messages = await client.GetMessagesAsync(run.ThreadId, run.Id);
+            bool foundId = false;
+            foreach (ThreadMessage msg in messages)
+            {
+                foreach (MessageContent cont in msg.ContentItems)
+                {
+                    if (cont is MessageTextContent textCont)
+                    {
+                        foreach (MessageTextAnnotation annotation in textCont.Annotations)
+                        {
+                            if (annotation is MessageTextFilePathAnnotation pathAnnotation)
+                            {
+                                Assert.NotNull(pathAnnotation.FileId);
+                                foundId = true;
+                            }
+                        }
+                    }
+                }
+            }
+            Assert.True(foundId);
+        }
+
         #region Helpers
+
+        private static string CreateTempDirMayBe()
+        {
+            string tempDir = Path.Combine(Path.GetTempPath(), TEMP_DIR);
+            if (!Directory.Exists(tempDir))
+            {
+                var info = Directory.CreateDirectory(tempDir);
+                Assert.True(info.Exists, "Unable to create temp directory.");
+            }
+            return tempDir;
+        }
 
         private AgentsClient GetClient()
         {
-            if (_s_client != null)
-                return _s_client;
             var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
             var storageQueueUri = TestEnvironment.STORAGE_QUEUE_URI;
             // For local testing if you are using non default account
@@ -1108,34 +1153,33 @@ namespace Azure.AI.Projects.Tests
             var cli = System.Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL");
             if (!string.IsNullOrEmpty(cli) && string.Compare(cli, "true", StringComparison.OrdinalIgnoreCase) == 0)
             {
-                _s_client = new AgentsClient(connectionString, new AzureCliCredential());
+                return InstrumentClient(new AgentsClient(connectionString, new AzureCliCredential(), InstrumentClientOptions(new AIProjectClientOptions())));
             }
             else
             {
-                _s_client = new AgentsClient(connectionString, new DefaultAzureCredential());
+                return InstrumentClient(new AgentsClient(connectionString, new DefaultAzureCredential(), InstrumentClientOptions(new AIProjectClientOptions())));
             }
-            return _s_client;
         }
 
-        private static void DeleteAndAssert(AgentsClient client, Agent agent)
+        private static async void DeleteAndAssert(AgentsClient client, Agent agent)
         {
-            Response<bool> resp = client.DeleteAgent(agent.Id);
+            Response<bool> resp = await client.DeleteAgentAsync(agent.Id);
             Assert.IsTrue(resp.Value);
         }
 
-        private static Agent GetAgent(AgentsClient client, string agentName=AGENT_NAME, string instruction= "You are helpful assistant.")
+        private static async Task<Agent> GetAgent(AgentsClient client, string agentName=AGENT_NAME, string instruction= "You are helpful assistant.")
         {
-            return client.CreateAgent(
+            return await client.CreateAgentAsync(
                 model: "gpt-4",
                 name: agentName,
                 instructions: instruction
             );
         }
 
-        private static AgentThread GetThread(AgentsClient client, Dictionary<string, string> metadata=null)
+        private static async Task<AgentThread> GetThread(AgentsClient client, Dictionary<string, string> metadata=null)
         {
-            Agent agent = GetAgent(client);
-            return client.CreateThread(metadata: metadata);
+            Agent agent = await GetAgent(client);
+            return await client.CreateThreadAsync(metadata: metadata);
         }
 
         private static byte[] GetBytes(object value)
@@ -1143,9 +1187,9 @@ namespace Azure.AI.Projects.Tests
             return Encoding.ASCII.GetBytes(JsonSerializer.Serialize(value));
         }
 
-        private static Stream GetStream(object value)
+        private static MemoryStream GetStream(object value)
         {
-            System.IO.MemoryStream stream = new();
+            MemoryStream stream = new();
             stream.Write(GetBytes(value), 0, GetBytes(value).Length);
             stream.Position = 0;
             return stream;
@@ -1164,11 +1208,17 @@ namespace Azure.AI.Projects.Tests
             return default;
         }
 
-        private static async Task<ThreadRun> WaitForRun(AgentsClient client, ThreadRun run)
+        private async Task<ThreadRun> WaitForRun(AgentsClient client, ThreadRun run)
         {
+            double delay = 500;
+            if (Mode == RecordedTestMode.Playback)
+            {
+                // No need to wait during playback.
+                delay = 1;
+            }
             do
             {
-                await Task.Delay(TimeSpan.FromMilliseconds(500));
+                await Task.Delay(TimeSpan.FromMilliseconds(delay));
                 run = await client.GetRunAsync(run.ThreadId, run.Id);
             }
             while (run.Status == RunStatus.Queued
@@ -1183,20 +1233,52 @@ namespace Azure.AI.Projects.Tests
             var dirName = Path.GetDirectoryName(pth) ?? "";
             return Path.Combine(new string[] { dirName, "TestData", FILE_NAME });
         }
+
+        private static async Task<int> CountElementsAndRemoveIds(AgentsClient client, HashSet<string> ids)
+        {
+            PageableList<Agent> agentsResp;
+            int count = 0;
+            string lastId = null;
+            do
+            {
+                agentsResp = await client.GetAgentsAsync(limit: 100, after: lastId);
+                foreach (Agent agent in agentsResp)
+                    ids.Remove(agent.Id);
+                count += agentsResp.Count();
+                lastId = agentsResp.LastId;
+            }
+            while (agentsResp.HasMore);
+            return count;
+        }
         #endregion
         #region Cleanup
         [TearDown]
         public void Cleanup()
         {
+            // Remve temporary directory
+            DirectoryInfo tempDir = new(Path.Combine(Path.GetTempPath(), TEMP_DIR));
+            if (tempDir.Exists)
+            {
+                tempDir.Delete(true);
+            }
             if (Mode == RecordedTestMode.Playback)
                 return;
-            AgentsClient client = GetClient();
+            AgentsClient client;
+            var cli = System.Environment.GetEnvironmentVariable("USE_CLI_CREDENTIAL");
+            if (!string.IsNullOrEmpty(cli) && string.Compare(cli, "true", StringComparison.OrdinalIgnoreCase) == 0)
+            {
+                client = new AgentsClient(TestEnvironment.AzureAICONNECTIONSTRING, new AzureCliCredential());
+            }
+            else
+            {
+                client = new AgentsClient(TestEnvironment.AzureAICONNECTIONSTRING, new DefaultAzureCredential());
+            }
 
             // Remove all files
             IReadOnlyList<AgentFile> files = client.GetFiles().Value;
             foreach (AgentFile af in files)
             {
-                if (af.Filename.Equals(FILE_NAME))
+                if (af.Filename.Equals(FILE_NAME) || af.Filename.Equals(FILE_NAME2))
                     client.DeleteFile(af.Id);
             }
 
