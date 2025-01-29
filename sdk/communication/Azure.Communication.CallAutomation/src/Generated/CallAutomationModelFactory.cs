@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Communication.CallAutomation.Models;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -47,7 +46,7 @@ namespace Azure.Communication.CallAutomation
             return new UnmuteParticipantResult(operationContext);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RecordingResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.RecordingResult"/>. </summary>
         /// <param name="recordingId"></param>
         /// <param name="recordingStorageInfo"> Container for chunks. </param>
         /// <param name="errors"></param>
@@ -55,7 +54,7 @@ namespace Azure.Communication.CallAutomation
         /// <param name="recordingDurationMs"></param>
         /// <param name="sessionEndReason"></param>
         /// <param name="recordingExpirationTime"></param>
-        /// <returns> A new <see cref="Models.RecordingResult"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="CallAutomation.RecordingResult"/> instance for mocking. </returns>
         public static RecordingResult RecordingResult(string recordingId = null, RecordingStorageInfo recordingStorageInfo = null, IEnumerable<ErrorDetails> errors = null, DateTimeOffset? recordingStartTime = null, long? recordingDurationMs = null, CallSessionEndReason? sessionEndReason = null, DateTimeOffset? recordingExpirationTime = null)
         {
             errors ??= new List<ErrorDetails>();
@@ -99,11 +98,11 @@ namespace Azure.Communication.CallAutomation
                 deleteLocation);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ErrorDetails"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.ErrorDetails"/>. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="message"> Error message. </param>
         /// <param name="innerError"> Inner error details. </param>
-        /// <returns> A new <see cref="Models.ErrorDetails"/> instance for mocking. </returns>
+        /// <returns> A new <see cref="CallAutomation.ErrorDetails"/> instance for mocking. </returns>
         public static ErrorDetails ErrorDetails(string code = null, string message = null, ErrorDetails innerError = null)
         {
             return new ErrorDetails(code, message, innerError);
@@ -155,6 +154,16 @@ namespace Azure.Communication.CallAutomation
         public static UserConsent UserConsent(int? recording = null)
         {
             return new UserConsent(recording);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CallAutomation.StartRecordingFailed"/>. </summary>
+        /// <param name="callConnectionId"> Call connection ID. </param>
+        /// <param name="correlationId"> Correlation ID for event to call correlation. </param>
+        /// <param name="recordingId"> The call recording id. </param>
+        /// <returns> A new <see cref="CallAutomation.StartRecordingFailed"/> instance for mocking. </returns>
+        public static StartRecordingFailed StartRecordingFailed(string callConnectionId = null, string correlationId = null, string recordingId = null)
+        {
+            return new StartRecordingFailed(callConnectionId, correlationId, recordingId);
         }
 
         /// <summary> Initializes a new instance of <see cref="CallAutomation.TranscriptionStarted"/>. </summary>

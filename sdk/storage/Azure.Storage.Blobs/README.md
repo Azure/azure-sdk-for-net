@@ -212,7 +212,7 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
 {
     BlobContainerOptions = new BlobStorageResourceContainerOptions
     {
-        BlobDirectoryPrefix = blobDirectoryPrefix
+        BlobPrefix = blobDirectoryPrefix
     },
     TransferOptions = new TransferOptions()
     {
@@ -245,7 +245,7 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
 {
     BlobContainerOptions = new BlobStorageResourceContainerOptions
     {
-        BlobDirectoryPrefix = blobDirectoryPrefix
+        BlobPrefix = blobDirectoryPrefix
     },
     TransferOptions = new TransferOptions()
     {

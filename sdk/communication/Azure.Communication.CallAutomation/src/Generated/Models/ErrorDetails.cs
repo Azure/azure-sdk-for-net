@@ -5,7 +5,7 @@
 
 #nullable disable
 
-namespace Azure.Communication.CallAutomation.Models
+namespace Azure.Communication.CallAutomation
 {
     /// <summary> Error details. </summary>
     public partial class ErrorDetails
