@@ -3,8 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Net;
+using System.Reflection.Metadata;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
@@ -12,8 +14,11 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
+using Azure.Data.ConfidentialLedger.Tests.Helper;
 using Azure.Security.ConfidentialLedger.Certificate;
 using NUnit.Framework;
+using static System.Net.WebRequestMethods;
+using static Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions;
 
 namespace Azure.Security.ConfidentialLedger.Tests
 {
@@ -49,7 +54,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
                     TestEnvironment.ConfidentialLedgerUrl,
                     credential: Credential,
                     clientCertificate: null,
-                    ledgerOptions: InstrumentClientOptions(new ConfidentialLedgerClientOptions()),
+                    ledgerOptions: InstrumentClientOptions(new ConfidentialLedgerClientOptions(ServiceVersion.V2024_08_22_Preview)),
                     identityServiceCert: serviceCert.Cert));
         }
 
@@ -252,6 +257,144 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
         }
 
+        [RecordedTest]
+        public async Task GetLedgerUsers()
+        {
+            // Create a user, test that it shows up in the users list
+            var userId = Recording.Random.NewGuid().ToString();
+            Response result = await Client.CreateOrUpdateLedgerUserAsync(
+                userId,
+                RequestContent.Create(new { assignedRole = "Reader" }));
+            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
+
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            Assert.That(stringResult, Does.Contain(userId));
+
+            HashSet<string> users = [];
+            await foreach (BinaryData page in Client.GetLedgerUsersAsync())
+            {
+                JsonElement pageResult = JsonDocument.Parse(page.ToStream()).RootElement;
+                if (pageResult.GetProperty("assignedRole").GetString() == "Reader")
+                {
+                    users.Add(pageResult.GetProperty("userId").GetString());
+                }
+            }
+
+            Assert.IsTrue(users.Contains(userId), "GetLedgerUsers endpoint does not contain expected reader");
+            await Client.DeleteLedgerUserAsync(userId);
+        }
+
+        [RecordedTest]
+        public async Task ProgrammabilityTest()
+        {
+            // Deploy JS App
+            string programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create("test", "programmability.js"));
+            RequestContent programmabilityContent = RequestContent.Create(programmabilityPayload);
+
+            Response result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
+            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
+
+            Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
+
+            // Verify Response by Querying endpt
+            ConfidentialLedgerHelperHttpClient helperHttpClient = new ConfidentialLedgerHelperHttpClient(TestEnvironment.ConfidentialLedgerUrl, Credential);
+            (var statusCode, var response) = await helperHttpClient.QueryUserDefinedContentEndpointAsync("app/Content");
+            Assert.AreEqual((int)HttpStatusCode.OK, statusCode);
+            Assert.AreEqual("TestContent", response);
+
+            // Deploy Empty JS Bundle to remove JS App
+            programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create());
+
+            result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
+            stringResult = new StreamReader(result.ContentStream).ReadToEnd();
+
+            Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
+        }
+
+        [RecordedTest]
+        public async Task ProgrammabilityJSRuntimeOptionsTest()
+        {
+            // Get Default JS Runtime Options
+            Response result = await Client.GetRuntimeOptionsAsync();
+            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
+
+            // Deserialize JSON response into a dictionary
+            var runtimeOptions = JsonSerializer.Deserialize<Dictionary<string, object>>(result.Content.ToString());
+
+            // Expected Default values
+            var expectedJSRuntimeOptions = new Dictionary<string, object>
+            {
+                { "log_exception_details", false },
+                { "max_cached_interpreters", 10 },
+                { "max_execution_time_ms", 1000 },
+                { "max_heap_bytes", 104857600 },
+                { "max_stack_bytes", 1048576 },
+                { "return_exception_details", false }
+            };
+
+            // Validate response matches expected options
+            foreach (var kvp in expectedJSRuntimeOptions)
+            {
+                Assert.True(runtimeOptions.TryGetValue(kvp.Key, out var actualValue), $"Missing key: {kvp.Key}");
+                Assert.Equals(kvp.Value, actualValue);
+            }
+
+            // Update Runtime Options
+            var updateJSRuntimeOptions = new Dictionary<string, object>
+            {
+                { "log_exception_details", false },
+                { "max_cached_interpreters", 20 },
+                { "max_execution_time_ms", 5000 },
+                { "max_heap_bytes", 204857600 },
+                { "max_stack_bytes", 1048576 },
+                { "return_exception_details", false }
+            };
+
+            string jsRuntimeOptionsPayload = JsonSerializer.Serialize(updateJSRuntimeOptions);
+            RequestContent runtimeOptionsContent = RequestContent.Create(jsRuntimeOptionsPayload);
+
+            result = await Client.UpdateRuntimeOptionsAsync(runtimeOptionsContent);
+
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+
+            // Revert Runtime Options
+            string restoreJsRuntimeOptionsPayload = JsonSerializer.Serialize(updateJSRuntimeOptions);
+            runtimeOptionsContent = RequestContent.Create(restoreJsRuntimeOptionsPayload);
+
+            result = await Client.UpdateRuntimeOptionsAsync(runtimeOptionsContent);
+
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
+        [RecordedTest]
+        public async Task CustomRoleTest()
+        {
+            const string roleName = "TestRole";
+            // Add Custom Role
+            var rolesParam = new RolesParam
+            {
+                Roles = new List<Role>
+                {
+                    new Role
+                    {
+                        RoleName = roleName,
+                        RoleActions = new List<string> { "/content/write" }
+                    }
+                }
+            };
+
+            Response result = await Client.CreateUserDefinedRoleAsync(RequestContent.Create(JsonSerializer.Serialize(rolesParam)));
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+
+            result =  await Client.GetUserDefinedRoleAsync(roleName);
+            var roleData = JsonSerializer.Deserialize<RolesParam>(result.Content.ToString());
+            // Validate Fetched RoleData with Added Role Data
+            Assert.Equals(rolesParam, roleData);
+
+            result = await Client.DeleteUserDefinedRoleAsync(roleName);
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
         private Dictionary<string, string> GetQueryStringKvps(string s)
         {
             var parts = s.Substring(s.IndexOf('?') + 1).Split('&');
@@ -314,6 +457,16 @@ namespace Azure.Security.ConfidentialLedger.Tests
                 return tid.GetString();
             }
             throw new Exception($"Could not parse transationId from response:\n{stringResult}");
+        }
+        private class Role
+        {
+            public string RoleName { get; set; } = string.Empty;
+            public List<string> RoleActions { get; set; } = new List<string>();
+        }
+
+        private class RolesParam
+        {
+            public List<Role> Roles { get; set; } = new List<Role>();
         }
     }
 }
