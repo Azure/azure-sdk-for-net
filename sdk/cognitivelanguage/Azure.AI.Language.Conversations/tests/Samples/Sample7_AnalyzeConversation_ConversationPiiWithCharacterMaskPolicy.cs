@@ -175,6 +175,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
+
             // Verify the HTTP response is successful
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
         }
