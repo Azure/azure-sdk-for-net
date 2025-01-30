@@ -19,6 +19,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using Azure.Core.TestFramework.Models;
+using Azure.Identity;
 using Azure.Messaging.ServiceBus;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -390,8 +391,34 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
 
         private ServiceBusClient CreateServiceBusClient()
         {
-            var serviceBusClient = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString,
-                new ServiceBusClientOptions() { TransportType = ServiceBusTransportType.AmqpWebSockets });
+            AzureCliCredential credential = new AzureCliCredential();
+            var serviceBusClient = new ServiceBusClient(
+                TestEnvironment.ServiceBusNamespace,
+                credential,
+                new ServiceBusClientOptions()
+                {
+                    TransportType = ServiceBusTransportType.AmqpWebSockets
+                });
+
+            if (Mode != RecordedTestMode.Playback)
+            {
+                // verify connection with service bus
+                // if having issue with connection, log in with "az login" in console
+                try
+                {
+                    var sender = serviceBusClient.CreateSender("testSender");
+                    var batch = sender.CreateMessageBatchAsync().Result;
+                }
+                catch (AuthenticationFailedException)
+                {
+                    throw;
+                }
+                catch (Exception)
+                {
+                    // continue;
+                }
+            }
+
             return InstrumentClient(serviceBusClient);
         }
     }

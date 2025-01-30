@@ -85,6 +85,13 @@ namespace Azure.Communication.CallAutomation.Tests.CallConnections
                     Assert.IsNotNull(removeParticipantSucceededEvent);
                     Assert.IsTrue(removeParticipantSucceededEvent is RemoveParticipantSucceeded);
                     Assert.AreEqual(callConnectionId, ((RemoveParticipantSucceeded)removeParticipantSucceededEvent!).CallConnectionId);
+
+                    // call should be disconnected after removing participant
+                    var disconnectedEvent = await WaitForEvent<CallDisconnected>(callConnectionId, TimeSpan.FromSeconds(20));
+                    Assert.IsNotNull(disconnectedEvent);
+                    Assert.IsTrue(disconnectedEvent is CallDisconnected);
+                    Assert.AreEqual(callConnectionId, ((CallDisconnected)disconnectedEvent!).CallConnectionId);
+
                     callConnectionId = null;
                 }
                 catch (Exception)
