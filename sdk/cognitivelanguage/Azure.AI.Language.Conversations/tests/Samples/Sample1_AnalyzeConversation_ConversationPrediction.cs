@@ -19,19 +19,19 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversation
-            string projectName = "EmailApp";
-            string deploymentName = "deployment1";
-//#if !SNIPPET
-//            projectName = TestEnvironment.ProjectName;
-//            deploymentName = TestEnvironment.DeploymentName;
-//#endif
+            string projectName = "Menu";
+            string deploymentName = "production";
+#if !SNIPPET
+            projectName = TestEnvironment.ProjectName;
+            deploymentName = TestEnvironment.DeploymentName;
+#endif
 
             AnalyzeConversationInput data = new ConversationLanguageUnderstandingInput(
                 new ConversationAnalysisInput(
                     new TextConversationItem(
                         id: "1",
                         participantId: "participant1",
-                        text: "I want to buy a house")),
+                        text: "Send an email to Carol about tomorrow's demo")),
                 new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
                 {
                     // Use Utf16CodeUnit for strings in .NET.
@@ -78,7 +78,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             }
             #endregion
 
-            Assert.That(conversationPrediction.TopIntent?.ToString(), Is.EqualTo("Buy"));
+            Assert.That(conversationPrediction.TopIntent?.ToString(), Is.EqualTo("Send"));
         }
 
         [AsyncOnly]
@@ -142,7 +142,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
-            Assert.That(conversationPrediction.TopIntent?.ToString(), Is.EqualTo("SendEmail"));
+            Assert.That(conversationPrediction.TopIntent?.ToString(), Is.EqualTo("Send"));
         }
     }
 }

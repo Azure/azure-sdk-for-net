@@ -31,7 +31,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     new TextConversationItem(
                         id: "1",
                         participantId: "participant1",
-                        text: "I want to buy a house")),
+                        text: "Send an email to Carol about tomorrow's demo")),
                 new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
             {
                 // Use Utf16CodeUnit for strings in .NET.
@@ -79,7 +79,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
-            Assert.That(conversationPrediction.TopIntent?.ToString(), Is.EqualTo("Buy"));
+            Assert.That(conversationPrediction.TopIntent?.ToString(), Is.EqualTo("Send"));
         }
 
         [AsyncOnly]
@@ -96,7 +96,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     new TextConversationItem(
                         id: "1",
                         participantId: "participant1",
-                        text: "I want to buy a house")),
+                        text: "Send an email to Carol about tomorrow's demo")),
                 new ConversationLanguageUnderstandingActionContent(projectName, deploymentName)
                 {
                     // Use Utf16CodeUnit for strings in .NET.
@@ -145,7 +145,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
-            Assert.That(conversationPrediction.TopIntent?.ToString(), Is.EqualTo("Buy"));
+            Assert.That(conversationPrediction.TopIntent?.ToString(), Is.EqualTo("Send"));
         }
     }
 }

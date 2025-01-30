@@ -19,12 +19,12 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
 
             #region Snippet:ConversationAnalysis_AnalyzeConversationWithLanguage
-            string projectName = "EmailApp";
-            string deploymentName = "deployment1";
-//#if !SNIPPET
-//            projectName = "EmailApp";
-//            deploymentName = "deployment1";
-//#endif
+            string projectName = "Menu";
+            string deploymentName = "production";
+#if !SNIPPET
+            projectName = TestEnvironment.ProjectName;
+            deploymentName = TestEnvironment.DeploymentName;
+#endif
 
             AnalyzeConversationInput data =
                 new ConversationLanguageUnderstandingInput(
@@ -83,7 +83,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
-            Assert.That(conversationPrediction.TopIntent?.ToString(), Is.EqualTo("SendEmail"));
+            Assert.That(conversationPrediction.TopIntent?.ToString(), Is.EqualTo("Send"));
         }
 
         [AsyncOnly]
@@ -153,7 +153,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
-            Assert.That(conversationPrediction.TopIntent?.ToString(), Is.EqualTo("SendEmail"));
+            Assert.That(conversationPrediction.TopIntent?.ToString(), Is.EqualTo("Send"));
         }
     }
 }
