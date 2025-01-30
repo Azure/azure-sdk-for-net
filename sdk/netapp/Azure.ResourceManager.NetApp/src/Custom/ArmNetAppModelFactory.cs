@@ -115,6 +115,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 isCoolAccessEnabled,
                 coolnessPeriod,
                 coolAccessRetrievalPolicy,
+                null,
                 isSnapshotDirectoryVisible,
                 smbAccessBasedEnumeration,
                 smbNonBrowsable,
