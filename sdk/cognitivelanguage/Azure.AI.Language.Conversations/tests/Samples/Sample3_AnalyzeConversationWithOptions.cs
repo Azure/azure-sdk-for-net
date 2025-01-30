@@ -79,7 +79,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
-            Assert.That(conversationPrediction.TopIntent?.ToString(), Is.EqualTo("Send"));
+            Assert.That(conversationPrediction.TopIntent?.ToString(), Is.EqualTo("SendEmail"));
         }
 
         [AsyncOnly]
@@ -145,7 +145,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
-            Assert.That(conversationPrediction.TopIntent?.ToString(), Is.EqualTo("Send"));
+            Assert.That(conversationPrediction.TopIntent?.ToString(), Is.EqualTo("SendEmail"));
         }
     }
 }
