@@ -26,14 +26,25 @@ namespace Azure.AI.Inference
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/AnalyzeTextDynamicClassificationResult.Serialization.cs
+        protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AnalyzeTextDynamicClassificationResult>)this).GetFormatFromOptions(options) : options.Format;
+========
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsNamedToolChoiceFunction>)this).GetFormatFromOptions(options) : options.Format;
+>>>>>>>> main:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ChatCompletionsNamedToolChoiceFunction)} does not support writing '{format}' format.");
             }
 
+<<<<<<<< HEAD:sdk/cognitivelanguage/Azure.AI.Language.Text/src/Generated/AnalyzeTextDynamicClassificationResult.Serialization.cs
+            base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("results"u8);
+            writer.WriteObjectValue(Results, options);
+========
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -51,6 +62,7 @@ namespace Azure.AI.Inference
 #endif
                 }
             }
+>>>>>>>> main:sdk/ai/Azure.AI.Inference/src/Generated/ChatCompletionsNamedToolChoiceFunction.Serialization.cs
         }
 
         ChatCompletionsNamedToolChoiceFunction IJsonModel<ChatCompletionsNamedToolChoiceFunction>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)

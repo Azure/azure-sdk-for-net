@@ -30,6 +30,7 @@ internal class StorageAccountFeature : CloudMachineFeature
             Sku = new StorageSku { Name = _skuName },
             IsHnsEnabled = true,
             AllowBlobPublicAccess = false,
+            AllowSharedKeyAccess = false,
             Identity = new()
             {
                 ManagedServiceIdentityType = ManagedServiceIdentityType.UserAssigned,

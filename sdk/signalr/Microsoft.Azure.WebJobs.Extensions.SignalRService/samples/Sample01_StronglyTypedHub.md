@@ -2,7 +2,7 @@
 
 Strongly typed serverless hub is a programming model which allows you to define your SignalR client methods in an interface, and the RPC implementation will be done by SignalR.
 
-This sample demonstrates how to create a strongly typed serverless hub and invoke SignalR client methods in it. To see more details on serverless hub, please go [here](https://docs.microsoft.com/azure/azure-signalr/signalr-concept-serverless-development-config#class-based-model).
+This sample demonstrates how to create a strongly typed serverless hub and invoke SignalR client methods in it. To see more details on serverless hub, please go [here](https://learn.microsoft.com/azure/azure-signalr/signalr-concept-serverless-development-config#class-based-model).
 
 ## Define a strongly typed serverless hub class
 

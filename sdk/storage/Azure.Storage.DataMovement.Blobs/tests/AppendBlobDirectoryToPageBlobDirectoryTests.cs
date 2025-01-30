@@ -56,34 +56,23 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 options = new PageBlobStorageResourceOptions
                 {
-                    ContentDisposition = new(false),
-                    ContentLanguage = new(false),
-                    CacheControl = new(false),
-                    ContentType = new(false),
-                    Metadata = new(false)
-                };
-            }
-            else if (propertiesTestType == TransferPropertiesTestType.Preserve)
-            {
-                options = new PageBlobStorageResourceOptions
-                {
-                    ContentDisposition = new(true),
-                    ContentLanguage = new(true),
-                    CacheControl = new(true),
-                    ContentType = new(true),
-                    Metadata = new(true)
+                    ContentDisposition = default,
+                    ContentLanguage = default,
+                    CacheControl = default,
+                    ContentType = default,
+                    Metadata = default
                 };
             }
             return new BlobStorageResourceContainer(containerClient, new BlobStorageResourceContainerOptions()
             {
                 BlobDirectoryPrefix = directoryPath,
-                BlobType = new(BlobType.Page),
+                BlobType = BlobType.Page,
                 BlobOptions = options
             });
         }
 
         protected override StorageResourceContainer GetSourceStorageResourceContainer(BlobContainerClient containerClient, string directoryPath)
-            => new BlobStorageResourceContainer(containerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = new(BlobType.Append) });
+            => new BlobStorageResourceContainer(containerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = BlobType.Append });
 
         protected internal override PageBlobClient GetDestinationBlob(BlobContainerClient containerClient, string blobName)
             => containerClient.GetPageBlobClient(blobName);

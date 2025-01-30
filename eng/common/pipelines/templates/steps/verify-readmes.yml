@@ -13,12 +13,19 @@ parameters:
 - name: Condition
   type: string
   default: succeeded()
+- name: IncludeIndirect
+  type: boolean
+  default: true
 
 steps:
 - pwsh: |
+    $includeIndirect = $${{ parameters.IncludeIndirect }}
     $packageProperties = Get-ChildItem -Recurse "${{ parameters.PackagePropertiesFolder }}" *.json
-
     $paths = @()
+
+    if (-not $includeIndirect) {
+      $packageProperties = $packageProperties | Where-Object { (Get-Content -Raw $_ | ConvertFrom-Json).IncludedForValidation -eq $false }
+    }
 
     foreach($propertiesFile in $packageProperties) {
       $PackageProp = Get-Content -Path $propertiesFile | ConvertFrom-Json

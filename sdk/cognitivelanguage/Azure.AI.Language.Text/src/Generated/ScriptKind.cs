@@ -34,6 +34,7 @@ namespace Azure.AI.Language.Text
         private const string GujaratiValue = "Gujarati";
         private const string GurmukhiValue = "Gurmukhi";
         private const string HangulValue = "Hangul";
+        private const string HanLiteralValue = "HanLiteral";
         private const string HanSimplifiedValue = "HanSimplified";
         private const string HanTraditionalValue = "HanTraditional";
         private const string HebrewValue = "Hebrew";
@@ -43,8 +44,12 @@ namespace Azure.AI.Language.Text
         private const string LaoValue = "Lao";
         private const string LatinValue = "Latin";
         private const string MalayalamValue = "Malayalam";
+        private const string MeiteiValue = "Meitei";
+        private const string MongolianValue = "Mongolian";
         private const string MyanmarValue = "Myanmar";
         private const string OdiaValue = "Odia";
+        private const string SantaliValue = "Santali";
+        private const string SharadaValue = "Sharada";
         private const string SinhalaValue = "Sinhala";
         private const string TamilValue = "Tamil";
         private const string TeluguValue = "Telugu";
@@ -76,6 +81,8 @@ namespace Azure.AI.Language.Text
         public static ScriptKind Gurmukhi { get; } = new ScriptKind(GurmukhiValue);
         /// <summary> Script name for the Hangul script. </summary>
         public static ScriptKind Hangul { get; } = new ScriptKind(HangulValue);
+        /// <summary> Script name for the HanLiteral script. </summary>
+        public static ScriptKind HanLiteral { get; } = new ScriptKind(HanLiteralValue);
         /// <summary> Script name for the HanSimplified script. </summary>
         public static ScriptKind HanSimplified { get; } = new ScriptKind(HanSimplifiedValue);
         /// <summary> Script name for the HanTraditional script. </summary>
@@ -94,10 +101,18 @@ namespace Azure.AI.Language.Text
         public static ScriptKind Latin { get; } = new ScriptKind(LatinValue);
         /// <summary> Script name for the Malayalam script. </summary>
         public static ScriptKind Malayalam { get; } = new ScriptKind(MalayalamValue);
+        /// <summary> Script name for the Meitei script. </summary>
+        public static ScriptKind Meitei { get; } = new ScriptKind(MeiteiValue);
+        /// <summary> Script name for the Mongolian script. </summary>
+        public static ScriptKind Mongolian { get; } = new ScriptKind(MongolianValue);
         /// <summary> Script name for the Myanmar script. </summary>
         public static ScriptKind Myanmar { get; } = new ScriptKind(MyanmarValue);
         /// <summary> Script name for the Odia script. </summary>
         public static ScriptKind Odia { get; } = new ScriptKind(OdiaValue);
+        /// <summary> Script name for the Santali script. </summary>
+        public static ScriptKind Santali { get; } = new ScriptKind(SantaliValue);
+        /// <summary> Script name for the Sharada script. </summary>
+        public static ScriptKind Sharada { get; } = new ScriptKind(SharadaValue);
         /// <summary> Script name for the Sinhala script. </summary>
         public static ScriptKind Sinhala { get; } = new ScriptKind(SinhalaValue);
         /// <summary> Script name for the Tamil script. </summary>

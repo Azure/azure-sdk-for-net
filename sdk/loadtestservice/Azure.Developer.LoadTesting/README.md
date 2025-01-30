@@ -9,7 +9,7 @@ Azure Load Testing provides client library in .NET to the user by which they can
 Various documentation is available to help you get started
 
 <!-- - [Source code][source_code] -->
-- [API reference documentation](https://docs.microsoft.com/rest/api/loadtesting/)
+- [API reference documentation](https://learn.microsoft.com/rest/api/loadtesting/)
 - [Product Documentation](https://azure.microsoft.com/services/load-testing/)
 
 ## Getting started
@@ -24,7 +24,7 @@ dotnet add package Azure.Developer.LoadTesting
 ```
 
 ### Prerequisites
-You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure Load Test Service Resource](https://learn.microsoft.com/azure/load-testing/). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
+You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Azure Load Test Service Resource](https://learn.microsoft.com/azure/load-testing/). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://learn.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
 
 
 ### Authenticate the client
@@ -124,7 +124,7 @@ This is a template, but your SDK readme should include details on how to contrib
 <!-- LINKS -->
 <!-- [source_code]: https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/loadtesting/azure-developer-loadtesting/src -->
 <!-- [sample_code]: https://github.com/Azure/azure-sdk-for-java/blob/main/sdk/loadtesting/azure-developer-loadtesting/src/samples -->
-[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
+[style-guide-msft]: https://learn.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
 [authenticate_with_token]: https://learn.microsoft.com/aspnet/core/security/authentication/identity
@@ -133,5 +133,5 @@ This is a template, but your SDK readme should include details on how to contrib
 [client_secret_credential]: https://learn.microsoft.com/dotnet/api/azure.identity.clientsecretcredential
 [nuget]: https://www.nuget.org/
 [azure_sub]: https://azure.microsoft.com/free/
-[api_reference_doc]: https://docs.microsoft.com/rest/api/loadtesting/
+[api_reference_doc]: https://learn.microsoft.com/rest/api/loadtesting/
 [product_documentation]: https://azure.microsoft.com/services/load-testing/

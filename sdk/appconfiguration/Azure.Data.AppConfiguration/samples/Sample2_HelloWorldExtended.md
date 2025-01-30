@@ -51,7 +51,7 @@ await client.SetConfigurationSettingAsync(instancesToUpdate);
 
 ## Search by label filter
 
-To gather all the information available for the "production" environment, call `GetConfigurationSettingsAsync` with a setting selector that filters for settings with the "production" label.  This will retrieve all the Configuration Settings in the store that satisfy that condition. See App Configuration [REST API](https://docs.microsoft.com/azure/azure-app-configuration/rest-api-key-value#filtering) for more information about filtering.
+To gather all the information available for the "production" environment, call `GetConfigurationSettingsAsync` with a setting selector that filters for settings with the "production" label.  This will retrieve all the Configuration Settings in the store that satisfy that condition. See App Configuration [REST API](https://learn.microsoft.com/azure/azure-app-configuration/rest-api-key-value#filtering) for more information about filtering.
 
 ```C# Snippet:AzConfigSample2_GetConfigurationSettingsAsync
 var selector = new SettingSelector { LabelFilter = "production" };
@@ -65,7 +65,7 @@ await foreach (ConfigurationSetting setting in client.GetConfigurationSettingsAs
 
 # Retrieve labels
 
-To gather all the labels whose names start with the "production" environment, call `GetLabelsAsync` with a label selector that filters for labels that start with the "production" label name.  This will retrieve all the labels in the store that satisfy that condition. See App Configuration [REST API](https://docs.microsoft.com/azure/azure-app-configuration/rest-api-labels#filtering) for more information about filtering.
+To gather all the labels whose names start with the "production" environment, call `GetLabelsAsync` with a label selector that filters for labels that start with the "production" label name.  This will retrieve all the labels in the store that satisfy that condition. See App Configuration [REST API](https://learn.microsoft.com/azure/azure-app-configuration/rest-api-labels#filtering) for more information about filtering.
 
 ```C# Snippet:AzConfigSample2_GetLabelsAsync
 var labelsSelector = new SettingLabelSelector { NameFilter = "production*" };

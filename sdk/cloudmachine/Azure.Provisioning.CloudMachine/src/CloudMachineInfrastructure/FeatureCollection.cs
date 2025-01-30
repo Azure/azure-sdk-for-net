@@ -33,7 +33,7 @@ public class FeatureCollection : IEnumerable<CloudMachineFeature>
         }
     }
 
-    internal void Add(CloudMachineFeature item)
+    public void Add(CloudMachineFeature item)
     {
         if (_count == _items.Length)
         {

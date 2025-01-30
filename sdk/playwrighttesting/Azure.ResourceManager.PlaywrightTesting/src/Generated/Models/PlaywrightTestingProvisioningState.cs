@@ -25,6 +25,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         private const string SucceededValue = "Succeeded";
         private const string FailedValue = "Failed";
         private const string CanceledValue = "Canceled";
+        private const string CreatingValue = "Creating";
         private const string DeletingValue = "Deleting";
         private const string AcceptedValue = "Accepted";
 
@@ -34,9 +35,11 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
         public static PlaywrightTestingProvisioningState Failed { get; } = new PlaywrightTestingProvisioningState(FailedValue);
         /// <summary> Resource creation was canceled. </summary>
         public static PlaywrightTestingProvisioningState Canceled { get; } = new PlaywrightTestingProvisioningState(CanceledValue);
-        /// <summary> Deletion in progress. </summary>
+        /// <summary> Creation in progress.. </summary>
+        public static PlaywrightTestingProvisioningState Creating { get; } = new PlaywrightTestingProvisioningState(CreatingValue);
+        /// <summary> Deletion in progress.. </summary>
         public static PlaywrightTestingProvisioningState Deleting { get; } = new PlaywrightTestingProvisioningState(DeletingValue);
-        /// <summary> Change accepted for processing. </summary>
+        /// <summary> Change accepted for processing.. </summary>
         public static PlaywrightTestingProvisioningState Accepted { get; } = new PlaywrightTestingProvisioningState(AcceptedValue);
         /// <summary> Determines if two <see cref="PlaywrightTestingProvisioningState"/> values are the same. </summary>
         public static bool operator ==(PlaywrightTestingProvisioningState left, PlaywrightTestingProvisioningState right) => left.Equals(right);

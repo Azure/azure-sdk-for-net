@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.Identity;
@@ -75,7 +76,7 @@ public partial class CloudMachineClient : ClientWorkspace
     /// <param name="connections"></param>
     /// <param name="credential">The token credential.</param>
     // TODO: we need to combine the configuration and the connections into a single parameter.
-    public CloudMachineClient(ConnectionCollection connections = default, TokenCredential credential = default)
+    public CloudMachineClient(IEnumerable<ClientConnection> connections = default, TokenCredential credential = default)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         : base(BuildCredential(credential))
     {
@@ -144,4 +145,11 @@ public partial class CloudMachineClient : ClientWorkspace
     /// <inheritdoc/>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public override string ToString() => Id;
+
+    /// <summary>
+    /// Retrieves all connection options.
+    /// </summary>
+    /// <returns></returns>
+    public override IEnumerable<ClientConnection> GetAllConnectionOptions()
+        => Connections;
 }
