@@ -527,6 +527,8 @@ try {
     if ($CI -and $Environment -eq 'AzureCloud' -and $env:PoolSubnet) {
         $templateParameters.Add('azsdkPipelineSubnetList', @($env:PoolSubnet))
     }
+    # Some arm/bicep templates may want to change deployment settings (e.g. local auth) in sandboxed TME tenants
+    $templateParameters.Add('tenantIsTME', ($context.Tenant.Name -like '*TME*'))
 
     $defaultCloudParameters = LoadCloudConfig $Environment
     MergeHashes $defaultCloudParameters $(Get-Variable templateParameters)
