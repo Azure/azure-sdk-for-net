@@ -24,7 +24,8 @@
 
   <ItemGroup>
     <None Update="Helper\programmability.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Link>programmability.js</Link>
     </None>
   </ItemGroup>
 

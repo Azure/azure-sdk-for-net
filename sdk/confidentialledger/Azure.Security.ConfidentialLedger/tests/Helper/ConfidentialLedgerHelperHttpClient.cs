@@ -36,7 +36,7 @@ namespace Azure.Data.ConfidentialLedger.Tests.Helper
         /// <param name="cancellationToken">Optional cancellation token.</param>
         /// <returns>Tuple containing HTTP status code and response body.</returns>
         public async Task<(HttpStatusCode StatusCode, string ResponseBody)> QueryUserDefinedContentEndpointAsync(
-            string path, CancellationToken cancellationToken = default)
+            string path, CancellationToken cancellationToken = default, bool jwtAuth = false)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -49,13 +49,16 @@ namespace Azure.Data.ConfidentialLedger.Tests.Helper
             {
                 using var request = new HttpRequestMessage(HttpMethod.Get, endpoint);
 
-                // Get Access Token using Azure TokenCredential
-                AccessToken accessToken = await _credential.GetTokenAsync(
-                    new TokenRequestContext(AuthorizationScopes),
-                    cancellationToken);
+                if (jwtAuth)
+                {
+                    // Get Access Token using Azure TokenCredential
+                    AccessToken accessToken = await _credential.GetTokenAsync(
+                        new TokenRequestContext(AuthorizationScopes),
+                        cancellationToken);
 
-                // Add Authorization header
-                request.Headers.Add("Authorization", $"Bearer {accessToken.Token}");
+                    // Add Authorization header
+                    request.Headers.Add("Authorization", $"Bearer {accessToken.Token}");
+                }
 
                 // Send GET request
                 HttpResponseMessage response = await _httpClient.SendAsync(request, cancellationToken);

@@ -17,7 +17,6 @@ using Azure.Core.TestFramework.Models;
 using Azure.Data.ConfidentialLedger.Tests.Helper;
 using Azure.Security.ConfidentialLedger.Certificate;
 using NUnit.Framework;
-using Xunit;
 using static Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions;
 
 namespace Azure.Security.ConfidentialLedger.Tests
@@ -209,10 +208,10 @@ namespace Azure.Security.ConfidentialLedger.Tests
         #endregion
 
         #region LedgerUserManagment
+
 #if API_V3
-        [Fact(Skip = "Skipped for API_V3")]
-#else
-        [Fact]
+        [Test]
+        [Ignore("Test is skipped for API_V3 because ledgerUsers Endpt should be used")]
 #endif
         public async Task GetUser(string objId)
         {
@@ -224,9 +223,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
 #if API_V3
-        [Fact(Skip = "Skipped for API_V3")]
-#else
-        [Fact]
+        [Test]
+        [Ignore("Test is skipped for API_V3 because ledgerUsers Endpt should be used")]
 #endif
         [RecordedTest]
         public async Task CreateAndGetAndDeleteUser()
@@ -248,9 +246,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
 #if API_V3
-        [Fact(Skip = "Skipped for API_V3")]
-#else
-        [Fact]
+        [Test]
+        [Ignore("Test is skipped for API_V3 because ledgerUsers Endpt should be used")]
 #endif
         [RecordedTest]
         public async Task GetUsers()
@@ -312,7 +309,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
         public async Task UserDefinedEndpointsTest()
         {
             // Deploy JS App
-            string programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create("test", "programmability.js"));
+            string filePath = Path.Combine(TestContext.CurrentContext.TestDirectory, "programmability.js");
+            string programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create("test", filePath));
             RequestContent programmabilityContent = RequestContent.Create(programmabilityPayload);
 
             Response result = await Client.CreateUserDefinedEndpointAsync(programmabilityContent);
