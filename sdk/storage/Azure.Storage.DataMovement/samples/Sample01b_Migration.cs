@@ -207,7 +207,7 @@ namespace Azure.Storage.DataMovement.Samples
         [Test]
         public async Task DownloadBlobDirectory()
         {
-            #region Snippet:DataMovementMigration_UploadBlobDirectory_VarDeclaration
+            #region Snippet:DataMovementMigration_DownloadBlobDirectory_VarDeclaration
             // these values provided by your code
             string directoryPath, blobDirectoryPath;
             Uri containerUri;
@@ -241,7 +241,7 @@ namespace Azure.Storage.DataMovement.Samples
                 blobs = new BlobsStorageResourceProvider(credential);
                 LocalFilesStorageResourceProvider files = new(); // TODO static on merge
 
-                #region Snippet:DataMovementMigration_UploadBlobDirectory
+                #region Snippet:DataMovementMigration_DownloadBlobDirectory
                 // download blob directory
                 TransferOperation operation = await transferManager.StartTransferAsync(
                     blobs.FromContainer(containerUri, new BlobStorageResourceContainerOptions()
@@ -249,6 +249,62 @@ namespace Azure.Storage.DataMovement.Samples
                         BlobDirectoryPrefix = blobDirectoryPath,
                     }),
                     files.FromDirectory(directoryPath)); // TODO static on merge
+                await operation.WaitForCompletionAsync();
+                #endregion
+            }
+            finally
+            {
+                await container.DeleteIfExistsAsync();
+            }
+        }
+
+        [Test]
+        public async Task CopyBlob()
+        {
+            #region Snippet:DataMovementMigration_CopyBlobToBlob_VarDeclaration
+            // these values provided by your code
+            Uri srcBlobUri, dstBlobUri;
+            BlobsStorageResourceProvider blobs;
+            TransferManager transferManager;
+            #endregion
+
+            // Get account and shared key access
+            // (see implementation for details)
+            (Uri accountUri, StorageSharedKeyCredential credential) = GetSharedKeyAccessAccount();
+
+            // generate a container and blob name for purposes of sample
+            string containerName = Randomize("sample-container");
+            string srcBlobName = Randomize("sample-blob");
+            string dstBlobName = Randomize("sample-blob");
+            srcBlobUri = new BlobUriBuilder(accountUri)
+            {
+                BlobContainerName = containerName,
+                BlobName = srcBlobName,
+            }.ToUri();
+            dstBlobUri = new BlobUriBuilder(accountUri)
+            {
+                BlobContainerName = containerName,
+                BlobName = dstBlobName,
+            }.ToUri();
+
+            BlobContainerClient container = null;
+            try
+            {
+                // Create the container & blob for this sample download
+                container = new BlobServiceClient(accountUri, credential)
+                    .GetBlobContainerClient(containerName);
+                await container.CreateIfNotExistsAsync();
+                await container.GetBlobClient(srcBlobName)
+                    .UploadAsync(BinaryData.FromString(SampleFileContent));
+
+                transferManager = new TransferManager();
+                blobs = new BlobsStorageResourceProvider(credential);
+
+                #region Snippet:DataMovementMigration_CopyBlobToBlob
+                // upload blob
+                TransferOperation operation = await transferManager.StartTransferAsync(
+                    blobs.FromBlob(srcBlobUri),
+                    blobs.FromBlob(dstBlobUri));
                 await operation.WaitForCompletionAsync();
                 #endregion
             }
