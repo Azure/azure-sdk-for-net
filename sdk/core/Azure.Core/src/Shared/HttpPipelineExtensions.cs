@@ -24,12 +24,24 @@ namespace Azure.Core
                 await pipeline.SendAsync(message, cts.Token).ConfigureAwait(false);
             }
 
-            if (!message.Response.IsError || statusOption == ErrorOptions.NoThrow)
+            // ================================================================
+            // JS: Clearing the `message.Resposne` here would transfer ownership
+            //      to the caller.  Otherwise, the response gets disposed when
+            //      `message` is disposed, which is not clear to callers.
+            //
+            //    The problem here is:
+            //       - The `Response` is not nullable; we'd need some dummy instance
+            //       - The error scenario breaks, as there is no way to dispose the response.
+            var response = message.Response;
+            // message.Response = null;
+
+            if (response!.IsError || statusOption == ErrorOptions.NoThrow)
             {
-                return message.Response;
+                return response;
             }
 
-            throw new RequestFailedException(message.Response);
+            throw new RequestFailedException(response);
+            // ================================================================
         }
 
         public static Response ProcessMessage(this HttpPipeline pipeline, HttpMessage message, RequestContext? requestContext, CancellationToken cancellationToken = default)
@@ -45,7 +57,7 @@ namespace Azure.Core
                 pipeline.Send(message, cts.Token);
             }
 
-            if (!message.Response.IsError || statusOption == ErrorOptions.NoThrow)
+            if (!message.Response!.IsError || statusOption == ErrorOptions.NoThrow)
             {
                 return message.Response;
             }
