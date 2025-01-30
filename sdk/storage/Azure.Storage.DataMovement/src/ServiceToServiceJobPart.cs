@@ -213,11 +213,8 @@ namespace Azure.Storage.DataMovement
                 {
                     await QueueChunkToChannelAsync(
                         async () =>
-                        await CreateDestinationResource(
-                            totalLength: length,
-                            blockSize: length,
-                            singleCall: true,
-                            sourceProperties: sourceProperties).ConfigureAwait(false)).ConfigureAwait(false);
+                        await StartSingleCallCopy(length, sourceProperties: sourceProperties).ConfigureAwait(false))
+                        .ConfigureAwait(false);
                     return;
                 }
 
@@ -232,7 +229,7 @@ namespace Azure.Storage.DataMovement
                     _cancellationToken);
 
                 // If we cannot copy in one shot, queue the rest of the chunks
-                if (await CreateDestinationResource(length, blockSize, singleCall: false, sourceProperties).ConfigureAwait(false))
+                if (await CreateDestinationResource(length, blockSize).ConfigureAwait(false))
                 {
                     IEnumerable<(long Offset, long Length)> ranges = GetRanges(length, blockSize);
                     if (_destinationResource.TransferType == TransferOrder.Unordered)
@@ -261,15 +258,47 @@ namespace Azure.Storage.DataMovement
             }
         }
 
+        private async Task StartSingleCallCopy(long completeLength, StorageResourceItemProperties sourceProperties)
+        {
+            try
+            {
+                StorageResourceCopyFromUriOptions options =
+                    await GetCopyFromUriOptionsAsync(_cancellationToken).ConfigureAwait(false);
+
+                await _destinationResource.CopyFromUriAsync(
+                    sourceResource: _sourceResource,
+                    overwrite: _createMode == StorageResourceCreationMode.OverwriteIfExists,
+                    completeLength: completeLength,
+                    options: options,
+                    cancellationToken: _cancellationToken).ConfigureAwait(false);
+
+                await ReportBytesWrittenAsync(completeLength).ConfigureAwait(false);
+                await CompleteTransferAsync(sourceProperties).ConfigureAwait(false);
+                await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
+            }
+            catch (RequestFailedException exception)
+                when (_createMode == StorageResourceCreationMode.SkipIfExists
+                 && exception.ErrorCode == "BlobAlreadyExists")
+            {
+                await InvokeSkippedArgAsync().ConfigureAwait(false);
+            }
+            catch (InvalidOperationException ex)
+            when (_createMode == StorageResourceCreationMode.SkipIfExists
+                && ex.Message.Contains("Cannot overwrite file."))
+            {
+                await InvokeSkippedArgAsync().ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                await InvokeFailedArgAsync(ex).ConfigureAwait(false);
+            }
+        }
+
         /// <summary>
         /// Creates the destination resource and performs the first copy call.
         /// Returns false if the copy is complete or this operation failed/skipped.
         /// </summary>
-        private async Task<bool> CreateDestinationResource(
-            long totalLength,
-            long blockSize,
-            bool singleCall,
-            StorageResourceItemProperties sourceProperties)
+        private async Task<bool> CreateDestinationResource(long totalLength, long blockSize)
         {
             try
             {
@@ -285,12 +314,6 @@ namespace Azure.Storage.DataMovement
 
                 // Report first chunk written to progress tracker
                 await ReportBytesWrittenAsync(blockSize).ConfigureAwait(false);
-                if (singleCall)
-                {
-                    await CompleteTransferAsync(sourceProperties).ConfigureAwait(false);
-                }
-
-                return !singleCall;
             }
             catch (RequestFailedException exception)
                 when (_createMode == StorageResourceCreationMode.SkipIfExists

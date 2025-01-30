@@ -97,13 +97,18 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            StorageResourceItemProperties sourceProperties = completeTransferOptions?.SourceProperties;
-            ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(sourceProperties?.RawProperties);
-            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties);
-            await ShareFileClient.SetHttpHeadersAsync(
-                httpHeaders: httpHeaders,
-                smbProperties: smbProperties,
-                cancellationToken: cancellationToken).ConfigureAwait(false);
+            // Call Set Properties if FileChangedOn is to be preserved or manually set
+            // as it can be changed during a transfer.
+            if (_options?._isFileChangedOnSet == false || _options?.FileChangedOn != null)
+            {
+                StorageResourceItemProperties sourceProperties = completeTransferOptions?.SourceProperties;
+                ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(sourceProperties?.RawProperties);
+                FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties);
+                await ShareFileClient.SetHttpHeadersAsync(
+                    httpHeaders: httpHeaders,
+                    smbProperties: smbProperties,
+                    cancellationToken: cancellationToken).ConfigureAwait(false);
+            }
         }
 
         protected override async Task CopyBlockFromUriAsync(
