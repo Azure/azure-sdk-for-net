@@ -104,10 +104,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
                 StorageResourceItemProperties sourceProperties = completeTransferOptions?.SourceProperties;
                 ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(sourceProperties?.RawProperties);
                 FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties);
-                await ShareFileClient.SetHttpHeadersAsync(
-                    httpHeaders: httpHeaders,
-                    smbProperties: smbProperties,
-                    cancellationToken: cancellationToken).ConfigureAwait(false);
+                await ShareFileClient.SetHttpHeadersAsync(new()
+                {
+                    HttpHeaders = httpHeaders,
+                    SmbProperties = smbProperties,
+                },
+                cancellationToken: cancellationToken).ConfigureAwait(false);
             }
         }
 

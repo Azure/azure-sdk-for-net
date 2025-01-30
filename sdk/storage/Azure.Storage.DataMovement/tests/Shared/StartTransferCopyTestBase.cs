@@ -949,7 +949,7 @@ namespace Azure.Storage.DataMovement.Tests
                 source.Container,
                 destination.Container,
                 (TransferPropertiesTestType) propertiesType,
-                size: Constants.KB + 100,
+                size: Constants.KB,
                 chunkSize: Constants.KB / 2);
         }
     }
