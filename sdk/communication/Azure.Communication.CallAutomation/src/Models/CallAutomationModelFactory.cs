@@ -18,10 +18,11 @@ namespace Azure.Communication.CallAutomation
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
         /// <returns> A new <see cref="CallAutomation.CallConnected"/> instance for mocking. </returns>
-        public static CallConnected CallConnected(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
+        public static CallConnected CallConnected(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new CallConnected(callConnectionId, serverCallId, correlationId, operationContext);
+            return new CallConnected(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
         /// <summary> Initializes a new instance of CallDisconnected. </summary>
@@ -29,10 +30,11 @@ namespace Azure.Communication.CallAutomation
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
         /// <param name="operationContext"> Used by customers when calling mid-call actions to correlate the request to the response event. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
         /// <returns> A new <see cref="CallAutomation.CallConnected"/> instance for mocking. </returns>
-        public static CallDisconnected CallDisconnected(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
+        public static CallDisconnected CallDisconnected(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new CallDisconnected(callConnectionId, serverCallId, correlationId, operationContext);
+            return new CallDisconnected(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
         }
 
         /// <summary> Initializes a new instance of CallTransferFailed. </summary>
@@ -56,7 +58,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.ContinuousDtmfRecognitionStopped"/> instance for mocking. </returns>
         public static ContinuousDtmfRecognitionStopped ContinuousDtmfRecognitionStopped(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new ContinuousDtmfRecognitionStopped(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new ContinuousDtmfRecognitionStopped(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of ContinuousDtmfRecognitionToneFailed. </summary>
@@ -68,7 +70,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.ContinuousDtmfRecognitionToneFailed"/> instance for mocking. </returns>
         public static ContinuousDtmfRecognitionToneFailed ContinuousDtmfRecognitionToneFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, ResultInformation resultInformation = null, string operationContext = null)
         {
-            return new ContinuousDtmfRecognitionToneFailed(callConnectionId, serverCallId, correlationId, resultInformation, operationContext);
+            return new ContinuousDtmfRecognitionToneFailed(resultInformation, operationContext,callConnectionId,serverCallId,correlationId);
         }
 
         /// <summary> Initializes a new instance of PlayCompleted. </summary>
@@ -80,7 +82,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.PlayCompleted"/> instance for mocking. </returns>
         public static PlayCompleted PlayCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new PlayCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new PlayCompleted(operationContext,resultInformation,callConnectionId,serverCallId,correlationId);
         }
 
         /// <summary> Initializes a new instance of PlayStarted. </summary>
@@ -92,7 +94,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.PlayStarted"/> instance for mocking. </returns>
         public static PlayStarted PlayStarted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new PlayStarted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new PlayStarted(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of PlayPaused. </summary>
@@ -104,7 +106,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.PlayPaused"/> instance for mocking. </returns>
         public static PlayPaused PlayPaused(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new PlayPaused(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new PlayPaused(operationContext,resultInformation,callConnectionId,serverCallId,correlationId);
         }
 
         /// <summary> Initializes a new instance of PlayResumed. </summary>
@@ -116,7 +118,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.PlayResumed"/> instance for mocking. </returns>
         public static PlayResumed PlayResumed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new PlayResumed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new PlayResumed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of PlayFailed. </summary>
@@ -128,7 +130,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.PlayFailed"/> instance for mocking. </returns>
         public static PlayFailed PlayFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new PlayFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new PlayFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of PlayCanceled. </summary>
@@ -136,10 +138,11 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
         /// <returns> A new <see cref="CallAutomation.PlayCanceled"/> instance for mocking. </returns>
-        public static PlayCanceled PlayCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
+        public static PlayCanceled PlayCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new PlayCanceled(callConnectionId, serverCallId, correlationId, operationContext);
+            return new PlayCanceled(operationContext,resultInformation,callConnectionId,serverCallId,correlationId);
         }
 
         /// <summary> Initializes a new instance of RecognizeCanceled. </summary>
@@ -147,10 +150,11 @@ namespace Azure.Communication.CallAutomation
         /// <param name="callConnectionId"> Call connection ID. </param>
         /// <param name="serverCallId"> Server call ID. </param>
         /// <param name="correlationId"> Correlation ID for event to call correlation. Also called ChainId for skype chain ID. </param>
+        /// <param name="resultInformation"> Contains the resulting SIP code, sub-code and message. </param>
         /// <returns> A new <see cref="CallAutomation.RecognizeCanceled"/> instance for mocking. </returns>
-        public static RecognizeCanceled RecognizeCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null)
+        public static RecognizeCanceled RecognizeCanceled(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new RecognizeCanceled(callConnectionId, serverCallId, correlationId, operationContext);
+            return new RecognizeCanceled(operationContext,resultInformation,callConnectionId,serverCallId,correlationId);
         }
 
         /// <summary> Initializes a new instance of RecognizeFailed. </summary>
@@ -162,7 +166,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.RecognizeFailed"/> instance for mocking. </returns>
         public static RecognizeFailed RecognizeFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new RecognizeFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new RecognizeFailed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of AddParticipantsResult. </summary>
@@ -319,14 +323,15 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Initializes a new instance of cancel add participant success event.
         /// </summary>
-        public static CancelAddParticipantSucceeded CancelAddParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string invitationId = default, string operationContext = default)
+        public static CancelAddParticipantSucceeded CancelAddParticipantSucceeded(string callConnectionId = default, string serverCallId = default, string correlationId = default, string invitationId = default, string operationContext = default, ResultInformation resultInformation = null)
         {
             var internalObject = new CancelAddParticipantSucceededInternal(
                 callConnectionId,
                 serverCallId,
                 correlationId,
                 operationContext,
-                invitationId
+                invitationId,
+                resultInformation
                 );
 
             return new CancelAddParticipantSucceeded(internalObject);
@@ -375,7 +380,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// Initializes a new instance of Participants Updated event.
         /// </summary>
-        public static ParticipantsUpdated ParticipantsUpdated(string callConnectionId = default, string serverCallId = default, string correlationId = default, IEnumerable<CallParticipant> participants = default, int sequenceNumber = default)
+        public static ParticipantsUpdated ParticipantsUpdated(string callConnectionId = default, string serverCallId = default, string correlationId = default, IEnumerable<CallParticipant> participants = default, int sequenceNumber = default, ResultInformation resultInformation = null)
         {
             var internalObject = new ParticipantsUpdatedInternal(
                 callConnectionId,
@@ -384,7 +389,8 @@ namespace Azure.Communication.CallAutomation
                 sequenceNumber,
                 participants == null
                     ? new List<CallParticipantInternal>()
-                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted,p.IsOnHold)).ToList()
+                    : participants.Select(p => new CallParticipantInternal(CommunicationIdentifierSerializer.Serialize(p.Identifier), p.IsMuted,p.IsOnHold)).ToList(),
+                resultInformation
                 );
 
             return new ParticipantsUpdated(internalObject);
@@ -475,7 +481,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.SendDtmfTonesCompleted"/> instance for mocking. </returns>
         public static SendDtmfTonesCompleted SendDtmfTonesCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            var internalObject = new SendDtmfTonesCompletedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            var internalObject = new SendDtmfTonesCompletedInternal(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
 
             return new SendDtmfTonesCompleted(internalObject);
         }
@@ -491,7 +497,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.SendDtmfTonesFailed"/> instance for mocking. </returns>
         public static SendDtmfTonesFailed SendDtmfTonesFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            var internalObject = new SendDtmfTonesFailedInternal(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            var internalObject = new SendDtmfTonesFailedInternal(operationContext,resultInformation,callConnectionId,serverCallId,correlationId);
 
             return new SendDtmfTonesFailed(internalObject);
         }
@@ -505,7 +511,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.HoldAudioStarted"/> instance for mocking. </returns>
         public static HoldAudioStarted HoldAudioStarted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new HoldAudioStarted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new HoldAudioStarted(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of HoldAudioPaused. </summary>
@@ -517,7 +523,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.HoldAudioPaused"/> instance for mocking. </returns>
         public static HoldAudioPaused HoldAudioPaused(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new HoldAudioPaused(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new HoldAudioPaused(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of HoldAudioResumed. </summary>
@@ -529,7 +535,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.HoldAudioResumed"/> instance for mocking. </returns>
         public static HoldAudioResumed HoldAudioResumed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new HoldAudioResumed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new HoldAudioResumed(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of HoldAudioCompleted. </summary>
@@ -541,7 +547,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.HoldAudioCompleted"/> instance for mocking. </returns>
         public static HoldAudioCompleted HoldAudioCompleted(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new HoldAudioCompleted(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new HoldAudioCompleted(operationContext, resultInformation, callConnectionId, serverCallId, correlationId);
         }
 
         /// <summary> Initializes a new instance of HoldFailed. </summary>
@@ -553,7 +559,7 @@ namespace Azure.Communication.CallAutomation
         /// <returns> A new <see cref="CallAutomation.HoldFailed"/> instance for mocking. </returns>
         public static HoldFailed HoldFailed(string callConnectionId = null, string serverCallId = null, string correlationId = null, string operationContext = null, ResultInformation resultInformation = null)
         {
-            return new HoldFailed(callConnectionId, serverCallId, correlationId, operationContext, resultInformation);
+            return new HoldFailed(operationContext,resultInformation,callConnectionId,serverCallId,correlationId);
         }
 
         /// <summary> Initializes a new instance of ConnectFailed. </summary>

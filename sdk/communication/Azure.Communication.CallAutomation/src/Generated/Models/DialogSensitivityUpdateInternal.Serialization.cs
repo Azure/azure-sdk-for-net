@@ -17,29 +17,24 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            string callConnectionId = default;
-            string serverCallId = default;
-            string correlationId = default;
+            bool? sensitiveMask = default;
             string operationContext = default;
             ResultInformation resultInformation = default;
             DialogInputType? dialogInputType = default;
             string dialogId = default;
-            bool? sensitiveMask = default;
+            object ivrContext = default;
+            string callConnectionId = default;
+            string serverCallId = default;
+            string correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("callConnectionId"u8))
+                if (property.NameEquals("sensitiveMask"u8))
                 {
-                    callConnectionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serverCallId"u8))
-                {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationId"u8))
-                {
-                    correlationId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sensitiveMask = property.Value.GetBoolean();
                     continue;
                 }
                 if (property.NameEquals("operationContext"u8))
@@ -70,25 +65,41 @@ namespace Azure.Communication.CallAutomation
                     dialogId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("sensitiveMask"u8))
+                if (property.NameEquals("ivrContext"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    sensitiveMask = property.Value.GetBoolean();
+                    ivrContext = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("callConnectionId"u8))
+                {
+                    callConnectionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serverCallId"u8))
+                {
+                    serverCallId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("correlationId"u8))
+                {
+                    correlationId = property.Value.GetString();
                     continue;
                 }
             }
             return new DialogSensitivityUpdateInternal(
-                callConnectionId,
-                serverCallId,
-                correlationId,
+                sensitiveMask,
                 operationContext,
                 resultInformation,
                 dialogInputType,
                 dialogId,
-                sensitiveMask);
+                ivrContext,
+                callConnectionId,
+                serverCallId,
+                correlationId);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

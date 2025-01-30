@@ -17,30 +17,16 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            string callConnectionId = default;
-            string serverCallId = default;
-            string correlationId = default;
             string operationContext = default;
             ResultInformation resultInformation = default;
             DialogInputType? dialogInputType = default;
             string dialogId = default;
+            object ivrContext = default;
+            string callConnectionId = default;
+            string serverCallId = default;
+            string correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("callConnectionId"u8))
-                {
-                    callConnectionId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("serverCallId"u8))
-                {
-                    serverCallId = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("correlationId"u8))
-                {
-                    correlationId = property.Value.GetString();
-                    continue;
-                }
                 if (property.NameEquals("operationContext"u8))
                 {
                     operationContext = property.Value.GetString();
@@ -69,15 +55,40 @@ namespace Azure.Communication.CallAutomation
                     dialogId = property.Value.GetString();
                     continue;
                 }
+                if (property.NameEquals("ivrContext"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    ivrContext = property.Value.GetObject();
+                    continue;
+                }
+                if (property.NameEquals("callConnectionId"u8))
+                {
+                    callConnectionId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("serverCallId"u8))
+                {
+                    serverCallId = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("correlationId"u8))
+                {
+                    correlationId = property.Value.GetString();
+                    continue;
+                }
             }
             return new DialogFailedInternal(
-                callConnectionId,
-                serverCallId,
-                correlationId,
                 operationContext,
                 resultInformation,
                 dialogInputType,
-                dialogId);
+                dialogId,
+                ivrContext,
+                callConnectionId,
+                serverCallId,
+                correlationId);
         }
 
         /// <summary> Deserializes the model from a raw response. </summary>

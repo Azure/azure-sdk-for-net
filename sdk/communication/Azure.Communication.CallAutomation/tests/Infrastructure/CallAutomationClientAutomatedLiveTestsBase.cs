@@ -418,6 +418,7 @@ namespace Azure.Communication.CallAutomation.Tests.Infrastructure
                     // continue;
                 }
             }
+
             return InstrumentClient(serviceBusClient);
         }
     }
