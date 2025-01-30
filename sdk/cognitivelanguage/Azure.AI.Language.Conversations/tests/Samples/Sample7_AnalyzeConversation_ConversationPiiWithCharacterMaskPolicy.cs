@@ -144,6 +144,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             #region Snippet:AnalyzeConversation_ConversationPiiSync
             AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
             #endregion
+
             // Assert: Validate the results
             foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
             {
