@@ -81,13 +81,12 @@ namespace Azure.Storage.DataMovement.Samples
             {
                 transferManager = new TransferManager();
                 blobs = new BlobsStorageResourceProvider(credential);
-                LocalFilesStorageResourceProvider files = new(); // TODO static on merge
 
                 #region Snippet:DataMovementMigration_UploadSingleFile
                 // upload blob
                 TransferOperation operation = await transferManager.StartTransferAsync(
-                    files.FromFile(filePath), // TODO static on merge
-                    blobs.FromBlob(blobUri));
+                    LocalFilesStorageResourceProvider.FromFile(filePath),
+                    await blobs.FromBlobAsync(blobUri));
                 await operation.WaitForCompletionAsync();
                 #endregion
             }
@@ -132,15 +131,14 @@ namespace Azure.Storage.DataMovement.Samples
             {
                 transferManager = new TransferManager();
                 blobs = new BlobsStorageResourceProvider(credential);
-                LocalFilesStorageResourceProvider files = new(); // TODO static on merge
 
                 #region Snippet:DataMovementMigration_UploadBlobDirectory
                 // upload blobs
                 TransferOperation operation = await transferManager.StartTransferAsync(
-                    files.FromDirectory(directoryPath),// TODO static on merge
-                    blobs.FromContainer(containerUri, new BlobStorageResourceContainerOptions()
+                    LocalFilesStorageResourceProvider.FromDirectory(directoryPath),
+                    await blobs.FromContainerAsync(containerUri, new BlobStorageResourceContainerOptions()
                     {
-                        BlobDirectoryPrefix = blobDirectoryPath,
+                        BlobPrefix = blobDirectoryPath,
                     }));
                 await operation.WaitForCompletionAsync();
                 #endregion
@@ -190,13 +188,12 @@ namespace Azure.Storage.DataMovement.Samples
 
                 transferManager = new TransferManager();
                 blobs = new BlobsStorageResourceProvider(credential);
-                LocalFilesStorageResourceProvider files = new(); // TODO static on merge
 
                 #region Snippet:DataMovementMigration_DownloadBlob
                 // download blob
                 TransferOperation operation = await transferManager.StartTransferAsync(
-                    blobs.FromBlob(blobUri),
-                    files.FromFile(filePath)); // TODO static on merge
+                    await blobs.FromBlobAsync(blobUri),
+                    LocalFilesStorageResourceProvider.FromFile(filePath));
                 await operation.WaitForCompletionAsync();
                 #endregion
             }
@@ -241,16 +238,15 @@ namespace Azure.Storage.DataMovement.Samples
             {
                 transferManager = new TransferManager();
                 blobs = new BlobsStorageResourceProvider(credential);
-                LocalFilesStorageResourceProvider files = new(); // TODO static on merge
 
                 #region Snippet:DataMovementMigration_DownloadBlobDirectory
                 // download blob directory
                 TransferOperation operation = await transferManager.StartTransferAsync(
-                    blobs.FromContainer(containerUri, new BlobStorageResourceContainerOptions()
+                    await blobs.FromContainerAsync(containerUri, new BlobStorageResourceContainerOptions()
                     {
-                        BlobDirectoryPrefix = blobDirectoryPath,
+                        BlobPrefix = blobDirectoryPath,
                     }),
-                    files.FromDirectory(directoryPath)); // TODO static on merge
+                    LocalFilesStorageResourceProvider.FromDirectory(directoryPath));
                 await operation.WaitForCompletionAsync();
                 #endregion
             }
@@ -305,8 +301,8 @@ namespace Azure.Storage.DataMovement.Samples
                 #region Snippet:DataMovementMigration_CopyBlobToBlob
                 // upload blob
                 TransferOperation operation = await transferManager.StartTransferAsync(
-                    blobs.FromBlob(srcBlobUri),
-                    blobs.FromBlob(dstBlobUri));
+                    await blobs.FromBlobAsync(srcBlobUri),
+                    await blobs.FromBlobAsync(dstBlobUri));
                 await operation.WaitForCompletionAsync();
                 #endregion
             }
@@ -368,8 +364,8 @@ namespace Azure.Storage.DataMovement.Samples
                 #region Snippet:DataMovementMigration_CopyBlobToShareFile
                 // upload blob
                 TransferOperation operation = await transferManager.StartTransferAsync(
-                    blobs.FromBlob(blobUri),
-                    files.FromFile(fileUri));
+                    await blobs.FromBlobAsync(blobUri),
+                    await files.FromFileAsync(fileUri));
                 await operation.WaitForCompletionAsync();
                 #endregion
             }
