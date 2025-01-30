@@ -16,7 +16,7 @@ namespace ClientModel.Tests
     public class TestClientEventListener : EventListener
     {
         private volatile bool _disposed;
-        private readonly ConcurrentQueue<EventWrittenEventArgs> _events = new ConcurrentQueue<EventWrittenEventArgs>();
+        private readonly ConcurrentQueue<EventWrittenEventArgs> _events = new();
 
         public IEnumerable<EventWrittenEventArgs> EventData => _events;
 
@@ -61,6 +61,8 @@ namespace ClientModel.Tests
             Assert.AreEqual(expectedEventName, args.EventName);
             Assert.AreEqual(expectedEventLevel, args.Level);
             Assert.AreEqual(expectedEventSourceName, args.EventSource.Name);
+            string requestId = args.GetProperty<string>("requestId");
+            Assert.That(string.IsNullOrEmpty(requestId), Is.False);
             return args;
         }
 

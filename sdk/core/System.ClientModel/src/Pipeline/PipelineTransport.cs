@@ -94,7 +94,7 @@ public abstract class PipelineTransport : PipelinePolicy
         }
         catch (Exception ex)
         {
-            _pipelineTransportLogger?.LogExceptionResponse(Activity.Current?.Id ?? string.Empty, ex);
+            _pipelineTransportLogger?.LogExceptionResponse(message.Request.ClientRequestId ?? string.Empty, ex);
             throw;
         }
     }
@@ -113,7 +113,7 @@ public abstract class PipelineTransport : PipelinePolicy
         }
         catch (Exception ex)
         {
-            _pipelineTransportLogger?.LogExceptionResponse(Activity.Current?.Id ?? string.Empty, ex);
+            _pipelineTransportLogger?.LogExceptionResponse(message.Request.ClientRequestId ?? string.Empty, ex);
             throw;
         }
     }
@@ -162,7 +162,7 @@ public abstract class PipelineTransport : PipelinePolicy
 
         if (elapsed > ClientLoggingOptions.RequestTooLongSeconds)
         {
-            _pipelineTransportLogger?.LogResponseDelay(Activity.Current?.Id ?? string.Empty, elapsed);
+            _pipelineTransportLogger?.LogResponseDelay(message.Request.ClientRequestId ?? string.Empty, elapsed);
         }
 
         // The remainder of the method handles response content according to

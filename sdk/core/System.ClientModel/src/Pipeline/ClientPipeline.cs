@@ -29,10 +29,11 @@ public sealed partial class ClientPipeline
 
     private readonly ReadOnlyMemory<PipelinePolicy> _policies;
     private readonly PipelineTransport _transport;
+    private readonly bool _enableLogging;
 
     private readonly TimeSpan _networkTimeout;
 
-    private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies, TimeSpan networkTimeout, int perCallIndex, int perTryIndex, int beforeTransportIndex)
+    private ClientPipeline(ReadOnlyMemory<PipelinePolicy> policies, TimeSpan networkTimeout, int perCallIndex, int perTryIndex, int beforeTransportIndex, bool enableLogging)
     {
         if (policies.Span[policies.Length - 1] is not PipelineTransport)
         {
@@ -50,6 +51,7 @@ public sealed partial class ClientPipeline
         _beforeTransportIndex = beforeTransportIndex;
 
         _networkTimeout = networkTimeout;
+        _enableLogging = enableLogging;
     }
 
     #region Factory methods for creating a pipeline instance
@@ -171,9 +173,11 @@ public sealed partial class ClientPipeline
         // Add the transport.
         policies[index++] = options.Transport ?? options.GetHttpClientPipelineTransport();
 
+        bool enableLogging = options.ClientLoggingOptions?.EnableLogging ?? ClientLoggingOptions.DefaultEnableLogging;
+
         return new ClientPipeline(policies,
             options.NetworkTimeout ?? DefaultNetworkTimeout,
-            perCallIndex, perTryIndex, beforeTransportIndex);
+            perCallIndex, perTryIndex, beforeTransportIndex, enableLogging);
     }
 
     #endregion
@@ -206,8 +210,10 @@ public sealed partial class ClientPipeline
     public void Send(PipelineMessage message)
     {
         Argument.AssertNotNull(message, nameof(message));
+        message.Request.ClientRequestId = Activity.Current?.Id ?? Guid.NewGuid().ToString();
 
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
+
         policies[0].Process(message, policies, 0);
     }
 
@@ -227,8 +233,10 @@ public sealed partial class ClientPipeline
     public async ValueTask SendAsync(PipelineMessage message)
     {
         Argument.AssertNotNull(message, nameof(message));
+        message.Request.ClientRequestId = Activity.Current?.Id ?? Guid.NewGuid().ToString();
 
         IReadOnlyList<PipelinePolicy> policies = GetProcessor(message);
+
         await policies[0].ProcessAsync(message, policies, 0).ConfigureAwait(false);
     }
 

@@ -136,7 +136,7 @@ public class ClientRetryPolicy : PipelinePolicy
                 message.RetryCount++;
                 OnTryComplete(message);
 
-                _retryLogger?.LogRequestRetrying(Activity.Current?.Id ?? string.Empty, message.RetryCount, elapsed);
+                _retryLogger?.LogRequestRetrying(message.Request.ClientRequestId ?? string.Empty, message.RetryCount, elapsed);
 
                 continue;
             }

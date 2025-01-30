@@ -51,6 +51,8 @@ public class TestLogger : ILogger
         LoggerEvent log = SingleEventById(eventId);
         Assert.AreEqual(expectedEventName, log.EventId.Name);
         Assert.AreEqual(expectedEventLevel, log.LogLevel);
+        string requestId = log.GetValueFromArguments<string>("requestId");
+        Assert.That(string.IsNullOrEmpty(requestId), Is.False);
         return log;
     }
 
