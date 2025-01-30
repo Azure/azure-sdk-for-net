@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetApp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2024-09-01-preview";
+            _apiVersion = apiVersion ?? "2024-09-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -743,7 +743,7 @@ namespace Azure.ResourceManager.NetApp
             }
         }
 
-        internal RequestUriBuilder CreateGetKeyVaultStatusRequestUri(string subscriptionId, string resourceGroupName, string accountName)
+        internal RequestUriBuilder CreateGetChangeKeyVaultInformationRequestUri(string subscriptionId, string resourceGroupName, string accountName)
         {
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.NetApp
             return uri;
         }
 
-        internal HttpMessage CreateGetKeyVaultStatusRequest(string subscriptionId, string resourceGroupName, string accountName)
+        internal HttpMessage CreateGetChangeKeyVaultInformationRequest(string subscriptionId, string resourceGroupName, string accountName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -786,13 +786,13 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> GetKeyVaultStatusAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public async Task<Response> GetChangeKeyVaultInformationAsync(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var message = CreateGetKeyVaultStatusRequest(subscriptionId, resourceGroupName, accountName);
+            using var message = CreateGetChangeKeyVaultInformationRequest(subscriptionId, resourceGroupName, accountName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -810,13 +810,13 @@ namespace Azure.ResourceManager.NetApp
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="accountName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response GetKeyVaultStatus(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
+        public Response GetChangeKeyVaultInformation(string subscriptionId, string resourceGroupName, string accountName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
 
-            using var message = CreateGetKeyVaultStatusRequest(subscriptionId, resourceGroupName, accountName);
+            using var message = CreateGetChangeKeyVaultInformationRequest(subscriptionId, resourceGroupName, accountName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
