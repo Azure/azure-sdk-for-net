@@ -1,13 +1,13 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+// This identifies the latest API Version under test: 2024-08-22-preview
+#define API_V3
+
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Net;
-using System.Reflection.Metadata;
-using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -17,7 +17,7 @@ using Azure.Core.TestFramework.Models;
 using Azure.Data.ConfidentialLedger.Tests.Helper;
 using Azure.Security.ConfidentialLedger.Certificate;
 using NUnit.Framework;
-using static System.Net.WebRequestMethods;
+using Xunit;
 using static Azure.Security.ConfidentialLedger.ConfidentialLedgerClientOptions;
 
 namespace Azure.Security.ConfidentialLedger.Tests
@@ -58,14 +58,6 @@ namespace Azure.Security.ConfidentialLedger.Tests
                     identityServiceCert: serviceCert.Cert));
         }
 
-        public async Task GetUser(string objId)
-        {
-            var result = await Client.GetUserAsync(objId, new());
-            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
-
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-            Assert.That(stringResult, Does.Contain(objId));
-        }
 #if NET6_0_OR_GREATER
         [LiveOnly]
         [RecordedTest]
@@ -86,6 +78,48 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.That(stringResult, Does.Contain("digest"));
         }
 #endif
+
+        [RecordedTest]
+        [LiveOnly]
+        public async Task GetLedgerIdentity()
+        {
+            var ledgerId = TestEnvironment.ConfidentialLedgerUrl.Host;
+            ledgerId = ledgerId.Substring(0, ledgerId.IndexOf('.'));
+            var result = await IdentityClient.GetLedgerIdentityAsync(ledgerId, new()).ConfigureAwait(false);
+
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+        }
+
+        #region LedgerTransactions
+        [RecordedTest]
+        public async Task PostLedgerEntry()
+        {
+            var operation = await Client.PostLedgerEntryAsync(
+                waitUntil: WaitUntil.Completed,
+                RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }));
+            var result = operation.GetRawResponse();
+            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
+
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            Assert.NotNull(operation.Id);
+            Assert.That(stringResult, Does.Contain("Committed"));
+            Assert.That(stringResult, Does.Contain(operation.Id));
+        }
+
+        [RecordedTest]
+        public async Task GetCurrentLedgerEntry()
+        {
+            await Client.PostLedgerEntryAsync(
+               waitUntil: WaitUntil.Completed,
+               RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }));
+
+            var result = await Client.GetCurrentLedgerEntryAsync();
+            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
+
+            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            Assert.That(stringResult, Does.Contain("contents"));
+        }
+
         [RecordedTest]
         public async Task GetLedgerEntries()
         {
@@ -139,7 +173,9 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
             Assert.That(stringResult, Does.Contain(transactionId));
         }
+        #endregion
 
+        #region LedgerGovernance
         [RecordedTest]
         public async Task GetConstitution()
         {
@@ -170,36 +206,28 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
             Assert.That(stringResult, Does.Contain("enclaveQuotes"));
         }
+        #endregion
 
-        [RecordedTest]
-        public async Task PostLedgerEntry()
+        #region LedgerUserManagment
+#if API_V3
+        [Fact(Skip = "Skipped for API_V3")]
+#else
+        [Fact]
+#endif
+        public async Task GetUser(string objId)
         {
-            var operation = await Client.PostLedgerEntryAsync(
-                waitUntil: WaitUntil.Completed,
-                RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }));
-            var result = operation.GetRawResponse();
+            var result = await Client.GetUserAsync(objId, new());
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-            Assert.NotNull(operation.Id);
-            Assert.That(stringResult, Does.Contain("Committed"));
-            Assert.That(stringResult, Does.Contain(operation.Id));
+            Assert.That(stringResult, Does.Contain(objId));
         }
 
-        [RecordedTest]
-        public async Task GetCurrentLedgerEntry()
-        {
-            await Client.PostLedgerEntryAsync(
-               waitUntil: WaitUntil.Completed,
-               RequestContent.Create(new { contents = Recording.GenerateAssetName("test") }));
-
-            var result = await Client.GetCurrentLedgerEntryAsync();
-            var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
-
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-            Assert.That(stringResult, Does.Contain("contents"));
-        }
-
+#if API_V3
+        [Fact(Skip = "Skipped for API_V3")]
+#else
+        [Fact]
+#endif
         [RecordedTest]
         public async Task CreateAndGetAndDeleteUser()
         {
@@ -219,6 +247,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
         }
 
+#if API_V3
+        [Fact(Skip = "Skipped for API_V3")]
+#else
+        [Fact]
+#endif
         [RecordedTest]
         public async Task GetUsers()
         {
@@ -247,17 +280,6 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [RecordedTest]
-        [LiveOnly]
-        public async Task GetLedgerIdentity()
-        {
-            var ledgerId = TestEnvironment.ConfidentialLedgerUrl.Host;
-            ledgerId = ledgerId.Substring(0, ledgerId.IndexOf('.'));
-            var result = await IdentityClient.GetLedgerIdentityAsync(ledgerId, new()).ConfigureAwait(false);
-
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
-        }
-
-        [RecordedTest]
         public async Task GetLedgerUsers()
         {
             // Create a user, test that it shows up in the users list
@@ -283,9 +305,11 @@ namespace Azure.Security.ConfidentialLedger.Tests
             Assert.IsTrue(users.Contains(userId), "GetLedgerUsers endpoint does not contain expected reader");
             await Client.DeleteLedgerUserAsync(userId);
         }
+        #endregion
 
+        #region Programmability
         [RecordedTest]
-        public async Task ProgrammabilityTest()
+        public async Task UserDefinedEndpointsTest()
         {
             // Deploy JS App
             string programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create("test", "programmability.js"));
@@ -300,7 +324,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             ConfidentialLedgerHelperHttpClient helperHttpClient = new ConfidentialLedgerHelperHttpClient(TestEnvironment.ConfidentialLedgerUrl, Credential);
             (var statusCode, var response) = await helperHttpClient.QueryUserDefinedContentEndpointAsync("app/Content");
             Assert.AreEqual((int)HttpStatusCode.OK, statusCode);
-            Assert.AreEqual("TestContent", response);
+            Assert.AreEqual("Test content", response);
 
             // Deploy Empty JS Bundle to remove JS App
             programmabilityPayload = JsonSerializer.Serialize(JSBundle.Create());
@@ -312,7 +336,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
 
         [RecordedTest]
-        public async Task ProgrammabilityJSRuntimeOptionsTest()
+        public async Task JSRuntimeOptionsTest()
         {
             // Get Default JS Runtime Options
             Response result = await Client.GetRuntimeOptionsAsync();
@@ -365,11 +389,13 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
         }
+        #endregion
 
+        #region CustomRole
         [RecordedTest]
         public async Task CustomRoleTest()
         {
-            const string roleName = "TestRole";
+            string roleName = "TestRole";
             // Add Custom Role
             var rolesParam = new RolesParam
             {
@@ -394,19 +420,9 @@ namespace Azure.Security.ConfidentialLedger.Tests
             result = await Client.DeleteUserDefinedRoleAsync(roleName);
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
         }
+        #endregion
 
-        private Dictionary<string, string> GetQueryStringKvps(string s)
-        {
-            var parts = s.Substring(s.IndexOf('?') + 1).Split('&');
-            var result = new Dictionary<string, string>();
-            foreach (var part in parts)
-            {
-                var kvp = part.Split('=');
-                result[kvp[0]] = kvp[1];
-            }
-            return result;
-        }
-
+        #region LedgerTestHelpers
         private async Task<(string TransactionId, string StringResult)> GetFirstTransactionIdFromGetEntries()
         {
             string stringResult = "Loading";
@@ -468,5 +484,6 @@ namespace Azure.Security.ConfidentialLedger.Tests
         {
             public List<Role> Roles { get; set; } = new List<Role>();
         }
+        #endregion
     }
 }
