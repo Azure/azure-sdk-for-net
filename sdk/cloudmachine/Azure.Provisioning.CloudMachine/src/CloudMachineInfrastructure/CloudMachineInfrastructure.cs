@@ -14,6 +14,8 @@ using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Roles;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace Azure.CloudMachine;
 
@@ -120,7 +122,7 @@ public class CloudMachineInfrastructure
 
         context ??= new ProvisioningBuildOptions();
         // This must occur after the features have been emitted.
-        context.InfrastructureResolvers.Add(new RoleResolver(Features.RoleAnnotations, [Identity], [PrincipalIdParameter]));
+        context.InfrastructureResolvers.Add(new RoleResolver(Id, Features.RoleAnnotations, [Identity], [PrincipalIdParameter]));
         return _infrastructure.Build(context);
     }
 
@@ -137,15 +139,27 @@ public class CloudMachineInfrastructure
 public static class CloudMachineInfrastructureConfiguration
 {
     /// <summary>
-    /// Adds a connection to the collection.
+    /// Adds a connections and CM ID to the config system.
     /// </summary>
     /// <param name="builder"></param>
     /// <param name="cm"></param>
     /// <returns></returns>
-    public static IConfigurationBuilder AddCloudMachineInfrastructure(this IConfigurationBuilder builder, CloudMachineInfrastructure cm)
+    public static IConfigurationBuilder AddCloudMachineConfiguration(this IConfigurationBuilder builder, CloudMachineInfrastructure cm)
     {
         builder.AddCloudMachineConnections(cm.Connections);
         builder.AddCloudMachineId(cm.Id);
+        return builder;
+    }
+
+    /// <summary>
+    /// Adds the CloudMachine to DI.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <param name="cm"></param>
+    /// <returns></returns>
+    public static IHostApplicationBuilder AddCloudMachine(this IHostApplicationBuilder builder, CloudMachineInfrastructure cm)
+    {
+        builder.Services.AddSingleton(new CloudMachineClient(cm.Connections));
         return builder;
     }
 }

@@ -270,7 +270,7 @@ Not all credentials require this configuration. Credentials that authenticate th
 
 ## Environment variables
 
-[`DefaultAzureCredential`][ref_DefaultAzureCredential] and [`EnvironmentCredential`][ref_EnvironmentCredential] can be configured with environment variables. Each type of authentication requires values for specific variables.
+[`DefaultAzureCredential`][ref_DefaultAzureCredential] and [`EnvironmentCredential`][ref_EnvironmentCredential] can be configured with environment variables. Each type of authentication requires values for specific variables. Configuration is attempted in the order in which these environment variables are listed. For example, if values for a client secret and certificate are both present, the client secret is used by `EnvironmentCredential`.
 
 ### Service principal with secret
 
@@ -299,13 +299,17 @@ Not all credentials require this configuration. Credentials that authenticate th
 |`AZURE_USERNAME`|a username (usually an email address)
 |`AZURE_PASSWORD`|that user's password
 
+### Workload identity (`DefaultAzureCredential`)
+
+|Variable name|Value
+|-|-
+|`AZURE_CLIENT_ID`|The client ID of the application the workload identity will authenticate. If defined, used as the default value for `WorkloadIdentityClientId` in `DefaultAzureCredentialOptions`.
+
 ### Managed identity (`DefaultAzureCredential`)
 
 |Variable name|Value
 |-|-
-|`AZURE_CLIENT_ID`|The client ID for the user-assigned managed identity. If defined, used as the default value for `ManagedIdentityClientId` in `DefaultAzureCredentialOptions`
-
-Configuration is attempted in the order in which these environment variables are listed. For example, if values for a client secret and certificate are both present, the client secret is used.
+|`AZURE_CLIENT_ID`|The client ID for the user-assigned managed identity. If defined, used as the default value for `ManagedIdentityClientId` in `DefaultAzureCredentialOptions`.
 
 ## Continuous Access Evaluation
 

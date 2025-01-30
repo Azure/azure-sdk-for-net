@@ -358,6 +358,7 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation JapanWest { get { throw null; } }
         public static Azure.Core.AzureLocation KoreaCentral { get { throw null; } }
         public static Azure.Core.AzureLocation KoreaSouth { get { throw null; } }
+        public static Azure.Core.AzureLocation MexicoCentral { get { throw null; } }
         public string Name { get { throw null; } }
         public static Azure.Core.AzureLocation NorthCentralUS { get { throw null; } }
         public static Azure.Core.AzureLocation NorthEurope { get { throw null; } }
@@ -370,6 +371,7 @@ namespace Azure.Core
         public static Azure.Core.AzureLocation SouthCentralUS { get { throw null; } }
         public static Azure.Core.AzureLocation SoutheastAsia { get { throw null; } }
         public static Azure.Core.AzureLocation SouthIndia { get { throw null; } }
+        public static Azure.Core.AzureLocation SpainCentral { get { throw null; } }
         public static Azure.Core.AzureLocation SwedenCentral { get { throw null; } }
         public static Azure.Core.AzureLocation SwedenSouth { get { throw null; } }
         public static Azure.Core.AzureLocation SwitzerlandNorth { get { throw null; } }

@@ -4,10 +4,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
-using Azure.Identity;
 using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.ComputeSchedule.Models;
 using Azure.ResourceManager.ComputeSchedule.Tests.Helpers;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
 
         protected async Task<ResourceGroupResource> CreateResourceGroupAsync(string rgName)
         {
-            var rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
+            ArmOperation<ResourceGroupResource> rgOp = await DefaultSubscription.GetResourceGroups().CreateOrUpdateAsync(
                 WaitUntil.Completed,
                 rgName,
                 new ResourceGroupData(Location)
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         private async Task<GenericResource> CreateNetworkInterface(ResourceIdentifier subnetId, ResourceGroupResource rg, string dependencyName)
         {
             var nicName = Recording.GenerateAssetName($"{dependencyName}-nic-");
-            ResourceIdentifier nicId = new ResourceIdentifier($"{rg.Id}/providers/Microsoft.Network/networkInterfaces/{nicName}");
+            ResourceIdentifier nicId = new($"{rg.Id}/providers/Microsoft.Network/networkInterfaces/{nicName}");
             var input = new GenericResourceData(Location)
             {
                 Properties = BinaryData.FromObjectAsJson(new Dictionary<string, object>()
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
                     }
                 })
             };
-            var operation = await _genericResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicId, input);
+            ArmOperation<GenericResource> operation = await _genericResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, nicId, input);
             return operation.Value;
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         {
             var vnetName = Recording.GenerateAssetName($"{dependencyName}-vnet-");
             var subnetName = Recording.GenerateAssetName($"{dependencyName}-subnet-");
-            ResourceIdentifier vnetId = new ResourceIdentifier($"{rg.Id}/providers/Microsoft.Network/virtualNetworks/{vnetName}");
+            ResourceIdentifier vnetId = new($"{rg.Id}/providers/Microsoft.Network/virtualNetworks/{vnetName}");
             var addressSpaces = new Dictionary<string, object>()
             {
                 { "addressPrefixes", new List<string>() { "10.0.0.0/16" } }
@@ -128,12 +128,12 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
                     { "subnets", subnets }
                 })
             };
-            var operation = await _genericResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetId, input);
+            ArmOperation<GenericResource> operation = await _genericResourceCollection.CreateOrUpdateAsync(WaitUntil.Completed, vnetId, input);
             return operation.Value;
         }
 
         /// <summary>
-        /// Dependencies for creating a virtual machine
+        /// Dependencies for creating a virtual machine.
         /// </summary>
         /// <returns></returns>
         protected async Task<GenericResource> CreateBasicDependenciesOfVirtualMachineCreationAsync(ResourceGroupResource rg, string dependencyName)
@@ -144,19 +144,34 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         }
 
         /// <summary>
-        /// Create a virtual machine in a resource group
+        /// Create a virtual machine in a resource group.
         /// </summary>
         /// <param name="vmName"></param>
+        /// <param name="vmnamesuffix"></param>
         /// <param name="resourceGroup"></param>
         /// <returns></returns>
         protected async Task<VirtualMachineResource> CreateVirtualMachineAsync(string vmName, string vmnamesuffix, ResourceGroupResource resourceGroup)
         {
-            var computerName = $"{vmName}{vmnamesuffix}";
-            VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
-            GenericResource nic = await CreateBasicDependenciesOfVirtualMachineCreationAsync(resourceGroup, computerName);
-            VirtualMachineData input = ResourceUtils.GetBasicWindowsVirtualMachineData(Location, computerName, nic.Id);
-            ArmOperation<VirtualMachineResource> lro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, computerName, input);
-            return lro.Value;
+            using CancellationTokenSource cts = new(TimeSpan.FromMinutes(10));
+            while (!cts.Token.IsCancellationRequested)
+            {
+                try
+                {
+                    var computerName = $"{vmName}{vmnamesuffix}";
+                    VirtualMachineCollection vmCollection = resourceGroup.GetVirtualMachines();
+                    GenericResource nic = await CreateBasicDependenciesOfVirtualMachineCreationAsync(resourceGroup, computerName);
+                    VirtualMachineData input = ResourceUtils.GetBasicWindowsVirtualMachineData(Location, computerName, nic.Id);
+                    ArmOperation<VirtualMachineResource> lro = await vmCollection.CreateOrUpdateAsync(WaitUntil.Completed, computerName, input);
+                    return lro.Value;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    await Task.Delay(1000);
+                    throw;
+                }
+            }
+            throw new OperationCanceledException("The operation was canceled before the virtual machine could be created.");
         }
 
         protected async Task<List<VirtualMachineResource>> GenerateMultipleVirtualMachines(string vmName, ResourceGroupResource resourceGroup, int vmCount)
@@ -193,7 +208,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
         }
 
 #pragma warning disable IDE0044 // Add readonly modifier
-        private Dictionary<string, OperationState> _completedOperations = new();
+        private Dictionary<string, OperationState?> _completedOperations = [];
 #pragma warning restore IDE0044 // Add readonly modifier
 
         private Task<bool> ShouldRetryPolling(GetOperationStatusResult response, int totalVmsCount)
@@ -224,6 +239,31 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             }
             return Task.FromResult(shouldRetry);
         }
+
+#nullable enable
+
+        /// <summary>
+        /// This method excludes resources not processed in Scheduledactions due to a number of reasons like operation conflicts etc.
+        /// </summary>
+        /// <param name="results"></param>
+        /// <returns></returns>
+        public static HashSet<string?> ExcludeResourcesNotProcessed(IEnumerable<ResourceOperationResult> results)
+        {
+            var validOperationIds = new HashSet<string?>();
+            foreach (ResourceOperationResult result in results)
+            {
+                if (result.ErrorCode != null)
+                {
+                    Console.WriteLine($"VM with resourceId: {result.ResourceId} encountered the following error: errorCode {result.ErrorCode}, errorDetails: {result.ErrorDetails}");
+                }
+                else
+                {
+                    validOperationIds.Add(result.Operation.OperationId);
+                }
+            }
+            return validOperationIds;
+        }
+#nullable disable
         #endregion
 
         #region SA Operations
@@ -237,6 +277,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             try
             {
                 result = await subscriptionResource.SubmitVirtualMachineStartAsync(location, content);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
+                throw;
             }
             catch (Exception ex)
             {
@@ -256,6 +301,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             {
                 result = await subscriptionResource.SubmitVirtualMachineDeallocateAsync(location, content);
             }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
+                throw;
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.InnerException?.Message);
@@ -274,6 +324,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             {
                 result = await subscriptionResource.SubmitVirtualMachineHibernateAsync(location, content);
             }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
+                throw;
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.InnerException?.Message);
@@ -290,6 +345,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             try
             {
                 result = await subscriptionResource.ExecuteVirtualMachineStartAsync(location, content);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
+                throw;
             }
             catch (Exception ex)
             {
@@ -310,6 +370,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             {
                 result = await subscriptionResource.ExecuteVirtualMachineDeallocateAsync(location, content);
             }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
+                throw;
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.InnerException?.Message);
@@ -329,6 +394,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             {
                 result = await subscriptionResource.ExecuteVirtualMachineHibernateAsync(location, content);
             }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
+                throw;
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.InnerException?.Message);
@@ -346,6 +416,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             try
             {
                 result = await subscriptionResource.GetVirtualMachineOperationStatusAsync(location, content);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
+                throw;
             }
             catch (Exception ex)
             {
@@ -366,6 +441,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             {
                 result = await subscriptionResource.CancelVirtualMachineOperationsAsync(location, content);
             }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
+                throw;
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.InnerException?.Message);
@@ -383,6 +463,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests
             try
             {
                 result = await subscriptionResource.GetVirtualMachineOperationErrorsAsync(location, content);
+            }
+            catch (RequestFailedException ex)
+            {
+                Console.WriteLine($"Request failed with ErrorCode:{ex.ErrorCode} and ErrorMessage: {ex.Message}");
+                throw;
             }
             catch (Exception ex)
             {
