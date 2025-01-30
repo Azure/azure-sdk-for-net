@@ -55,7 +55,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// </para><para>
         /// Microsoft recommends using <see cref="EncryptionAlgorithm.RsaOaep256"/> or stronger algorithms for enhanced security.
         /// Microsoft does <b>not</b> recommend <see cref="EncryptionAlgorithm.RsaOaep"/>, which is included solely for backwards compatibility.
-        /// RSA_OAEP utilizes SHA1, which has known collision problems.
+        /// <see cref="EncryptionAlgorithm.RsaOaep"/> utilizes SHA1, which has known collision problems.
         /// </para>
         /// </summary>
         public static EncryptionAlgorithm RsaOaep { get; } = new EncryptionAlgorithm(RsaOaepValue);
