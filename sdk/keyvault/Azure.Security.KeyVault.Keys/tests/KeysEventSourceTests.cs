@@ -303,7 +303,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
         // Use RSA operations as a proxy for cryptographic operations since it currently supports them all.
         private static IEnumerable GetRsaOperations(bool includePublicKeyMethods, bool ignoreHashingMethods)
         {
-            yield return new TestCaseData("Decrypt", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.DecryptAsync(algorithm ?? EncryptionAlgorithm.RsaOaep, s_buffer)));
+            yield return new TestCaseData("Decrypt", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.DecryptAsync(algorithm ?? EncryptionAlgorithm.RsaOaep256, s_buffer)));
             yield return new TestCaseData("Sign", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.SignAsync(algorithm ?? SignatureAlgorithm.RS256, s_buffer)));
             yield return new TestCaseData("SignData", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.SignDataAsync(algorithm ?? SignatureAlgorithm.RS256, s_buffer)))
                 .ConditionalIgnore(ignoreHashingMethods, "Cannot hash locally with invalid algorithm");
@@ -311,7 +311,7 @@ namespace Azure.Security.KeyVault.Keys.Tests
 
             if (includePublicKeyMethods)
             {
-                yield return new TestCaseData("Encrypt", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.EncryptAsync(algorithm ?? EncryptionAlgorithm.RsaOaep, s_buffer)));
+                yield return new TestCaseData("Encrypt", null, new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.EncryptAsync(algorithm ?? EncryptionAlgorithm.RsaOaep256, s_buffer)));
                 yield return new TestCaseData("Verify", "true", new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.VerifyAsync(algorithm ?? SignatureAlgorithm.RS256, s_buffer, s_buffer)));
                 yield return new TestCaseData("VerifyData", "true", new Func<CryptographyClient, string, Task<object>>(async (client, algorithm) => await client.VerifyDataAsync(algorithm ?? SignatureAlgorithm.RS256, s_buffer, s_buffer)))
                     .ConditionalIgnore(ignoreHashingMethods, "Cannot hash locally with invalid algorithm");

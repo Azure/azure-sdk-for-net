@@ -46,6 +46,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// Cryptographic standards no longer consider RSA with the PKCS#1 v1.5 padding scheme secure for encryption.
         /// </para>
         /// </summary>
+        [Obsolete("Microsoft recommends using EncryptionAlgorithm.RsaOaep256 or stronger algorithms for enhanced security. Microsoft does not recommend EncryptionAlgorithm.Rsa15, which is included solely for backwards compatibility.",false)]
         public static EncryptionAlgorithm Rsa15 { get; } = new EncryptionAlgorithm(Rsa15Value);
 
         /// <summary>
@@ -58,6 +59,7 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
         /// <see cref="EncryptionAlgorithm.RsaOaep"/> utilizes SHA1, which has known collision problems.
         /// </para>
         /// </summary>
+        [Obsolete("Microsoft recommends using EncryptionAlgorithm.RsaOaep256 or stronger algorithms for enhanced security. Microsoft does not recommend EncryptionAlgorithm.RsaOaep, which is included solely for backwards compatibility.",false)]
         public static EncryptionAlgorithm RsaOaep { get; } = new EncryptionAlgorithm(RsaOaepValue);
 
         /// <summary>
@@ -148,8 +150,10 @@ namespace Azure.Security.KeyVault.Keys.Cryptography
 
         internal static EncryptionAlgorithm FromRsaEncryptionPadding(RSAEncryptionPadding padding) => padding.Mode switch
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             RSAEncryptionPaddingMode.Pkcs1 => Rsa15,
             RSAEncryptionPaddingMode.Oaep when padding.OaepHashAlgorithm == HashAlgorithmName.SHA1 => RsaOaep,
+#pragma warning restore CS0618 // Type or member is obsolete
             RSAEncryptionPaddingMode.Oaep when padding.OaepHashAlgorithm == HashAlgorithmName.SHA256 => RsaOaep256,
             _ => throw new NotSupportedException($"{padding} is not supported"),
         };

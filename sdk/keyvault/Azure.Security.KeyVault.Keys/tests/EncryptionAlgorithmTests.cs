@@ -13,11 +13,13 @@ namespace Azure.Security.KeyVault.Keys.Tests
         [Test]
         public void FromRsaEncryptionPadding()
         {
+#pragma warning disable CS0618 // Type or member is obsolete
             EncryptionAlgorithm sut = EncryptionAlgorithm.FromRsaEncryptionPadding(RSAEncryptionPadding.Pkcs1);
             Assert.AreEqual(EncryptionAlgorithm.Rsa15, sut);
 
             sut = EncryptionAlgorithm.FromRsaEncryptionPadding(RSAEncryptionPadding.OaepSHA1);
             Assert.AreEqual(EncryptionAlgorithm.RsaOaep, sut);
+#pragma warning restore CS0618 // Type or member is obsolete
 
             sut = EncryptionAlgorithm.FromRsaEncryptionPadding(RSAEncryptionPadding.OaepSHA256);
             Assert.AreEqual(EncryptionAlgorithm.RsaOaep256, sut);
