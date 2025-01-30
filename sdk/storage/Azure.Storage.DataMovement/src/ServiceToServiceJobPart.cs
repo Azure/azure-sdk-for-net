@@ -314,6 +314,7 @@ namespace Azure.Storage.DataMovement
 
                 // Report first chunk written to progress tracker
                 await ReportBytesWrittenAsync(blockSize).ConfigureAwait(false);
+                return true;
             }
             catch (RequestFailedException exception)
                 when (_createMode == StorageResourceCreationMode.SkipIfExists
