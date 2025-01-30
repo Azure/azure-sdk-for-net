@@ -56,6 +56,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             {
                 Console.WriteLine($"Category: {intent.Category}");
                 Console.WriteLine($"Confidence: {intent.Confidence}");
+
                 Console.WriteLine();
             }
 
