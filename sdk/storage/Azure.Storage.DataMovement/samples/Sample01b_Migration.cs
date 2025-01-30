@@ -13,6 +13,8 @@ using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs;
 using System.Collections.Generic;
 using Azure.Storage.DataMovement.Blobs;
+using Azure.Storage.DataMovement.Files.Shares;
+using Azure.Storage.Files.Shares;
 
 namespace Azure.Storage.DataMovement.Samples
 {
@@ -311,6 +313,70 @@ namespace Azure.Storage.DataMovement.Samples
             finally
             {
                 await container.DeleteIfExistsAsync();
+            }
+        }
+
+        [Test]
+        public async Task CopyBlobToShare()
+        {
+            #region Snippet:DataMovementMigration_CopyBlobToShareFile_VarDeclaration
+            // these values provided by your code
+            Uri blobUri, fileUri;
+            BlobsStorageResourceProvider blobs;
+            ShareFilesStorageResourceProvider files;
+            TransferManager transferManager;
+            #endregion
+
+            // Get account and shared key access
+            // (see implementation for details)
+            (Uri accountUri, StorageSharedKeyCredential credential) = GetSharedKeyAccessAccount();
+
+            // generate a container and blob name for purposes of sample
+            string containerName = Randomize("sample-container");
+            string blobName = Randomize("sample-blob");
+            string filePath = $"{Randomize("sample-folder")}/{Randomize("sample-file")}";
+            blobUri = new BlobUriBuilder(accountUri)
+            {
+                BlobContainerName = containerName,
+                BlobName = blobName,
+            }.ToUri();
+            fileUri = new ShareUriBuilder(accountUri)
+            {
+                ShareName = containerName,
+                DirectoryOrFilePath = filePath,
+            }.ToUri();
+
+            BlobContainerClient container = null;
+            ShareClient share = null;
+            try
+            {
+                // Create the container & blob for this sample download
+                container = new BlobServiceClient(accountUri, credential)
+                    .GetBlobContainerClient(containerName);
+                await container.CreateIfNotExistsAsync();
+                await container.GetBlobClient(blobName)
+                    .UploadAsync(BinaryData.FromString(SampleFileContent));
+
+                // create the share to copy to
+                share = new ShareClient(accountUri, credential);
+                await share.CreateIfNotExistsAsync();
+
+                transferManager = new TransferManager();
+                blobs = new BlobsStorageResourceProvider(credential);
+                files = new ShareFilesStorageResourceProvider(credential);
+
+                #region Snippet:DataMovementMigration_CopyBlobToShareFile
+                // upload blob
+                TransferOperation operation = await transferManager.StartTransferAsync(
+                    blobs.FromBlob(blobUri),
+                    files.FromFile(fileUri));
+                await operation.WaitForCompletionAsync();
+                #endregion
+            }
+            finally
+            {
+                await container?.DeleteIfExistsAsync();
+                await share?.DeleteIfExistsAsync();
             }
         }
 

@@ -312,13 +312,13 @@ await TransferManager.DownloadAsync(
     CopyMethod.ServiceSideSyncCopy);
 ```
 **Modern:**
-```csharp
+```csharp Snippet:DataMovementMigration_CopyBlobToBlob_VarDeclaration
 // these values provided by your code
 string srcBlobUri, dstBlobUri;
 BlobsStorageResourceProvider blobs;
 TransferManager transferManager;
 ```
-```csharp
+```csharp Snippet:DataMovementMigration_CopyBlobToBlob
 // copy blob
 TranferOperation operation = await transferManager.StartTransferAsync(
     blobs.FromBlob(srcBlobUri),
