@@ -95,12 +95,7 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 else
                 {
                     var data = GetRandomBuffer(objectLength.Value);
-                    //var data = new byte[(int)objectLength];
-                    //for (int i = 0; i < data.Length; i++)
-                    //{
-                    //    data[i] = 0x61;
-                    //}
-                    using Stream originalStream = new MemoryStream(data);
+                    using Stream originalStream = await CreateLimitedMemoryStream(objectLength.Value);
                     await blobClient.UploadAsync(
                         originalStream,
                         new BlobUploadOptions()
