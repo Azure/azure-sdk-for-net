@@ -10,12 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Inference
 {
-    /// <summary>
-    /// An abstract representation of a structured content item within a chat message.
-    /// Please note <see cref="ChatMessageContentItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="ChatMessageImageContentItem"/>, <see cref="ChatMessageAudioContentItem"/> and <see cref="ChatMessageTextContentItem"/>.
-    /// </summary>
-    public abstract partial class ChatMessageContentItem
+    /// <summary> The details of an audio chat message content part. </summary>
+    public partial class ChatMessageInputAudio
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,23 +43,39 @@ namespace Azure.AI.Inference
         /// </list>
         /// </para>
         /// </summary>
-        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ChatMessageContentItem"/>. </summary>
-        protected ChatMessageContentItem()
+        /// <summary> Initializes a new instance of <see cref="ChatMessageInputAudio"/>. </summary>
+        /// <param name="data"> Base64 encoded audio data. </param>
+        /// <param name="format"> The audio format of the audio content. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public ChatMessageInputAudio(string data, AudioContentFormat format)
         {
+            Argument.AssertNotNull(data, nameof(data));
+
+            Data = data;
+            Format = format;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChatMessageContentItem"/>. </summary>
-        /// <param name="type"> The discriminated object type. </param>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageInputAudio"/>. </summary>
+        /// <param name="data"> Base64 encoded audio data. </param>
+        /// <param name="format"> The audio format of the audio content. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ChatMessageContentItem(string type, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ChatMessageInputAudio(string data, AudioContentFormat format, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Type = type;
+            Data = data;
+            Format = format;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The discriminated object type. </summary>
-        internal string Type { get; set; }
+        /// <summary> Initializes a new instance of <see cref="ChatMessageInputAudio"/> for deserialization. </summary>
+        internal ChatMessageInputAudio()
+        {
+        }
+
+        /// <summary> Base64 encoded audio data. </summary>
+        public string Data { get; }
+        /// <summary> The audio format of the audio content. </summary>
+        public AudioContentFormat Format { get; }
     }
 }

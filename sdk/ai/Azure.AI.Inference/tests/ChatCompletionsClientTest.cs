@@ -24,6 +24,7 @@ namespace Azure.AI.Inference.Tests
             MistralSmall,
             GitHubGpt4o,
             AoaiGpt4o,
+            AoaiAudioModel,
         }
 
         public enum ToolChoiceTestType
@@ -44,7 +45,7 @@ namespace Azure.AI.Inference.Tests
             UsingFilePath
         }
 
-        public ChatCompletionsClientTest(bool isAsync) : base(isAsync)
+        public ChatCompletionsClientTest(bool isAsync) : base(isAsync, RecordedTestMode.Live)
         {
             TestDiagnostics = false;
             JsonPathSanitizers.Add("$.messages[*].content[*].image_url.url");
@@ -470,6 +471,79 @@ namespace Azure.AI.Inference.Tests
                     new ChatRequestUserMessage(
                         new ChatMessageTextContentItem("describe this image"),
                         imageContentItem),
+                },
+                MaxTokens = 2048,
+            };
+
+            Response<ChatCompletions> response = null;
+            try
+            {
+                response = await client.CompleteAsync(requestOptions);
+            }
+            catch (Exception ex)
+            {
+                var requestPayload = captureRequestPayloadPolicy._requestContent;
+                var requestHeaders = captureRequestPayloadPolicy._requestHeaders;
+                Assert.True(false, $"Request failed with the following exception:\n {ex}\n Request headers: {requestHeaders}\n Request payload: {requestPayload}");
+            }
+
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.Value, Is.InstanceOf<ChatCompletions>());
+            ChatCompletions result = response.Value;
+            Assert.That(result.Id, Is.Not.Null.Or.Empty);
+            Assert.That(result.Created, Is.Not.Null.Or.Empty);
+            Assert.That(result.FinishReason, Is.EqualTo(CompletionsFinishReason.Stopped));
+            Assert.That(result.Role, Is.EqualTo(ChatRole.Assistant));
+            Assert.That(result.Content, Is.Not.Null.Or.Empty);
+        }
+
+        [RecordedTest]
+        [TestCase(TargetModel.AoaiAudioModel)]
+        public async Task TestChatCompletionsWithAudio(TargetModel targetModel)
+        {
+            if (Mode == RecordedTestMode.Playback)
+            {
+                Assert.Inconclusive("Unable to run test with file path in playback mode.");
+            }
+
+            var endpoint = targetModel switch
+            {
+                TargetModel.AoaiAudioModel => new Uri(TestEnvironment.AoaiAudioEndpoint),
+                _ => throw new ArgumentException(nameof(targetModel)),
+            };
+
+            var credential = targetModel switch
+            {
+                TargetModel.AoaiAudioModel => new AzureKeyCredential(TestEnvironment.AoaiAudioKey),
+                _ => throw new ArgumentException(nameof(targetModel)),
+            };
+
+            CaptureRequestPayloadPolicy captureRequestPayloadPolicy = new CaptureRequestPayloadPolicy();
+            AzureAIInferenceClientOptions clientOptions = new AzureAIInferenceClientOptions();
+            clientOptions.AddPolicy(captureRequestPayloadPolicy, HttpPipelinePosition.PerCall);
+
+            // Uncomment the following lines to enable enhanced log output
+            // AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger(EventLevel.Verbose);
+            // clientOptions.Diagnostics.IsLoggingContentEnabled = true;\
+
+            if (targetModel == TargetModel.AoaiAudioModel)
+            {
+                OverrideApiVersionPolicy overrideApiVersionPolicy = new OverrideApiVersionPolicy("2024-11-01-preview");
+                clientOptions.AddPolicy(overrideApiVersionPolicy, HttpPipelinePosition.PerCall);
+            }
+
+            var client = CreateClient(endpoint, credential, clientOptions);
+
+            ChatMessageAudioContentItem audioContentItem = new(ChatMessageInputAudio.Load(TestEnvironment.TestAudioMp3InputPath, AudioContentFormat.Mp3));
+
+            var requestOptions = new ChatCompletionsOptions()
+            {
+                Messages =
+                {
+                    new ChatRequestSystemMessage("You are a helpful assistant that helps describe images."),
+                    new ChatRequestUserMessage(
+                        new ChatMessageTextContentItem("Please translate this audio snippet to spanish."),
+                        audioContentItem),
                 },
                 MaxTokens = 2048,
             };

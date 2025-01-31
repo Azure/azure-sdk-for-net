@@ -78,6 +78,7 @@ namespace Azure.AI.Inference
                 switch (discriminator.GetString())
                 {
                     case "image_url": return ChatMessageImageContentItem.DeserializeChatMessageImageContentItem(element, options);
+                    case "input_audio": return ChatMessageAudioContentItem.DeserializeChatMessageAudioContentItem(element, options);
                     case "text": return ChatMessageTextContentItem.DeserializeChatMessageTextContentItem(element, options);
                 }
             }
