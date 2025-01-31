@@ -38,7 +38,7 @@ namespace TestProjects.Spector.Tests
         }
         internal static string GetCoverageFilePath()
         {
-            return Path.Combine(GetCoverageDirectory(), "tsp-spector-coverage-csharp-standard.json");
+            return Path.Combine(GetCoverageDirectory(), "tsp-spector-coverage-azure.json");
         }
 
         protected override void Stop(Process process)
