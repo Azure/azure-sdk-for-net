@@ -15,10 +15,12 @@
   - Ability to hold participants with a play source.
 - The new InterruptAudioAnnounce API now allows for the interruption of hold audio
 - With the InterruptHoldAudio option in PlayOptions, it is now possible to interrupt the hold audio.
+- Events now include ResultInformation, which provides more details on the success or failure of the events.
 
 ### Breaking Changes
 
 ### Bugs Fixed
+- Media streaming with AudioFormat default Pcm24kMono is removed and changed to null if AudioFormat is not passed.
 
 ### Other Changes
 - Introduced audio streaming data parsing capabilities.
