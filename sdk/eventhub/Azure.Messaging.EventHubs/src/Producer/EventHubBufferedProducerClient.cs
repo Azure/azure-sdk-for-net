@@ -1538,7 +1538,7 @@ namespace Azure.Messaging.EventHubs.Producer
 
                 if (releaseGuard)
                 {
-                    partitionState.SafeReleaseGuard();
+                    partitionState.PartitionGuard.Release();
                 }
 
                 var duration = publishWatch.IsActive ? publishWatch.GetElapsedTime().TotalSeconds : 0;
@@ -2494,9 +2494,6 @@ namespace Azure.Messaging.EventHubs.Producer
             /// <summary>The events that have been enqueued and are pending publishing.</summary>
             private readonly Channel<EventData> _pendingEvents;
 
-            /// <summary>The events that have been enqueued and are pending publishing.</summary>
-            private readonly int _partitionGuardMaximumCount;
-
             /// <summary>
             ///   Initializes a new instance of the <see cref="PartitionPublishingState"/> class.
             /// </summary>
@@ -2510,7 +2507,6 @@ namespace Azure.Messaging.EventHubs.Producer
                 PartitionId = partitionId;
                 PartitionGuard = new(options.MaximumConcurrentSendsPerPartition, options.MaximumConcurrentSendsPerPartition);
 
-                _partitionGuardMaximumCount = options.MaximumConcurrentSendsPerPartition;
                 _pendingEvents = CreatePendingEventChannel(options.MaximumEventBufferLengthPerPartition);
                 _stashedEvents = new();
             }
@@ -2542,19 +2538,6 @@ namespace Azure.Messaging.EventHubs.Producer
             /// <param name="eventData">The event to stash.</param>
             ///
             public void StashEvent(EventData eventData) => _stashedEvents.Enqueue(eventData);
-
-            /// <summary>
-            ///   Releases the partition guard after checking the state to ensure
-            ///   there is capacity remaining and a release is necessary.
-            /// </summary>
-            ///
-            public void SafeReleaseGuard()
-            {
-                if (PartitionGuard.CurrentCount < _partitionGuardMaximumCount)
-                {
-                    PartitionGuard.Release();
-                }
-            }
 
             /// <summary>
             ///   Performs tasks needed to clean-up the disposable resources used by the publisher.

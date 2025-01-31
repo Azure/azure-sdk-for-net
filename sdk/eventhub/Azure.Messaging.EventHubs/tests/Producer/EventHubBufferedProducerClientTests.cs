@@ -5298,7 +5298,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     if (releaseFlag)
                     {
-                        state.SafeReleaseGuard();
+                        state.PartitionGuard.Release();
                     }
 
                     completionSource.TrySetResult(true);
@@ -5366,7 +5366,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     if (releaseFlag)
                     {
-                        state.SafeReleaseGuard();
+                        state.PartitionGuard.Release();
                     }
 
                     if (Interlocked.Increment(ref publishCount) >= validPartitions.Length)
@@ -5452,7 +5452,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     if (releaseFlag)
                     {
-                        state.SafeReleaseGuard();
+                        state.PartitionGuard.Release();
                     }
 
                     if (Interlocked.Increment(ref publishCount) >= expectedPublishCount)
@@ -5542,7 +5542,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     if (releaseFlag)
                     {
-                        state.SafeReleaseGuard();
+                        state.PartitionGuard.Release();
                     }
 
                     if (Interlocked.Increment(ref publishCount) >= expectedPublishCount)
@@ -5633,7 +5633,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     if (releaseFlag)
                     {
-                        state.SafeReleaseGuard();
+                        state.PartitionGuard.Release();
                     }
 
                     if (Interlocked.Increment(ref publishCount) >= expectedPublishCount)
@@ -5735,7 +5735,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     if (releaseFlag)
                     {
-                        state.SafeReleaseGuard();
+                        state.PartitionGuard.Release();
                     }
 
                     if (Interlocked.Increment(ref publishCount) == expectedPublishCount)
@@ -5857,7 +5857,7 @@ namespace Azure.Messaging.EventHubs.Tests
 
                     if (releaseFlag)
                     {
-                        state.SafeReleaseGuard();
+                        state.PartitionGuard.Release();
                     }
 
                     if (Interlocked.Increment(ref finishCount) >= validPartitions.Length)
@@ -6062,7 +6062,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task DrainAndPublishPartitionEventsPublishshesOneBatch()
+        public async Task DrainAndPublishPartitionEventsPublishesOneBatch()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
@@ -6130,7 +6130,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task DrainAndPublishPartitionEventsPublishshesMultipleBatches()
+        public async Task DrainAndPublishPartitionEventsPublishesMultipleBatches()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
@@ -6259,7 +6259,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task DrainAndPublishPartitionEventsIvokesTheHandlerWhenPublishingFails()
+        public async Task DrainAndPublishPartitionEventsInvokesTheHandlerWhenPublishingFails()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
