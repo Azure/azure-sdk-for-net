@@ -327,8 +327,7 @@ namespace Azure.Storage.DataMovement
 
                 // Report bytes written before completion
                 await ReportBytesWrittenAsync(blockSize).ConfigureAwait(false);
-
-                // Set completion status to completed
+                await CompleteTransferAsync(sourceProperties).ConfigureAwait(false);
                 await OnTransferStateChangedAsync(TransferState.Completed).ConfigureAwait(false);
             }
             else
