@@ -383,7 +383,6 @@
     <PackageReference Update="System.Memory.Data" Version="6.0.0" />
     <PackageReference Update="System.Net.WebSockets.Client" Version="4.3.2" />
     <PackageReference Update="System.Reflection.Emit" Version="4.7.0" />
-    <PackageReference Update="System.Reflection.Metadata" Version="6.0.2" />
     <PackageReference Update="System.Runtime.InteropServices" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Algorithms" Version="4.3.0" />
     <PackageReference Update="System.Security.Cryptography.Cng" Version="4.5.2" />

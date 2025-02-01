@@ -44,14 +44,14 @@ internal class PipelineMessageHeadersLogValue : IReadOnlyList<KeyValuePair<strin
                 {
                     foreach (KeyValuePair<string, string> kvp in _requestHeaders)
                     {
-                        values.Add(new KeyValuePair<string, string>(kvp.Key, kvp.Value));
+                        values.Add(new KeyValuePair<string, string>(kvp.Key, _sanitizer.SanitizeHeader(kvp.Key, kvp.Value)));
                     }
                 }
                 else if (_responseHeaders != null)
                 {
                     foreach (KeyValuePair<string, string> kvp in _responseHeaders)
                     {
-                        values.Add(new KeyValuePair<string, string>(kvp.Key, kvp.Value));
+                        values.Add(new KeyValuePair<string, string>(kvp.Key, _sanitizer.SanitizeHeader(kvp.Key, kvp.Value)));
                     }
                 }
 

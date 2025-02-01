@@ -77,7 +77,7 @@ public class MessageLoggingPolicy : PipelinePolicy
 
         _messageLogger.LogRequest(requestId, request, _clientAssembly);
 
-        if (_enableMessageContentLogging && request.Content != null && _messageLogger.IsEnabled(LogLevel.Information, EventLevel.Informational))
+        if (_enableMessageContentLogging && request.Content != null && _messageLogger.IsEnabled(LogLevel.Debug, EventLevel.Verbose))
         {
             // Convert binary content to bytes
             using var memoryStream = new MaxLengthStream(_maxLength);

@@ -9,7 +9,7 @@ using System.Text;
 
 namespace System.ClientModel.Internal;
 
-// The methods in this class should only ever be called from LoggingHandler
+// The methods in this class should only ever be called from PipelineMessageLogger, PipelineRetryLogger, or PipelineTransportLogger
 [EventSource(Name = "System.ClientModel")]
 internal sealed class ClientModelEventSource : EventSource
 {
