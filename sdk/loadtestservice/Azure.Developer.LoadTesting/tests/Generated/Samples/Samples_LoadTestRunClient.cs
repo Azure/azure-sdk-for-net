@@ -510,56 +510,6 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_TestRunOperations_GetMetricDimensionValues_ListTheDimensionValuesForTheGivenMetricDimensionName()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = client.GetMetricDimensionValues("12316678-1234-1234-1234-122451189012", "SamplerName", "ActiveThreads", "LoadTestRunMetrics", "2022-09-24T19:00:40Z/2022-09-25T19:28:40Z", "PT1H", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TestRunOperations_GetMetricDimensionValues_ListTheDimensionValuesForTheGivenMetricDimensionName_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
-
-            Response response = await client.GetMetricDimensionValuesAsync("12316678-1234-1234-1234-122451189012", "SamplerName", "ActiveThreads", "LoadTestRunMetrics", "2022-09-24T19:00:40Z/2022-09-25T19:28:40Z", "PT1H", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_TestRunOperations_GetMetricDimensionValues_ListTheDimensionValuesForTheGivenMetricDimensionName_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
-
-            Response<DimensionValueList> response = client.GetMetricDimensionValues("12316678-1234-1234-1234-122451189012", "SamplerName", "ActiveThreads", "LoadTestRunMetrics", "2022-09-24T19:00:40Z/2022-09-25T19:28:40Z");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_TestRunOperations_GetMetricDimensionValues_ListTheDimensionValuesForTheGivenMetricDimensionName_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            TokenCredential credential = new DefaultAzureCredential();
-            LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
-
-            Response<DimensionValueList> response = await client.GetMetricDimensionValuesAsync("12316678-1234-1234-1234-122451189012", "SamplerName", "ActiveThreads", "LoadTestRunMetrics", "2022-09-24T19:00:40Z/2022-09-25T19:28:40Z");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_TestRunOperations_GetMetricDefinitions_ListTheMetricDefinitionsForALoadTestRun()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -926,6 +876,62 @@ namespace Azure.Developer.LoadTesting.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_TestRunOperations_GetMetricDimensionValues_ListTheDimensionValuesForTheGivenMetricDimensionName()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
+
+            foreach (BinaryData item in client.GetMetricDimensionValues("12316678-1234-1234-1234-122451189012", "SamplerName", "ActiveThreads", "LoadTestRunMetrics", "2022-09-24T19:00:40Z/2022-09-25T19:28:40Z", "PT1H", null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TestRunOperations_GetMetricDimensionValues_ListTheDimensionValuesForTheGivenMetricDimensionName_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
+
+            await foreach (BinaryData item in client.GetMetricDimensionValuesAsync("12316678-1234-1234-1234-122451189012", "SamplerName", "ActiveThreads", "LoadTestRunMetrics", "2022-09-24T19:00:40Z/2022-09-25T19:28:40Z", "PT1H", null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_TestRunOperations_GetMetricDimensionValues_ListTheDimensionValuesForTheGivenMetricDimensionName_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
+
+            foreach (string item in client.GetMetricDimensionValues("12316678-1234-1234-1234-122451189012", "SamplerName", "ActiveThreads", "LoadTestRunMetrics", "2022-09-24T19:00:40Z/2022-09-25T19:28:40Z"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_TestRunOperations_GetMetricDimensionValues_ListTheDimensionValuesForTheGivenMetricDimensionName_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            TokenCredential credential = new DefaultAzureCredential();
+            LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
+
+            await foreach (string item in client.GetMetricDimensionValuesAsync("12316678-1234-1234-1234-122451189012", "SamplerName", "ActiveThreads", "LoadTestRunMetrics", "2022-09-24T19:00:40Z/2022-09-25T19:28:40Z"))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_TestRunOperations_GetMetrics_ListTheMetricValuesForALoadTestRun()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -1016,7 +1022,7 @@ values = new object[]
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetTestProfileRuns(null, DateTimeOffset.Parse("2024-05-01T16:00:46.072Z"), DateTimeOffset.Parse("2024-05-01T16:50:46.072Z"), DateTimeOffset.Parse("2024-05-01T16:00:46.072Z"), DateTimeOffset.Parse("2024-05-01T16:50:46.072Z"), null, null, null, "12345678-1234-1234-1234-123456789012", "ACCEPTED", null))
+            foreach (BinaryData item in client.GetTestProfileRuns(null, DateTimeOffset.Parse("2024-05-01T16:00:46.072Z"), DateTimeOffset.Parse("2024-05-01T16:50:46.072Z"), DateTimeOffset.Parse("2024-05-01T16:00:46.072Z"), DateTimeOffset.Parse("2024-05-01T16:50:46.072Z"), null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("testProfileRunId").ToString());
@@ -1031,7 +1037,7 @@ values = new object[]
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestRunClient client = new LoadTestRunClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetTestProfileRunsAsync(null, DateTimeOffset.Parse("2024-05-01T16:00:46.072Z"), DateTimeOffset.Parse("2024-05-01T16:50:46.072Z"), DateTimeOffset.Parse("2024-05-01T16:00:46.072Z"), DateTimeOffset.Parse("2024-05-01T16:50:46.072Z"), null, null, null, "12345678-1234-1234-1234-123456789012", "ACCEPTED", null))
+            await foreach (BinaryData item in client.GetTestProfileRunsAsync(null, DateTimeOffset.Parse("2024-05-01T16:00:46.072Z"), DateTimeOffset.Parse("2024-05-01T16:50:46.072Z"), DateTimeOffset.Parse("2024-05-01T16:00:46.072Z"), DateTimeOffset.Parse("2024-05-01T16:50:46.072Z"), null, null, null, null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("testProfileRunId").ToString());

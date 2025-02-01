@@ -832,7 +832,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            foreach (BinaryData item in client.GetTestProfiles(null, DateTimeOffset.Parse("2024-05-01T16:00:46.072Z"), DateTimeOffset.Parse("2024-05-01T16:50:46.072Z"), "12345678-1234-1234-1234-123456789012", "12346-abcd-6789", null))
+            foreach (BinaryData item in client.GetTestProfiles(null, DateTimeOffset.Parse("2024-05-01T16:00:46.072Z"), DateTimeOffset.Parse("2024-05-01T16:50:46.072Z"), null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("testProfileId").ToString());
@@ -847,7 +847,7 @@ namespace Azure.Developer.LoadTesting.Samples
             TokenCredential credential = new DefaultAzureCredential();
             LoadTestAdministrationClient client = new LoadTestAdministrationClient(endpoint, credential);
 
-            await foreach (BinaryData item in client.GetTestProfilesAsync(null, DateTimeOffset.Parse("2024-05-01T16:00:46.072Z"), DateTimeOffset.Parse("2024-05-01T16:50:46.072Z"), "12345678-1234-1234-1234-123456789012", "12346-abcd-6789", null))
+            await foreach (BinaryData item in client.GetTestProfilesAsync(null, DateTimeOffset.Parse("2024-05-01T16:00:46.072Z"), DateTimeOffset.Parse("2024-05-01T16:50:46.072Z"), null, null, null))
             {
                 JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
                 Console.WriteLine(result.GetProperty("testProfileId").ToString());

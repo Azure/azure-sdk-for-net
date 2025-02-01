@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
@@ -1482,8 +1483,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="testIds"> Comma separated list IDs of the tests which should be associated with the test profiles to fetch. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Get all test profiles for the given filters. </remarks>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestProfilesAsync(int?,DateTimeOffset?,DateTimeOffset?,string,string,CancellationToken)']/*" />
-        public virtual AsyncPageable<TestProfile> GetTestProfilesAsync(int? maxpagesize = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, string testProfileIds = null, string testIds = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestProfilesAsync(int?,DateTimeOffset?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        public virtual AsyncPageable<TestProfile> GetTestProfilesAsync(int? maxpagesize = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, IEnumerable<string> testProfileIds = null, IEnumerable<string> testIds = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfilesRequest(maxpagesize, lastModifiedStartTime, lastModifiedEndTime, testProfileIds, testIds, context);
@@ -1499,8 +1500,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="testIds"> Comma separated list IDs of the tests which should be associated with the test profiles to fetch. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <remarks> Get all test profiles for the given filters. </remarks>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestProfiles(int?,DateTimeOffset?,DateTimeOffset?,string,string,CancellationToken)']/*" />
-        public virtual Pageable<TestProfile> GetTestProfiles(int? maxpagesize = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, string testProfileIds = null, string testIds = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestProfiles(int?,DateTimeOffset?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        public virtual Pageable<TestProfile> GetTestProfiles(int? maxpagesize = null, DateTimeOffset? lastModifiedStartTime = null, DateTimeOffset? lastModifiedEndTime = null, IEnumerable<string> testProfileIds = null, IEnumerable<string> testIds = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfilesRequest(maxpagesize, lastModifiedStartTime, lastModifiedEndTime, testProfileIds, testIds, context);
@@ -1518,7 +1519,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTestProfilesAsync(int?,DateTimeOffset?,DateTimeOffset?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTestProfilesAsync(int?,DateTimeOffset?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1531,8 +1532,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestProfilesAsync(int?,DateTimeOffset?,DateTimeOffset?,string,string,RequestContext)']/*" />
-        public virtual AsyncPageable<BinaryData> GetTestProfilesAsync(int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string testProfileIds, string testIds, RequestContext context)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestProfilesAsync(int?,DateTimeOffset?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetTestProfilesAsync(int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfilesRequest(maxpagesize, lastModifiedStartTime, lastModifiedEndTime, testProfileIds, testIds, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestProfilesNextPageRequest(nextLink, maxpagesize, lastModifiedStartTime, lastModifiedEndTime, testProfileIds, testIds, context);
@@ -1549,7 +1550,7 @@ namespace Azure.Developer.LoadTesting
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetTestProfiles(int?,DateTimeOffset?,DateTimeOffset?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetTestProfiles(int?,DateTimeOffset?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -1562,8 +1563,8 @@ namespace Azure.Developer.LoadTesting
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestProfiles(int?,DateTimeOffset?,DateTimeOffset?,string,string,RequestContext)']/*" />
-        public virtual Pageable<BinaryData> GetTestProfiles(int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string testProfileIds, string testIds, RequestContext context)
+        /// <include file="Docs/LoadTestAdministrationClient.xml" path="doc/members/member[@name='GetTestProfiles(int?,DateTimeOffset?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetTestProfiles(int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfilesRequest(maxpagesize, lastModifiedStartTime, lastModifiedEndTime, testProfileIds, testIds, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestProfilesNextPageRequest(nextLink, maxpagesize, lastModifiedStartTime, lastModifiedEndTime, testProfileIds, testIds, context);
@@ -1854,7 +1855,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetTestProfilesRequest(int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string testProfileIds, string testIds, RequestContext context)
+        internal HttpMessage CreateGetTestProfilesRequest(int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -1876,13 +1877,13 @@ namespace Azure.Developer.LoadTesting
             {
                 uri.AppendQuery("lastModifiedEndTime", lastModifiedEndTime.Value, "O", true);
             }
-            if (testProfileIds != null)
+            if (testProfileIds != null && !(testProfileIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQuery("testProfileIds", testProfileIds, true);
+                uri.AppendQueryDelimited("testProfileIds", testProfileIds, ",", true);
             }
-            if (testIds != null)
+            if (testIds != null && !(testIds is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
-                uri.AppendQuery("testIds", testIds, true);
+                uri.AppendQueryDelimited("testIds", testIds, ",", true);
             }
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -1917,7 +1918,7 @@ namespace Azure.Developer.LoadTesting
             return message;
         }
 
-        internal HttpMessage CreateGetTestProfilesNextPageRequest(string nextLink, int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, string testProfileIds, string testIds, RequestContext context)
+        internal HttpMessage CreateGetTestProfilesNextPageRequest(string nextLink, int? maxpagesize, DateTimeOffset? lastModifiedStartTime, DateTimeOffset? lastModifiedEndTime, IEnumerable<string> testProfileIds, IEnumerable<string> testIds, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
