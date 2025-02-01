@@ -18,11 +18,12 @@ namespace Azure.Provisioning.CosmosDB;
 public partial class CosmosDBSqlRoleAssignment : ProvisionableResource
 {
     /// <summary>
-    /// Gets the Name.
+    /// Gets or sets the Name.
     /// </summary>
     public BicepValue<string> Name 
     {
         get { Initialize(); return _name!; }
+        set { Initialize(); _name!.Assign(value); }
     }
     private BicepValue<string>? _name;
 
@@ -108,7 +109,7 @@ public partial class CosmosDBSqlRoleAssignment : ProvisionableResource
     /// </summary>
     protected override void DefineProvisionableProperties()
     {
-        _name = DefineProperty<string>("Name", ["name"], isOutput: true);
+        _name = DefineProperty<string>("Name", ["name"]);
         _principalId = DefineProperty<Guid>("PrincipalId", ["properties", "principalId"]);
         _roleDefinitionId = DefineProperty<ResourceIdentifier>("RoleDefinitionId", ["properties", "roleDefinitionId"]);
         _scope = DefineProperty<string>("Scope", ["properties", "scope"]);
