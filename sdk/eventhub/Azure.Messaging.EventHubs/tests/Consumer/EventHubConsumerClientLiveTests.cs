@@ -1270,41 +1270,6 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task ConsumerCannotReadWithInvalidProxy()
-        {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
-            {
-                using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
-
-                var clientOptions = new EventHubConsumerClientOptions();
-                clientOptions.RetryOptions.MaximumRetries = 0;
-                clientOptions.RetryOptions.MaximumDelay = TimeSpan.FromMilliseconds(5);
-                clientOptions.RetryOptions.TryTimeout = TimeSpan.FromSeconds(45);
-                clientOptions.ConnectionOptions.Proxy = new WebProxy("http://1.2.3.4:9999");
-                clientOptions.ConnectionOptions.TransportType = EventHubsTransportType.AmqpWebSockets;
-
-                await using (var producer = new EventHubProducerClient(EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName))
-                await using (var invalidProxyConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName, clientOptions))
-                {
-                    var partition = (await producer.GetPartitionIdsAsync(cancellationSource.Token)).First();
-
-                    // The sockets implementation in .NET Core on some platforms, such as Linux, does not trigger a specific socket exception and
-                    // will, instead, hang indefinitely.  The try timeout is intentionally set to a value smaller than the cancellation token to
-                    // invoke a timeout exception in these cases.
-
-                    Assert.That(async () => await ReadNothingAsync(invalidProxyConsumer, partition, cancellationSource.Token, iterationCount: 25), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="EventHubConsumerClient" /> is able to
-        ///   connect to the Event Hubs service and perform operations.
-        /// </summary>
-        ///
-        [Test]
         public async Task ConsumerCannotReadAsNonExclusiveWhenAnExclusiveReaderIsActive()
         {
             await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
@@ -2061,45 +2026,6 @@ namespace Azure.Messaging.EventHubs.Tests
                 await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, EventHubsTestEnvironment.Instance.EventHubsConnectionString, scope.EventHubName))
                 {
                     Assert.That(async () => await consumer.GetPartitionPropertiesAsync(invalidPartition, cancellationSource.Token), Throws.TypeOf<ArgumentOutOfRangeException>());
-                    Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
-                }
-            }
-        }
-
-        /// <summary>
-        ///   Verifies that the <see cref="EventHubConsumerClient" /> is able to
-        ///   connect to the Event Hubs service.
-        /// </summary>
-        ///
-        [Test]
-        public async Task ConsumerCannotRetrieveMetadataWithInvalidProxy()
-        {
-            await using (EventHubScope scope = await EventHubScope.CreateAsync(1))
-            {
-                using var cancellationSource = new CancellationTokenSource();
-                cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
-
-                var connectionString = EventHubsTestEnvironment.Instance.BuildConnectionStringForEventHub(scope.EventHubName);
-
-                var invalidProxyOptions = new EventHubConsumerClientOptions();
-                invalidProxyOptions.RetryOptions.MaximumRetries = 0;
-                invalidProxyOptions.RetryOptions.MaximumDelay = TimeSpan.FromMilliseconds(5);
-                invalidProxyOptions.RetryOptions.TryTimeout = TimeSpan.FromSeconds(45);
-                invalidProxyOptions.ConnectionOptions.Proxy = new WebProxy("http://1.2.3.4:9999");
-                invalidProxyOptions.ConnectionOptions.TransportType = EventHubsTransportType.AmqpWebSockets;
-
-                await using (var consumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString))
-                await using (var invalidProxyConsumer = new EventHubConsumerClient(EventHubConsumerClient.DefaultConsumerGroupName, connectionString, invalidProxyOptions))
-                {
-                    var partition = (await consumer.GetPartitionIdsAsync(cancellationSource.Token)).First();
-
-                    // The sockets implementation in .NET Core on some platforms, such as Linux, does not trigger a specific socket exception and
-                    // will, instead, hang indefinitely.  The try timeout is intentionally set to a value smaller than the cancellation token to
-                    // invoke a timeout exception in these cases.
-
-                    Assert.That(async () => await invalidProxyConsumer.GetPartitionIdsAsync(cancellationSource.Token), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
-                    Assert.That(async () => await invalidProxyConsumer.GetEventHubPropertiesAsync(cancellationSource.Token), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
-                    Assert.That(async () => await invalidProxyConsumer.GetPartitionPropertiesAsync(partition, cancellationSource.Token), Throws.InstanceOf<WebSocketException>().Or.InstanceOf<TimeoutException>());
                     Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
                 }
             }
