@@ -1046,7 +1046,7 @@ namespace Azure.Maps.Routing
         /// </summary>
         private static string GeoPointsToString(IList<GeoPosition> routePoints)
         {
-            var sb = new StringBuilder(string.Empty, routePoints.Count * 16);
+            var sb = new StringBuilder(string.Empty, routePoints.Count * 8);
             foreach (var point in routePoints)
             {
                 if (sb.Length > 0)
