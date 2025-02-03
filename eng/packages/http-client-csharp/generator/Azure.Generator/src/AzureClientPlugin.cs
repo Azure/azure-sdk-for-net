@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using Azure.Generator.Utilities;
 using Microsoft.CodeAnalysis;
 using Microsoft.Generator.CSharp;
 using Microsoft.Generator.CSharp.ClientModel;
@@ -29,6 +30,8 @@ public class AzureClientPlugin : ClientModelPlugin
     /// <inheritdoc/>
     public override AzureOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
 
+    internal ResourceDetection ResourceDetection { get; } = new();
+
     /// <summary>
     /// The Azure client plugin to generate the Azure client SDK.
     /// </summary>
@@ -46,9 +49,14 @@ public class AzureClientPlugin : ClientModelPlugin
     public override void Configure()
     {
         base.Configure();
+        // Include Azure.Core
         AddMetadataReference(MetadataReference.CreateFromFile(typeof(Response).Assembly.Location));
         var sharedSourceDirectory = Path.Combine(Path.GetDirectoryName(typeof(AzureClientPlugin).Assembly.Location)!, "Shared", "Core");
         AddSharedSourceDirectory(sharedSourceDirectory);
+        if (IsAzureArm.Value)
+        {
+            AddVisitor(new AzureArmVisitor());
+        }
     }
 
     /// <summary>

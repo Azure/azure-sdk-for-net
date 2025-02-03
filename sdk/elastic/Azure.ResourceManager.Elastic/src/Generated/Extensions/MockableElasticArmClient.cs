@@ -47,39 +47,27 @@ namespace Azure.ResourceManager.Elastic.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="MonitoredSubscriptionPropertyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitoredSubscriptionPropertyResource.CreateResourceIdentifier" /> to create a <see cref="MonitoredSubscriptionPropertyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="ElasticOpenAIIntegrationResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticOpenAIIntegrationResource.CreateResourceIdentifier" /> to create an <see cref="ElasticOpenAIIntegrationResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitoredSubscriptionPropertyResource"/> object. </returns>
-        public virtual MonitoredSubscriptionPropertyResource GetMonitoredSubscriptionPropertyResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ElasticOpenAIIntegrationResource"/> object. </returns>
+        public virtual ElasticOpenAIIntegrationResource GetElasticOpenAIIntegrationResource(ResourceIdentifier id)
         {
-            MonitoredSubscriptionPropertyResource.ValidateResourceId(id);
-            return new MonitoredSubscriptionPropertyResource(Client, id);
+            ElasticOpenAIIntegrationResource.ValidateResourceId(id);
+            return new ElasticOpenAIIntegrationResource(Client, id);
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="OpenAIIntegrationRPModelResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="OpenAIIntegrationRPModelResource.CreateResourceIdentifier" /> to create an <see cref="OpenAIIntegrationRPModelResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="ElasticTagRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ElasticTagRuleResource.CreateResourceIdentifier" /> to create an <see cref="ElasticTagRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="OpenAIIntegrationRPModelResource"/> object. </returns>
-        public virtual OpenAIIntegrationRPModelResource GetOpenAIIntegrationRPModelResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ElasticTagRuleResource"/> object. </returns>
+        public virtual ElasticTagRuleResource GetElasticTagRuleResource(ResourceIdentifier id)
         {
-            OpenAIIntegrationRPModelResource.ValidateResourceId(id);
-            return new OpenAIIntegrationRPModelResource(Client, id);
-        }
-
-        /// <summary>
-        /// Gets an object representing a <see cref="MonitoringTagRuleResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="MonitoringTagRuleResource.CreateResourceIdentifier" /> to create a <see cref="MonitoringTagRuleResource"/> <see cref="ResourceIdentifier"/> from its components.
-        /// </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MonitoringTagRuleResource"/> object. </returns>
-        public virtual MonitoringTagRuleResource GetMonitoringTagRuleResource(ResourceIdentifier id)
-        {
-            MonitoringTagRuleResource.ValidateResourceId(id);
-            return new MonitoringTagRuleResource(Client, id);
+            ElasticTagRuleResource.ValidateResourceId(id);
+            return new ElasticTagRuleResource(Client, id);
         }
     }
 }

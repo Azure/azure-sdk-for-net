@@ -98,6 +98,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsDefined(VectorEmbeddingPolicy))
+            {
+                writer.WritePropertyName("vectorEmbeddingPolicy"u8);
+                writer.WriteObjectValue(VectorEmbeddingPolicy, options);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -147,6 +152,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             CosmosDBAccountCreateMode? createMode = default;
             MaterializedViewDefinition materializedViewDefinition = default;
             IList<ComputedProperty> computedProperties = default;
+            VectorEmbeddingPolicy vectorEmbeddingPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -260,6 +266,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     computedProperties = array;
                     continue;
                 }
+                if (property.NameEquals("vectorEmbeddingPolicy"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    vectorEmbeddingPolicy = VectorEmbeddingPolicy.DeserializeVectorEmbeddingPolicy(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -279,6 +294,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 createMode,
                 materializedViewDefinition,
                 computedProperties ?? new ChangeTrackingList<ComputedProperty>(),
+                vectorEmbeddingPolicy,
                 serializedAdditionalRawData);
         }
 
@@ -489,6 +505,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         }
                         builder.AppendLine("  ]");
                     }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("VectorEmbeddings", out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  vectorEmbeddingPolicy: ");
+                builder.AppendLine("{");
+                builder.Append("    vectorEmbeddings: ");
+                builder.AppendLine(propertyOverride);
+                builder.AppendLine("  }");
+            }
+            else
+            {
+                if (Optional.IsDefined(VectorEmbeddingPolicy))
+                {
+                    builder.Append("  vectorEmbeddingPolicy: ");
+                    BicepSerializationHelpers.AppendChildObject(builder, VectorEmbeddingPolicy, options, 2, false, "  vectorEmbeddingPolicy: ");
                 }
             }
 

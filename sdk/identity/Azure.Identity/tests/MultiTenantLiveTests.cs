@@ -19,6 +19,7 @@ namespace Azure.Identity.Tests
         private IdentityTestClient _client;
 
         [RecordedTest]
+        [PlaybackOnly("Requires ephemeral tenant")]
         public async Task CallGraphWithClientSecret()
         {
             var tenantId = TestEnvironment.MultiTenantAppTenantId;

@@ -1,10 +1,17 @@
 # Release History
 
+## 1.8.0 (2025-02-05)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2024-11-03' to 'package-2024-11-04'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/bf420af156ea90b4226e96582bdb4c9647491ae6/specification/compute/resource-manager/readme.md. 
+    - Added a new property named `IsBootstrapCertificate` to `CloudServiceRoleProfile` class.
+ 
 ## 1.7.0 (2024-12-29)
 
 ### Features Added
 
-- Upgraded api-version tag from 'package-2024-07-01' to 'package-2024-03-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b09c9ec927456021dc549e111fa2cac3b4b00659/specification/compute/resource-manager/readme.md.
+- Upgraded api-version tag from 'package-2024-07-01' to 'package-2024-11-03'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/b09c9ec927456021dc549e111fa2cac3b4b00659/specification/compute/resource-manager/readme.md.
     - Added new classes named `GalleryInVmAccessControlProfileCollection`, `ComputeGalleryValidationProfile`, `GalleryImageExecutedValidation`, `AdditionalReplicaSet`, `GallerySoftDeleted`, `GallerySoftDeletedResourceList`, `ComputeGalleryEndpointAccess`, `ComputeGalleryEndpointTypes`, and `ComputeGalleryPlatformAttribute`.
     - Added a new property named `IsBlockedDeletionBeforeEndOfLife` to `GalleryImageVersionSafertyProfile` class.
     - Added a new property named `StartsAtVersion` to `GalleryImageFeature` class.
