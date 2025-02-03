@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -25,7 +26,9 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned. </param>
         /// <param name="replicaCount"> The number of replicas in the search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </param>
         /// <param name="partitionCount"> The number of partitions in the search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
+        /// <param name="endpoint"> The endpoint of the Azure AI Search service. </param>
         /// <param name="hostingMode"> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'default' or 'highDensity'. For all other SKUs, this value must be 'default'. </param>
+        /// <param name="computeType"> Configure this property to support the search service using either the default compute or Azure Confidential Compute. </param>
         /// <param name="publicNetworkAccess"> This value can be set to 'enabled' to avoid breaking changes on existing customer resources and templates. If set to 'disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </param>
         /// <param name="status"> The status of the search service. Possible values include: 'running': The search service is running and no provisioning operations are underway. 'provisioning': The search service is being provisioned or scaled up or down. 'deleting': The search service is being deleted. 'degraded': The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. 'disabled': The search service is disabled. In this state, the service will reject all API requests. 'error': The search service is in an error state. If your service is in the degraded, disabled, or error states, Microsoft is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </param>
         /// <param name="statusDetails"> The details of the search service status. </param>
@@ -39,7 +42,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the search service. </param>
         /// <returns> A new <see cref="Search.SearchServiceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchServiceData SearchServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchSkuName? skuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, SearchServiceHostingMode? hostingMode = null, SearchServicePublicNetworkAccess? publicNetworkAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, IEnumerable<SearchServiceIPRule> ipRules = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, SearchSemanticSearch? semanticSearch = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null)
+        public static SearchServiceData SearchServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchSkuName? skuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, Uri endpoint = null, SearchServiceHostingMode? hostingMode = null, ComputeType? computeType = null, SearchServicePublicNetworkAccess? publicNetworkAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, IEnumerable<SearchServiceIPRule> ipRules = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, SearchSemanticSearch? semanticSearch = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null)
         {
             return SearchServiceData(id,
                                      name,
@@ -52,7 +55,9 @@ namespace Azure.ResourceManager.Search.Models
                                      identity,
                                      replicaCount,
                                      partitionCount,
+                                     endpoint,
                                      hostingMode,
+                                     computeType,
                                      // ternary operator must use a nullable instance of the type to avoid triggering the implicit cast on the null
                                      publicNetworkAccess.HasValue ? new SearchServicePublicInternetAccess?(publicNetworkAccess.Value.ToSerialString()) : null,
                                      status,
@@ -80,7 +85,9 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="identity"> The identity of the resource. Current supported identity types: None, SystemAssigned. </param>
         /// <param name="replicaCount"> The number of replicas in the search service. If specified, it must be a value between 1 and 12 inclusive for standard SKUs or between 1 and 3 inclusive for basic SKU. </param>
         /// <param name="partitionCount"> The number of partitions in the search service; if specified, it can be 1, 2, 3, 4, 6, or 12. Values greater than 1 are only valid for standard SKUs. For 'standard3' services with hostingMode set to 'highDensity', the allowed values are between 1 and 3. </param>
+        /// <param name="endpoint"> The endpoint of the Azure AI Search service. </param>
         /// <param name="hostingMode"> Applicable only for the standard3 SKU. You can set this property to enable up to 3 high density partitions that allow up to 1000 indexes, which is much higher than the maximum indexes allowed for any other SKU. For the standard3 SKU, the value is either 'default' or 'highDensity'. For all other SKUs, this value must be 'default'. </param>
+        /// <param name="computeType"> Configure this property to support the search service using either the default compute or Azure Confidential Compute. </param>
         /// <param name="publicNetworkAccess"> This value can be set to 'enabled' to avoid breaking changes on existing customer resources and templates. If set to 'disabled', traffic over public interface is not allowed, and private endpoint connections would be the exclusive access method. </param>
         /// <param name="status"> The status of the search service. Possible values include: 'running': The search service is running and no provisioning operations are underway. 'provisioning': The search service is being provisioned or scaled up or down. 'deleting': The search service is being deleted. 'degraded': The search service is degraded. This can occur when the underlying search units are not healthy. The search service is most likely operational, but performance might be slow and some requests might be dropped. 'disabled': The search service is disabled. In this state, the service will reject all API requests. 'error': The search service is in an error state. If your service is in the degraded, disabled, or error states, Microsoft is actively investigating the underlying issue. Dedicated services in these states are still chargeable based on the number of search units provisioned. </param>
         /// <param name="statusDetails"> The details of the search service status. </param>
@@ -94,7 +101,7 @@ namespace Azure.ResourceManager.Search.Models
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources managed by the search service. </param>
         /// <returns> A new <see cref="Models.SearchServicePatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SearchServicePatch SearchServicePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchSkuName? skuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, SearchServiceHostingMode? hostingMode = null, SearchServicePublicNetworkAccess? publicNetworkAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, IEnumerable<SearchServiceIPRule> ipRules = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, SearchSemanticSearch? semanticSearch = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null)
+        public static SearchServicePatch SearchServicePatch(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, SearchSkuName? skuName = null, ManagedServiceIdentity identity = null, int? replicaCount = null, int? partitionCount = null, Uri endpoint = null, SearchServiceHostingMode? hostingMode = null, ComputeType? computeType = null, SearchServicePublicNetworkAccess? publicNetworkAccess = null, SearchServiceStatus? status = null, string statusDetails = null, SearchServiceProvisioningState? provisioningState = null, IEnumerable<SearchServiceIPRule> ipRules = null, SearchEncryptionWithCmk encryptionWithCmk = null, bool? isLocalAuthDisabled = null, SearchAadAuthDataPlaneAuthOptions authOptions = null, IEnumerable<SearchPrivateEndpointConnectionData> privateEndpointConnections = null, SearchSemanticSearch? semanticSearch = null, IEnumerable<SharedSearchServicePrivateLinkResourceData> sharedPrivateLinkResources = null)
         {
             return SearchServicePatch(id,
                                       name,
@@ -106,7 +113,9 @@ namespace Azure.ResourceManager.Search.Models
                                       identity,
                                       replicaCount,
                                       partitionCount,
+                                      endpoint,
                                       hostingMode,
+                                      computeType,
                                       publicNetworkAccess.ToString(),
                                       status,
                                       statusDetails,
