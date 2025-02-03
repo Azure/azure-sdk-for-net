@@ -246,7 +246,7 @@ resource scmfunc 'Microsoft.Web/sites/basicPublishingCredentialsPolicies@2022-09
 
 resource newCluster 'Microsoft.ContainerService/managedClusters@2023-06-01' = {
   name: baseName
-  location: 'westus2'
+  location: location
   identity: {
     type: 'SystemAssigned'
   }
