@@ -1,0 +1,6 @@
+{
+  "output-folder": ".",
+  "namespace": "Server.Versions.NotVersioned",
+  "library-name": "Server.Versions.NotVersioned",
+  "use-model-reader-writer": true
+}

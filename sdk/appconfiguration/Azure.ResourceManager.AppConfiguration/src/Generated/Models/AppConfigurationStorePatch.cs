@@ -60,8 +60,9 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="disableLocalAuth"> Disables all authentication methods other than AAD authentication. </param>
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
         /// <param name="enablePurgeProtection"> Property specifying whether protection against purge is enabled for this configuration store. </param>
+        /// <param name="dataPlaneProxy"> Property specifying the configuration of data plane proxy for Azure Resource Manager (ARM). </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppConfigurationStorePatch(ManagedServiceIdentity identity, AppConfigurationSku sku, IDictionary<string, string> tags, AppConfigurationStoreEncryptionProperties encryption, bool? disableLocalAuth, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? enablePurgeProtection, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppConfigurationStorePatch(ManagedServiceIdentity identity, AppConfigurationSku sku, IDictionary<string, string> tags, AppConfigurationStoreEncryptionProperties encryption, bool? disableLocalAuth, AppConfigurationPublicNetworkAccess? publicNetworkAccess, bool? enablePurgeProtection, AppConfigurationDataPlaneProxyProperties dataPlaneProxy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Identity = identity;
             Sku = sku;
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             DisableLocalAuth = disableLocalAuth;
             PublicNetworkAccess = publicNetworkAccess;
             EnablePurgeProtection = enablePurgeProtection;
+            DataPlaneProxy = dataPlaneProxy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -113,5 +115,8 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <summary> Property specifying whether protection against purge is enabled for this configuration store. </summary>
         [WirePath("properties.enablePurgeProtection")]
         public bool? EnablePurgeProtection { get; set; }
+        /// <summary> Property specifying the configuration of data plane proxy for Azure Resource Manager (ARM). </summary>
+        [WirePath("properties.dataPlaneProxy")]
+        public AppConfigurationDataPlaneProxyProperties DataPlaneProxy { get; set; }
     }
 }

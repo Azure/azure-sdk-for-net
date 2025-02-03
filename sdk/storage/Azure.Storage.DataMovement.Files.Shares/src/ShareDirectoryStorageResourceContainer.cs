@@ -48,7 +48,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             // Set the ShareFileTraits to send when listing.
             ShareFileTraits traits = ShareFileTraits.Attributes;
-            if (ResourceOptions?.FilePermissions?.Preserve ?? false)
+            if (ResourceOptions?.FilePermissions ?? false)
             {
                 traits |= ShareFileTraits.PermissionKey;
             }
@@ -76,18 +76,31 @@ namespace Azure.Storage.DataMovement.Files.Shares
         protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
             return new ShareFileDestinationCheckpointDetails(
+                isContentTypeSet: ResourceOptions?._isContentTypeSet ?? false,
                 contentType: ResourceOptions?.ContentType,
+                isContentEncodingSet: ResourceOptions?._isContentEncodingSet ?? false,
                 contentEncoding: ResourceOptions?.ContentEncoding,
+                isContentLanguageSet: ResourceOptions?._isContentLanguageSet ?? false,
                 contentLanguage: ResourceOptions?.ContentLanguage,
+                isContentDispositionSet: ResourceOptions?._isContentDispositionSet ?? false,
                 contentDisposition: ResourceOptions?.ContentDisposition,
+                isCacheControlSet: ResourceOptions?._isCacheControlSet ?? false,
                 cacheControl: ResourceOptions?.CacheControl,
+                isFileAttributesSet: ResourceOptions?._isFileAttributesSet ?? false,
                 fileAttributes: ResourceOptions?.FileAttributes,
-                preserveFilePermission: ResourceOptions?.FilePermissions?.Preserve,
+                filePermissions: ResourceOptions?.FilePermissions,
+                isFileCreatedOnSet: ResourceOptions?._isFileChangedOnSet ?? false,
                 fileCreatedOn: ResourceOptions?.FileCreatedOn,
+                isFileLastWrittenOnSet: ResourceOptions?._isFileLastWrittenOnSet ?? false,
                 fileLastWrittenOn: ResourceOptions?.FileLastWrittenOn,
+                isFileChangedOnSet: ResourceOptions?._isFileChangedOnSet ?? false,
                 fileChangedOn: ResourceOptions?.FileChangedOn,
+                isFileMetadataSet: ResourceOptions?._isFileMetadataSet ?? false,
                 fileMetadata: ResourceOptions?.FileMetadata,
-                directoryMetadata: ResourceOptions?.DirectoryMetadata);
+                isDirectoryMetadataSet: ResourceOptions?._isDirectoryMetadataSet ?? false,
+                directoryMetadata: ResourceOptions?.DirectoryMetadata)
+            {
+            };
         }
 
         protected override async Task CreateIfNotExistsAsync(CancellationToken cancellationToken = default)

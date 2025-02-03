@@ -308,7 +308,7 @@ namespace Azure.Storage.DataMovement
 
         protected async ValueTask ReportBytesWrittenAsync(long bytesTransferred)
         {
-            await _progressTracker.IncrementBytesTransferred(bytesTransferred, _cancellationToken).ConfigureAwait(false);
+            await _progressTracker.IncrementBytesTransferredAsync(bytesTransferred, _cancellationToken).ConfigureAwait(false);
         }
 
         public async virtual Task InvokeSingleCompletedArgAsync()
