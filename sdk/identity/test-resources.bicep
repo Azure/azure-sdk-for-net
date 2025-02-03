@@ -21,9 +21,14 @@ param adminUserName string = 'azureuser'
 
 param latestAksVersion string
 
+// Replace '-' with '' in the baseName variable
+var sanitizedBaseName = replace(baseName, '-', '')
+
 //See https://docs.microsoft.com/en-us/azure/role-based-access-control/built-in-roles
 var blobContributor = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'ba92f5b4-2d11-453d-a403-e96b0029c9fe') //Storage Blob Data Contributor
 var websiteContributor = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'de139f84-1756-47ae-9be6-808fbbe84772') //Website Contributor
+var acrPull = subscriptionResourceId('Microsoft.Authorization/roleDefinitions', '7f951dda-4ed3-4680-a7ca-43fe172d538d') //AcrPull
+
 // cluster parameters
 var kubernetesVersion = latestAksVersion
 
@@ -72,8 +77,18 @@ resource webRole 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
   }
 }
 
+resource acrPullContainerInstance 'Microsoft.Authorization/roleAssignments@2022-04-01' = {
+  name: guid(resourceGroup().id, acrPull, 'containerInstance')
+  properties: {
+    principalId: usermgdid.properties.principalId
+    principalType: 'ServicePrincipal'
+    roleDefinitionId: acrPull
+  }
+  scope: containerRegistry
+}
+
 resource sa 'Microsoft.Storage/storageAccounts@2021-08-01' = {
-  name: baseName
+  name: sanitizedBaseName
   location: location
   sku: {
     name: 'Standard_LRS'
@@ -81,11 +96,12 @@ resource sa 'Microsoft.Storage/storageAccounts@2021-08-01' = {
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
+    allowSharedKeyAccess: false
   }
 }
 
 resource sa2 'Microsoft.Storage/storageAccounts@2021-08-01' = {
-  name: '${baseName}2'
+  name: '${sanitizedBaseName}2'
   location: location
   sku: {
     name: 'Standard_LRS'
@@ -93,6 +109,7 @@ resource sa2 'Microsoft.Storage/storageAccounts@2021-08-01' = {
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
+    allowSharedKeyAccess: false
   }
 }
 
@@ -229,7 +246,7 @@ resource scmfunc 'Microsoft.Web/sites/basicPublishingCredentialsPolicies@2022-09
 
 resource newCluster 'Microsoft.ContainerService/managedClusters@2023-06-01' = {
   name: baseName
-  location: location
+  location: 'westus2'
   identity: {
     type: 'SystemAssigned'
   }
@@ -274,6 +291,17 @@ resource newCluster 'Microsoft.ContainerService/managedClusters@2023-06-01' = {
   }
 }
 
+resource containerRegistry 'Microsoft.ContainerRegistry/registries@2023-01-01-preview' = {
+  location: location
+  name: uniqueString(resourceGroup().id)
+  properties: {
+    adminUserEnabled: false
+  }
+  sku: {
+    name: 'Basic'
+  }
+}
+
 output IDENTITY_TENANT_ID string = tenantId
 output IDENTITY_CLIENT_ID string = testApplicationId
 output IDENTITY_WEBAPP_NAME string = web.name
@@ -285,6 +313,5 @@ output IDENTITY_AKS_POD_NAME string = 'dotnet-test-app'
 output IDENTITY_STORAGE_NAME_1 string = sa.name
 output IDENTITY_STORAGE_NAME_2 string = sa2.name
 output IDENTITY_FUNCTION_NAME string = azfunc.name
-output IDENTITY_USER_ASSIGNED_IDENTITY string = usermgdid.id
-output IDENTITY_USER_ASSIGNED_IDENTITY_CLIENT_ID string = usermgdid.properties.clientId
-output IDENTITY_USER_ASSIGNED_IDENTITY_NAME string = usermgdid.name
+output IDENTITY_ACR_LOGIN_SERVER string = containerRegistry.properties.loginServer
+output IDENTITY_ACR_NAME string = containerRegistry.name

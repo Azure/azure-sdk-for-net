@@ -9,7 +9,7 @@ public class Program
     {
         try
         {
-            var cred = new WorkloadIdentityCredential();
+            var cred = new DefaultAzureCredential();
             var token = await cred.GetTokenAsync(new TokenRequestContext(new string[] { "https://management.azure.com//.default" }));
             if (token.Token != null)
                 Console.WriteLine("Passed!");
