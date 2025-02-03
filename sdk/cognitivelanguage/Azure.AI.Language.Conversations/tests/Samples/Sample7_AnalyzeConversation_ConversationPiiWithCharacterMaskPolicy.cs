@@ -58,9 +58,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             // Act: Perform the PII analysis
             Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversations(data);
-            #region Snippet:AnalyzeConversation_ConversationPiiSync
             AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
-            #endregion
             // Assert: Validate the results
             foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
             {
@@ -141,10 +139,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
 
             // Act: Perform the PII analysis
             Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
-            #region Snippet:AnalyzeConversation_ConversationPiiSync
             AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
-            #endregion
-
             // Assert: Validate the results
             foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
             {

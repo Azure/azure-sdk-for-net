@@ -367,9 +367,7 @@ namespace Azure.AI.Language.Conversations.Tests
 
             // Act: Perform the PII analysis
             Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
-            #region Snippet:AnalyzeConversation_ConversationPiiSync
             AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
-            #endregion
 
             // Assert: Validate the results
             foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
