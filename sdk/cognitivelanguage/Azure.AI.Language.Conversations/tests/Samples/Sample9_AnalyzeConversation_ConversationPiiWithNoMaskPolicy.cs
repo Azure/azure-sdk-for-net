@@ -51,13 +51,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 }
             };
 
-            // Create input for analysis
             AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
 
-            // Act: Perform the PII analysis
             Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversations(data);
-            AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
 
+            #region Snippet:AnalyzeConversation_ConversationPiiWithNoMaskPolicySync
+            AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
+            #endregion
             // Assert: Validate the results
             foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
             {
@@ -103,7 +103,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
             List<string> detectedEntities = new();
 
-            // Create a NoMaskPolicyType (PII should be detected but not redacted)
+            #region Snippet:AnalyzeConversation_ConversationPiiWithNoMaskPolicy
             var redactionPolicy = new NoMaskPolicyType();
 
             // Simulate input conversation
@@ -167,10 +167,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
-            // Ensure PII was detected
-            Assert.NotZero(detectedEntities.Count);
+            #endregion
 
-            // Verify the HTTP response is successful
+            Assert.NotZero(detectedEntities.Count);
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
         }
     }

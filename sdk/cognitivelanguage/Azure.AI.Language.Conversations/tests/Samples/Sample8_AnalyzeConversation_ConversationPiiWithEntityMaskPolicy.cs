@@ -51,12 +51,12 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 }
             };
 
-            // Create input for analysis
             AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
 
-            // Act: Perform the PII analysis
             Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversations(data);
+            #region Snippet:AnalyzeConversation_ConversationPiiWithEntityMaskPolicySync
             AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
+            #endregion
 
             // Assert: Validate the results
             foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
@@ -106,10 +106,9 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
             ConversationAnalysisClient client = Client;
             List<string> redactedTexts = new();
 
-            // Create an EntityMaskTypePolicyType
+            #region Snippet:AnalyzeConversation_ConversationPiiWithEntityMaskPolicy
             var redactionPolicy = new EntityMaskTypePolicyType();
 
-            // Simulate input conversation
             MultiLanguageConversationInput input = new MultiLanguageConversationInput(
                 new List<ConversationInput>
                 {
@@ -176,7 +175,8 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
-            // Verify the HTTP response is successful
+            #endregion
+
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
         }
     }

@@ -53,13 +53,13 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                 }
             };
 
-            // Create input for analysis
             AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
 
-            // Act: Perform the PII analysis
             Response<AnalyzeConversationOperationState> analyzeConversationOperation = client.AnalyzeConversations(data);
+
+            #region Snippet:AnalyzeConversation_ConversationPiiWithCharacterMaskPolicySync
             AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
-            // Assert: Validate the results
+            #endregion
             foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
             {
                 Console.WriteLine($"Operation action name: {operationResult.Name}");
@@ -99,11 +99,10 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
         [ServiceVersion(Min = ConversationsClientOptions.ServiceVersion.V2024_11_15_Preview)]
         public async Task AnalyzeConversationAsync_ConversationPii_WithCharacterMaskPolicy()
         {
-            // Arrange: Initialize client and input
             ConversationAnalysisClient client = Client;
             List<string> redactedTexts = new();
 
-            // Create a CharacterMaskPolicyType with a custom masking character
+            #region Snippet:AnalyzeConversation_ConversationPiiWithCharacterMaskPolicy
             var redactionPolicy = new CharacterMaskPolicyType
             {
                 RedactionCharacter = RedactionCharacter.Asterisk
@@ -171,7 +170,7 @@ namespace Azure.AI.Language.Conversations.Tests.Samples
                     }
                 }
             }
-
+            #endregion
             // Verify the HTTP response is successful
             Assert.That(analyzeConversationOperation.GetRawResponse().Status, Is.EqualTo(200));
         }
