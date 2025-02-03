@@ -1111,3 +1111,6 @@
 
 #PRLabel: %CodeGen %Client
 /eng/packages/http-client-csharp/generator/Azure.Generator/        @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @annelo-msft
+
+#PRLabel: %CodeGen %Client
+/eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @annelo-msft

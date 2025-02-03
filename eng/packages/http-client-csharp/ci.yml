@@ -1,4 +1,11 @@
-trigger: none
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - eng/packages/http-client-csharp
+      - eng/scripts/typespec
 pr:
   branches:
     include:
@@ -9,6 +16,7 @@ pr:
   paths:
     include:
       - eng/packages/http-client-csharp
+      - eng/scripts/typespec
 
 parameters:
   - name: BuildPrereleaseVersion
@@ -47,7 +55,6 @@ extends:
       ShouldPublish: ${{ parameters.ShouldPublish }}
       PublishPublic: ${{ parameters.PublishPublic }}
       PublishDependsOnTest: ${{ parameters.PublishPublic }}
-
       ShouldRegenerate: ${{ parameters.ShouldRegenerate }}
       RegenerationJobCount: 5
       MinimumPerJob: 10
@@ -55,3 +62,4 @@ extends:
     TestMatrix:
       All:
         TestArguments: -UnitTests -GenerationChecks -Filter .NET
+        SpectorName: "http-client-csharp"
