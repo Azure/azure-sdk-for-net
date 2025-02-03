@@ -22,6 +22,7 @@ steps:
   - ${{ if ne(parameters.TokenToUseForAuth, '') }}:
     - pwsh: |
         $base64Token = [Convert]::ToBase64String([System.Text.Encoding]::UTF8.GetBytes("nobody:${{ parameters.TokenToUseForAuth }}"))
+        Write-Host "##vso[task.setvariable variable=_base64AuthToken;issecret=true;]$base64Token"
         git config set --global "http.extraheader" "AUTHORIZATION: basic $base64Token"
       displayName: Setup git config auth header
 
