@@ -30,8 +30,7 @@ public class MockRequestHeaders : PipelineRequestHeaders
 
     public override IEnumerator<KeyValuePair<string, string>> GetEnumerator()
     {
-        IEnumerator<KeyValuePair<string, string>> enumerator = _headers.GetEnumerator();
-        return enumerator;
+        throw new NotImplementedException();
     }
 
     public override bool Remove(string name)
@@ -51,15 +50,6 @@ public class MockRequestHeaders : PipelineRequestHeaders
 
     public override bool TryGetValues(string name, out IEnumerable<string>? values)
     {
-        bool hasValue = _headers.TryGetValue(name, out string? dictionaryValue);
-
-        if (!hasValue || string.IsNullOrEmpty(dictionaryValue))
-        {
-            values = null;
-            return false;
-        }
-
-        values = dictionaryValue.Split(',');
-        return true;
+        throw new NotImplementedException();
     }
 }

@@ -79,11 +79,6 @@ namespace Azure.AI.Language.Conversations.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RedactionPolicy))
-            {
-                writer.WritePropertyName("redactionPolicy"u8);
-                writer.WriteObjectValue(RedactionPolicy, options);
-            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -128,7 +123,6 @@ namespace Azure.AI.Language.Conversations.Models
             TranscriptContentType? redactionSource = default;
             RedactionCharacter? redactionCharacter = default;
             IList<ConversationPiiCategoryExclusions> excludePiiCategories = default;
-            BaseRedactionPolicy redactionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -202,15 +196,6 @@ namespace Azure.AI.Language.Conversations.Models
                     excludePiiCategories = array;
                     continue;
                 }
-                if (property.NameEquals("redactionPolicy"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    redactionPolicy = BaseRedactionPolicy.DeserializeBaseRedactionPolicy(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -225,7 +210,6 @@ namespace Azure.AI.Language.Conversations.Models
                 redactionSource,
                 redactionCharacter,
                 excludePiiCategories ?? new ChangeTrackingList<ConversationPiiCategoryExclusions>(),
-                redactionPolicy,
                 serializedAdditionalRawData);
         }
 

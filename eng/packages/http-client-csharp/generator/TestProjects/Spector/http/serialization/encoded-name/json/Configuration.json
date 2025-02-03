@@ -1,6 +1,0 @@
-{
-  "output-folder": ".",
-  "namespace": "Serialization.EncodedName.Json",
-  "library-name": "Serialization.EncodedName.Json",
-  "use-model-reader-writer": true
-}

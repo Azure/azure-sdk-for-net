@@ -1,7 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Generator.Utilities;
 using Microsoft.CodeAnalysis;
 using Microsoft.Generator.CSharp;
 using Microsoft.Generator.CSharp.ClientModel;
@@ -29,8 +28,6 @@ public class AzureClientPlugin : ClientModelPlugin
     private AzureOutputLibrary? _azureOutputLibrary;
     /// <inheritdoc/>
     public override AzureOutputLibrary OutputLibrary => _azureOutputLibrary ??= new();
-
-    internal ResourceDetection ResourceDetection { get; } = new();
 
     /// <summary>
     /// The Azure client plugin to generate the Azure client SDK.

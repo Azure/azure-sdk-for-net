@@ -131,22 +131,35 @@ namespace Azure.Storage.DataMovement.Blobs.Files.Shares.Tests
             {
                 options = new()
                 {
-                    ContentDisposition = _defaultContentDisposition,
-                    ContentLanguage = _defaultContentLanguageBlob,
-                    CacheControl = _defaultCacheControl,
-                    ContentType = _defaultContentType,
-                    Metadata = _defaultMetadata
+                    ContentDisposition = new(_defaultContentDisposition),
+                    ContentLanguage = new(_defaultContentLanguageBlob),
+                    CacheControl = new(_defaultCacheControl),
+                    ContentType = new(_defaultContentType),
+                    Metadata = new(_defaultMetadata)
                 };
             }
             else if (type == TransferPropertiesTestType.NoPreserve)
             {
                 options = new()
                 {
-                    ContentDisposition = default,
-                    ContentLanguage = default,
-                    CacheControl = default,
-                    ContentType = default,
-                    Metadata = default
+                    ContentDisposition = new(false),
+                    ContentLanguage = new(false),
+                    CacheControl = new(false),
+                    ContentType = new(false),
+                    ContentEncoding = new(false),
+                    Metadata = new(false),
+                };
+            }
+            else if (type == TransferPropertiesTestType.Preserve)
+            {
+                options = new()
+                {
+                    ContentDisposition = new(true),
+                    ContentLanguage = new(true),
+                    CacheControl = new(true),
+                    ContentType = new(true),
+                    ContentEncoding = new(true),
+                    Metadata = new(true),
                 };
             }
             return new AppendBlobStorageResource(objectClient, options);

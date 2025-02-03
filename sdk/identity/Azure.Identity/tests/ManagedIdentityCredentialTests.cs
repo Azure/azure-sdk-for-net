@@ -386,7 +386,6 @@ namespace Azure.Identity.Tests
         [TestCase("connecting to 169.254.169.254:80: connecting to 169.254.169.254:80: dial tcp 169.254.169.254:80: connectex: A socket operation was attempted to an unreachable network")]
         [TestCase("connecting to 169.254.169.254:80: connecting to 169.254.169.254:80: dial tcp 169.254.169.254:80: connectex: A socket operation was attempted to an unreachable foo")]
         [TestCase("<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\"><html>Some html</html>")]
-        [TestCase(null)]
         public void VerifyImdsRequestFailureForDockerDesktopThrowsCUE(string error)
         {
             using var environment = new TestEnvVar(new() { { "MSI_ENDPOINT", null }, { "MSI_SECRET", null }, { "IDENTITY_ENDPOINT", null }, { "IDENTITY_HEADER", null }, { "AZURE_POD_IDENTITY_AUTHORITY_HOST", null } });
@@ -402,10 +401,7 @@ namespace Azure.Identity.Tests
                     new ManagedIdentityClientOptions() { Pipeline = pipeline, ManagedIdentityId = ManagedIdentityId.FromUserAssignedClientId("mock-client-id"), IsForceRefreshEnabled = true, Options = options })));
 
             var ex = Assert.ThrowsAsync<CredentialUnavailableException>(async () => await credential.GetTokenAsync(new TokenRequestContext(MockScopes.Default)));
-            if (expectedMessage != null)
-            {
-                Assert.That(ex.InnerException.Message, Does.Contain(expectedMessage));
-            }
+            Assert.That(ex.InnerException.Message, Does.Contain(expectedMessage));
         }
 
         [NonParallelizable]
@@ -1194,10 +1190,7 @@ namespace Azure.Identity.Tests
         private static MockResponse CreateInvalidJsonResponse(int status, string message = "invalid json")
         {
             var response = new MockResponse(status);
-            if (message != null)
-            {
-                response.SetContent(message);
-            }
+            response.SetContent(message);
             return response;
         }
 

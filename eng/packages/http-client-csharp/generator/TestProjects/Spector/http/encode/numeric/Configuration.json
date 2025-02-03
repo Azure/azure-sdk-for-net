@@ -1,6 +1,0 @@
-{
-  "output-folder": ".",
-  "namespace": "Encode.Numeric",
-  "library-name": "Encode.Numeric",
-  "use-model-reader-writer": true
-}

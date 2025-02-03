@@ -835,14 +835,12 @@ namespace Azure.Storage.DataMovement.Tests
         private async Task CopyRemoteObjects_VerifyProperties(
             TSourceContainerClient sourceContainer,
             TDestinationContainerClient destinationContainer,
-            TransferPropertiesTestType propertiesType,
-            long size = Constants.KB,
-            long? chunkSize = default)
+            TransferPropertiesTestType propertiesType)
         {
             // Create blob with properties
             TSourceObjectClient sourceClient = await GetSourceObjectClientAsync(
                 container: sourceContainer,
-                objectLength: size,
+                objectLength: 0,
                 createResource: true);
             // Set preserve properties
             StorageResourceItem sourceResource = GetSourceStorageResourceItem(sourceClient);
@@ -855,10 +853,7 @@ namespace Azure.Storage.DataMovement.Tests
                 destinationClient,
                 propertiesTestType: propertiesType);
 
-            TransferOptions options = new()
-            {
-                MaximumTransferChunkSize = chunkSize,
-            };
+            TransferOptions options = new TransferOptions();
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             TransferManager transferManager = new TransferManager();
 
@@ -932,25 +927,6 @@ namespace Azure.Storage.DataMovement.Tests
                 source.Container,
                 destination.Container,
                 TransferPropertiesTestType.NewProperties);
-        }
-
-        [RecordedTest]
-        [TestCase((int) TransferPropertiesTestType.Default)]
-        [TestCase((int) TransferPropertiesTestType.Preserve)]
-        [TestCase((int) TransferPropertiesTestType.NoPreserve)]
-        [TestCase((int) TransferPropertiesTestType.NewProperties)]
-        public virtual async Task SourceObjectToDestinationObject_VerifyProperties_Chunks(int propertiesType)
-        {
-            // Arrange
-            await using IDisposingContainer<TSourceContainerClient> source = await GetSourceDisposingContainerAsync();
-            await using IDisposingContainer<TDestinationContainerClient> destination = await GetDestinationDisposingContainerAsync();
-
-            await CopyRemoteObjects_VerifyProperties(
-                source.Container,
-                destination.Container,
-                (TransferPropertiesTestType) propertiesType,
-                size: Constants.KB,
-                chunkSize: Constants.KB / 2);
         }
     }
 }

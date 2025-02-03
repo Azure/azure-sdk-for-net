@@ -1,12 +1,6 @@
 @description('The client OID to grant access to test resources.')
 param testApplicationOid string
 
-@description('The client ID to grant access to test resources.')
-param testApplicationId string
-
-@description('The tenant ID to grant access to test resources.')
-param tenantId string
-
 @minLength(6)
 @maxLength(50)
 @description('The base resource name.')
@@ -241,7 +235,7 @@ resource newCluster 'Microsoft.ContainerService/managedClusters@2023-06-01' = {
       {
         name: 'agentpool'
         count: 1
-        vmSize: 'Standard_D2s_v4'
+        vmSize: 'Standard_D2s_v3'
         osDiskSizeGB: 128
         osDiskType: 'Managed'
         kubeletDiskType: 'OS'
@@ -274,8 +268,6 @@ resource newCluster 'Microsoft.ContainerService/managedClusters@2023-06-01' = {
   }
 }
 
-output IDENTITY_TENANT_ID string = tenantId
-output IDENTITY_CLIENT_ID string = testApplicationId
 output IDENTITY_WEBAPP_NAME string = web.name
 output IDENTITY_USER_DEFINED_IDENTITY string = usermgdid.id
 output IDENTITY_USER_DEFINED_IDENTITY_CLIENT_ID string = usermgdid.properties.clientId

@@ -23,29 +23,32 @@ namespace Azure.AI.Language.Conversations.Models
         }
 
         private const string AddressValue = "Address";
-        private const string CreditCardValue = "CreditCard";
+        private const string CreditCardNumberValue = "CreditCardNumber";
         private const string EmailValue = "Email";
         private const string PersonValue = "Person";
         private const string NumericIdentifierValue = "NumericIdentifier";
-        private const string PhoneValue = "Phone";
+        private const string PhoneNumberValue = "PhoneNumber";
         private const string UsSocialSecurityNumberValue = "USSocialSecurityNumber";
+        private const string MiscellaneousValue = "Miscellaneous";
         private const string AllValue = "All";
         private const string DefaultValue = "Default";
 
         /// <summary> Address category. </summary>
         public static ConversationPiiCategories Address { get; } = new ConversationPiiCategories(AddressValue);
-        /// <summary> Credit card category. </summary>
-        public static ConversationPiiCategories CreditCard { get; } = new ConversationPiiCategories(CreditCardValue);
+        /// <summary> Credit card number category. </summary>
+        public static ConversationPiiCategories CreditCardNumber { get; } = new ConversationPiiCategories(CreditCardNumberValue);
         /// <summary> Email category. </summary>
         public static ConversationPiiCategories Email { get; } = new ConversationPiiCategories(EmailValue);
         /// <summary> Person category. </summary>
         public static ConversationPiiCategories Person { get; } = new ConversationPiiCategories(PersonValue);
         /// <summary> Numeric identifier category. </summary>
         public static ConversationPiiCategories NumericIdentifier { get; } = new ConversationPiiCategories(NumericIdentifierValue);
-        /// <summary> Phone category. </summary>
-        public static ConversationPiiCategories Phone { get; } = new ConversationPiiCategories(PhoneValue);
+        /// <summary> Phone number category. </summary>
+        public static ConversationPiiCategories PhoneNumber { get; } = new ConversationPiiCategories(PhoneNumberValue);
         /// <summary> US social security number category. </summary>
         public static ConversationPiiCategories UsSocialSecurityNumber { get; } = new ConversationPiiCategories(UsSocialSecurityNumberValue);
+        /// <summary> Miscellaneous category. </summary>
+        public static ConversationPiiCategories Miscellaneous { get; } = new ConversationPiiCategories(MiscellaneousValue);
         /// <summary> All categories. </summary>
         public static ConversationPiiCategories All { get; } = new ConversationPiiCategories(AllValue);
         /// <summary> Default categories. </summary>

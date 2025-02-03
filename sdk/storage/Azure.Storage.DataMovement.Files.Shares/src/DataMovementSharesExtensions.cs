@@ -15,47 +15,47 @@ namespace Azure.Storage.DataMovement.Files.Shares
             IDictionary<string, object> properties)
             => new()
             {
-                ContentType = (options?._isContentTypeSet ?? false)
-                    ? options?.ContentType
-                    : properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentType, out object contentType) == true
+                ContentType = (options?.ContentType?.Preserve ?? true)
+                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentType, out object contentType) == true
                         ? (string)contentType
-                        : default,
-                ContentEncoding = (options?._isContentEncodingSet ?? true)
-                    ? options?.ContentEncoding
-                    : properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentEncoding, out object contentEncoding) == true
+                        : default
+                    : options?.ContentType?.Value,
+                ContentEncoding = (options?.ContentEncoding?.Preserve ?? true)
+                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentEncoding, out object contentEncoding) == true
                         ? ConvertContentPropertyObjectToStringArray(DataMovementConstants.ResourceProperties.ContentEncoding, contentEncoding)
-                        : default,
-                ContentLanguage = (options?._isContentLanguageSet ?? false)
-                    ? options?.ContentLanguage
-                    : properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentLanguage, out object contentLanguage) == true
+                        : default
+                    : options?.ContentEncoding?.Value,
+                ContentLanguage = (options?.ContentLanguage?.Preserve ?? true)
+                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentLanguage, out object contentLanguage) == true
                         ? ConvertContentPropertyObjectToStringArray(DataMovementConstants.ResourceProperties.ContentLanguage, contentLanguage)
-                        : default,
-                ContentDisposition = (options?._isContentDispositionSet ?? false)
-                    ? options?.ContentDisposition
-                    : properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentDisposition, out object contentDisposition) == true
+                        : default
+                    : options?.ContentLanguage?.Value,
+                ContentDisposition = (options?.ContentDisposition?.Preserve ?? true)
+                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentDisposition, out object contentDisposition) == true
                         ? (string)contentDisposition
-                        : default,
-                CacheControl = (options?._isCacheControlSet ?? false)
-                    ? options?.CacheControl
-                    : properties?.TryGetValue(DataMovementConstants.ResourceProperties.CacheControl, out object cacheControl) == true
+                        : default
+                    : options?.ContentDisposition?.Value,
+                CacheControl = (options?.CacheControl?.Preserve ?? true)
+                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.CacheControl, out object cacheControl) == true
                         ? (string)cacheControl
-                        : default,
+                        : default
+                    : options?.CacheControl?.Value,
             };
 
         public static Metadata GetFileMetadata(
             this ShareFileStorageResourceOptions options,
             IDictionary<string, object> properties)
-            => (options?._isFileMetadataSet ?? false)
-                    ? options?.FileMetadata
-                    : properties?.TryGetValue(DataMovementConstants.ResourceProperties.Metadata, out object metadata) == true
-                        ? (Metadata)metadata
-                        : default;
+            => (options?.FileMetadata?.Preserve ?? true)
+                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.Metadata, out object metadata) == true
+                        ? (Metadata) metadata
+                        : default
+                    : options?.FileMetadata?.Value;
 
         public static string GetFilePermission(
             this ShareFileStorageResourceOptions options,
             IDictionary<string, object> properties)
-            => (options?.FilePermissions ?? false)
-                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.FilePermissions, out object permission) == true
+            => (options?.FilePermissions?.Preserve ?? false)
+                ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.FilePermissions, out object permission) == true
                         ? (string) permission
                         : default
                     : default;
@@ -86,7 +86,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             string permissionKeyValue = destinationPermissionKey;
             if (string.IsNullOrEmpty(permissionKeyValue))
             {
-                permissionKeyValue = (options?.FilePermissions ?? false)
+                permissionKeyValue = (options?.FilePermissions?.Preserve ?? false)
                     ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.DestinationFilePermissionKey, out object permissionKeyObject) == true
                         ? (string) permissionKeyObject
                         : default
@@ -94,56 +94,27 @@ namespace Azure.Storage.DataMovement.Files.Shares
             }
             return new()
             {
-                FileAttributes = (options?._isFileAttributesSet ?? false)
-                    ? options?.FileAttributes
-                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
+                FileAttributes = (options?.FileAttributes?.Preserve ?? true)
+                    ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
                         ? (NtfsFileAttributes?)fileAttributes
-                        : default,
+                        : default
+                    : options?.FileAttributes?.Value,
                 FilePermissionKey = permissionKeyValue,
-                FileCreatedOn = (options?._isFileCreatedOnSet ?? false)
-                    ? options?.FileCreatedOn
-                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.CreationTime, out object fileCreatedOn) == true
+                FileCreatedOn = (options?.FileCreatedOn?.Preserve ?? true)
+                    ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.CreationTime, out object fileCreatedOn) == true
                         ? (DateTimeOffset?)fileCreatedOn
-                        : default,
-                FileLastWrittenOn = (options?._isFileLastWrittenOnSet ?? false)
-                    ? options?.FileLastWrittenOn
-                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.LastWrittenOn, out object fileLastWrittenOn) == true
+                        : default
+                    : options?.FileCreatedOn?.Value,
+                FileLastWrittenOn = (options?.FileLastWrittenOn?.Preserve ?? true)
+                    ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.LastWrittenOn, out object fileLastWrittenOn) == true
                         ? (DateTimeOffset?)fileLastWrittenOn
-                        : default,
-                FileChangedOn = (options?._isFileChangedOnSet ?? false)
-                    ? options?.FileChangedOn
-                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ChangedOnTime, out object fileChangedOn) == true
+                        : default
+                    : options?.FileLastWrittenOn?.Value,
+                FileChangedOn = (options?.FileChangedOn?.Preserve ?? true)
+                    ? properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ChangedOnTime, out object fileChangedOn) == true
                         ? (DateTimeOffset?)fileChangedOn
-                        : default,
-            };
-        }
-
-        public static FileSmbProperties GetFileSmbProperties(
-            this ShareFileStorageResourceOptions options,
-            StorageResourceItemProperties properties)
-        {
-            return new()
-            {
-                FileAttributes = (options?._isFileAttributesSet ?? false)
-                    ? options?.FileAttributes
-                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.FileAttributes, out object fileAttributes) == true
-                        ? (NtfsFileAttributes?)fileAttributes
-                        : default,
-                FileCreatedOn = (options?._isFileCreatedOnSet ?? false)
-                    ? options?.FileCreatedOn
-                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.CreationTime, out object fileCreatedOn) == true
-                        ? (DateTimeOffset?)fileCreatedOn
-                        : default,
-                FileLastWrittenOn = (options?._isFileLastWrittenOnSet ?? false)
-                    ? options?.FileLastWrittenOn
-                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.LastWrittenOn, out object fileLastWrittenOn) == true
-                        ? (DateTimeOffset?)fileLastWrittenOn
-                        : default,
-                FileChangedOn = (options?._isFileChangedOnSet ?? false)
-                    ? options?.FileChangedOn
-                    : properties?.RawProperties?.TryGetValue(DataMovementConstants.ResourceProperties.ChangedOnTime, out object fileChangedOn) == true
-                        ? (DateTimeOffset?)fileChangedOn
-                        : default,
+                        : default
+                    : options?.FileChangedOn?.Value,
             };
         }
 
@@ -152,7 +123,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             => new()
             {
                 Conditions = options?.DestinationConditions,
-                FileLastWrittenMode = options?._isFileLastWrittenOnSet == false || options?.FileLastWrittenOn != default
+                FileLastWrittenMode = (options?.FileLastWrittenOn?.Value != default) || (options?.FileLastWrittenOn?.Preserve ?? false)
                     ? FileLastWrittenMode.Preserve
                     : default
             };
@@ -163,7 +134,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             => new()
             {
                 Conditions = options?.DestinationConditions,
-                FileLastWrittenMode = options == default || options?._isFileLastWrittenOnSet == false || options?.FileLastWrittenOn != default
+                FileLastWrittenMode = (options?.FileLastWrittenOn?.Value != default) || (options?.FileLastWrittenOn?.Preserve ?? true)
                     ? FileLastWrittenMode.Preserve
                     : default,
                 SourceAuthentication = sourceAuthorization

@@ -81,7 +81,7 @@
 # ServiceOwners:                                                   @adamedx
 
 # PRLabel: %AI Model Inference %AI Projects
-/sdk/ai/                                                           @trangevi @dargilco @jhakulin @glharper @jhakulin @nick863
+/sdk/ai/                                                           @trangevi @dargilco @jhakulin @glharper @jhakulin
 
 # PRLabel: %AI Model Inference
 /sdk/ai/Azure.AI.Inference                                         @trangevi @dargilco @jhakulin @glharper
@@ -90,10 +90,10 @@
 # ServiceOwners:                                                   @trangevi @dargilco @jhakulin @glharper
 
 # PRLabel: %AI Projects
-/sdk/ai/Azure.AI.Projects                                          @jhakulin @nick863
+/sdk/ai/Azure.AI.Projects                                          @jhakulin
 
 # ServiceLabel: %AI Projects
-# ServiceOwners:                                                   @dargilco @jhakulin @nick863
+# ServiceOwners:                                                   @dargilco @jhakulin
 
 # ServiceLabel: %AKS
 # ServiceOwners:                                                   @Azure/aks-pm
@@ -980,10 +980,10 @@
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
 
 # PRLabel: %Compute - Fleet
-/sdk/computefleet/Azure.ResourceManager.*/                         @sahilarora92 @rahuls-microsoft
+/sdk/computefleet/Azure.ResourceManager.*/                         @sahilarora92 @dhruvil009 @rahuls-microsoft
 
 # ServiceLabel: %Compute - Fleet %Mgmt
-# ServiceOwners:                                                   @sahilarora92 @rahuls-microsoft
+# ServiceOwners:                                                   @sahilarora92 @dhruvil009 @rahuls-microsoft
 
 # PRLael: %Container Orchestrator Runtime
 /sdk/containerorchestratorruntime/Azure.ResourceManager.*/         @HE-Xinyu @ddadaal
@@ -1111,6 +1111,3 @@
 
 #PRLabel: %CodeGen %Client
 /eng/packages/http-client-csharp/generator/Azure.Generator/        @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @annelo-msft
-
-#PRLabel: %CodeGen %Client
-/eng/scripts/typespec/                                             @JoshLove-msft @m-nash @jorgerangel-msft @jsquire @annelo-msft

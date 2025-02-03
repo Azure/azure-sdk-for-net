@@ -145,7 +145,8 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 await originalStream.CopyToAsync(fileStream);
             }
-            StorageResource sourceResource = LocalFilesStorageResourceProvider.FromFile(localSourceFile);
+            LocalFilesStorageResourceProvider files = new();
+            StorageResource sourceResource = files.FromFile(localSourceFile);
 
             // Create Transfer Manager with single threaded operation
             TransferManagerOptions managerOptions = new TransferManagerOptions()
@@ -365,7 +366,8 @@ namespace Azure.Storage.DataMovement.Tests
                 StorageResourceItem destinationResource = GetStorageResourceItem(destClient);
 
                 // Act
-                StorageResource sourceResource = LocalFilesStorageResourceProvider.FromFile(localSourceFile);
+                LocalFilesStorageResourceProvider files = new();
+                StorageResource sourceResource = files.FromFile(localSourceFile);
                 TransferOperation transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options[i]);
 
                 uploadedObjectInfo.Add(new VerifyUploadObjectContentInfo(
@@ -548,7 +550,8 @@ namespace Azure.Storage.DataMovement.Tests
             {
                 CreationPreference = StorageResourceCreationMode.SkipIfExists,
             };
-            StorageResource sourceResource = LocalFilesStorageResourceProvider.FromFile(newSourceFile);
+            LocalFilesStorageResourceProvider files = new();
+            StorageResource sourceResource = files.FromFile(newSourceFile);
             StorageResourceItem destinationResource = GetStorageResourceItem(objectClient);
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
 
@@ -607,7 +610,8 @@ namespace Azure.Storage.DataMovement.Tests
                 CreationPreference = StorageResourceCreationMode.FailIfExists,
             };
             TestEventsRaised testEventRaised = new TestEventsRaised(options);
-            StorageResource sourceResource = LocalFilesStorageResourceProvider.FromFile(newSourceFile);
+            LocalFilesStorageResourceProvider files = new();
+            StorageResource sourceResource = files.FromFile(newSourceFile);
             StorageResourceItem destinationResource = GetStorageResourceItem(objectClient);
             TransferManager transferManager = new TransferManager();
 

@@ -15,8 +15,6 @@ namespace Azure.AI.Projects
         /// <summary> Entra ID authentication (formerly known as AAD). </summary>
         EntraId,
         /// <summary> Shared Access Signature (SAS) authentication. </summary>
-        SAS,
-        /// <summary> No authentication. </summary>
-        None
+        SAS
     }
 }

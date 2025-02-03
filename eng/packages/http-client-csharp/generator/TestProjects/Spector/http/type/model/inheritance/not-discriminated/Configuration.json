@@ -1,6 +1,0 @@
-{
-  "output-folder": ".",
-  "namespace": "Type.Model.Inheritance.NotDiscriminated",
-  "library-name": "Type.Model.Inheritance.NotDiscriminated",
-  "use-model-reader-writer": true
-}

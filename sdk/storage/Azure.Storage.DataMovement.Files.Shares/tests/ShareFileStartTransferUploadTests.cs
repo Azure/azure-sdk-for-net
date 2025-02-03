@@ -72,7 +72,7 @@ namespace Azure.Storage.DataMovement.Files.Shares.Tests
             if (Mode == RecordedTestMode.Record ||
                 Mode == RecordedTestMode.Playback)
             {
-                options.FileLastWrittenOn = _defaultFileLastWrittenOn;
+                options.FileLastWrittenOn = new(_defaultFileLastWrittenOn);
             }
             return new ShareFileStorageResource(
                 objectClient,

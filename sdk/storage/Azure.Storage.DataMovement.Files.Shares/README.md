@@ -91,19 +91,20 @@ ShareFilesStorageResourceProvider shares = new(tokenCredential);
 To create a share `StorageResource`, use the methods `FromFile` or `FromDirectory`.
 
 ```C# Snippet:ResourceConstruction_Shares
-StorageResource directory = await shares.FromDirectoryAsync(
+StorageResource directory = shares.FromDirectory(
     new Uri("http://myaccount.files.core.windows.net/share/path/to/directory"));
-StorageResource rootDirectory = await shares.FromDirectoryAsync(
+StorageResource rootDirectory = shares.FromDirectory(
     new Uri("http://myaccount.files.core.windows.net/share"));
-StorageResource file = await shares.FromFileAsync(
+StorageResource file = shares.FromFile(
     new Uri("http://myaccount.files.core.windows.net/share/path/to/file.txt"));
 ```
 
 Storage resources can also be initialized with the appropriate client object from Azure.Storage.Files.Shares. Since these resources will use the credential already present in the client object, no credential is required in the provider when using `FromClient()`. **However**, a `ShareFilesStorageResourceProvider` must still have a credential if it is to be used in `TransferManagerOptions` for resuming a transfer.
 
 ```C# Snippet:ResourceConstruction_FromClients_Shares
-StorageResource shareDirectoryResource = ShareFilesStorageResourceProvider.FromClient(directoryClient);
-StorageResource shareFileResource = ShareFilesStorageResourceProvider.FromClient(fileClient);
+ShareFilesStorageResourceProvider shares = new();
+StorageResource shareDirectoryResource = shares.FromClient(directoryClient);
+StorageResource shareFileResource = shares.FromClient(fileClient);
 ```
 
 ### Upload
@@ -114,8 +115,8 @@ Upload a file.
 
 ```C# Snippet:SimplefileUpload_Shares
 TransferOperation fileTransfer = await transferManager.StartTransferAsync(
-    sourceResource: LocalFilesStorageResourceProvider.FromFile(sourceLocalFile),
-    destinationResource: await shares.FromFileAsync(destinationFileUri));
+    sourceResource: files.FromFile(sourceLocalFile),
+    destinationResource: shares.FromFile(destinationFileUri));
 await fileTransfer.WaitForCompletionAsync();
 ```
 
@@ -123,8 +124,8 @@ Upload a directory.
 
 ```C# Snippet:SimpleDirectoryUpload_Shares
 TransferOperation folderTransfer = await transferManager.StartTransferAsync(
-    sourceResource: LocalFilesStorageResourceProvider.FromDirectory(sourceLocalDirectory),
-    destinationResource: await shares.FromDirectoryAsync(destinationFolderUri));
+    sourceResource: files.FromDirectory(sourceLocalDirectory),
+    destinationResource: shares.FromDirectory(destinationFolderUri));
 await folderTransfer.WaitForCompletionAsync();
 ```
 
@@ -136,8 +137,8 @@ Download a file.
 
 ```C# Snippet:SimpleFileDownload_Shares
 TransferOperation fileTransfer = await transferManager.StartTransferAsync(
-    sourceResource: await shares.FromFileAsync(sourceFileUri),
-    destinationResource: LocalFilesStorageResourceProvider.FromFile(destinationLocalFile));
+    sourceResource: shares.FromFile(sourceFileUri),
+    destinationResource: files.FromFile(destinationLocalFile));
 await fileTransfer.WaitForCompletionAsync();
 ```
 
@@ -145,8 +146,8 @@ Download a Directory.
 
 ```C# Snippet:SimpleDirectoryDownload_Shares
 TransferOperation directoryTransfer = await transferManager.StartTransferAsync(
-    sourceResource: await shares.FromDirectoryAsync(sourceDirectoryUri),
-    destinationResource: LocalFilesStorageResourceProvider.FromDirectory(destinationLocalDirectory));
+    sourceResource: shares.FromDirectory(sourceDirectoryUri),
+    destinationResource: files.FromDirectory(destinationLocalDirectory));
 await directoryTransfer.WaitForCompletionAsync();
 ```
 
@@ -158,8 +159,8 @@ Copy a single file.
 
 ```C# Snippet:s2sCopyFile_Shares
 TransferOperation fileTransfer = await transferManager.StartTransferAsync(
-    sourceResource: await shares.FromFileAsync(sourceFileUri),
-    destinationResource: await shares.FromFileAsync(destinationFileUri));
+    sourceResource: shares.FromFile(sourceFileUri),
+    destinationResource: shares.FromFile(destinationFileUri));
 await fileTransfer.WaitForCompletionAsync();
 ```
 
@@ -167,8 +168,8 @@ Copy a directory.
 
 ```C# Snippet:s2sCopyDirectory_Shares
 TransferOperation directoryTransfer = await transferManager.StartTransferAsync(
-    sourceResource: await shares.FromDirectoryAsync(sourceDirectoryUri),
-    destinationResource: await shares.FromDirectoryAsync(destinationDirectoryUri));
+    sourceResource: shares.FromDirectory(sourceDirectoryUri),
+    destinationResource: shares.FromDirectory(destinationDirectoryUri));
 await directoryTransfer.WaitForCompletionAsync();
 ```
 

@@ -48,15 +48,6 @@ parameters:
 - name: PRMatrixSetting
   type: string
   default: 'ArtifactPackageNames'
-- name: PRJobBatchSize
-  type: number
-  default: 10
-- name: PRMatrixIndirectFilters
-  type: object
-  default: []
-- name: PRMatrixSparseIndirect
-  type: boolean
-  default: true
 # Mappings to OS name required at template compile time by 1es pipeline templates
 - name: Pools
   type: object
@@ -135,6 +126,7 @@ jobs:
     - ${{ else }}:
       - ${{ each pool in parameters.Pools }}:
         - pwsh: |
+            # dump the conglomerated CI matrix
             '${{ convertToJson(parameters.MatrixConfigs) }}' | Set-Content matrix.json
 
             ./eng/common/scripts/job-matrix/Create-PrJobMatrix.ps1 `
@@ -143,10 +135,7 @@ jobs:
               -PRMatrixSetting ${{ parameters.PRMatrixSetting }} `
               -DisplayNameFilter '$(displayNameFilter)' `
               -Filters '${{ join(''',''', parameters.MatrixFilters) }}', 'container=^$', 'SupportedClouds=^$|${{ parameters.CloudConfig.Cloud }}', 'Pool=${{ pool.filter }}' `
-              -IndirectFilters '${{ join(''',''', parameters.PRMatrixIndirectFilters) }}' `
-              -Replace '${{ join(''',''', parameters.MatrixReplace) }}' `
-              -PackagesPerPRJob ${{ parameters.PRJobBatchSize }} `
-              -SparseIndirect $${{ parameters.PRMatrixSparseIndirect }}
+              -Replace '${{ join(''',''', parameters.MatrixReplace) }}'
           displayName: Create ${{ pool.name }} PR Matrix
           name: vm_job_matrix_pr_${{ pool.name }}
 

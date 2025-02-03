@@ -7,7 +7,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 
 namespace System.ClientModel.Primitives;
 
@@ -17,29 +16,6 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public abstract class PipelineTransport : PipelinePolicy
 {
-    private readonly PipelineTransportLogger? _pipelineTransportLogger;
-
-    /// <summary>
-    /// Creates a new instance of the <see cref="PipelineTransport"/> class.
-    /// </summary>
-    protected PipelineTransport()
-    {
-    }
-
-    /// <summary>
-    /// Creates a new instance of the <see cref="PipelineTransport"/> class.
-    /// </summary>
-    /// <param name="enableLogging">If client-wide logging is enabled for this pipeline.</param>
-    /// <param name="loggerFactory">The <see cref="ILoggerFactory"/> to use to create an <see cref="ILogger"/> instance for logging.
-    /// If one is not provided, logs are written to Event Source by default.</param>
-    protected PipelineTransport(bool enableLogging, ILoggerFactory? loggerFactory)
-    {
-        if (enableLogging)
-        {
-            _pipelineTransportLogger = new(loggerFactory);
-        }
-    }
-
     #region CreateMessage
 
     /// <summary>
@@ -87,17 +63,7 @@ public abstract class PipelineTransport : PipelinePolicy
     /// <param name="message">The <see cref="PipelineMessage"/> containing the
     /// request that was sent and response that was received by the transport.</param>
     public void Process(PipelineMessage message)
-    {
-        try
-        {
-            ProcessSyncOrAsync(message, async: false).EnsureCompleted();
-        }
-        catch (Exception ex)
-        {
-            _pipelineTransportLogger?.LogExceptionResponse(message.Request.ClientRequestId ?? string.Empty, ex);
-            throw;
-        }
-    }
+        => ProcessSyncOrAsync(message, async: false).EnsureCompleted();
 
     /// <summary>
     /// Sends the HTTP request contained by <see cref="PipelineMessage.Request"/>
@@ -106,17 +72,7 @@ public abstract class PipelineTransport : PipelinePolicy
     /// <param name="message">The <see cref="PipelineMessage"/> containing the
     /// request that was sent and response that was received by the transport.</param>
     public async ValueTask ProcessAsync(PipelineMessage message)
-    {
-        try
-        {
-            await ProcessSyncOrAsync(message, async: true).ConfigureAwait(false);
-        }
-        catch (Exception ex)
-        {
-            _pipelineTransportLogger?.LogExceptionResponse(message.Request.ClientRequestId ?? string.Empty, ex);
-            throw;
-        }
-    }
+        => await ProcessSyncOrAsync(message, async: true).ConfigureAwait(false);
 
     private async ValueTask ProcessSyncOrAsync(PipelineMessage message, bool async)
     {
@@ -127,8 +83,6 @@ public abstract class PipelineTransport : PipelinePolicy
         CancellationToken messageToken = message.CancellationToken;
         using CancellationTokenSource timeoutTokenSource = CancellationTokenSource.CreateLinkedTokenSource(messageToken);
         timeoutTokenSource.CancelAfter(networkTimeout);
-
-        var before = Stopwatch.GetTimestamp();
 
         try
         {
@@ -154,16 +108,8 @@ public abstract class PipelineTransport : PipelinePolicy
             timeoutTokenSource.CancelAfter(Timeout.Infinite);
         }
 
-        var after = Stopwatch.GetTimestamp();
-        double elapsed = (after - before) / (double)Stopwatch.Frequency;
-
         message.AssertResponse();
         message.Response!.IsErrorCore = ClassifyResponse(message);
-
-        if (elapsed > ClientLoggingOptions.RequestTooLongSeconds)
-        {
-            _pipelineTransportLogger?.LogResponseDelay(message.Request.ClientRequestId ?? string.Empty, elapsed);
-        }
 
         // The remainder of the method handles response content according to
         // buffering logic specified by value of message.BufferResponse.

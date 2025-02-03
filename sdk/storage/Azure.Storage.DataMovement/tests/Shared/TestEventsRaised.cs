@@ -324,8 +324,15 @@ namespace Azure.Storage.DataMovement.Tests
         public async Task AssertPausedCheck()
         {
             await WaitForStatusEventsAsync().ConfigureAwait(false);
+
+            AssertUnexpectedFailureCheck();
             Assert.IsEmpty(SkippedEvents);
-            Assert.AreEqual(TransferState.Paused, StatusEvents.Last().TransferStatus.State);
+
+            AssertTransferStatusCollection(
+                new TransferStatus[] {
+                    InProgressStatus,
+                    new TransferStatusInternal(TransferState.Paused, false, false) },
+                StatusEvents.Select(e => e.TransferStatus).ToArray());
         }
 
         /// <summary>
@@ -370,7 +377,7 @@ namespace Azure.Storage.DataMovement.Tests
         /// </summary>
         private Task WaitForStatusEventsAsync()
         {
-            return Task.Delay(150);
+            return Task.Delay(100);
         }
     }
 }

@@ -524,11 +524,10 @@ namespace Azure.AI.Projects
                 throw new InvalidOperationException("No connections found for the specified parameters.");
             }
 
-            var connection = connections.Value[0];
+            var secret = connections.Value[0];
             return withCredential.GetValueOrDefault()
-                ? await GetConnectionWithSecretsAsync(connection.Name, "ignored").ConfigureAwait(false)
-                : Response.FromValue(connection, null);
-            ;
+                ? await GetConnectionWithSecretsAsync(secret.Name, "ignored").ConfigureAwait(false)
+                : await GetConnectionAsync(secret.Name).ConfigureAwait(false);
         }
 
         /// <summary> Get the details of a single connection. </summary>
@@ -546,10 +545,10 @@ namespace Azure.AI.Projects
                 throw new InvalidOperationException("No connections found for the specified parameters.");
             }
 
-            ConnectionResponse connection = connections.Value[0];
+            var secret = connections.Value[0];
             return withCredential.GetValueOrDefault()
-                ? GetConnectionWithSecrets(connection.Name, "ignored")
-                : Response.FromValue(connection, null);
+                ? GetConnectionWithSecrets(secret.Name, "ignored")
+                : GetConnection(secret.Name);
         }
 
         // CUSTOM: Fixed the request URI by removing "/agents/v1.0"

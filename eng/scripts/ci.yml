@@ -1,6 +1,4 @@
 # NOTE: Please refer to https://aka.ms/azsdk/engsys/ci-yaml before editing this file.
-# Excludes eng/scripts/typespec as these are only used in the eng/packages/http-client-csharp/ci.yml pipeline.
-
 trigger:
   branches:
     include:
@@ -11,8 +9,6 @@ trigger:
   paths:
     include:
       - eng/scripts/*
-    exclude:
-      - eng/scripts/typespec
 
 pr:
   branches:
@@ -24,8 +20,6 @@ pr:
   paths:
     include:
       - eng/scripts/*
-    exclude:
-      - eng/scripts/typespec
 
 extends:
   template: /eng/common/pipelines/templates/stages/archetype-sdk-tool-pwsh.yml

@@ -376,7 +376,17 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         encryptionKeySha256: default,
                         encryptionScope: default),
                     new MockResponse(201))));
-            AppendBlobStorageResource destinationResource = new AppendBlobStorageResource(mock.Object);
+
+            AppendBlobStorageResourceOptions resourceOptions = new()
+            {
+                CacheControl = new(true),
+                ContentDisposition = new(true),
+                ContentLanguage = new(true),
+                ContentEncoding = new(true),
+                ContentType = new(true),
+                Metadata = new(true)
+            };
+            AppendBlobStorageResource destinationResource = new AppendBlobStorageResource(mock.Object, resourceOptions);
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
@@ -472,12 +482,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
 
             AppendBlobStorageResourceOptions resourceOptions = new()
             {
-                CacheControl = default,
-                ContentDisposition = default,
-                ContentLanguage = default,
-                ContentEncoding = default,
-                ContentType = default,
-                Metadata = default
+                CacheControl = new(false),
+                ContentDisposition = new(false),
+                ContentLanguage = new(false),
+                ContentEncoding = new(false),
+                ContentType = new(false),
+                Metadata = new(false)
             };
             AppendBlobStorageResource destinationResource = new AppendBlobStorageResource(mock.Object, resourceOptions);
 
@@ -786,7 +796,16 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         encryptionKeySha256: default,
                         encryptionScope: default),
                     new MockResponse(201))));
-            AppendBlobStorageResource destinationResource = new AppendBlobStorageResource(mockDestination.Object);
+            AppendBlobStorageResourceOptions resourceOptions = new()
+            {
+                CacheControl = new(true),
+                ContentDisposition = new(true),
+                ContentLanguage = new(true),
+                ContentEncoding = new(true),
+                ContentType = new(true),
+                Metadata = new(true)
+            };
+            AppendBlobStorageResource destinationResource = new AppendBlobStorageResource(mockDestination.Object, resourceOptions);
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
@@ -885,12 +904,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     new MockResponse(201))));
             AppendBlobStorageResourceOptions resourceOptions = new()
             {
-                CacheControl = default,
-                ContentDisposition = default,
-                ContentLanguage = default,
-                ContentEncoding = default,
-                ContentType = default,
-                Metadata = default
+                CacheControl = new(false),
+                ContentDisposition = new(false),
+                ContentLanguage = new(false),
+                ContentEncoding = new(false),
+                ContentType = new(false),
+                Metadata = new(false)
             };
             AppendBlobStorageResource destinationResource = new AppendBlobStorageResource(mockDestination.Object, resourceOptions);
 
@@ -1288,7 +1307,16 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                         encryptionKeySha256: default,
                         encryptionScope: default),
                     new MockResponse(201))));
-            AppendBlobStorageResource destinationResource = new AppendBlobStorageResource(mockDestination.Object);
+            AppendBlobStorageResourceOptions resourceOptions = new()
+            {
+                CacheControl = new(true),
+                ContentDisposition = new(true),
+                ContentLanguage = new(true),
+                ContentEncoding = new(true),
+                ContentType = new(true),
+                Metadata = new(true)
+            };
+            AppendBlobStorageResource destinationResource = new AppendBlobStorageResource(mockDestination.Object, resourceOptions);
 
             // Act
             IDictionary<string, string> metadata = DataProvider.BuildMetadata();
@@ -1388,12 +1416,12 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                     new MockResponse(201))));
             AppendBlobStorageResourceOptions resourceOptions = new()
             {
-                CacheControl = default,
-                ContentDisposition = default,
-                ContentLanguage = default,
-                ContentEncoding = default,
-                ContentType = default,
-                Metadata = default
+                CacheControl = new(false),
+                ContentDisposition = new(false),
+                ContentLanguage = new(false),
+                ContentEncoding = new(false),
+                ContentType = new(false),
+                Metadata = new(false)
             };
             AppendBlobStorageResource destinationResource = new AppendBlobStorageResource(mockDestination.Object, resourceOptions);
 

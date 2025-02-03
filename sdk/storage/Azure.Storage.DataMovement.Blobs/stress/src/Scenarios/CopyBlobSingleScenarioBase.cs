@@ -63,11 +63,11 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                             _blobSize,
                             cancellationToken);
                         sourceBaseBlob = sourceBlob;
-                        sourceResource = BlobsStorageResourceProvider.FromClient(sourceBlob);
+                        sourceResource = _blobsStorageResourceProvider.FromClient(sourceBlob);
 
                         AppendBlobClient destinationBlob = destinationContainerClient.GetAppendBlobClient(blobName);
                         destinationBaseBlob = destinationBlob;
-                        destinationResource = BlobsStorageResourceProvider.FromClient(destinationBlob);
+                        destinationResource = _blobsStorageResourceProvider.FromClient(destinationBlob);
                     }
                     else if (blobType == BlobType.Page)
                     {
@@ -77,11 +77,11 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                             _blobSize,
                             cancellationToken);
                         sourceBaseBlob = sourceBlob;
-                        sourceResource = BlobsStorageResourceProvider.FromClient(sourceBlob);
+                        sourceResource = _blobsStorageResourceProvider.FromClient(sourceBlob);
 
                         PageBlobClient destinationBlob = destinationContainerClient.GetPageBlobClient(blobName);
                         destinationBaseBlob = destinationBlob;
-                        destinationResource = BlobsStorageResourceProvider.FromClient(destinationBlob);
+                        destinationResource = _blobsStorageResourceProvider.FromClient(destinationBlob);
                     }
                     else
                     {
@@ -91,11 +91,11 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                             _blobSize,
                             cancellationToken);
                         sourceBaseBlob = sourceBlob;
-                        sourceResource = BlobsStorageResourceProvider.FromClient(sourceBlob);
+                        sourceResource = _blobsStorageResourceProvider.FromClient(sourceBlob);
 
                         BlockBlobClient destinationBlob = destinationContainerClient.GetBlockBlobClient(blobName);
                         destinationBaseBlob = destinationBlob;
-                        destinationResource = BlobsStorageResourceProvider.FromClient(destinationBlob);
+                        destinationResource = _blobsStorageResourceProvider.FromClient(destinationBlob);
                     }
 
                     // Start Transfer

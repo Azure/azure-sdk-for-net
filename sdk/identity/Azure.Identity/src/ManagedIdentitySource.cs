@@ -87,7 +87,6 @@ namespace Azure.Identity
             if (response.IsError)
             {
                 string content = string.Empty;
-
                 try
                 {
                     content = response.Content.ToString();
@@ -95,9 +94,9 @@ namespace Azure.Identity
                     ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
                     : JsonDocument.Parse(response.ContentStream);
                 }
-                catch (Exception)
+                catch (JsonException)
                 {
-                    // If the response is not json or the Content was null, it is not the IMDS and it should be treated as CredentialUnavailable
+                    // If the response is not json, it is not the IMDS and it should be treated as CredentialUnavailable
                     throw new CredentialUnavailableException(UnexpectedResponse, new Exception(content));
                 }
             }

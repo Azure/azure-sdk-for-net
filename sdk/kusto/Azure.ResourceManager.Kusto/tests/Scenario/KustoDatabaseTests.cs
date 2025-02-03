@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
         {
             var databaseDataCreate = new KustoReadWriteDatabase {Location = Location, HotCachePeriod = _hotCachePeriod1, SoftDeletePeriod = _softDeletePeriod1};
             var databaseDataUpdate = new KustoReadWriteDatabase {Location = Location, HotCachePeriod = _hotCachePeriod2, SoftDeletePeriod = _softDeletePeriod2};
-            await RunDatabaseTests("sdkRWDatabase", databaseDataCreate, databaseDataUpdate);
+            await RunDatabaseTests(databaseDataCreate, databaseDataUpdate);
         }
 
         [TestCase]
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.Kusto.Tests.Scenario
             var keyVaultProperties = new KustoKeyVaultProperties {KeyName = KeyName, KeyVaultUri = KeyVaultUri, KeyVersion = KeyVersion, UserIdentity = UserAssignedIdentityId};
             var databaseDataCreate = new KustoReadWriteDatabase {Location = Location, HotCachePeriod = _hotCachePeriod1, SoftDeletePeriod = _softDeletePeriod1, KeyVaultProperties = keyVaultProperties};
             var databaseDataUpdate = new KustoReadWriteDatabase {Location = Location, HotCachePeriod = _hotCachePeriod2, SoftDeletePeriod = _softDeletePeriod2, KeyVaultProperties = keyVaultProperties};
-            await RunDatabaseTests("sdkCMKDatabase", databaseDataCreate, databaseDataUpdate);
+            await RunDatabaseTests(databaseDataCreate, databaseDataUpdate);
         }
 
-        private async Task RunDatabaseTests(string databaseNamePrefix, KustoReadWriteDatabase databaseDataCreate, KustoReadWriteDatabase databaseDataUpdate)
+        private async Task RunDatabaseTests(KustoReadWriteDatabase databaseDataCreate, KustoReadWriteDatabase databaseDataUpdate)
         {
             var databaseCollection = Cluster.GetKustoDatabases();
 
-            var databaseName = GenerateAssetName(databaseNamePrefix);
+            var databaseName = GenerateAssetName("sdkDatabase");
 
             Task<ArmOperation<KustoDatabaseResource>> CreateOrUpdateDatabaseAsync(
                 string databaseName, KustoReadWriteDatabase databaseData

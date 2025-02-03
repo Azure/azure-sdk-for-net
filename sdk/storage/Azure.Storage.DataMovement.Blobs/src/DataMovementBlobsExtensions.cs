@@ -385,13 +385,12 @@ namespace Azure.Storage.DataMovement.Blobs
                 DestinationConditions = CreateRequestConditions(options?.DestinationConditions, overwrite),
                 SourceAuthentication = sourceAuthorization,
             };
-            if (options == default ||
-                ((options?._isContentEncodingSet == false) &&
-                (options?._isContentDispositionSet == false) &&
-                (options?._isContentLanguageSet == false) &&
-                (options?._isContentTypeSet == false) &&
-                (options?._isCacheControlSet == false) &&
-                (options?._isMetadataSet == false)))
+            if ((options?.ContentEncoding?.Preserve ?? true) &&
+                (options?.ContentDisposition?.Preserve ?? true) &&
+                (options?.ContentLanguage?.Preserve ?? true) &&
+                (options?.ContentType?.Preserve ?? true) &&
+                (options?.CacheControl?.Preserve ?? true) &&
+                (options?.Metadata?.Preserve ?? true))
             {
                 return uploadFromUriOptions;
             }
@@ -532,28 +531,52 @@ namespace Azure.Storage.DataMovement.Blobs
             }
         }
 
+        internal static BlobStorageResourceOptions GetBlobResourceOptions(
+            this BlobDestinationCheckpointDetails checkpointDetails)
+        {
+            return new()
+            {
+                Metadata = checkpointDetails.Metadata,
+                CacheControl = checkpointDetails.CacheControl,
+                ContentDisposition = checkpointDetails.ContentDisposition,
+                ContentEncoding = checkpointDetails.ContentEncoding,
+                ContentLanguage = checkpointDetails.ContentLanguage,
+                ContentType = checkpointDetails.ContentType,
+                AccessTier = checkpointDetails.AccessTierValue,
+            };
+        }
+
         internal static BlockBlobStorageResourceOptions GetBlockBlobResourceOptions(
             this BlobDestinationCheckpointDetails checkpointDetails)
-            => new BlockBlobStorageResourceOptions(checkpointDetails);
+        {
+            BlobStorageResourceOptions baseOptions = checkpointDetails.GetBlobResourceOptions();
+            return new BlockBlobStorageResourceOptions(baseOptions);
+        }
 
         internal static PageBlobStorageResourceOptions GetPageBlobResourceOptions(
             this BlobDestinationCheckpointDetails checkpointDetails)
-            => new PageBlobStorageResourceOptions(checkpointDetails);
+        {
+            BlobStorageResourceOptions baseOptions = checkpointDetails.GetBlobResourceOptions();
+            return new PageBlobStorageResourceOptions(baseOptions);
+        }
 
         internal static AppendBlobStorageResourceOptions GetAppendBlobResourceOptions(
             this BlobDestinationCheckpointDetails checkpointDetails)
-            => new AppendBlobStorageResourceOptions(checkpointDetails);
+        {
+            BlobStorageResourceOptions baseOptions = checkpointDetails.GetBlobResourceOptions();
+            return new AppendBlobStorageResourceOptions(baseOptions);
+        }
 
         internal static BlobStorageResourceContainerOptions GetBlobContainerOptions(
             this BlobDestinationCheckpointDetails checkpointDetails,
             string directoryPrefix)
         {
+            BlobStorageResourceOptions baseOptions = checkpointDetails.GetBlobResourceOptions();
             return new BlobStorageResourceContainerOptions()
             {
                 BlobType = default,
-                _isBlobTypeSet = false,
-                BlobPrefix = directoryPrefix,
-                BlobOptions = new(checkpointDetails),
+                BlobDirectoryPrefix = directoryPrefix,
+                BlobOptions = baseOptions,
             };
         }
 
@@ -561,9 +584,17 @@ namespace Azure.Storage.DataMovement.Blobs
             => new BlobStorageResourceContainerOptions()
             {
                 BlobType = options?.BlobType,
-                _isBlobTypeSet = options?._isBlobTypeSet ?? false,
-                BlobPrefix = options?.BlobPrefix,
-                BlobOptions = new BlobStorageResourceOptions(options?.BlobOptions)
+                BlobDirectoryPrefix = options?.BlobDirectoryPrefix,
+                BlobOptions = new BlobStorageResourceOptions()
+                {
+                    Metadata = options?.BlobOptions?.Metadata,
+                    CacheControl = options?.BlobOptions?.CacheControl,
+                    ContentEncoding = options?.BlobOptions?.ContentEncoding,
+                    ContentDisposition = options?.BlobOptions?.ContentDisposition,
+                    ContentLanguage = options?.BlobOptions?.ContentLanguage,
+                    ContentType = options?.BlobOptions?.ContentType,
+                    AccessTier = options?.BlobOptions?.AccessTier,
+                }
             };
 
         internal static StorageResourceItemProperties ToResourceProperties(this BlobItem blobItem)
@@ -636,31 +667,31 @@ namespace Azure.Storage.DataMovement.Blobs
             IDictionary<string, object> properties)
             => new()
             {
-                ContentType = (options?._isContentTypeSet ?? false)
-                    ? options?.ContentType
-                    : properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentType, out object contentType) == true
+                ContentType = (options?.ContentType?.Preserve ?? true)
+                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentType, out object contentType) == true
                         ? (string) contentType
-                        : default,
-                ContentEncoding = (options?._isContentEncodingSet ?? false)
-                    ? options?.ContentEncoding
-                    : properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentEncoding, out object contentEncoding) == true
-                        ? ConvertContentPropertyObjectToString(DataMovementConstants.ResourceProperties.ContentEncoding, contentEncoding)
-                        : default,
-                ContentLanguage = (options?._isContentLanguageSet ?? false)
-                    ? options?.ContentLanguage
-                    : properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentLanguage, out object contentLanguage) == true
-                        ? ConvertContentPropertyObjectToString(DataMovementConstants.ResourceProperties.ContentLanguage, contentLanguage)
-                        : default,
-                ContentDisposition = (options?._isContentDispositionSet ?? false)
-                    ? options?.ContentDisposition
-                    : properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentDisposition, out object contentDisposition) == true
-                        ? (string)contentDisposition
-                        : default,
-                CacheControl = (options?._isCacheControlSet ?? false)
-                    ? options?.CacheControl
-                    : properties?.TryGetValue(DataMovementConstants.ResourceProperties.CacheControl, out object cacheControl) == true
-                        ? (string)cacheControl
                         : default
+                    : options?.ContentType?.Value,
+                ContentEncoding = (options?.ContentEncoding?.Preserve ?? true)
+                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentEncoding, out object contentEncoding) == true
+                        ? ConvertContentPropertyObjectToString(DataMovementConstants.ResourceProperties.ContentEncoding, contentEncoding)
+                        : default
+                    : options?.ContentEncoding?.Value,
+                ContentLanguage = (options?.ContentLanguage?.Preserve ?? true)
+                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentLanguage, out object contentLanguage) == true
+                        ? ConvertContentPropertyObjectToString(DataMovementConstants.ResourceProperties.ContentLanguage, contentLanguage)
+                        : default
+                    : options?.ContentLanguage?.Value,
+                ContentDisposition = (options?.ContentDisposition?.Preserve ?? true)
+                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.ContentDisposition, out object contentDisposition) == true
+                        ? (string) contentDisposition
+                        : default
+                    : options?.ContentDisposition?.Value,
+                CacheControl = (options?.CacheControl?.Preserve ?? true)
+                    ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.CacheControl, out object cacheControl) == true
+                        ? (string) cacheControl
+                        : default
+                    : options?.CacheControl?.Value,
             };
 
         // Get the access tier property
@@ -677,10 +708,10 @@ namespace Azure.Storage.DataMovement.Blobs
         private static Metadata GetMetadata(
             BlobStorageResourceOptions options,
             IDictionary<string, object> properties)
-            => (options?._isMetadataSet ?? false)
-                ? options?.Metadata
-                : properties?.TryGetValue(DataMovementConstants.ResourceProperties.Metadata, out object metadataObject) == true
-                    ? (Metadata)metadataObject
-                    : default;
+            => (options?.Metadata?.Preserve ?? true)
+                ? properties?.TryGetValue(DataMovementConstants.ResourceProperties.Metadata, out object metadataObject) == true
+                    ? (Metadata) metadataObject
+                    : default
+               : options?.Metadata?.Value;
     }
 }

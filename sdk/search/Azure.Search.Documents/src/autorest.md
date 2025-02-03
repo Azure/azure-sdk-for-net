@@ -58,15 +58,6 @@ directive:
     $["discriminator"] = "@odata.type";
 ```
 
-## Renaming models after the AI Studio rebrand to AI Foundry
-These should eventually be fixed in the swagger files.
-```yaml
-directive:
-- from: "searchservice.json"
-  where: $.definitions.AIStudioModelCatalogName
-  transform: $["x-ms-enum"].name = "AIFoundryModelCatalogName";
-```
-
 ### Mark definitions as objects
 The modeler warns about models without an explicit type.
 ``` yaml

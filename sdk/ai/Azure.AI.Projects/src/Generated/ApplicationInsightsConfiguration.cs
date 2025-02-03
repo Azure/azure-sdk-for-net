@@ -16,15 +16,18 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsConfiguration"/>. </summary>
         /// <param name="resourceId"> LogAnalytic Workspace resourceID associated with ApplicationInsights. </param>
         /// <param name="query"> Query to fetch the data. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/> or <paramref name="query"/> is null. </exception>
-        public ApplicationInsightsConfiguration(string resourceId, string query)
+        /// <param name="serviceName"> Service name. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="query"/> or <paramref name="serviceName"/> is null. </exception>
+        public ApplicationInsightsConfiguration(string resourceId, string query, string serviceName)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNull(query, nameof(query));
+            Argument.AssertNotNull(serviceName, nameof(serviceName));
 
             Type = "app_insights";
             ResourceId = resourceId;
             Query = query;
+            ServiceName = serviceName;
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsConfiguration"/>. </summary>

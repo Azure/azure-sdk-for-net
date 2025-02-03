@@ -156,7 +156,8 @@ namespace Azure.Storage.DataMovement.Tests
             };
 
             StorageResourceContainer sourceResource = GetStorageResourceContainer(sourceContainer, sourcePrefix);
-            StorageResourceContainer destinationResource = LocalFilesStorageResourceProvider.FromDirectory(disposingLocalDirectory.DirectoryPath);
+            LocalFilesStorageResourceProvider localProvider = new();
+            StorageResourceContainer destinationResource = localProvider.FromDirectory(disposingLocalDirectory.DirectoryPath);
 
             await new TransferValidator().TransferAndVerifyAsync(
                 sourceResource,
@@ -243,7 +244,8 @@ namespace Azure.Storage.DataMovement.Tests
             TestEventsRaised testEventRaised = new TestEventsRaised(options);
 
             StorageResourceContainer sourceResource = GetStorageResourceContainer(test.Container, sourceDirectoryName);
-            StorageResourceContainer destinationResource = LocalFilesStorageResourceProvider.FromDirectory(destinationFolder);
+            LocalFilesStorageResourceProvider localProvider = new();
+            StorageResourceContainer destinationResource = localProvider.FromDirectory(destinationFolder);
 
             TransferOperation transfer = await transferManager.StartTransferAsync(sourceResource, destinationResource, options);
             await TestTransferWithTimeout.WaitForCompletionAsync(
@@ -423,7 +425,8 @@ namespace Azure.Storage.DataMovement.Tests
 
             // Create storage resources
             StorageResourceContainer sourceResource = GetStorageResourceContainer(containerClient, sourcePrefix);
-            StorageResource destinationResource = LocalFilesStorageResourceProvider.FromDirectory(destinationFolder);
+            LocalFilesStorageResourceProvider files = new();
+            StorageResource destinationResource = files.FromDirectory(destinationFolder);
 
             // Create Transfer Manager with single threaded operation
             TransferManagerOptions managerOptions = new TransferManagerOptions()

@@ -1,6 +1,0 @@
-{
-  "output-folder": ".",
-  "namespace": "SpecialHeaders.ConditionalRequest",
-  "library-name": "SpecialHeaders.ConditionalRequest",
-  "use-model-reader-writer": true
-}

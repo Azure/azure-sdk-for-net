@@ -20,7 +20,6 @@ public class MockPipelineRequest : PipelineRequest
     {
         _headers = new MockRequestHeaders();
         _method = "GET";
-        _uri = new Uri("https://www.example.com");
     }
 
     protected override BinaryContent? ContentCore

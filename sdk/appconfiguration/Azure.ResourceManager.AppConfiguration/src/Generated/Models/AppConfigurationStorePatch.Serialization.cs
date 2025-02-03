@@ -78,11 +78,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 writer.WritePropertyName("enablePurgeProtection"u8);
                 writer.WriteBooleanValue(EnablePurgeProtection.Value);
             }
-            if (Optional.IsDefined(DataPlaneProxy))
-            {
-                writer.WritePropertyName("dataPlaneProxy"u8);
-                writer.WriteObjectValue(DataPlaneProxy, options);
-            }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -128,7 +123,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             bool? disableLocalAuth = default;
             AppConfigurationPublicNetworkAccess? publicNetworkAccess = default;
             bool? enablePurgeProtection = default;
-            AppConfigurationDataPlaneProxyProperties dataPlaneProxy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -210,15 +204,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                             enablePurgeProtection = property0.Value.GetBoolean();
                             continue;
                         }
-                        if (property0.NameEquals("dataPlaneProxy"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dataPlaneProxy = AppConfigurationDataPlaneProxyProperties.DeserializeAppConfigurationDataPlaneProxyProperties(property0.Value, options);
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -236,7 +221,6 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 disableLocalAuth,
                 publicNetworkAccess,
                 enablePurgeProtection,
-                dataPlaneProxy,
                 serializedAdditionalRawData);
         }
 

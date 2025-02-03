@@ -290,7 +290,7 @@ namespace BasicTypeSpec.Models
             int requiredInt = default;
             IList<StringFixedEnum> requiredCollection = default;
             IDictionary<string, StringExtensibleEnum> requiredDictionary = default;
-            ThingModel requiredModel = default;
+            Thing requiredModel = default;
             IntExtensibleEnum? intExtensibleEnum = default;
             IList<IntExtensibleEnum> intExtensibleEnumCollection = default;
             FloatExtensibleEnum? floatExtensibleEnum = default;
@@ -345,7 +345,7 @@ namespace BasicTypeSpec.Models
                 }
                 if (prop.NameEquals("requiredModel"u8))
                 {
-                    requiredModel = ThingModel.DeserializeThingModel(prop.Value, options);
+                    requiredModel = Thing.DeserializeThing(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("intExtensibleEnum"u8))

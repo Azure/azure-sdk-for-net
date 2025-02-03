@@ -48,21 +48,22 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="CreateVectorStoreFileRequest"/>. </summary>
         internal CreateVectorStoreFileRequest()
         {
+            DataSources = new ChangeTrackingList<VectorStoreDataSource>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateVectorStoreFileRequest"/>. </summary>
         /// <param name="fileId"> Identifier of the file. </param>
-        /// <param name="dataSource"> Azure asset ID. </param>
+        /// <param name="dataSources"> Azure asset ID. </param>
         /// <param name="chunkingStrategy">
         /// The chunking strategy used to chunk the file(s). If not set, will use the auto strategy.
         /// Please note <see cref="VectorStoreChunkingStrategyRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="VectorStoreAutoChunkingStrategyRequest"/> and <see cref="VectorStoreStaticChunkingStrategyRequest"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CreateVectorStoreFileRequest(string fileId, VectorStoreDataSource dataSource, VectorStoreChunkingStrategyRequest chunkingStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CreateVectorStoreFileRequest(string fileId, IReadOnlyList<VectorStoreDataSource> dataSources, VectorStoreChunkingStrategyRequest chunkingStrategy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             FileId = fileId;
-            DataSource = dataSource;
+            DataSources = dataSources;
             ChunkingStrategy = chunkingStrategy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
@@ -70,7 +71,7 @@ namespace Azure.AI.Projects
         /// <summary> Identifier of the file. </summary>
         public string FileId { get; }
         /// <summary> Azure asset ID. </summary>
-        public VectorStoreDataSource DataSource { get; }
+        public IReadOnlyList<VectorStoreDataSource> DataSources { get; }
         /// <summary>
         /// The chunking strategy used to chunk the file(s). If not set, will use the auto strategy.
         /// Please note <see cref="VectorStoreChunkingStrategyRequest"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

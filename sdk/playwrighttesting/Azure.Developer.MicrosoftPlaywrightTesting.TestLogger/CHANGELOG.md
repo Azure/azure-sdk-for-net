@@ -1,24 +1,11 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 1.0.0-beta.4 (2024-12-13)
 
 ### Bugs Fixed
 
-### Other Changes
+- Fixed a bug where upload results were incomplete for large size classname suites.
 
-## 1.0.0-beta.4 (2025-01-17)
-
-### Features Added
- 
-- Warning message when MPT access token is close to expiry
- 
-### Bugs Fixed
- 
-- Max character limits in reporting API calls
 
 ## 1.0.0-beta.3 (2024-11-18)
 

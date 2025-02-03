@@ -88,7 +88,6 @@ namespace Azure.AI.Inference.Telemetry
             {
                 _activity?.SetTag(kv.Key, kv.Value);
             }
-            _activity?.SetTag(AzNamespaceKey, AzureRpNamespaceValue);
             SetTagMaybe(GenAiRequestMaxTokensKey, requestOptions.MaxTokens);
             SetTagMaybe(GenAiRequestTemperatureKey, requestOptions.Temperature);
             SetTagMaybe(GenAiRequestTopPKey, requestOptions.NucleusSamplingFactor);

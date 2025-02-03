@@ -50,7 +50,7 @@ namespace Azure.Storage.DataMovement.Blobs
         {
             BlobContainerClient = blobContainerClient;
             _options = options;
-            DirectoryPrefix = _options?.BlobPrefix;
+            DirectoryPrefix = _options?.BlobDirectoryPrefix;
 
             _uri = DirectoryPrefix != null
                 ? new BlobUriBuilder(BlobContainerClient.Uri)
@@ -68,14 +68,14 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override StorageResourceItem GetStorageResourceReference(string path, string resourceId)
         {
             BlobType type = BlobType.Block;
-            if (_options == default || !_options._isBlobTypeSet)
+            if (_options?.BlobType?.Preserve ?? true)
             {
                 type = ToBlobType(resourceId);
             }
             else
             {
                 // If the user has set the blob type in the options, use that instead of the resourceId
-                type = _options?.BlobType ?? BlobType.Block;
+                type = _options?.BlobType?.Value ?? BlobType.Block;
             }
             return GetBlobAsStorageResource(ApplyOptionalPrefix(path), type: type);
         }
@@ -219,7 +219,16 @@ namespace Azure.Storage.DataMovement.Blobs
         }
 
         protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
-            => new BlobDestinationCheckpointDetails(_options);
+            => new BlobDestinationCheckpointDetails(
+                blobType: _options?.BlobType,
+                contentType: _options?.BlobOptions?.ContentType,
+                contentEncoding: _options?.BlobOptions?.ContentEncoding,
+                contentLanguage: _options?.BlobOptions?.ContentLanguage,
+                contentDisposition: _options?.BlobOptions?.ContentDisposition,
+                cacheControl: _options?.BlobOptions?.CacheControl,
+                accessTier: _options?.BlobOptions?.AccessTier,
+                metadata: _options?.BlobOptions?.Metadata,
+                tags: default);
 
         private string ApplyOptionalPrefix(string path)
             => IsDirectory
@@ -234,7 +243,7 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override StorageResourceContainer GetChildStorageResourceContainer(string path)
         {
             BlobStorageResourceContainerOptions options = _options.DeepCopy();
-            options.BlobPrefix = string.Join("/", DirectoryPrefix, path);
+            options.BlobDirectoryPrefix = string.Join("/", DirectoryPrefix, path);
             return new BlobStorageResourceContainer(
                 BlobContainerClient,
                 options);

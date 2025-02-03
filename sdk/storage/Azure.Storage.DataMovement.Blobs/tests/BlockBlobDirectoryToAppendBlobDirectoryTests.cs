@@ -77,17 +77,28 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 options = new AppendBlobStorageResourceOptions
                 {
-                    ContentDisposition = default,
-                    ContentLanguage = default,
-                    CacheControl = default,
-                    ContentType = default,
-                    Metadata = default
+                    ContentDisposition = new(false),
+                    ContentLanguage = new(false),
+                    CacheControl = new(false),
+                    ContentType = new(false),
+                    Metadata = new(false)
+                };
+            }
+            else if (propertiesTestType == TransferPropertiesTestType.Preserve)
+            {
+                options = new AppendBlobStorageResourceOptions
+                {
+                    ContentDisposition = new(true),
+                    ContentLanguage = new(true),
+                    CacheControl = new(true),
+                    ContentType = new(true),
+                    Metadata = new(true)
                 };
             }
             return new BlobStorageResourceContainer(containerClient, new BlobStorageResourceContainerOptions()
             {
-                BlobPrefix = directoryPath,
-                BlobType = BlobType.Append,
+                BlobDirectoryPrefix = directoryPath,
+                BlobType = new(BlobType.Append),
                 BlobOptions = options
             });
         }
@@ -99,8 +110,8 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
                 containerClient,
                 new BlobStorageResourceContainerOptions()
                 {
-                    BlobPrefix = directoryPath,
-                    BlobType = BlobType.Block
+                    BlobDirectoryPrefix = directoryPath,
+                    BlobType = new(BlobType.Block)
                 });
 
         protected internal override AppendBlobClient GetDestinationBlob(BlobContainerClient containerClient, string blobName)

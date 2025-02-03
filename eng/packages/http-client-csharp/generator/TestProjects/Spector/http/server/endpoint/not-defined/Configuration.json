@@ -1,6 +1,0 @@
-{
-  "output-folder": ".",
-  "namespace": "Server.Endpoint.NotDefined",
-  "library-name": "Server.Endpoint.NotDefined",
-  "use-model-reader-writer": true
-}

@@ -354,9 +354,15 @@ namespace Azure.Storage.DataMovement.Blobs
         protected override StorageResourceCheckpointDetails GetDestinationCheckpointDetails()
         {
             return new BlobDestinationCheckpointDetails(
-                isBlobTypeSet: true,
-                blobType: BlobType.Block,
-                blobOptions: _options);
+                blobType: new(BlobType.Block),
+                contentType: _options?.ContentType,
+                contentEncoding: _options?.ContentEncoding,
+                contentLanguage: _options?.ContentLanguage,
+                contentDisposition: _options?.ContentDisposition,
+                cacheControl: _options?.CacheControl,
+                accessTier: _options?.AccessTier,
+                metadata: _options?.Metadata,
+                tags: default);
         }
 
         // no-op for get permissions

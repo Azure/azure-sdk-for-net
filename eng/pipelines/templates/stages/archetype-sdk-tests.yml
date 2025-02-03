@@ -57,6 +57,8 @@ parameters:
       # Canary regions are currently not supported in TME so disabling for now
       # Canary:
       #   Location: 'eastus2euap'
+      UsGov:
+      China:
   - name: MatrixConfigs
     type: object
     default:
@@ -101,9 +103,6 @@ parameters:
   - name: UseFederatedAuth
     type: boolean
     default: true
-  - name: PersistOidcToken
-    type: boolean
-    default: false
 
 extends:
   template: /eng/pipelines/templates/stages/1es-redirect.yml
@@ -144,7 +143,6 @@ extends:
                       TestSetupSteps: ${{ parameters.TestSetupSteps }}
                       DeployTestResources: ${{ parameters.DeployTestResources }}
                       UseFederatedAuth: ${{ parameters.UseFederatedAuth }}
-                      PersistOidcToken: ${{ parameters.PersistOidcToken }}
                     MatrixConfigs:
                       # Enumerate platforms and additional platforms based on supported clouds (sparse platform<-->cloud matrix).
                       - ${{ each config in parameters.MatrixConfigs }}:

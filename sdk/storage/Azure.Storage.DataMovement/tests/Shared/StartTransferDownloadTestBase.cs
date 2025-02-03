@@ -139,7 +139,8 @@ namespace Azure.Storage.DataMovement.Tests
                 objectLength: size,
                 createResource: true);
             StorageResourceItem sourceResource = GetStorageResourceItem(TObjectClient);
-            StorageResource destinationResource = LocalFilesStorageResourceProvider.FromFile(destFile);
+            LocalFilesStorageResourceProvider files = new();
+            StorageResource destinationResource = files.FromFile(destFile);
 
             // Create Transfer Manager with single threaded operation
             TransferManagerOptions managerOptions = new TransferManagerOptions()
@@ -360,7 +361,8 @@ namespace Azure.Storage.DataMovement.Tests
                 // of order operations still get predictable IDs and the
                 // recordings work correctly
                 StorageResourceItem sourceResource = GetStorageResourceItem(downloadedObjectInfo[i].SourceObjectClient);
-                StorageResource destinationResource = LocalFilesStorageResourceProvider.FromFile(downloadedObjectInfo[i].DestinationLocalPath);
+                LocalFilesStorageResourceProvider files = new();
+                StorageResource destinationResource = files.FromFile(downloadedObjectInfo[i].DestinationLocalPath);
 
                 // Act
                 TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -500,7 +502,8 @@ namespace Azure.Storage.DataMovement.Tests
             TestEventsRaised testEventsRaised = new(options);
             TransferManager transferManager = new TransferManager();
 
-            StorageResource destinationResource = LocalFilesStorageResourceProvider.FromFile(destFile);
+            LocalFilesStorageResourceProvider files = new();
+            StorageResource destinationResource = files.FromFile(destFile);
 
             // Start transfer and await for completion.
             TransferOperation transfer = await transferManager.StartTransferAsync(
@@ -549,7 +552,8 @@ namespace Azure.Storage.DataMovement.Tests
             };
             TestEventsRaised testEventsRaised = new TestEventsRaised(options);
             StorageResourceItem sourceResource = GetStorageResourceItem(sourceClient);
-            StorageResource destinationResource = LocalFilesStorageResourceProvider.FromFile(destFile);
+            LocalFilesStorageResourceProvider files = new();
+            StorageResource destinationResource = files.FromFile(destFile);
 
             TransferManager transferManager = new TransferManager();
 

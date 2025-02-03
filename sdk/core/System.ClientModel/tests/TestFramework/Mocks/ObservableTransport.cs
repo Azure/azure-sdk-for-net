@@ -92,30 +92,42 @@ public class ObservableTransport : PipelineTransport
 
         protected override BinaryContent? ContentCore
         {
-            get => null;
+            get => throw new NotImplementedException();
             set => throw new NotImplementedException();
         }
 
         protected override PipelineRequestHeaders HeadersCore
-            => new MockRequestHeaders();
+            => throw new NotImplementedException();
 
-        protected override string MethodCore { get; set; } = "GET";
+        protected override string MethodCore
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
 
-        protected override Uri? UriCore { get; set; } = new Uri("http://example.com"); // For the logging policy
+        protected override Uri? UriCore
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
     }
 
     private class TransportResponse : PipelineResponse
     {
         public override int Status => 0;
 
-        public override string ReasonPhrase { get; } = string.Empty;
+        public override string ReasonPhrase => throw new NotImplementedException();
 
-        public override Stream? ContentStream { get; set; }
+        public override Stream? ContentStream
+        {
+            get => null;
+            set => throw new NotImplementedException();
+        }
 
-        public override BinaryData Content { get; } = new BinaryData(new byte[0]);
+        public override BinaryData Content => throw new NotImplementedException();
 
         protected override PipelineResponseHeaders HeadersCore
-            => new MockResponseHeaders();
+            => throw new NotImplementedException();
 
         public override void Dispose()
         {

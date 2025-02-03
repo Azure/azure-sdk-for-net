@@ -43,9 +43,6 @@ namespace Azure.Communication.CallAutomation
         /// </summary>
         internal bool InterruptCallMediaOperation { get; set; }
 
-        /// <summary> If set, hold audio will be interrupted, then this request will be played, and then the hold audio will be resumed. </summary>
-        public bool InterruptHoldAudio { get; set; }
-
         /// <summary>
         /// Creates a new PlayOptions object.
         /// </summary>

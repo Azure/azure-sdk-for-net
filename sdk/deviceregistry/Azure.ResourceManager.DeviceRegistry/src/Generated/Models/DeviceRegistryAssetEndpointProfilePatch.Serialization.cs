@@ -45,11 +45,29 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Optional.IsDefined(Properties))
+            writer.WritePropertyName("properties"u8);
+            writer.WriteStartObject();
+            if (Optional.IsDefined(TargetAddress))
             {
-                writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties, options);
+                writer.WritePropertyName("targetAddress"u8);
+                writer.WriteStringValue(TargetAddress.AbsoluteUri);
             }
+            if (Optional.IsDefined(UserAuthentication))
+            {
+                writer.WritePropertyName("userAuthentication"u8);
+                writer.WriteObjectValue(UserAuthentication, options);
+            }
+            if (Optional.IsDefined(TransportAuthentication))
+            {
+                writer.WritePropertyName("transportAuthentication"u8);
+                writer.WriteObjectValue(TransportAuthentication, options);
+            }
+            if (Optional.IsDefined(AdditionalConfiguration))
+            {
+                writer.WritePropertyName("additionalConfiguration"u8);
+                writer.WriteStringValue(AdditionalConfiguration);
+            }
+            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -88,7 +106,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 return null;
             }
             IDictionary<string, string> tags = default;
-            AssetEndpointProfileUpdateProperties properties = default;
+            Uri targetAddress = default;
+            UserAuthenticationUpdate userAuthentication = default;
+            TransportAuthenticationUpdate transportAuthentication = default;
+            string additionalConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,9 +132,44 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
+                        property.ThrowNonNullablePropertyIsNull();
                         continue;
                     }
-                    properties = AssetEndpointProfileUpdateProperties.DeserializeAssetEndpointProfileUpdateProperties(property.Value, options);
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        if (property0.NameEquals("targetAddress"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            targetAddress = new Uri(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("userAuthentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            userAuthentication = UserAuthenticationUpdate.DeserializeUserAuthenticationUpdate(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("transportAuthentication"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            transportAuthentication = TransportAuthenticationUpdate.DeserializeTransportAuthenticationUpdate(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("additionalConfiguration"u8))
+                        {
+                            additionalConfiguration = property0.Value.GetString();
+                            continue;
+                        }
+                    }
                     continue;
                 }
                 if (options.Format != "W")
@@ -122,7 +178,13 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeviceRegistryAssetEndpointProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
+            return new DeviceRegistryAssetEndpointProfilePatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                targetAddress,
+                userAuthentication,
+                transportAuthentication,
+                additionalConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceRegistryAssetEndpointProfilePatch>.Write(ModelReaderWriterOptions options)

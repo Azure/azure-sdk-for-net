@@ -186,16 +186,6 @@ namespace Azure.ResourceManager.Kusto
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(CalloutPolicies))
-            {
-                writer.WritePropertyName("calloutPolicies"u8);
-                writer.WriteStartArray();
-                foreach (var item in CalloutPolicies)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(PublicIPType))
             {
                 writer.WritePropertyName("publicIPType"u8);
@@ -220,11 +210,6 @@ namespace Azure.ResourceManager.Kusto
             {
                 writer.WritePropertyName("migrationCluster"u8);
                 writer.WriteObjectValue(MigrationCluster, options);
-            }
-            if (options.Format != "W" && Optional.IsDefined(ZoneStatus))
-            {
-                writer.WritePropertyName("zoneStatus"u8);
-                writer.WriteStringValue(ZoneStatus.Value.ToString());
             }
             writer.WriteEndObject();
         }
@@ -280,12 +265,10 @@ namespace Azure.ResourceManager.Kusto
             bool? enableAutoStop = default;
             KustoClusterNetworkAccessFlag? restrictOutboundNetworkAccess = default;
             IList<string> allowedFqdnList = default;
-            IList<KustoCalloutPolicy> calloutPolicies = default;
             KustoClusterPublicIPType? publicIPType = default;
             string virtualClusterGraduationProperties = default;
             IReadOnlyList<KustoPrivateEndpointConnectionData> privateEndpointConnections = default;
             MigrationClusterProperties migrationCluster = default;
-            KustoClusterZoneStatus? zoneStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -584,20 +567,6 @@ namespace Azure.ResourceManager.Kusto
                             allowedFqdnList = array;
                             continue;
                         }
-                        if (property0.NameEquals("calloutPolicies"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            List<KustoCalloutPolicy> array = new List<KustoCalloutPolicy>();
-                            foreach (var item in property0.Value.EnumerateArray())
-                            {
-                                array.Add(KustoCalloutPolicy.DeserializeKustoCalloutPolicy(item, options));
-                            }
-                            calloutPolicies = array;
-                            continue;
-                        }
                         if (property0.NameEquals("publicIPType"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -633,15 +602,6 @@ namespace Azure.ResourceManager.Kusto
                                 continue;
                             }
                             migrationCluster = MigrationClusterProperties.DeserializeMigrationClusterProperties(property0.Value, options);
-                            continue;
-                        }
-                        if (property0.NameEquals("zoneStatus"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            zoneStatus = new KustoClusterZoneStatus(property0.Value.GetString());
                             continue;
                         }
                     }
@@ -685,12 +645,10 @@ namespace Azure.ResourceManager.Kusto
                 enableAutoStop,
                 restrictOutboundNetworkAccess,
                 allowedFqdnList ?? new ChangeTrackingList<string>(),
-                calloutPolicies ?? new ChangeTrackingList<KustoCalloutPolicy>(),
                 publicIPType,
                 virtualClusterGraduationProperties,
                 privateEndpointConnections ?? new ChangeTrackingList<KustoPrivateEndpointConnectionData>(),
                 migrationCluster,
-                zoneStatus,
                 serializedAdditionalRawData);
         }
 

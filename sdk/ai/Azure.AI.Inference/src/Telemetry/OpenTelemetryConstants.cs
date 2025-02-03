@@ -11,8 +11,6 @@ namespace Azure.AI.Inference.Telemetry
         // https://github.com/open-telemetry/semantic-conventions/tree/v1.27.0/docs/gen-ai
 
         public const string ErrorTypeKey = "error.type";
-
-        public const string AzNamespaceKey = "az.namespace";
         public const string ServerAddressKey = "server.address";
         public const string ServerPortKey = "server.port";
 
@@ -40,8 +38,6 @@ namespace Azure.AI.Inference.Telemetry
 
         public const string GenAiEventContent = "gen_ai.event.content";
         public const string GenAiChoice = "gen_ai.choice";
-
-        public const string AzureRpNamespaceValue = "Microsoft.CognitiveServices";
 
         public const string ClientName = "Azure.AI.Inference.ChatCompletionsClient";
         public const string EnableOpenTelemetrySwitch = "Azure.Experimental.EnableActivitySource";

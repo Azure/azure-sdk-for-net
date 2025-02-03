@@ -57,7 +57,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                             _blobSize,
                             cancellationToken);
                         sourceBaseBlob = sourceBlob;
-                        sourceResource = BlobsStorageResourceProvider.FromClient(sourceBlob);
+                        sourceResource = _blobsStorageResourceProvider.FromClient(sourceBlob);
                     }
                     else if (blobType == BlobType.Page)
                     {
@@ -67,7 +67,7 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                             _blobSize,
                             cancellationToken);
                         sourceBaseBlob = sourceBlob;
-                        sourceResource = BlobsStorageResourceProvider.FromClient(sourceBlob);
+                        sourceResource = _blobsStorageResourceProvider.FromClient(sourceBlob);
                     }
                     else
                     {
@@ -77,11 +77,11 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                             _blobSize,
                             cancellationToken);
                         sourceBaseBlob = sourceBlob;
-                        sourceResource = BlobsStorageResourceProvider.FromClient(sourceBlob);
+                        sourceResource = _blobsStorageResourceProvider.FromClient(sourceBlob);
                     }
 
                     // Create Local Destination Storage Resource
-                    StorageResource destinationResource = LocalFilesStorageResourceProvider.FromFile(Path.Combine(disposingLocalDirectory.DirectoryPath, blobName));
+                    StorageResource destinationResource = _localFilesStorageResourceProvider.FromFile(Path.Combine(disposingLocalDirectory.DirectoryPath, blobName));
 
                     // Start Transfer
                     await new TransferValidator()

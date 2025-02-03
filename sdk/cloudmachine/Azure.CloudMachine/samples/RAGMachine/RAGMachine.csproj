@@ -6,7 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <!-- Signal that samples are building in the repo as opposed to a standalone download from Samples Browser -->
     <IsClientLibrary>true</IsClientLibrary>
-    <IsPackable>false</IsPackable>
+    <IsPackable>true</IsPackable>
     <IsSample>true</IsSample>
     <WarnOnPackingNonPackableProject>false</WarnOnPackingNonPackableProject>
     <IsShippingLibrary>false</IsShippingLibrary>

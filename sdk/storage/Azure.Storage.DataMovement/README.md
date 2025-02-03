@@ -92,12 +92,13 @@ Transfers are defined by a source and destination `StorageResource`. There are t
 The below sample demonstrates `StorageResourceProvider` use to start transfers by uploading a file to Azure Blob Storage, using the Azure.Storage.DataMovement.Blobs package. It uses an Azure.Core token credential with permission to write to the blob.
 
 ```C# Snippet:SimpleBlobUpload_BasePackage
+LocalFilesStorageResourceProvider files = new();
 BlobsStorageResourceProvider blobs = new(tokenCredential);
 
 // Create simple transfer single blob upload job
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
-    sourceResource: LocalFilesStorageResourceProvider.FromFile(sourceLocalPath),
-    destinationResource: await blobs.FromBlobAsync(destinationBlobUri));
+    sourceResource: files.FromFile(sourceLocalPath),
+    destinationResource: blobs.FromBlob(destinationBlobUri));
 await transferOperation.WaitForCompletionAsync();
 ```
 
@@ -112,10 +113,11 @@ The below sample initializes the `TransferManager` such that it's capable of res
 **Important:** Credentials to storage providers are not persisted. Storage access which requires credentials will need its appropriate `StorageResourceProvider` to be configured with those credentials. Below uses an `Azure.Core` token credential with permission to the appropriate resources.
 
 ```C# Snippet:SetupTransferManagerForResume
+LocalFilesStorageResourceProvider files = new();
 BlobsStorageResourceProvider blobs = new(tokenCredential);
 TransferManager transferManager = new(new TransferManagerOptions()
 {
-    ProvidersForResuming = new List<StorageResourceProvider>() { blobs },
+    ResumeProviders = new List<StorageResourceProvider>() { files, blobs },
 });
 ```
 
@@ -206,12 +208,8 @@ async Task<TransferOperation> ListenToProgressAsync(TransferManager transferMana
 {
     TransferOptions transferOptions = new()
     {
-        ProgressHandlerOptions = new()
-        {
-            ProgressHandler = progress,
-            // optionally include the below if progress updates on bytes transferred are desired
-            TrackBytesTransferred = true,
-        }
+        // optionally include the below if progress updates on bytes transferred are desired
+        ProgressHandlerOptions = new(progress, trackBytesTransferred: true)
     };
     return await transferManager.StartTransferAsync(
         source,

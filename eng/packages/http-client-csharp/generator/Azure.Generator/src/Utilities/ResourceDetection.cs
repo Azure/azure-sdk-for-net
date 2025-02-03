@@ -11,15 +11,20 @@ using System.Linq;
 
 namespace Azure.Generator.Utilities
 {
-    internal class ResourceDetection
+    internal static class ResourceDetection
     {
         private const string ProvidersSegment = "/providers/";
-        private ConcurrentDictionary<string, (string Name, InputModelType? InputModel)?> _resourceDataSchemaCache = new ConcurrentDictionary<string, (string Name, InputModelType? InputModel)?>();
+        private static ConcurrentDictionary<string, (string Name, InputModelType? InputModel)?> _resourceDataSchemaCache = new ConcurrentDictionary<string, (string Name, InputModelType? InputModel)?>();
+
+        public static bool IsResource(this OperationSet set)
+        {
+            return set.TryGetResourceDataSchema(out _, out _);
+        }
 
         private static InputModelType? FindObjectSchemaWithName(string name)
             => AzureClientPlugin.Instance.InputLibrary.InputNamespace.Models.OfType<InputModelType>().FirstOrDefault(inputModel => inputModel.Name == name);
 
-        public bool TryGetResourceDataSchema(OperationSet set, [MaybeNullWhen(false)] out string resourceSpecName, out InputModelType? inputModel)
+        public static bool TryGetResourceDataSchema(this OperationSet set, [MaybeNullWhen(false)] out string resourceSpecName, out InputModelType? inputModel)
         {
             resourceSpecName = null;
             inputModel = null;
@@ -43,7 +48,7 @@ namespace Azure.Generator.Utilities
                 return false;
 
             // try put operation to get the resource name
-            if (TryOperationWithMethod(set, RequestMethod.Put, out inputModel))
+            if (set.TryOperationWithMethod(RequestMethod.Put, out inputModel))
             {
                 resourceSpecName = inputModel.Name;
                 _resourceDataSchemaCache.TryAdd(set.RequestPath, (resourceSpecName, inputModel));
@@ -51,7 +56,7 @@ namespace Azure.Generator.Utilities
             }
 
             // try get operation to get the resource name
-            if (TryOperationWithMethod(set, RequestMethod.Get, out inputModel))
+            if (set.TryOperationWithMethod(RequestMethod.Get, out inputModel))
             {
                 resourceSpecName = inputModel.Name;
                 _resourceDataSchemaCache.TryAdd(set.RequestPath, (resourceSpecName, inputModel));
@@ -75,7 +80,7 @@ namespace Azure.Generator.Utilities
             return segments.Length % 2 == 0;
         }
 
-        private bool TryOperationWithMethod(OperationSet set, RequestMethod method, [MaybeNullWhen(false)] out InputModelType inputModel)
+        private static bool TryOperationWithMethod(this OperationSet set, RequestMethod method, [MaybeNullWhen(false)] out InputModelType inputModel)
         {
             inputModel = null;
 
@@ -98,6 +103,7 @@ namespace Azure.Generator.Utilities
             inputModel = responseType;
             return true;
         }
+
 
         private static bool IsResourceModel(InputModelType inputModelType)
         {

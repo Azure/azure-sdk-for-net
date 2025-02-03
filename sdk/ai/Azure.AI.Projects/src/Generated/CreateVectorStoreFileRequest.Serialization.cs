@@ -39,10 +39,15 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("file_id"u8);
                 writer.WriteStringValue(FileId);
             }
-            if (Optional.IsDefined(DataSource))
+            if (Optional.IsCollectionDefined(DataSources))
             {
-                writer.WritePropertyName("data_source"u8);
-                writer.WriteObjectValue(DataSource, options);
+                writer.WritePropertyName("data_sources"u8);
+                writer.WriteStartArray();
+                foreach (var item in DataSources)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(ChunkingStrategy))
             {
@@ -87,7 +92,7 @@ namespace Azure.AI.Projects
                 return null;
             }
             string fileId = default;
-            VectorStoreDataSource dataSource = default;
+            IReadOnlyList<VectorStoreDataSource> dataSources = default;
             VectorStoreChunkingStrategyRequest chunkingStrategy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -98,13 +103,18 @@ namespace Azure.AI.Projects
                     fileId = property.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("data_source"u8))
+                if (property.NameEquals("data_sources"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    dataSource = VectorStoreDataSource.DeserializeVectorStoreDataSource(property.Value, options);
+                    List<VectorStoreDataSource> array = new List<VectorStoreDataSource>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(VectorStoreDataSource.DeserializeVectorStoreDataSource(item, options));
+                    }
+                    dataSources = array;
                     continue;
                 }
                 if (property.NameEquals("chunking_strategy"u8))
@@ -122,7 +132,7 @@ namespace Azure.AI.Projects
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new CreateVectorStoreFileRequest(fileId, dataSource, chunkingStrategy, serializedAdditionalRawData);
+            return new CreateVectorStoreFileRequest(fileId, dataSources ?? new ChangeTrackingList<VectorStoreDataSource>(), chunkingStrategy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CreateVectorStoreFileRequest>.Write(ModelReaderWriterOptions options)

@@ -6062,7 +6062,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task DrainAndPublishPartitionEventsPublishesOneBatch()
+        public async Task DrainAndPublishPartitionEventsPublishshesOneBatch()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
@@ -6130,7 +6130,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task DrainAndPublishPartitionEventsPublishesMultipleBatches()
+        public async Task DrainAndPublishPartitionEventsPublishshesMultipleBatches()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);
@@ -6259,7 +6259,7 @@ namespace Azure.Messaging.EventHubs.Tests
         /// </summary>
         ///
         [Test]
-        public async Task DrainAndPublishPartitionEventsInvokesTheHandlerWhenPublishingFails()
+        public async Task DrainAndPublishPartitionEventsIvokesTheHandlerWhenPublishingFails()
         {
             using var cancellationSource = new CancellationTokenSource();
             cancellationSource.CancelAfter(EventHubsTestEnvironment.Instance.TestExecutionTimeLimit);

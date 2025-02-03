@@ -58,12 +58,12 @@ namespace Azure.Storage.DataMovement.Blobs.Stress
                     StorageResource sourceResource = await TestSetupHelper.GetTemporaryFileStorageResourceAsync(disposingLocalDirectory.DirectoryPath);
 
                     // Create Destination Storage Resource
-                    StorageResource destinationResource = BlobsStorageResourceProvider.FromClient(
+                    StorageResource destinationResource = _blobsStorageResourceProvider.FromClient(
                         destinationContainerClient,
                         new()
                         {
-                            BlobPrefix = pathPrefix,
-                            BlobType = blobType
+                            BlobDirectoryPrefix = pathPrefix,
+                            BlobType = new(blobType)
                         });
 
                     // Upload

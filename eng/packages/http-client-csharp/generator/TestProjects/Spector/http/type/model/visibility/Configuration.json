@@ -1,6 +1,0 @@
-{
-  "output-folder": ".",
-  "namespace": "Type.Model.Visibility",
-  "library-name": "Type.Model.Visibility",
-  "use-model-reader-writer": true
-}

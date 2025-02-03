@@ -22,10 +22,6 @@ namespace Azure.Storage.DataMovement.Blobs
         {
         }
 
-        internal PageBlobStorageResourceOptions(BlobDestinationCheckpointDetails checkpointDetails) : base(checkpointDetails)
-        {
-        }
-
         /// <summary>
         /// Optional. User-controlled value that you can use to track requests.
         /// The value of the SequenceNumber must be between

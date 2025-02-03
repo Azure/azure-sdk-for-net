@@ -18,30 +18,31 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// The type of blob.
         /// </summary>
-        public bool IsBlobTypeSet;
-        public BlobType? BlobType;
+        public DataTransferProperty<BlobType?> BlobType;
+        public bool PreserveBlobType;
+        public BlobType? BlobTypeValue;
 
         /// <summary>
         /// The content headers for the destination blob.
         /// </summary>
-        public string CacheControl;
-        public bool IsCacheControlSet;
+        public DataTransferProperty<string> CacheControl;
+        public bool PreserveCacheControl;
         public byte[] CacheControlBytes;
 
-        public string ContentDisposition;
-        public bool IsContentDispositionSet;
+        public DataTransferProperty<string> ContentDisposition;
+        public bool PreserveContentDisposition;
         public byte[] ContentDispositionBytes;
 
-        public string ContentEncoding;
-        public bool IsContentEncodingSet;
+        public DataTransferProperty<string> ContentEncoding;
+        public bool PreserveContentEncoding;
         public byte[] ContentEncodingBytes;
 
-        public string ContentLanguage;
-        public bool IsContentLanguageSet;
+        public DataTransferProperty<string> ContentLanguage;
+        public bool PreserveContentLanguage;
         public byte[] ContentLanguageBytes;
 
-        public string ContentType;
-        public bool IsContentTypeSet;
+        public DataTransferProperty<string> ContentType;
+        public bool PreserveContentType;
         public byte[] ContentTypeBytes;
 
         /// <summary>
@@ -52,98 +53,64 @@ namespace Azure.Storage.DataMovement.Blobs
         /// <summary>
         /// The metadata for the destination blob.
         /// </summary>
-        public Metadata Metadata;
-        public bool IsMetadataSet;
+        public DataTransferProperty<Metadata> Metadata;
+        public bool PreserveMetadata;
         public byte[] MetadataBytes;
 
         /// <summary>
         /// The Blob tags for the destination blob.
         /// </summary>
-        public Tags Tags;
+        public DataTransferProperty<Tags> Tags;
         public bool PreserveTags;
         public byte[] TagsBytes;
 
         public override int Length => CalculateLength();
 
-        public BlobDestinationCheckpointDetails(BlobStorageResourceContainerOptions options) : this(
-            isBlobTypeSet: options?._isBlobTypeSet ?? false,
-            blobType: options?.BlobType,
-            blobOptions: options?.BlobOptions)
-        { }
-
-        public BlobDestinationCheckpointDetails(bool isBlobTypeSet, BlobType? blobType, BlobStorageResourceOptions blobOptions)
-            : this(
-                isBlobTypeSet: isBlobTypeSet,
-                blobType: blobType,
-                isContentTypeSet: blobOptions?._isContentTypeSet ?? false,
-                contentType: blobOptions?.ContentType,
-                isContentEncodingSet: blobOptions?._isContentEncodingSet ?? false,
-                contentEncoding: blobOptions?.ContentEncoding,
-                isContentLanguageSet: blobOptions?._isContentLanguageSet ?? false,
-                contentLanguage: blobOptions?.ContentLanguage,
-                isContentDispositionSet: blobOptions?._isContentDispositionSet ?? false,
-                contentDisposition: blobOptions?.ContentDisposition,
-                isCacheControlSet: blobOptions?._isCacheControlSet ?? false,
-                cacheControl: blobOptions?.CacheControl,
-                accessTier: blobOptions?.AccessTier,
-                isMetadataSet: blobOptions?._isMetadataSet ?? false,
-                metadata: blobOptions?.Metadata,
-                preserveTags: true,
-                tags: default)
-        { }
-
         public BlobDestinationCheckpointDetails(
-            bool isBlobTypeSet,
-            BlobType? blobType,
-            bool isContentTypeSet,
-            string contentType,
-            bool isContentEncodingSet,
-            string contentEncoding,
-            bool isContentLanguageSet,
-            string contentLanguage,
-            bool isContentDispositionSet,
-            string contentDisposition,
-            bool isCacheControlSet,
-            string cacheControl,
+            DataTransferProperty<BlobType?> blobType,
+            DataTransferProperty<string> contentType,
+            DataTransferProperty<string> contentEncoding,
+            DataTransferProperty<string> contentLanguage,
+            DataTransferProperty<string> contentDisposition,
+            DataTransferProperty<string> cacheControl,
             AccessTier? accessTier,
-            bool isMetadataSet,
-            Metadata metadata,
-            bool preserveTags,
-            Tags tags)
+            DataTransferProperty<Metadata> metadata,
+            DataTransferProperty<Tags> tags)
         {
             Version = DataMovementBlobConstants.DestinationCheckpointDetails.SchemaVersion;
             BlobType = blobType;
-            IsBlobTypeSet = isBlobTypeSet;
+            PreserveBlobType = blobType?.Preserve ?? true;
+            BlobTypeValue = blobType?.Value != default ? blobType.Value : default;
 
             AccessTierValue = accessTier;
 
             CacheControl = cacheControl;
-            IsCacheControlSet = isCacheControlSet;
-            CacheControlBytes = cacheControl != default ? Encoding.UTF8.GetBytes(cacheControl) : Array.Empty<byte>();
+            PreserveCacheControl = cacheControl?.Preserve ?? true;
+            CacheControlBytes = cacheControl?.Value != default ? Encoding.UTF8.GetBytes(cacheControl.Value) : Array.Empty<byte>();
 
             ContentDisposition = contentDisposition;
-            IsContentDispositionSet = isContentDispositionSet;
-            ContentDispositionBytes = contentDisposition != default ? Encoding.UTF8.GetBytes(contentDisposition) : Array.Empty<byte>();
+            PreserveContentDisposition = contentDisposition?.Preserve ?? true;
+            ContentDispositionBytes = contentDisposition?.Value != default ? Encoding.UTF8.GetBytes(contentDisposition.Value) : Array.Empty<byte>();
 
             ContentEncoding = contentEncoding;
-            IsContentEncodingSet = isContentEncodingSet;
-            ContentEncodingBytes = contentEncoding != default ? Encoding.UTF8.GetBytes(contentEncoding) : Array.Empty<byte>();
+            PreserveContentEncoding = contentEncoding?.Preserve ?? true;
+            ContentEncodingBytes = contentEncoding?.Value != default ? Encoding.UTF8.GetBytes(contentEncoding.Value) : Array.Empty<byte>();
 
             ContentLanguage = contentLanguage;
-            IsContentLanguageSet = isContentLanguageSet;
-            ContentLanguageBytes = contentLanguage != default ? Encoding.UTF8.GetBytes(contentLanguage) : Array.Empty<byte>();
+            PreserveContentLanguage = contentLanguage?.Preserve ?? true;
+            ContentLanguageBytes = contentLanguage?.Value != default ? Encoding.UTF8.GetBytes(contentLanguage.Value) : Array.Empty<byte>();
 
             ContentType = contentType;
-            IsContentTypeSet = isContentTypeSet;
-            ContentTypeBytes = contentType != default ? Encoding.UTF8.GetBytes(contentType) : Array.Empty<byte>();
+            PreserveContentType = contentType?.Preserve ?? true;
+            ContentTypeBytes = contentType?.Value != default ? Encoding.UTF8.GetBytes(contentType.Value) : Array.Empty<byte>();
 
             Metadata = metadata;
-            IsMetadataSet = isMetadataSet;
-            MetadataBytes = metadata != default ? Encoding.UTF8.GetBytes(metadata.DictionaryToString()) : Array.Empty<byte>();
+            PreserveMetadata = metadata?.Preserve ?? true;
+            MetadataBytes = metadata?.Value != default ? Encoding.UTF8.GetBytes(metadata.Value.DictionaryToString()) : Array.Empty<byte>();
 
             Tags = tags;
-            PreserveTags = preserveTags;
-            TagsBytes = tags != default ? Encoding.UTF8.GetBytes(tags.DictionaryToString()) : Array.Empty<byte>();
+            PreserveTags = tags?.Preserve ?? false;
+            TagsBytes = tags?.Value != default ? Encoding.UTF8.GetBytes(tags.Value.DictionaryToString()) : Array.Empty<byte>();
         }
 
         protected override void Serialize(Stream stream)
@@ -157,10 +124,10 @@ namespace Azure.Storage.DataMovement.Blobs
             writer.Write(Version);
 
             // BlobType
-            writer.Write(IsBlobTypeSet);
-            if (IsBlobTypeSet)
+            writer.Write(PreserveBlobType);
+            if (!PreserveBlobType)
             {
-                writer.Write((byte)BlobType);
+                writer.Write((byte)BlobTypeValue);
             }
             else
             {
@@ -168,8 +135,8 @@ namespace Azure.Storage.DataMovement.Blobs
             }
 
             // Preserve Content Type
-            writer.Write(IsContentTypeSet);
-            if (IsContentTypeSet)
+            writer.Write(PreserveContentType);
+            if (!PreserveContentType)
             {
                 // Content Type offset/length
                 writer.WriteVariableLengthFieldInfo(ContentTypeBytes.Length, ref currentVariableLengthIndex);
@@ -181,8 +148,8 @@ namespace Azure.Storage.DataMovement.Blobs
             }
 
             // Preserve Content Encoding
-            writer.Write(IsContentEncodingSet);
-            if (IsContentEncodingSet)
+            writer.Write(PreserveContentEncoding);
+            if (!PreserveContentEncoding)
             {
                 // ContentEncoding offset/length
                 writer.WriteVariableLengthFieldInfo(ContentEncodingBytes.Length, ref currentVariableLengthIndex);
@@ -194,8 +161,8 @@ namespace Azure.Storage.DataMovement.Blobs
             }
 
             // Preserve Content Language
-            writer.Write(IsContentLanguageSet);
-            if (IsContentLanguageSet)
+            writer.Write(PreserveContentLanguage);
+            if (!PreserveContentLanguage)
             {
                 // ContentLanguage offset/length
                 writer.WriteVariableLengthFieldInfo(ContentLanguageBytes.Length, ref currentVariableLengthIndex);
@@ -207,8 +174,8 @@ namespace Azure.Storage.DataMovement.Blobs
             }
 
             // Preserve Content Disposition
-            writer.Write(IsContentDispositionSet);
-            if (IsContentDispositionSet)
+            writer.Write(PreserveContentDisposition);
+            if (!PreserveContentDisposition)
             {
                 // ContentDisposition offset/length
                 writer.WriteVariableLengthFieldInfo(ContentDispositionBytes.Length, ref currentVariableLengthIndex);
@@ -220,8 +187,8 @@ namespace Azure.Storage.DataMovement.Blobs
             }
 
             // Preserve Cache Control
-            writer.Write(IsCacheControlSet);
-            if (IsCacheControlSet)
+            writer.Write(PreserveCacheControl);
+            if (!PreserveCacheControl)
             {
                 // CacheControl offset/length
                 writer.WriteVariableLengthFieldInfo(CacheControlBytes.Length, ref currentVariableLengthIndex);
@@ -236,8 +203,8 @@ namespace Azure.Storage.DataMovement.Blobs
             writer.Write((byte)AccessTierValue.ToJobPlanAccessTier());
 
             // Preserve Metadata
-            writer.Write(IsMetadataSet);
-            if (IsMetadataSet)
+            writer.Write(PreserveMetadata);
+            if (!PreserveMetadata)
             {
                 // Metadata offset/length
                 writer.WriteVariableLengthFieldInfo(MetadataBytes.Length, ref currentVariableLengthIndex);
@@ -261,27 +228,27 @@ namespace Azure.Storage.DataMovement.Blobs
                 writer.WriteEmptyLengthOffset();
             }
 
-            if (IsContentTypeSet)
+            if (!PreserveContentType)
             {
                 writer.Write(ContentTypeBytes);
             }
-            if (IsContentEncodingSet)
+            if (!PreserveContentEncoding)
             {
                 writer.Write(ContentEncodingBytes);
             }
-            if (IsContentLanguageSet)
+            if (!PreserveContentLanguage)
             {
                 writer.Write(ContentLanguageBytes);
             }
-            if (IsContentDispositionSet)
+            if (!PreserveContentDisposition)
             {
                 writer.Write(ContentDispositionBytes);
             }
-            if (IsCacheControlSet)
+            if (!PreserveCacheControl)
             {
                 writer.Write(CacheControlBytes);
             }
-            if (IsMetadataSet)
+            if (!PreserveMetadata)
             {
                 writer.Write(MetadataBytes);
             }
@@ -306,31 +273,31 @@ namespace Azure.Storage.DataMovement.Blobs
 
             // Index Values
             // BlobType
-            bool isBlobTypeSet = reader.ReadBoolean();
+            bool preserveBlobType = reader.ReadBoolean();
             BlobType blobType = (BlobType)reader.ReadByte();
 
             // Preserve Content Type and offset/length
-            bool isContentTypeSet = reader.ReadBoolean();
+            bool preserveContentType = reader.ReadBoolean();
             int contentTypeOffset = reader.ReadInt32();
             int contentTypeLength = reader.ReadInt32();
 
             // Preserve Content Encoding and offset/length
-            bool isContentEncodingSet = reader.ReadBoolean();
+            bool preserveContentEncoding = reader.ReadBoolean();
             int contentEncodingOffset = reader.ReadInt32();
             int contentEncodingLength = reader.ReadInt32();
 
             // Preserve Content Language and offset/length
-            bool isContentLanguageSet = reader.ReadBoolean();
+            bool preserveContentLanguage = reader.ReadBoolean();
             int contentLanguageOffset = reader.ReadInt32();
             int contentLanguageLength = reader.ReadInt32();
 
             // Preserve ContentDisposition and offset/length
-            bool isContentDispositionSet = reader.ReadBoolean();
+            bool preserveContentDisposition = reader.ReadBoolean();
             int contentDispositionOffset = reader.ReadInt32();
             int contentDispositionLength = reader.ReadInt32();
 
             // Preserve CacheControl and offset/length
-            bool isCacheControlSet = reader.ReadBoolean();
+            bool preserveCacheControl = reader.ReadBoolean();
             int cacheControlOffset = reader.ReadInt32();
             int cacheControlLength = reader.ReadInt32();
 
@@ -343,7 +310,7 @@ namespace Azure.Storage.DataMovement.Blobs
             }
 
             // Preserve Metadata and offset/length
-            bool isMetadataSet = reader.ReadBoolean();
+            bool preserveMetadata = reader.ReadBoolean();
             int metadataOffset = reader.ReadInt32();
             int metadataLength = reader.ReadInt32();
 
@@ -410,23 +377,15 @@ namespace Azure.Storage.DataMovement.Blobs
             }
 
             return new BlobDestinationCheckpointDetails(
-                isBlobTypeSet: isBlobTypeSet,
-                blobType: blobType,
-                isContentTypeSet: isContentTypeSet,
-                contentType: contentType,
-                isContentEncodingSet: isContentEncodingSet,
-                contentEncoding: contentEncoding,
-                isContentLanguageSet: isContentLanguageSet,
-                contentLanguage: contentLanguage,
-                isContentDispositionSet: isContentDispositionSet,
-                contentDisposition: contentDisposition,
-                isCacheControlSet: isCacheControlSet,
-                cacheControl: cacheControl,
+                blobType: preserveBlobType ? new(preserveBlobType) : new(blobType),
+                contentType: preserveContentType ? new(preserveContentType) : new(contentType),
+                contentEncoding: preserveContentEncoding ? new(preserveContentEncoding): new(contentEncoding),
+                contentLanguage: preserveContentLanguage ? new(preserveContentLanguage) : new(contentLanguage),
+                contentDisposition: preserveContentDisposition ? new(preserveContentDisposition) : new(contentDisposition),
+                cacheControl: preserveCacheControl ? new(preserveCacheControl): new(cacheControl),
                 accessTier: accessTier,
-                isMetadataSet: isMetadataSet,
-                metadata: metadataString.ToDictionary(nameof(metadataString)),
-                preserveTags: preserveTags,
-                tags: tagsString.ToDictionary(nameof(tagsString)));
+                metadata: preserveMetadata ? new(preserveMetadata) : new(metadataString.ToDictionary(nameof(metadataString))),
+                tags: preserveTags ? new(preserveTags) : new(tagsString.ToDictionary(nameof(tagsString))));
         }
 
         private int CalculateLength()
@@ -434,27 +393,27 @@ namespace Azure.Storage.DataMovement.Blobs
             // Length is calculated based on whether the property is preserved.
             // If the property is preserved, the property's length is added to the total length.
             int length = DataMovementBlobConstants.DestinationCheckpointDetails.VariableLengthStartIndex;
-            if (IsContentTypeSet)
+            if (!PreserveContentType)
             {
                 length += ContentTypeBytes.Length;
             }
-            if (IsContentEncodingSet)
+            if (!PreserveContentEncoding)
             {
                 length += ContentEncodingBytes.Length;
             }
-            if (IsContentLanguageSet)
+            if (!PreserveContentLanguage)
             {
                 length += ContentLanguageBytes.Length;
             }
-            if (IsContentDispositionSet)
+            if (!PreserveContentDisposition)
             {
                 length += ContentDispositionBytes.Length;
             }
-            if (IsCacheControlSet)
+            if (!PreserveCacheControl)
             {
                 length += CacheControlBytes.Length;
             }
-            if (IsMetadataSet)
+            if (!PreserveMetadata)
             {
                 length += MetadataBytes.Length;
             }

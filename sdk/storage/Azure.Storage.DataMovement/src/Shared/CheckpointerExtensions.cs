@@ -88,12 +88,12 @@ namespace Azure.Storage.DataMovement
 
         internal static void WritePreservablePropertyOffset(
             this BinaryWriter writer,
-            bool isValueSet,
+            bool preserveValue,
             int length,
             ref int currentVariableLengthIndex)
         {
-            writer.Write(isValueSet);
-            if (isValueSet)
+            writer.Write(preserveValue);
+            if (!preserveValue)
             {
                 // Content Type offset/length
                 writer.WriteVariableLengthFieldInfo(length, ref currentVariableLengthIndex);

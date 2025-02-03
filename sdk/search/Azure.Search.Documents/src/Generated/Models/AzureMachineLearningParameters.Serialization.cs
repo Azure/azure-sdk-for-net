@@ -92,7 +92,7 @@ namespace Azure.Search.Documents.Indexes.Models
             string resourceId = default;
             TimeSpan? timeout = default;
             string region = default;
-            AIFoundryModelCatalogName? modelName = default;
+            AIStudioModelCatalogName? modelName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("uri"u8))
@@ -151,7 +151,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     {
                         continue;
                     }
-                    modelName = new AIFoundryModelCatalogName(property.Value.GetString());
+                    modelName = new AIStudioModelCatalogName(property.Value.GetString());
                     continue;
                 }
             }

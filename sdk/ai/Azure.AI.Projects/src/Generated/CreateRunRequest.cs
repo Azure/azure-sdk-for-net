@@ -246,9 +246,6 @@ namespace Azure.AI.Projects
         /// <item>
         /// <description><see cref="AgentsApiResponseFormat"/></description>
         /// </item>
-        /// <item>
-        /// <description><see cref="ResponseFormatJsonSchemaType"/></description>
-        /// </item>
         /// </list>
         /// </remarks>
         /// Examples:

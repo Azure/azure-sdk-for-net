@@ -73,23 +73,34 @@ namespace Azure.Storage.DataMovement.Blobs.Tests
             {
                 options = new BlockBlobStorageResourceOptions
                 {
-                    ContentDisposition = default,
-                    ContentLanguage = default,
-                    CacheControl = default,
-                    ContentType = default,
-                    Metadata = default
+                    ContentDisposition = new(false),
+                    ContentLanguage = new(false),
+                    CacheControl = new(false),
+                    ContentType = new(false),
+                    Metadata = new(false)
+                };
+            }
+            else if (propertiesTestType == TransferPropertiesTestType.Preserve)
+            {
+                options = new BlockBlobStorageResourceOptions
+                {
+                    ContentDisposition = new(true),
+                    ContentLanguage = new(true),
+                    CacheControl = new(true),
+                    ContentType = new(true),
+                    Metadata = new(true)
                 };
             }
             return new BlobStorageResourceContainer(containerClient, new BlobStorageResourceContainerOptions()
             {
-                BlobPrefix = directoryPath,
-                BlobType = BlobType.Block,
+                BlobDirectoryPrefix = directoryPath,
+                BlobType = new(BlobType.Block),
                 BlobOptions = options
             });
         }
 
         protected override StorageResourceContainer GetSourceStorageResourceContainer(BlobContainerClient containerClient, string directoryPath)
-            => new BlobStorageResourceContainer(containerClient, new BlobStorageResourceContainerOptions() { BlobPrefix = directoryPath, BlobType = BlobType.Page });
+            => new BlobStorageResourceContainer(containerClient, new BlobStorageResourceContainerOptions() { BlobDirectoryPrefix = directoryPath, BlobType = new(BlobType.Page) });
 
         protected internal override BlockBlobClient GetDestinationBlob(BlobContainerClient containerClient, string blobName)
             => containerClient.GetBlockBlobClient(blobName);

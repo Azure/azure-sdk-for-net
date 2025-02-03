@@ -78,10 +78,13 @@ class AzureEngSemanticVersion : IComparable {
 
       if ($null -eq $matches['prelabel'])
       {
+        # artifically provide these values for non-prereleases to enable easy sorting of them later than prereleases.
+        $this.PrereleaseLabel = "zzz"
+        $this.PrereleaseNumber = 99999999
         $this.IsPrerelease = $false
         $this.VersionType = "GA"
         if ($this.Major -eq 0) {
-          # Treat initial 0 versions as a prerelease beta's
+           # Treat initial 0 versions as a prerelease beta's
           $this.VersionType = "Beta"
           $this.IsPrerelease = $true
         }
@@ -113,7 +116,7 @@ class AzureEngSemanticVersion : IComparable {
   # See https://azure.github.io/azure-sdk/policies_releases.html#package-versioning
   [bool] HasValidPrereleaseLabel()
   {
-    if ($this.PrereleaseLabel) {
+    if ($this.IsPrerelease -eq $true) {
       if ($this.PrereleaseLabel -ne $this.DefaultPrereleaseLabel -and $this.PrereleaseLabel -ne $this.DefaultAlphaReleaseLabel) {
         Write-Host "Unexpected pre-release identifier '$($this.PrereleaseLabel)', "`
                    "should be '$($this.DefaultPrereleaseLabel)' or '$($this.DefaultAlphaReleaseLabel)'"
@@ -133,7 +136,7 @@ class AzureEngSemanticVersion : IComparable {
   {
     $versionString = "{0}.{1}.{2}" -F $this.Major, $this.Minor, $this.Patch
 
-    if ($this.PrereleaseLabel)
+    if ($this.IsPrerelease -and $this.PrereleaseLabel -ne "zzz")
     {
       $versionString += $this.PrereleaseLabelSeparator + $this.PrereleaseLabel + `
                         $this.PrereleaseNumberSeparator + $this.PrereleaseNumber
@@ -144,40 +147,22 @@ class AzureEngSemanticVersion : IComparable {
     return $versionString;
   }
 
-  [void] IncrementAndSetToPrerelease($Segment) {
-    if ($this.BuildNumber)
+  [void] IncrementAndSetToPrerelease() {
+    if ($this.IsPrerelease -eq $false)
     {
-      throw "Cannot increment releases tagged with azure pipelines build numbers"
-    }
-
-    if ($this.PrereleaseLabel)
-    {
-      $this.PrereleaseNumber++
+      $this.PrereleaseLabel = $this.DefaultPrereleaseLabel
+      $this.PrereleaseNumber = 1
+      $this.Minor++
+      $this.Patch = 0
+      $this.IsPrerelease = $true
     }
     else
     {
-      $this.$Segment++
-      if($Segment -eq "Major") {
-        $this.Minor = 0
-        $this.Patch = 0
+      if ($this.BuildNumber) {
+        throw "Cannot increment releases tagged with azure pipelines build numbers"
       }
-      if($Segment -eq "Minor") {
-        $this.Patch = 0
-      }
-
-      # If the major version is 0, we don't need a prerelease label
-      if ($this.Major -ne 0)
-      {
-        $this.PrereleaseLabel = $this.DefaultPrereleaseLabel
-        $this.PrereleaseNumber = 1
-      }
-
-      $this.IsPrerelease = $true
+      $this.PrereleaseNumber++
     }
-  }
-
-  [void] IncrementAndSetToPrerelease() {
-    $this.IncrementAndSetToPrerelease("Minor")
   }
 
   [void] SetupPythonConventions()
@@ -213,30 +198,11 @@ class AzureEngSemanticVersion : IComparable {
     $ret = $this.Patch.CompareTo($other.Patch)
     if ($ret) { return $ret }
 
-    # provide artificial prerelease values for non-prereleases to sort them later than prereleases.
-    if ($this.PrereleaseLabel) {
-      $thisPrereleaseLabel = $this.PrereleaseLabel
-      $thisPrereleaseNumber = $this.PrereleaseNumber
-    }
-    else {
-      $thisPrereleaseLabel = "zzz"
-      $thisPrereleaseNumber = 99999999
-    }
-
-    if ($other.PrereleaseLabel) {
-      $otherPrereleaseLabel = $other.PrereleaseLabel
-      $otherPrereleaseNumber = $other.PrereleaseNumber
-    }
-    else {
-      $otherPrereleaseLabel = "zzz"
-      $otherPrereleaseNumber = 99999999
-    }
-
     # Mimic PowerShell that uses case-insensitive comparisons by default.
-    $ret = [string]::Compare($thisPrereleaseLabel, $otherPrereleaseLabel, $true)
+    $ret = [string]::Compare($this.PrereleaseLabel, $other.PrereleaseLabel, $true)
     if ($ret) { return $ret }
 
-    $ret = $thisPrereleaseNumber.CompareTo($otherPrereleaseNumber)
+    $ret = $this.PrereleaseNumber.CompareTo($other.PrereleaseNumber)
     if ($ret) { return $ret }
 
     return ([int] $this.BuildNumber).CompareTo([int] $other.BuildNumber)
@@ -392,41 +358,6 @@ class AzureEngSemanticVersion : IComparable {
     $pbetaVer.IncrementAndSetToPrerelease()
     if ("1.2.3b5" -ne $pbetaVer.ToString()) {
       Write-Host "Error: Python beta string did not correctly increment"
-    }
-
-    $version = [AzureEngSemanticVersion]::ParseVersionString("0.1.2")
-    $version.IncrementAndSetToPrerelease()
-    $expected = "0.2.0"
-    if ($expected -ne $version.ToString()) {
-      Write-Host "Error: version string did not correctly increment. Expected: $expected, Actual: $version"
-    }
-
-    $version = [AzureEngSemanticVersion]::ParseVersionString("0.1.2")
-    $version.IncrementAndSetToPrerelease("patch")
-    $expected = "0.1.3"
-    if ($expected -ne $version.ToString()) {
-      Write-Host "Error: version string did not correctly increment. Expected: $expected, Actual: $version"
-    }
-
-    $version = [AzureEngSemanticVersion]::ParseVersionString("0.1.2")
-    $version.IncrementAndSetToPrerelease("minor")
-    $expected = "0.2.0"
-    if ($expected -ne $version.ToString()) {
-      Write-Host "Error: version string did not correctly increment. Expected: $expected, Actual: $version"
-    }
-
-    $version = [AzureEngSemanticVersion]::ParseVersionString("0.1.2")
-    $version.IncrementAndSetToPrerelease("major")
-    $expected = "1.0.0-beta.1"
-    if ($expected -ne $version.ToString()) {
-      Write-Host "Error: version string did not correctly increment. Expected: $expected, Actual: $version"
-    }
-
-    $version = [AzureEngSemanticVersion]::ParseVersionString("1.0.0-beta.1")
-    $version.IncrementAndSetToPrerelease()
-    $expected = "1.0.0-beta.2"
-    if ($expected -ne $version.ToString()) {
-      Write-Host "Error: version string did not correctly increment. Expected: $expected, Actual: $version"
     }
 
     Write-Host "QuickTests done"

@@ -1,6 +1,0 @@
-{
-  "output-folder": ".",
-  "namespace": "SpecialHeaders.Repeatability",
-  "library-name": "SpecialHeaders.Repeatability",
-  "use-model-reader-writer": true
-}
