@@ -7,8 +7,8 @@ Run `dotnet build /t:GenerateCode` to generate code.
 azure-arm: true
 library-name: Network
 namespace: Azure.ResourceManager.Network
-require: https://github.com/Azure/azure-rest-api-specs/blob/5dc3201e0fd56e77cd54d8f79867af4d3f57a51b/specification/network/resource-manager/readme.md
-# tag: package-2024-05
+require: https://github.com/Azure/azure-rest-api-specs/blob/249861ae31f1199949fc7626306562889ec34989/specification/network/resource-manager/readme.md
+tag: package-2024-06-preview
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -27,6 +27,7 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+  lenient-model-deduplication: true
 use-model-reader-writer: true
 model-namespace: true
 public-clients: false
@@ -220,6 +221,14 @@ rename-mapping:
   VpnPacketCaptureStopParameters: VpnPacketCaptureStopContent
   VpnPolicyMemberAttributeType.AADGroupId: AadGroupId
   LoadBalancingRulePropertiesFormat: LoadBalancingRuleProperties
+  NspProfile: NetworkSecurityPerimeterProfile
+  NspAccessRule: NetworkSecurityPerimeterAccessRule
+  NspAssociation: NetworkSecurityPerimeterAssociation
+  NspLink: NetworkSecurityPerimeterLink
+  NspLinkReference: NetworkSecurityPerimeterLinkReference
+  NspLoggingConfiguration: NetworkSecurityPerimeterLoggingConfiguration
+  PerimeterAssociableResource: NetworkSecurityPerimeterAssociableResourceType 
+  
 
 keep-plural-resource-data:
 - PolicySignaturesOverridesForIdps
@@ -347,6 +356,8 @@ directive:
   - remove-operation: 'GetActiveSessions'
   - remove-operation: 'DisconnectActiveSessions'
   - remove-operation: 'VirtualNetworks_ListDdosProtectionStatus'
+  - remove-operation: 'NetworkSecurityPerimeterAssociations_Reconcile'
+  - remove-operation: 'NetworkSecurityPerimeterAccessRules_Reconcile'
   # This part is for generate partial class in network
   # these operations are renamed because their api-versions are different from others in the same operation group
   # - rename-operation:
