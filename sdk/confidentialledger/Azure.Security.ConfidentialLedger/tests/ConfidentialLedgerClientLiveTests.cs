@@ -322,13 +322,12 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
             Console.WriteLine(resp.Content);
 
-            var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
-            Assert.IsNotNull(bundleData);
-            Assert.AreEqual(bundleData.Modules.Count, 1);
-            Assert.AreEqual(bundleData.Modules[0].Name, "test");
+            //var bundleData= JsonSerializer.Deserialize<Bundle>(resp.Content.ToString());
+            string programContent = File.ReadAllText(filePath);
+            Assert.AreEqual(programContent, resp.Content.ToString());
 
             // Verify Response by Querying endpt
-            // TODO: Verify
+            /// TODO: Investigate InternalServerError
             //ConfidentialLedgerHelperHttpClient helperHttpClient = new ConfidentialLedgerHelperHttpClient(TestEnvironment.ConfidentialLedgerUrl, Credential);
             //(var statusCode, var response) = await helperHttpClient.QueryUserDefinedContentEndpointAsync("/app/content");
             //Assert.AreEqual((int)HttpStatusCode.OK, statusCode);
