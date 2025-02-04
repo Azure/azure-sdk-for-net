@@ -10,6 +10,7 @@ using System.IO;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
@@ -210,7 +211,6 @@ namespace Azure.Security.ConfidentialLedger.Tests
         #region LedgerUserManagment
 
 #if API_V3
-        [Test]
         [Ignore("Test is skipped for API_V3 because ledgerUsers Endpt should be used")]
 #endif
         public async Task GetUser(string objId)
@@ -283,7 +283,7 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var userId = Recording.Random.NewGuid().ToString();
             Response result = await Client.CreateOrUpdateLedgerUserAsync(
                 userId,
-                RequestContent.Create(new { assignedRole = "Reader" }));
+                RequestContent.Create(new { assignedRoles = new List<string> { "Reader" } }));
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
@@ -293,7 +293,8 @@ namespace Azure.Security.ConfidentialLedger.Tests
             await foreach (BinaryData page in Client.GetLedgerUsersAsync())
             {
                 JsonElement pageResult = JsonDocument.Parse(page.ToStream()).RootElement;
-                if (pageResult.GetProperty("assignedRole").GetString() == "Reader")
+
+                if (pageResult.GetProperty("assignedRoles")[0].ToString() == "Reader")
                 {
                     users.Add(pageResult.GetProperty("userId").GetString());
                 }
@@ -318,9 +319,12 @@ namespace Azure.Security.ConfidentialLedger.Tests
 
             Assert.AreEqual((int)HttpStatusCode.Created, result.Status);
 
+            var resp = await Client.GetUserDefinedEndpointsModuleAsync("test");
+            Console.WriteLine(resp.Content);
+
             // Verify Response by Querying endpt
             ConfidentialLedgerHelperHttpClient helperHttpClient = new ConfidentialLedgerHelperHttpClient(TestEnvironment.ConfidentialLedgerUrl, Credential);
-            (var statusCode, var response) = await helperHttpClient.QueryUserDefinedContentEndpointAsync("app/Content");
+            (var statusCode, var response) = await helperHttpClient.QueryUserDefinedContentEndpointAsync("/app/content");
             Assert.AreEqual((int)HttpStatusCode.OK, statusCode);
             Assert.AreEqual("Test content", response);
 
@@ -341,50 +345,54 @@ namespace Azure.Security.ConfidentialLedger.Tests
             var stringResult = new StreamReader(result.ContentStream).ReadToEnd();
 
             // Deserialize JSON response into a dictionary
-            var runtimeOptions = JsonSerializer.Deserialize<Dictionary<string, object>>(result.Content.ToString());
+            var runtimeOptions = JsonSerializer.Deserialize<RuntimeOptions>(result.Content.ToString());
 
-            // Expected Default values
-            var expectedJSRuntimeOptions = new Dictionary<string, object>
+            var expectedRuntimeOptions = new RuntimeOptions
             {
-                { "log_exception_details", false },
-                { "max_cached_interpreters", 10 },
-                { "max_execution_time_ms", 1000 },
-                { "max_heap_bytes", 104857600 },
-                { "max_stack_bytes", 1048576 },
-                { "return_exception_details", false }
+                LogExceptionDetails = false,
+                MaxCachedInterpreters = 10,
+                MaxExecutionTimeMs = 1000,
+                MaxHeapBytes = 104857600,
+                MaxStackBytes = 1048576,
+                ReturnExceptionDetails = false
             };
 
-            // Validate response matches expected options
-            foreach (var kvp in expectedJSRuntimeOptions)
-            {
-                Assert.True(runtimeOptions.TryGetValue(kvp.Key, out var actualValue), $"Missing key: {kvp.Key}");
-                Assert.Equals(kvp.Value, actualValue);
-            }
+            Assert.AreEqual(expectedRuntimeOptions.LogExceptionDetails, runtimeOptions.LogExceptionDetails);
+            Assert.AreEqual(expectedRuntimeOptions.MaxCachedInterpreters, runtimeOptions.MaxCachedInterpreters);
+            Assert.AreEqual(expectedRuntimeOptions.MaxExecutionTimeMs, runtimeOptions.MaxExecutionTimeMs);
+            Assert.AreEqual(expectedRuntimeOptions.MaxHeapBytes, runtimeOptions.MaxHeapBytes);
+            Assert.AreEqual(expectedRuntimeOptions.MaxStackBytes, runtimeOptions.MaxStackBytes);
+            Assert.AreEqual(expectedRuntimeOptions.ReturnExceptionDetails, runtimeOptions.ReturnExceptionDetails);
 
-            // Update Runtime Options
-            var updateJSRuntimeOptions = new Dictionary<string, object>
+            var updateJSRuntimeOptions = new RuntimeOptions
             {
-                { "log_exception_details", false },
-                { "max_cached_interpreters", 20 },
-                { "max_execution_time_ms", 5000 },
-                { "max_heap_bytes", 204857600 },
-                { "max_stack_bytes", 1048576 },
-                { "return_exception_details", false }
+                LogExceptionDetails = false,
+                MaxCachedInterpreters = 20,
+                MaxExecutionTimeMs = 5000,
+                MaxHeapBytes = 204857600,
+                MaxStackBytes = 1048576,
+                ReturnExceptionDetails = false
             };
 
             string jsRuntimeOptionsPayload = JsonSerializer.Serialize(updateJSRuntimeOptions);
             RequestContent runtimeOptionsContent = RequestContent.Create(jsRuntimeOptionsPayload);
 
             result = await Client.UpdateRuntimeOptionsAsync(runtimeOptionsContent);
-
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
 
+            runtimeOptions = JsonSerializer.Deserialize<RuntimeOptions>(result.Content.ToString());
+            Assert.AreEqual(updateJSRuntimeOptions.LogExceptionDetails, runtimeOptions.LogExceptionDetails);
+            Assert.AreEqual(updateJSRuntimeOptions.MaxCachedInterpreters, runtimeOptions.MaxCachedInterpreters);
+            Assert.AreEqual(updateJSRuntimeOptions.MaxExecutionTimeMs, runtimeOptions.MaxExecutionTimeMs);
+            Assert.AreEqual(updateJSRuntimeOptions.MaxHeapBytes, runtimeOptions.MaxHeapBytes);
+            Assert.AreEqual(updateJSRuntimeOptions.MaxStackBytes, runtimeOptions.MaxStackBytes);
+            Assert.AreEqual(updateJSRuntimeOptions.ReturnExceptionDetails, runtimeOptions.ReturnExceptionDetails);
+
             // Revert Runtime Options
-            string restoreJsRuntimeOptionsPayload = JsonSerializer.Serialize(updateJSRuntimeOptions);
+            string restoreJsRuntimeOptionsPayload = JsonSerializer.Serialize(expectedRuntimeOptions);
             runtimeOptionsContent = RequestContent.Create(restoreJsRuntimeOptionsPayload);
 
             result = await Client.UpdateRuntimeOptionsAsync(runtimeOptionsContent);
-
             Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
         }
         #endregion
@@ -394,29 +402,36 @@ namespace Azure.Security.ConfidentialLedger.Tests
         public async Task CustomRoleTest()
         {
             string roleName = "TestRole";
+
             // Add Custom Role
             var rolesParam = new RolesParam
             {
-                Roles = new List<Role>
-                {
+                Roles = [
                     new Role
                     {
                         RoleName = roleName,
                         RoleActions = new List<string> { "/content/write" }
                     }
-                }
+                ]
             };
 
-            Response result = await Client.CreateUserDefinedRoleAsync(RequestContent.Create(JsonSerializer.Serialize(rolesParam)));
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            try
+            {
+                Response result = await Client.CreateUserDefinedRoleAsync(RequestContent.Create(JsonSerializer.Serialize(rolesParam)));
+                Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
 
-            result =  await Client.GetUserDefinedRoleAsync(roleName);
-            var roleData = JsonSerializer.Deserialize<RolesParam>(result.Content.ToString());
-            // Validate Fetched RoleData with Added Role Data
-            Assert.Equals(rolesParam, roleData);
+                result = await Client.GetUserDefinedRoleAsync(roleName);
 
-            result = await Client.DeleteUserDefinedRoleAsync(roleName);
-            Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+                RolesParam roleData = JsonSerializer.Deserialize<RolesParam>(result.Content.ToString());
+                // Validate Fetched RoleData with Added Role Data
+                Assert.AreEqual(rolesParam.Roles[0].RoleName, roleData.Roles[0].RoleName);
+                Assert.AreEqual(rolesParam.Roles[0].RoleActions[0], roleData.Roles[0].RoleActions[0]);
+            }
+            finally
+            {
+                Response result = await Client.DeleteUserDefinedRoleAsync(roleName);
+                Assert.AreEqual((int)HttpStatusCode.OK, result.Status);
+            }
         }
         #endregion
 
@@ -474,14 +489,33 @@ namespace Azure.Security.ConfidentialLedger.Tests
         }
         private class Role
         {
+            [JsonPropertyName("role_name")]
             public string RoleName { get; set; } = string.Empty;
+            [JsonPropertyName("role_actions")]
             public List<string> RoleActions { get; set; } = new List<string>();
         }
 
         private class RolesParam
         {
+            [JsonPropertyName("roles")]
             public List<Role> Roles { get; set; } = new List<Role>();
         }
-        #endregion
+
+        private class RuntimeOptions
+        {
+            [JsonPropertyName("log_exception_details")]
+            public bool LogExceptionDetails { get; set; }
+            [JsonPropertyName("max_cached_interpreters")]
+            public int MaxCachedInterpreters { get; set; }
+            [JsonPropertyName("max_execution_time_ms")]
+            public int MaxExecutionTimeMs { get; set; }
+            [JsonPropertyName("max_heap_bytes")]
+            public int MaxHeapBytes { get; set; }
+            [JsonPropertyName("max_stack_bytes")]
+            public int MaxStackBytes { get; set; }
+            [JsonPropertyName("return_exception_details")]
+            public bool ReturnExceptionDetails { get; set; }
+            #endregion
+        }
     }
 }

@@ -2056,7 +2056,7 @@ namespace Azure.Security.ConfidentialLedger
             request.Method = RequestMethod.Get;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/app/userDefinedEndpoints/runTimeOptions", false);
+            uri.AppendPath("/app/userDefinedEndpoints/runtimeOptions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
@@ -2070,7 +2070,7 @@ namespace Azure.Security.ConfidentialLedger
             request.Method = RequestMethod.Patch;
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/app/userDefinedEndpoints/runTimeOptions", false);
+            uri.AppendPath("/app/userDefinedEndpoints/runtimeOptions", false);
             uri.AppendQuery("api-version", _apiVersion, true);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
