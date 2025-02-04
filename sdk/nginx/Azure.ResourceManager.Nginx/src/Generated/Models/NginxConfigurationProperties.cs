@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Nginx.Models
         public NginxConfigurationProperties()
         {
             Files = new ChangeTrackingList<NginxConfigurationFile>();
-            ProtectedFiles = new ChangeTrackingList<NginxConfigurationFile>();
+            ProtectedFiles = new ChangeTrackingList<NginxConfigurationProtectedFileContent>();
         }
 
         /// <summary> Initializes a new instance of <see cref="NginxConfigurationProperties"/>. </summary>
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <param name="package"></param>
         /// <param name="rootFile"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NginxConfigurationProperties(NginxProvisioningState? provisioningState, IList<NginxConfigurationFile> files, IList<NginxConfigurationFile> protectedFiles, NginxConfigurationPackage package, string rootFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal NginxConfigurationProperties(NginxProvisioningState? provisioningState, IList<NginxConfigurationFile> files, IList<NginxConfigurationProtectedFileContent> protectedFiles, NginxConfigurationPackage package, string rootFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             Files = files;
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Nginx.Models
         /// <summary> Gets the files. </summary>
         public IList<NginxConfigurationFile> Files { get; }
         /// <summary> Gets the protected files. </summary>
-        public IList<NginxConfigurationFile> ProtectedFiles { get; }
+        public IList<NginxConfigurationProtectedFileContent> ProtectedFiles { get; }
         /// <summary> Gets or sets the package. </summary>
         public NginxConfigurationPackage Package { get; set; }
         /// <summary> Gets or sets the root file. </summary>
