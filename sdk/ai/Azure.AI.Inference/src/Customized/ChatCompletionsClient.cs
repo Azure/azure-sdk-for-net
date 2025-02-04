@@ -21,18 +21,25 @@ namespace Azure.AI.Inference
     [CodeGenSuppress("CompleteAsync", typeof(ChatCompletionsOptions), typeof(ExtraParameters?), typeof(CancellationToken))]
     public partial class ChatCompletionsClient
     {
+        public const string USER_AGENT_APP_ID = "AIInferenceClient";
+
         /// <summary> Initializes a new instance of ChatCompletionsClient. </summary>
         /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
         /// <param name="options"> The options for configuring the client. </param>
+        /// <param name="userAgent">The user agent used for logging. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public ChatCompletionsClient(Uri endpoint, AzureKeyCredential credential, AzureAIInferenceClientOptions options)
+        public ChatCompletionsClient(Uri endpoint, AzureKeyCredential credential, AzureAIInferenceClientOptions options, string userAgent=default)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             Argument.AssertNotNull(credential, nameof(credential));
             options ??= new AzureAIInferenceClientOptions();
             credential.Deconstruct(out var key);
             options.AddPolicy(new AddApiKeyHeaderPolicy(key), HttpPipelinePosition.PerCall);
+            if (string.IsNullOrEmpty(userAgent))
+                options.AddPolicy(new UserAgentPolicy(USER_AGENT_APP_ID), HttpPipelinePosition.PerCall);
+            else
+                options.AddPolicy(new UserAgentPolicy($"{USER_AGENT_APP_ID}-{userAgent}"), HttpPipelinePosition.PerCall);
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
             _keyCredential = credential;
