@@ -81,7 +81,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             string filePermission = _options?.GetFilePermission(properties?.RawProperties);
             FileSmbProperties smbProperties = _options?.GetFileSmbProperties(properties, _destinationPermissionKey);
             // if transfer is not empty and File Attribute contains ReadOnly, we should not set it before creating the file.
-            if (properties.ResourceLength > 0 && IsReadOnlySet(smbProperties.FileAttributes))
+            if ((properties == null || properties.ResourceLength > 0) && IsReadOnlySet(smbProperties.FileAttributes))
             {
                 smbProperties.FileAttributes = default;
             }
@@ -113,7 +113,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             // Call Set Properties
             // if transfer is not empty and original File Attribute contains ReadOnly
             // or if FileChangedOn is to be preserved or manually set
-            if ((sourceProperties.ResourceLength > 0 && IsReadOnlySet(smbProperties.FileAttributes))
+            if (((sourceProperties == null || sourceProperties.ResourceLength > 0) && IsReadOnlySet(smbProperties.FileAttributes))
                     || (_options?._isFileChangedOnSet == false || _options?.FileChangedOn != null))
             {
                 ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(sourceProperties?.RawProperties);
