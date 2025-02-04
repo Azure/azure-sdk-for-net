@@ -1,5 +1,18 @@
 namespace Azure.CloudMachine
 {
+    public partial class AIFoundryClient : Azure.Core.ClientWorkspace
+    {
+        protected AIFoundryClient() : base (default(Azure.Core.TokenCredential)) { }
+        public AIFoundryClient(string connectionString, Azure.Core.TokenCredential credential = null) : base (default(Azure.Core.TokenCredential)) { }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public Azure.Core.ConnectionCollection Connections { get { throw null; } }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        public override System.Collections.Generic.IEnumerable<Azure.Core.ClientConnection> GetAllConnectionOptions() { throw null; }
+        public override Azure.Core.ClientConnection GetConnectionOptions(string connectionId) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+    }
     public static partial class AzureAIProjectsExensions
     {
         public static Azure.AI.Projects.AgentsClient GetAgentsClient(this Azure.Core.ClientWorkspace workspace) { throw null; }

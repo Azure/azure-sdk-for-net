@@ -24,12 +24,8 @@ public partial class AIFoundryTests : SamplesBase<CloudMachineTestEnvironment>
     [Test]
     public void AIFoundryScenariosTests()
     {
-        CloudMachineInfrastructure infra = new();
-
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        infra.AddFeature(new FoundryProjectFeature(connectionString));
-
-        CloudMachineClient client = infra.GetClient();
+        AIFoundryClient client = new AIFoundryClient(connectionString);
 
         // Azure AI Project clients
         AgentsClient agents = client.GetAgentsClient();
@@ -52,12 +48,8 @@ public partial class AIFoundryTests : SamplesBase<CloudMachineTestEnvironment>
     [Test]
     public void AIFoundryAgents()
     {
-        CloudMachineInfrastructure infra = new();
-
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        infra.AddFeature(new FoundryProjectFeature(connectionString));
-
-        CloudMachineClient client = infra.GetClient();
+        var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        AIFoundryClient client = new AIFoundryClient(connectionString);
         var agentsClient = client.GetAgentsClient();
 
         //// Step 2: Create a agent
@@ -113,12 +105,8 @@ public partial class AIFoundryTests : SamplesBase<CloudMachineTestEnvironment>
     [Test]
     public void AIFoundryInferenceChatCompletion()
     {
-        CloudMachineInfrastructure infra = new();
-
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        infra.AddFeature(new FoundryProjectFeature(connectionString));
-
-        CloudMachineClient client = infra.GetClient();
+        var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        AIFoundryClient client = new AIFoundryClient(connectionString);
         var chatClient = client.GetChatCompletionsClient();
 
         var requestOptions = new ChatCompletionsOptions()
@@ -138,12 +126,8 @@ public partial class AIFoundryTests : SamplesBase<CloudMachineTestEnvironment>
     [Test]
     public void AIFoundryAzureOpenAIChatCompletion()
     {
-        CloudMachineInfrastructure infra = new();
-
-        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        infra.AddFeature(new FoundryProjectFeature(connectionString));
-
-        CloudMachineClient client = infra.GetClient();
+        var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
+        AIFoundryClient client = new AIFoundryClient(connectionString);
         ChatClient chatClient = client.GetOpenAIChatClient("gpt-4o-mini");
 
         ChatCompletion completion = chatClient.CompleteChat(
@@ -153,5 +137,33 @@ public partial class AIFoundryTests : SamplesBase<CloudMachineTestEnvironment>
             ]);
 
         Console.WriteLine($"{completion.Role}: {completion.Content[0].Text}");
+    }
+
+    [Test]
+    public void AIFoundryScenariosTestsUsingCMClient()
+    {
+        CloudMachineInfrastructure infra = new();
+
+        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        infra.AddFeature(new FoundryProjectFeature(connectionString));
+
+        CloudMachineClient client = infra.GetClient();
+
+        // Azure AI Project clients
+        AgentsClient agents = client.GetAgentsClient();
+        EvaluationsClient evaluations = client.GetEvaluationsClient();
+
+        // Azure Inference Clients using connections API
+        ChatCompletionsClient chatClient = client.GetChatCompletionsClient();
+        EmbeddingsClient embeddingsClient = client.GetEmbeddingsClient();
+
+        // Azure OpenAI Clients using connections API
+        ChatClient openAIChatClient = client.GetOpenAIChatClient("gpt-4o-mini");
+        EmbeddingClient openAIEmbeddingsClient = client.GetOpenAIEmbeddingsClient("text-embedding-ada-002");
+
+        // Azure AI Search Clients using connections API
+        SearchClient searchClient = client.GetSearchClient("index");
+        SearchIndexClient indexClient = client.GetSearchIndexClient();
+        SearchIndexerClient indexerClient = client.GetSearchIndexerClient();
     }
 }
