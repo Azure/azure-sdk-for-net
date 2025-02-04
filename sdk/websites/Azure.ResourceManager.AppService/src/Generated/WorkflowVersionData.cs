@@ -77,8 +77,9 @@ namespace Azure.ResourceManager.AppService
         /// <param name="integrationAccount"> The integration account. </param>
         /// <param name="definition"> The definition. </param>
         /// <param name="parameters"> The parameters. </param>
+        /// <param name="etag"> Etag is property returned in Create/Update/Get response of the workflow, so that customer can supply it in the header to ensure optimistic updates. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal WorkflowVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, WorkflowSku sku, WorkflowResourceReference integrationAccount, BinaryData definition, IDictionary<string, WorkflowContent> parameters, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal WorkflowVersionData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, WorkflowProvisioningState? provisioningState, DateTimeOffset? createdOn, DateTimeOffset? changedOn, WorkflowState? state, string version, string accessEndpoint, FlowEndpointsConfiguration endpointsConfiguration, FlowAccessControlConfiguration accessControl, WorkflowSku sku, WorkflowResourceReference integrationAccount, BinaryData definition, IDictionary<string, WorkflowContent> parameters, string etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             CreatedOn = createdOn;
@@ -92,6 +93,7 @@ namespace Azure.ResourceManager.AppService
             IntegrationAccount = integrationAccount;
             Definition = definition;
             Parameters = parameters;
+            ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -165,5 +167,8 @@ namespace Azure.ResourceManager.AppService
         /// <summary> The parameters. </summary>
         [WirePath("properties.parameters")]
         public IDictionary<string, WorkflowContent> Parameters { get; }
+        /// <summary> Etag is property returned in Create/Update/Get response of the workflow, so that customer can supply it in the header to ensure optimistic updates. </summary>
+        [WirePath("etag")]
+        public string ETag { get; set; }
     }
 }

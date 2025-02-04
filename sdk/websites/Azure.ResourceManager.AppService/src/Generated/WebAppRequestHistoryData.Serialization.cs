@@ -44,6 +44,11 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsDefined(ETag))
+            {
+                writer.WritePropertyName("etag"u8);
+                writer.WriteStringValue(ETag);
+            }
         }
 
         WebAppRequestHistoryData IJsonModel<WebAppRequestHistoryData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
@@ -67,6 +72,7 @@ namespace Azure.ResourceManager.AppService
                 return null;
             }
             WebAppRequestHistoryProperties properties = default;
+            string etag = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
@@ -84,6 +90,11 @@ namespace Azure.ResourceManager.AppService
                         continue;
                     }
                     properties = WebAppRequestHistoryProperties.DeserializeWebAppRequestHistoryProperties(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("etag"u8))
+                {
+                    etag = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -143,6 +154,7 @@ namespace Azure.ResourceManager.AppService
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
                 properties,
+                etag,
                 serializedAdditionalRawData);
         }
 
@@ -241,6 +253,29 @@ namespace Azure.ResourceManager.AppService
                 {
                     builder.Append("  properties: ");
                     BicepSerializationHelpers.AppendChildObject(builder, Properties, options, 2, false, "  properties: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (hasPropertyOverride)
+            {
+                builder.Append("  etag: ");
+                builder.AppendLine(propertyOverride);
+            }
+            else
+            {
+                if (Optional.IsDefined(ETag))
+                {
+                    builder.Append("  etag: ");
+                    if (ETag.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ETag}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ETag}'");
+                    }
                 }
             }
 
