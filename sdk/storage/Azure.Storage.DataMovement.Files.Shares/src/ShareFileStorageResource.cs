@@ -109,7 +109,7 @@ namespace Azure.Storage.DataMovement.Files.Shares
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
             StorageResourceItemProperties sourceProperties = completeTransferOptions?.SourceProperties;
-            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties, _destinationPermissionKey);
+            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties);
             // Call Set Properties
             // if transfer is not empty and original File Attribute contains ReadOnly
             // or if FileChangedOn is to be preserved or manually set
