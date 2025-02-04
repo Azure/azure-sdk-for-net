@@ -22,5 +22,3 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: ${{ parameters.Service }}
-    ExcludePaths:
-      - eng/packages/http-client-csharp
