@@ -17,6 +17,8 @@ it will be installed for you when you install one of the client libraries using 
 In case you want to install it explicitly (to implement your own client library, for example),
 you can find the NuGet package [here](https://www.nuget.org/packages/Azure.Core).
 
+Change that won't merge
+
 ## Key concepts
 
 The main shared concepts of Azure.Core (and so Azure SDK libraries using Azure.Core) include:

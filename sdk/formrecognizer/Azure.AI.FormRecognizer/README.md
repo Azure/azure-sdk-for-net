@@ -13,6 +13,8 @@ Azure AI Document Intelligence is a cloud service that uses machine learning to 
 
 [Source code][formreco_client_src] | [Package (NuGet)][formreco_nuget_package] | [API reference documentation][formreco_refdocs] | [Product documentation][formreco_docs] | [Samples][formreco_samples]
 
+Change that won't merge
+
 ## Getting started
 
 ### Install the package
