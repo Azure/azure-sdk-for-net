@@ -2,8 +2,11 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace System.ClientModel.Primitives;
 
@@ -12,6 +15,12 @@ namespace System.ClientModel.Primitives;
 /// </summary>
 public static class ModelReaderWriter
 {
+    private static readonly HashSet<Type> s_supportedCollectionTypes =
+    [
+        typeof(List<>),
+        typeof(Dictionary<,>)
+    ];
+
     /// <summary>
     /// Converts the value of a model into a <see cref="BinaryData"/>.
     /// </summary>
@@ -61,24 +70,86 @@ public static class ModelReaderWriter
         }
 
         options ??= ModelReaderWriterOptions.Json;
-
-        var iModel = model as IPersistableModel<object>;
-        if (iModel is null)
-        {
-            throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IPersistableModel<object>)}");
-        }
-
-        if (ShouldWriteAsJson(iModel, options, out IJsonModel<object>? jsonModel))
-        {
-            using (UnsafeBufferSequence.Reader reader = new ModelWriter<object>(jsonModel, options).ExtractReader())
-            {
-                return reader.ToBinaryData();
-            }
-        }
-        else
+        if (model is IPersistableModel<object> iModel && !ShouldWriteAsJson(iModel, options, out _))
         {
             return iModel.Write(options);
         }
+        else
+        {
+            using UnsafeBufferSequence sequenceWriter = new();
+            using Utf8JsonWriter writer = new(sequenceWriter);
+            WriteJson(model, options, writer);
+            writer.Flush();
+            return sequenceWriter.ExtractReader().ToBinaryData();
+        }
+    }
+
+    private static void WriteJson(object model, ModelReaderWriterOptions options, Utf8JsonWriter writer)
+    {
+        if (model is IPersistableModel<object> iModel && ShouldWriteAsJson(iModel, options, out IJsonModel<object>? jsonModel))
+        {
+            jsonModel.Write(writer, options);
+        }
+        else if (model is IEnumerable enumerable)
+        {
+            WriteEnumerable(options, enumerable, writer);
+        }
+        else
+        {
+            throw new InvalidOperationException($"{model.GetType().Name} does not implement {nameof(IPersistableModel<object>)} or {nameof(IEnumerable<IPersistableModel<object>>)}");
+        }
+    }
+
+    private static void WriteEnumerable(ModelReaderWriterOptions options, IEnumerable enumerable, Utf8JsonWriter writer)
+    {
+        var enumerableType = enumerable.GetType();
+
+        if (enumerableType.IsArray && enumerableType.GetArrayRank() > 1 && enumerableType.GetElementType()?.IsArray == false) //multi-dimensional array
+        {
+            Array array = (Array)enumerable;
+            WriteMultiDimensionalArray(array, new int[array.Rank], 0, options, writer);
+        }
+        else
+        {
+            if (enumerable is IDictionary dictionary)
+            {
+                writer.WriteStartObject();
+                foreach (var x in dictionary.Keys)
+                {
+                    writer.WritePropertyName(x.ToString()!);
+                    WriteJson(dictionary[x]!, options, writer);
+                }
+                writer.WriteEndObject();
+            }
+            else
+            {
+                writer.WriteStartArray();
+                foreach (var item in enumerable)
+                {
+                    WriteJson(item, options, writer);
+                }
+                writer.WriteEndArray();
+            }
+        }
+    }
+
+    private static void WriteMultiDimensionalArray(Array array, int[] indices, int currentDimension, ModelReaderWriterOptions options, Utf8JsonWriter writer)
+    {
+        // If we've reached the innermost dimension, print the value at the collected indices
+        if (currentDimension == array.Rank)
+        {
+            WriteJson(array.GetValue(indices)!, options, writer);
+            return;
+        }
+
+        writer.WriteStartArray();
+        // Recursively iterate through each level
+        for (int i = 0; i < array.GetLength(currentDimension); i++)
+        {
+            indices[currentDimension] = i;
+            WriteMultiDimensionalArray(array, indices, currentDimension + 1, options, writer);
+        }
+        writer.WriteEndArray();
     }
 
     /// <summary>
@@ -91,8 +162,9 @@ public static class ModelReaderWriter
     /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
     /// <exception cref="ArgumentNullException">If <paramref name="data"/> is null.</exception>
     /// <exception cref="MissingMethodException">If <typeparamref name="T"/> does not have a public or non public empty constructor.</exception>
-    public static T? Read<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(BinaryData data, ModelReaderWriterOptions? options = default)
-        where T : IPersistableModel<T>
+    public static T? Read<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>(
+        BinaryData data,
+        ModelReaderWriterOptions? options = default)
     {
         if (data is null)
         {
@@ -101,14 +173,36 @@ public static class ModelReaderWriter
 
         options ??= ModelReaderWriterOptions.Json;
 
-        return GetInstance<T>().Create(data, options);
+        Type typeOfT = typeof(T);
+
+        if (typeOfT.IsArray)
+        {
+            throw new ArgumentException("Arrays are not supported. Use List<> instead.", nameof(T));
+        }
+
+        var genericType = typeOfT.IsGenericType ? typeOfT.GetGenericTypeDefinition() : null;
+
+        if (genericType is not null)
+        {
+            if (!s_supportedCollectionTypes.Contains(genericType))
+            {
+                throw new ArgumentException($"Collection Type {typeOfT.Name} is not supported.", nameof(T));
+            }
+
+            return (T)ReadCollection(data, typeOfT, nameof(T), options);
+        }
+        else
+        {
+            var iModel = GetInstance(typeOfT) as IPersistableModel<T>;
+            return iModel!.Create(data, options);
+        }
     }
 
     /// <summary>
     /// Converts the <see cref="BinaryData"/> into a <paramref name="returnType"/>.
     /// </summary>
     /// <param name="data">The <see cref="BinaryData"/> to convert.</param>
-    /// <param name="returnType">The type of the objec to convert and return.</param>
+    /// <param name="returnType">The type of the object to convert and return.</param>
     /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
     /// <returns>A <paramref name="returnType"/> representation of the <see cref="BinaryData"/>.</returns>
     /// <exception cref="InvalidOperationException">Throws if <paramref name="returnType"/> does not implement <see cref="IPersistableModel{T}"/>.</exception>
@@ -116,7 +210,10 @@ public static class ModelReaderWriter
     /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
     /// <exception cref="ArgumentNullException">If <paramref name="data"/> or <paramref name="returnType"/> are null.</exception>
     /// <exception cref="MissingMethodException">If <paramref name="returnType"/> does not have a public or non public empty constructor.</exception>
-    public static object? Read(BinaryData data, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType, ModelReaderWriterOptions? options = default)
+    public static object? Read(
+        BinaryData data,
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType,
+        ModelReaderWriterOptions? options = default)
     {
         if (data is null)
         {
@@ -128,28 +225,166 @@ public static class ModelReaderWriter
             throw new ArgumentNullException(nameof(returnType));
         }
 
+        if (returnType.IsArray)
+        {
+            throw new ArgumentException("Arrays are not supported. Use List<> instead.", nameof(returnType));
+        }
+
         options ??= ModelReaderWriterOptions.Json;
 
-        return GetInstance(returnType).Create(data, options);
+        var genericType = returnType.IsGenericType ? returnType.GetGenericTypeDefinition() : null;
+
+        if (genericType is not null)
+        {
+            if (!s_supportedCollectionTypes.Contains(genericType))
+            {
+                throw new ArgumentException($"Collection Type {returnType.Name} is not supported.", nameof(returnType));
+            }
+
+            return ReadCollection(data, returnType, nameof(returnType), options);
+        }
+        else
+        {
+            return GetInstance(returnType).Create(data, options);
+        }
     }
 
-    private static IPersistableModel<object> GetInstance([DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
+    private static object ReadCollection(BinaryData data, Type returnType, string paramName, ModelReaderWriterOptions options)
+    {
+        object? collection = Activator.CreateInstance(returnType);
+        if (collection is null)
+        {
+            throw new InvalidOperationException($"Unable to create instance of {returnType.Name}.");
+        }
+
+        Utf8JsonReader reader = new Utf8JsonReader(data);
+        reader.Read();
+        var genericType = returnType.GetGenericTypeDefinition();
+        if (genericType.Equals(typeof(Dictionary<,>)))
+        {
+            if (reader.TokenType != JsonTokenType.StartObject)
+            {
+                throw new FormatException("Expected start of dictionary.");
+            }
+        }
+        else if (reader.TokenType != JsonTokenType.StartArray)
+        {
+            throw new FormatException("Expected start of array.");
+        }
+        ReadJsonCollection(ref reader, collection, 1, paramName, options);
+        return collection;
+    }
+
+    private static void ReadJsonCollection(ref Utf8JsonReader reader, object collection, int depth, string paramName, ModelReaderWriterOptions options)
+    {
+        int argNumber = collection is IDictionary ? 1 : 0;
+        Type elementType = collection.GetType().GetGenericArguments()[argNumber];
+        if (elementType.IsArray)
+        {
+            throw new ArgumentException("Arrays are not supported. Use List<> instead.");
+        }
+        Type? elementGenericType = elementType.IsGenericType ? elementType.GetGenericTypeDefinition() : null;
+        if (elementGenericType is not null && !s_supportedCollectionTypes.Contains(elementGenericType))
+        {
+            throw new ArgumentException($"Collection Type {elementGenericType.Name} is not supported.", paramName);
+        }
+
+        bool isElementDictionary = elementGenericType is not null && elementGenericType.Equals(typeof(Dictionary<,>));
+
+        var persistableModel = GetObjectInstance(elementType) as IPersistableModel<object>;
+        IJsonModel<object>? iJsonModel = null;
+        if (persistableModel is not null && !ShouldWriteAsJson(persistableModel, options, out iJsonModel))
+        {
+            throw new InvalidOperationException($"Element type {elementType.Name} reading a collection is only supported for 'J' format");
+        }
+        bool isInnerCollection = iJsonModel is null;
+        string? propertyName = null;
+
+        while (reader.Read())
+        {
+            switch (reader.TokenType)
+            {
+                case JsonTokenType.StartObject:
+                    if (isInnerCollection)
+                    {
+                        if (isElementDictionary)
+                        {
+                            var innerDictionary = Activator.CreateInstance(elementType);
+                            if (innerDictionary is null)
+                            {
+                                throw new InvalidOperationException($"Unable to create instance of {elementType.Name}.");
+                            }
+                            AddItemToCollection(collection, propertyName, innerDictionary);
+                            ReadJsonCollection(ref reader, innerDictionary, depth++, paramName, options);
+                        }
+                        else
+                        {
+                            throw new InvalidOperationException("Unexpected StartObject found.");
+                        }
+                    }
+                    else
+                    {
+                        AddItemToCollection(collection, propertyName, iJsonModel!.Create(ref reader, options));
+                    }
+                    break;
+                case JsonTokenType.StartArray:
+                    if (!isInnerCollection)
+                    {
+                        throw new InvalidOperationException("Unexpected StartArray found.");
+                    }
+
+                    var innerList = Activator.CreateInstance(elementType);
+                    if (innerList is null)
+                    {
+                        throw new InvalidOperationException($"Unable to create instance of {elementType.Name}.");
+                    }
+                    AddItemToCollection(collection, propertyName, innerList);
+                    ReadJsonCollection(ref reader, innerList, depth++, paramName, options);
+                    break;
+                case JsonTokenType.EndArray:
+                    if (--depth == 0)
+                    {
+                        return;
+                    }
+                    break;
+                case JsonTokenType.PropertyName:
+                    propertyName = reader.GetString();
+                    break;
+                case JsonTokenType.EndObject:
+                    return;
+                default:
+                    throw new FormatException($"Unexpected token {reader.TokenType}.");
+            }
+        }
+    }
+
+    private static void AddItemToCollection(object collection, string? key, object item)
+    {
+        if (collection is IDictionary dictionary)
+        {
+            if (key is null)
+            {
+                throw new InvalidOperationException("Null key found for dictionary entry.");
+            }
+            dictionary.Add(key, item);
+        }
+        else if (collection is IList list)
+        {
+            list.Add(item);
+        }
+        else
+        {
+            throw new InvalidOperationException($"Collection type {collection.GetType().Name} is not supported.");
+        }
+    }
+
+    private static IPersistableModel<object> GetInstance(
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType)
     {
         var model = GetObjectInstance(returnType) as IPersistableModel<object>;
         if (model is null)
         {
             throw new InvalidOperationException($"{returnType.Name} does not implement {nameof(IPersistableModel<object>)}");
-        }
-        return model;
-    }
-
-    private static IPersistableModel<T> GetInstance<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] T>()
-        where T : IPersistableModel<T>
-    {
-        var model = GetObjectInstance(typeof(T)) as IPersistableModel<T>;
-        if (model is null)
-        {
-            throw new InvalidOperationException($"{typeof(T).Name} does not implement {nameof(IPersistableModel<T>)}");
         }
         return model;
     }
@@ -196,8 +431,4 @@ public static class ModelReaderWriter
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static bool IsJsonFormatRequested<T>(IPersistableModel<T> model, ModelReaderWriterOptions options)
         => options.Format == "J" || (options.Format == "W" && model.GetFormatFromOptions(options) == "J");
-
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static bool IsJsonFormatRequested(IPersistableModel<object> model, ModelReaderWriterOptions options)
-        => IsJsonFormatRequested<object>(model, options);
 }

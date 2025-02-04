@@ -20,16 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="TestData\AvailabilitySetData\AvailabilitySetData.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\AvailabilitySetData\AvailabilitySetDataWireFormat.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\AvailabilitySetData\AvailabilitySetDataWithVMs.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="TestData\AvailabilitySetData\AvailabilitySetDataWithVMsWireFormat.json">
+    <None Update="TestData\AvailabilitySetData\*.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="TestData\ModelWithPersistableOnly\ModelWithPersistableOnlyWireFormat.json">

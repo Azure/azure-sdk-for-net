@@ -1,31 +1,48 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using NUnit.Framework;
 using System.ClientModel.Primitives;
 using System.ClientModel.Tests.Client.ModelReaderWriterTests.Models;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text.Json;
+using NUnit.Framework;
 
 namespace System.ClientModel.Tests.ModelReaderWriterTests
 {
     public class ModelReaderWriterTests
     {
-        private static readonly ModelReaderWriterOptions _wireOptions = new ModelReaderWriterOptions("W");
+        private static readonly ModelReaderWriterOptions s_wireOptions = new("W");
+
+        private static readonly List<object> s_emptyCollections =
+        [
+            new List<SubType>(),
+            new SubType[] { },
+            new Collection<SubType> { },
+            new ObservableCollection<SubType> { },
+            new HashSet<SubType> { },
+            new Queue<SubType> { },
+            new Stack<SubType> { },
+            new LinkedList<SubType> { },
+            new SortedSet<SubType> { },
+            new ArrayList { },
+        ];
 
         [Test]
         public void ArgumentExceptions()
         {
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(null!));
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(null!, typeof(BaseWithNoUnknown)));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(new BinaryData(new byte[] { }), null!));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(new BinaryData([]), null!));
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write<BaseWithNoUnknown>(null!));
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write(null!));
 
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(null!, _wireOptions));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(null!, typeof(BaseWithNoUnknown), _wireOptions));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(new BinaryData(new byte[] { }), null!, _wireOptions));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write<BaseWithNoUnknown>(null!, _wireOptions));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write(null!, _wireOptions));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(null!, s_wireOptions));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(null!, typeof(BaseWithNoUnknown), s_wireOptions));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(new BinaryData([]), null!, s_wireOptions));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write<BaseWithNoUnknown>(null!, s_wireOptions));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write(null!, s_wireOptions));
         }
 
         [TestCaseSource(typeof(ReaderWriterTestSource), "InvalidOperationBinaryData")]
@@ -49,7 +66,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 gotException = true;
             }
 
-            Assert.IsTrue(gotException, "Did not recieve exception");
+            Assert.IsTrue(gotException, "Did not receive exception");
 
             gotException = false;
             try
@@ -62,7 +79,7 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
                 gotException = true;
             }
 
-            Assert.IsTrue(gotException, "Did not recieve exception");
+            Assert.IsTrue(gotException, "Did not receive exception");
         }
 
         [TestCaseSource(typeof(ReaderWriterTestSource), "NullBinaryData")]
@@ -83,26 +100,82 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ValidateErrorIfUnknownDoesntExist()
         {
             BaseWithNoUnknown baseInstance = new SubType();
-            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(new BinaryData(Array.Empty<byte>())));
-            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(new BinaryData(Array.Empty<byte>()), typeof(BaseWithNoUnknown)));
+            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(new BinaryData([])));
+            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(new BinaryData([]), typeof(BaseWithNoUnknown)));
         }
 
         [Test]
         public void ValidateErrorIfNoDefaultCtor()
         {
-            Assert.Throws<MissingMethodException>(() => ModelReaderWriter.Read<ModelWithNoDefaultCtor>(new BinaryData(Array.Empty<byte>())));
+            Assert.Throws<MissingMethodException>(() => ModelReaderWriter.Read<ModelWithNoDefaultCtor>(new BinaryData([])));
         }
 
         [Test]
         public void ValidateErrorIfNotImplementInterface()
         {
-            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(new BinaryData(Array.Empty<byte>()), typeof(DoesntImplementInterface)));
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(new BinaryData([]), typeof(DoesNotImplementInterface)));
             Assert.IsTrue(ex?.Message.Contains("does not implement"));
-            ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(new DoesntImplementInterface()));
+            ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(new DoesNotImplementInterface()));
             Assert.IsTrue(ex?.Message.Contains("does not implement"));
         }
 
-        private class DoesntImplementInterface { }
+        [Test]
+        public void EmptyEnumerableOfNoInterface()
+        {
+            List<DoesNotImplementInterface> list = [];
+            BinaryData data = ModelReaderWriter.Write(list);
+            Assert.AreEqual("[]", data.ToString());
+        }
+
+        [Test]
+        public void EmptyEnumerableOfNonJson()
+        {
+            List<SubType> list = [];
+            BinaryData data = ModelReaderWriter.Write(list, new ModelReaderWriterOptions("X"));
+            Assert.AreEqual("[]", data.ToString());
+        }
+
+        [Test]
+        public void EnumerableOfNoInterface()
+        {
+            List<DoesNotImplementInterface> list =
+            [
+                new DoesNotImplementInterface(),
+            ];
+            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list));
+        }
+
+        [Test]
+        public void EnumerableOfNonJson()
+        {
+            List<SubType> list =
+            [
+                new SubType(),
+            ];
+            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(list, new ModelReaderWriterOptions("X")));
+        }
+
+        [TestCaseSource(nameof(s_emptyCollections))]
+        public void WriteEmptyCollection(object collection)
+        {
+            BinaryData data = ModelReaderWriter.Write(collection);
+            Assert.IsNotNull(data);
+            Assert.AreEqual("[]", data.ToString());
+        }
+
+        [Test]
+        public void WriteDictionaryOfInterface()
+        {
+            Dictionary<string, SubType> dict = new()
+            {
+                { "key", new SubType() },
+            };
+            BinaryData data = ModelReaderWriter.Write(dict);
+            Assert.IsNotNull(data);
+            Assert.AreEqual("{\"key\":{}}", data.ToString());
+        }
+
+        private class DoesNotImplementInterface { }
 
         private class SubType : BaseWithNoUnknown, IJsonModel<SubType>
         {
@@ -120,6 +193,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             void IJsonModel<SubType>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             {
+                writer.WriteStartObject();
+                writer.WriteEndObject();
                 return;
             }
 
@@ -145,6 +220,8 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
 
             void IJsonModel<BaseWithNoUnknown>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
             {
+                writer.WriteStartObject();
+                writer.WriteEndObject();
                 return;
             }
 
