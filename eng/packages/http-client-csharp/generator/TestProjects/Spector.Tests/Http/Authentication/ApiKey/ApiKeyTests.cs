@@ -1,26 +1,26 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.ClientModel;
-using System.Threading.Tasks;
 using Authentication.ApiKey;
+using Azure;
 using NUnit.Framework;
+using System.Threading.Tasks;
 
-namespace TestProjects.CadlRanch.Tests.Http.Authentication.ApiKey
+namespace TestProjects.Spector.Tests.Http.Authentication.ApiKey
 {
-    public class ApiKeyTests : CadlRanchTestBase
+    public class ApiKeyTests : SpectorTestBase
     {
-        [CadlRanchTest]
+        [SpectorTest]
         public Task Valid() => Test(async (host) =>
         {
-            ClientResult response = await new ApiKeyClient(host, new ApiKeyCredential("valid-key"), null).ValidAsync();
-            Assert.AreEqual(204, response.GetRawResponse().Status);
+            Response response = await new ApiKeyClient(host, new AzureKeyCredential("valid-key"), null).ValidAsync();
+            Assert.AreEqual(204, response.Status);
         });
 
-        [CadlRanchTest]
+        [SpectorTest]
         public Task Invalid() => Test((host) =>
         {
-            var exception = Assert.ThrowsAsync<ClientResultException>(() => new ApiKeyClient(host, new ApiKeyCredential("invalid-key"), null).InvalidAsync());
+            var exception = Assert.ThrowsAsync<RequestFailedException>(() => new ApiKeyClient(host, new AzureKeyCredential("invalid-key"), null).InvalidAsync());
             Assert.AreEqual(403, exception!.Status);
             return Task.CompletedTask;
         });
