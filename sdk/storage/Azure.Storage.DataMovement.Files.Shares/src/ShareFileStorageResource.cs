@@ -80,6 +80,12 @@ namespace Azure.Storage.DataMovement.Files.Shares
             IDictionary<string, string> metadata = _options?.GetFileMetadata(properties?.RawProperties);
             string filePermission = _options?.GetFilePermission(properties?.RawProperties);
             FileSmbProperties smbProperties = _options?.GetFileSmbProperties(properties, _destinationPermissionKey);
+            // if transfer is not empty and File Attribute contains ReadOnly, we should not set it before creating the file.
+            if ((properties == null || properties.ResourceLength > 0) && IsReadOnlySet(smbProperties.FileAttributes))
+            {
+                smbProperties.FileAttributes = default;
+            }
+
             await ShareFileClient.CreateAsync(
                     maxSize: maxSize,
                     httpHeaders: httpHeaders,
@@ -90,6 +96,11 @@ namespace Azure.Storage.DataMovement.Files.Shares
                     cancellationToken: cancellationToken).ConfigureAwait(false);
         }
 
+        private bool IsReadOnlySet(NtfsFileAttributes? fileAttributes)
+        {
+            return fileAttributes?.HasFlag(NtfsFileAttributes.ReadOnly) ?? false;
+        }
+
         protected override async Task CompleteTransferAsync(
             bool overwrite,
             StorageResourceCompleteTransferOptions completeTransferOptions,
@@ -97,13 +108,15 @@ namespace Azure.Storage.DataMovement.Files.Shares
         {
             CancellationHelper.ThrowIfCancellationRequested(cancellationToken);
 
-            // Call Set Properties if FileChangedOn is to be preserved or manually set
-            // as it can be changed during a transfer.
-            if (_options?._isFileChangedOnSet == false || _options?.FileChangedOn != null)
+            StorageResourceItemProperties sourceProperties = completeTransferOptions?.SourceProperties;
+            FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties);
+            // Call Set Properties
+            // if transfer is not empty and original File Attribute contains ReadOnly
+            // or if FileChangedOn is to be preserved or manually set
+            if (((sourceProperties == null || sourceProperties.ResourceLength > 0) && IsReadOnlySet(smbProperties.FileAttributes))
+                    || (_options?._isFileChangedOnSet == false || _options?.FileChangedOn != null))
             {
-                StorageResourceItemProperties sourceProperties = completeTransferOptions?.SourceProperties;
                 ShareFileHttpHeaders httpHeaders = _options?.GetShareFileHttpHeaders(sourceProperties?.RawProperties);
-                FileSmbProperties smbProperties = _options?.GetFileSmbProperties(sourceProperties);
                 await ShareFileClient.SetHttpHeadersAsync(new()
                 {
                     HttpHeaders = httpHeaders,
