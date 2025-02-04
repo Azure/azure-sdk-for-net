@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Azure.AI.Inference;
 using Azure.AI.Projects;
+using Azure.CloudMachine.AIFoundry;
 using Azure.CloudMachine.OpenAI;
 using Azure.Core.TestFramework;
 using Azure.Search.Documents;
@@ -23,8 +24,12 @@ public partial class AIFoundryTests : SamplesBase<CloudMachineTestEnvironment>
     [Test]
     public void AIFoundryScenariosTests()
     {
+        CloudMachineInfrastructure infra = new();
+
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        AIFoundryClient client = new AIFoundryClient(connectionString);
+        infra.AddFeature(new FoundryProjectFeature(connectionString));
+
+        CloudMachineClient client = infra.GetClient();
 
         // Azure AI Project clients
         AgentsClient agents = client.GetAgentsClient();
@@ -47,8 +52,12 @@ public partial class AIFoundryTests : SamplesBase<CloudMachineTestEnvironment>
     [Test]
     public void AIFoundryAgents()
     {
-        var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
-        AIFoundryClient client = new AIFoundryClient(connectionString);
+        CloudMachineInfrastructure infra = new();
+
+        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        infra.AddFeature(new FoundryProjectFeature(connectionString));
+
+        CloudMachineClient client = infra.GetClient();
         var agentsClient = client.GetAgentsClient();
 
         //// Step 2: Create a agent
@@ -104,8 +113,12 @@ public partial class AIFoundryTests : SamplesBase<CloudMachineTestEnvironment>
     [Test]
     public void AIFoundryInferenceChatCompletion()
     {
-        var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
-        AIFoundryClient client = new AIFoundryClient(connectionString);
+        CloudMachineInfrastructure infra = new();
+
+        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        infra.AddFeature(new FoundryProjectFeature(connectionString));
+
+        CloudMachineClient client = infra.GetClient();
         var chatClient = client.GetChatCompletionsClient();
 
         var requestOptions = new ChatCompletionsOptions()
@@ -125,8 +138,12 @@ public partial class AIFoundryTests : SamplesBase<CloudMachineTestEnvironment>
     [Test]
     public void AIFoundryAzureOpenAIChatCompletion()
     {
-        var connectionString = Environment.GetEnvironmentVariable("PROJECT_CONNECTION_STRING");
-        AIFoundryClient client = new AIFoundryClient(connectionString);
+        CloudMachineInfrastructure infra = new();
+
+        var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
+        infra.AddFeature(new FoundryProjectFeature(connectionString));
+
+        CloudMachineClient client = infra.GetClient();
         ChatClient chatClient = client.GetOpenAIChatClient("gpt-4o-mini");
 
         ChatCompletion completion = chatClient.CompleteChat(

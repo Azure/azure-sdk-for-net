@@ -47,6 +47,15 @@ namespace Azure.CloudMachine
         public static Microsoft.Extensions.Configuration.IConfigurationBuilder AddCloudMachineConfiguration(this Microsoft.Extensions.Configuration.IConfigurationBuilder builder, Azure.CloudMachine.CloudMachineInfrastructure cm) { throw null; }
     }
 }
+namespace Azure.CloudMachine.AIFoundry
+{
+    public partial class FoundryProjectFeature : Azure.CloudMachine.Core.CloudMachineFeature
+    {
+        public FoundryProjectFeature(string connectionString) { }
+        protected internal override void EmitConnections(Azure.Core.ConnectionCollection connections, string cmId) { }
+        protected override Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.CloudMachine.CloudMachineInfrastructure cm) { throw null; }
+    }
+}
 namespace Azure.CloudMachine.AppService
 {
     public partial class AppServiceFeature : Azure.CloudMachine.Core.CloudMachineFeature
