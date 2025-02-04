@@ -96,7 +96,6 @@ resource sa 'Microsoft.Storage/storageAccounts@2021-08-01' = {
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
-    allowSharedKeyAccess: false
   }
 }
 
@@ -109,7 +108,6 @@ resource sa2 'Microsoft.Storage/storageAccounts@2021-08-01' = {
   kind: 'StorageV2'
   properties: {
     accessTier: 'Hot'
-    allowSharedKeyAccess: false
   }
 }
 
