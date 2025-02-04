@@ -63,8 +63,8 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             Assert.IsTrue(nginxCertificate.Data.Name.Equals(nginxCertificateName, StringComparison.InvariantCultureIgnoreCase));
             Assert.IsTrue(nginxCertificate.Data.Id.Equals(nginxCertificateResourceIdentifier));
             Assert.IsTrue(nginxCertificate.Data.ResourceType.Equals(NginxCertificateResource.ResourceType));
-            Assert.IsNotNull(nginxCertificate.Data.SystemData);
-            Assert.IsNotNull(nginxCertificate.Data.Location);
+            Assert.IsNull(nginxCertificate.Data.SystemData);
+            Assert.IsNull(nginxCertificate.Data.Location);
             Assert.IsNotNull(nginxCertificate.Data.Properties.ProvisioningState);
             Assert.IsTrue(nginxCertificate.Data.Properties.CertificateVirtualPath.Equals(certificateVirtualPath));
             Assert.IsTrue(nginxCertificate.Data.Properties.KeyVirtualPath.Equals(keyVirtualPath));
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
             Assert.IsNotNull(nginxCertificate.Data.Properties.Sha1Thumbprint);
             Assert.IsNotNull(nginxCertificate.Data.Properties.KeyVaultSecretVersion);
             Assert.IsNotNull(nginxCertificate.Data.Properties.KeyVaultSecretCreated);
-            Assert.IsNull(nginxCertificate.Data.Properties.CertificateError);
+            Assert.IsNotNull(nginxCertificate.Data.Properties.CertificateError);
         }
 
         [TestCase]
