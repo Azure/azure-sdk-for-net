@@ -6,32 +6,30 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using static Azure.Security.ConfidentialLedger.Tests.ConfidentialLedgerClientLiveTests;
 
 namespace Azure.Data.ConfidentialLedger.Tests.Helper
 {
-    public static class JSBundle
+    internal static class JSBundle
     {
         /// <summary>
-        /// Creates a dictionary bundle with metadata and modules.
+        /// Creates a bundle with metadata and modules.
         /// </summary>
         /// <param name="moduleName">Name of the module (optional).</param>
         /// <param name="jsFilePath">Path to the JavaScript file (optional).</param>
-        /// <returns>A dictionary representing the bundle. Returns an empty bundle if the file is missing.</returns>
-        public static Dictionary<string, object> Create(string? moduleName = null, string? jsFilePath = null)
+        /// <returns>A undle. Returns an empty bundle if the file is missing.</returns>
+        internal static Bundle Create(string? moduleName = null, string? jsFilePath = null)
         {
             // If moduleName or jsFilePath is not provided, return an empty bundle
             if (string.IsNullOrEmpty(moduleName) || string.IsNullOrEmpty(jsFilePath))
             {
-                return new Dictionary<string, object>
-                {
-                    ["metadata"] = new Dictionary<string, object> { ["endpoints"] = new Dictionary<string, object>() },
-                    ["modules"] = new List<Dictionary<string, object>>()
-                };
+                return new Bundle();
             }
 
             string moduleContent = string.Empty;
 
             // Read the module file if it exists
+            Console.WriteLine($"JSFile Exists: {File.Exists(jsFilePath)}");
             if (File.Exists(jsFilePath))
             {
                 try
@@ -42,48 +40,38 @@ namespace Azure.Data.ConfidentialLedger.Tests.Helper
                 {
                     // Log or return an error message if the file cannot be read
                     Console.WriteLine($" Error reading file {jsFilePath}: {ex.Message}");
-                    return new Dictionary<string, object>
-                    {
-                        ["metadata"] = new Dictionary<string, object> { ["endpoints"] = new Dictionary<string, object>() },
-                        ["modules"] = new List<Dictionary<string, object>>()
-                    };
+                    return new Bundle();
                 }
             }
 
-            // Define endpoints dictionary only if the module content is not empty
-            var endpoints = new Dictionary<string, object>
-            {
-                ["/content"] = new Dictionary<string, object>
-                {
-                    ["get"] = new Dictionary<string, object>
-                    {
-                        ["js_module"] = moduleName == null ? "" : moduleName,
-                        ["js_function"] = "content",
-                        ["forwarding_required"] = "never",
-                        ["redirection_strategy"] = "none",
-                        ["authn_policies"] = new List<string> { "no_auth" },
-                        ["mode"] = "readonly",
-                        ["openapi"] = new Dictionary<string, object>()
-                    }
-                }
-            };
-
             // Define modules list only if the module content is not empty
-            var modules = new List<Dictionary<string, object>>
-                {
-                    new Dictionary<string, object>
-                    {
-                        ["name"] = moduleName == null ? "" : moduleName,
-                        ["module"] = moduleContent
-                    }
-                };
+            var modules = new List<Module> { new Module { Name = moduleName, ModuleContent = moduleContent } };
 
-            // Construct the Bundle
-            return new Dictionary<string, object>
+            var bundle = new Bundle
             {
-                ["metadata"] = new Dictionary<string, object> { ["endpoints"] = endpoints },
-                ["modules"] = modules
+                Metadata = new Metadata
+                {
+                    Endpoints = new Dictionary<string, Dictionary<string, Endpoint>>
+                    {
+                        [_userDefinedEndpoint] = new Dictionary<string, Endpoint>
+                        {
+                            ["get"] = new Endpoint
+                            {
+                                JsModule = moduleName,
+                                JsFunction = "content",
+                                ForwardingRequired = "never",
+                                RedirectionStrategy = "none",
+                                AuthnPolicies = new List<string> { "no_auth" },
+                                Mode = "readonly",
+                                OpenApi = new Dictionary<string, object>()
+                            }
+                        }
+                    }
+                },
+                Modules = modules,
             };
+
+            return bundle;
         }
     }
 }
