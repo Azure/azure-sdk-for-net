@@ -60,10 +60,10 @@ namespace Azure.Storage.DataMovement.Files.Shares
         }
 
         internal async Task CreateAsync(
-             bool overwrite,
-             long maxSize,
-             StorageResourceItemProperties properties,
-             CancellationToken cancellationToken)
+            bool overwrite,
+            long maxSize,
+            StorageResourceItemProperties properties,
+            CancellationToken cancellationToken)
         {
             if (!overwrite)
             {
