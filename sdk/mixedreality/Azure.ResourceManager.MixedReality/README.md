@@ -1,6 +1,6 @@
 # Microsoft Azure Mixed Reality management client library for .NET
 
-Microsoft Azure Mixed Reality cloud services like Azure Remote Rendering and Azure Spatial Anchors help developers build compelling immersive experiences on a variety of platforms. These services allow you to integrate spatial awareness into your projects when you're making applications for 3D training, predictive equipment maintenance, and design review, all in the context of your users’ environments.
+Microsoft Azure Mixed Reality cloud services like Azure Remote Rendering help developers build compelling immersive experiences on a variety of platforms.
 
 This library supports managing Microsoft Azure Mixed Reality resources.
 

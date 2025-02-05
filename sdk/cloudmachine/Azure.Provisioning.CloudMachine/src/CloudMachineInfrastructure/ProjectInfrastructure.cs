@@ -19,7 +19,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Azure.CloudMachine;
 
-public class CloudMachineInfrastructure
+public class ProjectInfrastructure
 {
     private readonly Infrastructure _infrastructure = new("cm");
     private readonly List<NamedProvisionableConstruct> _constrcuts = [];
@@ -34,9 +34,9 @@ public class CloudMachineInfrastructure
     public UserAssignedIdentity Identity { get; private set; }
     public string Id { get; private set; }
 
-    public CloudMachineClient GetClient()
+    public ProjectClient GetClient()
     {
-        CloudMachineClient client = new(connections: Connections);
+        ProjectClient client = new(connections: Connections);
         return client;
     }
 
@@ -46,11 +46,11 @@ public class CloudMachineInfrastructure
     [EditorBrowsable(EditorBrowsableState.Never)]
     public ProvisioningParameter PrincipalIdParameter => new("principalId", typeof(string));
 
-    public CloudMachineInfrastructure(string? cmId = default)
+    public ProjectInfrastructure(string? cmId = default)
     {
         if (cmId == default)
         {
-            cmId = CloudMachineClient.ReadOrCreateCloudMachineId();
+            cmId = ProjectClient.ReadOrCreateCloudMachineId();
         }
         Id = cmId;
 
@@ -144,7 +144,7 @@ public static class CloudMachineInfrastructureConfiguration
     /// <param name="builder"></param>
     /// <param name="cm"></param>
     /// <returns></returns>
-    public static IConfigurationBuilder AddCloudMachineConfiguration(this IConfigurationBuilder builder, CloudMachineInfrastructure cm)
+    public static IConfigurationBuilder AddCloudMachineConfiguration(this IConfigurationBuilder builder, ProjectInfrastructure cm)
     {
         builder.AddCloudMachineConnections(cm.Connections);
         builder.AddCloudMachineId(cm.Id);
@@ -157,9 +157,9 @@ public static class CloudMachineInfrastructureConfiguration
     /// <param name="builder"></param>
     /// <param name="cm"></param>
     /// <returns></returns>
-    public static IHostApplicationBuilder AddCloudMachine(this IHostApplicationBuilder builder, CloudMachineInfrastructure cm)
+    public static IHostApplicationBuilder AddCloudMachine(this IHostApplicationBuilder builder, ProjectInfrastructure cm)
     {
-        builder.Services.AddSingleton(new CloudMachineClient(cm.Connections));
+        builder.Services.AddSingleton(new ProjectClient(cm.Connections));
         return builder;
     }
 }

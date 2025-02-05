@@ -5,6 +5,7 @@ trigger:
   paths:
     include:
       - eng/packages/http-client-csharp
+      - eng/scripts/typespec
 pr:
   branches:
     include:
@@ -15,6 +16,7 @@ pr:
   paths:
     include:
       - eng/packages/http-client-csharp
+      - eng/scripts/typespec
 
 parameters:
   - name: BuildPrereleaseVersion
