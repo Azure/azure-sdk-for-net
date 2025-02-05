@@ -352,7 +352,7 @@ namespace Azure.AI.Language.Conversations
 
         /// <summary> Initializes a new instance of <see cref="Models.RegexKey"/>. </summary>
         /// <param name="key"> The key of the regex pattern used in extracting the entity. </param>
-        /// <param name="regexPattern"> The .NET regex pattern used in extracting the entity. Please visit https://docs.microsoft.com/dotnet/standard/base-types/regular-expressions for more information about .NET regular expressions. </param>
+        /// <param name="regexPattern"> The .NET regex pattern used in extracting the entity. Please visit https://learn.microsoft.com/dotnet/standard/base-types/regular-expressions for more information about .NET regular expressions. </param>
         /// <returns> A new <see cref="Models.RegexKey"/> instance for mocking. </returns>
         public static RegexKey RegexKey(string key = null, string regexPattern = null)
         {
@@ -382,36 +382,6 @@ namespace Azure.AI.Language.Conversations
         public static TargetIntentResult TargetIntentResult(string targetProjectKind = null, string apiVersion = null, double confidence = default)
         {
             return new UnknownTargetIntentResult(targetProjectKind == null ? default : new TargetProjectKind(targetProjectKind), apiVersion, confidence, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.NoneLinkedTargetIntentResult"/>. </summary>
-        /// <param name="apiVersion"> The API version used to call a target service. </param>
-        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        /// <param name="result"> The actual response from a Conversation project. </param>
-        /// <returns> A new <see cref="Models.NoneLinkedTargetIntentResult"/> instance for mocking. </returns>
-        public static NoneLinkedTargetIntentResult NoneLinkedTargetIntentResult(string apiVersion = null, double confidence = default, ConversationResult result = null)
-        {
-            return new NoneLinkedTargetIntentResult(TargetProjectKind.NonLinked, apiVersion, confidence, serializedAdditionalRawData: null, result);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationResult"/>. </summary>
-        /// <param name="query"> The same query given in request. </param>
-        /// <param name="detectedLanguage"> The detected language from the query in BCP 47 language representation. </param>
-        /// <param name="prediction"> The predicted result for the query. </param>
-        /// <returns> A new <see cref="Models.ConversationResult"/> instance for mocking. </returns>
-        public static ConversationResult ConversationResult(string query = null, string detectedLanguage = null, ConversationPrediction prediction = null)
-        {
-            return new ConversationResult(query, detectedLanguage, prediction, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationTargetIntentResult"/>. </summary>
-        /// <param name="apiVersion"> The API version used to call a target service. </param>
-        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
-        /// <param name="result"> The actual response from a Conversation project. </param>
-        /// <returns> A new <see cref="Models.ConversationTargetIntentResult"/> instance for mocking. </returns>
-        public static ConversationTargetIntentResult ConversationTargetIntentResult(string apiVersion = null, double confidence = default, ConversationResult result = null)
-        {
-            return new ConversationTargetIntentResult(TargetProjectKind.Conversation, apiVersion, confidence, serializedAdditionalRawData: null, result);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LuisTargetIntentResult"/>. </summary>
@@ -511,6 +481,36 @@ namespace Azure.AI.Language.Conversations
         public static AnswerSpan AnswerSpan(string text = null, double? confidenceScore = null, int? offset = null, int? length = null)
         {
             return new AnswerSpan(text, confidenceScore, offset, length, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.NoneLinkedTargetIntentResult"/>. </summary>
+        /// <param name="apiVersion"> The API version used to call a target service. </param>
+        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
+        /// <param name="result"> The actual response from a Conversation project. </param>
+        /// <returns> A new <see cref="Models.NoneLinkedTargetIntentResult"/> instance for mocking. </returns>
+        public static NoneLinkedTargetIntentResult NoneLinkedTargetIntentResult(string apiVersion = null, double confidence = default, ConversationResult result = null)
+        {
+            return new NoneLinkedTargetIntentResult(TargetProjectKind.NonLinked, apiVersion, confidence, serializedAdditionalRawData: null, result);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConversationResult"/>. </summary>
+        /// <param name="query"> The same query given in request. </param>
+        /// <param name="detectedLanguage"> The detected language from the query in BCP 47 language representation. </param>
+        /// <param name="prediction"> The predicted result for the query. </param>
+        /// <returns> A new <see cref="Models.ConversationResult"/> instance for mocking. </returns>
+        public static ConversationResult ConversationResult(string query = null, string detectedLanguage = null, ConversationPrediction prediction = null)
+        {
+            return new ConversationResult(query, detectedLanguage, prediction, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConversationTargetIntentResult"/>. </summary>
+        /// <param name="apiVersion"> The API version used to call a target service. </param>
+        /// <param name="confidence"> The prediction score and it ranges from 0.0 to 1.0. </param>
+        /// <param name="result"> The actual response from a Conversation project. </param>
+        /// <returns> A new <see cref="Models.ConversationTargetIntentResult"/> instance for mocking. </returns>
+        public static ConversationTargetIntentResult ConversationTargetIntentResult(string apiVersion = null, double confidence = default, ConversationResult result = null)
+        {
+            return new ConversationTargetIntentResult(TargetProjectKind.Conversation, apiVersion, confidence, serializedAdditionalRawData: null, result);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConversationError"/>. </summary>
@@ -618,6 +618,149 @@ namespace Azure.AI.Language.Conversations
             return new UnknownAnalyzeConversationOperationResult(lastUpdateDateTime, status, name, kind == null ? default : new AnalyzeConversationOperationResultsKind(kind), serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Models.SummarizationOperationResult"/>. </summary>
+        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="status"> The status of the task at the mentioned last update time. </param>
+        /// <param name="name"> task name. </param>
+        /// <param name="results"> results. </param>
+        /// <returns> A new <see cref="Models.SummarizationOperationResult"/> instance for mocking. </returns>
+        public static SummarizationOperationResult SummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = null, SummaryResult results = null)
+        {
+            return new SummarizationOperationResult(
+                lastUpdateDateTime,
+                status,
+                name,
+                AnalyzeConversationOperationResultsKind.SummarizationOperationResults,
+                serializedAdditionalRawData: null,
+                results);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SummaryResult"/>. </summary>
+        /// <param name="conversations"> array of conversations. </param>
+        /// <param name="errors"> Errors by document id. </param>
+        /// <param name="statistics"> statistics. </param>
+        /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
+        /// <returns> A new <see cref="Models.SummaryResult"/> instance for mocking. </returns>
+        public static SummaryResult SummaryResult(IEnumerable<ConversationsSummaryResult> conversations = null, IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null)
+        {
+            conversations ??= new List<ConversationsSummaryResult>();
+            errors ??= new List<DocumentError>();
+
+            return new SummaryResult(conversations?.ToList(), errors?.ToList(), statistics, modelVersion, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConversationsSummaryResult"/>. </summary>
+        /// <param name="id"> Unique, non-empty conversation identifier. </param>
+        /// <param name="warnings"> Warnings encountered in processing the document. </param>
+        /// <param name="statistics"> If showStats=true was specified in the request this field will contain information about the conversation payload. </param>
+        /// <param name="summaries"> array of summaries. </param>
+        /// <returns> A new <see cref="Models.ConversationsSummaryResult"/> instance for mocking. </returns>
+        public static ConversationsSummaryResult ConversationsSummaryResult(string id = null, IEnumerable<InputWarning> warnings = null, ConversationStatistics statistics = null, IEnumerable<SummaryResultItem> summaries = null)
+        {
+            warnings ??= new List<InputWarning>();
+            summaries ??= new List<SummaryResultItem>();
+
+            return new ConversationsSummaryResult(id, warnings?.ToList(), statistics, summaries?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.InputWarning"/>. </summary>
+        /// <param name="code"> Warning code. </param>
+        /// <param name="message"> Warning message. </param>
+        /// <param name="targetRef"> A JSON pointer reference indicating the target object. </param>
+        /// <returns> A new <see cref="Models.InputWarning"/> instance for mocking. </returns>
+        public static InputWarning InputWarning(string code = null, string message = null, string targetRef = null)
+        {
+            return new InputWarning(code, message, targetRef, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConversationStatistics"/>. </summary>
+        /// <param name="transactionsCount"> Number of text units for the request. </param>
+        /// <returns> A new <see cref="Models.ConversationStatistics"/> instance for mocking. </returns>
+        public static ConversationStatistics ConversationStatistics(int transactionsCount = default)
+        {
+            return new ConversationStatistics(transactionsCount, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SummaryResultItem"/>. </summary>
+        /// <param name="aspect"> aspect. </param>
+        /// <param name="text"> text. </param>
+        /// <param name="contexts"> Context list of the summary. </param>
+        /// <returns> A new <see cref="Models.SummaryResultItem"/> instance for mocking. </returns>
+        public static SummaryResultItem SummaryResultItem(string aspect = null, string text = null, IEnumerable<ItemizedSummaryContext> contexts = null)
+        {
+            contexts ??= new List<ItemizedSummaryContext>();
+
+            return new SummaryResultItem(aspect, text, contexts?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ItemizedSummaryContext"/>. </summary>
+        /// <param name="offset"> Start position for the context. Use of different 'stringIndexType' values can affect the offset returned. </param>
+        /// <param name="length"> The length of the context. Use of different 'stringIndexType' values can affect the length returned. </param>
+        /// <param name="conversationItemId"> Reference to the ID of ConversationItem. </param>
+        /// <returns> A new <see cref="Models.ItemizedSummaryContext"/> instance for mocking. </returns>
+        public static ItemizedSummaryContext ItemizedSummaryContext(int offset = default, int length = default, string conversationItemId = null)
+        {
+            return new ItemizedSummaryContext(offset, length, conversationItemId, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DocumentError"/>. </summary>
+        /// <param name="id"> The ID of the input document. </param>
+        /// <param name="error"> Error encountered. </param>
+        /// <returns> A new <see cref="Models.DocumentError"/> instance for mocking. </returns>
+        public static DocumentError DocumentError(string id = null, ConversationError error = null)
+        {
+            return new DocumentError(id, error, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.RequestStatistics"/>. </summary>
+        /// <param name="documentsCount"> Number of documents submitted in the request. </param>
+        /// <param name="validDocumentsCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
+        /// <param name="erroneousDocumentsCount"> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </param>
+        /// <param name="transactionsCount"> Number of transactions for the request. </param>
+        /// <returns> A new <see cref="Models.RequestStatistics"/> instance for mocking. </returns>
+        public static RequestStatistics RequestStatistics(int documentsCount = default, int validDocumentsCount = default, int erroneousDocumentsCount = default, long transactionsCount = default)
+        {
+            return new RequestStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CustomSummarizationOperationResult"/>. </summary>
+        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="status"> The status of the task at the mentioned last update time. </param>
+        /// <param name="name"> task name. </param>
+        /// <param name="results"> Custom Summary Result. </param>
+        /// <returns> A new <see cref="Models.CustomSummarizationOperationResult"/> instance for mocking. </returns>
+        public static CustomSummarizationOperationResult CustomSummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = null, CustomSummaryResult results = null)
+        {
+            return new CustomSummarizationOperationResult(
+                lastUpdateDateTime,
+                status,
+                name,
+                AnalyzeConversationOperationResultsKind.CustomSummarizationOperationResults,
+                serializedAdditionalRawData: null,
+                results);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.CustomSummaryResult"/>. </summary>
+        /// <param name="conversations"> array of conversations. </param>
+        /// <param name="errors"> Errors by document id. </param>
+        /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
+        /// <param name="projectName"> This field indicates the project name for the model. </param>
+        /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
+        /// <returns> A new <see cref="Models.CustomSummaryResult"/> instance for mocking. </returns>
+        public static CustomSummaryResult CustomSummaryResult(IEnumerable<ConversationsSummaryResult> conversations = null, IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string projectName = null, string deploymentName = null)
+        {
+            conversations ??= new List<ConversationsSummaryResult>();
+            errors ??= new List<DocumentError>();
+
+            return new CustomSummaryResult(
+                conversations?.ToList(),
+                errors?.ToList(),
+                statistics,
+                projectName,
+                deploymentName,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ConversationPiiOperationResult"/>. </summary>
         /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
@@ -649,26 +792,6 @@ namespace Azure.AI.Language.Conversations
             return new ConversationPiiResults(errors?.ToList(), statistics, modelVersion, conversations?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DocumentError"/>. </summary>
-        /// <param name="id"> The ID of the input document. </param>
-        /// <param name="error"> Error encountered. </param>
-        /// <returns> A new <see cref="Models.DocumentError"/> instance for mocking. </returns>
-        public static DocumentError DocumentError(string id = null, ConversationError error = null)
-        {
-            return new DocumentError(id, error, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.RequestStatistics"/>. </summary>
-        /// <param name="documentsCount"> Number of documents submitted in the request. </param>
-        /// <param name="validDocumentsCount"> Number of valid documents. This excludes empty, over-size limit or non-supported languages documents. </param>
-        /// <param name="erroneousDocumentsCount"> Number of invalid documents. This includes empty, over-size limit or non-supported languages documents. </param>
-        /// <param name="transactionsCount"> Number of transactions for the request. </param>
-        /// <returns> A new <see cref="Models.RequestStatistics"/> instance for mocking. </returns>
-        public static RequestStatistics RequestStatistics(int documentsCount = default, int validDocumentsCount = default, int erroneousDocumentsCount = default, long transactionsCount = default)
-        {
-            return new RequestStatistics(documentsCount, validDocumentsCount, erroneousDocumentsCount, transactionsCount, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.ConversationalPiiResult"/>. </summary>
         /// <param name="id"> Unique, non-empty conversation identifier. </param>
         /// <param name="warnings"> Warnings encountered in processing the document. </param>
@@ -681,24 +804,6 @@ namespace Azure.AI.Language.Conversations
             conversationItems ??= new List<ConversationPiiItemResult>();
 
             return new ConversationalPiiResult(id, warnings?.ToList(), statistics, conversationItems?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.InputWarning"/>. </summary>
-        /// <param name="code"> Warning code. </param>
-        /// <param name="message"> Warning message. </param>
-        /// <param name="targetRef"> A JSON pointer reference indicating the target object. </param>
-        /// <returns> A new <see cref="Models.InputWarning"/> instance for mocking. </returns>
-        public static InputWarning InputWarning(string code = null, string message = null, string targetRef = null)
-        {
-            return new InputWarning(code, message, targetRef, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationStatistics"/>. </summary>
-        /// <param name="transactionsCount"> Number of text units for the request. </param>
-        /// <returns> A new <see cref="Models.ConversationStatistics"/> instance for mocking. </returns>
-        public static ConversationStatistics ConversationStatistics(int transactionsCount = default)
-        {
-            return new ConversationStatistics(transactionsCount, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ConversationPiiItemResult"/>. </summary>
@@ -749,8 +854,11 @@ namespace Azure.AI.Language.Conversations
         /// <param name="offset"> Start position for the entity text. Use of different 'stringIndexType' values can affect the offset returned. </param>
         /// <param name="length"> Length for the entity text. Use of different 'stringIndexType' values can affect the length returned. </param>
         /// <param name="confidenceScore"> Confidence score between 0 and 1 of the extracted entity. </param>
+        /// <param name="mask"> Exact mask text to mask the PII entity. </param>
+        /// <param name="maskOffset"> Offset of the mask text. </param>
+        /// <param name="maskLength"> Length of the mask text. </param>
         /// <returns> A new <see cref="Models.NamedEntity"/> instance for mocking. </returns>
-        public static NamedEntity NamedEntity(string text = null, string category = null, string subcategory = null, int offset = default, int length = default, double confidenceScore = default)
+        public static NamedEntity NamedEntity(string text = null, string category = null, string subcategory = null, int offset = default, int length = default, double confidenceScore = default, string mask = null, int? maskOffset = null, int? maskLength = null)
         {
             return new NamedEntity(
                 text,
@@ -759,111 +867,9 @@ namespace Azure.AI.Language.Conversations
                 offset,
                 length,
                 confidenceScore,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SummarizationOperationResult"/>. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
-        /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        /// <param name="name"> task name. </param>
-        /// <param name="results"> results. </param>
-        /// <returns> A new <see cref="Models.SummarizationOperationResult"/> instance for mocking. </returns>
-        public static SummarizationOperationResult SummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = null, SummaryResult results = null)
-        {
-            return new SummarizationOperationResult(
-                lastUpdateDateTime,
-                status,
-                name,
-                AnalyzeConversationOperationResultsKind.SummarizationOperationResults,
-                serializedAdditionalRawData: null,
-                results);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SummaryResult"/>. </summary>
-        /// <param name="conversations"> array of conversations. </param>
-        /// <param name="errors"> Errors by document id. </param>
-        /// <param name="statistics"> statistics. </param>
-        /// <param name="modelVersion"> This field indicates which model is used for scoring. </param>
-        /// <returns> A new <see cref="Models.SummaryResult"/> instance for mocking. </returns>
-        public static SummaryResult SummaryResult(IEnumerable<ConversationsSummaryResult> conversations = null, IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string modelVersion = null)
-        {
-            conversations ??= new List<ConversationsSummaryResult>();
-            errors ??= new List<DocumentError>();
-
-            return new SummaryResult(conversations?.ToList(), errors?.ToList(), statistics, modelVersion, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ConversationsSummaryResult"/>. </summary>
-        /// <param name="id"> Unique, non-empty conversation identifier. </param>
-        /// <param name="warnings"> Warnings encountered in processing the document. </param>
-        /// <param name="statistics"> If showStats=true was specified in the request this field will contain information about the conversation payload. </param>
-        /// <param name="summaries"> array of summaries. </param>
-        /// <returns> A new <see cref="Models.ConversationsSummaryResult"/> instance for mocking. </returns>
-        public static ConversationsSummaryResult ConversationsSummaryResult(string id = null, IEnumerable<InputWarning> warnings = null, ConversationStatistics statistics = null, IEnumerable<SummaryResultItem> summaries = null)
-        {
-            warnings ??= new List<InputWarning>();
-            summaries ??= new List<SummaryResultItem>();
-
-            return new ConversationsSummaryResult(id, warnings?.ToList(), statistics, summaries?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SummaryResultItem"/>. </summary>
-        /// <param name="aspect"> aspect. </param>
-        /// <param name="text"> text. </param>
-        /// <param name="contexts"> Context list of the summary. </param>
-        /// <returns> A new <see cref="Models.SummaryResultItem"/> instance for mocking. </returns>
-        public static SummaryResultItem SummaryResultItem(string aspect = null, string text = null, IEnumerable<ItemizedSummaryContext> contexts = null)
-        {
-            contexts ??= new List<ItemizedSummaryContext>();
-
-            return new SummaryResultItem(aspect, text, contexts?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ItemizedSummaryContext"/>. </summary>
-        /// <param name="offset"> Start position for the context. Use of different 'stringIndexType' values can affect the offset returned. </param>
-        /// <param name="length"> The length of the context. Use of different 'stringIndexType' values can affect the length returned. </param>
-        /// <param name="conversationItemId"> Reference to the ID of ConversationItem. </param>
-        /// <returns> A new <see cref="Models.ItemizedSummaryContext"/> instance for mocking. </returns>
-        public static ItemizedSummaryContext ItemizedSummaryContext(int offset = default, int length = default, string conversationItemId = null)
-        {
-            return new ItemizedSummaryContext(offset, length, conversationItemId, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CustomSummarizationOperationResult"/>. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
-        /// <param name="status"> The status of the task at the mentioned last update time. </param>
-        /// <param name="name"> task name. </param>
-        /// <param name="results"> Custom Summary Result. </param>
-        /// <returns> A new <see cref="Models.CustomSummarizationOperationResult"/> instance for mocking. </returns>
-        public static CustomSummarizationOperationResult CustomSummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, ConversationActionState status = default, string name = null, CustomSummaryResult results = null)
-        {
-            return new CustomSummarizationOperationResult(
-                lastUpdateDateTime,
-                status,
-                name,
-                AnalyzeConversationOperationResultsKind.CustomSummarizationOperationResults,
-                serializedAdditionalRawData: null,
-                results);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.CustomSummaryResult"/>. </summary>
-        /// <param name="conversations"> array of conversations. </param>
-        /// <param name="errors"> Errors by document id. </param>
-        /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
-        /// <param name="projectName"> This field indicates the project name for the model. </param>
-        /// <param name="deploymentName"> This field indicates the deployment name for the model. </param>
-        /// <returns> A new <see cref="Models.CustomSummaryResult"/> instance for mocking. </returns>
-        public static CustomSummaryResult CustomSummaryResult(IEnumerable<ConversationsSummaryResult> conversations = null, IEnumerable<DocumentError> errors = null, RequestStatistics statistics = null, string projectName = null, string deploymentName = null)
-        {
-            conversations ??= new List<ConversationsSummaryResult>();
-            errors ??= new List<DocumentError>();
-
-            return new CustomSummaryResult(
-                conversations?.ToList(),
-                errors?.ToList(),
-                statistics,
-                projectName,
-                deploymentName,
+                mask,
+                maskOffset,
+                maskLength,
                 serializedAdditionalRawData: null);
         }
 

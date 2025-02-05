@@ -75,7 +75,7 @@ namespace Azure.Identity.Tests
         {
             var expiresOn = DateTimeOffset.FromUnixTimeSeconds(DateTimeOffset.UtcNow.Add(expiresOffset).ToUnixTimeSeconds());
             var token = TokenGenerator.GenerateToken(Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), Guid.NewGuid().ToString(), expiresOn.UtcDateTime);
-            var xml = @$"<Object Type=""System.Management.Automation.PSCustomObject""><Property Name=""Token"" Type=""System.String"">{token}</Property><Property Name=""ExpiresOn"" Type=""System.Int64"">{expiresOn.ToUnixTimeSeconds()}</Property></Object>";
+            var xml = @$"<Object Type=""System.Management.Automation.PSCustomObject""><Property Name=""Token"" Type=""System.String"">{token}</Property><Property Name=""ExpiresOn"" Type=""System.Int64"">{expiresOn.UtcDateTime.Ticks}</Property></Object>";
             return (token, expiresOn, xml);
         }
 

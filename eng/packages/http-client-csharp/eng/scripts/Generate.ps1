@@ -2,7 +2,8 @@
 param(
     $filter,
     [bool]$Stubbed = $true,
-    [bool]$LaunchOnly = $false
+    [bool]$LaunchOnly = $false,
+    [switch]$ForceNewProject = $false
 )
 
 Import-Module "$PSScriptRoot\Generation.psm1" -DisableNameChecking -Force;
@@ -20,14 +21,14 @@ if (-not $LaunchOnly) {
         $unbrandedTypespecTestProject = Join-Path $testProjectsLocalDir "Basic-TypeSpec"
         $unbrandedTypespecTestProject = $unbrandedTypespecTestProject
 
-        Invoke (Get-TspCommand "$unbrandedTypespecTestProject/Basic-TypeSpec.tsp" $unbrandedTypespecTestProject)
+        Invoke (Get-TspCommand "$unbrandedTypespecTestProject/Basic-TypeSpec.tsp" $unbrandedTypespecTestProject -forceNewProject $ForceNewProject)
 
         # exit if the generation failed
         if ($LASTEXITCODE -ne 0) {
             exit $LASTEXITCODE
         }
 
-        Write-Host "Building UnbrandedTypeSpec" -ForegroundColor Cyan
+        Write-Host "Building BasicTypeSpec" -ForegroundColor Cyan
         Invoke "dotnet build $packageRoot/generator/TestProjects/Local/Basic-TypeSpec/src/BasicTypeSpec.csproj"
 
         # exit if the generation failed
@@ -39,7 +40,7 @@ if (-not $LaunchOnly) {
 
 $specsDirectory = "$packageRoot/node_modules/@typespec/http-specs"
 $azureSpecsDirectory = "$packageRoot/node_modules/@azure-tools/azure-http-specs"
-$cadlRanchRoot = Join-Path $packageRoot 'generator' 'TestProjects' 'CadlRanch'
+$spectorRoot = Join-Path $packageRoot 'generator' 'TestProjects' 'Spector'
 
 function IsSpecDir {
     param (
@@ -95,9 +96,9 @@ $azureAllowSpecs = @(
     Join-Path 'http' 'resiliency' 'srv-driven'
 )
 
-$cadlRanchLaunchProjects = @{}
+$spectorLaunchProjects = @{}
 
-# Loop through all directories and subdirectories of the cadl ranch specs
+# Loop through all directories and subdirectories of the spector specs
 $directories = @(Get-ChildItem -Path "$specsDirectory/specs" -Directory -Recurse)
 $directories += @(Get-ChildItem -Path "$azureSpecsDirectory/specs" -Directory -Recurse)
 foreach ($directory in $directories) {
@@ -128,7 +129,7 @@ foreach ($directory in $directories) {
         continue
     }
 
-    $generationDir = $cadlRanchRoot
+    $generationDir = $spectorRoot
     foreach ($folder in $folders) {
         $generationDir = Join-Path $generationDir $folder
     }
@@ -140,26 +141,26 @@ foreach ($directory in $directories) {
     
     if ($folders.Contains("versioning")) {
         Generate-Versioning $directory.FullName $generationDir -generateStub $stubbed
-        $cadlRanchLaunchProjects.Add($($folders -join "-") + "-v1", $("TestProjects/CadlRanch/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))") + "/v1")
-        $cadlRanchLaunchProjects.Add($($folders -join "-") + "-v2", $("TestProjects/CadlRanch/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))") + "/v2")
+        $spectorLaunchProjects.Add($($folders -join "-") + "-v1", $("TestProjects/Spector/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))") + "/v1")
+        $spectorLaunchProjects.Add($($folders -join "-") + "-v2", $("TestProjects/Spector/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))") + "/v2")
         continue
     }
 
     # srv-driven contains two separate specs, for two separate clients. We need to generate both.
     if ($folders.Contains("srv-driven")) {
         Generate-Srv-Driven $directory.FullName $generationDir -generateStub $stubbed
-        $cadlRanchLaunchProjects.Add($($folders -join "-") + "-v1", $("TestProjects/CadlRanch/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))") + "/v1")
-        $cadlRanchLaunchProjects.Add($($folders -join "-") + "-v2", $("TestProjects/CadlRanch/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))") + "/v2")
+        $spectorLaunchProjects.Add($($folders -join "-") + "-v1", $("TestProjects/Spector/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))") + "/v1")
+        $spectorLaunchProjects.Add($($folders -join "-") + "-v2", $("TestProjects/Spector/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))") + "/v2")
         continue
     }
 
-    $cadlRanchLaunchProjects.Add(($folders -join "-"), ("TestProjects/CadlRanch/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))"))
+    $spectorLaunchProjects.Add(($folders -join "-"), ("TestProjects/Spector/$($subPath.Replace([System.IO.Path]::DirectorySeparatorChar, '/'))"))
     if ($LaunchOnly) {
         continue
     }
     
     Write-Host "Generating $subPath" -ForegroundColor Cyan
-    Invoke (Get-TspCommand $specFile $generationDir $stubbed)
+    Invoke (Get-TspCommand $specFile $generationDir $stubbed -forceNewProject $ForceNewProject)
 
     # exit if the generation failed
     if ($LASTEXITCODE -ne 0) {
@@ -181,7 +182,7 @@ if ($null -eq $filter) {
     $launchSettings["profiles"]["Basic-TypeSpec"].Add("commandName", "Executable")
     $launchSettings["profiles"]["Basic-TypeSpec"].Add("executablePath", "dotnet")
 
-    foreach ($kvp in $cadlRanchLaunchProjects.GetEnumerator()) {
+    foreach ($kvp in $spectorLaunchProjects.GetEnumerator()) {
         $launchSettings["profiles"].Add($kvp.Key, @{})
         $launchSettings["profiles"][$kvp.Key].Add("commandLineArgs", "`$(SolutionDir)/../dist/generator/Microsoft.Generator.CSharp.dll `$(SolutionDir)/$($kvp.Value) -p AzureStubPlugin")
         $launchSettings["profiles"][$kvp.Key].Add("commandName", "Executable")
@@ -207,5 +208,5 @@ if ($null -eq $filter) {
     # Write the launch settings to the launchSettings.json file
     $launchSettingsPath = Join-Path $solutionDir "Azure.Generator" "src" "Properties" "launchSettings.json"
     # Write the settings to JSON and normalize line endings to Unix style (LF)
-    $sortedLaunchSettings | ConvertTo-Json | ForEach-Object { $_ -replace "`r`n", "`n" } | Set-Content $launchSettingsPath
+    $sortedLaunchSettings | ConvertTo-Json | ForEach-Object { ($_ -replace "`r`n", "`n") + "`n" } | Set-Content -NoNewline $launchSettingsPath
 }
