@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Inference
 {
-    public partial class ChatMessageAudioContentItem : IUtf8JsonSerializable, IJsonModel<ChatMessageAudioContentItem>
+    internal partial class ChatMessageAudioDataContentItem : IUtf8JsonSerializable, IJsonModel<ChatMessageAudioDataContentItem>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatMessageAudioContentItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatMessageAudioDataContentItem>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ChatMessageAudioContentItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ChatMessageAudioDataContentItem>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Inference
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChatMessageAudioContentItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChatMessageAudioDataContentItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatMessageAudioContentItem)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatMessageAudioDataContentItem)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -39,19 +39,19 @@ namespace Azure.AI.Inference
             writer.WriteObjectValue(InputAudio, options);
         }
 
-        ChatMessageAudioContentItem IJsonModel<ChatMessageAudioContentItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ChatMessageAudioDataContentItem IJsonModel<ChatMessageAudioDataContentItem>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChatMessageAudioContentItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChatMessageAudioDataContentItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatMessageAudioContentItem)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatMessageAudioDataContentItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeChatMessageAudioContentItem(document.RootElement, options);
+            return DeserializeChatMessageAudioDataContentItem(document.RootElement, options);
         }
 
-        internal static ChatMessageAudioContentItem DeserializeChatMessageAudioContentItem(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ChatMessageAudioDataContentItem DeserializeChatMessageAudioDataContentItem(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -81,46 +81,46 @@ namespace Azure.AI.Inference
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ChatMessageAudioContentItem(type, serializedAdditionalRawData, inputAudio);
+            return new ChatMessageAudioDataContentItem(type, serializedAdditionalRawData, inputAudio);
         }
 
-        BinaryData IPersistableModel<ChatMessageAudioContentItem>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ChatMessageAudioDataContentItem>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChatMessageAudioContentItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChatMessageAudioDataContentItem>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChatMessageAudioContentItem)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatMessageAudioDataContentItem)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ChatMessageAudioContentItem IPersistableModel<ChatMessageAudioContentItem>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ChatMessageAudioDataContentItem IPersistableModel<ChatMessageAudioDataContentItem>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ChatMessageAudioContentItem>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ChatMessageAudioDataContentItem>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeChatMessageAudioContentItem(document.RootElement, options);
+                        return DeserializeChatMessageAudioDataContentItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChatMessageAudioContentItem)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatMessageAudioDataContentItem)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ChatMessageAudioContentItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ChatMessageAudioDataContentItem>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static new ChatMessageAudioContentItem FromResponse(Response response)
+        internal static new ChatMessageAudioDataContentItem FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeChatMessageAudioContentItem(document.RootElement);
+            return DeserializeChatMessageAudioDataContentItem(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

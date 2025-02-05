@@ -11,12 +11,12 @@ using System.Collections.Generic;
 namespace Azure.AI.Inference
 {
     /// <summary> A structured chat content item containing an audio content. </summary>
-    public partial class ChatMessageAudioContentItem : ChatMessageContentItem
+    internal partial class ChatMessageAudioDataContentItem : ChatMessageContentItem
     {
-        /// <summary> Initializes a new instance of <see cref="ChatMessageAudioContentItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageAudioDataContentItem"/>. </summary>
         /// <param name="inputAudio"> The details of the input audio. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="inputAudio"/> is null. </exception>
-        public ChatMessageAudioContentItem(ChatMessageInputAudio inputAudio)
+        public ChatMessageAudioDataContentItem(ChatMessageInputAudio inputAudio)
         {
             Argument.AssertNotNull(inputAudio, nameof(inputAudio));
 
@@ -24,17 +24,17 @@ namespace Azure.AI.Inference
             InputAudio = inputAudio;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChatMessageAudioContentItem"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ChatMessageAudioDataContentItem"/>. </summary>
         /// <param name="type"> The discriminated object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="inputAudio"> The details of the input audio. </param>
-        internal ChatMessageAudioContentItem(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, ChatMessageInputAudio inputAudio) : base(type, serializedAdditionalRawData)
+        internal ChatMessageAudioDataContentItem(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, ChatMessageInputAudio inputAudio) : base(type, serializedAdditionalRawData)
         {
             InputAudio = inputAudio;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ChatMessageAudioContentItem"/> for deserialization. </summary>
-        internal ChatMessageAudioContentItem()
+        /// <summary> Initializes a new instance of <see cref="ChatMessageAudioDataContentItem"/> for deserialization. </summary>
+        internal ChatMessageAudioDataContentItem()
         {
         }
 

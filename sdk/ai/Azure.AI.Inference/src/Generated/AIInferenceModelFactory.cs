@@ -30,14 +30,6 @@ namespace Azure.AI.Inference
             return new ChatMessageTextContentItem("text", serializedAdditionalRawData: null, text);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Inference.ChatMessageAudioContentItem"/>. </summary>
-        /// <param name="inputAudio"> The details of the input audio. </param>
-        /// <returns> A new <see cref="Inference.ChatMessageAudioContentItem"/> instance for mocking. </returns>
-        public static ChatMessageAudioContentItem ChatMessageAudioContentItem(ChatMessageInputAudio inputAudio = null)
-        {
-            return new ChatMessageAudioContentItem("input_audio", serializedAdditionalRawData: null, inputAudio);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Inference.ChatCompletionsToolCall"/>. </summary>
         /// <param name="id"> The ID of the tool call. </param>
         /// <param name="type"> The type of tool call. Currently, only `function` is supported. </param>

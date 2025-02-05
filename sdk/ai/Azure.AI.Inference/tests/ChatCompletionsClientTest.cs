@@ -25,6 +25,7 @@ namespace Azure.AI.Inference.Tests
             GitHubGpt4o,
             AoaiGpt4o,
             AoaiAudioModel,
+            PhiAudioModel
         }
 
         public enum ToolChoiceTestType
@@ -499,6 +500,7 @@ namespace Azure.AI.Inference.Tests
 
         [RecordedTest]
         [TestCase(TargetModel.AoaiAudioModel)]
+        [TestCase(TargetModel.PhiAudioModel)]
         public async Task TestChatCompletionsWithAudio(TargetModel targetModel)
         {
             if (Mode == RecordedTestMode.Playback)
@@ -509,12 +511,14 @@ namespace Azure.AI.Inference.Tests
             var endpoint = targetModel switch
             {
                 TargetModel.AoaiAudioModel => new Uri(TestEnvironment.AoaiAudioEndpoint),
+                TargetModel.PhiAudioModel => new Uri(TestEnvironment.PhiAudioEndpoint),
                 _ => throw new ArgumentException(nameof(targetModel)),
             };
 
             var credential = targetModel switch
             {
                 TargetModel.AoaiAudioModel => new AzureKeyCredential(TestEnvironment.AoaiAudioKey),
+                TargetModel.PhiAudioModel => new AzureKeyCredential(TestEnvironment.PhiAudioKey),
                 _ => throw new ArgumentException(nameof(targetModel)),
             };
 
@@ -534,7 +538,12 @@ namespace Azure.AI.Inference.Tests
 
             var client = CreateClient(endpoint, credential, clientOptions);
 
-            ChatMessageAudioContentItem audioContentItem = new(ChatMessageInputAudio.Load(TestEnvironment.TestAudioMp3InputPath, AudioContentFormat.Mp3));
+            ChatMessageAudioContentItem audioContentItem = targetModel switch
+            {
+                TargetModel.AoaiAudioModel => new(TestEnvironment.TestAudioMp3InputPath, AudioContentFormat.Mp3),
+                TargetModel.PhiAudioModel => new(new Uri("https://github.com/Azure/azure-sdk-for-python/blob/main/sdk/ai/azure-ai-inference/tests/hello_how_are_you.mp3")),
+                _ => throw new ArgumentException(nameof(targetModel)),
+            };
 
             var requestOptions = new ChatCompletionsOptions()
             {
@@ -547,6 +556,11 @@ namespace Azure.AI.Inference.Tests
                 },
                 MaxTokens = 2048,
             };
+
+            if (targetModel == TargetModel.PhiAudioModel)
+            {
+                requestOptions.Model = "phi-4-omni-updated-final-10";
+            }
 
             Response<ChatCompletions> response = null;
             try
