@@ -59,8 +59,7 @@ public partial class CloudMachineClient : ClientWorkspace
         foreach (IConfigurationSection connection in connectionsSection.GetChildren())
         {
             string id = connection["Id"];
-            if (id == null)
-                continue;
+            if (id == null) continue;
             string locator = connection["Locator"];
 
             Connections.Add(new ClientConnection(id, locator, ClientAuthenticationMethod.EntraId));
