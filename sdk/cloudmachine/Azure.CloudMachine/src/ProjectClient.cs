@@ -13,7 +13,7 @@ namespace Azure.CloudMachine;
 /// <summary>
 /// The cloud machine client.
 /// </summary>
-public partial class CloudMachineClient : ClientWorkspace
+public partial class ProjectClient : ClientWorkspace
 {
     /// <summary>
     /// The cloud machine ID.
@@ -28,9 +28,9 @@ public partial class CloudMachineClient : ClientWorkspace
     public ConnectionCollection Connections { get; } = [];
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="CloudMachineClient"/> class for mocking purposes..
+    /// Initializes a new instance of the <see cref="ProjectClient"/> class for mocking purposes..
     /// </summary>
-    protected CloudMachineClient() :
+    protected ProjectClient() :
         this(credential: BuildCredential(default))
     {
         Id = AppConfigHelpers.ReadOrCreateCloudMachineId();
@@ -40,11 +40,11 @@ public partial class CloudMachineClient : ClientWorkspace
 
 #pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
     /// <summary>
-    /// Initializes a new instance of the <see cref="CloudMachineClient"/> class.
+    /// Initializes a new instance of the <see cref="ProjectClient"/> class.
     /// </summary>
     /// <param name="configuration">The configuration settings.</param>
     /// <param name="credential">The token credential.</param>
-    public CloudMachineClient(IConfiguration configuration, TokenCredential credential = default)
+    public ProjectClient(IConfiguration configuration, TokenCredential credential = default)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         : base(BuildCredential(credential))
     {
@@ -71,12 +71,12 @@ public partial class CloudMachineClient : ClientWorkspace
 
 #pragma warning disable AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
     /// <summary>
-    /// Initializes a new instance of the <see cref="CloudMachineClient"/> class.
+    /// Initializes a new instance of the <see cref="ProjectClient"/> class.
     /// </summary>
     /// <param name="connections"></param>
     /// <param name="credential">The token credential.</param>
     // TODO: we need to combine the configuration and the connections into a single parameter.
-    public CloudMachineClient(IEnumerable<ClientConnection> connections = default, TokenCredential credential = default)
+    public ProjectClient(IEnumerable<ClientConnection> connections = default, TokenCredential credential = default)
 #pragma warning restore AZC0007 // DO provide a minimal constructor that takes only the parameters required to connect to the service.
         : base(BuildCredential(credential))
     {

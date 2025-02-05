@@ -24,7 +24,7 @@ public class KeyVaultFeature : CloudMachineFeature
         connections.Add(new ClientConnection("Azure.Security.KeyVault.Secrets.SecretClient", $"https://{cmId}.vault.azure.net/"));
     }
 
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
         // Add a KeyVault to the CloudMachine infrastructure.
         KeyVaultService keyVaultResource = new("cm_kv")
