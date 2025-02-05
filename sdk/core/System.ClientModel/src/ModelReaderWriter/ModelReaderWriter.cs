@@ -249,7 +249,11 @@ public static class ModelReaderWriter
         }
     }
 
-    private static object ReadCollection(BinaryData data, Type returnType, string paramName, ModelReaderWriterOptions options)
+    private static object ReadCollection(
+        BinaryData data,
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type returnType,
+        string paramName,
+        ModelReaderWriterOptions options)
     {
         object collection = CallActivator(returnType);
         Utf8JsonReader reader = new Utf8JsonReader(data);
