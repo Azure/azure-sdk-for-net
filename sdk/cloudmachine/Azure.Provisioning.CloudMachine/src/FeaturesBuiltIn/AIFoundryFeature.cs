@@ -48,18 +48,18 @@ namespace Azure.CloudMachine.AIFoundry
             var foundryConnections = new AIFoundryConnections(_connectionString, new DefaultAzureCredential());
 
             // Add OpenAI connections
-            connections.Add(foundryConnections.GetFoundryConnection("Azure.AI.OpenAI.AzureOpenAIClient"));
-            connections.Add(foundryConnections.GetFoundryConnection("OpenAI.Chat.ChatClient"));
-            connections.Add(foundryConnections.GetFoundryConnection("OpenAI.Embeddings.EmbeddingClient"));
+            connections.Add(foundryConnections.GetConnection("Azure.AI.OpenAI.AzureOpenAIClient"));
+            connections.Add(foundryConnections.GetConnection("OpenAI.Chat.ChatClient"));
+            connections.Add(foundryConnections.GetConnection("OpenAI.Embeddings.EmbeddingClient"));
 
             // Add Inference connections
-            connections.Add(foundryConnections.GetFoundryConnection("Azure.AI.Inference.ChatCompletionsClient"));
-            connections.Add(foundryConnections.GetFoundryConnection("Azure.AI.Inference.EmbeddingsClient"));
+            connections.Add(foundryConnections.GetConnection("Azure.AI.Inference.ChatCompletionsClient"));
+            connections.Add(foundryConnections.GetConnection("Azure.AI.Inference.EmbeddingsClient"));
 
             // Add Search connections
-            connections.Add(foundryConnections.GetFoundryConnection("Azure.Search.Documents.SearchClient"));
-            connections.Add(foundryConnections.GetFoundryConnection("Azure.Search.Documents.Indexes.SearchIndexClient"));
-            connections.Add(foundryConnections.GetFoundryConnection("Azure.Search.Documents.Indexes.SearchIndexerClient"));
+            connections.Add(foundryConnections.GetConnection("Azure.Search.Documents.SearchClient"));
+            connections.Add(foundryConnections.GetConnection("Azure.Search.Documents.Indexes.SearchIndexClient"));
+            connections.Add(foundryConnections.GetConnection("Azure.Search.Documents.Indexes.SearchIndexerClient"));
         }
 
         /// <summary>

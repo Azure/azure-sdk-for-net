@@ -39,7 +39,7 @@ namespace Azure.CloudMachine.AIFoundry
         /// <exception cref="ArgumentException">
         /// Thrown if the Foundry connection is not found, or if it doesn’t use a valid API key auth.
         /// </exception>
-        public ClientConnection GetFoundryConnection(string connectionId)
+        public ClientConnection GetConnection(string connectionId)
         {
             // 1) Get ConnectionType
             ConnectionType connectionType = GetConnectionTypeFromId(connectionId);
