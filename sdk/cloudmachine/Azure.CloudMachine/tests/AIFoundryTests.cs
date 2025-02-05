@@ -142,12 +142,12 @@ public partial class AIFoundryTests : SamplesBase<CloudMachineTestEnvironment>
     [Test]
     public void AIFoundryScenariosTestsUsingCMClient()
     {
-        CloudMachineInfrastructure infra = new();
+        ProjectInfrastructure infra = new();
 
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
         infra.AddFeature(new AIFoundryFeature(connectionString));
 
-        CloudMachineClient client = infra.GetClient();
+        ProjectClient client = infra.GetClient();
 
         // Azure AI Project clients
         AgentsClient agents = client.GetAgentsClient();

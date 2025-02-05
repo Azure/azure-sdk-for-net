@@ -67,7 +67,7 @@ namespace Azure.CloudMachine.AIFoundry
         /// </summary>
         /// <param name="cm">The CloudMachineInfrastructure context.</param>
         /// <returns>A placeholder or no-op resource, as provisioning is out-of-band for now.</returns>
-        protected override ProvisionableResource EmitResources(CloudMachineInfrastructure cm)
+        protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
         {
             // In the future, generate real provisioning resources for Foundry
             return new NoOpResource();

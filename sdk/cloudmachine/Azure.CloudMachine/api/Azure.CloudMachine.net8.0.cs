@@ -23,11 +23,20 @@ namespace Azure.CloudMachine
         public static Azure.Search.Documents.Indexes.SearchIndexClient GetSearchIndexClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
         public static Azure.Search.Documents.Indexes.SearchIndexerClient GetSearchIndexerClient(this Azure.Core.ClientWorkspace workspace) { throw null; }
     }
-    public partial class CloudMachineClient : Azure.Core.ClientWorkspace
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MessagingServices
     {
-        protected CloudMachineClient() : base (default(Azure.Core.TokenCredential)) { }
-        public CloudMachineClient(Microsoft.Extensions.Configuration.IConfiguration configuration, Azure.Core.TokenCredential credential = null) : base (default(Azure.Core.TokenCredential)) { }
-        public CloudMachineClient(System.Collections.Generic.IEnumerable<Azure.Core.ClientConnection> connections = null, Azure.Core.TokenCredential credential = null) : base (default(Azure.Core.TokenCredential)) { }
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public void SendJson(object serializable) { }
+        public System.Threading.Tasks.Task SendJsonAsync(object serializable) { throw null; }
+        public void WhenMessageReceived(System.Action<string> received) { }
+    }
+    public partial class ProjectClient : Azure.Core.ClientWorkspace
+    {
+        protected ProjectClient() : base (default(Azure.Core.TokenCredential)) { }
+        public ProjectClient(Microsoft.Extensions.Configuration.IConfiguration configuration, Azure.Core.TokenCredential credential = null) : base (default(Azure.Core.TokenCredential)) { }
+        public ProjectClient(System.Collections.Generic.IEnumerable<Azure.Core.ClientConnection> connections = null, Azure.Core.TokenCredential credential = null) : base (default(Azure.Core.TokenCredential)) { }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public Azure.Core.ConnectionCollection Connections { get { throw null; } }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
@@ -45,15 +54,6 @@ namespace Azure.CloudMachine
         public static string ReadOrCreateCloudMachineId() { throw null; }
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
         public override string ToString() { throw null; }
-    }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct MessagingServices
-    {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public void SendJson(object serializable) { }
-        public System.Threading.Tasks.Task SendJsonAsync(object serializable) { throw null; }
-        public void WhenMessageReceived(System.Action<string> received) { }
     }
     public partial class StorageFile
     {

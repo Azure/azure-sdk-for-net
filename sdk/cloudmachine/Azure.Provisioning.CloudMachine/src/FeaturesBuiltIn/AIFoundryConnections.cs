@@ -64,7 +64,7 @@ namespace Azure.CloudMachine.AIFoundry
                 {
                     if (!_connectionCache.TryGetValue(connectionType, out response))
                     {
-                        response = _connectionsClient.GetDefaultConnection(connectionType, /*throwIfNotFound=*/true);
+                        response = _connectionsClient.GetDefaultConnection(connectionType, true);
                         _connectionCache[connectionType] = response;
                     }
                 }
