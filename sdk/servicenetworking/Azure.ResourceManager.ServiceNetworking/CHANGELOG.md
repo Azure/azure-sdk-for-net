@@ -7,6 +7,7 @@
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 - Added CRUD Operations for Application Gateway for Containers (AGC) Security Policy
+- Bumped api-version to `2025-01-01`
 
 ### Breaking Changes
 
