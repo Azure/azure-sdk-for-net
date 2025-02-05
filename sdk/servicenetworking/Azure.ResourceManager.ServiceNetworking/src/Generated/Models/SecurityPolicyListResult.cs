@@ -7,12 +7,12 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
+using System.Linq;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    /// <summary> The type used for update operations of the TrafficController. </summary>
-    public partial class TrafficControllerPatch
+    /// <summary> The response of a SecurityPolicy list operation. </summary>
+    internal partial class SecurityPolicyListResult
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,37 +46,35 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TrafficControllerPatch"/>. </summary>
-        public TrafficControllerPatch()
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyListResult"/>. </summary>
+        /// <param name="value"> The SecurityPolicy items on this page. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
+        internal SecurityPolicyListResult(IEnumerable<ApplicationGatewayForContainersSecurityPolicyData> value)
         {
-            Tags = new ChangeTrackingDictionary<string, string>();
+            Argument.AssertNotNull(value, nameof(value));
+
+            Value = value.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrafficControllerPatch"/>. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="securityPolicyConfigurations"> Security Policy Configuration. </param>
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyListResult"/>. </summary>
+        /// <param name="value"> The SecurityPolicy items on this page. </param>
+        /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficControllerPatch(IDictionary<string, string> tags, SecurityPolicyConfigurationsUpdate securityPolicyConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal SecurityPolicyListResult(IReadOnlyList<ApplicationGatewayForContainersSecurityPolicyData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Tags = tags;
-            SecurityPolicyConfigurations = securityPolicyConfigurations;
+            Value = value;
+            NextLink = nextLink;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Resource tags. </summary>
-        public IDictionary<string, string> Tags { get; }
-        /// <summary> Security Policy Configuration. </summary>
-        internal SecurityPolicyConfigurationsUpdate SecurityPolicyConfigurations { get; set; }
-        /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier WafSecurityPolicyId
+        /// <summary> Initializes a new instance of <see cref="SecurityPolicyListResult"/> for deserialization. </summary>
+        internal SecurityPolicyListResult()
         {
-            get => SecurityPolicyConfigurations is null ? default : SecurityPolicyConfigurations.WafSecurityPolicyId;
-            set
-            {
-                if (SecurityPolicyConfigurations is null)
-                    SecurityPolicyConfigurations = new SecurityPolicyConfigurationsUpdate();
-                SecurityPolicyConfigurations.WafSecurityPolicyId = value;
-            }
         }
+
+        /// <summary> The SecurityPolicy items on this page. </summary>
+        public IReadOnlyList<ApplicationGatewayForContainersSecurityPolicyData> Value { get; }
+        /// <summary> The link to the next page of items. </summary>
+        public Uri NextLink { get; }
     }
 }

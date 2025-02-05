@@ -8,11 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    /// <summary> The type used for update operations of the TrafficController. </summary>
-    public partial class TrafficControllerPatch
+    /// <summary> The type used for update operations of the SecurityPolicy. </summary>
+    public partial class ApplicationGatewayForContainersSecurityPolicyPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -46,36 +47,36 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TrafficControllerPatch"/>. </summary>
-        public TrafficControllerPatch()
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayForContainersSecurityPolicyPatch"/>. </summary>
+        public ApplicationGatewayForContainersSecurityPolicyPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrafficControllerPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayForContainersSecurityPolicyPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="securityPolicyConfigurations"> Security Policy Configuration. </param>
+        /// <param name="wafPolicy"> Web Application Firewall Policy of the Traffic Controller Security Policy. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrafficControllerPatch(IDictionary<string, string> tags, SecurityPolicyConfigurationsUpdate securityPolicyConfigurations, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ApplicationGatewayForContainersSecurityPolicyPatch(IDictionary<string, string> tags, WritableSubResource wafPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
-            SecurityPolicyConfigurations = securityPolicyConfigurations;
+            WafPolicy = wafPolicy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
-        /// <summary> Security Policy Configuration. </summary>
-        internal SecurityPolicyConfigurationsUpdate SecurityPolicyConfigurations { get; set; }
+        /// <summary> Web Application Firewall Policy of the Traffic Controller Security Policy. </summary>
+        internal WritableSubResource WafPolicy { get; set; }
         /// <summary> Gets or sets Id. </summary>
-        public ResourceIdentifier WafSecurityPolicyId
+        public ResourceIdentifier WafPolicyId
         {
-            get => SecurityPolicyConfigurations is null ? default : SecurityPolicyConfigurations.WafSecurityPolicyId;
+            get => WafPolicy is null ? default : WafPolicy.Id;
             set
             {
-                if (SecurityPolicyConfigurations is null)
-                    SecurityPolicyConfigurations = new SecurityPolicyConfigurationsUpdate();
-                SecurityPolicyConfigurations.WafSecurityPolicyId = value;
+                if (WafPolicy is null)
+                    WafPolicy = new WritableSubResource();
+                WafPolicy.Id = value;
             }
         }
     }
