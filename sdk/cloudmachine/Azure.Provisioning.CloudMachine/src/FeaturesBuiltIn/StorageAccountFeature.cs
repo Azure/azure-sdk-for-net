@@ -21,7 +21,7 @@ internal class StorageAccountFeature : CloudMachineFeature
         Name = accountName;
     }
 
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
         var storage = new StorageAccount("cm_storage", StorageAccount.ResourceVersions.V2023_01_01)
         {
@@ -60,7 +60,7 @@ internal class BlobContainerFeature : CloudMachineFeature
         ContainerName = containerName;
         Parent = parent;
     }
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure cm)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
     {
         BlobContainer container = new($"cm_storage_blobs_container_{ContainerName}", "2023-01-01")
         {
@@ -89,7 +89,7 @@ internal class BlobServiceFeature : CloudMachineFeature
     {
         Account = account;
     }
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure cm)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
     {
         BlobService blobs = new("cm_storage_blobs")
         {
