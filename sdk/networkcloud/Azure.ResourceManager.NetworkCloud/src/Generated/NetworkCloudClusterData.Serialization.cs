@@ -49,6 +49,11 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStartObject();
             writer.WritePropertyName("aggregatorOrSingleRackDefinition"u8);
             writer.WriteObjectValue(AggregatorOrSingleRackDefinition, options);
+            if (Optional.IsDefined(AnalyticsOutputSettings))
+            {
+                writer.WritePropertyName("analyticsOutputSettings"u8);
+                writer.WriteObjectValue(AnalyticsOutputSettings, options);
+            }
             if (Optional.IsDefined(AnalyticsWorkspaceId))
             {
                 writer.WritePropertyName("analyticsWorkspaceId"u8);
@@ -165,6 +170,11 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("secretArchive"u8);
                 writer.WriteObjectValue(SecretArchive, options);
             }
+            if (Optional.IsDefined(SecretArchiveSettings))
+            {
+                writer.WritePropertyName("secretArchiveSettings"u8);
+                writer.WriteObjectValue(SecretArchiveSettings, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(SupportExpireOn))
             {
                 writer.WritePropertyName("supportExpiryDate"u8);
@@ -174,6 +184,11 @@ namespace Azure.ResourceManager.NetworkCloud
             {
                 writer.WritePropertyName("updateStrategy"u8);
                 writer.WriteObjectValue(UpdateStrategy, options);
+            }
+            if (Optional.IsDefined(VulnerabilityScanningSettings))
+            {
+                writer.WritePropertyName("vulnerabilityScanningSettings"u8);
+                writer.WriteObjectValue(VulnerabilityScanningSettings, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(WorkloadResourceIds))
             {
@@ -222,6 +237,7 @@ namespace Azure.ResourceManager.NetworkCloud
             ResourceType type = default;
             SystemData systemData = default;
             NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = default;
+            AnalyticsOutputSettings analyticsOutputSettings = default;
             ResourceIdentifier analyticsWorkspaceId = default;
             IReadOnlyList<ClusterAvailableUpgradeVersion> availableUpgradeVersions = default;
             ClusterCapacity clusterCapacity = default;
@@ -245,8 +261,10 @@ namespace Azure.ResourceManager.NetworkCloud
             ClusterProvisioningState? provisioningState = default;
             RuntimeProtectionConfiguration runtimeProtectionConfiguration = default;
             ClusterSecretArchive secretArchive = default;
+            SecretArchiveSettings secretArchiveSettings = default;
             DateTimeOffset? supportExpiryDate = default;
             ClusterUpdateStrategy updateStrategy = default;
+            VulnerabilityScanningSettings vulnerabilityScanningSettings = default;
             IReadOnlyList<ResourceIdentifier> workloadResourceIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -322,6 +340,15 @@ namespace Azure.ResourceManager.NetworkCloud
                         if (property0.NameEquals("aggregatorOrSingleRackDefinition"u8))
                         {
                             aggregatorOrSingleRackDefinition = NetworkCloudRackDefinition.DeserializeNetworkCloudRackDefinition(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("analyticsOutputSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            analyticsOutputSettings = AnalyticsOutputSettings.DeserializeAnalyticsOutputSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("analyticsWorkspaceId"u8))
@@ -521,6 +548,15 @@ namespace Azure.ResourceManager.NetworkCloud
                             secretArchive = ClusterSecretArchive.DeserializeClusterSecretArchive(property0.Value, options);
                             continue;
                         }
+                        if (property0.NameEquals("secretArchiveSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            secretArchiveSettings = SecretArchiveSettings.DeserializeSecretArchiveSettings(property0.Value, options);
+                            continue;
+                        }
                         if (property0.NameEquals("supportExpiryDate"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -537,6 +573,15 @@ namespace Azure.ResourceManager.NetworkCloud
                                 continue;
                             }
                             updateStrategy = ClusterUpdateStrategy.DeserializeClusterUpdateStrategy(property0.Value, options);
+                            continue;
+                        }
+                        if (property0.NameEquals("vulnerabilityScanningSettings"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            vulnerabilityScanningSettings = VulnerabilityScanningSettings.DeserializeVulnerabilityScanningSettings(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("workloadResourceIds"u8))
@@ -579,6 +624,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 extendedLocation,
                 identity,
                 aggregatorOrSingleRackDefinition,
+                analyticsOutputSettings,
                 analyticsWorkspaceId,
                 availableUpgradeVersions ?? new ChangeTrackingList<ClusterAvailableUpgradeVersion>(),
                 clusterCapacity,
@@ -602,8 +648,10 @@ namespace Azure.ResourceManager.NetworkCloud
                 provisioningState,
                 runtimeProtectionConfiguration,
                 secretArchive,
+                secretArchiveSettings,
                 supportExpiryDate,
                 updateStrategy,
+                vulnerabilityScanningSettings,
                 workloadResourceIds ?? new ChangeTrackingList<ResourceIdentifier>(),
                 serializedAdditionalRawData);
         }

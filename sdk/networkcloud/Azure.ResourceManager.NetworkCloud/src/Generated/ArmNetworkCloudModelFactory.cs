@@ -327,7 +327,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="extendedLocation"> The extended location of the cluster manager associated with the cluster. </param>
         /// <param name="identity"> The identity for the resource. </param>
         /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
-        /// <param name="analyticsWorkspaceId"> The resource ID of the Log Analytics Workspace that will be used for storing relevant logs. </param>
+        /// <param name="analyticsOutputSettings"> The settings for the log analytics workspace used for output of logs from this cluster. </param>
+        /// <param name="analyticsWorkspaceId"> Field Deprecated. The resource ID of the Log Analytics Workspace that will be used for storing relevant logs. </param>
         /// <param name="availableUpgradeVersions"> The list of cluster runtime version upgrades available for this cluster. </param>
         /// <param name="clusterCapacity"> The capacity supported by this cluster. </param>
         /// <param name="clusterConnectionStatus"> The latest heartbeat status between the cluster manager and the cluster. </param>
@@ -353,11 +354,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="provisioningState"> The provisioning state of the cluster. </param>
         /// <param name="runtimeProtectionEnforcementLevel"> The settings for cluster runtime protection. </param>
         /// <param name="secretArchive"> The configuration for use of a key vault to store secrets for later retrieval by the operator. </param>
+        /// <param name="secretArchiveSettings"> The settings for the secret archive used to hold credentials for the cluster. </param>
         /// <param name="supportExpireOn"> The support end date of the runtime version of the cluster. </param>
         /// <param name="updateStrategy"> The strategy for updating the cluster. </param>
+        /// <param name="vulnerabilityScanningContainerScan"> The settings for how security vulnerability scanning is applied to the cluster. </param>
         /// <param name="workloadResourceIds"> The list of workload resource IDs that are hosted within this cluster. </param>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudClusterData"/> instance for mocking. </returns>
-        public static NetworkCloudClusterData NetworkCloudClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, ManagedServiceIdentity identity = null, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = null, ResourceIdentifier analyticsWorkspaceId = null, IEnumerable<ClusterAvailableUpgradeVersion> availableUpgradeVersions = null, ClusterCapacity clusterCapacity = null, ClusterConnectionStatus? clusterConnectionStatus = null, ExtendedLocation clusterExtendedLocation = null, string clusterLocation = null, ClusterManagerConnectionStatus? clusterManagerConnectionStatus = null, ResourceIdentifier clusterManagerId = null, ServicePrincipalInformation clusterServicePrincipal = null, ClusterType clusterType = default, string clusterVersion = null, CommandOutputSettings commandOutputSettings = null, ValidationThreshold computeDeploymentThreshold = null, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions = null, ClusterDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, ExtendedLocation hybridAksExtendedLocation = null, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, long? manualActionCount = null, ResourceIdentifier networkFabricId = null, ClusterProvisioningState? provisioningState = null, RuntimeProtectionEnforcementLevel? runtimeProtectionEnforcementLevel = null, ClusterSecretArchive secretArchive = null, DateTimeOffset? supportExpireOn = null, ClusterUpdateStrategy updateStrategy = null, IEnumerable<ResourceIdentifier> workloadResourceIds = null)
+        public static NetworkCloudClusterData NetworkCloudClusterData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, ManagedServiceIdentity identity = null, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition = null, AnalyticsOutputSettings analyticsOutputSettings = null, ResourceIdentifier analyticsWorkspaceId = null, IEnumerable<ClusterAvailableUpgradeVersion> availableUpgradeVersions = null, ClusterCapacity clusterCapacity = null, ClusterConnectionStatus? clusterConnectionStatus = null, ExtendedLocation clusterExtendedLocation = null, string clusterLocation = null, ClusterManagerConnectionStatus? clusterManagerConnectionStatus = null, ResourceIdentifier clusterManagerId = null, ServicePrincipalInformation clusterServicePrincipal = null, ClusterType clusterType = default, string clusterVersion = null, CommandOutputSettings commandOutputSettings = null, ValidationThreshold computeDeploymentThreshold = null, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions = null, ClusterDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, ExtendedLocation hybridAksExtendedLocation = null, ManagedResourceGroupConfiguration managedResourceGroupConfiguration = null, long? manualActionCount = null, ResourceIdentifier networkFabricId = null, ClusterProvisioningState? provisioningState = null, RuntimeProtectionEnforcementLevel? runtimeProtectionEnforcementLevel = null, ClusterSecretArchive secretArchive = null, SecretArchiveSettings secretArchiveSettings = null, DateTimeOffset? supportExpireOn = null, ClusterUpdateStrategy updateStrategy = null, VulnerabilityScanningSettingsContainerScan? vulnerabilityScanningContainerScan = null, IEnumerable<ResourceIdentifier> workloadResourceIds = null)
         {
             tags ??= new Dictionary<string, string>();
             availableUpgradeVersions ??= new List<ClusterAvailableUpgradeVersion>();
@@ -374,6 +377,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 extendedLocation,
                 identity,
                 aggregatorOrSingleRackDefinition,
+                analyticsOutputSettings,
                 analyticsWorkspaceId,
                 availableUpgradeVersions?.ToList(),
                 clusterCapacity,
@@ -397,15 +401,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 provisioningState,
                 runtimeProtectionEnforcementLevel != null ? new RuntimeProtectionConfiguration(runtimeProtectionEnforcementLevel, serializedAdditionalRawData: null) : null,
                 secretArchive,
+                secretArchiveSettings,
                 supportExpireOn,
                 updateStrategy,
+                vulnerabilityScanningContainerScan != null ? new VulnerabilityScanningSettings(vulnerabilityScanningContainerScan, serializedAdditionalRawData: null) : null,
                 workloadResourceIds?.ToList(),
                 serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.BareMetalMachineConfiguration"/>. </summary>
         /// <param name="bmcConnectionString"> The connection string for the baseboard management controller including IP address and protocol. </param>
-        /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. </param>
+        /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. The password field is expected to be an Azure Key Vault key URL. Until the cluster is converted to utilize managed identity by setting the secret archive settings, the actual password value should be provided instead. </param>
         /// <param name="bmcMacAddress"> The MAC address of the BMC for this machine. </param>
         /// <param name="bootMacAddress"> The MAC address associated with the PXE NIC card. </param>
         /// <param name="machineDetails"> The free-form additional information about the machine, e.g. an asset tag. </param>
@@ -934,9 +940,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="location"> The location. </param>
         /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
         /// <param name="administratorCredentials"> The credentials of the administrative interface on this storage appliance. </param>
-        /// <param name="capacity"> The total capacity of the storage appliance. </param>
+        /// <param name="capacity"> The total capacity of the storage appliance. Measured in GiB. </param>
         /// <param name="capacityUsed"> The amount of storage consumed. </param>
-        /// <param name="clusterId"> The resource ID of the cluster this storage appliance is associated with. </param>
+        /// <param name="clusterId"> The resource ID of the cluster this storage appliance is associated with. Measured in GiB. </param>
         /// <param name="detailedStatus"> The detailed status of the storage appliance. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
         /// <param name="managementIPv4Address"> The endpoint for the management interface of the storage appliance. </param>
@@ -1051,6 +1057,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="bootMethod"> Selects the boot method for the virtual machine. </param>
         /// <param name="cloudServicesNetworkAttachment"> The cloud service network that provides platform-level services for the virtual machine. </param>
         /// <param name="clusterId"> The resource ID of the cluster the virtual machine is created for. </param>
+        /// <param name="consoleExtendedLocation"> The extended location to use for creation of a VM console resource. </param>
         /// <param name="cpuCores"> The number of CPU cores in the virtual machine. </param>
         /// <param name="detailedStatus"> The more detailed status of the virtual machine. </param>
         /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
@@ -1070,7 +1077,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="vmImageRepositoryCredentials"> The credentials used to login to the image repository that has access to the specified image. </param>
         /// <param name="volumes"> The resource IDs of volumes that are attached to the virtual machine. </param>
         /// <returns> A new <see cref="NetworkCloud.NetworkCloudVirtualMachineData"/> instance for mocking. </returns>
-        public static NetworkCloudVirtualMachineData NetworkCloudVirtualMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, string adminUsername = null, string availabilityZone = null, ResourceIdentifier bareMetalMachineId = null, VirtualMachineBootMethod? bootMethod = null, NetworkAttachment cloudServicesNetworkAttachment = null, ResourceIdentifier clusterId = null, long cpuCores = default, VirtualMachineDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, VirtualMachineIsolateEmulatorThread? isolateEmulatorThread = null, long memorySizeInGB = default, IEnumerable<NetworkAttachment> networkAttachments = null, string networkData = null, IEnumerable<VirtualMachinePlacementHint> placementHints = null, VirtualMachinePowerState? powerState = null, VirtualMachineProvisioningState? provisioningState = null, IEnumerable<NetworkCloudSshPublicKey> sshPublicKeys = null, NetworkCloudStorageProfile storageProfile = null, string userData = null, VirtualMachineVirtioInterfaceType? virtioInterface = null, VirtualMachineDeviceModelType? vmDeviceModel = null, string vmImage = null, ImageRepositoryCredentials vmImageRepositoryCredentials = null, IEnumerable<ResourceIdentifier> volumes = null)
+        public static NetworkCloudVirtualMachineData NetworkCloudVirtualMachineData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ExtendedLocation extendedLocation = null, string adminUsername = null, string availabilityZone = null, ResourceIdentifier bareMetalMachineId = null, VirtualMachineBootMethod? bootMethod = null, NetworkAttachment cloudServicesNetworkAttachment = null, ResourceIdentifier clusterId = null, ExtendedLocation consoleExtendedLocation = null, long cpuCores = default, VirtualMachineDetailedStatus? detailedStatus = null, string detailedStatusMessage = null, VirtualMachineIsolateEmulatorThread? isolateEmulatorThread = null, long memorySizeInGB = default, IEnumerable<NetworkAttachment> networkAttachments = null, string networkData = null, IEnumerable<VirtualMachinePlacementHint> placementHints = null, VirtualMachinePowerState? powerState = null, VirtualMachineProvisioningState? provisioningState = null, IEnumerable<NetworkCloudSshPublicKey> sshPublicKeys = null, NetworkCloudStorageProfile storageProfile = null, string userData = null, VirtualMachineVirtioInterfaceType? virtioInterface = null, VirtualMachineDeviceModelType? vmDeviceModel = null, string vmImage = null, ImageRepositoryCredentials vmImageRepositoryCredentials = null, IEnumerable<ResourceIdentifier> volumes = null)
         {
             tags ??= new Dictionary<string, string>();
             networkAttachments ??= new List<NetworkAttachment>();
@@ -1092,6 +1099,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 bootMethod,
                 cloudServicesNetworkAttachment,
                 clusterId,
+                consoleExtendedLocation,
                 cpuCores,
                 detailedStatus,
                 detailedStatusMessage,
@@ -1485,6 +1493,91 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The extended location of the cluster manager associated with the cluster. </param>
+        /// <param name="identity"> The identity for the resource. </param>
+        /// <param name="aggregatorOrSingleRackDefinition"> The rack definition that is intended to reflect only a single rack in a single rack cluster, or an aggregator rack in a multi-rack cluster. </param>
+        /// <param name="analyticsWorkspaceId"> The resource ID of the Log Analytics Workspace that will be used for storing relevant logs. </param>
+        /// <param name="availableUpgradeVersions"> The list of cluster runtime version upgrades available for this cluster. </param>
+        /// <param name="clusterCapacity"> The capacity supported by this cluster. </param>
+        /// <param name="clusterConnectionStatus"> The latest heartbeat status between the cluster manager and the cluster. </param>
+        /// <param name="clusterExtendedLocation"> The extended location (custom location) that represents the cluster's control plane location. This extended location is used to route the requests of child objects of the cluster that are handled by the platform operator. </param>
+        /// <param name="clusterLocation"> The customer-provided location information to identify where the cluster resides. </param>
+        /// <param name="clusterManagerConnectionStatus"> The latest connectivity status between cluster manager and the cluster. </param>
+        /// <param name="clusterManagerId"> The resource ID of the cluster manager that manages this cluster. This is set by the Cluster Manager when the cluster is created. </param>
+        /// <param name="clusterServicePrincipal"> The service principal to be used by the cluster during Arc Appliance installation. </param>
+        /// <param name="clusterType"> The type of rack configuration for the cluster. </param>
+        /// <param name="clusterVersion"> The current runtime version of the cluster. </param>
+        /// <param name="commandOutputSettings"> The settings for commands run in this cluster, such as bare metal machine run read only commands and data extracts. </param>
+        /// <param name="computeDeploymentThreshold"> The validation threshold indicating the allowable failures of compute machines during environment validation and deployment. </param>
+        /// <param name="computeRackDefinitions">
+        /// The list of rack definitions for the compute racks in a multi-rack
+        /// cluster, or an empty list in a single-rack cluster.
+        /// </param>
+        /// <param name="detailedStatus"> The current detailed status of the cluster. </param>
+        /// <param name="detailedStatusMessage"> The descriptive message about the detailed status. </param>
+        /// <param name="hybridAksExtendedLocation"> Field Deprecated. This field will not be populated in an upcoming version. The extended location (custom location) that represents the Hybrid AKS control plane location. This extended location is used when creating provisioned clusters (Hybrid AKS clusters). </param>
+        /// <param name="managedResourceGroupConfiguration"> The configuration of the managed resource group associated with the resource. </param>
+        /// <param name="manualActionCount"> The count of Manual Action Taken (MAT) events that have not been validated. </param>
+        /// <param name="networkFabricId"> The resource ID of the Network Fabric associated with the cluster. </param>
+        /// <param name="provisioningState"> The provisioning state of the cluster. </param>
+        /// <param name="runtimeProtectionEnforcementLevel"> The settings for cluster runtime protection. </param>
+        /// <param name="secretArchive"> The configuration for use of a key vault to store secrets for later retrieval by the operator. </param>
+        /// <param name="supportExpireOn"> The support end date of the runtime version of the cluster. </param>
+        /// <param name="updateStrategy"> The strategy for updating the cluster. </param>
+        /// <param name="workloadResourceIds"> The list of workload resource IDs that are hosted within this cluster. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.NetworkCloud.NetworkCloudClusterData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudClusterData NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, ManagedServiceIdentity identity, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ResourceIdentifier analyticsWorkspaceId, IEnumerable<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, ExtendedLocation clusterExtendedLocation, string clusterLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, CommandOutputSettings commandOutputSettings, ValidationThreshold computeDeploymentThreshold, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, ExtendedLocation hybridAksExtendedLocation, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, ResourceIdentifier networkFabricId, ClusterProvisioningState? provisioningState, RuntimeProtectionEnforcementLevel? runtimeProtectionEnforcementLevel, ClusterSecretArchive secretArchive, DateTimeOffset? supportExpireOn, ClusterUpdateStrategy updateStrategy, IEnumerable<ResourceIdentifier> workloadResourceIds)
+        {
+            return NetworkCloudClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, extendedLocation: extendedLocation, identity: identity, aggregatorOrSingleRackDefinition: aggregatorOrSingleRackDefinition, analyticsOutputSettings: default, analyticsWorkspaceId: analyticsWorkspaceId, availableUpgradeVersions: availableUpgradeVersions, clusterCapacity: clusterCapacity, clusterConnectionStatus: clusterConnectionStatus, clusterExtendedLocation: clusterExtendedLocation, clusterLocation: clusterLocation, clusterManagerConnectionStatus: clusterManagerConnectionStatus, clusterManagerId: clusterManagerId, clusterServicePrincipal: clusterServicePrincipal, clusterType: clusterType, clusterVersion: clusterVersion, commandOutputSettings: commandOutputSettings, computeDeploymentThreshold: computeDeploymentThreshold, computeRackDefinitions: computeRackDefinitions, detailedStatus: detailedStatus, detailedStatusMessage: detailedStatusMessage, hybridAksExtendedLocation: hybridAksExtendedLocation, managedResourceGroupConfiguration: managedResourceGroupConfiguration, manualActionCount: manualActionCount, networkFabricId: networkFabricId, provisioningState: provisioningState, runtimeProtectionEnforcementLevel: runtimeProtectionEnforcementLevel, secretArchive: secretArchive, secretArchiveSettings: default, supportExpireOn: supportExpireOn, updateStrategy: updateStrategy, vulnerabilityScanningContainerScan: default, workloadResourceIds: workloadResourceIds);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="extendedLocation"> The extended location of the cluster associated with the resource. </param>
+        /// <param name="adminUsername"> The name of the administrator to which the ssh public keys will be added into the authorized keys. </param>
+        /// <param name="availabilityZone"> The cluster availability zone containing this virtual machine. </param>
+        /// <param name="bareMetalMachineId"> The resource ID of the bare metal machine that hosts the virtual machine. </param>
+        /// <param name="bootMethod"> Selects the boot method for the virtual machine. </param>
+        /// <param name="cloudServicesNetworkAttachment"> The cloud service network that provides platform-level services for the virtual machine. </param>
+        /// <param name="clusterId"> The resource ID of the cluster the virtual machine is created for. </param>
+        /// <param name="cpuCores"> The number of CPU cores in the virtual machine. </param>
+        /// <param name="detailedStatus"> The more detailed status of the virtual machine. </param>
+        /// <param name="detailedStatusMessage"> The descriptive message about the current detailed status. </param>
+        /// <param name="isolateEmulatorThread"> Field Deprecated, the value will be ignored if provided. The indicator of whether one of the specified CPU cores is isolated to run the emulator thread for this virtual machine. </param>
+        /// <param name="memorySizeInGB"> The memory size of the virtual machine. Allocations are measured in gibibytes. </param>
+        /// <param name="networkAttachments"> The list of network attachments to the virtual machine. </param>
+        /// <param name="networkData"> The Base64 encoded cloud-init network data. </param>
+        /// <param name="placementHints"> The scheduling hints for the virtual machine. </param>
+        /// <param name="powerState"> The power state of the virtual machine. </param>
+        /// <param name="provisioningState"> The provisioning state of the virtual machine. </param>
+        /// <param name="sshPublicKeys"> The list of ssh public keys. Each key will be added to the virtual machine using the cloud-init ssh_authorized_keys mechanism for the adminUsername. </param>
+        /// <param name="storageProfile"> The storage profile that specifies size and other parameters about the disks related to the virtual machine. </param>
+        /// <param name="userData"> The Base64 encoded cloud-init user data. </param>
+        /// <param name="virtioInterface"> Field Deprecated, use virtualizationModel instead. The type of the virtio interface. </param>
+        /// <param name="vmDeviceModel"> The type of the device model to use. </param>
+        /// <param name="vmImage"> The virtual machine image that is currently provisioned to the OS disk, using the full url and tag notation used to pull the image. </param>
+        /// <param name="vmImageRepositoryCredentials"> The credentials used to login to the image repository that has access to the specified image. </param>
+        /// <param name="volumes"> The resource IDs of volumes that are attached to the virtual machine. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.NetworkCloud.NetworkCloudVirtualMachineData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkCloudVirtualMachineData NetworkCloudVirtualMachineData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, string adminUsername, string availabilityZone, ResourceIdentifier bareMetalMachineId, VirtualMachineBootMethod? bootMethod, NetworkAttachment cloudServicesNetworkAttachment, ResourceIdentifier clusterId, long cpuCores, VirtualMachineDetailedStatus? detailedStatus, string detailedStatusMessage, VirtualMachineIsolateEmulatorThread? isolateEmulatorThread, long memorySizeInGB, IEnumerable<NetworkAttachment> networkAttachments, string networkData, IEnumerable<VirtualMachinePlacementHint> placementHints, VirtualMachinePowerState? powerState, VirtualMachineProvisioningState? provisioningState, IEnumerable<NetworkCloudSshPublicKey> sshPublicKeys, NetworkCloudStorageProfile storageProfile, string userData, VirtualMachineVirtioInterfaceType? virtioInterface, VirtualMachineDeviceModelType? vmDeviceModel, string vmImage, ImageRepositoryCredentials vmImageRepositoryCredentials, IEnumerable<ResourceIdentifier> volumes)
+        {
+            return NetworkCloudVirtualMachineData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, extendedLocation: extendedLocation, adminUsername: adminUsername, availabilityZone: availabilityZone, bareMetalMachineId: bareMetalMachineId, bootMethod: bootMethod, cloudServicesNetworkAttachment: cloudServicesNetworkAttachment, clusterId: clusterId, consoleExtendedLocation: default, cpuCores: cpuCores, detailedStatus: detailedStatus, detailedStatusMessage: detailedStatusMessage, isolateEmulatorThread: isolateEmulatorThread, memorySizeInGB: memorySizeInGB, networkAttachments: networkAttachments, networkData: networkData, placementHints: placementHints, powerState: powerState, provisioningState: provisioningState, sshPublicKeys: sshPublicKeys, storageProfile: storageProfile, userData: userData, virtioInterface: virtioInterface, vmDeviceModel: vmDeviceModel, vmImage: vmImage, vmImageRepositoryCredentials: vmImageRepositoryCredentials, volumes: volumes);
+        }
+
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetworkCloud.NetworkCloudBareMetalMachineData" />. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -1590,7 +1683,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkCloudClusterData NetworkCloudClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ExtendedLocation extendedLocation, NetworkCloudRackDefinition aggregatorOrSingleRackDefinition, ResourceIdentifier analyticsWorkspaceId, IEnumerable<ClusterAvailableUpgradeVersion> availableUpgradeVersions, ClusterCapacity clusterCapacity, ClusterConnectionStatus? clusterConnectionStatus, ExtendedLocation clusterExtendedLocation, string clusterLocation, ClusterManagerConnectionStatus? clusterManagerConnectionStatus, ResourceIdentifier clusterManagerId, ServicePrincipalInformation clusterServicePrincipal, ClusterType clusterType, string clusterVersion, ValidationThreshold computeDeploymentThreshold, IEnumerable<NetworkCloudRackDefinition> computeRackDefinitions, ClusterDetailedStatus? detailedStatus, string detailedStatusMessage, ExtendedLocation hybridAksExtendedLocation, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, long? manualActionCount, ResourceIdentifier networkFabricId, ClusterProvisioningState? provisioningState, DateTimeOffset? supportExpireOn, IEnumerable<ResourceIdentifier> workloadResourceIds)
         {
-            return NetworkCloudClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, extendedLocation: extendedLocation, identity: default, aggregatorOrSingleRackDefinition: aggregatorOrSingleRackDefinition, analyticsWorkspaceId: analyticsWorkspaceId, availableUpgradeVersions: availableUpgradeVersions, clusterCapacity: clusterCapacity, clusterConnectionStatus: clusterConnectionStatus, clusterExtendedLocation: clusterExtendedLocation, clusterLocation: clusterLocation, clusterManagerConnectionStatus: clusterManagerConnectionStatus, clusterManagerId: clusterManagerId, clusterServicePrincipal: clusterServicePrincipal, clusterType: clusterType, clusterVersion: clusterVersion, commandOutputSettings: default, computeDeploymentThreshold: computeDeploymentThreshold, computeRackDefinitions: computeRackDefinitions, detailedStatus: detailedStatus, detailedStatusMessage: detailedStatusMessage, hybridAksExtendedLocation: hybridAksExtendedLocation, managedResourceGroupConfiguration: managedResourceGroupConfiguration, manualActionCount: manualActionCount, networkFabricId: networkFabricId, provisioningState: provisioningState, runtimeProtectionEnforcementLevel: default, secretArchive: default, supportExpireOn: supportExpireOn, updateStrategy: default, workloadResourceIds: workloadResourceIds);
+            return NetworkCloudClusterData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, extendedLocation: extendedLocation, identity: default, aggregatorOrSingleRackDefinition: aggregatorOrSingleRackDefinition, analyticsOutputSettings: default, analyticsWorkspaceId: analyticsWorkspaceId, availableUpgradeVersions: availableUpgradeVersions, clusterCapacity: clusterCapacity, clusterConnectionStatus: clusterConnectionStatus, clusterExtendedLocation: clusterExtendedLocation, clusterLocation: clusterLocation, clusterManagerConnectionStatus: clusterManagerConnectionStatus, clusterManagerId: clusterManagerId, clusterServicePrincipal: clusterServicePrincipal, clusterType: clusterType, clusterVersion: clusterVersion, commandOutputSettings: default, computeDeploymentThreshold: computeDeploymentThreshold, computeRackDefinitions: computeRackDefinitions, detailedStatus: detailedStatus, detailedStatusMessage: detailedStatusMessage, hybridAksExtendedLocation: hybridAksExtendedLocation, managedResourceGroupConfiguration: managedResourceGroupConfiguration, manualActionCount: manualActionCount, networkFabricId: networkFabricId, provisioningState: provisioningState, runtimeProtectionEnforcementLevel: default, secretArchive: default, secretArchiveSettings: default, supportExpireOn: supportExpireOn, updateStrategy: default, vulnerabilityScanningContainerScan: default, workloadResourceIds: workloadResourceIds);
         }
 
         /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.NetworkCloud.NetworkCloudStorageApplianceData" />. </summary>

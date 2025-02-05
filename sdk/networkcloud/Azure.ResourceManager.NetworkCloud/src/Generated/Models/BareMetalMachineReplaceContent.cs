@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BareMetalMachineReplaceContent"/>. </summary>
-        /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. </param>
+        /// <param name="bmcCredentials"> The credentials of the baseboard management controller on this bare metal machine. The password field is expected to be an Azure Key Vault key URL. Until the cluster is converted to utilize managed identity by setting the secret archive settings, the actual password value should be provided instead. </param>
         /// <param name="bmcMacAddress"> The MAC address of the BMC device. </param>
         /// <param name="bootMacAddress"> The MAC address of a NIC connected to the PXE network. </param>
         /// <param name="machineName"> The OS-level hostname assigned to this machine. </param>
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The credentials of the baseboard management controller on this bare metal machine. </summary>
+        /// <summary> The credentials of the baseboard management controller on this bare metal machine. The password field is expected to be an Azure Key Vault key URL. Until the cluster is converted to utilize managed identity by setting the secret archive settings, the actual password value should be provided instead. </summary>
         public AdministrativeCredentials BmcCredentials { get; set; }
         /// <summary> The MAC address of the BMC device. </summary>
         public string BmcMacAddress { get; set; }

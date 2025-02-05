@@ -22,14 +22,17 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string ErrorValue = "Error";
         private const string AvailableValue = "Available";
+        private const string DegradedValue = "Degraded";
+        private const string ErrorValue = "Error";
         private const string ProvisioningValue = "Provisioning";
 
-        /// <summary> Error. </summary>
-        public static StorageApplianceDetailedStatus Error { get; } = new StorageApplianceDetailedStatus(ErrorValue);
         /// <summary> Available. </summary>
         public static StorageApplianceDetailedStatus Available { get; } = new StorageApplianceDetailedStatus(AvailableValue);
+        /// <summary> Degraded. </summary>
+        public static StorageApplianceDetailedStatus Degraded { get; } = new StorageApplianceDetailedStatus(DegradedValue);
+        /// <summary> Error. </summary>
+        public static StorageApplianceDetailedStatus Error { get; } = new StorageApplianceDetailedStatus(ErrorValue);
         /// <summary> Provisioning. </summary>
         public static StorageApplianceDetailedStatus Provisioning { get; } = new StorageApplianceDetailedStatus(ProvisioningValue);
         /// <summary> Determines if two <see cref="StorageApplianceDetailedStatus"/> values are the same. </summary>
