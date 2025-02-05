@@ -167,7 +167,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-Response<EvaluationJobState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response<EvaluationOperationState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code>
 This sample shows how to call GetEvaluationStatusAsync with all parameters.
 <code><![CDATA[
@@ -175,7 +175,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-Response<EvaluationJobState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response<EvaluationOperationState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetEvaluationStatus(string,string,string,CancellationToken)">
@@ -186,7 +186,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-Response<EvaluationJobState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response<EvaluationOperationState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code>
 This sample shows how to call GetEvaluationStatus with all parameters.
 <code><![CDATA[
@@ -194,7 +194,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-Response<EvaluationJobState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response<EvaluationOperationState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetEvaluationStatusAsync(string,string,string,RequestContext)">
@@ -233,6 +233,12 @@ Console.WriteLine(result.GetProperty("expiresOn").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -285,6 +291,12 @@ Console.WriteLine(result.GetProperty("expiresOn").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -519,7 +531,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-Response<LoadSnapshotJobState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response<LoadSnapshotOperationState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code>
 This sample shows how to call GetLoadSnapshotStatusAsync with all parameters.
 <code><![CDATA[
@@ -527,7 +539,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-Response<LoadSnapshotJobState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response<LoadSnapshotOperationState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetLoadSnapshotStatus(string,string,string,CancellationToken)">
@@ -538,7 +550,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-Response<LoadSnapshotJobState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response<LoadSnapshotOperationState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code>
 This sample shows how to call GetLoadSnapshotStatus with all parameters.
 <code><![CDATA[
@@ -546,7 +558,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-Response<LoadSnapshotJobState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+Response<LoadSnapshotOperationState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetLoadSnapshotStatusAsync(string,string,string,RequestContext)">
@@ -581,6 +593,12 @@ Console.WriteLine(result.GetProperty("expiresOn").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -623,6 +641,12 @@ Console.WriteLine(result.GetProperty("expiresOn").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());

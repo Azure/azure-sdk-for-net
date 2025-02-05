@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.Language.Conversations.Authoring.Models
 {
     /// <summary> Represents the state of an import job. </summary>
-    public partial class ImportProjectJobState
+    public partial class ImportProjectOperationState
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,20 +45,20 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ImportProjectJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportProjectOperationState"/>. </summary>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
         /// <param name="status"> The job status. </param>
-        internal ImportProjectJobState(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, AnalyzeConversationAuthoringJobStatus status)
+        internal ImportProjectOperationState(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ConversationAuthoringOperationStatus status)
         {
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
             Status = status;
-            Warnings = new ChangeTrackingList<AuthoringConversationsWarning>();
+            Warnings = new ChangeTrackingList<ResponseError>();
             Errors = new ChangeTrackingList<ResponseError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImportProjectJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ImportProjectOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ImportProjectJobState(string jobId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DateTimeOffset? expiresOn, AnalyzeConversationAuthoringJobStatus status, IReadOnlyList<AuthoringConversationsWarning> warnings, IReadOnlyList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ImportProjectOperationState(string jobId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DateTimeOffset? expiresOn, ConversationAuthoringOperationStatus status, IReadOnlyList<ResponseError> warnings, IReadOnlyList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobId = jobId;
             CreatedOn = createdOn;
@@ -79,8 +79,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ImportProjectJobState"/> for deserialization. </summary>
-        internal ImportProjectJobState()
+        /// <summary> Initializes a new instance of <see cref="ImportProjectOperationState"/> for deserialization. </summary>
+        internal ImportProjectOperationState()
         {
         }
 
@@ -93,9 +93,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> The expiration date time of the job. </summary>
         public DateTimeOffset? ExpiresOn { get; }
         /// <summary> The job status. </summary>
-        public AnalyzeConversationAuthoringJobStatus Status { get; }
+        public ConversationAuthoringOperationStatus Status { get; }
         /// <summary> The warnings that were encountered while executing the job. </summary>
-        public IReadOnlyList<AuthoringConversationsWarning> Warnings { get; }
+        public IReadOnlyList<ResponseError> Warnings { get; }
         /// <summary> The errors encountered while executing the job. </summary>
         public IReadOnlyList<ResponseError> Errors { get; }
     }

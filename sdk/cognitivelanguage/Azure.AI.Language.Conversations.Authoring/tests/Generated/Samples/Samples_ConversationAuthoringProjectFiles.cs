@@ -59,7 +59,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-            Response<ExportProjectJobState> response = client.GetExportStatus("<projectName>", "<jobId>");
+            Response<ExportProjectOperationState> response = client.GetExportStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-            Response<ExportProjectJobState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
+            Response<ExportProjectOperationState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -91,6 +91,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -120,6 +126,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -139,7 +151,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-            Response<ExportProjectJobState> response = client.GetExportStatus("<projectName>", "<jobId>");
+            Response<ExportProjectOperationState> response = client.GetExportStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -150,7 +162,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-            Response<ExportProjectJobState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
+            Response<ExportProjectOperationState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -195,7 +207,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-            Response<ImportProjectJobState> response = client.GetImportStatus("<projectName>", "<jobId>");
+            Response<ImportProjectOperationState> response = client.GetImportStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -206,7 +218,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-            Response<ImportProjectJobState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+            Response<ImportProjectOperationState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -227,6 +239,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -255,6 +273,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -273,7 +297,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-            Response<ImportProjectJobState> response = client.GetImportStatus("<projectName>", "<jobId>");
+            Response<ImportProjectOperationState> response = client.GetImportStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -284,7 +308,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-            Response<ImportProjectJobState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+            Response<ImportProjectOperationState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]

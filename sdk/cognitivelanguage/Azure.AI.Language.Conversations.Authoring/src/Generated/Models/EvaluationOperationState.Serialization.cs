@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring.Models
 {
-    public partial class ImportProjectJobState : IUtf8JsonSerializable, IJsonModel<ImportProjectJobState>
+    public partial class EvaluationOperationState : IUtf8JsonSerializable, IJsonModel<EvaluationOperationState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ImportProjectJobState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EvaluationOperationState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<ImportProjectJobState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<EvaluationOperationState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportProjectJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EvaluationOperationState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImportProjectJobState)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(EvaluationOperationState)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W")
@@ -56,7 +56,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 writer.WriteStartArray();
                 foreach (var item in Warnings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -70,6 +70,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
                 writer.WriteEndArray();
             }
+            writer.WritePropertyName("result"u8);
+            writer.WriteObjectValue(Result, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -87,19 +89,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
         }
 
-        ImportProjectJobState IJsonModel<ImportProjectJobState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        EvaluationOperationState IJsonModel<EvaluationOperationState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportProjectJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EvaluationOperationState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImportProjectJobState)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(EvaluationOperationState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeImportProjectJobState(document.RootElement, options);
+            return DeserializeEvaluationOperationState(document.RootElement, options);
         }
 
-        internal static ImportProjectJobState DeserializeImportProjectJobState(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static EvaluationOperationState DeserializeEvaluationOperationState(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -111,9 +113,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             DateTimeOffset createdOn = default;
             DateTimeOffset lastUpdatedOn = default;
             DateTimeOffset? expiresOn = default;
-            AnalyzeConversationAuthoringJobStatus status = default;
-            IReadOnlyList<AuthoringConversationsWarning> warnings = default;
+            ConversationAuthoringOperationStatus status = default;
+            IReadOnlyList<ResponseError> warnings = default;
             IReadOnlyList<ResponseError> errors = default;
+            EvaluationJobResult result = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +147,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new AnalyzeConversationAuthoringJobStatus(property.Value.GetString());
+                    status = new ConversationAuthoringOperationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("warnings"u8))
@@ -153,10 +156,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     {
                         continue;
                     }
-                    List<AuthoringConversationsWarning> array = new List<AuthoringConversationsWarning>();
+                    List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthoringConversationsWarning.DeserializeAuthoringConversationsWarning(item, options));
+                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
                     }
                     warnings = array;
                     continue;
@@ -175,60 +178,66 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     errors = array;
                     continue;
                 }
+                if (property.NameEquals("result"u8))
+                {
+                    result = EvaluationJobResult.DeserializeEvaluationJobResult(property.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new ImportProjectJobState(
+            return new EvaluationOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
                 expiresOn,
                 status,
-                warnings ?? new ChangeTrackingList<AuthoringConversationsWarning>(),
+                warnings ?? new ChangeTrackingList<ResponseError>(),
                 errors ?? new ChangeTrackingList<ResponseError>(),
+                result,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ImportProjectJobState>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<EvaluationOperationState>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportProjectJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EvaluationOperationState>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImportProjectJobState)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EvaluationOperationState)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ImportProjectJobState IPersistableModel<ImportProjectJobState>.Create(BinaryData data, ModelReaderWriterOptions options)
+        EvaluationOperationState IPersistableModel<EvaluationOperationState>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ImportProjectJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<EvaluationOperationState>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeImportProjectJobState(document.RootElement, options);
+                        return DeserializeEvaluationOperationState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImportProjectJobState)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EvaluationOperationState)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ImportProjectJobState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<EvaluationOperationState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static ImportProjectJobState FromResponse(Response response)
+        internal static EvaluationOperationState FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeImportProjectJobState(document.RootElement);
+            return DeserializeEvaluationOperationState(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

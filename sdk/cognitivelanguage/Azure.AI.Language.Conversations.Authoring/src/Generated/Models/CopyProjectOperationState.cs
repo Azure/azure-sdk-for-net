@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations.Authoring.Models
 {
-    /// <summary> Represents the state of a training job. </summary>
-    public partial class TrainingJobState
+    /// <summary> Represents the state of a copy job. </summary>
+    public partial class CopyProjectOperationState
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,25 +45,20 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="TrainingJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyProjectOperationState"/>. </summary>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
         /// <param name="status"> The job status. </param>
-        /// <param name="result"> Represents training tasks detailed result. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="result"/> is null. </exception>
-        internal TrainingJobState(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, AnalyzeConversationAuthoringJobStatus status, TrainingJobResult result)
+        internal CopyProjectOperationState(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ConversationAuthoringOperationStatus status)
         {
-            Argument.AssertNotNull(result, nameof(result));
-
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
             Status = status;
-            Warnings = new ChangeTrackingList<AuthoringConversationsWarning>();
+            Warnings = new ChangeTrackingList<ResponseError>();
             Errors = new ChangeTrackingList<ResponseError>();
-            Result = result;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrainingJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CopyProjectOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -71,9 +66,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <param name="result"> Represents training tasks detailed result. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrainingJobState(string jobId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DateTimeOffset? expiresOn, AnalyzeConversationAuthoringJobStatus status, IReadOnlyList<AuthoringConversationsWarning> warnings, IReadOnlyList<ResponseError> errors, TrainingJobResult result, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CopyProjectOperationState(string jobId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DateTimeOffset? expiresOn, ConversationAuthoringOperationStatus status, IReadOnlyList<ResponseError> warnings, IReadOnlyList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobId = jobId;
             CreatedOn = createdOn;
@@ -82,12 +76,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             Status = status;
             Warnings = warnings;
             Errors = errors;
-            Result = result;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="TrainingJobState"/> for deserialization. </summary>
-        internal TrainingJobState()
+        /// <summary> Initializes a new instance of <see cref="CopyProjectOperationState"/> for deserialization. </summary>
+        internal CopyProjectOperationState()
         {
         }
 
@@ -100,12 +93,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> The expiration date time of the job. </summary>
         public DateTimeOffset? ExpiresOn { get; }
         /// <summary> The job status. </summary>
-        public AnalyzeConversationAuthoringJobStatus Status { get; }
+        public ConversationAuthoringOperationStatus Status { get; }
         /// <summary> The warnings that were encountered while executing the job. </summary>
-        public IReadOnlyList<AuthoringConversationsWarning> Warnings { get; }
+        public IReadOnlyList<ResponseError> Warnings { get; }
         /// <summary> The errors encountered while executing the job. </summary>
         public IReadOnlyList<ResponseError> Errors { get; }
-        /// <summary> Represents training tasks detailed result. </summary>
-        public TrainingJobResult Result { get; }
     }
 }

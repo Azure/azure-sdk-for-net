@@ -187,7 +187,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response<DeploymentDeleteFromResourcesJobState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
+            Response<DeploymentDeleteFromResourcesOperationState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -198,7 +198,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response<DeploymentDeleteFromResourcesJobState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+            Response<DeploymentDeleteFromResourcesOperationState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -219,6 +219,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -247,6 +253,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -265,7 +277,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response<DeploymentDeleteFromResourcesJobState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
+            Response<DeploymentDeleteFromResourcesOperationState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -276,7 +288,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response<DeploymentDeleteFromResourcesJobState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+            Response<DeploymentDeleteFromResourcesOperationState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -321,7 +333,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response<DeploymentJobState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
+            Response<DeploymentOperationState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -332,7 +344,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response<DeploymentJobState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+            Response<DeploymentOperationState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -353,6 +365,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -381,6 +399,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -399,7 +423,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response<DeploymentJobState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
+            Response<DeploymentOperationState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -410,7 +434,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response<DeploymentJobState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+            Response<DeploymentOperationState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
         }
 
         [Test]
@@ -455,7 +479,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response<SwapDeploymentsJobState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
+            Response<SwapDeploymentsOperationState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -466,7 +490,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response<SwapDeploymentsJobState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
+            Response<SwapDeploymentsOperationState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -487,6 +511,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -515,6 +545,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -533,7 +569,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response<SwapDeploymentsJobState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
+            Response<SwapDeploymentsOperationState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -544,7 +580,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            Response<SwapDeploymentsJobState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
+            Response<SwapDeploymentsOperationState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]

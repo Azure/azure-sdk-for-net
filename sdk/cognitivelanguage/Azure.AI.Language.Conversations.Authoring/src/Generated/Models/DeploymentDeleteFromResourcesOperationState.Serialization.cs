@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring.Models
 {
-    public partial class EvaluationJobState : IUtf8JsonSerializable, IJsonModel<EvaluationJobState>
+    public partial class DeploymentDeleteFromResourcesOperationState : IUtf8JsonSerializable, IJsonModel<DeploymentDeleteFromResourcesOperationState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<EvaluationJobState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentDeleteFromResourcesOperationState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<EvaluationJobState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeploymentDeleteFromResourcesOperationState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EvaluationJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentDeleteFromResourcesOperationState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EvaluationJobState)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentDeleteFromResourcesOperationState)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W")
@@ -56,7 +56,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 writer.WriteStartArray();
                 foreach (var item in Warnings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -70,8 +70,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
                 writer.WriteEndArray();
             }
-            writer.WritePropertyName("result"u8);
-            writer.WriteObjectValue(Result, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -89,19 +87,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
         }
 
-        EvaluationJobState IJsonModel<EvaluationJobState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeploymentDeleteFromResourcesOperationState IJsonModel<DeploymentDeleteFromResourcesOperationState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EvaluationJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentDeleteFromResourcesOperationState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EvaluationJobState)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentDeleteFromResourcesOperationState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeEvaluationJobState(document.RootElement, options);
+            return DeserializeDeploymentDeleteFromResourcesOperationState(document.RootElement, options);
         }
 
-        internal static EvaluationJobState DeserializeEvaluationJobState(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DeploymentDeleteFromResourcesOperationState DeserializeDeploymentDeleteFromResourcesOperationState(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -113,10 +111,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             DateTimeOffset createdOn = default;
             DateTimeOffset lastUpdatedOn = default;
             DateTimeOffset? expiresOn = default;
-            AnalyzeConversationAuthoringJobStatus status = default;
-            IReadOnlyList<AuthoringConversationsWarning> warnings = default;
+            ConversationAuthoringOperationStatus status = default;
+            IReadOnlyList<ResponseError> warnings = default;
             IReadOnlyList<ResponseError> errors = default;
-            EvaluationJobResult result = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +144,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new AnalyzeConversationAuthoringJobStatus(property.Value.GetString());
+                    status = new ConversationAuthoringOperationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("warnings"u8))
@@ -156,10 +153,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     {
                         continue;
                     }
-                    List<AuthoringConversationsWarning> array = new List<AuthoringConversationsWarning>();
+                    List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthoringConversationsWarning.DeserializeAuthoringConversationsWarning(item, options));
+                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
                     }
                     warnings = array;
                     continue;
@@ -178,66 +175,60 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     errors = array;
                     continue;
                 }
-                if (property.NameEquals("result"u8))
-                {
-                    result = EvaluationJobResult.DeserializeEvaluationJobResult(property.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new EvaluationJobState(
+            return new DeploymentDeleteFromResourcesOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
                 expiresOn,
                 status,
-                warnings ?? new ChangeTrackingList<AuthoringConversationsWarning>(),
+                warnings ?? new ChangeTrackingList<ResponseError>(),
                 errors ?? new ChangeTrackingList<ResponseError>(),
-                result,
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<EvaluationJobState>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeploymentDeleteFromResourcesOperationState>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EvaluationJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentDeleteFromResourcesOperationState>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EvaluationJobState)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentDeleteFromResourcesOperationState)} does not support writing '{options.Format}' format.");
             }
         }
 
-        EvaluationJobState IPersistableModel<EvaluationJobState>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DeploymentDeleteFromResourcesOperationState IPersistableModel<DeploymentDeleteFromResourcesOperationState>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<EvaluationJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentDeleteFromResourcesOperationState>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeEvaluationJobState(document.RootElement, options);
+                        return DeserializeDeploymentDeleteFromResourcesOperationState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EvaluationJobState)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentDeleteFromResourcesOperationState)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<EvaluationJobState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeploymentDeleteFromResourcesOperationState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static EvaluationJobState FromResponse(Response response)
+        internal static DeploymentDeleteFromResourcesOperationState FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeEvaluationJobState(document.RootElement);
+            return DeserializeDeploymentDeleteFromResourcesOperationState(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

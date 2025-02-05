@@ -95,8 +95,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             string modelLabel = default;
             string trainingConfigVersion = default;
             AnalyzeConversationAuthoringTrainingMode? trainingMode = default;
-            SubTrainingJobState trainingStatus = default;
-            SubTrainingJobState evaluationStatus = default;
+            SubTrainingOperationState trainingStatus = default;
+            SubTrainingOperationState evaluationStatus = default;
             DateTimeOffset? estimatedEndOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -123,7 +123,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
                 if (property.NameEquals("trainingStatus"u8))
                 {
-                    trainingStatus = SubTrainingJobState.DeserializeSubTrainingJobState(property.Value, options);
+                    trainingStatus = SubTrainingOperationState.DeserializeSubTrainingOperationState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("evaluationStatus"u8))
@@ -132,7 +132,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     {
                         continue;
                     }
-                    evaluationStatus = SubTrainingJobState.DeserializeSubTrainingJobState(property.Value, options);
+                    evaluationStatus = SubTrainingOperationState.DeserializeSubTrainingOperationState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("estimatedEndOn"u8))

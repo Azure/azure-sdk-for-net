@@ -7,7 +7,7 @@ This sample shows how to call CopyProjectAuthorizationAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
 Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation);
 ]]></code>
@@ -15,7 +15,7 @@ This sample shows how to call CopyProjectAuthorizationAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
 Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
 ]]></code></example>
@@ -26,7 +26,7 @@ This sample shows how to call CopyProjectAuthorization.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
 Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation);
 ]]></code>
@@ -34,7 +34,7 @@ This sample shows how to call CopyProjectAuthorization with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
 Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
 ]]></code></example>
@@ -45,7 +45,7 @@ This sample shows how to call CopyProjectAuthorizationAsync and parse the result
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -65,7 +65,7 @@ This sample shows how to call CopyProjectAuthorizationAsync with all parameters 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -90,7 +90,7 @@ This sample shows how to call CopyProjectAuthorization and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -110,7 +110,7 @@ This sample shows how to call CopyProjectAuthorization with all parameters and r
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -135,17 +135,17 @@ This sample shows how to call GetCopyProjectStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
-Response<CopyProjectJobState> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
+Response<CopyProjectOperationState> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetCopyProjectStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
-Response<CopyProjectJobState> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
+Response<CopyProjectOperationState> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetCopyProjectStatus(string,string,CancellationToken)">
@@ -154,17 +154,17 @@ This sample shows how to call GetCopyProjectStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
-Response<CopyProjectJobState> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
+Response<CopyProjectOperationState> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetCopyProjectStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
-Response<CopyProjectJobState> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
+Response<CopyProjectOperationState> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetCopyProjectStatusAsync(string,string,RequestContext)">
@@ -173,9 +173,9 @@ This sample shows how to call GetCopyProjectStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
-Response response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>", (RequestContext)null);
+Response response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -187,9 +187,9 @@ This sample shows how to call GetCopyProjectStatusAsync with all parameters and 
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
-Response response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>", (RequestContext)null);
+Response response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -199,6 +199,12 @@ Console.WriteLine(result.GetProperty("expiresOn").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -215,9 +221,9 @@ This sample shows how to call GetCopyProjectStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
-Response response = client.GetCopyProjectStatus("<projectName>", "<jobId>", (RequestContext)null);
+Response response = client.GetCopyProjectStatus("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -229,9 +235,9 @@ This sample shows how to call GetCopyProjectStatus with all parameters and parse
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
-Response response = client.GetCopyProjectStatus("<projectName>", "<jobId>", (RequestContext)null);
+Response response = client.GetCopyProjectStatus("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("jobId").ToString());
@@ -241,6 +247,12 @@ Console.WriteLine(result.GetProperty("expiresOn").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -257,7 +269,7 @@ This sample shows how to call CopyProjectAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
 CopyProjectDetails body = new CopyProjectDetails(
 AnalyzeConversationAuthoringProjectKind.Conversation,
@@ -272,7 +284,7 @@ This sample shows how to call CopyProjectAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
 CopyProjectDetails body = new CopyProjectDetails(
 AnalyzeConversationAuthoringProjectKind.Conversation,
@@ -290,7 +302,7 @@ This sample shows how to call CopyProject.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
 CopyProjectDetails body = new CopyProjectDetails(
 AnalyzeConversationAuthoringProjectKind.Conversation,
@@ -305,7 +317,7 @@ This sample shows how to call CopyProject with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
 CopyProjectDetails body = new CopyProjectDetails(
 AnalyzeConversationAuthoringProjectKind.Conversation,
@@ -323,7 +335,7 @@ This sample shows how to call CopyProjectAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -340,7 +352,7 @@ This sample shows how to call CopyProjectAsync with all parameters and request c
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -360,7 +372,7 @@ This sample shows how to call CopyProject.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {
@@ -377,7 +389,7 @@ This sample shows how to call CopyProject with all parameters and request conten
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringCopyProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopyProjectClient(apiVersion: "2024-11-15-preview");
+ConversationAuthoringCopiedProject client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringCopiedProjectClient(apiVersion: "2024-11-15-preview");
 
 using RequestContent content = RequestContent.Create(new
 {

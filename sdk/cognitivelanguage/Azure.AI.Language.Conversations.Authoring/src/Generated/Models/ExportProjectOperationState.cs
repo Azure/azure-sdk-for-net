@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Language.Conversations.Authoring.Models
 {
-    /// <summary> Represents the state of loading a snapshot job. </summary>
-    public partial class LoadSnapshotJobState
+    /// <summary> Represents the state of an export job. </summary>
+    public partial class ExportProjectOperationState
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,20 +45,20 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="LoadSnapshotJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportProjectOperationState"/>. </summary>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
         /// <param name="status"> The job status. </param>
-        internal LoadSnapshotJobState(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, AnalyzeConversationAuthoringJobStatus status)
+        internal ExportProjectOperationState(DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, ConversationAuthoringOperationStatus status)
         {
             CreatedOn = createdOn;
             LastUpdatedOn = lastUpdatedOn;
             Status = status;
-            Warnings = new ChangeTrackingList<AuthoringConversationsWarning>();
+            Warnings = new ChangeTrackingList<ResponseError>();
             Errors = new ChangeTrackingList<ResponseError>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoadSnapshotJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ExportProjectOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -66,8 +66,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <param name="resultUri"> The URL to use in order to download the exported project. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LoadSnapshotJobState(string jobId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DateTimeOffset? expiresOn, AnalyzeConversationAuthoringJobStatus status, IReadOnlyList<AuthoringConversationsWarning> warnings, IReadOnlyList<ResponseError> errors, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ExportProjectOperationState(string jobId, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, DateTimeOffset? expiresOn, ConversationAuthoringOperationStatus status, IReadOnlyList<ResponseError> warnings, IReadOnlyList<ResponseError> errors, string resultUri, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             JobId = jobId;
             CreatedOn = createdOn;
@@ -76,11 +77,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             Status = status;
             Warnings = warnings;
             Errors = errors;
+            ResultUri = resultUri;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="LoadSnapshotJobState"/> for deserialization. </summary>
-        internal LoadSnapshotJobState()
+        /// <summary> Initializes a new instance of <see cref="ExportProjectOperationState"/> for deserialization. </summary>
+        internal ExportProjectOperationState()
         {
         }
 
@@ -93,10 +95,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> The expiration date time of the job. </summary>
         public DateTimeOffset? ExpiresOn { get; }
         /// <summary> The job status. </summary>
-        public AnalyzeConversationAuthoringJobStatus Status { get; }
+        public ConversationAuthoringOperationStatus Status { get; }
         /// <summary> The warnings that were encountered while executing the job. </summary>
-        public IReadOnlyList<AuthoringConversationsWarning> Warnings { get; }
+        public IReadOnlyList<ResponseError> Warnings { get; }
         /// <summary> The errors encountered while executing the job. </summary>
         public IReadOnlyList<ResponseError> Errors { get; }
+        /// <summary> The URL to use in order to download the exported project. </summary>
+        public string ResultUri { get; }
     }
 }

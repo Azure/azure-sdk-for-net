@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring.Models
 {
-    public partial class SubTrainingJobState : IUtf8JsonSerializable, IJsonModel<SubTrainingJobState>
+    public partial class SubTrainingOperationState : IUtf8JsonSerializable, IJsonModel<SubTrainingOperationState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubTrainingJobState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SubTrainingOperationState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SubTrainingJobState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SubTrainingOperationState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubTrainingJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SubTrainingOperationState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubTrainingJobState)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SubTrainingOperationState)} does not support writing '{format}' format.");
             }
 
             writer.WritePropertyName("percentComplete"u8);
@@ -65,19 +65,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
         }
 
-        SubTrainingJobState IJsonModel<SubTrainingJobState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        SubTrainingOperationState IJsonModel<SubTrainingOperationState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubTrainingJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SubTrainingOperationState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubTrainingJobState)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SubTrainingOperationState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSubTrainingJobState(document.RootElement, options);
+            return DeserializeSubTrainingOperationState(document.RootElement, options);
         }
 
-        internal static SubTrainingJobState DeserializeSubTrainingJobState(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static SubTrainingOperationState DeserializeSubTrainingOperationState(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -88,7 +88,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             int percentComplete = default;
             DateTimeOffset? startedOn = default;
             DateTimeOffset? endedOn = default;
-            AnalyzeConversationAuthoringJobStatus status = default;
+            ConversationAuthoringOperationStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new AnalyzeConversationAuthoringJobStatus(property.Value.GetString());
+                    status = new ConversationAuthoringOperationStatus(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -127,46 +127,46 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SubTrainingJobState(percentComplete, startedOn, endedOn, status, serializedAdditionalRawData);
+            return new SubTrainingOperationState(percentComplete, startedOn, endedOn, status, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SubTrainingJobState>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<SubTrainingOperationState>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubTrainingJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SubTrainingOperationState>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubTrainingJobState)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubTrainingOperationState)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SubTrainingJobState IPersistableModel<SubTrainingJobState>.Create(BinaryData data, ModelReaderWriterOptions options)
+        SubTrainingOperationState IPersistableModel<SubTrainingOperationState>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SubTrainingJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<SubTrainingOperationState>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSubTrainingJobState(document.RootElement, options);
+                        return DeserializeSubTrainingOperationState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubTrainingJobState)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubTrainingOperationState)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SubTrainingJobState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SubTrainingOperationState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static SubTrainingJobState FromResponse(Response response)
+        internal static SubTrainingOperationState FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeSubTrainingJobState(document.RootElement);
+            return DeserializeSubTrainingOperationState(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

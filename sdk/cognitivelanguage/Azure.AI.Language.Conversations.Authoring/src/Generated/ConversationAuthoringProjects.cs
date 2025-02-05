@@ -245,13 +245,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProjectDeletionStatusAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<ProjectDeletionJobState>> GetProjectDeletionStatusAsync(string jobId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ProjectDeletionOperationState>> GetProjectDeletionStatusAsync(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = await GetProjectDeletionStatusAsync(jobId, context).ConfigureAwait(false);
-            return Response.FromValue(ProjectDeletionJobState.FromResponse(response), response);
+            return Response.FromValue(ProjectDeletionOperationState.FromResponse(response), response);
         }
 
         /// <summary> Gets the status for a project deletion job. </summary>
@@ -260,13 +260,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProjectDeletionStatus(string,CancellationToken)']/*" />
-        public virtual Response<ProjectDeletionJobState> GetProjectDeletionStatus(string jobId, CancellationToken cancellationToken = default)
+        public virtual Response<ProjectDeletionOperationState> GetProjectDeletionStatus(string jobId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             Response response = GetProjectDeletionStatus(jobId, context);
-            return Response.FromValue(ProjectDeletionJobState.FromResponse(response), response);
+            return Response.FromValue(ProjectDeletionOperationState.FromResponse(response), response);
         }
 
         /// <summary>

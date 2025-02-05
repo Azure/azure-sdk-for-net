@@ -50,7 +50,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="trainingConfigVersion"> Represents training config version. </param>
         /// <param name="trainingStatus"> Represents the model training status. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="modelLabel"/>, <paramref name="trainingConfigVersion"/> or <paramref name="trainingStatus"/> is null. </exception>
-        internal TrainingJobResult(string modelLabel, string trainingConfigVersion, SubTrainingJobState trainingStatus)
+        internal TrainingJobResult(string modelLabel, string trainingConfigVersion, SubTrainingOperationState trainingStatus)
         {
             Argument.AssertNotNull(modelLabel, nameof(modelLabel));
             Argument.AssertNotNull(trainingConfigVersion, nameof(trainingConfigVersion));
@@ -69,7 +69,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="evaluationStatus"> Represents model evaluation status. </param>
         /// <param name="estimatedEndOn"> Represents the estimated end date time for training and evaluation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TrainingJobResult(string modelLabel, string trainingConfigVersion, AnalyzeConversationAuthoringTrainingMode? trainingMode, SubTrainingJobState trainingStatus, SubTrainingJobState evaluationStatus, DateTimeOffset? estimatedEndOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TrainingJobResult(string modelLabel, string trainingConfigVersion, AnalyzeConversationAuthoringTrainingMode? trainingMode, SubTrainingOperationState trainingStatus, SubTrainingOperationState evaluationStatus, DateTimeOffset? estimatedEndOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ModelLabel = modelLabel;
             TrainingConfigVersion = trainingConfigVersion;
@@ -92,9 +92,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <summary> Represents the mode of the training operation. </summary>
         public AnalyzeConversationAuthoringTrainingMode? TrainingMode { get; }
         /// <summary> Represents the model training status. </summary>
-        public SubTrainingJobState TrainingStatus { get; }
+        public SubTrainingOperationState TrainingStatus { get; }
         /// <summary> Represents model evaluation status. </summary>
-        public SubTrainingJobState EvaluationStatus { get; }
+        public SubTrainingOperationState EvaluationStatus { get; }
         /// <summary> Represents the estimated end date time for training and evaluation. </summary>
         public DateTimeOffset? EstimatedEndOn { get; }
     }

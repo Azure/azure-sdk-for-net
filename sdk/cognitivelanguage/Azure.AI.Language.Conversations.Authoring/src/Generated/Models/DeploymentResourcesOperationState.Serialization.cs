@@ -13,11 +13,11 @@ using Azure.Core;
 
 namespace Azure.AI.Language.Conversations.Authoring.Models
 {
-    public partial class DeploymentJobState : IUtf8JsonSerializable, IJsonModel<DeploymentJobState>
+    public partial class DeploymentResourcesOperationState : IUtf8JsonSerializable, IJsonModel<DeploymentResourcesOperationState>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentJobState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DeploymentResourcesOperationState>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<DeploymentJobState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DeploymentResourcesOperationState>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -28,10 +28,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentResourcesOperationState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentJobState)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentResourcesOperationState)} does not support writing '{format}' format.");
             }
 
             if (options.Format != "W")
@@ -56,7 +56,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 writer.WriteStartArray();
                 foreach (var item in Warnings)
                 {
-                    writer.WriteObjectValue(item, options);
+                    JsonSerializer.Serialize(writer, item);
                 }
                 writer.WriteEndArray();
             }
@@ -87,19 +87,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             }
         }
 
-        DeploymentJobState IJsonModel<DeploymentJobState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        DeploymentResourcesOperationState IJsonModel<DeploymentResourcesOperationState>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentResourcesOperationState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentJobState)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentResourcesOperationState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDeploymentJobState(document.RootElement, options);
+            return DeserializeDeploymentResourcesOperationState(document.RootElement, options);
         }
 
-        internal static DeploymentJobState DeserializeDeploymentJobState(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static DeploymentResourcesOperationState DeserializeDeploymentResourcesOperationState(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -111,8 +111,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             DateTimeOffset createdOn = default;
             DateTimeOffset lastUpdatedOn = default;
             DateTimeOffset? expiresOn = default;
-            AnalyzeConversationAuthoringJobStatus status = default;
-            IReadOnlyList<AuthoringConversationsWarning> warnings = default;
+            ConversationAuthoringOperationStatus status = default;
+            IReadOnlyList<ResponseError> warnings = default;
             IReadOnlyList<ResponseError> errors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -144,7 +144,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
                 if (property.NameEquals("status"u8))
                 {
-                    status = new AnalyzeConversationAuthoringJobStatus(property.Value.GetString());
+                    status = new ConversationAuthoringOperationStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("warnings"u8))
@@ -153,10 +153,10 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                     {
                         continue;
                     }
-                    List<AuthoringConversationsWarning> array = new List<AuthoringConversationsWarning>();
+                    List<ResponseError> array = new List<ResponseError>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AuthoringConversationsWarning.DeserializeAuthoringConversationsWarning(item, options));
+                        array.Add(JsonSerializer.Deserialize<ResponseError>(item.GetRawText()));
                     }
                     warnings = array;
                     continue;
@@ -181,54 +181,54 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new DeploymentJobState(
+            return new DeploymentResourcesOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
                 expiresOn,
                 status,
-                warnings ?? new ChangeTrackingList<AuthoringConversationsWarning>(),
+                warnings ?? new ChangeTrackingList<ResponseError>(),
                 errors ?? new ChangeTrackingList<ResponseError>(),
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<DeploymentJobState>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<DeploymentResourcesOperationState>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentResourcesOperationState>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentJobState)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentResourcesOperationState)} does not support writing '{options.Format}' format.");
             }
         }
 
-        DeploymentJobState IPersistableModel<DeploymentJobState>.Create(BinaryData data, ModelReaderWriterOptions options)
+        DeploymentResourcesOperationState IPersistableModel<DeploymentResourcesOperationState>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<DeploymentJobState>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<DeploymentResourcesOperationState>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeDeploymentJobState(document.RootElement, options);
+                        return DeserializeDeploymentResourcesOperationState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentJobState)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentResourcesOperationState)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<DeploymentJobState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DeploymentResourcesOperationState>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <summary> Deserializes the model from a raw response. </summary>
         /// <param name="response"> The response to deserialize the model from. </param>
-        internal static DeploymentJobState FromResponse(Response response)
+        internal static DeploymentResourcesOperationState FromResponse(Response response)
         {
             using var document = JsonDocument.Parse(response.Content);
-            return DeserializeDeploymentJobState(document.RootElement);
+            return DeserializeDeploymentResourcesOperationState(document.RootElement);
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>

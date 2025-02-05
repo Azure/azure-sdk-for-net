@@ -241,7 +241,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-Response<ProjectDeletionJobState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
+Response<ProjectDeletionOperationState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
 ]]></code>
 This sample shows how to call GetProjectDeletionStatusAsync with all parameters.
 <code><![CDATA[
@@ -249,7 +249,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-Response<ProjectDeletionJobState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
+Response<ProjectDeletionOperationState> response = await client.GetProjectDeletionStatusAsync("<jobId>");
 ]]></code></example>
     </member>
     <member name="GetProjectDeletionStatus(string,CancellationToken)">
@@ -260,7 +260,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-Response<ProjectDeletionJobState> response = client.GetProjectDeletionStatus("<jobId>");
+Response<ProjectDeletionOperationState> response = client.GetProjectDeletionStatus("<jobId>");
 ]]></code>
 This sample shows how to call GetProjectDeletionStatus with all parameters.
 <code><![CDATA[
@@ -268,7 +268,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-Response<ProjectDeletionJobState> response = client.GetProjectDeletionStatus("<jobId>");
+Response<ProjectDeletionOperationState> response = client.GetProjectDeletionStatus("<jobId>");
 ]]></code></example>
     </member>
     <member name="GetProjectDeletionStatusAsync(string,RequestContext)">
@@ -303,6 +303,12 @@ Console.WriteLine(result.GetProperty("expiresOn").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -345,6 +351,12 @@ Console.WriteLine(result.GetProperty("expiresOn").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());

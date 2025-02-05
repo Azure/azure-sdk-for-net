@@ -36,7 +36,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExportedModelJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExportedModelOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -44,13 +44,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.ExportedModelJobState"/> instance for mocking. </returns>
-        public static ExportedModelJobState ExportedModelJobState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeConversationAuthoringJobStatus status = default, IEnumerable<AuthoringConversationsWarning> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.ExportedModelOperationState"/> instance for mocking. </returns>
+        public static ExportedModelOperationState ExportedModelOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
-            warnings ??= new List<AuthoringConversationsWarning>();
+            warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new ExportedModelJobState(
+            return new ExportedModelOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -59,15 +59,6 @@ namespace Azure.AI.Language.Conversations.Authoring
                 warnings?.ToList(),
                 errors?.ToList(),
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AuthoringConversationsWarning"/>. </summary>
-        /// <param name="code"> The warning code. </param>
-        /// <param name="message"> The warning message. </param>
-        /// <returns> A new <see cref="Models.AuthoringConversationsWarning"/> instance for mocking. </returns>
-        public static AuthoringConversationsWarning AuthoringConversationsWarning(string code = null, string message = null)
-        {
-            return new AuthoringConversationsWarning(code, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PrebuiltEntities"/>. </summary>
@@ -124,7 +115,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new EvaluationJobResult(evaluationDetails, modelLabel, trainingConfigVersion, percentComplete, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.EvaluationJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.EvaluationOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -133,13 +124,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="result"> Represents evaluation task detailed result. </param>
-        /// <returns> A new <see cref="Models.EvaluationJobState"/> instance for mocking. </returns>
-        public static EvaluationJobState EvaluationJobState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeConversationAuthoringJobStatus status = default, IEnumerable<AuthoringConversationsWarning> warnings = null, IEnumerable<ResponseError> errors = null, EvaluationJobResult result = null)
+        /// <returns> A new <see cref="Models.EvaluationOperationState"/> instance for mocking. </returns>
+        public static EvaluationOperationState EvaluationOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null, EvaluationJobResult result = null)
         {
-            warnings ??= new List<AuthoringConversationsWarning>();
+            warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new EvaluationJobState(
+            return new EvaluationOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -151,7 +142,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LoadSnapshotJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.LoadSnapshotOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -159,13 +150,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.LoadSnapshotJobState"/> instance for mocking. </returns>
-        public static LoadSnapshotJobState LoadSnapshotJobState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeConversationAuthoringJobStatus status = default, IEnumerable<AuthoringConversationsWarning> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.LoadSnapshotOperationState"/> instance for mocking. </returns>
+        public static LoadSnapshotOperationState LoadSnapshotOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
-            warnings ??= new List<AuthoringConversationsWarning>();
+            warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new LoadSnapshotJobState(
+            return new LoadSnapshotOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -354,7 +345,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="evaluationStatus"> Represents model evaluation status. </param>
         /// <param name="estimatedEndOn"> Represents the estimated end date time for training and evaluation. </param>
         /// <returns> A new <see cref="Models.TrainingJobResult"/> instance for mocking. </returns>
-        public static TrainingJobResult TrainingJobResult(string modelLabel = null, string trainingConfigVersion = null, AnalyzeConversationAuthoringTrainingMode? trainingMode = null, SubTrainingJobState trainingStatus = null, SubTrainingJobState evaluationStatus = null, DateTimeOffset? estimatedEndOn = null)
+        public static TrainingJobResult TrainingJobResult(string modelLabel = null, string trainingConfigVersion = null, AnalyzeConversationAuthoringTrainingMode? trainingMode = null, SubTrainingOperationState trainingStatus = null, SubTrainingOperationState evaluationStatus = null, DateTimeOffset? estimatedEndOn = null)
         {
             return new TrainingJobResult(
                 modelLabel,
@@ -366,18 +357,18 @@ namespace Azure.AI.Language.Conversations.Authoring
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SubTrainingJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SubTrainingOperationState"/>. </summary>
         /// <param name="percentComplete"> Represents progress percentage. </param>
         /// <param name="startedOn"> Represents the start date time. </param>
         /// <param name="endedOn"> Represents the end date time. </param>
         /// <param name="status"> Represents the status of the sub-operation. </param>
-        /// <returns> A new <see cref="Models.SubTrainingJobState"/> instance for mocking. </returns>
-        public static SubTrainingJobState SubTrainingJobState(int percentComplete = default, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, AnalyzeConversationAuthoringJobStatus status = default)
+        /// <returns> A new <see cref="Models.SubTrainingOperationState"/> instance for mocking. </returns>
+        public static SubTrainingOperationState SubTrainingOperationState(int percentComplete = default, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, ConversationAuthoringOperationStatus status = default)
         {
-            return new SubTrainingJobState(percentComplete, startedOn, endedOn, status, serializedAdditionalRawData: null);
+            return new SubTrainingOperationState(percentComplete, startedOn, endedOn, status, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TrainingJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.TrainingOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -386,13 +377,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="result"> Represents training tasks detailed result. </param>
-        /// <returns> A new <see cref="Models.TrainingJobState"/> instance for mocking. </returns>
-        public static TrainingJobState TrainingJobState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeConversationAuthoringJobStatus status = default, IEnumerable<AuthoringConversationsWarning> warnings = null, IEnumerable<ResponseError> errors = null, TrainingJobResult result = null)
+        /// <returns> A new <see cref="Models.TrainingOperationState"/> instance for mocking. </returns>
+        public static TrainingOperationState TrainingOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null, TrainingJobResult result = null)
         {
-            warnings ??= new List<AuthoringConversationsWarning>();
+            warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new TrainingJobState(
+            return new TrainingOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -424,7 +415,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new TrainingConfigVersion(trainingConfigVersionProperty, modelExpirationDate, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExportProjectJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExportProjectOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -433,13 +424,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
         /// <param name="resultUri"> The URL to use in order to download the exported project. </param>
-        /// <returns> A new <see cref="Models.ExportProjectJobState"/> instance for mocking. </returns>
-        public static ExportProjectJobState ExportProjectJobState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeConversationAuthoringJobStatus status = default, IEnumerable<AuthoringConversationsWarning> warnings = null, IEnumerable<ResponseError> errors = null, string resultUri = null)
+        /// <returns> A new <see cref="Models.ExportProjectOperationState"/> instance for mocking. </returns>
+        public static ExportProjectOperationState ExportProjectOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null, string resultUri = null)
         {
-            warnings ??= new List<AuthoringConversationsWarning>();
+            warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new ExportProjectJobState(
+            return new ExportProjectOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -589,7 +580,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new OrchestrationExportedUtterance(text, language, intent, dataset, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ImportProjectJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ImportProjectOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -597,13 +588,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.ImportProjectJobState"/> instance for mocking. </returns>
-        public static ImportProjectJobState ImportProjectJobState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeConversationAuthoringJobStatus status = default, IEnumerable<AuthoringConversationsWarning> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.ImportProjectOperationState"/> instance for mocking. </returns>
+        public static ImportProjectOperationState ImportProjectOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
-            warnings ??= new List<AuthoringConversationsWarning>();
+            warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new ImportProjectJobState(
+            return new ImportProjectOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -644,7 +635,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProjectDeletionJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProjectDeletionOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -652,13 +643,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.ProjectDeletionJobState"/> instance for mocking. </returns>
-        public static ProjectDeletionJobState ProjectDeletionJobState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeConversationAuthoringJobStatus status = default, IEnumerable<AuthoringConversationsWarning> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.ProjectDeletionOperationState"/> instance for mocking. </returns>
+        public static ProjectDeletionOperationState ProjectDeletionOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
-            warnings ??= new List<AuthoringConversationsWarning>();
+            warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new ProjectDeletionJobState(
+            return new ProjectDeletionOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -722,7 +713,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new DeploymentResource(resourceId, region, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SwapDeploymentsJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.SwapDeploymentsOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -730,13 +721,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.SwapDeploymentsJobState"/> instance for mocking. </returns>
-        public static SwapDeploymentsJobState SwapDeploymentsJobState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeConversationAuthoringJobStatus status = default, IEnumerable<AuthoringConversationsWarning> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.SwapDeploymentsOperationState"/> instance for mocking. </returns>
+        public static SwapDeploymentsOperationState SwapDeploymentsOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
-            warnings ??= new List<AuthoringConversationsWarning>();
+            warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new SwapDeploymentsJobState(
+            return new SwapDeploymentsOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -758,7 +749,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new CreateDeploymentDetails(trainedModelLabel, assignedResourceIds?.ToList(), serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeploymentJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -766,13 +757,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.DeploymentJobState"/> instance for mocking. </returns>
-        public static DeploymentJobState DeploymentJobState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeConversationAuthoringJobStatus status = default, IEnumerable<AuthoringConversationsWarning> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.DeploymentOperationState"/> instance for mocking. </returns>
+        public static DeploymentOperationState DeploymentOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
-            warnings ??= new List<AuthoringConversationsWarning>();
+            warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new DeploymentJobState(
+            return new DeploymentOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -783,7 +774,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeploymentDeleteFromResourcesJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentDeleteFromResourcesOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -791,13 +782,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.DeploymentDeleteFromResourcesJobState"/> instance for mocking. </returns>
-        public static DeploymentDeleteFromResourcesJobState DeploymentDeleteFromResourcesJobState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeConversationAuthoringJobStatus status = default, IEnumerable<AuthoringConversationsWarning> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.DeploymentDeleteFromResourcesOperationState"/> instance for mocking. </returns>
+        public static DeploymentDeleteFromResourcesOperationState DeploymentDeleteFromResourcesOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
-            warnings ??= new List<AuthoringConversationsWarning>();
+            warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new DeploymentDeleteFromResourcesJobState(
+            return new DeploymentDeleteFromResourcesOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -808,7 +799,7 @@ namespace Azure.AI.Language.Conversations.Authoring
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeploymentResourcesJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentResourcesOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -816,13 +807,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.DeploymentResourcesJobState"/> instance for mocking. </returns>
-        public static DeploymentResourcesJobState DeploymentResourcesJobState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeConversationAuthoringJobStatus status = default, IEnumerable<AuthoringConversationsWarning> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.DeploymentResourcesOperationState"/> instance for mocking. </returns>
+        public static DeploymentResourcesOperationState DeploymentResourcesOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
-            warnings ??= new List<AuthoringConversationsWarning>();
+            warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new DeploymentResourcesJobState(
+            return new DeploymentResourcesOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -874,7 +865,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new AssignedProjectDeploymentMetadata(deploymentName, lastDeployedOn, deploymentExpiresOn, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CopyProjectJobState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.CopyProjectOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -882,13 +873,13 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.CopyProjectJobState"/> instance for mocking. </returns>
-        public static CopyProjectJobState CopyProjectJobState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, AnalyzeConversationAuthoringJobStatus status = default, IEnumerable<AuthoringConversationsWarning> warnings = null, IEnumerable<ResponseError> errors = null)
+        /// <returns> A new <see cref="Models.CopyProjectOperationState"/> instance for mocking. </returns>
+        public static CopyProjectOperationState CopyProjectOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
-            warnings ??= new List<AuthoringConversationsWarning>();
+            warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new CopyProjectJobState(
+            return new CopyProjectOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,

@@ -9,7 +9,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-Response<ExportProjectJobState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
+Response<ExportProjectOperationState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetExportStatusAsync with all parameters.
 <code><![CDATA[
@@ -17,7 +17,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-Response<ExportProjectJobState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
+Response<ExportProjectOperationState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetExportStatus(string,string,CancellationToken)">
@@ -28,7 +28,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-Response<ExportProjectJobState> response = client.GetExportStatus("<projectName>", "<jobId>");
+Response<ExportProjectOperationState> response = client.GetExportStatus("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetExportStatus with all parameters.
 <code><![CDATA[
@@ -36,7 +36,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-Response<ExportProjectJobState> response = client.GetExportStatus("<projectName>", "<jobId>");
+Response<ExportProjectOperationState> response = client.GetExportStatus("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetExportStatusAsync(string,string,RequestContext)">
@@ -71,6 +71,12 @@ Console.WriteLine(result.GetProperty("expiresOn").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -114,6 +120,12 @@ Console.WriteLine(result.GetProperty("expiresOn").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -133,7 +145,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-Response<ImportProjectJobState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+Response<ImportProjectOperationState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetImportStatusAsync with all parameters.
 <code><![CDATA[
@@ -141,7 +153,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-Response<ImportProjectJobState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+Response<ImportProjectOperationState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetImportStatus(string,string,CancellationToken)">
@@ -152,7 +164,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-Response<ImportProjectJobState> response = client.GetImportStatus("<projectName>", "<jobId>");
+Response<ImportProjectOperationState> response = client.GetImportStatus("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetImportStatus with all parameters.
 <code><![CDATA[
@@ -160,7 +172,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjectFiles client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectFilesClient(apiVersion: "2024-11-15-preview");
 
-Response<ImportProjectJobState> response = client.GetImportStatus("<projectName>", "<jobId>");
+Response<ImportProjectOperationState> response = client.GetImportStatus("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetImportStatusAsync(string,string,RequestContext)">
@@ -195,6 +207,12 @@ Console.WriteLine(result.GetProperty("expiresOn").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -237,6 +255,12 @@ Console.WriteLine(result.GetProperty("expiresOn").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());

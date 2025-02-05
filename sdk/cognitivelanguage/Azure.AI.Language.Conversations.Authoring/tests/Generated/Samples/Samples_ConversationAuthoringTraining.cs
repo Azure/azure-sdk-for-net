@@ -67,7 +67,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
 
-            Response<TrainingJobState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
+            Response<TrainingOperationState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -78,7 +78,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
 
-            Response<TrainingJobState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
+            Response<TrainingOperationState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -99,6 +99,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -139,6 +145,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -169,7 +181,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
 
-            Response<TrainingJobState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
+            Response<TrainingOperationState> response = client.GetTrainingStatus("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -180,7 +192,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
 
-            Response<TrainingJobState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
+            Response<TrainingOperationState> response = await client.GetTrainingStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -341,7 +353,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
 
-            foreach (TrainingJobState item in client.GetTrainingJobs("<projectName>"))
+            foreach (TrainingOperationState item in client.GetTrainingJobs("<projectName>"))
             {
             }
         }
@@ -354,7 +366,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
 
-            await foreach (TrainingJobState item in client.GetTrainingJobsAsync("<projectName>"))
+            await foreach (TrainingOperationState item in client.GetTrainingJobsAsync("<projectName>"))
             {
             }
         }
@@ -377,6 +389,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
                 Console.WriteLine(result.GetProperty("status").ToString());
                 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
                 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
                 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
                 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
                 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -418,6 +436,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
                 Console.WriteLine(result.GetProperty("status").ToString());
                 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
                 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+                Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
                 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
                 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
                 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -449,7 +473,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
 
-            foreach (TrainingJobState item in client.GetTrainingJobs("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            foreach (TrainingOperationState item in client.GetTrainingJobs("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }
@@ -462,7 +486,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
 
-            await foreach (TrainingJobState item in client.GetTrainingJobsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            await foreach (TrainingOperationState item in client.GetTrainingJobsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }

@@ -11,7 +11,7 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     [CodeGenClient("AuthoringClient")]
-    [CodeGenSuppress("GetConversationAuthoringCopyProjectClient", typeof(string))]
+    [CodeGenSuppress("GetConversationAuthoringCopiedProjectClient", typeof(string))]
     [CodeGenSuppress("GetConversationAuthoringDeploymentResourcesClient", typeof(string))]
     [CodeGenSuppress("GetConversationAuthoringDeploymentsClient", typeof(string))]
     [CodeGenSuppress("GetConversationAuthoringProjectsClient", typeof(string))]
@@ -52,14 +52,14 @@ namespace Azure.AI.Language.Conversations.Authoring
             return new ConversationAuthoringProjectFiles(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
         }
 
-        /// <summary> Initializes a new instance of ConversationAuthoringCopyProject. </summary>
+        /// <summary> Initializes a new instance of ConversationAuthoringCopiedProject. </summary>
         /// <param name="projectName"> The project name to use for this subclient. </param>
-        public virtual ConversationAuthoringCopyProject GetCopyProject(string projectName)
+        public virtual ConversationAuthoringCopiedProject GetCopiedProject(string projectName)
         {
             var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new ConversationAuthoringCopyProject(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
+            return new ConversationAuthoringCopiedProject(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
         }
 
         /// <summary> Initializes a new instance of ConversationAuthoringDeploymentResources. </summary>

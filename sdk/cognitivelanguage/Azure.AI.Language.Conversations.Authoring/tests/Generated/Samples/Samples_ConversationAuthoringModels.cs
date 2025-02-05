@@ -243,7 +243,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response<EvaluationJobState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<EvaluationOperationState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -254,7 +254,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response<EvaluationJobState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<EvaluationOperationState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -275,6 +275,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -309,6 +315,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -333,7 +345,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response<EvaluationJobState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<EvaluationOperationState> response = client.GetEvaluationStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -344,7 +356,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response<EvaluationJobState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<EvaluationOperationState> response = await client.GetEvaluationStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -611,7 +623,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response<LoadSnapshotJobState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<LoadSnapshotOperationState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -622,7 +634,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response<LoadSnapshotJobState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<LoadSnapshotOperationState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -643,6 +655,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -671,6 +689,12 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             Console.WriteLine(result.GetProperty("status").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
             Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -689,7 +713,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response<LoadSnapshotJobState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<LoadSnapshotOperationState> response = client.GetLoadSnapshotStatus("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]
@@ -700,7 +724,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            Response<LoadSnapshotJobState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
+            Response<LoadSnapshotOperationState> response = await client.GetLoadSnapshotStatusAsync("<projectName>", "<trainedModelLabel>", "<jobId>");
         }
 
         [Test]

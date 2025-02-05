@@ -125,7 +125,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-Response<DeploymentDeleteFromResourcesJobState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+Response<DeploymentDeleteFromResourcesOperationState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetDeploymentDeleteFromResourcesStatusAsync with all parameters.
 <code><![CDATA[
@@ -133,7 +133,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-Response<DeploymentDeleteFromResourcesJobState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+Response<DeploymentDeleteFromResourcesOperationState> response = await client.GetDeploymentDeleteFromResourcesStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetDeploymentDeleteFromResourcesStatus(string,string,string,CancellationToken)">
@@ -144,7 +144,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-Response<DeploymentDeleteFromResourcesJobState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
+Response<DeploymentDeleteFromResourcesOperationState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetDeploymentDeleteFromResourcesStatus with all parameters.
 <code><![CDATA[
@@ -152,7 +152,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-Response<DeploymentDeleteFromResourcesJobState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
+Response<DeploymentDeleteFromResourcesOperationState> response = client.GetDeploymentDeleteFromResourcesStatus("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetDeploymentDeleteFromResourcesStatusAsync(string,string,string,RequestContext)">
@@ -187,6 +187,12 @@ Console.WriteLine(result.GetProperty("expiresOn").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -229,6 +235,12 @@ Console.WriteLine(result.GetProperty("expiresOn").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -247,7 +259,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-Response<DeploymentJobState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+Response<DeploymentOperationState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetDeploymentStatusAsync with all parameters.
 <code><![CDATA[
@@ -255,7 +267,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-Response<DeploymentJobState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
+Response<DeploymentOperationState> response = await client.GetDeploymentStatusAsync("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetDeploymentStatus(string,string,string,CancellationToken)">
@@ -266,7 +278,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-Response<DeploymentJobState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
+Response<DeploymentOperationState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetDeploymentStatus with all parameters.
 <code><![CDATA[
@@ -274,7 +286,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-Response<DeploymentJobState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
+Response<DeploymentOperationState> response = client.GetDeploymentStatus("<projectName>", "<deploymentName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetDeploymentStatusAsync(string,string,string,RequestContext)">
@@ -309,6 +321,12 @@ Console.WriteLine(result.GetProperty("expiresOn").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -351,6 +369,12 @@ Console.WriteLine(result.GetProperty("expiresOn").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -369,7 +393,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-Response<SwapDeploymentsJobState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
+Response<SwapDeploymentsOperationState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetSwapDeploymentsStatusAsync with all parameters.
 <code><![CDATA[
@@ -377,7 +401,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-Response<SwapDeploymentsJobState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
+Response<SwapDeploymentsOperationState> response = await client.GetSwapDeploymentsStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetSwapDeploymentsStatus(string,string,CancellationToken)">
@@ -388,7 +412,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-Response<SwapDeploymentsJobState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
+Response<SwapDeploymentsOperationState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
 ]]></code>
 This sample shows how to call GetSwapDeploymentsStatus with all parameters.
 <code><![CDATA[
@@ -396,7 +420,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-Response<SwapDeploymentsJobState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
+Response<SwapDeploymentsOperationState> response = client.GetSwapDeploymentsStatus("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
     <member name="GetSwapDeploymentsStatusAsync(string,string,RequestContext)">
@@ -431,6 +455,12 @@ Console.WriteLine(result.GetProperty("expiresOn").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
@@ -473,6 +503,12 @@ Console.WriteLine(result.GetProperty("expiresOn").ToString());
 Console.WriteLine(result.GetProperty("status").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
