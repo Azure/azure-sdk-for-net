@@ -49,7 +49,7 @@ public class FeatureCollection : IEnumerable<CloudMachineFeature>
         }
     }
 
-    internal void Emit(CloudMachineInfrastructure infrastructure)
+    internal void Emit(ProjectInfrastructure infrastructure)
     {
         int index = 0;
         while (true)
