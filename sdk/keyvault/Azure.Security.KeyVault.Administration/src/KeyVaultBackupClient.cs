@@ -15,7 +15,7 @@ namespace Azure.Security.KeyVault.Administration
     /// </summary>
     public class KeyVaultBackupClient
     {
-        private readonly KeyVaultClient _restClient;
+        private readonly KeyVaultRestClient _restClient;
 
         /// <summary>
         /// The vault Uri.
@@ -55,7 +55,7 @@ namespace Azure.Security.KeyVault.Administration
 
             options ??= new KeyVaultAdministrationClientOptions();
 
-            _restClient = new KeyVaultClient(VaultUri, credential,options);
+            _restClient = new KeyVaultRestClient(VaultUri, credential,options);
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ namespace Azure.Security.KeyVault.Administration
     /// <summary>
     /// Options to configure the requests sent to Key Vault.
     /// </summary>
-    [CodeGenModel("KeyVaultClientOptions")]
+    [CodeGenModel("KeyVaultRestClientOptions")]
     public partial class KeyVaultAdministrationClientOptions : ClientOptions
     {
         internal const string CallerShouldAuditReason = "https://aka.ms/azsdk/callershouldaudit/security-keyvault-administration";
@@ -20,35 +20,6 @@ namespace Azure.Security.KeyVault.Administration
         /// <see href="https://docs.microsoft.com/rest/api/keyvault/key-vault-versions">Key Vault versions</see>.
         /// </summary>
         internal const ServiceVersion LatestVersion = ServiceVersion.V7_6_Preview_1;
-
-//        /// <summary>
-//        /// The versions of Azure Key Vault supported by this client
-//        /// library.
-//        /// </summary>
-//        public enum ServiceVersion
-//        {
-//#pragma warning disable CA1707 // Identifiers should not contain underscores
-//            /// <summary>
-//            /// The Key Vault API version 7.2.
-//            /// </summary>
-//            V7_2 = 1,
-
-//            /// <summary>
-//            /// The Key Vault API version 7.3.
-//            /// </summary>
-//            V7_3 = 2,
-
-//            /// <summary>
-//            /// The Key Vault API version 7.4.
-//            /// </summary>
-//            V7_4 = 3,
-
-//            /// <summary>
-//            /// The Key Vault API version 7.5.
-//            /// </summary>
-//            V7_5 = 4,
-//#pragma warning restore CA1707 // Identifiers should not contain underscores
-//        }
 
         /// <summary>
         /// Gets the <see cref="ServiceVersion"/> of the service API used when

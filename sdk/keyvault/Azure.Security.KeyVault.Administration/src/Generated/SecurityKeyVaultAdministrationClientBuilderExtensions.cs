@@ -5,31 +5,10 @@
 
 #nullable disable
 
-using System;
-using Azure.Core.Extensions;
-using Azure.Security.KeyVault.Administration;
-
 namespace Microsoft.Extensions.Azure
 {
-    /// <summary> Extension methods to add <see cref="KeyVaultClient"/> to client builder. </summary>
+    /// <summary> Extension methods to add  to client builder. </summary>
     public static partial class SecurityKeyVaultAdministrationClientBuilderExtensions
     {
-        /// <summary> Registers a <see cref="KeyVaultClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        public static IAzureClientBuilder<KeyVaultClient, KeyVaultAdministrationClientOptions> AddKeyVaultClient<TBuilder>(this TBuilder builder, Uri endpoint)
-        where TBuilder : IAzureClientFactoryBuilderWithCredential
-        {
-            return builder.RegisterClientFactory<KeyVaultClient, KeyVaultAdministrationClientOptions>((options, cred) => new KeyVaultClient(endpoint, cred, options));
-        }
-
-        /// <summary> Registers a <see cref="KeyVaultClient"/> instance. </summary>
-        /// <param name="builder"> The builder to register with. </param>
-        /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<KeyVaultClient, KeyVaultAdministrationClientOptions> AddKeyVaultClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
-        where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
-        {
-            return builder.RegisterClientFactory<KeyVaultClient, KeyVaultAdministrationClientOptions>(configuration);
-        }
     }
 }

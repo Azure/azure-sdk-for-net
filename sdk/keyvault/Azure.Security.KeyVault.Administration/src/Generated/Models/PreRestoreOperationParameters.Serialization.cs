@@ -5,155 +5,34 @@
 
 #nullable disable
 
-using System;
-using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration.Models
 {
-    internal partial class PreRestoreOperationParameters : IUtf8JsonSerializable, IJsonModel<PreRestoreOperationParameters>
+    internal partial class PreRestoreOperationParameters : IUtf8JsonSerializable
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PreRestoreOperationParameters>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<PreRestoreOperationParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            JsonModelWriteCore(writer, options);
-            writer.WriteEndObject();
-        }
-
-        /// <param name="writer"> The JSON writer. </param>
-        /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PreRestoreOperationParameters>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(PreRestoreOperationParameters)} does not support writing '{format}' format.");
-            }
-
             if (Optional.IsDefined(SasTokenParameters))
             {
                 writer.WritePropertyName("sasTokenParameters"u8);
-                writer.WriteObjectValue(SasTokenParameters, options);
+                writer.WriteObjectValue(SasTokenParameters);
             }
             if (Optional.IsDefined(FolderToRestore))
             {
                 writer.WritePropertyName("folderToRestore"u8);
                 writer.WriteStringValue(FolderToRestore);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-        }
-
-        PreRestoreOperationParameters IJsonModel<PreRestoreOperationParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PreRestoreOperationParameters>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(PreRestoreOperationParameters)} does not support reading '{format}' format.");
-            }
-
-            using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePreRestoreOperationParameters(document.RootElement, options);
-        }
-
-        internal static PreRestoreOperationParameters DeserializePreRestoreOperationParameters(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            SASTokenParameter sasTokenParameters = default;
-            string folderToRestore = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("sasTokenParameters"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    sasTokenParameters = SASTokenParameter.DeserializeSASTokenParameter(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("folderToRestore"u8))
-                {
-                    folderToRestore = property.Value.GetString();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new PreRestoreOperationParameters(sasTokenParameters, folderToRestore, serializedAdditionalRawData);
-        }
-
-        BinaryData IPersistableModel<PreRestoreOperationParameters>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PreRestoreOperationParameters>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options);
-                default:
-                    throw new FormatException($"The model {nameof(PreRestoreOperationParameters)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        PreRestoreOperationParameters IPersistableModel<PreRestoreOperationParameters>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<PreRestoreOperationParameters>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializePreRestoreOperationParameters(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(PreRestoreOperationParameters)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<PreRestoreOperationParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static PreRestoreOperationParameters FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return DeserializePreRestoreOperationParameters(document.RootElement);
+            writer.WriteEndObject();
         }
 
         /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this, ModelSerializationExtensions.WireOptions);
+            content.JsonWriter.WriteObjectValue(this);
             return content;
         }
     }

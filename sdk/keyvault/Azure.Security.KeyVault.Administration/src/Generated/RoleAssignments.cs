@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Administration
 {
     // Data plane generated sub-client.
     /// <summary> The RoleAssignments sub-client. </summary>
-    public partial class RoleAssignments
+    internal partial class RoleAssignments
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -415,7 +415,7 @@ namespace Azure.Security.KeyVault.Administration
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetForScopesRequest(scope, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetForScopesNextPageRequest(nextLink, scope, filter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(e), ClientDiagnostics, _pipeline, "RoleAssignments.GetForScopes", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment, ClientDiagnostics, _pipeline, "RoleAssignments.GetForScopes", "value", "nextLink", context);
         }
 
         /// <summary> Gets role assignments for a scope. </summary>
@@ -430,7 +430,7 @@ namespace Azure.Security.KeyVault.Administration
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetForScopesRequest(scope, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetForScopesNextPageRequest(nextLink, scope, filter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment(e), ClientDiagnostics, _pipeline, "RoleAssignments.GetForScopes", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, KeyVaultRoleAssignment.DeserializeKeyVaultRoleAssignment, ClientDiagnostics, _pipeline, "RoleAssignments.GetForScopes", "value", "nextLink", context);
         }
 
         /// <summary>

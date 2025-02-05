@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Administration
     /// </summary>
     public class KeyVaultSettingsClient
     {
-        private readonly KeyVaultClient _restClient;
+        private readonly KeyVaultRestClient _restClient;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultSettingsClient"/> class for the specified vault.
@@ -44,7 +44,7 @@ namespace Azure.Security.KeyVault.Administration
 
             options ??= new KeyVaultAdministrationClientOptions();
 
-            _restClient = new KeyVaultClient(vaultUri,credential, options);
+            _restClient = new KeyVaultRestClient(vaultUri,credential, options);
         }
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyVaultBackupClient"/> class for mocking.

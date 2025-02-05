@@ -16,7 +16,7 @@ namespace Azure.Security.KeyVault.Administration
 {
     // Data plane generated client.
     /// <summary> The key vault client performs cryptographic key operations and vault operations against the Key Vault service. </summary>
-    public partial class KeyVaultClient
+    internal partial class KeyVaultRestClient
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -30,35 +30,9 @@ namespace Azure.Security.KeyVault.Administration
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of KeyVaultClient for mocking. </summary>
-        protected KeyVaultClient()
+        /// <summary> Initializes a new instance of KeyVaultRestClient for mocking. </summary>
+        protected KeyVaultRestClient()
         {
-        }
-
-        /// <summary> Initializes a new instance of KeyVaultClient. </summary>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public KeyVaultClient(Uri endpoint, TokenCredential credential) : this(endpoint, credential, new KeyVaultAdministrationClientOptions())
-        {
-        }
-
-        /// <summary> Initializes a new instance of KeyVaultClient. </summary>
-        /// <param name="endpoint"> The <see cref="Uri"/> to use. </param>
-        /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        /// <param name="options"> The options for configuring the client. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
-        public KeyVaultClient(Uri endpoint, TokenCredential credential, KeyVaultAdministrationClientOptions options)
-        {
-            Argument.AssertNotNull(endpoint, nameof(endpoint));
-            Argument.AssertNotNull(credential, nameof(credential));
-            options ??= new KeyVaultAdministrationClientOptions();
-
-            ClientDiagnostics = new ClientDiagnostics(options, true);
-            _tokenCredential = credential;
-            _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new BearerTokenAuthenticationPolicy(_tokenCredential, AuthorizationScopes) }, new ResponseClassifier());
-            _endpoint = endpoint;
-            _apiVersion = options.Version;
         }
 
         /// <summary> Returns the status of full backup operation. </summary>
@@ -114,7 +88,7 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.FullBackupStatus");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.FullBackupStatus");
             scope.Start();
             try
             {
@@ -153,7 +127,7 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.FullBackupStatus");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.FullBackupStatus");
             scope.Start();
             try
             {
@@ -220,7 +194,7 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.RestoreStatus");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.RestoreStatus");
             scope.Start();
             try
             {
@@ -259,7 +233,7 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.RestoreStatus");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.RestoreStatus");
             scope.Start();
             try
             {
@@ -326,7 +300,7 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.SelectiveKeyRestoreStatus");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.SelectiveKeyRestoreStatus");
             scope.Start();
             try
             {
@@ -365,7 +339,7 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.SelectiveKeyRestoreStatus");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.SelectiveKeyRestoreStatus");
             scope.Start();
             try
             {
@@ -401,7 +375,7 @@ namespace Azure.Security.KeyVault.Administration
             Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.UpdateSetting");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.UpdateSetting");
             scope.Start();
             try
             {
@@ -437,7 +411,7 @@ namespace Azure.Security.KeyVault.Administration
             Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.UpdateSetting");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.UpdateSetting");
             scope.Start();
             try
             {
@@ -506,7 +480,7 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.GetSetting");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.GetSetting");
             scope.Start();
             try
             {
@@ -545,7 +519,7 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNullOrEmpty(settingName, nameof(settingName));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.GetSetting");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.GetSetting");
             scope.Start();
             try
             {
@@ -599,7 +573,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> The response returned from the service. </returns>
         internal virtual async Task<Response> GetSettingsAsync(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.GetSettings");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.GetSettings");
             scope.Start();
             try
             {
@@ -633,7 +607,7 @@ namespace Azure.Security.KeyVault.Administration
         /// <returns> The response returned from the service. </returns>
         internal virtual Response GetSettings(RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.GetSettings");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.GetSettings");
             scope.Start();
             try
             {
@@ -659,7 +633,7 @@ namespace Azure.Security.KeyVault.Administration
             using RequestContent content = azureStorageBlobContainerUri.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await FullBackupAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FullBackupDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultClient.FullBackup");
+            return ProtocolOperationHelpers.Convert(response, FullBackupDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.FullBackup");
         }
 
         /// <summary> Creates a full backup using a user-provided SAS token to an Azure blob storage container. </summary>
@@ -674,7 +648,7 @@ namespace Azure.Security.KeyVault.Administration
             using RequestContent content = azureStorageBlobContainerUri.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = FullBackup(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, FullBackupDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultClient.FullBackup");
+            return ProtocolOperationHelpers.Convert(response, FullBackupDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.FullBackup");
         }
 
         /// <summary>
@@ -702,12 +676,12 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.FullBackup");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.FullBackup");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateFullBackupRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "KeyVaultClient.FullBackup", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.FullBackup", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -741,12 +715,12 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.FullBackup");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.FullBackup");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateFullBackupRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "KeyVaultClient.FullBackup", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.FullBackup", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -767,7 +741,7 @@ namespace Azure.Security.KeyVault.Administration
             using RequestContent content = preBackupOperationParameters.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await PreFullBackupAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, FullBackupDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultClient.PreFullBackup");
+            return ProtocolOperationHelpers.Convert(response, FullBackupDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.PreFullBackup");
         }
 
         /// <summary> Pre-backup operation for checking whether the customer can perform a full backup operation. </summary>
@@ -782,7 +756,7 @@ namespace Azure.Security.KeyVault.Administration
             using RequestContent content = preBackupOperationParameters.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = PreFullBackup(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, FullBackupDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultClient.PreFullBackup");
+            return ProtocolOperationHelpers.Convert(response, FullBackupDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.PreFullBackup");
         }
 
         /// <summary>
@@ -810,12 +784,12 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.PreFullBackup");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.PreFullBackup");
             scope.Start();
             try
             {
                 using HttpMessage message = CreatePreFullBackupRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "KeyVaultClient.PreFullBackup", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.PreFullBackup", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -849,12 +823,12 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.PreFullBackup");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.PreFullBackup");
             scope.Start();
             try
             {
                 using HttpMessage message = CreatePreFullBackupRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "KeyVaultClient.PreFullBackup", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.PreFullBackup", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -875,7 +849,7 @@ namespace Azure.Security.KeyVault.Administration
             using RequestContent content = preRestoreOperationParameters.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await PreFullRestoreOperationAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, RestoreDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultClient.PreFullRestoreOperation");
+            return ProtocolOperationHelpers.Convert(response, RestoreDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperation");
         }
 
         /// <summary> Pre-restore operation for checking whether the customer can perform a full restore operation. </summary>
@@ -890,7 +864,7 @@ namespace Azure.Security.KeyVault.Administration
             using RequestContent content = preRestoreOperationParameters.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = PreFullRestoreOperation(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, RestoreDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultClient.PreFullRestoreOperation");
+            return ProtocolOperationHelpers.Convert(response, RestoreDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperation");
         }
 
         /// <summary>
@@ -918,12 +892,12 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.PreFullRestoreOperation");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.PreFullRestoreOperation");
             scope.Start();
             try
             {
                 using HttpMessage message = CreatePreFullRestoreOperationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "KeyVaultClient.PreFullRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -957,12 +931,12 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.PreFullRestoreOperation");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.PreFullRestoreOperation");
             scope.Start();
             try
             {
                 using HttpMessage message = CreatePreFullRestoreOperationRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "KeyVaultClient.PreFullRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.PreFullRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -983,7 +957,7 @@ namespace Azure.Security.KeyVault.Administration
             using RequestContent content = restoreBlobDetails.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await FullRestoreOperationAsync(waitUntil, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, RestoreDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultClient.FullRestoreOperation");
+            return ProtocolOperationHelpers.Convert(response, RestoreDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperation");
         }
 
         /// <summary> Restores all key materials using the SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
@@ -998,7 +972,7 @@ namespace Azure.Security.KeyVault.Administration
             using RequestContent content = restoreBlobDetails.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = FullRestoreOperation(waitUntil, content, context);
-            return ProtocolOperationHelpers.Convert(response, RestoreDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultClient.FullRestoreOperation");
+            return ProtocolOperationHelpers.Convert(response, RestoreDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperation");
         }
 
         /// <summary>
@@ -1026,12 +1000,12 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.FullRestoreOperation");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.FullRestoreOperation");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateFullRestoreOperationRequest(content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "KeyVaultClient.FullRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1065,12 +1039,12 @@ namespace Azure.Security.KeyVault.Administration
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.FullRestoreOperation");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.FullRestoreOperation");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateFullRestoreOperationRequest(content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "KeyVaultClient.FullRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.FullRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
             }
             catch (Exception e)
             {
@@ -1094,7 +1068,7 @@ namespace Azure.Security.KeyVault.Administration
             using RequestContent content = restoreBlobDetails.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = await SelectiveKeyRestoreOperationAsync(waitUntil, keyName, content, context).ConfigureAwait(false);
-            return ProtocolOperationHelpers.Convert(response, SelectiveKeyRestoreDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultClient.SelectiveKeyRestoreOperation");
+            return ProtocolOperationHelpers.Convert(response, SelectiveKeyRestoreDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperation");
         }
 
         /// <summary> Restores all key versions of a given key using user supplied SAS token pointing to a previously stored Azure Blob storage backup folder. </summary>
@@ -1112,7 +1086,7 @@ namespace Azure.Security.KeyVault.Administration
             using RequestContent content = restoreBlobDetails.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             Operation<BinaryData> response = SelectiveKeyRestoreOperation(waitUntil, keyName, content, context);
-            return ProtocolOperationHelpers.Convert(response, SelectiveKeyRestoreDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultClient.SelectiveKeyRestoreOperation");
+            return ProtocolOperationHelpers.Convert(response, SelectiveKeyRestoreDetailsInternal.FromResponse, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperation");
         }
 
         /// <summary>
@@ -1143,12 +1117,12 @@ namespace Azure.Security.KeyVault.Administration
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.SelectiveKeyRestoreOperation");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.SelectiveKeyRestoreOperation");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSelectiveKeyRestoreOperationRequest(keyName, content, context);
-                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "KeyVaultClient.SelectiveKeyRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
+                return await ProtocolOperationHelpers.ProcessMessageAsync(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil).ConfigureAwait(false);
             }
             catch (Exception e)
             {
@@ -1185,12 +1159,12 @@ namespace Azure.Security.KeyVault.Administration
             Argument.AssertNotNullOrEmpty(keyName, nameof(keyName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("KeyVaultClient.SelectiveKeyRestoreOperation");
+            using var scope = ClientDiagnostics.CreateScope("KeyVaultRestClient.SelectiveKeyRestoreOperation");
             scope.Start();
             try
             {
                 using HttpMessage message = CreateSelectiveKeyRestoreOperationRequest(keyName, content, context);
-                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "KeyVaultClient.SelectiveKeyRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
+                return ProtocolOperationHelpers.ProcessMessage(_pipeline, message, ClientDiagnostics, "KeyVaultRestClient.SelectiveKeyRestoreOperation", OperationFinalStateVia.AzureAsyncOperation, context, waitUntil);
             }
             catch (Exception e)
             {

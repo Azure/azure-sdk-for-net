@@ -1909,7 +1909,7 @@
     {
      "$id": "196",
      "kind": "property",
-     "name": "type",
+     "name": "SettingType",
      "serializedName": "type",
      "doc": "The type specifier of the value.",
      "type": {

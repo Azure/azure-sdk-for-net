@@ -17,7 +17,7 @@ namespace Azure.Security.KeyVault.Administration
 {
     // Data plane generated sub-client.
     /// <summary> The RoleDefinitions sub-client. </summary>
-    public partial class RoleDefinitions
+    internal partial class RoleDefinitions
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://vault.azure.net/.default" };
         private readonly TokenCredential _tokenCredential;
@@ -415,7 +415,7 @@ namespace Azure.Security.KeyVault.Administration
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRoleDefinitionsRequest(scope, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRoleDefinitionsNextPageRequest(nextLink, scope, filter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(e), ClientDiagnostics, _pipeline, "RoleDefinitions.GetRoleDefinitions", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition, ClientDiagnostics, _pipeline, "RoleDefinitions.GetRoleDefinitions", "value", "nextLink", context);
         }
 
         /// <summary> Get all role definitions that are applicable at scope and above. </summary>
@@ -430,7 +430,7 @@ namespace Azure.Security.KeyVault.Administration
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetRoleDefinitionsRequest(scope, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetRoleDefinitionsNextPageRequest(nextLink, scope, filter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition(e), ClientDiagnostics, _pipeline, "RoleDefinitions.GetRoleDefinitions", "value", "nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, KeyVaultRoleDefinition.DeserializeKeyVaultRoleDefinition, ClientDiagnostics, _pipeline, "RoleDefinitions.GetRoleDefinitions", "value", "nextLink", context);
         }
 
         /// <summary>

@@ -10,16 +10,32 @@ using Azure.Core;
 
 namespace Azure.Security.KeyVault.Administration
 {
-    /// <summary> Client options for KeyVaultClient. </summary>
+    /// <summary> Client options for KeyVaultRestClient. </summary>
     public partial class KeyVaultAdministrationClientOptions : ClientOptions
     {
         /// <summary> The version of the service to use. </summary>
         public enum ServiceVersion
         {
+            /// <summary>
+            /// The Key Vault API version 7.2.
+            /// </summary>
+            V7_2 = 1,
+
+            /// <summary>
+            /// The Key Vault API version 7.3.
+            /// </summary>
+            V7_3 = 2,
+
+            /// <summary>
+            /// The Key Vault API version 7.4.
+            /// </summary>
+            V7_4 = 3,
+
             /// <summary> Service version "7.5". </summary>
-            V7_5 = 1,
+            V7_5 = 4,
+
             /// <summary> Service version "7.6-preview.1". </summary>
-            V7_6_Preview_1 = 2,
+            V7_6_Preview_1 = 5,
         }
     }
 }
