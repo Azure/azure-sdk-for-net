@@ -303,16 +303,16 @@ namespace Azure.ResourceManager.Nginx.Tests.Scenario
                 WebApplicationFirewallActivationState = WebApplicationFirewallActivationState.Enabled
             };
             deploymentPatch.Properties.NginxAppProtect = nginxAppProtect;
-            NginxDeploymentResource nginxDeployment3 = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, deploymentPatch)).Value;
+            NginxDeploymentResource updatedNginxDeployment = (await nginxDeployment.UpdateAsync(WaitUntil.Completed, deploymentPatch)).Value;
 
-            Assert.IsNotNull(nginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallActivationState);
-            Assert.AreEqual(nginxDeployment3.Data.Properties.NginxAppProtect.WebApplicationFirewallActivationState, WebApplicationFirewallActivationState.Enabled);
-            Assert.IsNotNull(nginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallSettings.ActivationState);
-            Assert.AreEqual(nginxDeployment3.Data.Properties.NginxAppProtect.WebApplicationFirewallSettings.ActivationState, WebApplicationFirewallActivationState.Enabled);
-            Assert.IsNotNull(nginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallStatus.AttackSignaturesPackage);
-            Assert.IsNotNull(nginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallStatus.BotSignaturesPackage);
-            Assert.IsNotNull(nginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallStatus.ThreatCampaignsPackage);
-            Assert.IsNotNull(nginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallStatus.ComponentVersions);
+            Assert.IsNotNull(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallActivationState);
+            Assert.AreEqual(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallActivationState, WebApplicationFirewallActivationState.Enabled);
+            Assert.IsNotNull(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallSettings.ActivationState);
+            Assert.AreEqual(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallSettings.ActivationState, WebApplicationFirewallActivationState.Enabled);
+            Assert.IsNotNull(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallStatus.AttackSignaturesPackage);
+            Assert.IsNotNull(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallStatus.BotSignaturesPackage);
+            Assert.IsNotNull(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallStatus.ThreatCampaignsPackage);
+            Assert.IsNotNull(updatedNginxDeployment.Data.Properties.NginxAppProtect.WebApplicationFirewallStatus.ComponentVersions);
 
             nginxAppProtect.WebApplicationFirewallActivationState = WebApplicationFirewallActivationState.Disabled;
             deploymentPatch.Properties.NginxAppProtect = nginxAppProtect;
