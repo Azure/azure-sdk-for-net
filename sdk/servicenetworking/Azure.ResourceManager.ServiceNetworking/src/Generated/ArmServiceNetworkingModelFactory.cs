@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceNetworking.SecurityPolicyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ServiceNetworking.AGCSecurityPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -120,12 +120,12 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// <param name="policyType"> Type of the Traffic Controller Security Policy. </param>
         /// <param name="wafPolicyId"> Web Application Firewall Policy of the Traffic Controller Security Policy. </param>
         /// <param name="provisioningState"> Provisioning State of Traffic Controller SecurityPolicy Resource. </param>
-        /// <returns> A new <see cref="ServiceNetworking.SecurityPolicyData"/> instance for mocking. </returns>
-        public static SecurityPolicyData SecurityPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PolicyType? policyType = null, ResourceIdentifier wafPolicyId = null, ProvisioningState? provisioningState = null)
+        /// <returns> A new <see cref="ServiceNetworking.AGCSecurityPolicyData"/> instance for mocking. </returns>
+        public static AGCSecurityPolicyData AGCSecurityPolicyData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, PolicyType? policyType = null, ResourceIdentifier wafPolicyId = null, ProvisioningState? provisioningState = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new SecurityPolicyData(
+            return new AGCSecurityPolicyData(
                 id,
                 name,
                 resourceType,

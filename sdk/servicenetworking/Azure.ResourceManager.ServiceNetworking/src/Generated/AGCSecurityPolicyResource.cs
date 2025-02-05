@@ -17,14 +17,14 @@ using Azure.ResourceManager.ServiceNetworking.Models;
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
-    /// A Class representing a SecurityPolicy along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="SecurityPolicyResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetSecurityPolicyResource method.
-    /// Otherwise you can get one from its parent resource <see cref="TrafficControllerResource"/> using the GetSecurityPolicy method.
+    /// A Class representing an AGCSecurityPolicy along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="AGCSecurityPolicyResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetAGCSecurityPolicyResource method.
+    /// Otherwise you can get one from its parent resource <see cref="TrafficControllerResource"/> using the GetAGCSecurityPolicy method.
     /// </summary>
-    public partial class SecurityPolicyResource : ArmResource
+    public partial class AGCSecurityPolicyResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="SecurityPolicyResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="AGCSecurityPolicyResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="trafficControllerName"> The trafficControllerName. </param>
@@ -35,35 +35,35 @@ namespace Azure.ResourceManager.ServiceNetworking
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _securityPolicySecurityPoliciesInterfaceClientDiagnostics;
-        private readonly SecurityPoliciesInterfaceRestOperations _securityPolicySecurityPoliciesInterfaceRestClient;
-        private readonly SecurityPolicyData _data;
+        private readonly ClientDiagnostics _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics;
+        private readonly SecurityPoliciesInterfaceRestOperations _agcSecurityPolicySecurityPoliciesInterfaceRestClient;
+        private readonly AGCSecurityPolicyData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.ServiceNetworking/trafficControllers/securityPolicies";
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityPolicyResource"/> class for mocking. </summary>
-        protected SecurityPolicyResource()
+        /// <summary> Initializes a new instance of the <see cref="AGCSecurityPolicyResource"/> class for mocking. </summary>
+        protected AGCSecurityPolicyResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AGCSecurityPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal SecurityPolicyResource(ArmClient client, SecurityPolicyData data) : this(client, data.Id)
+        internal AGCSecurityPolicyResource(ArmClient client, AGCSecurityPolicyData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityPolicyResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AGCSecurityPolicyResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SecurityPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AGCSecurityPolicyResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityPolicySecurityPoliciesInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string securityPolicySecurityPoliciesInterfaceApiVersion);
-            _securityPolicySecurityPoliciesInterfaceRestClient = new SecurityPoliciesInterfaceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityPolicySecurityPoliciesInterfaceApiVersion);
+            _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string agcSecurityPolicySecurityPoliciesInterfaceApiVersion);
+            _agcSecurityPolicySecurityPoliciesInterfaceRestClient = new SecurityPoliciesInterfaceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, agcSecurityPolicySecurityPoliciesInterfaceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceNetworking
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual SecurityPolicyData Data
+        public virtual AGCSecurityPolicyData Data
         {
             get
             {
@@ -107,21 +107,21 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<SecurityPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AGCSecurityPolicyResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyResource.Get");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyResource.Get");
             scope.Start();
             try
             {
-                var response = await _securityPolicySecurityPoliciesInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _agcSecurityPolicySecurityPoliciesInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AGCSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -147,21 +147,21 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<SecurityPolicyResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<AGCSecurityPolicyResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyResource.Get");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyResource.Get");
             scope.Start();
             try
             {
-                var response = _securityPolicySecurityPoliciesInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _agcSecurityPolicySecurityPoliciesInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AGCSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -195,12 +195,12 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyResource.Delete");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyResource.Delete");
             scope.Start();
             try
             {
-                var response = await _securityPolicySecurityPoliciesInterfaceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceNetworkingArmOperation(_securityPolicySecurityPoliciesInterfaceClientDiagnostics, Pipeline, _securityPolicySecurityPoliciesInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _agcSecurityPolicySecurityPoliciesInterfaceRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceNetworkingArmOperation(_agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics, Pipeline, _agcSecurityPolicySecurityPoliciesInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -237,12 +237,12 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyResource.Delete");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyResource.Delete");
             scope.Start();
             try
             {
-                var response = _securityPolicySecurityPoliciesInterfaceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new ServiceNetworkingArmOperation(_securityPolicySecurityPoliciesInterfaceClientDiagnostics, Pipeline, _securityPolicySecurityPoliciesInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _agcSecurityPolicySecurityPoliciesInterfaceRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new ServiceNetworkingArmOperation(_agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics, Pipeline, _agcSecurityPolicySecurityPoliciesInterfaceRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -271,23 +271,23 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<SecurityPolicyResource>> UpdateAsync(SecurityPolicyPatch patch, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AGCSecurityPolicyResource>> UpdateAsync(AGCSecurityPolicyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyResource.Update");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyResource.Update");
             scope.Start();
             try
             {
-                var response = await _securityPolicySecurityPoliciesInterfaceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new SecurityPolicyResource(Client, response.Value), response.GetRawResponse());
+                var response = await _agcSecurityPolicySecurityPoliciesInterfaceRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken).ConfigureAwait(false);
+                return Response.FromValue(new AGCSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -313,23 +313,23 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="patch"> The resource properties to be updated. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<SecurityPolicyResource> Update(SecurityPolicyPatch patch, CancellationToken cancellationToken = default)
+        public virtual Response<AGCSecurityPolicyResource> Update(AGCSecurityPolicyPatch patch, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(patch, nameof(patch));
 
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyResource.Update");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyResource.Update");
             scope.Start();
             try
             {
-                var response = _securityPolicySecurityPoliciesInterfaceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
-                return Response.FromValue(new SecurityPolicyResource(Client, response.Value), response.GetRawResponse());
+                var response = _agcSecurityPolicySecurityPoliciesInterfaceRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, patch, cancellationToken);
+                return Response.FromValue(new AGCSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -363,12 +363,12 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual async Task<Response<SecurityPolicyResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AGCSecurityPolicyResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyResource.AddTag");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyResource.AddTag");
             scope.Start();
             try
             {
@@ -377,13 +377,13 @@ namespace Azure.ResourceManager.ServiceNetworking
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _securityPolicySecurityPoliciesInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new SecurityPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _agcSecurityPolicySecurityPoliciesInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AGCSecurityPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new SecurityPolicyPatch();
+                    var patch = new AGCSecurityPolicyPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -425,12 +425,12 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
-        public virtual Response<SecurityPolicyResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
+        public virtual Response<AGCSecurityPolicyResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyResource.AddTag");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyResource.AddTag");
             scope.Start();
             try
             {
@@ -439,13 +439,13 @@ namespace Azure.ResourceManager.ServiceNetworking
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _securityPolicySecurityPoliciesInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new SecurityPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _agcSecurityPolicySecurityPoliciesInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new AGCSecurityPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new SecurityPolicyPatch();
+                    var patch = new AGCSecurityPolicyPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -479,18 +479,18 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual async Task<Response<SecurityPolicyResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AGCSecurityPolicyResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyResource.SetTags");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyResource.SetTags");
             scope.Start();
             try
             {
@@ -500,13 +500,13 @@ namespace Azure.ResourceManager.ServiceNetworking
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _securityPolicySecurityPoliciesInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new SecurityPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _agcSecurityPolicySecurityPoliciesInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AGCSecurityPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new SecurityPolicyPatch();
+                    var patch = new AGCSecurityPolicyPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
                     return result;
@@ -536,18 +536,18 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="tags"> The set of tags to use as replacement. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
-        public virtual Response<SecurityPolicyResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
+        public virtual Response<AGCSecurityPolicyResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyResource.SetTags");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyResource.SetTags");
             scope.Start();
             try
             {
@@ -557,13 +557,13 @@ namespace Azure.ResourceManager.ServiceNetworking
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _securityPolicySecurityPoliciesInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new SecurityPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _agcSecurityPolicySecurityPoliciesInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new AGCSecurityPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new SecurityPolicyPatch();
+                    var patch = new AGCSecurityPolicyPatch();
                     patch.Tags.ReplaceWith(tags);
                     var result = Update(patch, cancellationToken: cancellationToken);
                     return result;
@@ -593,18 +593,18 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual async Task<Response<SecurityPolicyResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AGCSecurityPolicyResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyResource.RemoveTag");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyResource.RemoveTag");
             scope.Start();
             try
             {
@@ -613,13 +613,13 @@ namespace Azure.ResourceManager.ServiceNetworking
                     var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
                     await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _securityPolicySecurityPoliciesInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new SecurityPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = await _agcSecurityPolicySecurityPoliciesInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(new AGCSecurityPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new SecurityPolicyPatch();
+                    var patch = new AGCSecurityPolicyPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
@@ -653,18 +653,18 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
-        public virtual Response<SecurityPolicyResource> RemoveTag(string key, CancellationToken cancellationToken = default)
+        public virtual Response<AGCSecurityPolicyResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyResource.RemoveTag");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyResource.RemoveTag");
             scope.Start();
             try
             {
@@ -673,13 +673,13 @@ namespace Azure.ResourceManager.ServiceNetworking
                     var originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
                     GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _securityPolicySecurityPoliciesInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                    return Response.FromValue(new SecurityPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    var originalResponse = _agcSecurityPolicySecurityPoliciesInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                    return Response.FromValue(new AGCSecurityPolicyResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
                 }
                 else
                 {
                     var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new SecurityPolicyPatch();
+                    var patch = new AGCSecurityPolicyPatch();
                     foreach (var tag in current.Tags)
                     {
                         patch.Tags.Add(tag);

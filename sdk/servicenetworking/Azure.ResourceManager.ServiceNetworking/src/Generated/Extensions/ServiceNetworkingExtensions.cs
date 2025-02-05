@@ -90,22 +90,22 @@ namespace Azure.ResourceManager.ServiceNetworking
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SecurityPolicyResource" /> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="SecurityPolicyResource.CreateResourceIdentifier" /> to create a <see cref="SecurityPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// Gets an object representing an <see cref="AGCSecurityPolicyResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="AGCSecurityPolicyResource.CreateResourceIdentifier" /> to create an <see cref="AGCSecurityPolicyResource" /> <see cref="ResourceIdentifier" /> from its components.
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingArmClient.GetSecurityPolicyResource(ResourceIdentifier)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableServiceNetworkingArmClient.GetAGCSecurityPolicyResource(ResourceIdentifier)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SecurityPolicyResource"/> object. </returns>
-        public static SecurityPolicyResource GetSecurityPolicyResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="AGCSecurityPolicyResource"/> object. </returns>
+        public static AGCSecurityPolicyResource GetAGCSecurityPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableServiceNetworkingArmClient(client).GetSecurityPolicyResource(id);
+            return GetMockableServiceNetworkingArmClient(client).GetAGCSecurityPolicyResource(id);
         }
 
         /// <summary>

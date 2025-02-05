@@ -18,28 +18,28 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SecurityPolicyResource"/> and their operations.
-    /// Each <see cref="SecurityPolicyResource"/> in the collection will belong to the same instance of <see cref="TrafficControllerResource"/>.
-    /// To get a <see cref="SecurityPolicyCollection"/> instance call the GetSecurityPolicies method from an instance of <see cref="TrafficControllerResource"/>.
+    /// A class representing a collection of <see cref="AGCSecurityPolicyResource"/> and their operations.
+    /// Each <see cref="AGCSecurityPolicyResource"/> in the collection will belong to the same instance of <see cref="TrafficControllerResource"/>.
+    /// To get an <see cref="AGCSecurityPolicyCollection"/> instance call the GetAGCSecurityPolicies method from an instance of <see cref="TrafficControllerResource"/>.
     /// </summary>
-    public partial class SecurityPolicyCollection : ArmCollection, IEnumerable<SecurityPolicyResource>, IAsyncEnumerable<SecurityPolicyResource>
+    public partial class AGCSecurityPolicyCollection : ArmCollection, IEnumerable<AGCSecurityPolicyResource>, IAsyncEnumerable<AGCSecurityPolicyResource>
     {
-        private readonly ClientDiagnostics _securityPolicySecurityPoliciesInterfaceClientDiagnostics;
-        private readonly SecurityPoliciesInterfaceRestOperations _securityPolicySecurityPoliciesInterfaceRestClient;
+        private readonly ClientDiagnostics _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics;
+        private readonly SecurityPoliciesInterfaceRestOperations _agcSecurityPolicySecurityPoliciesInterfaceRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityPolicyCollection"/> class for mocking. </summary>
-        protected SecurityPolicyCollection()
+        /// <summary> Initializes a new instance of the <see cref="AGCSecurityPolicyCollection"/> class for mocking. </summary>
+        protected AGCSecurityPolicyCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="SecurityPolicyCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="AGCSecurityPolicyCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
-        internal SecurityPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal AGCSecurityPolicyCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _securityPolicySecurityPoliciesInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", SecurityPolicyResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(SecurityPolicyResource.ResourceType, out string securityPolicySecurityPoliciesInterfaceApiVersion);
-            _securityPolicySecurityPoliciesInterfaceRestClient = new SecurityPoliciesInterfaceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, securityPolicySecurityPoliciesInterfaceApiVersion);
+            _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceNetworking", AGCSecurityPolicyResource.ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(AGCSecurityPolicyResource.ResourceType, out string agcSecurityPolicySecurityPoliciesInterfaceApiVersion);
+            _agcSecurityPolicySecurityPoliciesInterfaceRestClient = new SecurityPoliciesInterfaceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, agcSecurityPolicySecurityPoliciesInterfaceApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -78,17 +78,17 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<SecurityPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string securityPolicyName, SecurityPolicyData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<AGCSecurityPolicyResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string securityPolicyName, AGCSecurityPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyCollection.CreateOrUpdate");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _securityPolicySecurityPoliciesInterfaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data, cancellationToken).ConfigureAwait(false);
-                var operation = new ServiceNetworkingArmOperation<SecurityPolicyResource>(new SecurityPolicyOperationSource(Client), _securityPolicySecurityPoliciesInterfaceClientDiagnostics, Pipeline, _securityPolicySecurityPoliciesInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _agcSecurityPolicySecurityPoliciesInterfaceRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data, cancellationToken).ConfigureAwait(false);
+                var operation = new ServiceNetworkingArmOperation<AGCSecurityPolicyResource>(new AGCSecurityPolicyOperationSource(Client), _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics, Pipeline, _agcSecurityPolicySecurityPoliciesInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> or <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<SecurityPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string securityPolicyName, SecurityPolicyData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<AGCSecurityPolicyResource> CreateOrUpdate(WaitUntil waitUntil, string securityPolicyName, AGCSecurityPolicyData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyCollection.CreateOrUpdate");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _securityPolicySecurityPoliciesInterfaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data, cancellationToken);
-                var operation = new ServiceNetworkingArmOperation<SecurityPolicyResource>(new SecurityPolicyOperationSource(Client), _securityPolicySecurityPoliciesInterfaceClientDiagnostics, Pipeline, _securityPolicySecurityPoliciesInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _agcSecurityPolicySecurityPoliciesInterfaceRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data, cancellationToken);
+                var operation = new ServiceNetworkingArmOperation<AGCSecurityPolicyResource>(new AGCSecurityPolicyOperationSource(Client), _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics, Pipeline, _agcSecurityPolicySecurityPoliciesInterfaceRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,18 +174,18 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
-        public virtual async Task<Response<SecurityPolicyResource>> GetAsync(string securityPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AGCSecurityPolicyResource>> GetAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyCollection.Get");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = await _securityPolicySecurityPoliciesInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken).ConfigureAwait(false);
+                var response = await _agcSecurityPolicySecurityPoliciesInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AGCSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -219,18 +219,18 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
-        public virtual Response<SecurityPolicyResource> Get(string securityPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<AGCSecurityPolicyResource> Get(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyCollection.Get");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyCollection.Get");
             scope.Start();
             try
             {
-                var response = _securityPolicySecurityPoliciesInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken);
+                var response = _agcSecurityPolicySecurityPoliciesInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new SecurityPolicyResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new AGCSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -256,17 +256,17 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="SecurityPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SecurityPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="AGCSecurityPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AGCSecurityPolicyResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityPolicySecurityPoliciesInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityPolicySecurityPoliciesInterfaceRestClient.CreateListByTrafficControllerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new SecurityPolicyResource(Client, SecurityPolicyData.DeserializeSecurityPolicyData(e)), _securityPolicySecurityPoliciesInterfaceClientDiagnostics, Pipeline, "SecurityPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _agcSecurityPolicySecurityPoliciesInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _agcSecurityPolicySecurityPoliciesInterfaceRestClient.CreateListByTrafficControllerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new AGCSecurityPolicyResource(Client, AGCSecurityPolicyData.DeserializeAGCSecurityPolicyData(e)), _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics, Pipeline, "AGCSecurityPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -286,17 +286,17 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SecurityPolicyResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SecurityPolicyResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="AGCSecurityPolicyResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AGCSecurityPolicyResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _securityPolicySecurityPoliciesInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _securityPolicySecurityPoliciesInterfaceRestClient.CreateListByTrafficControllerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new SecurityPolicyResource(Client, SecurityPolicyData.DeserializeSecurityPolicyData(e)), _securityPolicySecurityPoliciesInterfaceClientDiagnostics, Pipeline, "SecurityPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => _agcSecurityPolicySecurityPoliciesInterfaceRestClient.CreateListByTrafficControllerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _agcSecurityPolicySecurityPoliciesInterfaceRestClient.CreateListByTrafficControllerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new AGCSecurityPolicyResource(Client, AGCSecurityPolicyData.DeserializeAGCSecurityPolicyData(e)), _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics, Pipeline, "AGCSecurityPolicyCollection.GetAll", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -328,11 +328,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyCollection.Exists");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _securityPolicySecurityPoliciesInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _agcSecurityPolicySecurityPoliciesInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -371,11 +371,11 @@ namespace Azure.ResourceManager.ServiceNetworking
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyCollection.Exists");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyCollection.Exists");
             scope.Start();
             try
             {
-                var response = _securityPolicySecurityPoliciesInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
+                var response = _agcSecurityPolicySecurityPoliciesInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -402,7 +402,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -410,18 +410,18 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
-        public virtual async Task<NullableResponse<SecurityPolicyResource>> GetIfExistsAsync(string securityPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<AGCSecurityPolicyResource>> GetIfExistsAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyCollection.GetIfExists");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _securityPolicySecurityPoliciesInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                var response = await _agcSecurityPolicySecurityPoliciesInterfaceRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
-                    return new NoValueResponse<SecurityPolicyResource>(response.GetRawResponse());
-                return Response.FromValue(new SecurityPolicyResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<AGCSecurityPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new AGCSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -455,18 +455,18 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
-        public virtual NullableResponse<SecurityPolicyResource> GetIfExists(string securityPolicyName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<AGCSecurityPolicyResource> GetIfExists(string securityPolicyName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(securityPolicyName, nameof(securityPolicyName));
 
-            using var scope = _securityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("SecurityPolicyCollection.GetIfExists");
+            using var scope = _agcSecurityPolicySecurityPoliciesInterfaceClientDiagnostics.CreateScope("AGCSecurityPolicyCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _securityPolicySecurityPoliciesInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
+                var response = _agcSecurityPolicySecurityPoliciesInterfaceRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, securityPolicyName, cancellationToken: cancellationToken);
                 if (response.Value == null)
-                    return new NoValueResponse<SecurityPolicyResource>(response.GetRawResponse());
-                return Response.FromValue(new SecurityPolicyResource(Client, response.Value), response.GetRawResponse());
+                    return new NoValueResponse<AGCSecurityPolicyResource>(response.GetRawResponse());
+                return Response.FromValue(new AGCSecurityPolicyResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             }
         }
 
-        IEnumerator<SecurityPolicyResource> IEnumerable<SecurityPolicyResource>.GetEnumerator()
+        IEnumerator<AGCSecurityPolicyResource> IEnumerable<AGCSecurityPolicyResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             return GetAll().GetEnumerator();
         }
 
-        IAsyncEnumerator<SecurityPolicyResource> IAsyncEnumerable<SecurityPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<AGCSecurityPolicyResource> IAsyncEnumerable<AGCSecurityPolicyResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

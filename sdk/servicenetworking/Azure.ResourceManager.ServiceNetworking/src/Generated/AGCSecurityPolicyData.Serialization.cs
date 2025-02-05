@@ -16,11 +16,11 @@ using Azure.ResourceManager.ServiceNetworking.Models;
 
 namespace Azure.ResourceManager.ServiceNetworking
 {
-    public partial class SecurityPolicyData : IUtf8JsonSerializable, IJsonModel<SecurityPolicyData>
+    public partial class AGCSecurityPolicyData : IUtf8JsonSerializable, IJsonModel<AGCSecurityPolicyData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecurityPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AGCSecurityPolicyData>)this).Write(writer, ModelSerializationExtensions.WireOptions);
 
-        void IJsonModel<SecurityPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AGCSecurityPolicyData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -31,10 +31,10 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AGCSecurityPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityPolicyData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AGCSecurityPolicyData)} does not support writing '{format}' format.");
             }
 
             base.JsonModelWriteCore(writer, options);
@@ -58,19 +58,19 @@ namespace Azure.ResourceManager.ServiceNetworking
             writer.WriteEndObject();
         }
 
-        SecurityPolicyData IJsonModel<SecurityPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        AGCSecurityPolicyData IJsonModel<AGCSecurityPolicyData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AGCSecurityPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityPolicyData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AGCSecurityPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSecurityPolicyData(document.RootElement, options);
+            return DeserializeAGCSecurityPolicyData(document.RootElement, options);
         }
 
-        internal static SecurityPolicyData DeserializeSecurityPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static AGCSecurityPolicyData DeserializeAGCSecurityPolicyData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= ModelSerializationExtensions.WireOptions;
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new SecurityPolicyData(
+            return new AGCSecurityPolicyData(
                 id,
                 name,
                 type,
@@ -192,35 +192,35 @@ namespace Azure.ResourceManager.ServiceNetworking
                 serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<SecurityPolicyData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<AGCSecurityPolicyData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AGCSecurityPolicyData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityPolicyData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AGCSecurityPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        SecurityPolicyData IPersistableModel<SecurityPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        AGCSecurityPolicyData IPersistableModel<AGCSecurityPolicyData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecurityPolicyData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<AGCSecurityPolicyData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeSecurityPolicyData(document.RootElement, options);
+                        return DeserializeAGCSecurityPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityPolicyData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AGCSecurityPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<SecurityPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AGCSecurityPolicyData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

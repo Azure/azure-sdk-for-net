@@ -4,6 +4,19 @@
 
 ### Features Added
 
+- Perform CRUD Operations for Application Gateway for Containers (AGC) Security Policy
+- Use the latest API version for (2025-01-01)
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.0-beta.1 (Unreleased)
+
+### Features Added
+
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 

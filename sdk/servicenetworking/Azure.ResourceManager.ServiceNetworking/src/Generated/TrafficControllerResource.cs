@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.ServiceNetworking
             return GetFrontends().Get(frontendName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of SecurityPolicyResources in the TrafficController. </summary>
-        /// <returns> An object representing collection of SecurityPolicyResources and their operations over a SecurityPolicyResource. </returns>
-        public virtual SecurityPolicyCollection GetSecurityPolicies()
+        /// <summary> Gets a collection of AGCSecurityPolicyResources in the TrafficController. </summary>
+        /// <returns> An object representing collection of AGCSecurityPolicyResources and their operations over a AGCSecurityPolicyResource. </returns>
+        public virtual AGCSecurityPolicyCollection GetAGCSecurityPolicies()
         {
-            return GetCachedClient(client => new SecurityPolicyCollection(client, Id));
+            return GetCachedClient(client => new AGCSecurityPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,9 +261,9 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SecurityPolicyResource>> GetSecurityPolicyAsync(string securityPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AGCSecurityPolicyResource>> GetAGCSecurityPolicyAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            return await GetSecurityPolicies().GetAsync(securityPolicyName, cancellationToken).ConfigureAwait(false);
+            return await GetAGCSecurityPolicies().GetAsync(securityPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="SecurityPolicyResource"/></description>
+        /// <description><see cref="AGCSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SecurityPolicyResource> GetSecurityPolicy(string securityPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<AGCSecurityPolicyResource> GetAGCSecurityPolicy(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            return GetSecurityPolicies().Get(securityPolicyName, cancellationToken);
+            return GetAGCSecurityPolicies().Get(securityPolicyName, cancellationToken);
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources.Models;
 namespace Azure.ResourceManager.ServiceNetworking.Models
 {
     /// <summary> The type used for update operations of the SecurityPolicy. </summary>
-    public partial class SecurityPolicyPatch
+    public partial class AGCSecurityPolicyPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -47,17 +47,17 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SecurityPolicyPatch"/>. </summary>
-        public SecurityPolicyPatch()
+        /// <summary> Initializes a new instance of <see cref="AGCSecurityPolicyPatch"/>. </summary>
+        public AGCSecurityPolicyPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityPolicyPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AGCSecurityPolicyPatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="wafPolicy"> Web Application Firewall Policy of the Traffic Controller Security Policy. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityPolicyPatch(IDictionary<string, string> tags, WritableSubResource wafPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AGCSecurityPolicyPatch(IDictionary<string, string> tags, WritableSubResource wafPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Tags = tags;
             WafPolicy = wafPolicy;

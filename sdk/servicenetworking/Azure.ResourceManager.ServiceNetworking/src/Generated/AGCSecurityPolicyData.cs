@@ -15,10 +15,10 @@ using Azure.ResourceManager.ServiceNetworking.Models;
 namespace Azure.ResourceManager.ServiceNetworking
 {
     /// <summary>
-    /// A class representing the SecurityPolicy data model.
+    /// A class representing the AGCSecurityPolicy data model.
     /// SecurityPolicy Subresource of Traffic Controller.
     /// </summary>
-    public partial class SecurityPolicyData : TrackedResourceData
+    public partial class AGCSecurityPolicyData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,13 +52,13 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SecurityPolicyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AGCSecurityPolicyData"/>. </summary>
         /// <param name="location"> The location. </param>
-        public SecurityPolicyData(AzureLocation location) : base(location)
+        public AGCSecurityPolicyData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityPolicyData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AGCSecurityPolicyData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <param name="wafPolicy"> Web Application Firewall Policy of the Traffic Controller Security Policy. </param>
         /// <param name="provisioningState"> Provisioning State of Traffic Controller SecurityPolicy Resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.PolicyType? policyType, WritableSubResource wafPolicy, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal AGCSecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.PolicyType? policyType, WritableSubResource wafPolicy, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             PolicyType = policyType;
             WafPolicy = wafPolicy;
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.ServiceNetworking
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SecurityPolicyData"/> for deserialization. </summary>
-        internal SecurityPolicyData()
+        /// <summary> Initializes a new instance of <see cref="AGCSecurityPolicyData"/> for deserialization. </summary>
+        internal AGCSecurityPolicyData()
         {
         }
 
