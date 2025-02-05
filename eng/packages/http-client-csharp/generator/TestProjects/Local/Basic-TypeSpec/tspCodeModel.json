@@ -3602,8 +3602,7 @@
   "$id": "340",
   "ApiKey": {
    "$id": "341",
-   "Name": "my-api-key",
-   "In": "header"
+   "Name": "my-api-key"
   },
   "OAuth2": {
    "$id": "342",
