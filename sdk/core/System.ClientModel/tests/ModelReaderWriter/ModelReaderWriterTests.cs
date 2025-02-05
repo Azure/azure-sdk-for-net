@@ -34,13 +34,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         {
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(null!));
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(null!, typeof(BaseWithNoUnknown)));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(new BinaryData([]), null!));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(BinaryData.Empty, null!));
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write<BaseWithNoUnknown>(null!));
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write(null!));
 
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(null!, s_wireOptions));
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(null!, typeof(BaseWithNoUnknown), s_wireOptions));
-            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(new BinaryData([]), null!, s_wireOptions));
+            Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Read(BinaryData.Empty, null!, s_wireOptions));
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write<BaseWithNoUnknown>(null!, s_wireOptions));
             Assert.Throws<ArgumentNullException>(() => ModelReaderWriter.Write(null!, s_wireOptions));
         }
@@ -100,20 +100,20 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
         public void ValidateErrorIfUnknownDoesntExist()
         {
             BaseWithNoUnknown baseInstance = new SubType();
-            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(new BinaryData([])));
-            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(new BinaryData([]), typeof(BaseWithNoUnknown)));
+            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<BaseWithNoUnknown>(BinaryData.Empty));
+            Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.Empty, typeof(BaseWithNoUnknown)));
         }
 
         [Test]
         public void ValidateErrorIfNoDefaultCtor()
         {
-            Assert.Throws<MissingMethodException>(() => ModelReaderWriter.Read<ModelWithNoDefaultCtor>(new BinaryData([])));
+            Assert.Throws<MissingMethodException>(() => ModelReaderWriter.Read<ModelWithNoDefaultCtor>(BinaryData.Empty));
         }
 
         [Test]
         public void ValidateErrorIfNotImplementInterface()
         {
-            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(new BinaryData([]), typeof(DoesNotImplementInterface)));
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(BinaryData.Empty, typeof(DoesNotImplementInterface)));
             Assert.IsTrue(ex?.Message.Contains("does not implement"));
             ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Write(new DoesNotImplementInterface()));
             Assert.IsTrue(ex?.Message.Contains("does not implement"));

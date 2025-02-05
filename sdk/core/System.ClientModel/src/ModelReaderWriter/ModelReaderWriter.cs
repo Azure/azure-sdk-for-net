@@ -345,6 +345,7 @@ public static class ModelReaderWriter
         }
     }
 
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
     private static object CallActivator(Type typeToActivate, bool nonPublic = false)
     {
         var obj = Activator.CreateInstance(typeToActivate, nonPublic);
