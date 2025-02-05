@@ -175,6 +175,68 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests
             Assert.AreEqual("{\"key\":{}}", data.ToString());
         }
 
+        [Test]
+        public void NullOptionsWritesJson()
+        {
+            BinaryData data = ModelReaderWriter.Write(new SubType(), null);
+            Assert.IsNotNull(data);
+            Assert.AreEqual("{}", data.ToString());
+        }
+
+        [Test]
+        public void ReadListOfNonPersistableFails()
+        {
+            var json = "[{\"x\":1},{\"y\":2}]";
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read<List<DoesNotImplementInterface>>(BinaryData.FromString(json)));
+            Assert.IsNotNull(ex);
+            Assert.IsTrue(ex!.Message.EndsWith(" must implement IJsonModel<>."));
+        }
+
+        [Test]
+        public void ReadListOfDictionariesAsListOfLists()
+        {
+            var json = "[{\"x\":{}},{\"y\":{}}]";
+            var ex = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<List<List<SubType>>>(BinaryData.FromString(json)));
+            Assert.IsNotNull(ex);
+            Assert.IsTrue(ex!.Message.Equals("Unexpected StartObject found."));
+        }
+
+        [Test]
+        public void ReadListOfListsAsListOfDictionaries()
+        {
+            var json = "[[{}],[{}]]";
+            var ex = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<List<Dictionary<string, SubType>>>(BinaryData.FromString(json)));
+            Assert.IsNotNull(ex);
+            Assert.IsTrue(ex!.Message.Equals("Unexpected StartArray found."));
+        }
+
+        [Test]
+        public void ReadUnexpectedToken()
+        {
+            var json = "[null{}]";
+            var ex = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<List<SubType>>(BinaryData.FromString(json)));
+            Assert.IsNotNull(ex);
+            Assert.IsTrue(ex!.Message.Equals("Unexpected token Null."));
+        }
+
+        [Test]
+        public void ReadDictionaryWithNoPropertyNames()
+        {
+            bool foundException = false;
+            var json = "{{},{}}";
+            try
+            {
+                var result = ModelReaderWriter.Read<Dictionary<string, SubType>>(BinaryData.FromString(json));
+            }
+            catch (Exception ex)
+            {
+                foundException = true;
+                Assert.IsTrue(ex.GetType().Name.Equals("JsonReaderException"));
+                Assert.IsTrue(ex.Message.StartsWith("'{' is an invalid start of a property name."));
+            }
+            Assert.IsTrue(foundException, "Expected an exception but none was thrown");
+        }
+
         private class DoesNotImplementInterface { }
 
         private class SubType : BaseWithNoUnknown, IJsonModel<SubType>

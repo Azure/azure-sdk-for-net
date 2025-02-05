@@ -17,7 +17,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
     {
         private static readonly string s_payload = File.ReadAllText(TestData.GetLocation("AvailabilitySetData/AvailabilitySetDataListOfLists.json")).TrimEnd();
         private static readonly BinaryData s_data = new BinaryData(Encoding.UTF8.GetBytes(s_payload));
-        private static readonly List<List<AvailabilitySetData>> s_availabilitySets = ModelReaderWriter.Read<List<List<AvailabilitySetData>>>(s_data)!;
         private static readonly string s_collapsedPayload = GetCollapsedPayload();
 
         private static readonly HashSet<Type> s_supportedCollectionTypes =
@@ -25,6 +24,14 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             typeof(List<>),
             typeof(Dictionary<,>)
         ];
+
+        private List<List<AvailabilitySetData>>? _availabilitySets;
+
+        [OneTimeSetUp]
+        public void OneTimeSetUp()
+        {
+            _availabilitySets = ModelReaderWriter.Read<List<List<AvailabilitySetData>>>(s_data);
+        }
 
         private static string GetCollapsedPayload()
         {
@@ -54,46 +61,6 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
                 }
             }
         }
-
-        private static readonly IEnumerable<TestCaseData> s_listOfLists =
-        [
-            new TestCaseData(new List<List<AvailabilitySetData>>(s_availabilitySets))
-                .SetName("{m}-ListOfList"),
-            new TestCaseData(new AvailabilitySetData[,] { { s_availabilitySets[0][0], s_availabilitySets[0][1] }, { s_availabilitySets[1][0], s_availabilitySets[1][1] } })
-                .SetName("{m}-MultiDimensionalArray"),
-            new TestCaseData((object)new AvailabilitySetData[][] { new AvailabilitySetData[] { s_availabilitySets[0][0], s_availabilitySets[0][1] }, new AvailabilitySetData[] { s_availabilitySets[1][0], s_availabilitySets[1][1] } })
-                .SetName("{m}-JaggedArray"),
-            new TestCaseData(new List<AvailabilitySetData[]>() { new AvailabilitySetData[] { s_availabilitySets[0][0], s_availabilitySets[0][1] }, new AvailabilitySetData[] { s_availabilitySets[1][0], s_availabilitySets[1][1] } })
-                .SetName("{m}-ListOfArray"),
-            new TestCaseData((object)new List<AvailabilitySetData>[] { s_availabilitySets[0], s_availabilitySets[1] })
-                .SetName("{m}-ArrayOfList"),
-            new TestCaseData(new Collection<Collection<AvailabilitySetData>> () { new(s_availabilitySets[0]), new(s_availabilitySets[1]) })
-                .SetName("{m}-CollectionOfCollection"),
-            new TestCaseData(new Collection<List<AvailabilitySetData>> () { new(s_availabilitySets[0]), new(s_availabilitySets[1]) })
-                .SetName("{m}-CollectionOfList"),
-            new TestCaseData(new List<Collection<AvailabilitySetData>> () { new(s_availabilitySets[0]), new(s_availabilitySets[1]) })
-                .SetName("{m}-ListOfCollection"),
-            new TestCaseData(new ObservableCollection<ObservableCollection<AvailabilitySetData>> () { new(s_availabilitySets[0]), new(s_availabilitySets[1]) })
-                .SetName("{m}-ObservableOfObservable"),
-            new TestCaseData(new ObservableCollection<List<AvailabilitySetData>> () { new(s_availabilitySets[0]), new(s_availabilitySets[1]) })
-                .SetName("{m}-ObservableOfList"),
-            new TestCaseData(new HashSet<HashSet<AvailabilitySetData>> () { new(s_availabilitySets[0]), new(s_availabilitySets[1]) })
-                .SetName("{m}-HashOfHash"),
-            new TestCaseData(new HashSet<List<AvailabilitySetData>> () { new(s_availabilitySets[0]), new(s_availabilitySets[1]) })
-                .SetName("{m}-HashOfList"),
-            new TestCaseData(new Queue<Queue<AvailabilitySetData>> ([new Queue<AvailabilitySetData>(s_availabilitySets[0]), new Queue<AvailabilitySetData>(s_availabilitySets[1])]))
-                .SetName("{m}-QueueOfQueue"),
-            new TestCaseData(new Queue<List<AvailabilitySetData>> ([[.. s_availabilitySets[0]], [.. s_availabilitySets[1]]]))
-                .SetName("{m}-QueueOfList"),
-            new TestCaseData(new Stack<Stack<AvailabilitySetData>> ([new Stack<AvailabilitySetData>([s_availabilitySets[1][1], s_availabilitySets[1][0]]), new Stack<AvailabilitySetData>([s_availabilitySets[0][1], s_availabilitySets[0][0]])]))
-                .SetName("{m}-StackOfStack"),
-            new TestCaseData(new Stack<List<AvailabilitySetData>> ([[.. s_availabilitySets[1]], [.. s_availabilitySets[0]]]))
-                .SetName("{m}-StackOfList"),
-            new TestCaseData(new LinkedList<LinkedList<AvailabilitySetData>> ([new LinkedList<AvailabilitySetData>(s_availabilitySets[0]), new LinkedList<AvailabilitySetData>(s_availabilitySets[1])]))
-                .SetName("{m}-LinkedOfLinked"),
-            new TestCaseData(new LinkedList<List<AvailabilitySetData>> ([[.. s_availabilitySets[0]], [.. s_availabilitySets[1]]]))
-                .SetName("{m}-LinkedOfList"),
-        ];
 
         [Test]
         public void ReadListGeneric()
@@ -156,8 +123,116 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.IsTrue(ex!.Message.StartsWith("Arrays are not supported. Use List<> instead."));
         }
 
-        [TestCaseSource(nameof(s_listOfLists))]
-        public void ValidateTypeChecking(object collection)
+        [Test]
+        public void ValidateTypeCheckingListOfList()
+        {
+            ValidateTypeChecking(new List<List<AvailabilitySetData>>(_availabilitySets!));
+        }
+
+        [Test]
+        public void ValidateTypeCheckingMultiDimensionalArray()
+        {
+            ValidateTypeChecking(new AvailabilitySetData[,] { { _availabilitySets![0][0], _availabilitySets[0][1] }, { _availabilitySets[1][0], _availabilitySets[1][1] } });
+        }
+
+        [Test]
+        public void ValidateTypeCheckingJaggedArray()
+        {
+            ValidateTypeChecking(new AvailabilitySetData[][] { new AvailabilitySetData[] { _availabilitySets![0][0], _availabilitySets[0][1] }, new AvailabilitySetData[] { _availabilitySets[1][0], _availabilitySets[1][1] } });
+        }
+
+        [Test]
+        public void ValidateTypeCheckingListOfArray()
+        {
+            ValidateTypeChecking(new List<AvailabilitySetData[]>() { new AvailabilitySetData[] { _availabilitySets![0][0], _availabilitySets[0][1] }, new AvailabilitySetData[] { _availabilitySets[1][0], _availabilitySets[1][1] } });
+        }
+
+        [Test]
+        public void ValidateTypeCheckingArrayOfList()
+        {
+            ValidateTypeChecking(new List<AvailabilitySetData>[] { _availabilitySets![0], _availabilitySets[1] });
+        }
+
+        [Test]
+        public void ValidateTypeCheckingCollectionOfCollection()
+        {
+            ValidateTypeChecking(new Collection<Collection<AvailabilitySetData>>() { new(_availabilitySets![0]), new(_availabilitySets[1]) });
+        }
+
+        [Test]
+        public void ValidateTypeCheckingCollectionOfList()
+        {
+            ValidateTypeChecking(new Collection<List<AvailabilitySetData>>() { new(_availabilitySets![0]), new(_availabilitySets[1]) });
+        }
+
+        [Test]
+        public void ValidateTypeCheckingListOfCollection()
+        {
+            ValidateTypeChecking(new List<Collection<AvailabilitySetData>>() { new(_availabilitySets![0]), new(_availabilitySets[1]) });
+        }
+
+        [Test]
+        public void ValidateTypeCheckingObservableOfObservable()
+        {
+            ValidateTypeChecking(new ObservableCollection<ObservableCollection<AvailabilitySetData>>() { new(_availabilitySets![0]), new(_availabilitySets[1]) });
+        }
+
+        [Test]
+        public void ValidateTypeCheckingObservableOfList()
+        {
+            ValidateTypeChecking(new ObservableCollection<List<AvailabilitySetData>>() { new(_availabilitySets![0]), new(_availabilitySets[1]) });
+        }
+
+        [Test]
+        public void ValidateTypeCheckingHashOfHash()
+        {
+            ValidateTypeChecking(new HashSet<HashSet<AvailabilitySetData>>() { new(_availabilitySets![0]), new(_availabilitySets[1]) });
+        }
+
+        [Test]
+        public void ValidateTypeCheckingHashOfList()
+        {
+            ValidateTypeChecking(new HashSet<List<AvailabilitySetData>>() { new(_availabilitySets![0]), new(_availabilitySets[1]) });
+        }
+
+        [Test]
+        public void ValidateTypeCheckingQueueOfQueue()
+        {
+            ValidateTypeChecking(new Queue<Queue<AvailabilitySetData>>([new Queue<AvailabilitySetData>(_availabilitySets![0]), new Queue<AvailabilitySetData>(_availabilitySets[1])]));
+        }
+
+        [Test]
+        public void ValidateTypeCheckingQueueOfList()
+        {
+            ValidateTypeChecking(new Queue<List<AvailabilitySetData>>([[.. _availabilitySets![0]], [.. _availabilitySets[1]]]));
+        }
+
+        [Test]
+        public void ValidateTypeCheckingStackOfStack()
+        {
+            ValidateTypeChecking(new Stack<Stack<AvailabilitySetData>>([new Stack<AvailabilitySetData>([_availabilitySets![1][1], _availabilitySets[1][0]]), new Stack<AvailabilitySetData>([_availabilitySets[0][1], _availabilitySets[0][0]])]));
+        }
+
+        [Test]
+        public void ValidateTypeCheckingStackOfList()
+        {
+            ValidateTypeChecking(new Stack<List<AvailabilitySetData>>([[.. _availabilitySets![1]], [.. _availabilitySets[0]]]));
+        }
+
+        [Test]
+        public void ValidateTypeCheckingLinkedOfLinked()
+        {
+            ValidateTypeChecking(new LinkedList<LinkedList<AvailabilitySetData>>([new LinkedList<AvailabilitySetData>(_availabilitySets![0]), new LinkedList<AvailabilitySetData>(_availabilitySets[1])]));
+        }
+
+        [Test]
+        public void ValidateTypeCheckingLinkedOfList()
+        {
+            ValidateTypeChecking(new LinkedList<List<AvailabilitySetData>>([[.. _availabilitySets![0]], [.. _availabilitySets[1]]]));
+        }
+
+        //[TestCaseSource(nameof(ListOfLists))]
+        private void ValidateTypeChecking(object collection)
         {
             var type = collection.GetType();
             var genericType = type.IsGenericType ? type.GetGenericTypeDefinition() : null;
@@ -205,8 +280,115 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             }
         }
 
-        [TestCaseSource(nameof(s_listOfLists))]
-        public void WriteCollection(object collection)
+        [Test]
+        public void WriteListOfList()
+        {
+            WriteCollection(new List<List<AvailabilitySetData>>(_availabilitySets!));
+        }
+
+        [Test]
+        public void WriteMultiDimensionalArray()
+        {
+            WriteCollection(new AvailabilitySetData[,] { { _availabilitySets![0][0], _availabilitySets[0][1] }, { _availabilitySets[1][0], _availabilitySets[1][1] } });
+        }
+
+        [Test]
+        public void WriteJaggedArray()
+        {
+            WriteCollection(new AvailabilitySetData[][] { new AvailabilitySetData[] { _availabilitySets![0][0], _availabilitySets[0][1] }, new AvailabilitySetData[] { _availabilitySets[1][0], _availabilitySets[1][1] } });
+        }
+
+        [Test]
+        public void WriteListOfArray()
+        {
+            WriteCollection(new List<AvailabilitySetData[]>() { new AvailabilitySetData[] { _availabilitySets![0][0], _availabilitySets[0][1] }, new AvailabilitySetData[] { _availabilitySets[1][0], _availabilitySets[1][1] } });
+        }
+
+        [Test]
+        public void WriteArrayOfList()
+        {
+            WriteCollection(new List<AvailabilitySetData>[] { _availabilitySets![0], _availabilitySets[1] });
+        }
+
+        [Test]
+        public void WriteCollectionOfCollection()
+        {
+            WriteCollection(new Collection<Collection<AvailabilitySetData>>() { new(_availabilitySets![0]), new(_availabilitySets[1]) });
+        }
+
+        [Test]
+        public void WriteCollectionOfList()
+        {
+            WriteCollection(new Collection<List<AvailabilitySetData>>() { new(_availabilitySets![0]), new(_availabilitySets[1]) });
+        }
+
+        [Test]
+        public void WriteListOfCollection()
+        {
+            WriteCollection(new List<Collection<AvailabilitySetData>>() { new(_availabilitySets![0]), new(_availabilitySets[1]) });
+        }
+
+        [Test]
+        public void WriteObservableOfObservable()
+        {
+            WriteCollection(new ObservableCollection<ObservableCollection<AvailabilitySetData>>() { new(_availabilitySets![0]), new(_availabilitySets[1]) });
+        }
+
+        [Test]
+        public void WriteObservableOfList()
+        {
+            WriteCollection(new ObservableCollection<List<AvailabilitySetData>>() { new(_availabilitySets![0]), new(_availabilitySets[1]) });
+        }
+
+        [Test]
+        public void WriteHashOfHash()
+        {
+            WriteCollection(new HashSet<HashSet<AvailabilitySetData>>() { new(_availabilitySets![0]), new(_availabilitySets[1]) });
+        }
+
+        [Test]
+        public void WriteHashOfList()
+        {
+            WriteCollection(new HashSet<List<AvailabilitySetData>>() { new(_availabilitySets![0]), new(_availabilitySets[1]) });
+        }
+
+        [Test]
+        public void WriteQueueOfQueue()
+        {
+            WriteCollection(new Queue<Queue<AvailabilitySetData>>([new Queue<AvailabilitySetData>(_availabilitySets![0]), new Queue<AvailabilitySetData>(_availabilitySets[1])]));
+        }
+
+        [Test]
+        public void WriteQueueOfList()
+        {
+            WriteCollection(new Queue<List<AvailabilitySetData>>([[.. _availabilitySets![0]], [.. _availabilitySets[1]]]));
+        }
+
+        [Test]
+        public void WriteStackOfStack()
+        {
+            WriteCollection(new Stack<Stack<AvailabilitySetData>>([new Stack<AvailabilitySetData>([_availabilitySets![1][1], _availabilitySets[1][0]]), new Stack<AvailabilitySetData>([_availabilitySets[0][1], _availabilitySets[0][0]])]));
+        }
+
+        [Test]
+        public void WriteStackOfList()
+        {
+            WriteCollection(new Stack<List<AvailabilitySetData>>([[.. _availabilitySets![1]], [.. _availabilitySets[0]]]));
+        }
+
+        [Test]
+        public void WriteLinkedOfLinked()
+        {
+            WriteCollection(new LinkedList<LinkedList<AvailabilitySetData>>([new LinkedList<AvailabilitySetData>(_availabilitySets![0]), new LinkedList<AvailabilitySetData>(_availabilitySets[1])]));
+        }
+
+        [Test]
+        public void WriteLinkedOfList()
+        {
+            WriteCollection(new LinkedList<List<AvailabilitySetData>>([[.. _availabilitySets![0]], [.. _availabilitySets[1]]]));
+        }
+
+        private void WriteCollection(object collection)
         {
             BinaryData data = ModelReaderWriter.Write(collection);
             Assert.IsNotNull(data);
@@ -232,8 +414,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
         [Test]
         public void ReadNoPublicCtorType()
         {
+#if NET5_0_OR_GREATER
             var ex = Assert.Throws<MissingMethodException>(() => ModelReaderWriter.Read(s_data, typeof(FileStream)));
             Assert.IsNotNull(ex);
+#else
+            var ex = Assert.Throws<InvalidOperationException>(() => ModelReaderWriter.Read(s_data, typeof(FileStream)));
+            Assert.IsNotNull(ex);
+#endif
         }
     }
 }

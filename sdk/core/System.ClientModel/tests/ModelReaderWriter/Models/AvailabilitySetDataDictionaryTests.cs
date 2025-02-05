@@ -61,5 +61,13 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.IsNotNull(data);
             Assert.AreEqual(s_collapsedPayload, data.ToString());
         }
+
+        [Test]
+        public void ReadListWhenDictionary()
+        {
+            var ex = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<List<AvailabilitySetData>>(s_data));
+            Assert.IsNotNull(ex);
+            Assert.IsTrue(ex!.Message.Equals("Expected start of array."));
+        }
     }
 }

@@ -114,10 +114,10 @@ public static class ModelReaderWriter
             if (enumerable is IDictionary dictionary)
             {
                 writer.WriteStartObject();
-                foreach (var x in dictionary.Keys)
+                foreach (var key in dictionary.Keys)
                 {
-                    writer.WritePropertyName(x.ToString()!);
-                    WriteJson(dictionary[x]!, options, writer);
+                    writer.WritePropertyName(key.ToString()!);
+                    WriteJson(dictionary[key]!, options, writer);
                 }
                 writer.WriteEndObject();
             }
@@ -251,12 +251,7 @@ public static class ModelReaderWriter
 
     private static object ReadCollection(BinaryData data, Type returnType, string paramName, ModelReaderWriterOptions options)
     {
-        object? collection = Activator.CreateInstance(returnType);
-        if (collection is null)
-        {
-            throw new InvalidOperationException($"Unable to create instance of {returnType.Name}.");
-        }
-
+        object collection = CallActivator(returnType);
         Utf8JsonReader reader = new Utf8JsonReader(data);
         reader.Read();
         var genericType = returnType.GetGenericTypeDefinition();
@@ -293,9 +288,9 @@ public static class ModelReaderWriter
 
         var persistableModel = GetObjectInstance(elementType) as IPersistableModel<object>;
         IJsonModel<object>? iJsonModel = null;
-        if (persistableModel is not null && !ShouldWriteAsJson(persistableModel, options, out iJsonModel))
+        if (elementGenericType is null && (persistableModel is null || !ShouldWriteAsJson(persistableModel, options, out iJsonModel)))
         {
-            throw new InvalidOperationException($"Element type {elementType.Name} reading a collection is only supported for 'J' format");
+            throw new InvalidOperationException($"Element type {elementType.Name} must implement IJsonModel<>.");
         }
         bool isInnerCollection = iJsonModel is null;
         string? propertyName = null;
@@ -309,17 +304,13 @@ public static class ModelReaderWriter
                     {
                         if (isElementDictionary)
                         {
-                            var innerDictionary = Activator.CreateInstance(elementType);
-                            if (innerDictionary is null)
-                            {
-                                throw new InvalidOperationException($"Unable to create instance of {elementType.Name}.");
-                            }
+                            var innerDictionary = CallActivator(elementType);
                             AddItemToCollection(collection, propertyName, innerDictionary);
                             ReadJsonCollection(ref reader, innerDictionary, depth++, paramName, options);
                         }
                         else
                         {
-                            throw new InvalidOperationException("Unexpected StartObject found.");
+                            throw new FormatException("Unexpected StartObject found.");
                         }
                     }
                     else
@@ -328,16 +319,12 @@ public static class ModelReaderWriter
                     }
                     break;
                 case JsonTokenType.StartArray:
-                    if (!isInnerCollection)
+                    if (!isInnerCollection || isElementDictionary)
                     {
-                        throw new InvalidOperationException("Unexpected StartArray found.");
+                        throw new FormatException("Unexpected StartArray found.");
                     }
 
-                    var innerList = Activator.CreateInstance(elementType);
-                    if (innerList is null)
-                    {
-                        throw new InvalidOperationException($"Unable to create instance of {elementType.Name}.");
-                    }
+                    object innerList = CallActivator(elementType);
                     AddItemToCollection(collection, propertyName, innerList);
                     ReadJsonCollection(ref reader, innerList, depth++, paramName, options);
                     break;
@@ -358,13 +345,26 @@ public static class ModelReaderWriter
         }
     }
 
+    private static object CallActivator(Type typeToActivate, bool nonPublic = false)
+    {
+        var obj = Activator.CreateInstance(typeToActivate, nonPublic);
+        if (obj is null)
+        {
+            //we should never get here, but just in case
+            throw new InvalidOperationException($"Unable to create instance of {typeToActivate.Name}.");
+        }
+
+        return obj;
+    }
+
     private static void AddItemToCollection(object collection, string? key, object item)
     {
         if (collection is IDictionary dictionary)
         {
             if (key is null)
             {
-                throw new InvalidOperationException("Null key found for dictionary entry.");
+                //we should never get here because System.Text.Json will throw JsonReaderException if there was no property name
+                throw new FormatException("Null key found for dictionary entry.");
             }
             dictionary.Add(key, item);
         }
@@ -374,6 +374,7 @@ public static class ModelReaderWriter
         }
         else
         {
+            //we should never be able to get here since we check for supported collection types in ReadCollection
             throw new InvalidOperationException($"Collection type {collection.GetType().Name} is not supported.");
         }
     }
@@ -399,12 +400,7 @@ public static class ModelReaderWriter
             throw new InvalidOperationException($"{returnType.Name} must be decorated with {nameof(PersistableModelProxyAttribute)} to be used with {nameof(ModelReaderWriter)}");
         }
 
-        var obj = Activator.CreateInstance(typeToActivate, true);
-        if (obj is null)
-        {
-            throw new InvalidOperationException($"Unable to create instance of {typeToActivate.Name}.");
-        }
-        return obj;
+        return CallActivator(typeToActivate, true);
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]

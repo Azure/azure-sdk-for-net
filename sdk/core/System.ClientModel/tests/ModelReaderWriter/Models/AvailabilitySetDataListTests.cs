@@ -97,5 +97,22 @@ namespace System.ClientModel.Tests.ModelReaderWriterTests.Models
             Assert.IsNotNull(data);
             Assert.AreEqual(s_collapsedPayload, data.ToString());
         }
+
+        [Test]
+        public void ReadUnsupportedCollectionGeneric()
+        {
+            var ex = Assert.Throws<ArgumentException>(() => ModelReaderWriter.Read<SortedDictionary<string, AvailabilitySetData>>(s_data));
+            Assert.IsNotNull(ex);
+            Assert.IsTrue(ex!.Message.Contains("Collection Type "));
+            Assert.AreEqual("T", ex.ParamName);
+        }
+
+        [Test]
+        public void ReadDictionaryWhenList()
+        {
+            var ex = Assert.Throws<FormatException>(() => ModelReaderWriter.Read<Dictionary<string, AvailabilitySetData>>(s_data));
+            Assert.IsNotNull(ex);
+            Assert.IsTrue(ex!.Message.Equals("Expected start of dictionary."));
+        }
     }
 }
