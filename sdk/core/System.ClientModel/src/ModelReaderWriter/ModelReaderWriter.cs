@@ -266,11 +266,15 @@ public static class ModelReaderWriter
         {
             throw new FormatException("Expected start of array.");
         }
-        ReadJsonCollection(ref reader, collection, 1, paramName, options);
+        ReadJsonCollection(ref reader, collection, paramName, options);
         return collection;
     }
 
-    private static void ReadJsonCollection(ref Utf8JsonReader reader, object collection, int depth, string paramName, ModelReaderWriterOptions options)
+    private static void ReadJsonCollection(
+        ref Utf8JsonReader reader,
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] object collection,
+        string paramName,
+        ModelReaderWriterOptions options)
     {
         int argNumber = collection is IDictionary ? 1 : 0;
         Type elementType = collection.GetType().GetGenericArguments()[argNumber];
@@ -306,7 +310,7 @@ public static class ModelReaderWriter
                         {
                             var innerDictionary = CallActivator(elementType);
                             AddItemToCollection(collection, propertyName, innerDictionary);
-                            ReadJsonCollection(ref reader, innerDictionary, depth++, paramName, options);
+                            ReadJsonCollection(ref reader, innerDictionary, paramName, options);
                         }
                         else
                         {
@@ -326,14 +330,10 @@ public static class ModelReaderWriter
 
                     object innerList = CallActivator(elementType);
                     AddItemToCollection(collection, propertyName, innerList);
-                    ReadJsonCollection(ref reader, innerList, depth++, paramName, options);
+                    ReadJsonCollection(ref reader, innerList, paramName, options);
                     break;
                 case JsonTokenType.EndArray:
-                    if (--depth == 0)
-                    {
-                        return;
-                    }
-                    break;
+                    return;
                 case JsonTokenType.PropertyName:
                     propertyName = reader.GetString();
                     break;
@@ -346,7 +346,9 @@ public static class ModelReaderWriter
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static object CallActivator(Type typeToActivate, bool nonPublic = false)
+    private static object CallActivator(
+        [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors | DynamicallyAccessedMemberTypes.NonPublicConstructors)] Type typeToActivate,
+        bool nonPublic = false)
     {
         var obj = Activator.CreateInstance(typeToActivate, nonPublic);
         if (obj is null)
