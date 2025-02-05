@@ -26,7 +26,8 @@ function Get-TspCommand {
         [string]$generationDir,
         [bool]$generateStub = $false,
         [string]$namespaceOverride = $null,
-        [string]$apiVersion = $null
+        [string]$apiVersion = $null,
+        [bool]$forceNewProject = $false
     )
     $command = "npx tsp compile $specFile"
     $command += " --trace @azure-typespec/http-client-csharp"
@@ -47,6 +48,10 @@ function Get-TspCommand {
     
     if ($apiVersion) {
         $command += " --option @azure-typespec/http-client-csharp.api-version=$apiVersion"
+    }
+
+    if ($forceNewProject) {
+        $command += " --option @azure-typespec/http-client-csharp.new-project=true"
     }
 
     return $command

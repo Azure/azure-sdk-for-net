@@ -50,17 +50,21 @@ jobs:
           - '!sdk/**/recordings/*'
           - '!sdk/**/SessionRecords/*'
           - '!sdk/**/session-records/*'
+        ${{ if endsWith(parameters.Repository, '-pr') }}:
+          TokenToUseForAuth: $(azuresdk-github-pat)
+
     - template: /eng/common/pipelines/templates/steps/install-pipeline-generation.yml
     - template: /eng/common/pipelines/templates/steps/set-default-branch.yml
 
     - pwsh: |
         Write-Host "Setting up pipeline variables"
-        if ("${{ parameters.Repository }}" -match "Azure/azure-sdk-for-(?<prefix>[^-]*)(?<pr>-pr)?") {
-          $prefix = $matches['prefix']
-          $devOpsPath = "\$prefix"
+        if ("${{ parameters.Repository }}" -match "Azure/azure-sdk-for-(?<lang>[^-]*)(?<pr>-pr)?") {
+          $lang = $matches['lang']
+          $devOpsPath = "\$lang"
+          $prefix = $lang
           if ($matches['pr']) {
             $devOpsPath = "${devOpsPath}\pr"
-            $prefix = "${prefix}-pr"
+            $prefix += "-pr"
             Write-Host "##vso[task.setvariable variable=ProjectForPRValidation]internal"
           }
           Write-Host "Prefix = $prefix"
@@ -79,8 +83,8 @@ jobs:
         $testServiceConnections = '"Azure" "azure-sdk-tests" "azure-sdk-tests-preview" "azure-sdk-tests-public" "Azure SDK Test Resources - LiveTestSecrets"'
         $internalServiceConnections = '"Azure" "Azure SDK Artifacts" "Azure SDK Engineering System" "opensource-api-connection" "AzureSDKEngKeyVault Secrets"'
 
-        # Map the language prefix to the appropriate variable groups
-        switch ($prefix)
+        # Map the language to the appropriate variable groups
+        switch ($lang)
         {
           "java" {
             $internalVariableGroups = '$(AzureSDK_Maven_Release_Pipeline_Secrets) $(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
@@ -115,7 +119,7 @@ jobs:
             $generateUnifiedWeekly = 'true'
           }
           default {
-            Write-Error "Prefix '$prefix' is not recognized."
+            Write-Error "Language '$lang' is not recognized."
             exit 1
           }
         }
