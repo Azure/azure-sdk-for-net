@@ -397,6 +397,12 @@ jobs:
                 echo "##vso[task.setvariable variable=DISCOVER_DEPENDENT_PACKAGES]1"
               displayName: Enable AdditionalDependency Calculation
 
+            - pwsh: |
+                Get-ChildItem -Path "$(Build.SourcesDirectory)" -Recurse | ForEach-Object {
+                  Write-Host $_.FullName
+                }
+              displayName: Dump Visible Files
+
             - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
               parameters:
                 ServiceDirectory: ${{parameters.ServiceDirectory}}
