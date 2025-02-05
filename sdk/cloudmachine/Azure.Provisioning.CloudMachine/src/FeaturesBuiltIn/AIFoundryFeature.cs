@@ -16,27 +16,6 @@ namespace Azure.CloudMachine.AIFoundry
     {
         private readonly string _connectionString;
 
-        // Group the IDs by ConnectionType for future expansions or custom logic.
-        private static readonly string[] s_openAiIds = new[]
-        {
-            "Azure.AI.OpenAI.AzureOpenAIClient",
-            "OpenAI.Chat.ChatClient",
-            "OpenAI.Embeddings.EmbeddingClient"
-        };
-
-        private static readonly string[] s_inferenceIds = new[]
-        {
-            "Azure.AI.Inference.ChatCompletionsClient",
-            "Azure.AI.Inference.EmbeddingsClient"
-        };
-
-        private static readonly string[] s_searchIds = new[]
-        {
-            "Azure.Search.Documents.SearchClient",
-            "Azure.Search.Documents.Indexes.SearchIndexClient",
-            "Azure.Search.Documents.Indexes.SearchIndexerClient"
-        };
-
         /// <summary>
         /// Initializes a new instance of the <see cref="AIFoundryFeature"/> class.
         /// </summary>
@@ -67,20 +46,20 @@ namespace Azure.CloudMachine.AIFoundry
             connections.Add(new ClientConnection(foundryId, _connectionString));
 
             var foundryConnections = new AIFoundryConnections(_connectionString, new DefaultAzureCredential());
-            foreach (var id in s_openAiIds)
-            {
-                connections.Add(foundryConnections.GetFoundryConnection(id));
-            }
 
-            foreach (var id in s_inferenceIds)
-            {
-                connections.Add(foundryConnections.GetFoundryConnection(id));
-            }
+            // Add OpenAI connections
+            connections.Add(foundryConnections.GetFoundryConnection("Azure.AI.OpenAI.AzureOpenAIClient"));
+            connections.Add(foundryConnections.GetFoundryConnection("OpenAI.Chat.ChatClient"));
+            connections.Add(foundryConnections.GetFoundryConnection("OpenAI.Embeddings.EmbeddingClient"));
 
-            foreach (var id in s_searchIds)
-            {
-                connections.Add(foundryConnections.GetFoundryConnection(id));
-            }
+            // Add Inference connections
+            connections.Add(foundryConnections.GetFoundryConnection("Azure.AI.Inference.ChatCompletionsClient"));
+            connections.Add(foundryConnections.GetFoundryConnection("Azure.AI.Inference.EmbeddingsClient"));
+
+            // Add Search connections
+            connections.Add(foundryConnections.GetFoundryConnection("Azure.Search.Documents.SearchClient"));
+            connections.Add(foundryConnections.GetFoundryConnection("Azure.Search.Documents.Indexes.SearchIndexClient"));
+            connections.Add(foundryConnections.GetFoundryConnection("Azure.Search.Documents.Indexes.SearchIndexerClient"));
         }
 
         /// <summary>
