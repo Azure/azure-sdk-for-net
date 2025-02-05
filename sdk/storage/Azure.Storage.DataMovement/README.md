@@ -92,13 +92,12 @@ Transfers are defined by a source and destination `StorageResource`. There are t
 The below sample demonstrates `StorageResourceProvider` use to start transfers by uploading a file to Azure Blob Storage, using the Azure.Storage.DataMovement.Blobs package. It uses an Azure.Core token credential with permission to write to the blob.
 
 ```C# Snippet:SimpleBlobUpload_BasePackage
-LocalFilesStorageResourceProvider files = new();
 BlobsStorageResourceProvider blobs = new(tokenCredential);
 
 // Create simple transfer single blob upload job
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
-    sourceResource: files.FromFile(sourceLocalPath),
-    destinationResource: blobs.FromBlob(destinationBlobUri));
+    sourceResource: LocalFilesStorageResourceProvider.FromFile(sourceLocalPath),
+    destinationResource: await blobs.FromBlobAsync(destinationBlobUri));
 await transferOperation.WaitForCompletionAsync();
 ```
 
@@ -113,11 +112,10 @@ The below sample initializes the `TransferManager` such that it's capable of res
 **Important:** Credentials to storage providers are not persisted. Storage access which requires credentials will need its appropriate `StorageResourceProvider` to be configured with those credentials. Below uses an `Azure.Core` token credential with permission to the appropriate resources.
 
 ```C# Snippet:SetupTransferManagerForResume
-LocalFilesStorageResourceProvider files = new();
 BlobsStorageResourceProvider blobs = new(tokenCredential);
 TransferManager transferManager = new(new TransferManagerOptions()
 {
-    ResumeProviders = new List<StorageResourceProvider>() { files, blobs },
+    ProvidersForResuming = new List<StorageResourceProvider>() { blobs },
 });
 ```
 
@@ -304,8 +302,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc].
 For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Common%2FREADME.png)
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement/src

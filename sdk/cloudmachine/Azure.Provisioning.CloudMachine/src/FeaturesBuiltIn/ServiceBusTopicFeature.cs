@@ -17,7 +17,7 @@ internal class ServiceBusTopicFeature : CloudMachineFeature
         _parent = parent;
     }
 
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
         var topic = new ServiceBusTopic(Name, "2021-11-01")
         {

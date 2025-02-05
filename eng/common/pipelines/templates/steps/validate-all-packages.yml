@@ -4,7 +4,7 @@ parameters:
   ConfigFileDir: $(Build.ArtifactStagingDirectory)/PackageInfo
 
 steps:
- - ${{ if and(ne(variables['Skip.PackageValidation'], 'true'), eq(variables['System.TeamProject'], 'internal')) }}:
+ - ${{ if and(ne(variables['Skip.PackageValidation'], 'true'), and(ne(variables['Build.Reason'], 'PullRequest'), eq(variables['System.TeamProject'], 'internal'))) }}:
     - pwsh: |
         echo "##vso[task.setvariable variable=SetAsReleaseBuild]false"
       displayName: "Set as release build"

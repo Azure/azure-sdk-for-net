@@ -1,0 +1,6 @@
+{
+  "output-folder": ".",
+  "namespace": "Type.Model.Inheritance.NestedDiscriminator",
+  "library-name": "Type.Model.Inheritance.NestedDiscriminator",
+  "use-model-reader-writer": true
+}
