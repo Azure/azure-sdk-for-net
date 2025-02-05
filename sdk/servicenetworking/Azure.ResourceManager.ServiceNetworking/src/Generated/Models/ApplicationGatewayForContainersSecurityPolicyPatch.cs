@@ -8,17 +8,12 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.ServiceNetworking.Models;
 
-namespace Azure.ResourceManager.ServiceNetworking
+namespace Azure.ResourceManager.ServiceNetworking.Models
 {
-    /// <summary>
-    /// A class representing the AGCSecurityPolicy data model.
-    /// SecurityPolicy Subresource of Traffic Controller.
-    /// </summary>
-    public partial class AGCSecurityPolicyData : TrackedResourceData
+    /// <summary> The type used for update operations of the SecurityPolicy. </summary>
+    public partial class ApplicationGatewayForContainersSecurityPolicyPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -52,38 +47,25 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="AGCSecurityPolicyData"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public AGCSecurityPolicyData(AzureLocation location) : base(location)
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayForContainersSecurityPolicyPatch"/>. </summary>
+        public ApplicationGatewayForContainersSecurityPolicyPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="AGCSecurityPolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="policyType"> Type of the Traffic Controller Security Policy. </param>
+        /// <summary> Initializes a new instance of <see cref="ApplicationGatewayForContainersSecurityPolicyPatch"/>. </summary>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="wafPolicy"> Web Application Firewall Policy of the Traffic Controller Security Policy. </param>
-        /// <param name="provisioningState"> Provisioning State of Traffic Controller SecurityPolicy Resource. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AGCSecurityPolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, Models.PolicyType? policyType, WritableSubResource wafPolicy, ProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal ApplicationGatewayForContainersSecurityPolicyPatch(IDictionary<string, string> tags, WritableSubResource wafPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            PolicyType = policyType;
+            Tags = tags;
             WafPolicy = wafPolicy;
-            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AGCSecurityPolicyData"/> for deserialization. </summary>
-        internal AGCSecurityPolicyData()
-        {
-        }
-
-        /// <summary> Type of the Traffic Controller Security Policy. </summary>
-        public Models.PolicyType? PolicyType { get; }
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> Web Application Firewall Policy of the Traffic Controller Security Policy. </summary>
         internal WritableSubResource WafPolicy { get; set; }
         /// <summary> Gets or sets Id. </summary>
@@ -97,8 +79,5 @@ namespace Azure.ResourceManager.ServiceNetworking
                 WafPolicy.Id = value;
             }
         }
-
-        /// <summary> Provisioning State of Traffic Controller SecurityPolicy Resource. </summary>
-        public ProvisioningState? ProvisioningState { get; }
     }
 }

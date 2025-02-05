@@ -228,11 +228,11 @@ namespace Azure.ResourceManager.ServiceNetworking
             return GetFrontends().Get(frontendName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of AGCSecurityPolicyResources in the TrafficController. </summary>
-        /// <returns> An object representing collection of AGCSecurityPolicyResources and their operations over a AGCSecurityPolicyResource. </returns>
-        public virtual AGCSecurityPolicyCollection GetAGCSecurityPolicies()
+        /// <summary> Gets a collection of ApplicationGatewayForContainersSecurityPolicyResources in the TrafficController. </summary>
+        /// <returns> An object representing collection of ApplicationGatewayForContainersSecurityPolicyResources and their operations over a ApplicationGatewayForContainersSecurityPolicyResource. </returns>
+        public virtual ApplicationGatewayForContainersSecurityPolicyCollection GetApplicationGatewayForContainersSecurityPolicies()
         {
-            return GetCachedClient(client => new AGCSecurityPolicyCollection(client, Id));
+            return GetCachedClient(client => new ApplicationGatewayForContainersSecurityPolicyCollection(client, Id));
         }
 
         /// <summary>
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AGCSecurityPolicyResource"/></description>
+        /// <description><see cref="ApplicationGatewayForContainersSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,9 +261,9 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<AGCSecurityPolicyResource>> GetAGCSecurityPolicyAsync(string securityPolicyName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationGatewayForContainersSecurityPolicyResource>> GetApplicationGatewayForContainersSecurityPolicyAsync(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            return await GetAGCSecurityPolicies().GetAsync(securityPolicyName, cancellationToken).ConfigureAwait(false);
+            return await GetApplicationGatewayForContainersSecurityPolicies().GetAsync(securityPolicyName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="AGCSecurityPolicyResource"/></description>
+        /// <description><see cref="ApplicationGatewayForContainersSecurityPolicyResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -292,9 +292,9 @@ namespace Azure.ResourceManager.ServiceNetworking
         /// <exception cref="ArgumentNullException"> <paramref name="securityPolicyName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="securityPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<AGCSecurityPolicyResource> GetAGCSecurityPolicy(string securityPolicyName, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationGatewayForContainersSecurityPolicyResource> GetApplicationGatewayForContainersSecurityPolicy(string securityPolicyName, CancellationToken cancellationToken = default)
         {
-            return GetAGCSecurityPolicies().Get(securityPolicyName, cancellationToken);
+            return GetApplicationGatewayForContainersSecurityPolicies().Get(securityPolicyName, cancellationToken);
         }
 
         /// <summary>

@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 return null;
             }
-            IReadOnlyList<AGCSecurityPolicyData> value = default;
+            IReadOnlyList<ApplicationGatewayForContainersSecurityPolicyData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<AGCSecurityPolicyData> array = new List<AGCSecurityPolicyData>();
+                    List<ApplicationGatewayForContainersSecurityPolicyData> array = new List<ApplicationGatewayForContainersSecurityPolicyData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AGCSecurityPolicyData.DeserializeAGCSecurityPolicyData(item, options));
+                        array.Add(ApplicationGatewayForContainersSecurityPolicyData.DeserializeApplicationGatewayForContainersSecurityPolicyData(item, options));
                     }
                     value = array;
                     continue;

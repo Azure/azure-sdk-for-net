@@ -14,7 +14,7 @@ using NUnit.Framework;
 
 namespace Azure.ResourceManager.ServiceNetworking.Samples
 {
-    public partial class Sample_AGCSecurityPolicyResource
+    public partial class Sample_ApplicationGatewayForContainersSecurityPolicyResource
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -28,21 +28,21 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AGCSecurityPolicyResource created on azure
-            // for more information of creating AGCSecurityPolicyResource, please refer to the document of AGCSecurityPolicyResource
+            // this example assumes you already have this ApplicationGatewayForContainersSecurityPolicyResource created on azure
+            // for more information of creating ApplicationGatewayForContainersSecurityPolicyResource, please refer to the document of ApplicationGatewayForContainersSecurityPolicyResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
             string trafficControllerName = "tc1";
             string securityPolicyName = "sp1";
-            ResourceIdentifier agcSecurityPolicyResourceId = AGCSecurityPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, securityPolicyName);
-            AGCSecurityPolicyResource agcSecurityPolicy = client.GetAGCSecurityPolicyResource(agcSecurityPolicyResourceId);
+            ResourceIdentifier applicationGatewayForContainersSecurityPolicyResourceId = ApplicationGatewayForContainersSecurityPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, securityPolicyName);
+            ApplicationGatewayForContainersSecurityPolicyResource applicationGatewayForContainersSecurityPolicy = client.GetApplicationGatewayForContainersSecurityPolicyResource(applicationGatewayForContainersSecurityPolicyResourceId);
 
             // invoke the operation
-            AGCSecurityPolicyResource result = await agcSecurityPolicy.GetAsync();
+            ApplicationGatewayForContainersSecurityPolicyResource result = await applicationGatewayForContainersSecurityPolicy.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AGCSecurityPolicyData resourceData = result.Data;
+            ApplicationGatewayForContainersSecurityPolicyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,17 +59,17 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AGCSecurityPolicyResource created on azure
-            // for more information of creating AGCSecurityPolicyResource, please refer to the document of AGCSecurityPolicyResource
+            // this example assumes you already have this ApplicationGatewayForContainersSecurityPolicyResource created on azure
+            // for more information of creating ApplicationGatewayForContainersSecurityPolicyResource, please refer to the document of ApplicationGatewayForContainersSecurityPolicyResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
             string trafficControllerName = "tc1";
             string securityPolicyName = "sp1";
-            ResourceIdentifier agcSecurityPolicyResourceId = AGCSecurityPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, securityPolicyName);
-            AGCSecurityPolicyResource agcSecurityPolicy = client.GetAGCSecurityPolicyResource(agcSecurityPolicyResourceId);
+            ResourceIdentifier applicationGatewayForContainersSecurityPolicyResourceId = ApplicationGatewayForContainersSecurityPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, securityPolicyName);
+            ApplicationGatewayForContainersSecurityPolicyResource applicationGatewayForContainersSecurityPolicy = client.GetApplicationGatewayForContainersSecurityPolicyResource(applicationGatewayForContainersSecurityPolicyResourceId);
 
             // invoke the operation
-            await agcSecurityPolicy.DeleteAsync(WaitUntil.Completed);
+            await applicationGatewayForContainersSecurityPolicy.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine("Succeeded");
         }
@@ -86,25 +86,25 @@ namespace Azure.ResourceManager.ServiceNetworking.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this AGCSecurityPolicyResource created on azure
-            // for more information of creating AGCSecurityPolicyResource, please refer to the document of AGCSecurityPolicyResource
+            // this example assumes you already have this ApplicationGatewayForContainersSecurityPolicyResource created on azure
+            // for more information of creating ApplicationGatewayForContainersSecurityPolicyResource, please refer to the document of ApplicationGatewayForContainersSecurityPolicyResource
             string subscriptionId = "subid";
             string resourceGroupName = "rg1";
             string trafficControllerName = "tc1";
             string securityPolicyName = "sp1";
-            ResourceIdentifier agcSecurityPolicyResourceId = AGCSecurityPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, securityPolicyName);
-            AGCSecurityPolicyResource agcSecurityPolicy = client.GetAGCSecurityPolicyResource(agcSecurityPolicyResourceId);
+            ResourceIdentifier applicationGatewayForContainersSecurityPolicyResourceId = ApplicationGatewayForContainersSecurityPolicyResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, trafficControllerName, securityPolicyName);
+            ApplicationGatewayForContainersSecurityPolicyResource applicationGatewayForContainersSecurityPolicy = client.GetApplicationGatewayForContainersSecurityPolicyResource(applicationGatewayForContainersSecurityPolicyResourceId);
 
             // invoke the operation
-            AGCSecurityPolicyPatch patch = new AGCSecurityPolicyPatch
+            ApplicationGatewayForContainersSecurityPolicyPatch patch = new ApplicationGatewayForContainersSecurityPolicyPatch
             {
                 WafPolicyId = new ResourceIdentifier("/subscriptions/subid/resourcegroups/rg1/providers/Microsoft.Networking/applicationGatewayWebApplicationFirewallPolicies/wp-0"),
             };
-            AGCSecurityPolicyResource result = await agcSecurityPolicy.UpdateAsync(patch);
+            ApplicationGatewayForContainersSecurityPolicyResource result = await applicationGatewayForContainersSecurityPolicy.UpdateAsync(patch);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            AGCSecurityPolicyData resourceData = result.Data;
+            ApplicationGatewayForContainersSecurityPolicyData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

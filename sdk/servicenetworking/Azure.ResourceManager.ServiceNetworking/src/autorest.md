@@ -18,7 +18,7 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 rename-mapping:
-  SecurityPolicy: AGCSecurityPolicy
+  SecurityPolicy: ApplicationGatewayForContainersSecurityPolicy
 
 
 

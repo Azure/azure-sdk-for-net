@@ -71,15 +71,15 @@ namespace Azure.ResourceManager.ServiceNetworking.Mocking
         }
 
         /// <summary>
-        /// Gets an object representing an <see cref="AGCSecurityPolicyResource"/> along with the instance operations that can be performed on it but with no data.
-        /// You can use <see cref="AGCSecurityPolicyResource.CreateResourceIdentifier" /> to create an <see cref="AGCSecurityPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// Gets an object representing an <see cref="ApplicationGatewayForContainersSecurityPolicyResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ApplicationGatewayForContainersSecurityPolicyResource.CreateResourceIdentifier" /> to create an <see cref="ApplicationGatewayForContainersSecurityPolicyResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="AGCSecurityPolicyResource"/> object. </returns>
-        public virtual AGCSecurityPolicyResource GetAGCSecurityPolicyResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ApplicationGatewayForContainersSecurityPolicyResource"/> object. </returns>
+        public virtual ApplicationGatewayForContainersSecurityPolicyResource GetApplicationGatewayForContainersSecurityPolicyResource(ResourceIdentifier id)
         {
-            AGCSecurityPolicyResource.ValidateResourceId(id);
-            return new AGCSecurityPolicyResource(Client, id);
+            ApplicationGatewayForContainersSecurityPolicyResource.ValidateResourceId(id);
+            return new ApplicationGatewayForContainersSecurityPolicyResource(Client, id);
         }
     }
 }
