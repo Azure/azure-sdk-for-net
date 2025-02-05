@@ -415,108 +415,582 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAuthoringProjects_GetSupportedLanguages_ShortVersion()
+        public void Example_AnalyzeConversationAuthoringExportProjectJobState_GetExportStatus_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetSupportedLanguages("Conversation");
+            Response response = client.GetExportStatus("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("languageName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("languageCode").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdOn").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAuthoringProjects_GetSupportedLanguages_ShortVersion_Async()
+        public async Task Example_AnalyzeConversationAuthoringExportProjectJobState_GetExportStatus_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetSupportedLanguagesAsync("Conversation");
+            Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("languageName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("languageCode").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdOn").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAuthoringProjects_GetSupportedLanguages_ShortVersion_Convenience()
+        public void Example_AnalyzeConversationAuthoringExportProjectJobState_GetExportStatus_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            Response<SupportedLanguages> response = client.GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind.Conversation);
+            Response<ExportProjectOperationState> response = client.GetExportStatus("<projectName>", "<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAuthoringProjects_GetSupportedLanguages_ShortVersion_Convenience_Async()
+        public async Task Example_AnalyzeConversationAuthoringExportProjectJobState_GetExportStatus_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            Response<SupportedLanguages> response = await client.GetSupportedLanguagesAsync(AnalyzeConversationAuthoringProjectKind.Conversation);
+            Response<ExportProjectOperationState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAuthoringProjects_GetSupportedLanguages_AllParameters()
+        public void Example_AnalyzeConversationAuthoringExportProjectJobState_GetExportStatus_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetSupportedLanguages("Conversation", top: 1234, skip: 1234, maxpagesize: 1234);
+            Response response = client.GetExportStatus("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("languageName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("languageCode").ToString());
-            Console.WriteLine(result.GetProperty("nextLink").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdOn").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("resultUri").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAuthoringProjects_GetSupportedLanguages_AllParameters_Async()
+        public async Task Example_AnalyzeConversationAuthoringExportProjectJobState_GetExportStatus_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetSupportedLanguagesAsync("Conversation", top: 1234, skip: 1234, maxpagesize: 1234);
+            Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", null);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("languageName").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("languageCode").ToString());
-            Console.WriteLine(result.GetProperty("nextLink").ToString());
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdOn").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("resultUri").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAuthoringProjects_GetSupportedLanguages_AllParameters_Convenience()
+        public void Example_AnalyzeConversationAuthoringExportProjectJobState_GetExportStatus_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            Response<SupportedLanguages> response = client.GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind.Conversation, top: 1234, skip: 1234, maxpagesize: 1234);
+            Response<ExportProjectOperationState> response = client.GetExportStatus("<projectName>", "<jobId>");
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAuthoringProjects_GetSupportedLanguages_AllParameters_Convenience_Async()
+        public async Task Example_AnalyzeConversationAuthoringExportProjectJobState_GetExportStatus_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            Response<SupportedLanguages> response = await client.GetSupportedLanguagesAsync(AnalyzeConversationAuthoringProjectKind.Conversation, top: 1234, skip: 1234, maxpagesize: 1234);
+            Response<ExportProjectOperationState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AnalyzeConversationAuthoringImportProjectJobState_GetImportStatus_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response response = client.GetImportStatus("<projectName>", "<jobId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdOn").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversationAuthoringImportProjectJobState_GetImportStatus_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdOn").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AnalyzeConversationAuthoringImportProjectJobState_GetImportStatus_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response<ImportProjectOperationState> response = client.GetImportStatus("<projectName>", "<jobId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversationAuthoringImportProjectJobState_GetImportStatus_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response<ImportProjectOperationState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AnalyzeConversationAuthoringImportProjectJobState_GetImportStatus_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response response = client.GetImportStatus("<projectName>", "<jobId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdOn").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversationAuthoringImportProjectJobState_GetImportStatus_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdOn").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AnalyzeConversationAuthoringImportProjectJobState_GetImportStatus_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response<ImportProjectOperationState> response = client.GetImportStatus("<projectName>", "<jobId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversationAuthoringImportProjectJobState_GetImportStatus_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response<ImportProjectOperationState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_ConversationAuthoringProjects_CopyProjectAuthorization_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                projectKind = "Conversation",
+            });
+            Response response = client.CopyProjectAuthorization("<projectName>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("projectKind").ToString());
+            Console.WriteLine(result.GetProperty("targetProjectName").ToString());
+            Console.WriteLine(result.GetProperty("accessToken").ToString());
+            Console.WriteLine(result.GetProperty("expiresAt").ToString());
+            Console.WriteLine(result.GetProperty("targetResourceId").ToString());
+            Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ConversationAuthoringProjects_CopyProjectAuthorization_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                projectKind = "Conversation",
+            });
+            Response response = await client.CopyProjectAuthorizationAsync("<projectName>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("projectKind").ToString());
+            Console.WriteLine(result.GetProperty("targetProjectName").ToString());
+            Console.WriteLine(result.GetProperty("accessToken").ToString());
+            Console.WriteLine(result.GetProperty("expiresAt").ToString());
+            Console.WriteLine(result.GetProperty("targetResourceId").ToString());
+            Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_ConversationAuthoringProjects_CopyProjectAuthorization_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ConversationAuthoringProjects_CopyProjectAuthorization_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_ConversationAuthoringProjects_CopyProjectAuthorization_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                projectKind = "Conversation",
+                storageInputContainerName = "<storageInputContainerName>",
+                allowOverwrite = true,
+            });
+            Response response = client.CopyProjectAuthorization("<projectName>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("projectKind").ToString());
+            Console.WriteLine(result.GetProperty("targetProjectName").ToString());
+            Console.WriteLine(result.GetProperty("accessToken").ToString());
+            Console.WriteLine(result.GetProperty("expiresAt").ToString());
+            Console.WriteLine(result.GetProperty("targetResourceId").ToString());
+            Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ConversationAuthoringProjects_CopyProjectAuthorization_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                projectKind = "Conversation",
+                storageInputContainerName = "<storageInputContainerName>",
+                allowOverwrite = true,
+            });
+            Response response = await client.CopyProjectAuthorizationAsync("<projectName>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("projectKind").ToString());
+            Console.WriteLine(result.GetProperty("targetProjectName").ToString());
+            Console.WriteLine(result.GetProperty("accessToken").ToString());
+            Console.WriteLine(result.GetProperty("expiresAt").ToString());
+            Console.WriteLine(result.GetProperty("targetResourceId").ToString());
+            Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_ConversationAuthoringProjects_CopyProjectAuthorization_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ConversationAuthoringProjects_CopyProjectAuthorization_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AnalyzeConversationAuthoringCopiedProjectJobState_GetCopyProjectStatus_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response response = client.GetCopyProjectStatus("<projectName>", "<jobId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdOn").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversationAuthoringCopiedProjectJobState_GetCopyProjectStatus_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdOn").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AnalyzeConversationAuthoringCopiedProjectJobState_GetCopyProjectStatus_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response<CopyProjectOperationState> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversationAuthoringCopiedProjectJobState_GetCopyProjectStatus_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response<CopyProjectOperationState> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AnalyzeConversationAuthoringCopiedProjectJobState_GetCopyProjectStatus_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response response = client.GetCopyProjectStatus("<projectName>", "<jobId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdOn").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversationAuthoringCopiedProjectJobState_GetCopyProjectStatus_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>", null);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("jobId").ToString());
+            Console.WriteLine(result.GetProperty("createdOn").ToString());
+            Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+            Console.WriteLine(result.GetProperty("expiresOn").ToString());
+            Console.WriteLine(result.GetProperty("status").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+            Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AnalyzeConversationAuthoringCopiedProjectJobState_GetCopyProjectStatus_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response<CopyProjectOperationState> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversationAuthoringCopiedProjectJobState_GetCopyProjectStatus_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response<CopyProjectOperationState> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
         }
 
         [Test]
@@ -661,6 +1135,122 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
+        public void Example_AnalyzeConversationAuthoringSupportedLanguage_GetSupportedLanguages_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            foreach (BinaryData item in client.GetSupportedLanguages("Conversation"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("languageName").ToString());
+                Console.WriteLine(result.GetProperty("languageCode").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversationAuthoringSupportedLanguage_GetSupportedLanguages_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            await foreach (BinaryData item in client.GetSupportedLanguagesAsync("Conversation"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("languageName").ToString());
+                Console.WriteLine(result.GetProperty("languageCode").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AnalyzeConversationAuthoringSupportedLanguage_GetSupportedLanguages_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            foreach (SupportedLanguage item in client.GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind.Conversation))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversationAuthoringSupportedLanguage_GetSupportedLanguages_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            await foreach (SupportedLanguage item in client.GetSupportedLanguagesAsync(AnalyzeConversationAuthoringProjectKind.Conversation))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AnalyzeConversationAuthoringSupportedLanguage_GetSupportedLanguages_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            foreach (BinaryData item in client.GetSupportedLanguages("Conversation", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("languageName").ToString());
+                Console.WriteLine(result.GetProperty("languageCode").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversationAuthoringSupportedLanguage_GetSupportedLanguages_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            await foreach (BinaryData item in client.GetSupportedLanguagesAsync("Conversation", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("languageName").ToString());
+                Console.WriteLine(result.GetProperty("languageCode").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AnalyzeConversationAuthoringSupportedLanguage_GetSupportedLanguages_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            foreach (SupportedLanguage item in client.GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind.Conversation, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversationAuthoringSupportedLanguage_GetSupportedLanguages_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            await foreach (SupportedLanguage item in client.GetSupportedLanguagesAsync(AnalyzeConversationAuthoringProjectKind.Conversation, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
         public void Example_ConversationAuthoringProjects_DeleteProject_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -701,6 +1291,650 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
             Operation operation = await client.DeleteProjectAsync(WaitUntil.Completed, "<projectName>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_ConversationAuthoringProjects_Export_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Operation operation = client.Export(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ConversationAuthoringProjects_Export_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_ConversationAuthoringProjects_Export_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Operation operation = client.Export(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ConversationAuthoringProjects_Export_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_ConversationAuthoringProjects_Export_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Operation operation = client.Export(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit", exportedProjectFormat: "Conversation", assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ConversationAuthoringProjects_Export_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit", exportedProjectFormat: "Conversation", assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_ConversationAuthoringProjects_Export_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Operation operation = client.Export(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit, exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation, assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ConversationAuthoringProjects_Export_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit, exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation, assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_ConversationAuthoringProjects_Import_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                projectFileVersion = "<projectFileVersion>",
+                stringIndexType = "Utf16CodeUnit",
+                metadata = new
+                {
+                    projectKind = "Conversation",
+                    projectName = "<projectName>",
+                    language = "<language>",
+                },
+            });
+            Operation operation = client.Import(WaitUntil.Completed, "<projectName>", content);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ConversationAuthoringProjects_Import_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                projectFileVersion = "<projectFileVersion>",
+                stringIndexType = "Utf16CodeUnit",
+                metadata = new
+                {
+                    projectKind = "Conversation",
+                    projectName = "<projectName>",
+                    language = "<language>",
+                },
+            });
+            Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", content);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_ConversationAuthoringProjects_Import_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>"));
+            Operation operation = client.Import(WaitUntil.Completed, "<projectName>", body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ConversationAuthoringProjects_Import_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>"));
+            Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_ConversationAuthoringProjects_Import_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                projectFileVersion = "<projectFileVersion>",
+                stringIndexType = "Utf16CodeUnit",
+                metadata = new
+                {
+                    projectKind = "Conversation",
+                    settings = new
+                    {
+                        confidenceThreshold = 123.45F,
+                    },
+                    storageInputContainerName = "<storageInputContainerName>",
+                    projectName = "<projectName>",
+                    multilingual = true,
+                    description = "<description>",
+                    language = "<language>",
+                },
+                assets = new
+                {
+                    intents = new object[]
+            {
+new
+{
+category = "<category>",
+}
+            },
+                    entities = new object[]
+            {
+new
+{
+category = "<category>",
+compositionMode = "returnLongestOverlap",
+entities = new
+{
+sublists = new object[]
+{
+new
+{
+listKey = "<listKey>",
+synonyms = new object[]
+{
+new
+{
+language = "<language>",
+values = new object[]
+{
+"<values>"
+},
+}
+},
+}
+},
+},
+prebuilts = new object[]
+{
+new
+{
+category = "<category>",
+}
+},
+regex = new
+{
+expressions = new object[]
+{
+new
+{
+regexKey = "<regexKey>",
+language = "<language>",
+regexPattern = "<regexPattern>",
+}
+},
+},
+requiredComponents = new object[]
+{
+"<requiredComponents>"
+},
+}
+            },
+                    utterances = new object[]
+            {
+new
+{
+entities = new object[]
+{
+new
+{
+category = "<category>",
+offset = 1234,
+length = 1234,
+}
+},
+text = "<text>",
+language = "<language>",
+intent = "<intent>",
+dataset = "<dataset>",
+}
+            },
+                    projectKind = "Conversation",
+                },
+            });
+            Operation operation = client.Import(WaitUntil.Completed, "<projectName>", content, exportedProjectFormat: "Conversation");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ConversationAuthoringProjects_Import_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                projectFileVersion = "<projectFileVersion>",
+                stringIndexType = "Utf16CodeUnit",
+                metadata = new
+                {
+                    projectKind = "Conversation",
+                    settings = new
+                    {
+                        confidenceThreshold = 123.45F,
+                    },
+                    storageInputContainerName = "<storageInputContainerName>",
+                    projectName = "<projectName>",
+                    multilingual = true,
+                    description = "<description>",
+                    language = "<language>",
+                },
+                assets = new
+                {
+                    intents = new object[]
+            {
+new
+{
+category = "<category>",
+}
+            },
+                    entities = new object[]
+            {
+new
+{
+category = "<category>",
+compositionMode = "returnLongestOverlap",
+entities = new
+{
+sublists = new object[]
+{
+new
+{
+listKey = "<listKey>",
+synonyms = new object[]
+{
+new
+{
+language = "<language>",
+values = new object[]
+{
+"<values>"
+},
+}
+},
+}
+},
+},
+prebuilts = new object[]
+{
+new
+{
+category = "<category>",
+}
+},
+regex = new
+{
+expressions = new object[]
+{
+new
+{
+regexKey = "<regexKey>",
+language = "<language>",
+regexPattern = "<regexPattern>",
+}
+},
+},
+requiredComponents = new object[]
+{
+"<requiredComponents>"
+},
+}
+            },
+                    utterances = new object[]
+            {
+new
+{
+entities = new object[]
+{
+new
+{
+category = "<category>",
+offset = 1234,
+length = 1234,
+}
+},
+text = "<text>",
+language = "<language>",
+intent = "<intent>",
+dataset = "<dataset>",
+}
+            },
+                    projectKind = "Conversation",
+                },
+            });
+            Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", content, exportedProjectFormat: "Conversation");
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_ConversationAuthoringProjects_Import_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>")
+            {
+                Settings = new ProjectSettings(123.45F),
+                StorageInputContainerName = "<storageInputContainerName>",
+                Multilingual = true,
+                Description = "<description>",
+            })
+            {
+                Assets = new ConversationExportedProjectAsset
+                {
+                    Intents = { new ConversationExportedIntent("<category>") },
+                    Entities = {new ConversationExportedEntity("<category>")
+{
+CompositionMode = AnalyzeConversationAuthoringCompositionMode.ReturnLongestOverlap,
+Entities = new ExportedEntityList
+{
+Sublists = {new ExportedEntitySublist
+{
+ListKey = "<listKey>",
+Synonyms = {new ExportedEntityListSynonym
+{
+Language = "<language>",
+Values = {"<values>"},
+}},
+}},
+},
+Prebuilts = {new ExportedPrebuiltEntity("<category>")},
+Regex = new ExportedEntityRegex
+{
+Expressions = {new ExportedEntityRegexExpression
+{
+RegexKey = "<regexKey>",
+Language = "<language>",
+RegexPattern = "<regexPattern>",
+}},
+},
+RequiredComponents = {"<requiredComponents>"},
+}},
+                    Utterances = {new ConversationExportedUtterance("<text>", "<intent>")
+{
+Entities = {new ExportedUtteranceEntityLabel("<category>", 1234, 1234)},
+Language = "<language>",
+Dataset = "<dataset>",
+}},
+                },
+            };
+            Operation operation = client.Import(WaitUntil.Completed, "<projectName>", body, exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ConversationAuthoringProjects_Import_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>")
+            {
+                Settings = new ProjectSettings(123.45F),
+                StorageInputContainerName = "<storageInputContainerName>",
+                Multilingual = true,
+                Description = "<description>",
+            })
+            {
+                Assets = new ConversationExportedProjectAsset
+                {
+                    Intents = { new ConversationExportedIntent("<category>") },
+                    Entities = {new ConversationExportedEntity("<category>")
+{
+CompositionMode = AnalyzeConversationAuthoringCompositionMode.ReturnLongestOverlap,
+Entities = new ExportedEntityList
+{
+Sublists = {new ExportedEntitySublist
+{
+ListKey = "<listKey>",
+Synonyms = {new ExportedEntityListSynonym
+{
+Language = "<language>",
+Values = {"<values>"},
+}},
+}},
+},
+Prebuilts = {new ExportedPrebuiltEntity("<category>")},
+Regex = new ExportedEntityRegex
+{
+Expressions = {new ExportedEntityRegexExpression
+{
+RegexKey = "<regexKey>",
+Language = "<language>",
+RegexPattern = "<regexPattern>",
+}},
+},
+RequiredComponents = {"<requiredComponents>"},
+}},
+                    Utterances = {new ConversationExportedUtterance("<text>", "<intent>")
+{
+Entities = {new ExportedUtteranceEntityLabel("<category>", 1234, 1234)},
+Language = "<language>",
+Dataset = "<dataset>",
+}},
+                },
+            };
+            Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", body, exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_ConversationAuthoringProjects_CopyProject_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                projectKind = "Conversation",
+                targetProjectName = "<targetProjectName>",
+                accessToken = "<accessToken>",
+                expiresAt = "2022-05-10T18:57:31.2311892Z",
+                targetResourceId = "<targetResourceId>",
+                targetResourceRegion = "<targetResourceRegion>",
+            });
+            Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", content);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ConversationAuthoringProjects_CopyProject_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                projectKind = "Conversation",
+                targetProjectName = "<targetProjectName>",
+                accessToken = "<accessToken>",
+                expiresAt = "2022-05-10T18:57:31.2311892Z",
+                targetResourceId = "<targetResourceId>",
+                targetResourceRegion = "<targetResourceRegion>",
+            });
+            Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<projectName>", content);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_ConversationAuthoringProjects_CopyProject_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            CopyProjectDetails body = new CopyProjectDetails(
+                AnalyzeConversationAuthoringProjectKind.Conversation,
+                "<targetProjectName>",
+                "<accessToken>",
+                DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                "<targetResourceId>",
+                "<targetResourceRegion>");
+            Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ConversationAuthoringProjects_CopyProject_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            CopyProjectDetails body = new CopyProjectDetails(
+                AnalyzeConversationAuthoringProjectKind.Conversation,
+                "<targetProjectName>",
+                "<accessToken>",
+                DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                "<targetResourceId>",
+                "<targetResourceRegion>");
+            Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<projectName>", body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_ConversationAuthoringProjects_CopyProject_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                projectKind = "Conversation",
+                targetProjectName = "<targetProjectName>",
+                accessToken = "<accessToken>",
+                expiresAt = "2022-05-10T18:57:31.2311892Z",
+                targetResourceId = "<targetResourceId>",
+                targetResourceRegion = "<targetResourceRegion>",
+            });
+            Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", content);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ConversationAuthoringProjects_CopyProject_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            using RequestContent content = RequestContent.Create(new
+            {
+                projectKind = "Conversation",
+                targetProjectName = "<targetProjectName>",
+                accessToken = "<accessToken>",
+                expiresAt = "2022-05-10T18:57:31.2311892Z",
+                targetResourceId = "<targetResourceId>",
+                targetResourceRegion = "<targetResourceRegion>",
+            });
+            Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<projectName>", content);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_ConversationAuthoringProjects_CopyProject_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            CopyProjectDetails body = new CopyProjectDetails(
+                AnalyzeConversationAuthoringProjectKind.Conversation,
+                "<targetProjectName>",
+                "<accessToken>",
+                DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                "<targetResourceId>",
+                "<targetResourceRegion>");
+            Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", body);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ConversationAuthoringProjects_CopyProject_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            CopyProjectDetails body = new CopyProjectDetails(
+                AnalyzeConversationAuthoringProjectKind.Conversation,
+                "<targetProjectName>",
+                "<accessToken>",
+                DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+                "<targetResourceId>",
+                "<targetResourceRegion>");
+            Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<projectName>", body);
         }
     }
 }

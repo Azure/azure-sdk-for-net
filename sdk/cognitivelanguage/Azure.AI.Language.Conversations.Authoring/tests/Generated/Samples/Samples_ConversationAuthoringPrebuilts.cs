@@ -18,112 +18,122 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAuthoringPrebuilts_GetSupportedPrebuiltEntities_ShortVersion()
+        public void Example_AnalyzeConversationAuthoringPrebuiltEntity_GetSupportedPrebuiltEntities_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringPrebuilts client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetSupportedPrebuiltEntities(null, null, null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("examples").ToString());
+            foreach (BinaryData item in client.GetSupportedPrebuiltEntities(null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("category").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("examples").ToString());
+            }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAuthoringPrebuilts_GetSupportedPrebuiltEntities_ShortVersion_Async()
+        public async Task Example_AnalyzeConversationAuthoringPrebuiltEntity_GetSupportedPrebuiltEntities_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringPrebuilts client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetSupportedPrebuiltEntitiesAsync(null, null, null, null, null, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("examples").ToString());
+            await foreach (BinaryData item in client.GetSupportedPrebuiltEntitiesAsync(null, null, null, null, null, null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("category").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("examples").ToString());
+            }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAuthoringPrebuilts_GetSupportedPrebuiltEntities_ShortVersion_Convenience()
+        public void Example_AnalyzeConversationAuthoringPrebuiltEntity_GetSupportedPrebuiltEntities_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringPrebuilts client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
-            Response<PrebuiltEntities> response = client.GetSupportedPrebuiltEntities();
+            foreach (PrebuiltEntity item in client.GetSupportedPrebuiltEntities())
+            {
+            }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAuthoringPrebuilts_GetSupportedPrebuiltEntities_ShortVersion_Convenience_Async()
+        public async Task Example_AnalyzeConversationAuthoringPrebuiltEntity_GetSupportedPrebuiltEntities_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringPrebuilts client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
-            Response<PrebuiltEntities> response = await client.GetSupportedPrebuiltEntitiesAsync();
+            await foreach (PrebuiltEntity item in client.GetSupportedPrebuiltEntitiesAsync())
+            {
+            }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAuthoringPrebuilts_GetSupportedPrebuiltEntities_AllParameters()
+        public void Example_AnalyzeConversationAuthoringPrebuiltEntity_GetSupportedPrebuiltEntities_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringPrebuilts client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = client.GetSupportedPrebuiltEntities("<language>", "<multilingual>", 1234, 1234, 1234, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("examples").ToString());
-            Console.WriteLine(result.GetProperty("nextLink").ToString());
+            foreach (BinaryData item in client.GetSupportedPrebuiltEntities(1234, 1234, 1234, "<language>", "<multilingual>", null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("category").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("examples").ToString());
+            }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAuthoringPrebuilts_GetSupportedPrebuiltEntities_AllParameters_Async()
+        public async Task Example_AnalyzeConversationAuthoringPrebuiltEntity_GetSupportedPrebuiltEntities_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringPrebuilts client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
-            Response response = await client.GetSupportedPrebuiltEntitiesAsync("<language>", "<multilingual>", 1234, 1234, 1234, null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("category").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("description").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("examples").ToString());
-            Console.WriteLine(result.GetProperty("nextLink").ToString());
+            await foreach (BinaryData item in client.GetSupportedPrebuiltEntitiesAsync(1234, 1234, 1234, "<language>", "<multilingual>", null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("category").ToString());
+                Console.WriteLine(result.GetProperty("description").ToString());
+                Console.WriteLine(result.GetProperty("examples").ToString());
+            }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAuthoringPrebuilts_GetSupportedPrebuiltEntities_AllParameters_Convenience()
+        public void Example_AnalyzeConversationAuthoringPrebuiltEntity_GetSupportedPrebuiltEntities_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringPrebuilts client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
-            Response<PrebuiltEntities> response = client.GetSupportedPrebuiltEntities(language: "<language>", multilingual: "<multilingual>", top: 1234, skip: 1234, maxpagesize: 1234);
+            foreach (PrebuiltEntity item in client.GetSupportedPrebuiltEntities(maxCount: 1234, skip: 1234, maxpagesize: 1234, language: "<language>", multilingual: "<multilingual>"))
+            {
+            }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAuthoringPrebuilts_GetSupportedPrebuiltEntities_AllParameters_Convenience_Async()
+        public async Task Example_AnalyzeConversationAuthoringPrebuiltEntity_GetSupportedPrebuiltEntities_AllParameters_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringPrebuilts client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringPrebuiltsClient(apiVersion: "2024-11-15-preview");
 
-            Response<PrebuiltEntities> response = await client.GetSupportedPrebuiltEntitiesAsync(language: "<language>", multilingual: "<multilingual>", top: 1234, skip: 1234, maxpagesize: 1234);
+            await foreach (PrebuiltEntity item in client.GetSupportedPrebuiltEntitiesAsync(maxCount: 1234, skip: 1234, maxpagesize: 1234, language: "<language>", multilingual: "<multilingual>"))
+            {
+            }
         }
     }
 }

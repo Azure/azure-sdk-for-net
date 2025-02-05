@@ -46,14 +46,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="TrainingConfigVersion"/>. </summary>
-        /// <param name="trainingConfigVersionProperty"> Represents the version of the config. </param>
         /// <param name="modelExpirationDate"> Represents the training config version expiration date. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="trainingConfigVersionProperty"/> is null. </exception>
-        internal TrainingConfigVersion(string trainingConfigVersionProperty, DateTimeOffset modelExpirationDate)
+        internal TrainingConfigVersion(DateTimeOffset modelExpirationDate)
         {
-            Argument.AssertNotNull(trainingConfigVersionProperty, nameof(trainingConfigVersionProperty));
-
-            TrainingConfigVersionProperty = trainingConfigVersionProperty;
             ModelExpirationDate = modelExpirationDate;
         }
 

@@ -46,17 +46,14 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="PrebuiltEntity"/>. </summary>
-        /// <param name="category"> The prebuilt entity category. </param>
         /// <param name="description"> The description. </param>
         /// <param name="examples"> English examples for the entity. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="category"/>, <paramref name="description"/> or <paramref name="examples"/> is null. </exception>
-        internal PrebuiltEntity(string category, string description, string examples)
+        /// <exception cref="ArgumentNullException"> <paramref name="description"/> or <paramref name="examples"/> is null. </exception>
+        internal PrebuiltEntity(string description, string examples)
         {
-            Argument.AssertNotNull(category, nameof(category));
             Argument.AssertNotNull(description, nameof(description));
             Argument.AssertNotNull(examples, nameof(examples));
 
-            Category = category;
             Description = description;
             Examples = examples;
         }

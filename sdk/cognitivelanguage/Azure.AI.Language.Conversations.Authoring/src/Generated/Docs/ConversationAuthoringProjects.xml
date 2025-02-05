@@ -367,98 +367,536 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetP
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
 ]]></code></example>
     </member>
-    <member name="GetSupportedLanguagesAsync(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)">
+    <member name="GetExportStatusAsync(string,string,CancellationToken)">
       <example>
-This sample shows how to call GetSupportedLanguagesAsync.
+This sample shows how to call GetExportStatusAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-Response<SupportedLanguages> response = await client.GetSupportedLanguagesAsync(AnalyzeConversationAuthoringProjectKind.Conversation);
+Response<ExportProjectOperationState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
 ]]></code>
-This sample shows how to call GetSupportedLanguagesAsync with all parameters.
+This sample shows how to call GetExportStatusAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-Response<SupportedLanguages> response = await client.GetSupportedLanguagesAsync(AnalyzeConversationAuthoringProjectKind.Conversation, top: 1234, skip: 1234, maxpagesize: 1234);
+Response<ExportProjectOperationState> response = await client.GetExportStatusAsync("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
-    <member name="GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)">
+    <member name="GetExportStatus(string,string,CancellationToken)">
       <example>
-This sample shows how to call GetSupportedLanguages.
+This sample shows how to call GetExportStatus.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-Response<SupportedLanguages> response = client.GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind.Conversation);
+Response<ExportProjectOperationState> response = client.GetExportStatus("<projectName>", "<jobId>");
 ]]></code>
-This sample shows how to call GetSupportedLanguages with all parameters.
+This sample shows how to call GetExportStatus with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-Response<SupportedLanguages> response = client.GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind.Conversation, top: 1234, skip: 1234, maxpagesize: 1234);
+Response<ExportProjectOperationState> response = client.GetExportStatus("<projectName>", "<jobId>");
 ]]></code></example>
     </member>
-    <member name="GetSupportedLanguagesAsync(string,int?,int?,int?,RequestContext)">
+    <member name="GetExportStatusAsync(string,string,RequestContext)">
       <example>
-This sample shows how to call GetSupportedLanguagesAsync and parse the result.
+This sample shows how to call GetExportStatusAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-Response response = await client.GetSupportedLanguagesAsync("Conversation");
+Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("languageName").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("languageCode").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
-This sample shows how to call GetSupportedLanguagesAsync with all parameters and parse the result.
+This sample shows how to call GetExportStatusAsync with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-Response response = await client.GetSupportedLanguagesAsync("Conversation", top: 1234, skip: 1234, maxpagesize: 1234);
+Response response = await client.GetExportStatusAsync("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("languageName").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("languageCode").ToString());
-Console.WriteLine(result.GetProperty("nextLink").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("resultUri").ToString());
 ]]></code></example>
     </member>
-    <member name="GetSupportedLanguages(string,int?,int?,int?,RequestContext)">
+    <member name="GetExportStatus(string,string,RequestContext)">
       <example>
-This sample shows how to call GetSupportedLanguages and parse the result.
+This sample shows how to call GetExportStatus and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-Response response = client.GetSupportedLanguages("Conversation");
+Response response = client.GetExportStatus("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("languageName").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("languageCode").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
 ]]></code>
-This sample shows how to call GetSupportedLanguages with all parameters and parse the result.
+This sample shows how to call GetExportStatus with all parameters and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-Response response = client.GetSupportedLanguages("Conversation", top: 1234, skip: 1234, maxpagesize: 1234);
+Response response = client.GetExportStatus("<projectName>", "<jobId>", null);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("languageName").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("languageCode").ToString());
-Console.WriteLine(result.GetProperty("nextLink").ToString());
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("resultUri").ToString());
+]]></code></example>
+    </member>
+    <member name="GetImportStatusAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetImportStatusAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response<ImportProjectOperationState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+]]></code>
+This sample shows how to call GetImportStatusAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response<ImportProjectOperationState> response = await client.GetImportStatusAsync("<projectName>", "<jobId>");
+]]></code></example>
+    </member>
+    <member name="GetImportStatus(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetImportStatus.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response<ImportProjectOperationState> response = client.GetImportStatus("<projectName>", "<jobId>");
+]]></code>
+This sample shows how to call GetImportStatus with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response<ImportProjectOperationState> response = client.GetImportStatus("<projectName>", "<jobId>");
+]]></code></example>
+    </member>
+    <member name="GetImportStatusAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetImportStatusAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetImportStatusAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response response = await client.GetImportStatusAsync("<projectName>", "<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+]]></code></example>
+    </member>
+    <member name="GetImportStatus(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetImportStatus and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response response = client.GetImportStatus("<projectName>", "<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetImportStatus with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response response = client.GetImportStatus("<projectName>", "<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+]]></code></example>
+    </member>
+    <member name="CopyProjectAuthorizationAsync(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)">
+      <example>
+This sample shows how to call CopyProjectAuthorizationAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation);
+]]></code>
+This sample shows how to call CopyProjectAuthorizationAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
+]]></code></example>
+    </member>
+    <member name="CopyProjectAuthorization(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)">
+      <example>
+This sample shows how to call CopyProjectAuthorization.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation);
+]]></code>
+This sample shows how to call CopyProjectAuthorization with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
+]]></code></example>
+    </member>
+    <member name="CopyProjectAuthorizationAsync(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CopyProjectAuthorizationAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    projectKind = "Conversation",
+});
+Response response = await client.CopyProjectAuthorizationAsync("<projectName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("projectKind").ToString());
+Console.WriteLine(result.GetProperty("targetProjectName").ToString());
+Console.WriteLine(result.GetProperty("accessToken").ToString());
+Console.WriteLine(result.GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("targetResourceId").ToString());
+Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
+]]></code>
+This sample shows how to call CopyProjectAuthorizationAsync with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    projectKind = "Conversation",
+    storageInputContainerName = "<storageInputContainerName>",
+    allowOverwrite = true,
+});
+Response response = await client.CopyProjectAuthorizationAsync("<projectName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("projectKind").ToString());
+Console.WriteLine(result.GetProperty("targetProjectName").ToString());
+Console.WriteLine(result.GetProperty("accessToken").ToString());
+Console.WriteLine(result.GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("targetResourceId").ToString());
+Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
+]]></code></example>
+    </member>
+    <member name="CopyProjectAuthorization(string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CopyProjectAuthorization and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    projectKind = "Conversation",
+});
+Response response = client.CopyProjectAuthorization("<projectName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("projectKind").ToString());
+Console.WriteLine(result.GetProperty("targetProjectName").ToString());
+Console.WriteLine(result.GetProperty("accessToken").ToString());
+Console.WriteLine(result.GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("targetResourceId").ToString());
+Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
+]]></code>
+This sample shows how to call CopyProjectAuthorization with all parameters and request content and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    projectKind = "Conversation",
+    storageInputContainerName = "<storageInputContainerName>",
+    allowOverwrite = true,
+});
+Response response = client.CopyProjectAuthorization("<projectName>", content);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("projectKind").ToString());
+Console.WriteLine(result.GetProperty("targetProjectName").ToString());
+Console.WriteLine(result.GetProperty("accessToken").ToString());
+Console.WriteLine(result.GetProperty("expiresAt").ToString());
+Console.WriteLine(result.GetProperty("targetResourceId").ToString());
+Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCopyProjectStatusAsync(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetCopyProjectStatusAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response<CopyProjectOperationState> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
+]]></code>
+This sample shows how to call GetCopyProjectStatusAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response<CopyProjectOperationState> response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>");
+]]></code></example>
+    </member>
+    <member name="GetCopyProjectStatus(string,string,CancellationToken)">
+      <example>
+This sample shows how to call GetCopyProjectStatus.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response<CopyProjectOperationState> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
+]]></code>
+This sample shows how to call GetCopyProjectStatus with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response<CopyProjectOperationState> response = client.GetCopyProjectStatus("<projectName>", "<jobId>");
+]]></code></example>
+    </member>
+    <member name="GetCopyProjectStatusAsync(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetCopyProjectStatusAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetCopyProjectStatusAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response response = await client.GetCopyProjectStatusAsync("<projectName>", "<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
+]]></code></example>
+    </member>
+    <member name="GetCopyProjectStatus(string,string,RequestContext)">
+      <example>
+This sample shows how to call GetCopyProjectStatus and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response response = client.GetCopyProjectStatus("<projectName>", "<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+]]></code>
+This sample shows how to call GetCopyProjectStatus with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Response response = client.GetCopyProjectStatus("<projectName>", "<jobId>", null);
+
+JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+Console.WriteLine(result.GetProperty("jobId").ToString());
+Console.WriteLine(result.GetProperty("createdOn").ToString());
+Console.WriteLine(result.GetProperty("lastUpdatedOn").ToString());
+Console.WriteLine(result.GetProperty("expiresOn").ToString());
+Console.WriteLine(result.GetProperty("status").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("warnings")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("message").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("target").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetProperty("innererror").GetProperty("code").ToString());
+Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
 ]]></code></example>
     </member>
     <member name="GetProjectsAsync(int?,int?,int?,CancellationToken)">
@@ -589,6 +1027,110 @@ foreach (BinaryData item in client.GetProjects(1234, 1234, 1234, null))
 }
 ]]></code></example>
     </member>
+    <member name="GetSupportedLanguagesAsync(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetSupportedLanguagesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+await foreach (SupportedLanguage item in client.GetSupportedLanguagesAsync(AnalyzeConversationAuthoringProjectKind.Conversation))
+{
+}
+]]></code>
+This sample shows how to call GetSupportedLanguagesAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+await foreach (SupportedLanguage item in client.GetSupportedLanguagesAsync(AnalyzeConversationAuthoringProjectKind.Conversation, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetSupportedLanguages.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+foreach (SupportedLanguage item in client.GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind.Conversation))
+{
+}
+]]></code>
+This sample shows how to call GetSupportedLanguages with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+foreach (SupportedLanguage item in client.GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind.Conversation, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetSupportedLanguagesAsync(string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetSupportedLanguagesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+await foreach (BinaryData item in client.GetSupportedLanguagesAsync("Conversation"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("languageName").ToString());
+    Console.WriteLine(result.GetProperty("languageCode").ToString());
+}
+]]></code>
+This sample shows how to call GetSupportedLanguagesAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+await foreach (BinaryData item in client.GetSupportedLanguagesAsync("Conversation", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("languageName").ToString());
+    Console.WriteLine(result.GetProperty("languageCode").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetSupportedLanguages(string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetSupportedLanguages and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+foreach (BinaryData item in client.GetSupportedLanguages("Conversation"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("languageName").ToString());
+    Console.WriteLine(result.GetProperty("languageCode").ToString());
+}
+]]></code>
+This sample shows how to call GetSupportedLanguages with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+foreach (BinaryData item in client.GetSupportedLanguages("Conversation", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("languageName").ToString());
+    Console.WriteLine(result.GetProperty("languageCode").ToString());
+}
+]]></code></example>
+    </member>
     <member name="DeleteProjectAsync(WaitUntil,string,RequestContext)">
       <example>
 This sample shows how to call DeleteProjectAsync.
@@ -625,6 +1167,614 @@ AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
 Operation operation = client.DeleteProject(WaitUntil.Completed, "<projectName>");
+]]></code></example>
+    </member>
+    <member name="ExportAsync(WaitUntil,string,StringIndexType,AnalyzeConversationAuthoringExportedProjectFormat?,string,string,CancellationToken)">
+      <example>
+This sample shows how to call ExportAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit);
+]]></code>
+This sample shows how to call ExportAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit, exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation, assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
+]]></code></example>
+    </member>
+    <member name="Export(WaitUntil,string,StringIndexType,AnalyzeConversationAuthoringExportedProjectFormat?,string,string,CancellationToken)">
+      <example>
+This sample shows how to call Export.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Operation operation = client.Export(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit);
+]]></code>
+This sample shows how to call Export with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Operation operation = client.Export(WaitUntil.Completed, "<projectName>", StringIndexType.Utf16CodeUnit, exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation, assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
+]]></code></example>
+    </member>
+    <member name="ExportAsync(WaitUntil,string,string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call ExportAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit");
+]]></code>
+This sample shows how to call ExportAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Operation operation = await client.ExportAsync(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit", exportedProjectFormat: "Conversation", assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
+]]></code></example>
+    </member>
+    <member name="Export(WaitUntil,string,string,string,string,string,RequestContext)">
+      <example>
+This sample shows how to call Export.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Operation operation = client.Export(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit");
+]]></code>
+This sample shows how to call Export with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+Operation operation = client.Export(WaitUntil.Completed, "<projectName>", "Utf16CodeUnit", exportedProjectFormat: "Conversation", assetKind: "<assetKind>", trainedModelLabel: "<trainedModelLabel>");
+]]></code></example>
+    </member>
+    <member name="ImportAsync(WaitUntil,string,ExportedProject,AnalyzeConversationAuthoringExportedProjectFormat?,CancellationToken)">
+      <example>
+This sample shows how to call ImportAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>"));
+Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", body);
+]]></code>
+This sample shows how to call ImportAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>")
+{
+    Settings = new ProjectSettings(123.45F),
+    StorageInputContainerName = "<storageInputContainerName>",
+    Multilingual = true,
+    Description = "<description>",
+})
+{
+    Assets = new ConversationExportedProjectAsset
+    {
+        Intents = { new ConversationExportedIntent("<category>") },
+        Entities = {new ConversationExportedEntity("<category>")
+        {
+            CompositionMode = AnalyzeConversationAuthoringCompositionMode.ReturnLongestOverlap,
+            Entities = new ExportedEntityList
+            {
+                Sublists = {new ExportedEntitySublist
+                {
+                    ListKey = "<listKey>",
+                    Synonyms = {new ExportedEntityListSynonym
+                    {
+                        Language = "<language>",
+                        Values = {"<values>"},
+                    }},
+                }},
+            },
+            Prebuilts = {new ExportedPrebuiltEntity("<category>")},
+            Regex = new ExportedEntityRegex
+            {
+                Expressions = {new ExportedEntityRegexExpression
+                {
+                    RegexKey = "<regexKey>",
+                    Language = "<language>",
+                    RegexPattern = "<regexPattern>",
+                }},
+            },
+            RequiredComponents = {"<requiredComponents>"},
+        }},
+        Utterances = {new ConversationExportedUtterance("<text>", "<intent>")
+        {
+            Entities = {new ExportedUtteranceEntityLabel("<category>", 1234, 1234)},
+            Language = "<language>",
+            Dataset = "<dataset>",
+        }},
+    },
+};
+Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", body, exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation);
+]]></code></example>
+    </member>
+    <member name="Import(WaitUntil,string,ExportedProject,AnalyzeConversationAuthoringExportedProjectFormat?,CancellationToken)">
+      <example>
+This sample shows how to call Import.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>"));
+Operation operation = client.Import(WaitUntil.Completed, "<projectName>", body);
+]]></code>
+This sample shows how to call Import with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>")
+{
+    Settings = new ProjectSettings(123.45F),
+    StorageInputContainerName = "<storageInputContainerName>",
+    Multilingual = true,
+    Description = "<description>",
+})
+{
+    Assets = new ConversationExportedProjectAsset
+    {
+        Intents = { new ConversationExportedIntent("<category>") },
+        Entities = {new ConversationExportedEntity("<category>")
+        {
+            CompositionMode = AnalyzeConversationAuthoringCompositionMode.ReturnLongestOverlap,
+            Entities = new ExportedEntityList
+            {
+                Sublists = {new ExportedEntitySublist
+                {
+                    ListKey = "<listKey>",
+                    Synonyms = {new ExportedEntityListSynonym
+                    {
+                        Language = "<language>",
+                        Values = {"<values>"},
+                    }},
+                }},
+            },
+            Prebuilts = {new ExportedPrebuiltEntity("<category>")},
+            Regex = new ExportedEntityRegex
+            {
+                Expressions = {new ExportedEntityRegexExpression
+                {
+                    RegexKey = "<regexKey>",
+                    Language = "<language>",
+                    RegexPattern = "<regexPattern>",
+                }},
+            },
+            RequiredComponents = {"<requiredComponents>"},
+        }},
+        Utterances = {new ConversationExportedUtterance("<text>", "<intent>")
+        {
+            Entities = {new ExportedUtteranceEntityLabel("<category>", 1234, 1234)},
+            Language = "<language>",
+            Dataset = "<dataset>",
+        }},
+    },
+};
+Operation operation = client.Import(WaitUntil.Completed, "<projectName>", body, exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation);
+]]></code></example>
+    </member>
+    <member name="ImportAsync(WaitUntil,string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call ImportAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    projectFileVersion = "<projectFileVersion>",
+    stringIndexType = "Utf16CodeUnit",
+    metadata = new
+    {
+        projectKind = "Conversation",
+        projectName = "<projectName>",
+        language = "<language>",
+    },
+});
+Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", content);
+]]></code>
+This sample shows how to call ImportAsync with all parameters and request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    projectFileVersion = "<projectFileVersion>",
+    stringIndexType = "Utf16CodeUnit",
+    metadata = new
+    {
+        projectKind = "Conversation",
+        settings = new
+        {
+            confidenceThreshold = 123.45F,
+        },
+        storageInputContainerName = "<storageInputContainerName>",
+        projectName = "<projectName>",
+        multilingual = true,
+        description = "<description>",
+        language = "<language>",
+    },
+    assets = new
+    {
+        intents = new object[]
+        {
+            new
+            {
+                category = "<category>",
+            }
+        },
+        entities = new object[]
+        {
+            new
+            {
+                category = "<category>",
+                compositionMode = "returnLongestOverlap",
+                entities = new
+                {
+                    sublists = new object[]
+                    {
+                        new
+                        {
+                            listKey = "<listKey>",
+                            synonyms = new object[]
+                            {
+                                new
+                                {
+                                    language = "<language>",
+                                    values = new object[]
+                                    {
+                                        "<values>"
+                                    },
+                                }
+                            },
+                        }
+                    },
+                },
+                prebuilts = new object[]
+                {
+                    new
+                    {
+                        category = "<category>",
+                    }
+                },
+                regex = new
+                {
+                    expressions = new object[]
+                    {
+                        new
+                        {
+                            regexKey = "<regexKey>",
+                            language = "<language>",
+                            regexPattern = "<regexPattern>",
+                        }
+                    },
+                },
+                requiredComponents = new object[]
+                {
+                    "<requiredComponents>"
+                },
+            }
+        },
+        utterances = new object[]
+        {
+            new
+            {
+                entities = new object[]
+                {
+                    new
+                    {
+                        category = "<category>",
+                        offset = 1234,
+                        length = 1234,
+                    }
+                },
+                text = "<text>",
+                language = "<language>",
+                intent = "<intent>",
+                dataset = "<dataset>",
+            }
+        },
+        projectKind = "Conversation",
+    },
+});
+Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", content, exportedProjectFormat: "Conversation");
+]]></code></example>
+    </member>
+    <member name="Import(WaitUntil,string,RequestContent,string,RequestContext)">
+      <example>
+This sample shows how to call Import.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    projectFileVersion = "<projectFileVersion>",
+    stringIndexType = "Utf16CodeUnit",
+    metadata = new
+    {
+        projectKind = "Conversation",
+        projectName = "<projectName>",
+        language = "<language>",
+    },
+});
+Operation operation = client.Import(WaitUntil.Completed, "<projectName>", content);
+]]></code>
+This sample shows how to call Import with all parameters and request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    projectFileVersion = "<projectFileVersion>",
+    stringIndexType = "Utf16CodeUnit",
+    metadata = new
+    {
+        projectKind = "Conversation",
+        settings = new
+        {
+            confidenceThreshold = 123.45F,
+        },
+        storageInputContainerName = "<storageInputContainerName>",
+        projectName = "<projectName>",
+        multilingual = true,
+        description = "<description>",
+        language = "<language>",
+    },
+    assets = new
+    {
+        intents = new object[]
+        {
+            new
+            {
+                category = "<category>",
+            }
+        },
+        entities = new object[]
+        {
+            new
+            {
+                category = "<category>",
+                compositionMode = "returnLongestOverlap",
+                entities = new
+                {
+                    sublists = new object[]
+                    {
+                        new
+                        {
+                            listKey = "<listKey>",
+                            synonyms = new object[]
+                            {
+                                new
+                                {
+                                    language = "<language>",
+                                    values = new object[]
+                                    {
+                                        "<values>"
+                                    },
+                                }
+                            },
+                        }
+                    },
+                },
+                prebuilts = new object[]
+                {
+                    new
+                    {
+                        category = "<category>",
+                    }
+                },
+                regex = new
+                {
+                    expressions = new object[]
+                    {
+                        new
+                        {
+                            regexKey = "<regexKey>",
+                            language = "<language>",
+                            regexPattern = "<regexPattern>",
+                        }
+                    },
+                },
+                requiredComponents = new object[]
+                {
+                    "<requiredComponents>"
+                },
+            }
+        },
+        utterances = new object[]
+        {
+            new
+            {
+                entities = new object[]
+                {
+                    new
+                    {
+                        category = "<category>",
+                        offset = 1234,
+                        length = 1234,
+                    }
+                },
+                text = "<text>",
+                language = "<language>",
+                intent = "<intent>",
+                dataset = "<dataset>",
+            }
+        },
+        projectKind = "Conversation",
+    },
+});
+Operation operation = client.Import(WaitUntil.Completed, "<projectName>", content, exportedProjectFormat: "Conversation");
+]]></code></example>
+    </member>
+    <member name="CopyProjectAsync(WaitUntil,string,CopyProjectDetails,CancellationToken)">
+      <example>
+This sample shows how to call CopyProjectAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+CopyProjectDetails body = new CopyProjectDetails(
+AnalyzeConversationAuthoringProjectKind.Conversation,
+"<targetProjectName>",
+"<accessToken>",
+DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+"<targetResourceId>",
+"<targetResourceRegion>");
+Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<projectName>", body);
+]]></code>
+This sample shows how to call CopyProjectAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+CopyProjectDetails body = new CopyProjectDetails(
+AnalyzeConversationAuthoringProjectKind.Conversation,
+"<targetProjectName>",
+"<accessToken>",
+DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+"<targetResourceId>",
+"<targetResourceRegion>");
+Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<projectName>", body);
+]]></code></example>
+    </member>
+    <member name="CopyProject(WaitUntil,string,CopyProjectDetails,CancellationToken)">
+      <example>
+This sample shows how to call CopyProject.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+CopyProjectDetails body = new CopyProjectDetails(
+AnalyzeConversationAuthoringProjectKind.Conversation,
+"<targetProjectName>",
+"<accessToken>",
+DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+"<targetResourceId>",
+"<targetResourceRegion>");
+Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", body);
+]]></code>
+This sample shows how to call CopyProject with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+CopyProjectDetails body = new CopyProjectDetails(
+AnalyzeConversationAuthoringProjectKind.Conversation,
+"<targetProjectName>",
+"<accessToken>",
+DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
+"<targetResourceId>",
+"<targetResourceRegion>");
+Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", body);
+]]></code></example>
+    </member>
+    <member name="CopyProjectAsync(WaitUntil,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CopyProjectAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    projectKind = "Conversation",
+    targetProjectName = "<targetProjectName>",
+    accessToken = "<accessToken>",
+    expiresAt = "2022-05-10T18:57:31.2311892Z",
+    targetResourceId = "<targetResourceId>",
+    targetResourceRegion = "<targetResourceRegion>",
+});
+Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<projectName>", content);
+]]></code>
+This sample shows how to call CopyProjectAsync with all parameters and request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    projectKind = "Conversation",
+    targetProjectName = "<targetProjectName>",
+    accessToken = "<accessToken>",
+    expiresAt = "2022-05-10T18:57:31.2311892Z",
+    targetResourceId = "<targetResourceId>",
+    targetResourceRegion = "<targetResourceRegion>",
+});
+Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<projectName>", content);
+]]></code></example>
+    </member>
+    <member name="CopyProject(WaitUntil,string,RequestContent,RequestContext)">
+      <example>
+This sample shows how to call CopyProject.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    projectKind = "Conversation",
+    targetProjectName = "<targetProjectName>",
+    accessToken = "<accessToken>",
+    expiresAt = "2022-05-10T18:57:31.2311892Z",
+    targetResourceId = "<targetResourceId>",
+    targetResourceRegion = "<targetResourceRegion>",
+});
+Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", content);
+]]></code>
+This sample shows how to call CopyProject with all parameters and request content.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+using RequestContent content = RequestContent.Create(new
+{
+    projectKind = "Conversation",
+    targetProjectName = "<targetProjectName>",
+    accessToken = "<accessToken>",
+    expiresAt = "2022-05-10T18:57:31.2311892Z",
+    targetResourceId = "<targetResourceId>",
+    targetResourceRegion = "<targetResourceRegion>",
+});
+Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", content);
 ]]></code></example>
     </member>
   </members>

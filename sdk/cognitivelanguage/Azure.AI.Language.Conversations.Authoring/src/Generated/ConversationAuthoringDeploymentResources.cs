@@ -56,29 +56,31 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Lists the deployments to which an Azure resource is assigned. This doesn't return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources. </summary>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetAssignedResourceDeploymentsAsync(int?,int?,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<AssignedResourceDeploymentsMetadata>> GetAssignedResourceDeploymentsAsync(int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<AssignedProjectDeploymentsMetadata> GetAssignedResourceDeploymentsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetAssignedResourceDeploymentsAsync(top, skip, maxpagesize, context).ConfigureAwait(false);
-            return Response.FromValue(AssignedResourceDeploymentsMetadata.FromResponse(response), response);
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssignedResourceDeploymentsRequest(maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssignedResourceDeploymentsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AssignedProjectDeploymentsMetadata.DeserializeAssignedProjectDeploymentsMetadata(e), ClientDiagnostics, _pipeline, "ConversationAuthoringDeploymentResources.GetAssignedResourceDeployments", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the deployments to which an Azure resource is assigned. This doesn't return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources. </summary>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetAssignedResourceDeployments(int?,int?,int?,CancellationToken)']/*" />
-        public virtual Response<AssignedResourceDeploymentsMetadata> GetAssignedResourceDeployments(int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<AssignedProjectDeploymentsMetadata> GetAssignedResourceDeployments(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetAssignedResourceDeployments(top, skip, maxpagesize, context);
-            return Response.FromValue(AssignedResourceDeploymentsMetadata.FromResponse(response), response);
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssignedResourceDeploymentsRequest(maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssignedResourceDeploymentsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AssignedProjectDeploymentsMetadata.DeserializeAssignedProjectDeploymentsMetadata(e), ClientDiagnostics, _pipeline, "ConversationAuthoringDeploymentResources.GetAssignedResourceDeployments", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -96,27 +98,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetAssignedResourceDeploymentsAsync(int?,int?,int?,RequestContext)']/*" />
-        public virtual async Task<Response> GetAssignedResourceDeploymentsAsync(int? top, int? skip, int? maxpagesize, RequestContext context)
+        public virtual AsyncPageable<BinaryData> GetAssignedResourceDeploymentsAsync(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.GetAssignedResourceDeployments");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAssignedResourceDeploymentsRequest(top, skip, maxpagesize, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssignedResourceDeploymentsRequest(maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssignedResourceDeploymentsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringDeploymentResources.GetAssignedResourceDeployments", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -134,27 +127,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetAssignedResourceDeployments(int?,int?,int?,RequestContext)']/*" />
-        public virtual Response GetAssignedResourceDeployments(int? top, int? skip, int? maxpagesize, RequestContext context)
+        public virtual Pageable<BinaryData> GetAssignedResourceDeployments(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringDeploymentResources.GetAssignedResourceDeployments");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetAssignedResourceDeploymentsRequest(top, skip, maxpagesize, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssignedResourceDeploymentsRequest(maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssignedResourceDeploymentsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringDeploymentResources.GetAssignedResourceDeployments", "value", "nextLink", maxpagesize, context);
         }
 
         internal HttpMessage CreateAssignDeploymentResourcesRequest(string projectName, RequestContent content, RequestContext context)
@@ -260,7 +244,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetAssignedResourceDeploymentsRequest(int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetAssignedResourceDeploymentsRequest(int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -270,9 +254,9 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/global/deployments/resources", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("top", top.Value, true);
+                uri.AppendQuery("top", maxCount.Value, true);
             }
             if (skip != null)
             {
@@ -288,6 +272,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         internal HttpMessage CreateGetDeploymentResourcesNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetAssignedResourceDeploymentsNextPageRequest(string nextLink, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;

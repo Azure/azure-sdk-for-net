@@ -7,7 +7,7 @@
 
 using System;
 using System.Threading;
-using System.Threading.Tasks;
+using Autorest.CSharp.Core;
 using Azure.AI.Language.Conversations.Authoring.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -55,33 +55,35 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="multilingual"> Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/ConversationAuthoringPrebuilts.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntitiesAsync(string,string,int?,int?,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<PrebuiltEntities>> GetSupportedPrebuiltEntitiesAsync(string language = null, string multilingual = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ConversationAuthoringPrebuilts.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntitiesAsync(int?,int?,int?,string,string,CancellationToken)']/*" />
+        public virtual AsyncPageable<PrebuiltEntity> GetSupportedPrebuiltEntitiesAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, string language = null, string multilingual = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetSupportedPrebuiltEntitiesAsync(language, multilingual, top, skip, maxpagesize, context).ConfigureAwait(false);
-            return Response.FromValue(PrebuiltEntities.FromResponse(response), response);
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedPrebuiltEntitiesRequest(maxCount, skip, pageSizeHint, language, multilingual, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, maxCount, skip, pageSizeHint, language, multilingual, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PrebuiltEntity.DeserializePrebuiltEntity(e), ClientDiagnostics, _pipeline, "ConversationAuthoringPrebuilts.GetSupportedPrebuiltEntities", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="multilingual"> Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/ConversationAuthoringPrebuilts.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntities(string,string,int?,int?,int?,CancellationToken)']/*" />
-        public virtual Response<PrebuiltEntities> GetSupportedPrebuiltEntities(string language = null, string multilingual = null, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ConversationAuthoringPrebuilts.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntities(int?,int?,int?,string,string,CancellationToken)']/*" />
+        public virtual Pageable<PrebuiltEntity> GetSupportedPrebuiltEntities(int? maxCount = null, int? skip = null, int? maxpagesize = null, string language = null, string multilingual = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetSupportedPrebuiltEntities(language, multilingual, top, skip, maxpagesize, context);
-            return Response.FromValue(PrebuiltEntities.FromResponse(response), response);
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedPrebuiltEntitiesRequest(maxCount, skip, pageSizeHint, language, multilingual, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, maxCount, skip, pageSizeHint, language, multilingual, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PrebuiltEntity.DeserializePrebuiltEntity(e), ClientDiagnostics, _pipeline, "ConversationAuthoringPrebuilts.GetSupportedPrebuiltEntities", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -94,34 +96,25 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSupportedPrebuiltEntitiesAsync(string,string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSupportedPrebuiltEntitiesAsync(int?,int?,int?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="multilingual"> Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConversationAuthoringPrebuilts.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntitiesAsync(string,string,int?,int?,int?,RequestContext)']/*" />
-        public virtual async Task<Response> GetSupportedPrebuiltEntitiesAsync(string language, string multilingual, int? top, int? skip, int? maxpagesize, RequestContext context)
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/ConversationAuthoringPrebuilts.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntitiesAsync(int?,int?,int?,string,string,RequestContext)']/*" />
+        public virtual AsyncPageable<BinaryData> GetSupportedPrebuiltEntitiesAsync(int? maxCount, int? skip, int? maxpagesize, string language, string multilingual, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringPrebuilts.GetSupportedPrebuiltEntities");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSupportedPrebuiltEntitiesRequest(language, multilingual, top, skip, maxpagesize, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedPrebuiltEntitiesRequest(maxCount, skip, pageSizeHint, language, multilingual, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, maxCount, skip, pageSizeHint, language, multilingual, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringPrebuilts.GetSupportedPrebuiltEntities", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -134,37 +127,28 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="GetSupportedPrebuiltEntities(string,string,int?,int?,int?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="GetSupportedPrebuiltEntities(int?,int?,int?,string,string,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
         /// </summary>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
         /// <param name="multilingual"> Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConversationAuthoringPrebuilts.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntities(string,string,int?,int?,int?,RequestContext)']/*" />
-        public virtual Response GetSupportedPrebuiltEntities(string language, string multilingual, int? top, int? skip, int? maxpagesize, RequestContext context)
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
+        /// <include file="Docs/ConversationAuthoringPrebuilts.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntities(int?,int?,int?,string,string,RequestContext)']/*" />
+        public virtual Pageable<BinaryData> GetSupportedPrebuiltEntities(int? maxCount, int? skip, int? maxpagesize, string language, string multilingual, RequestContext context)
         {
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringPrebuilts.GetSupportedPrebuiltEntities");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetSupportedPrebuiltEntitiesRequest(language, multilingual, top, skip, maxpagesize, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedPrebuiltEntitiesRequest(maxCount, skip, pageSizeHint, language, multilingual, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, maxCount, skip, pageSizeHint, language, multilingual, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringPrebuilts.GetSupportedPrebuiltEntities", "value", "nextLink", maxpagesize, context);
         }
 
-        internal HttpMessage CreateGetSupportedPrebuiltEntitiesRequest(string language, string multilingual, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetSupportedPrebuiltEntitiesRequest(int? maxCount, int? skip, int? maxpagesize, string language, string multilingual, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -174,17 +158,9 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendRaw("/language", false);
             uri.AppendPath("/authoring/analyze-conversations/projects/global/prebuilt-entities", false);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (language != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("language", language, true);
-            }
-            if (multilingual != null)
-            {
-                uri.AppendQuery("multilingual", multilingual, true);
-            }
-            if (top != null)
-            {
-                uri.AppendQuery("top", top.Value, true);
+                uri.AppendQuery("top", maxCount.Value, true);
             }
             if (skip != null)
             {
@@ -194,6 +170,28 @@ namespace Azure.AI.Language.Conversations.Authoring
             {
                 uri.AppendQuery("maxpagesize", maxpagesize.Value, true);
             }
+            if (language != null)
+            {
+                uri.AppendQuery("language", language, true);
+            }
+            if (multilingual != null)
+            {
+                uri.AppendQuery("multilingual", multilingual, true);
+            }
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetSupportedPrebuiltEntitiesNextPageRequest(string nextLink, int? maxCount, int? skip, int? maxpagesize, string language, string multilingual, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendRawNextLink(nextLink, false);
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             return message;

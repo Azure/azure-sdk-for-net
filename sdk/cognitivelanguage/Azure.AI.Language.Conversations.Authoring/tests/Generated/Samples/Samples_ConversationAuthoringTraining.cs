@@ -197,112 +197,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAuthoringTraining_GetTrainingConfigVersions_ShortVersion()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
-
-            Response response = client.GetTrainingConfigVersions("Conversation");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("trainingConfigVersion").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("modelExpirationDate").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAuthoringTraining_GetTrainingConfigVersions_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
-
-            Response response = await client.GetTrainingConfigVersionsAsync("Conversation");
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("trainingConfigVersion").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("modelExpirationDate").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAuthoringTraining_GetTrainingConfigVersions_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
-
-            Response<TrainingConfigVersions> response = client.GetTrainingConfigVersions(AnalyzeConversationAuthoringProjectKind.Conversation);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAuthoringTraining_GetTrainingConfigVersions_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
-
-            Response<TrainingConfigVersions> response = await client.GetTrainingConfigVersionsAsync(AnalyzeConversationAuthoringProjectKind.Conversation);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAuthoringTraining_GetTrainingConfigVersions_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
-
-            Response response = client.GetTrainingConfigVersions("Conversation", top: 1234, skip: 1234, maxpagesize: 1234);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("trainingConfigVersion").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("modelExpirationDate").ToString());
-            Console.WriteLine(result.GetProperty("nextLink").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAuthoringTraining_GetTrainingConfigVersions_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
-
-            Response response = await client.GetTrainingConfigVersionsAsync("Conversation", top: 1234, skip: 1234, maxpagesize: 1234);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("trainingConfigVersion").ToString());
-            Console.WriteLine(result.GetProperty("value")[0].GetProperty("modelExpirationDate").ToString());
-            Console.WriteLine(result.GetProperty("nextLink").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAuthoringTraining_GetTrainingConfigVersions_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
-
-            Response<TrainingConfigVersions> response = client.GetTrainingConfigVersions(AnalyzeConversationAuthoringProjectKind.Conversation, top: 1234, skip: 1234, maxpagesize: 1234);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAuthoringTraining_GetTrainingConfigVersions_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
-
-            Response<TrainingConfigVersions> response = await client.GetTrainingConfigVersionsAsync(AnalyzeConversationAuthoringProjectKind.Conversation, top: 1234, skip: 1234, maxpagesize: 1234);
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_AnalyzeConversationAuthoringTrainingJobState_GetTrainingJobs_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
@@ -487,6 +381,122 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
 
             await foreach (TrainingOperationState item in client.GetTrainingJobsAsync("<projectName>", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AnalyzeConversationAuthoringTrainingConfigVersion_GetTrainingConfigVersions_ShortVersion()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
+
+            foreach (BinaryData item in client.GetTrainingConfigVersions("Conversation"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversationAuthoringTrainingConfigVersion_GetTrainingConfigVersions_ShortVersion_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
+
+            await foreach (BinaryData item in client.GetTrainingConfigVersionsAsync("Conversation"))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AnalyzeConversationAuthoringTrainingConfigVersion_GetTrainingConfigVersions_ShortVersion_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
+
+            foreach (TrainingConfigVersion item in client.GetTrainingConfigVersions(AnalyzeConversationAuthoringProjectKind.Conversation))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversationAuthoringTrainingConfigVersion_GetTrainingConfigVersions_ShortVersion_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
+
+            await foreach (TrainingConfigVersion item in client.GetTrainingConfigVersionsAsync(AnalyzeConversationAuthoringProjectKind.Conversation))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AnalyzeConversationAuthoringTrainingConfigVersion_GetTrainingConfigVersions_AllParameters()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
+
+            foreach (BinaryData item in client.GetTrainingConfigVersions("Conversation", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversationAuthoringTrainingConfigVersion_GetTrainingConfigVersions_AllParameters_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
+
+            await foreach (BinaryData item in client.GetTrainingConfigVersionsAsync("Conversation", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
+                Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public void Example_AnalyzeConversationAuthoringTrainingConfigVersion_GetTrainingConfigVersions_AllParameters_Convenience()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
+
+            foreach (TrainingConfigVersion item in client.GetTrainingConfigVersions(AnalyzeConversationAuthoringProjectKind.Conversation, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+            {
+            }
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_AnalyzeConversationAuthoringTrainingConfigVersion_GetTrainingConfigVersions_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
+
+            await foreach (TrainingConfigVersion item in client.GetTrainingConfigVersionsAsync(AnalyzeConversationAuthoringProjectKind.Conversation, maxCount: 1234, skip: 1234, maxpagesize: 1234))
             {
             }
         }

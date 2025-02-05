@@ -167,100 +167,6 @@ Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").G
 Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndOn").ToString());
 ]]></code></example>
     </member>
-    <member name="GetTrainingConfigVersionsAsync(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)">
-      <example>
-This sample shows how to call GetTrainingConfigVersionsAsync.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
-
-Response<TrainingConfigVersions> response = await client.GetTrainingConfigVersionsAsync(AnalyzeConversationAuthoringProjectKind.Conversation);
-]]></code>
-This sample shows how to call GetTrainingConfigVersionsAsync with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
-
-Response<TrainingConfigVersions> response = await client.GetTrainingConfigVersionsAsync(AnalyzeConversationAuthoringProjectKind.Conversation, top: 1234, skip: 1234, maxpagesize: 1234);
-]]></code></example>
-    </member>
-    <member name="GetTrainingConfigVersions(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)">
-      <example>
-This sample shows how to call GetTrainingConfigVersions.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
-
-Response<TrainingConfigVersions> response = client.GetTrainingConfigVersions(AnalyzeConversationAuthoringProjectKind.Conversation);
-]]></code>
-This sample shows how to call GetTrainingConfigVersions with all parameters.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
-
-Response<TrainingConfigVersions> response = client.GetTrainingConfigVersions(AnalyzeConversationAuthoringProjectKind.Conversation, top: 1234, skip: 1234, maxpagesize: 1234);
-]]></code></example>
-    </member>
-    <member name="GetTrainingConfigVersionsAsync(string,int?,int?,int?,RequestContext)">
-      <example>
-This sample shows how to call GetTrainingConfigVersionsAsync and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
-
-Response response = await client.GetTrainingConfigVersionsAsync("Conversation");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("trainingConfigVersion").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("modelExpirationDate").ToString());
-]]></code>
-This sample shows how to call GetTrainingConfigVersionsAsync with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
-
-Response response = await client.GetTrainingConfigVersionsAsync("Conversation", top: 1234, skip: 1234, maxpagesize: 1234);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("trainingConfigVersion").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("modelExpirationDate").ToString());
-Console.WriteLine(result.GetProperty("nextLink").ToString());
-]]></code></example>
-    </member>
-    <member name="GetTrainingConfigVersions(string,int?,int?,int?,RequestContext)">
-      <example>
-This sample shows how to call GetTrainingConfigVersions and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
-
-Response response = client.GetTrainingConfigVersions("Conversation");
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("trainingConfigVersion").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("modelExpirationDate").ToString());
-]]></code>
-This sample shows how to call GetTrainingConfigVersions with all parameters and parse the result.
-<code><![CDATA[
-Uri endpoint = new Uri("<endpoint>");
-AzureKeyCredential credential = new AzureKeyCredential("<key>");
-ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
-
-Response response = client.GetTrainingConfigVersions("Conversation", top: 1234, skip: 1234, maxpagesize: 1234);
-
-JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("trainingConfigVersion").ToString());
-Console.WriteLine(result.GetProperty("value")[0].GetProperty("modelExpirationDate").ToString());
-Console.WriteLine(result.GetProperty("nextLink").ToString());
-]]></code></example>
-    </member>
     <member name="GetTrainingJobsAsync(string,int?,int?,int?,CancellationToken)">
       <example>
 This sample shows how to call GetTrainingJobsAsync.
@@ -436,6 +342,110 @@ foreach (BinaryData item in client.GetTrainingJobs("<projectName>", 1234, 1234, 
     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("endedOn").ToString());
     Console.WriteLine(result.GetProperty("result").GetProperty("evaluationStatus").GetProperty("status").ToString());
     Console.WriteLine(result.GetProperty("result").GetProperty("estimatedEndOn").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetTrainingConfigVersionsAsync(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetTrainingConfigVersionsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
+
+await foreach (TrainingConfigVersion item in client.GetTrainingConfigVersionsAsync(AnalyzeConversationAuthoringProjectKind.Conversation))
+{
+}
+]]></code>
+This sample shows how to call GetTrainingConfigVersionsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
+
+await foreach (TrainingConfigVersion item in client.GetTrainingConfigVersionsAsync(AnalyzeConversationAuthoringProjectKind.Conversation, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetTrainingConfigVersions(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetTrainingConfigVersions.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
+
+foreach (TrainingConfigVersion item in client.GetTrainingConfigVersions(AnalyzeConversationAuthoringProjectKind.Conversation))
+{
+}
+]]></code>
+This sample shows how to call GetTrainingConfigVersions with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
+
+foreach (TrainingConfigVersion item in client.GetTrainingConfigVersions(AnalyzeConversationAuthoringProjectKind.Conversation, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetTrainingConfigVersionsAsync(string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetTrainingConfigVersionsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
+
+await foreach (BinaryData item in client.GetTrainingConfigVersionsAsync("Conversation"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
+    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+}
+]]></code>
+This sample shows how to call GetTrainingConfigVersionsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
+
+await foreach (BinaryData item in client.GetTrainingConfigVersionsAsync("Conversation", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
+    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetTrainingConfigVersions(string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetTrainingConfigVersions and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
+
+foreach (BinaryData item in client.GetTrainingConfigVersions("Conversation"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
+    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
+}
+]]></code>
+This sample shows how to call GetTrainingConfigVersions with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
+
+foreach (BinaryData item in client.GetTrainingConfigVersions("Conversation", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("trainingConfigVersion").ToString());
+    Console.WriteLine(result.GetProperty("modelExpirationDate").ToString());
 }
 ]]></code></example>
     </member>

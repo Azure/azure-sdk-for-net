@@ -11,11 +11,9 @@ using Azure.Core.Pipeline;
 namespace Azure.AI.Language.Conversations.Authoring
 {
     [CodeGenClient("AuthoringClient")]
-    [CodeGenSuppress("GetConversationAuthoringCopiedProjectClient", typeof(string))]
     [CodeGenSuppress("GetConversationAuthoringDeploymentResourcesClient", typeof(string))]
     [CodeGenSuppress("GetConversationAuthoringDeploymentsClient", typeof(string))]
     [CodeGenSuppress("GetConversationAuthoringProjectsClient", typeof(string))]
-    [CodeGenSuppress("GetConversationAuthoringProjectFilesClient", typeof(string))]
     [CodeGenSuppress("GetConversationAuthoringTrainingClient", typeof(string))]
     [CodeGenSuppress("GetConversationAuthoringModelsClient", typeof(string))]
     [CodeGenSuppress("GetConversationAuthoringPrebuiltsClient", typeof(string))]
@@ -40,26 +38,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             _keyCredential = credential;
             _pipeline = HttpPipelineBuilder.Build(options, Array.Empty<HttpPipelinePolicy>(), new HttpPipelinePolicy[] { new AzureKeyCredentialPolicy(_keyCredential, AuthorizationHeader) }, new ResponseClassifier());
             _endpoint = endpoint;
-        }
-
-        /// <summary> Initializes a new instance of ConversationAuthoringProjectFiles. </summary>
-        /// <param name="projectName"> The project name to use for this subclient. </param>
-        public virtual ConversationAuthoringProjectFiles GetProjectFiles(string projectName)
-        {
-            var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
-            Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
-
-            return new ConversationAuthoringProjectFiles(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
-        }
-
-        /// <summary> Initializes a new instance of ConversationAuthoringCopiedProject. </summary>
-        /// <param name="projectName"> The project name to use for this subclient. </param>
-        public virtual ConversationAuthoringCopiedProject GetCopiedProject(string projectName)
-        {
-            var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
-            Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
-
-            return new ConversationAuthoringCopiedProject(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
         }
 
         /// <summary> Initializes a new instance of ConversationAuthoringDeploymentResources. </summary>

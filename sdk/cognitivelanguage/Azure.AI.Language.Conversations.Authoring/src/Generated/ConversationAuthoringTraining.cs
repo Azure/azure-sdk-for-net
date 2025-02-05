@@ -58,30 +58,32 @@ namespace Azure.AI.Language.Conversations.Authoring
 
         /// <summary> Lists the support training config version for a given project type. </summary>
         /// <param name="projectKind"> The project kind. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/ConversationAuthoringTraining.xml" path="doc/members/member[@name='GetTrainingConfigVersionsAsync(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)']/*" />
-        public virtual async Task<Response<TrainingConfigVersions>> GetTrainingConfigVersionsAsync(AnalyzeConversationAuthoringProjectKind projectKind, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<TrainingConfigVersion> GetTrainingConfigVersionsAsync(AnalyzeConversationAuthoringProjectKind projectKind, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetTrainingConfigVersionsAsync(projectKind.ToString(), top, skip, maxpagesize, context).ConfigureAwait(false);
-            return Response.FromValue(TrainingConfigVersions.FromResponse(response), response);
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingConfigVersionsRequest(projectKind.ToString(), maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind.ToString(), maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TrainingConfigVersion.DeserializeTrainingConfigVersion(e), ClientDiagnostics, _pipeline, "ConversationAuthoringTraining.GetTrainingConfigVersions", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Lists the support training config version for a given project type. </summary>
         /// <param name="projectKind"> The project kind. </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <include file="Docs/ConversationAuthoringTraining.xml" path="doc/members/member[@name='GetTrainingConfigVersions(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)']/*" />
-        public virtual Response<TrainingConfigVersions> GetTrainingConfigVersions(AnalyzeConversationAuthoringProjectKind projectKind, int? top = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<TrainingConfigVersion> GetTrainingConfigVersions(AnalyzeConversationAuthoringProjectKind projectKind, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetTrainingConfigVersions(projectKind.ToString(), top, skip, maxpagesize, context);
-            return Response.FromValue(TrainingConfigVersions.FromResponse(response), response);
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingConfigVersionsRequest(projectKind.ToString(), maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind.ToString(), maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TrainingConfigVersion.DeserializeTrainingConfigVersion(e), ClientDiagnostics, _pipeline, "ConversationAuthoringTraining.GetTrainingConfigVersions", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -100,30 +102,21 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </list>
         /// </summary>
         /// <param name="projectKind"> The project kind. Allowed values: "Conversation" | "Orchestration" | "CustomConversationSummarization". </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
+        /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringTraining.xml" path="doc/members/member[@name='GetTrainingConfigVersionsAsync(string,int?,int?,int?,RequestContext)']/*" />
-        public virtual async Task<Response> GetTrainingConfigVersionsAsync(string projectKind, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual AsyncPageable<BinaryData> GetTrainingConfigVersionsAsync(string projectKind, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringTraining.GetTrainingConfigVersions");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTrainingConfigVersionsRequest(projectKind, top, skip, maxpagesize, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingConfigVersionsRequest(projectKind, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringTraining.GetTrainingConfigVersions", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -142,30 +135,21 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </list>
         /// </summary>
         /// <param name="projectKind"> The project kind. Allowed values: "Conversation" | "Orchestration" | "CustomConversationSummarization". </param>
-        /// <param name="top"> The maximum number of resources to return from the collection. </param>
-        /// <param name="skip"> An offset into the collection of the first resource to be returned. </param>
-        /// <param name="maxpagesize"> The maximum number of resources to include in a single response. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectKind"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
+        /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
         /// <include file="Docs/ConversationAuthoringTraining.xml" path="doc/members/member[@name='GetTrainingConfigVersions(string,int?,int?,int?,RequestContext)']/*" />
-        public virtual Response GetTrainingConfigVersions(string projectKind, int? top = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
+        public virtual Pageable<BinaryData> GetTrainingConfigVersions(string projectKind, int? maxCount = null, int? skip = null, int? maxpagesize = null, RequestContext context = null)
         {
             Argument.AssertNotNull(projectKind, nameof(projectKind));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringTraining.GetTrainingConfigVersions");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateGetTrainingConfigVersionsRequest(projectKind, top, skip, maxpagesize, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingConfigVersionsRequest(projectKind, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringTraining.GetTrainingConfigVersions", "value", "nextLink", maxpagesize, context);
         }
 
         internal HttpMessage CreateTrainRequest(string projectName, RequestContent content, RequestContext context)
@@ -253,7 +237,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateGetTrainingConfigVersionsRequest(string projectKind, int? top, int? skip, int? maxpagesize, RequestContext context)
+        internal HttpMessage CreateGetTrainingConfigVersionsRequest(string projectKind, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
@@ -264,9 +248,9 @@ namespace Azure.AI.Language.Conversations.Authoring
             uri.AppendPath("/authoring/analyze-conversations/projects/global/training-config-versions", false);
             uri.AppendQuery("projectKind", projectKind, true);
             uri.AppendQuery("api-version", _apiVersion, true);
-            if (top != null)
+            if (maxCount != null)
             {
-                uri.AppendQuery("top", top.Value, true);
+                uri.AppendQuery("top", maxCount.Value, true);
             }
             if (skip != null)
             {
@@ -282,6 +266,20 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         internal HttpMessage CreateGetTrainingJobsNextPageRequest(string nextLink, string projectName, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
+        {
+            var message = _pipeline.CreateMessage(context, ResponseClassifier200);
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendRaw("/language", false);
+            uri.AppendRawNextLink(nextLink, false);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetTrainingConfigVersionsNextPageRequest(string nextLink, string projectKind, int? maxCount, int? skip, int? maxpagesize, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
