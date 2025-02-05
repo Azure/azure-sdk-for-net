@@ -49,9 +49,9 @@ namespace Azure.CloudMachine
 }
 namespace Azure.CloudMachine.AIFoundry
 {
-    public partial class FoundryProjectFeature : Azure.CloudMachine.Core.CloudMachineFeature
+    public partial class AIFoundryFeature : Azure.CloudMachine.Core.CloudMachineFeature
     {
-        public FoundryProjectFeature(string connectionString) { }
+        public AIFoundryFeature(string connectionString) { }
         protected internal override void EmitConnections(Azure.Core.ConnectionCollection connections, string cmId) { }
         protected override Azure.Provisioning.Primitives.ProvisionableResource EmitResources(Azure.CloudMachine.CloudMachineInfrastructure cm) { throw null; }
     }

@@ -145,7 +145,7 @@ public partial class AIFoundryTests : SamplesBase<CloudMachineTestEnvironment>
         CloudMachineInfrastructure infra = new();
 
         var connectionString = TestEnvironment.AzureAICONNECTIONSTRING;
-        infra.AddFeature(new FoundryProjectFeature(connectionString));
+        infra.AddFeature(new AIFoundryFeature(connectionString));
 
         CloudMachineClient client = infra.GetClient();
 
