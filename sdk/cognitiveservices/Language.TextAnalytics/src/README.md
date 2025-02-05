@@ -14,4 +14,4 @@
 * Netstandard 1.4, based on the NetCore framework
 
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fcognitiveservices%2FLanguage.TextAnalytics%2Fsrc%2FReadme.png)
+

@@ -8,4 +8,4 @@ the places we are importing those files to include the updated version number. C
 the CentralPackageVersionPackagePath property in Directory.Build.Data.targets. Be sure to clean up
 the old version as well.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Feng%2FMicrosoft.Build.CentralPackageVersions%2FReadme.png)
+

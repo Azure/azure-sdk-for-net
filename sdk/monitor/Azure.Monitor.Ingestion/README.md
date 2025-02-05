@@ -285,4 +285,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 [data_collection_rule]: https://learn.microsoft.com/azure/azure-monitor/essentials/data-collection-rule-overview
 [logging]: https://learn.microsoft.com/dotnet/azure/sdk/logging
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/monitor/Azure.Monitor.Ingestion/README.png)
+

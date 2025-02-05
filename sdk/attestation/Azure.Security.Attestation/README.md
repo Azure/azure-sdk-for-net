@@ -357,4 +357,4 @@ See [CONTRIBUTING.md][contributing] for details on building, testing, and contri
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fattestation%2FAzure.Security.Attestation%2FREADME.png)
+

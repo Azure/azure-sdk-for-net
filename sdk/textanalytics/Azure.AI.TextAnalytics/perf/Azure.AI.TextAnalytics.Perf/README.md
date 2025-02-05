@@ -20,4 +20,4 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 Please see our [contributing guide](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventhub/Azure.Messaging.EventHubs/CONTRIBUTING.md) for more information.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Ftextanalytics%2FAzure.AI.TextAnalytics%2Fperf%2FAzure.AI.TextAnalytics.Perf%2FREADME.png)
+

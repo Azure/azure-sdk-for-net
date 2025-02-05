@@ -229,4 +229,4 @@ additional questions or comments.
 [applied-ai-service]: https://azure.microsoft.com/product-categories/applied-ai-services/#services
 [machine-learning]: https://azure.microsoft.com/services/machine-learning
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fvideoanalyzer%2Fazure-media-videoanalyzer-edge%2FREADME.png)
+
