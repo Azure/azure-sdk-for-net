@@ -19,55 +19,55 @@ namespace Microsoft.Extensions.Azure
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Service host. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public static IAzureClientBuilder<ChatCompletionsClient, AzureAIInferenceClientOptions> AddChatCompletionsClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        public static IAzureClientBuilder<ChatCompletionsClient, AIModelClientOptions> AddChatCompletionsClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<ChatCompletionsClient, AzureAIInferenceClientOptions>((options) => new ChatCompletionsClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<ChatCompletionsClient, AIModelClientOptions>((options) => new ChatCompletionsClient(endpoint, credential, options));
         }
 
         /// <summary> Registers a <see cref="ChatCompletionsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Service host. </param>
-        public static IAzureClientBuilder<ChatCompletionsClient, AzureAIInferenceClientOptions> AddChatCompletionsClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<ChatCompletionsClient, AIModelClientOptions> AddChatCompletionsClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<ChatCompletionsClient, AzureAIInferenceClientOptions>((options, cred) => new ChatCompletionsClient(endpoint, cred, options));
+            return builder.RegisterClientFactory<ChatCompletionsClient, AIModelClientOptions>((options, cred) => new ChatCompletionsClient(endpoint, cred, options));
         }
 
         /// <summary> Registers a <see cref="EmbeddingsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Service host. </param>
         /// <param name="credential"> A credential used to authenticate to an Azure Service. </param>
-        public static IAzureClientBuilder<EmbeddingsClient, AzureAIInferenceClientOptions> AddEmbeddingsClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
+        public static IAzureClientBuilder<EmbeddingsClient, AIModelClientOptions> AddEmbeddingsClient<TBuilder>(this TBuilder builder, Uri endpoint, AzureKeyCredential credential)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<EmbeddingsClient, AzureAIInferenceClientOptions>((options) => new EmbeddingsClient(endpoint, credential, options));
+            return builder.RegisterClientFactory<EmbeddingsClient, AIModelClientOptions>((options) => new EmbeddingsClient(endpoint, credential, options));
         }
 
         /// <summary> Registers a <see cref="EmbeddingsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Service host. </param>
-        public static IAzureClientBuilder<EmbeddingsClient, AzureAIInferenceClientOptions> AddEmbeddingsClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<EmbeddingsClient, AIModelClientOptions> AddEmbeddingsClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilderWithCredential
         {
-            return builder.RegisterClientFactory<EmbeddingsClient, AzureAIInferenceClientOptions>((options, cred) => new EmbeddingsClient(endpoint, cred, options));
+            return builder.RegisterClientFactory<EmbeddingsClient, AIModelClientOptions>((options, cred) => new EmbeddingsClient(endpoint, cred, options));
         }
 
         /// <summary> Registers a <see cref="ChatCompletionsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<ChatCompletionsClient, AzureAIInferenceClientOptions> AddChatCompletionsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<ChatCompletionsClient, AIModelClientOptions> AddChatCompletionsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<ChatCompletionsClient, AzureAIInferenceClientOptions>(configuration);
+            return builder.RegisterClientFactory<ChatCompletionsClient, AIModelClientOptions>(configuration);
         }
         /// <summary> Registers a <see cref="EmbeddingsClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<EmbeddingsClient, AzureAIInferenceClientOptions> AddEmbeddingsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<EmbeddingsClient, AIModelClientOptions> AddEmbeddingsClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<EmbeddingsClient, AzureAIInferenceClientOptions>(configuration);
+            return builder.RegisterClientFactory<EmbeddingsClient, AIModelClientOptions>(configuration);
         }
     }
 }

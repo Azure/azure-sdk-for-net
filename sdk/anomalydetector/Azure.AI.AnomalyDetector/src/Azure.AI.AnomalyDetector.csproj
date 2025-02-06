@@ -1,27 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Microsoft Azure Cognitive Services Anomaly Detector client library</Description>
-    <AssemblyTitle>Microsoft Azure.AI.AnomalyDetector client library</AssemblyTitle>
-    <Version>3.0.0-preview.8</Version>
-    <PackageTags>Microsoft Azure Anomaly Detector</PackageTags>
-    <DisableEnhancedAnalysis>true</DisableEnhancedAnalysis>
+    <Description>This is the Azure.AI.AnomalyDetector client library for developing .NET applications with rich experience.</Description>
+    <AssemblyTitle>Azure SDK Code Generation Azure.AI.AnomalyDetector for Azure Data Plane</AssemblyTitle>
+    <Version>1.0.0-beta.1</Version>
+    <PackageTags>Azure.AI.AnomalyDetector</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
-    <GenerateAPIListing>true</GenerateAPIListing>
-    <NoWarn>$(NoWarn);CS1591;AZC0012</NoWarn>
     <IncludeOperationsSharedSource>true</IncludeOperationsSharedSource>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared/Core" />
+    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared/Core" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.Text.Json" />
   </ItemGroup>
-
-  <!-- Shared source from Azure.Core -->
-  <ItemGroup>
-    <Compile Include="$(AzureCoreSharedSources)ArrayBufferWriter.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)AzureKeyCredentialPolicy.cs" LinkBase="Shared" />
-    <Compile Include="$(AzureCoreSharedSources)AzureResourceProviderNamespaceAttribute.cs" LinkBase="Shared" />
-  </ItemGroup>
-
 </Project>
