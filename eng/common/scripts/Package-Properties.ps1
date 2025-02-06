@@ -183,6 +183,9 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     $lookup = @{}
 
     foreach ($pkg in $allPackageProperties) {
+        if (-not $pkg.DirectoryPath) {
+            Write-Host $pkg.Name
+        }
         $pkgDirectory = Resolve-Path "$($pkg.DirectoryPath)"
         $lookupKey = ($pkg.DirectoryPath).Replace($RepoRoot, "").TrimStart('\/')
         $lookup[$lookupKey] = $pkg

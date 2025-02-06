@@ -44,8 +44,6 @@ Param (
 
 . (Join-Path $PSScriptRoot common.ps1)
 
-Set-PSDebug -Trace 2
-
 function SetOutput($outputPath, $incomingPackageSpec)
 {
 
