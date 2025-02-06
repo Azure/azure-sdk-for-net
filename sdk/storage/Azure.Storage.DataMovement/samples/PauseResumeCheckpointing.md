@@ -2,6 +2,9 @@
 
 By persisting transfer progress to disk, DataMovement allows resuming of transfers that failed partway through, or were otherwise paused. To resume a transfer, the transfer manager needs to be setup in the first place with `StorageResourceProvider` instances (the same ones used above in [Starting New Transfers](#starting-new-transfers)) which are capable of reassembling the transfer components from persisted data.
 
+When resuming a transfer, any individual transfer item (e.g. blob, file) in which,
+the transfer did not successfully transfer or transfer that was interrupted partway, will be resumed from the beginning. This means that no transfer will resume from the middle of a transfer item.
+
 By default Data Movement SDK will create a folder called `.azstoragedml` at the path where the SDK is being run.
 
 ## Setting Checkpointer Folder Local Location

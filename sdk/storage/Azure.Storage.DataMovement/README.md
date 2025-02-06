@@ -42,7 +42,9 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 
 ### Authenticate the client
 
-Authentication is specific to the targeted storage service. Please see documentation for the individual services
+Authentication is specific to the targeted storage service. Please see documentation for the individual services:
+- [Blob](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Blobs#authenticate-the-client)
+- [File Share](/github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Files.Shares#authenticate-the-client)
 
 ### Permissions
 
@@ -137,6 +139,12 @@ See [Handling Failed Transfers](#handling-failed-transfers) and [Enabling Loggin
 Get started with our [Blob DataMovement samples][blob_samples].
 
 Get started with our [Share File DataMovement samples][share_samples].
+
+For advanced scenarios regarding the `TransferManager` see [TransferManager Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/samples/TransferManager.md).
+
+For advanced scenarios regarding the `TransferManager.StartTransfer()` operation, see [Start Transfer Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/samples/StartTransfer.md).
+
+For advanced scenarios and information regarding Resume, Pause and/or checkpointing see [Pause and Resume, Checkpointing Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/samples/PauseResumeCheckpointing.md).
 
 ## Contributing
 

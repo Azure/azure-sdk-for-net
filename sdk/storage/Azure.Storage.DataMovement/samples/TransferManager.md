@@ -12,7 +12,7 @@ TransferManager transferManager = new TransferManager(new TransferManagerOptions
 
 ## Setting Checkpointer
 
-The checkpointer options (`TransferCheckpointStoreOptions`) is set through the `TransferManagerOptions`. For more information about checkpointing see [Resume through Checkpointing](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/samples/Checkpointing.md).
+The checkpointer options (`TransferCheckpointStoreOptions`) is set through the `TransferManagerOptions`. For more information about checkpointing see [Resume through Checkpointing](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/storage/Azure.Storage.DataMovement/samples/PauseResumeCheckpointing.md).
 
 The example below shows how to set the checkpointer to a specific local path.
 ```csharp

@@ -1195,6 +1195,22 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             }
         }
 
+        public void CreateTransferOptionCreationMode()
+        {
+            #region Snippet:TransferOptionsOverwrite
+            TransferOptions optionsOverwriteIfExists = new TransferOptions()
+            {
+                CreationMode = StorageResourceCreationMode.OverwriteIfExists,
+            };
+            #endregion
+            #region Snippet:TransferOptionsSkipIfExists
+            TransferOptions optionsSkipIfExists = new TransferOptions()
+            {
+                CreationMode = StorageResourceCreationMode.SkipIfExists,
+            };
+            #endregion
+        }
+
         #region Snippet:EnumerateTransfersStatus
         public async Task CheckTransfersStatusAsync(TransferManager transferManager)
         {

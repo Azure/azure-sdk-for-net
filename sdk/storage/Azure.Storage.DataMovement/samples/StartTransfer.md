@@ -114,3 +114,28 @@ transferOptions.ItemTransferFailed += (TransferItemFailedEventArgs args) =>
     return Task.CompletedTask;
 };
 ```
+
+## Transfer Creation Mode
+
+By default, if a transfer that fails to transfer an individual transfer item, it will bring the entire transfer to a stopped completion state that contains failures.
+
+To overwrite if a transfer item already exists set the `TransferOptions.CreationMode` to `StorageResourceCreationMode.OverwriteIfExists`.
+
+```C# Snippet:TransferOptionsOverwrite
+TransferOptions optionsOverwriteIfExists = new TransferOptions()
+{
+    CreationMode = StorageResourceCreationMode.OverwriteIfExists,
+};
+```
+
+To skip when a failure is seen during a transfer of an item set the `TransferOptions.CreationMode` to `StorageResourceCreationMode.Skip`.
+
+```C# Snippet:TransferOptionsSkipIfExists
+TransferOptions optionsSkipIfExists = new TransferOptions()
+{
+    CreationMode = StorageResourceCreationMode.SkipIfExists,
+};
+```
+
+
+
