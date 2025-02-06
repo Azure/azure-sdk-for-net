@@ -117,17 +117,12 @@ namespace Azure.Generator.Primitives
             ? [
                 new("Azure.Core"),
                 new("Azure.ResourceManager"),
-                new("System.Text.Json"),
-                new("System.ClientModel")
+                new("System.ClientModel"),
+                new("System.Text.Json")
             ]
             : [
                 new("Azure.Core"),
-                new("System.Text.Json")
-            ];
-
-        private static readonly IReadOnlyList<CSharpProjectWriter.CSProjDependencyPackage> _brandedDependencyPackages =
-            [
-                new("Azure.Core"),
+                new("System.ClientModel"),
                 new("System.Text.Json")
             ];
 
