@@ -16,36 +16,36 @@ namespace Azure.Communication.JobRouter.Models
         /// <summary> Registers a <see cref="JobRouterAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Uri of your Communication resource. </param>
-        public static IAzureClientBuilder<JobRouterAdministrationClient, JobRouterClientOptions> AddJobRouterAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<JobRouterAdministrationClient, AzureCommunicationRoutingServiceClientOptions> AddJobRouterAdministrationClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<JobRouterAdministrationClient, JobRouterClientOptions>((options) => new JobRouterAdministrationClient(endpoint, options));
+            return builder.RegisterClientFactory<JobRouterAdministrationClient, AzureCommunicationRoutingServiceClientOptions>((options) => new JobRouterAdministrationClient(endpoint, options));
         }
 
         /// <summary> Registers a <see cref="JobRouterClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="endpoint"> Uri of your Communication resource. </param>
-        public static IAzureClientBuilder<JobRouterClient, JobRouterClientOptions> AddJobRouterClient<TBuilder>(this TBuilder builder, Uri endpoint)
+        public static IAzureClientBuilder<JobRouterClient, AzureCommunicationRoutingServiceClientOptions> AddJobRouterClient<TBuilder>(this TBuilder builder, Uri endpoint)
         where TBuilder : IAzureClientFactoryBuilder
         {
-            return builder.RegisterClientFactory<JobRouterClient, JobRouterClientOptions>((options) => new JobRouterClient(endpoint, options));
+            return builder.RegisterClientFactory<JobRouterClient, AzureCommunicationRoutingServiceClientOptions>((options) => new JobRouterClient(endpoint, options));
         }
 
         /// <summary> Registers a <see cref="JobRouterAdministrationClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<JobRouterAdministrationClient, JobRouterClientOptions> AddJobRouterAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<JobRouterAdministrationClient, AzureCommunicationRoutingServiceClientOptions> AddJobRouterAdministrationClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<JobRouterAdministrationClient, JobRouterClientOptions>(configuration);
+            return builder.RegisterClientFactory<JobRouterAdministrationClient, AzureCommunicationRoutingServiceClientOptions>(configuration);
         }
         /// <summary> Registers a <see cref="JobRouterClient"/> instance. </summary>
         /// <param name="builder"> The builder to register with. </param>
         /// <param name="configuration"> The configuration values. </param>
-        public static IAzureClientBuilder<JobRouterClient, JobRouterClientOptions> AddJobRouterClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
+        public static IAzureClientBuilder<JobRouterClient, AzureCommunicationRoutingServiceClientOptions> AddJobRouterClient<TBuilder, TConfiguration>(this TBuilder builder, TConfiguration configuration)
         where TBuilder : IAzureClientFactoryBuilderWithConfiguration<TConfiguration>
         {
-            return builder.RegisterClientFactory<JobRouterClient, JobRouterClientOptions>(configuration);
+            return builder.RegisterClientFactory<JobRouterClient, AzureCommunicationRoutingServiceClientOptions>(configuration);
         }
     }
 }

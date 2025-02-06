@@ -4,9 +4,9 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Azure.Core.TestFramework", "..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj", "{ECC730C1-4AEA-420C-916A-66B19B79E4DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Language.Conversations.Authoring", "src\Azure.AI.Language.Conversations.Authoring.csproj", "{28FF4005-4467-4E36-92E7-DEA27DEB1519}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Communication.Messages", "src\Azure.Communication.Messages.csproj", "{28FF4005-4467-4E36-92E7-DEA27DEB1519}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.AI.Language.Conversations.Authoring.Tests", "tests\Azure.AI.Language.Conversations.Authoring.Tests.csproj", "{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Azure.Communication.Messages.Tests", "tests\Azure.Communication.Messages.Tests.csproj", "{1F1CD1D4-9932-4B73-99D8-C252A67D4B46}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
