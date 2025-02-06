@@ -12,8 +12,8 @@
   <ItemGroup>
     <PackageReference Include="System.ClientModel" />
     <PackageReference Include="System.Text.Json" />
-	<PackageReference Include="Azure.Core" />
-	<PackageReference Include="Azure.ResourceManager" />
+	  <PackageReference Include="Azure.Core" />
+	  <PackageReference Include="Azure.ResourceManager" />
   </ItemGroup>
 	
 	<!-- Include shared code from Azure.Core -->
