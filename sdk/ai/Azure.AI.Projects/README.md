@@ -643,7 +643,6 @@ namespace FunctionProj
         }
 
         [Function("Foo")]
-        [QueueOutput("azure-function-tool-output")]
         public void Run([QueueTrigger("azure-function-foo-input")] Arguments input, FunctionContext executionContext)
         {
             var logger = executionContext.GetLogger("Foo");
