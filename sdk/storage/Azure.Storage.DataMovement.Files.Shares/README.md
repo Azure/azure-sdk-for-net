@@ -45,7 +45,7 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 ```
 
 ### Authenticate the client
-The Azure.Storage.DataMovement.Files.Shares library uses clients from the Azure.Storage.Files.Shares package to communicate with the Azure File Storage service. For more information see the Azure.Storage.Files.Shares [authentication documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Files.Shares#authenticate-the-client).
+The Azure.Storage.DataMovement.Files.Shares library uses clients from the Azure.Storage.Files.Shares package to communicate with the Azure File Storage service. For more information see the Azure.Storage.Files.Shares [authentication documentation](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Files.Shares/README.md#authenticate-the-client).
 
 ### Permissions
 
