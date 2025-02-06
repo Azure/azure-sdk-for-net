@@ -44,7 +44,7 @@ az storage account create --name MyStorageAccount --resource-group MyResourceGro
 
 Authentication is specific to the targeted storage service. Please see documentation for the individual services:
 - [Blob](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Blobs/README.md#authenticate-the-client)
-- [File Share](/github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Files.Shares/README.md#authenticate-the-client)
+- [File Share](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Files.Shares/README.md#authenticate-the-client)
 
 ### Permissions
 
