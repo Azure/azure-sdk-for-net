@@ -143,6 +143,7 @@ function Get-PkgProperties {
     )
 
     $allPkgProps = Get-AllPkgProperties -ServiceDirectory $ServiceDirectory
+
     $pkgProps = $allPkgProps.Where({ $_.Name -eq $PackageName -or $_.ArtifactName -eq $PackageName });
 
     if ($pkgProps.Count -ge 1) {
@@ -183,9 +184,6 @@ function Get-PrPkgProperties([string]$InputDiffJson) {
     $lookup = @{}
 
     foreach ($pkg in $allPackageProperties) {
-        if (-not $pkg.DirectoryPath) {
-            Write-Host $pkg.Name
-        }
         $pkgDirectory = Resolve-Path "$($pkg.DirectoryPath)"
         $lookupKey = ($pkg.DirectoryPath).Replace($RepoRoot, "").TrimStart('\/')
         $lookup[$lookupKey] = $pkg
@@ -256,6 +254,10 @@ function Get-AllPkgProperties ([string]$ServiceDirectory = $null) {
             $pkgPropsResult = Get-PkgPropsForEntireService -serviceDirectoryPath (Join-Path $RepoRoot "sdk" $ServiceDirectory)
         }
     }
+
+    Write-Host "Ending Get-allPkgProperties"
+    Write-Host $pkgPropsResult
+    Write-Host $pkgPropsResult.Count
 
     return $pkgPropsResult
 }
