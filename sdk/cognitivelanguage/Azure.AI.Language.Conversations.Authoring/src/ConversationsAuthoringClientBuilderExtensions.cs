@@ -3,7 +3,7 @@
 
 using Azure.Core;
 
-namespace Azure.AI.Language.Conversations.Authoring
+namespace Microsoft.Extensions.Azure
 {
     /// <summary> Extension methods to add <see cref="ConversationAnalysisAuthoringClient"/> to client builder. </summary>
     [CodeGenModel("AILanguageConversationsAuthoringClientBuilderExtensions")]
