@@ -113,6 +113,9 @@ An upload takes place between a local file `StorageResource` as source and file 
 Upload a file.
 
 ```C# Snippet:SimplefileUpload_Shares
+TokenCredential tokenCredential = new DefaultAzureCredential();
+ShareFilesStorageResourceProvider shares = new(tokenCredential);
+TransferManager transferManager = new TransferManager(new TransferManagerOptions());
 TransferOperation fileTransfer = await transferManager.StartTransferAsync(
     sourceResource: LocalFilesStorageResourceProvider.FromFile(sourceLocalFile),
     destinationResource: await shares.FromFileAsync(destinationFileUri));

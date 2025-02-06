@@ -43,4 +43,13 @@ async Task CheckTransfersAsync(TransferManager transferManager)
 To list transfers based on `TransferStatus` value:
 
 ```C# Snippet:EnumerateTransfersStatus
+public async Task CheckTransfersStatusAsync(TransferManager transferManager)
+{
+    string logFile = CreateTempPath();
+    await foreach (TransferOperation transfer in transferManager.GetTransfersAsync())
+    {
+        using StreamWriter logStream = File.AppendText(logFile);
+        logStream.WriteLine(Enum.GetName(typeof(TransferStatus), transfer.Status));
+    }
+}
 ```

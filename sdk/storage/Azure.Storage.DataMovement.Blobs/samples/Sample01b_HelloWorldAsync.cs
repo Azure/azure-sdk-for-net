@@ -1132,17 +1132,6 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 }
                 #endregion
 
-                #region Snippet:EnumerateTransfersStatus
-                async Task CheckTransfersAsync(TransferManager transferManager)
-                {
-                    await foreach (TransferOperation transfer in transferManager.GetTransfersAsync())
-                    {
-                        using StreamWriter logStream = File.AppendText(logFile);
-                        logStream.WriteLine(Enum.GetName(typeof(TransferStatus), transfer.Status));
-                    }
-                }
-                #endregion
-
                 #region Snippet:ListenToTransferEvents
                 async Task<TransferOperation> ListenToTransfersAsync(TransferManager transferManager,
                     StorageResource source, StorageResource destination)
@@ -1205,6 +1194,18 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await container.DeleteIfExistsAsync();
             }
         }
+
+        #region Snippet:EnumerateTransfersStatus
+        public async Task CheckTransfersStatusAsync(TransferManager transferManager)
+        {
+            string logFile = CreateTempPath();
+            await foreach (TransferOperation transfer in transferManager.GetTransfersAsync())
+            {
+                using StreamWriter logStream = File.AppendText(logFile);
+                logStream.WriteLine(Enum.GetName(typeof(TransferStatus), transfer.Status));
+            }
+        }
+        #endregion
 
         public async Task<string> CreateBlobContainerTestDirectory(BlobContainerClient client, int depth = 0, string basePath = default)
         {

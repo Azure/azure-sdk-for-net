@@ -99,15 +99,15 @@ namespace Azure.Storage.DataMovement.Files.Shares.Samples
             await share.CreateIfNotExistsAsync();
             try
             {
-                ShareFilesStorageResourceProvider shares = new(new StorageSharedKeyCredential(StorageAccountName, StorageAccountKey));
-
                 // Get a reference to a destination share file/directory
                 Uri destinationFolderUri = share.GetDirectoryClient("sample-directory").Uri;
                 Uri destinationFileUri = share.GetRootDirectoryClient().GetFileClient("sample-file").Uri;
-                TransferManager transferManager = new TransferManager(new TransferManagerOptions());
 
                 // Create simple transfer single share file upload job
                 #region Snippet:SimplefileUpload_Shares
+                TokenCredential tokenCredential = new DefaultAzureCredential();
+                ShareFilesStorageResourceProvider shares = new(tokenCredential);
+                TransferManager transferManager = new TransferManager(new TransferManagerOptions());
                 TransferOperation fileTransfer = await transferManager.StartTransferAsync(
                     sourceResource: LocalFilesStorageResourceProvider.FromFile(sourceLocalFile),
                     destinationResource: await shares.FromFileAsync(destinationFileUri));
