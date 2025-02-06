@@ -216,7 +216,7 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     },
     TransferOptions = new TransferOptions()
     {
-        CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
+        CreationMode = StorageResourceCreationMode.OverwriteIfExists,
     }
 };
 
@@ -249,7 +249,7 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     },
     TransferOptions = new TransferOptions()
     {
-        CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
+        CreationMode = StorageResourceCreationMode.OverwriteIfExists,
     }
 };
 
