@@ -91,11 +91,11 @@ ShareFilesStorageResourceProvider shares = new(tokenCredential);
 To create a share `StorageResource`, use the methods `FromFile` or `FromDirectory`.
 
 ```C# Snippet:ResourceConstruction_Shares
-StorageResource directory = shares.FromDirectory(
+StorageResource directory = await shares.FromDirectoryAsync(
     new Uri("http://myaccount.files.core.windows.net/share/path/to/directory"));
-StorageResource rootDirectory = shares.FromDirectory(
+StorageResource rootDirectory = await shares.FromDirectoryAsync(
     new Uri("http://myaccount.files.core.windows.net/share"));
-StorageResource file = shares.FromFile(
+StorageResource file = await shares.FromFileAsync(
     new Uri("http://myaccount.files.core.windows.net/share/path/to/file.txt"));
 ```
 
@@ -115,7 +115,7 @@ Upload a file.
 ```C# Snippet:SimplefileUpload_Shares
 TransferOperation fileTransfer = await transferManager.StartTransferAsync(
     sourceResource: LocalFilesStorageResourceProvider.FromFile(sourceLocalFile),
-    destinationResource: shares.FromFile(destinationFileUri));
+    destinationResource: await shares.FromFileAsync(destinationFileUri));
 await fileTransfer.WaitForCompletionAsync();
 ```
 
@@ -124,7 +124,7 @@ Upload a directory.
 ```C# Snippet:SimpleDirectoryUpload_Shares
 TransferOperation folderTransfer = await transferManager.StartTransferAsync(
     sourceResource: LocalFilesStorageResourceProvider.FromDirectory(sourceLocalDirectory),
-    destinationResource: shares.FromDirectory(destinationFolderUri));
+    destinationResource: await shares.FromDirectoryAsync(destinationFolderUri));
 await folderTransfer.WaitForCompletionAsync();
 ```
 
@@ -136,7 +136,7 @@ Download a file.
 
 ```C# Snippet:SimpleFileDownload_Shares
 TransferOperation fileTransfer = await transferManager.StartTransferAsync(
-    sourceResource: shares.FromFile(sourceFileUri),
+    sourceResource: await shares.FromFileAsync(sourceFileUri),
     destinationResource: LocalFilesStorageResourceProvider.FromFile(destinationLocalFile));
 await fileTransfer.WaitForCompletionAsync();
 ```
@@ -145,7 +145,7 @@ Download a Directory.
 
 ```C# Snippet:SimpleDirectoryDownload_Shares
 TransferOperation directoryTransfer = await transferManager.StartTransferAsync(
-    sourceResource: shares.FromDirectory(sourceDirectoryUri),
+    sourceResource: await shares.FromDirectoryAsync(sourceDirectoryUri),
     destinationResource: LocalFilesStorageResourceProvider.FromDirectory(destinationLocalDirectory));
 await directoryTransfer.WaitForCompletionAsync();
 ```
@@ -158,8 +158,8 @@ Copy a single file.
 
 ```C# Snippet:s2sCopyFile_Shares
 TransferOperation fileTransfer = await transferManager.StartTransferAsync(
-    sourceResource: shares.FromFile(sourceFileUri),
-    destinationResource: shares.FromFile(destinationFileUri));
+    sourceResource: await shares.FromFileAsync(sourceFileUri),
+    destinationResource: await shares.FromFileAsync(destinationFileUri));
 await fileTransfer.WaitForCompletionAsync();
 ```
 
@@ -167,8 +167,8 @@ Copy a directory.
 
 ```C# Snippet:s2sCopyDirectory_Shares
 TransferOperation directoryTransfer = await transferManager.StartTransferAsync(
-    sourceResource: shares.FromDirectory(sourceDirectoryUri),
-    destinationResource: shares.FromDirectory(destinationDirectoryUri));
+    sourceResource: await shares.FromDirectoryAsync(sourceDirectoryUri),
+    destinationResource: await shares.FromDirectoryAsync(destinationDirectoryUri));
 await directoryTransfer.WaitForCompletionAsync();
 ```
 
@@ -196,8 +196,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc].
 For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Common%2FREADME.png)
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Common/src

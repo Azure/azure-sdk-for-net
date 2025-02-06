@@ -1,17 +1,13 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2025-02-06)
 
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
 - Exposed `JsonModelWriteCore` for model serialization procedure.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added CRUD Operations for Application Gateway for Containers (AGC) Security Policy
+- Bumped api-version to `2025-01-01`
 
 ## 1.0.1 (2023-11-30)
 

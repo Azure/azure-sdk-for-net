@@ -44,6 +44,7 @@ param (
   [Parameter(Mandatory = $False)][array] $Filters,
   [Parameter(Mandatory = $False)][array] $IndirectFilters,
   [Parameter(Mandatory = $False)][array] $Replace,
+  [Parameter(Mandatory = $False)][bool] $SparseIndirect = $true,
   [Parameter(Mandatory = $False)][int] $PackagesPerPRJob = 10,
   [Parameter()][switch] $CI = ($null -ne $env:SYSTEM_TEAMPROJECTID)
 )
@@ -72,7 +73,8 @@ function QueuePop([ref]$queue) {
 
 function GeneratePRMatrixForBatch {
   param (
-    [Parameter(Mandatory = $true)][array] $Packages
+    [Parameter(Mandatory = $true)][array] $Packages,
+    [Parameter(Mandatory = $false)][bool] $FullSparseMatrix = $false
   )
 
   $OverallResult = @()
@@ -85,6 +87,8 @@ function GeneratePRMatrixForBatch {
   $directBatch = $Packages[0].IncludedForValidation -eq $false
   Write-Host "Generating matrix for $($directBatch ? 'direct' : 'indirect') packages"
 
+  $batchNamePrefix = $($directBatch ? 'b' : 'ib')
+
   # The key here is that after we group the packages by the matrix config objects, we can use the first item's MatrixConfig
   # to generate the matrix for the group, no reason to have to parse the key value backwards to get the matrix config.
   $matrixBatchesByConfig = Group-ByObjectKey $Packages "CIMatrixConfigs"
@@ -96,6 +100,7 @@ function GeneratePRMatrixForBatch {
     $matrixResults = @()
     foreach ($matrixConfig in $matrixConfigs) {
       Write-Host "Generating config for $($matrixConfig.Path)"
+      $nonSparse = $matrixConfig.PSObject.Properties['NonSparseParameters'] ? $matrixConfig.NonSparseParameters : @()
 
       $matrixResults = @()
       if ($directBatch) {
@@ -104,7 +109,8 @@ function GeneratePRMatrixForBatch {
           -Selection $matrixConfig.Selection `
           -DisplayNameFilter $DisplayNameFilter `
           -Filters $Filters `
-          -Replace $Replace
+          -Replace $Replace `
+          -NonSparseParameters $nonSparse
 
         if ($matrixResults) {
           Write-Host "We have the following direct matrix results: "
@@ -117,7 +123,8 @@ function GeneratePRMatrixForBatch {
           -Selection $matrixConfig.Selection `
           -DisplayNameFilter $DisplayNameFilter `
           -Filters ($Filters + $IndirectFilters) `
-          -Replace $Replace
+          -Replace $Replace `
+          -NonSparseParameters $nonSparse
 
         if ($matrixResults) {
           Write-Host "We have the following indirect matrix results: "
@@ -134,10 +141,10 @@ function GeneratePRMatrixForBatch {
       # we only need to modify the generated job name if there is more than one matrix config + batch
       $matrixSuffixNecessary = $matrixBatchesByConfig.Keys.Count -gt 1
 
-      # if we are doing direct packages, we need to walk the batches and duplicate the matrix config for each batch, fully assigning
+      # if we are doing direct packages (or a full indirect matrix), we need to walk the batches and duplicate the matrix config for each batch, fully assigning
       # the each batch's packages to the matrix config. This will generate a _non-sparse_ matrix for the incoming packages
-      if ($directBatch) {
-        $batchSuffixNecessary = $packageBatches.Length -gt 1
+      if ($directBatch -or $FullSparseMatrix) {
+        $batchSuffixNecessary = $packageBatches.Length -gt $($directBatch ? 1 : 0)
         $batchCounter = 1
 
         foreach ($batch in $packageBatches) {
@@ -155,7 +162,7 @@ function GeneratePRMatrixForBatch {
             }
 
             if ($batchSuffixNecessary) {
-              $outputItem["name"] = $outputItem["name"] + "_b$batchCounter"
+              $outputItem["name"] = $outputItem["name"] + "$batchNamePrefix$batchCounter"
             }
 
             $OverallResult += $outputItem
@@ -180,7 +187,7 @@ function GeneratePRMatrixForBatch {
           }
 
           if ($batchSuffixNecessary) {
-            $outputItem["name"] = $outputItem["name"] + "_ib$batchCounter"
+            $outputItem["name"] = $outputItem["name"]  + "_$batchNamePrefix$batchCounter"
           }
           # now we need to take an item from the front of the matrix results, clone it, and add it to the back of the matrix results
           # we will add the cloned version to OverallResult
@@ -236,7 +243,7 @@ if ($indirectPackages) {
   foreach($artifact in $indirectPackages) {
     Write-Host "-> $($artifact.ArtifactName)"
   }
-  $OverallResult += GeneratePRMatrixForBatch -Packages $indirectPackages
+  $OverallResult += GeneratePRMatrixForBatch -Packages $indirectPackages -FullSparseMatrix (-not $SparseIndirect)
 }
 $serialized = SerializePipelineMatrix $OverallResult
 

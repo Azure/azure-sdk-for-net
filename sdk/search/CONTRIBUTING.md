@@ -80,7 +80,5 @@ Our samples are structured as unit tests so we can easily verify they're up to
 date and working correctly.  These tests make minimal use of test infrastructure
 to keep them easy to read.
 
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fsearch%2FCONTRIBUTING.png)
-
 <!-- LINKS -->
 [core_tests]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core.TestFramework

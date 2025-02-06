@@ -95,17 +95,17 @@ BlobsStorageResourceProvider blobs = new(tokenCredential);
 To create a blob `StorageResource`, use the methods `FromBlob` or `FromContainer`.
 
 ```C# Snippet:ResourceConstruction_Blobs
-StorageResource container = blobs.FromContainer(
+StorageResource container = await blobs.FromContainerAsync(
     new Uri("https://myaccount.blob.core.windows.net/container"));
 
 // Block blobs are the default if no options are specified
-StorageResource blockBlob = blobs.FromBlob(
+StorageResource blockBlob = await blobs.FromBlobAsync(
     new Uri("https://myaccount.blob.core.windows.net/container/sample-blob-block"),
     new BlockBlobStorageResourceOptions());
-StorageResource pageBlob = blobs.FromBlob(
+StorageResource pageBlob = await blobs.FromBlobAsync(
     new Uri("https://myaccount.blob.core.windows.net/container/sample-blob-page"),
     new PageBlobStorageResourceOptions());
-StorageResource appendBlob = blobs.FromBlob(
+StorageResource appendBlob = await blobs.FromBlobAsync(
     new Uri("https://myaccount.blob.core.windows.net/container/sample-blob-append"),
     new AppendBlobStorageResourceOptions());
 ```
@@ -154,7 +154,7 @@ Upload a block blob.
 ```C# Snippet:SimpleBlobUpload
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
     sourceResource: LocalFilesStorageResourceProvider.FromFile(sourceLocalPath),
-    destinationResource: blobs.FromBlob(destinationBlobUri));
+    destinationResource: await blobs.FromBlobAsync(destinationBlobUri));
 await transferOperation.WaitForCompletionAsync();
 ```
 
@@ -163,7 +163,7 @@ Upload a directory as a specific blob type.
 ```C# Snippet:SimpleDirectoryUpload
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
     sourceResource: LocalFilesStorageResourceProvider.FromDirectory(sourcePath),
-    destinationResource: blobs.FromContainer(
+    destinationResource: await blobs.FromContainerAsync(
         blobContainerUri,
         new BlobStorageResourceContainerOptions()
         {
@@ -181,7 +181,7 @@ Download a blob.
 
 ```C# Snippet:SimpleBlockBlobDownload
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
-    sourceResource: blobs.FromBlob(sourceBlobUri),
+    sourceResource: await blobs.FromBlobAsync(sourceBlobUri),
     destinationResource: LocalFilesStorageResourceProvider.FromFile(downloadPath));
 await transferOperation.WaitForCompletionAsync();
 ```
@@ -190,7 +190,7 @@ Download a container which may contain a mix of blob types.
 
 ```C# Snippet:SimpleDirectoryDownload_Blob
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
-    sourceResource: blobs.FromContainer(
+    sourceResource: await blobs.FromContainerAsync(
         blobContainerUri,
         new BlobStorageResourceContainerOptions()
         {
@@ -208,8 +208,8 @@ Copy a single blob. Note the destination blob is an append blob, regardless of t
 
 ```C# Snippet:s2sCopyBlob
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
-    sourceResource: blobs.FromBlob(sourceBlobUri),
-    destinationResource: blobs.FromBlob(destinationBlobUri, new AppendBlobStorageResourceOptions()));
+    sourceResource: await blobs.FromBlobAsync(sourceBlobUri),
+    destinationResource: await blobs.FromBlobAsync(destinationBlobUri, new AppendBlobStorageResourceOptions()));
 await transferOperation.WaitForCompletionAsync();
 ```
 
@@ -217,13 +217,13 @@ Copy a blob container.
 
 ```C# Snippet:s2sCopyBlobContainer
 TransferOperation transferOperation = await transferManager.StartTransferAsync(
-sourceResource: blobs.FromContainer(
+sourceResource: await blobs.FromContainerAsync(
     sourceContainerUri,
     new BlobStorageResourceContainerOptions()
     {
         BlobPrefix = sourceDirectoryName
     }),
-destinationResource: blobs.FromContainer(
+destinationResource: await blobs.FromContainerAsync(
     destinationContainerUri,
     new BlobStorageResourceContainerOptions()
     {
@@ -270,7 +270,7 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     },
     TransferOptions = new TransferOptions()
     {
-        CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
+        CreationMode = StorageResourceCreationMode.OverwriteIfExists,
     }
 };
 
@@ -303,7 +303,7 @@ BlobContainerClientTransferOptions options = new BlobContainerClientTransferOpti
     },
     TransferOptions = new TransferOptions()
     {
-        CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
+        CreationMode = StorageResourceCreationMode.OverwriteIfExists,
     }
 };
 
@@ -336,8 +336,6 @@ This project has adopted the [Microsoft Open Source Code of Conduct][coc].
 For more information see the [Code of Conduct FAQ][coc_faq]
 or contact [opencode@microsoft.com][coc_contact] with any
 additional questions or comments.
-
-![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net%2Fsdk%2Fstorage%2FAzure.Storage.Common%2FREADME.png)
 
 <!-- LINKS -->
 [source]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.Common/src
