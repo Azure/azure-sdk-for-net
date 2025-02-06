@@ -1,70 +1,70 @@
-# Azure Schema Registry client library for .NET
+# Azure.Data.SchemaRegistry client library for .NET
 
-Azure Schema Registry is a schema repository service hosted by Azure Event Hubs, providing schema storage, versioning, and management. The registry is leveraged by serializers to reduce payload size while describing payload structure with schema identifiers rather than full schemas.
+Azure.Data.SchemaRegistry is a managed service that helps developers get secret simply and securely.
+
+Use the client library for to:
+
+* [Get secret](https://docs.microsoft.com/azure)
+
+[Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
+
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/schemaregistry/Azure.Data.SchemaRegistry/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
 
 ## Getting started
 
+This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
+
 ### Install the package
 
-Install the Azure Schema Registry client library for .NET with [NuGet][nuget]:
+First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `dotnet add package package-name`, but should enable a developer to successfully install the package from NuGet, npm, or even cloning a GitHub repository.
+
+Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Data.SchemaRegistry
+dotnet add package Azure.Data.SchemaRegistry --prerelease
 ```
 
 ### Prerequisites
 
-* An [Azure subscription][azure_sub]
-* An [Event Hubs namespace][event_hubs_namespace]
-* A [Schema Group][create_schema_group] of the correct serialization type
+Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
 
-If you need to [create an Event Hubs namespace][create_event_hubs_namespace], you can use the Azure Portal or [Azure PowerShell][azure_powershell].
-
-You can use Azure PowerShell to create the Event Hubs namespace with the following command:
-
-```PowerShell
-New-AzEventHubNamespace -ResourceGroupName myResourceGroup -NamespaceName namespace_name -Location eastus
-```
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
 
 ### Authenticate the client
 
-In order to interact with the Azure Schema Registry service, you'll need to create an instance of the [Schema Registry Client][schema_registry_client] class. To create this client, you'll need Azure resource credentials and the Event Hubs namespace hostname.
+If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
 
-#### Get credentials
+For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
 
-To acquire authenticated credentials and start interacting with Azure resources, please see the [getting started with Azure Identity guide][quickstart_guide].
+### Service API versions
 
-#### Get Event Hubs namespace hostname
+The client library targets the latest service API version by default. A client instance accepts an optional service API version parameter from its options to specify which API version service to communicate.
 
-The simplest way is to use the [Azure portal][azure_portal] and navigate to your Event Hubs namespace. From the Overview tab, you'll see `Host name`. Copy the value from this field.
+#### Select a service API version
 
-#### Create SchemaRegistryClient
+You have the flexibility to explicitly select a supported service API version when instantiating a client by configuring its associated options. This ensures that the client can communicate with services using the specified API version.
 
-Once you have the Azure resource credentials and the Event Hubs namespace hostname, you can create the [SchemaRegistryClient][schema_registry_client]. You'll also need the [Azure.Identity][azure_identity] package to create the credential.
+For example,
 
-```C# Snippet:SchemaRegistryCreateSchemaRegistryClient
-// Create a new SchemaRegistry client using the default credential from Azure.Identity using environment variables previously set,
-// including AZURE_CLIENT_ID, AZURE_CLIENT_SECRET, and AZURE_TENANT_ID.
-// For more information on Azure.Identity usage, see: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
-string fullyQualifiedNamespace = "{hostname}.servicebus.windows.net";
-var client = new SchemaRegistryClient(fullyQualifiedNamespace: fullyQualifiedNamespace, credential: new DefaultAzureCredential());
+```C# Snippet:Create<YourService>ClientForSpecificApiVersion
+Uri endpoint = new Uri("<your endpoint>");
+DefaultAzureCredential credential = new DefaultAzureCredential();
+<YourService>ClientOptions options = new <YourService>ClientOptions(<YourService>ClientOptions.ServiceVersion.<API Version>)
+var client = new <YourService>Client(endpoint, credential, options);
 ```
+
+When selecting an API version, it's important to verify that there are no breaking changes compared to the latest API version. If there are significant differences, API calls may fail due to incompatibility.
+
+Always ensure that the chosen API version is fully supported and operational for your specific use case and that it aligns with the service's versioning policy.
 
 ## Key concepts
 
-### Schemas
+The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
 
-A schema has 6 components:
-- Group Name: The name of the group of schemas in the Schema Registry instance.
-- Schema Name: The name of the schema.
-- Schema ID: The ID assigned by the Schema Registry instance for the schema.
-- Schema Format: The format used for serialization of the schema. For example, Avro.
-- Schema Content: The string representation of the schema.
-- Schema Version: The version assigned to the schema in the Schema Registry instance.
-
-These components play different roles. Some are used as input into the operations and some are outputs. Currently, [SchemaProperties][schema_properties] only exposes those properties that are potential outputs that are used in SchemaRegistry operations. Those exposed properties are `Content` and `Id`.
+Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
 
 ### Thread safety
+
 We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
 
 ### Additional concepts
@@ -74,113 +74,34 @@ We guarantee that all client instance methods are thread-safe and independent of
 [Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
 [Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
 [Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
-[Mocking](https://learn.microsoft.com/dotnet/azure/sdk/unit-testing-mocking) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
 [Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
 <!-- CLIENT COMMON BAR -->
 
 ## Examples
 
-The following shows examples of what is available through the `SchemaRegistryClient`. There are both sync and async methods available for these client operations.
-
-* [Register a schema](#register-a-schema)
-* [Retrieve a schema ID](#retrieve-a-schema-id)
-* [Retrieve a schema](#retrieve-a-schema)
-
-### Register a schema
-
-Register a schema to be stored in the Azure Schema Registry.
-
-```C# Snippet:SchemaRegistryRegisterSchema
-string groupName = "<schema_group_name>";
-string name = "employeeSample";
-SchemaFormat format = SchemaFormat.Avro;
-// Example schema's definition
-string definition = @"
-{
-   ""type"" : ""record"",
-    ""namespace"" : ""TestSchema"",
-    ""name"" : ""Employee"",
-    ""fields"" : [
-    { ""name"" : ""Name"" , ""type"" : ""string"" },
-    { ""name"" : ""Age"", ""type"" : ""int"" }
-    ]
-}";
-
-Response<SchemaProperties> schemaProperties = client.RegisterSchema(groupName, name, definition, format);
-```
-
-### Retrieve a schema ID
-
-Retrieve a previously registered schema ID from the Azure Schema Registry.
-
-```C# Snippet:SchemaRegistryRetrieveSchemaId
-string groupName = "<schema_group_name>";
-string name = "employeeSample";
-SchemaFormat format = SchemaFormat.Avro;
-// Example schema's content
-string content = @"
-{
-   ""type"" : ""record"",
-    ""namespace"" : ""TestSchema"",
-    ""name"" : ""Employee"",
-    ""fields"" : [
-    { ""name"" : ""Name"" , ""type"" : ""string"" },
-    { ""name"" : ""Age"", ""type"" : ""int"" }
-    ]
-}";
-
-SchemaProperties schemaProperties = client.GetSchemaProperties(groupName, name, content, format);
-string schemaId = schemaProperties.Id;
-```
-
-### Retrieve a schema
-
-Retrieve a previously registered schema's content from the Azure Schema Registry with either a schema ID or the group name, schema name, and version.
-
-```C# Snippet:SchemaRegistryRetrieveSchema
-var schemaId = "<schema_id>";
-SchemaRegistrySchema schema = client.GetSchema(schemaId);
-string definition = schema.Definition;
-```
-
-```C# Snippet:SchemaRegistryRetrieveSchemaVersion
-string groupName = "<schema_group_name>";
-string name = "<schema_id>";
-int version = 1;
-SchemaRegistrySchema schema = client.GetSchema(groupName, name, version);
-string definition = schema.Definition;
-```
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/schemaregistry/Azure.Data.SchemaRegistry/samples).
 
 ## Troubleshooting
 
-Information on troubleshooting steps will be provided as potential issues are discovered.
+Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
+
+Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
+
+If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
 
 ## Next steps
 
-See [Azure Schema Registry][azure_schema_registry] for additional information.
+* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
+* If appropriate, point users to other packages that might be useful.
+* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
 
 ## Contributing
 
-This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
-
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][code_of_conduct_faq] or contact [opencode@microsoft.com][email_opencode] with any additional questions or comments.
+This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
 
 <!-- LINKS -->
-[nuget]: https://www.nuget.org/
-[event_hubs_namespace]: https://learn.microsoft.com/azure/event-hubs/event-hubs-about
-[create_schema_group]: https://learn.microsoft.com/azure/event-hubs/create-schema-registry#create-a-schema-group
-[azure_powershell]: https://learn.microsoft.com/powershell/azure/
-[create_event_hubs_namespace]: https://learn.microsoft.com/azure/event-hubs/event-hubs-quickstart-powershell#create-an-event-hubs-namespace
-[quickstart_guide]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
-[schema_registry_client]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/schemaregistry/Azure.Data.SchemaRegistry/src/SchemaRegistryClient.cs
-[azure_portal]: https://ms.portal.azure.com/
-[schema_properties]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/schemaregistry/Azure.Data.SchemaRegistry/src/SchemaProperties.cs
-[azure_identity]: https://www.nuget.org/packages/Azure.Identity
-[cla]: https://cla.microsoft.com
-[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
-[code_of_conduct_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-[email_opencode]: mailto:opencode@microsoft.com
-[azure_sub]: https://azure.microsoft.com/free/dotnet/
-[azure_schema_registry]: https://aka.ms/schemaregistry
+[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
+[style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/schemaregistry/Azure.Data.SchemaRegistry/README.png)
