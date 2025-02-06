@@ -8,13 +8,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.AI.Language.Conversations.Authoring.Models;
 using Azure.Core;
 
-namespace Azure.AI.Language.Conversations.Authoring
+namespace Azure.AI.Language.Conversations.Authoring.Models
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class AuthoringModelFactory
+    public static partial class ConversationAnalysisAuthoringModelFactory
     {
         /// <summary> Initializes a new instance of <see cref="Models.ExportedTrainedModel"/>. </summary>
         /// <param name="exportedModelName"> The exported model name. </param>
