@@ -77,26 +77,18 @@ function Get-AllPackageInfoFromRepo($serviceDirectory)
       $buildOutputPath = Join-Path $RepoRoot "$($pkgProp.Name)_dependencylistoutput.txt"
 
       if (!(Test-Path $outputFilePath)) {
-        Write-Host "        dotnet build /t:ProjectDependsOn ./eng/service.proj
-          /p:TestDependsOnDependency=`"$($pkgProp.Name)`"
-          /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false
-          /p:IncludePerf=false /p:RunApiCompat=false
-          /p:InheritDocEnabled=false /p:BuildProjectReferences=false
-          /p:OutputProjectFilePath=`"$outputFilePath`" > $buildOutputPath 2>&1"
+        try {
+          $command = "dotnet build /t:ProjectDependsOn ./eng/service.proj /p:TestDependsOnDependency=`"$($pkgProp.Name)`" /p:IncludeSrc=false " +
+          "/p:IncludeStress=false /p:IncludeSamples=false /p:IncludePerf=false /p:RunApiCompat=false /p:InheritDocEnabled=false /p:BuildProjectReferences=false" +
+          " /p:OutputProjectFilePath=`"$outputFilePath`" > $buildOutputPath 2>&1"
 
-        # calculate the dependent packages
-        dotnet build /t:ProjectDependsOn ./eng/service.proj `
-          /p:TestDependsOnDependency="$($pkgProp.Name)" `
-          /p:IncludeSrc=false /p:IncludeStress=false /p:IncludeSamples=false  `
-          /p:IncludePerf=false /p:RunApiCompat=false `
-          /p:InheritDocEnabled=false /p:BuildProjectReferences=false `
-          /p:OutputProjectFilePath="$outputFilePath" > $buildOutputPath 2>&1
-
-        if ($LASTEXITCODE -ne 0) {
-          Write-Host "Failed calculating dependencies for $($pkgProp.Name). Exit code $LASTEXITCODE."
-          Write-Host "Dumping erroring build output."
-          Write-Host (Get-Content -Raw $buildOutputPath)
-          continue
+          Invoke-LoggedCommand $command | Out-Null
+        }
+        catch {
+            Write-Host "Failed calculating dependencies for $($pkgProp.Name). Exit code $LASTEXITCODE."
+            Write-Host "Dumping erroring build output."
+            Write-Host (Get-Content -Raw $buildOutputPath)
+            continue
         }
       }
 
