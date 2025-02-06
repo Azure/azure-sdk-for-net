@@ -709,7 +709,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAuthoringProjects_CopyProjectAuthorization_ShortVersion()
+        public void Example_ConversationAuthoringProjects_AuthorizeProjectCopy_ShortVersion()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -719,7 +719,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             {
                 projectKind = "Conversation",
             });
-            Response response = client.CopyProjectAuthorization("<projectName>", content);
+            Response response = client.AuthorizeProjectCopy("<projectName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("projectKind").ToString());
@@ -732,7 +732,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAuthoringProjects_CopyProjectAuthorization_ShortVersion_Async()
+        public async Task Example_ConversationAuthoringProjects_AuthorizeProjectCopy_ShortVersion_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -742,7 +742,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             {
                 projectKind = "Conversation",
             });
-            Response response = await client.CopyProjectAuthorizationAsync("<projectName>", content);
+            Response response = await client.AuthorizeProjectCopyAsync("<projectName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("projectKind").ToString());
@@ -755,54 +755,29 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAuthoringProjects_CopyProjectAuthorization_ShortVersion_Convenience()
+        public void Example_ConversationAuthoringProjects_AuthorizeProjectCopy_ShortVersion_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation);
+            Response<CopyProjectDetails> response = client.AuthorizeProjectCopy("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAuthoringProjects_CopyProjectAuthorization_ShortVersion_Convenience_Async()
+        public async Task Example_ConversationAuthoringProjects_AuthorizeProjectCopy_ShortVersion_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation);
+            Response<CopyProjectDetails> response = await client.AuthorizeProjectCopyAsync("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation);
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAuthoringProjects_CopyProjectAuthorization_AllParameters()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
-
-            using RequestContent content = RequestContent.Create(new
-            {
-                projectKind = "Conversation",
-                storageInputContainerName = "<storageInputContainerName>",
-                allowOverwrite = true,
-            });
-            Response response = client.CopyProjectAuthorization("<projectName>", content);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("projectKind").ToString());
-            Console.WriteLine(result.GetProperty("targetProjectName").ToString());
-            Console.WriteLine(result.GetProperty("accessToken").ToString());
-            Console.WriteLine(result.GetProperty("expiresAt").ToString());
-            Console.WriteLine(result.GetProperty("targetResourceId").ToString());
-            Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAuthoringProjects_CopyProjectAuthorization_AllParameters_Async()
+        public void Example_ConversationAuthoringProjects_AuthorizeProjectCopy_AllParameters()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -814,7 +789,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
                 storageInputContainerName = "<storageInputContainerName>",
                 allowOverwrite = true,
             });
-            Response response = await client.CopyProjectAuthorizationAsync("<projectName>", content);
+            Response response = client.AuthorizeProjectCopy("<projectName>", content);
 
             JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
             Console.WriteLine(result.GetProperty("projectKind").ToString());
@@ -827,24 +802,49 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_ConversationAuthoringProjects_CopyProjectAuthorization_AllParameters_Convenience()
+        public async Task Example_ConversationAuthoringProjects_AuthorizeProjectCopy_AllParameters_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
+            using RequestContent content = RequestContent.Create(new
+            {
+                projectKind = "Conversation",
+                storageInputContainerName = "<storageInputContainerName>",
+                allowOverwrite = true,
+            });
+            Response response = await client.AuthorizeProjectCopyAsync("<projectName>", content);
+
+            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+            Console.WriteLine(result.GetProperty("projectKind").ToString());
+            Console.WriteLine(result.GetProperty("targetProjectName").ToString());
+            Console.WriteLine(result.GetProperty("accessToken").ToString());
+            Console.WriteLine(result.GetProperty("expiresAt").ToString());
+            Console.WriteLine(result.GetProperty("targetResourceId").ToString());
+            Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_ConversationAuthoringProjects_CopyProjectAuthorization_AllParameters_Convenience_Async()
+        public void Example_ConversationAuthoringProjects_AuthorizeProjectCopy_AllParameters_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
+            Response<CopyProjectDetails> response = client.AuthorizeProjectCopy("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
+        }
+
+        [Test]
+        [Ignore("Only validating compilation of examples")]
+        public async Task Example_ConversationAuthoringProjects_AuthorizeProjectCopy_AllParameters_Convenience_Async()
+        {
+            Uri endpoint = new Uri("<endpoint>");
+            AzureKeyCredential credential = new AzureKeyCredential("<key>");
+            ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
+
+            Response<CopyProjectDetails> response = await client.AuthorizeProjectCopyAsync("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
         }
 
         [Test]

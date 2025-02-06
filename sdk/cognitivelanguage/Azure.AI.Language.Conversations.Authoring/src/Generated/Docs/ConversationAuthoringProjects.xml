@@ -637,47 +637,47 @@ Console.WriteLine(result.GetProperty("errors")[0].GetProperty("details")[0].GetP
 Console.WriteLine(result.GetProperty("errors")[0].GetProperty("innererror").GetProperty("code").ToString());
 ]]></code></example>
     </member>
-    <member name="CopyProjectAuthorizationAsync(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)">
+    <member name="AuthorizeProjectCopyAsync(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)">
       <example>
-This sample shows how to call CopyProjectAuthorizationAsync.
+This sample shows how to call AuthorizeProjectCopyAsync.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation);
+Response<CopyProjectDetails> response = await client.AuthorizeProjectCopyAsync("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation);
 ]]></code>
-This sample shows how to call CopyProjectAuthorizationAsync with all parameters.
+This sample shows how to call AuthorizeProjectCopyAsync with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-Response<CopyProjectDetails> response = await client.CopyProjectAuthorizationAsync("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
+Response<CopyProjectDetails> response = await client.AuthorizeProjectCopyAsync("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
 ]]></code></example>
     </member>
-    <member name="CopyProjectAuthorization(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)">
+    <member name="AuthorizeProjectCopy(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)">
       <example>
-This sample shows how to call CopyProjectAuthorization.
+This sample shows how to call AuthorizeProjectCopy.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation);
+Response<CopyProjectDetails> response = client.AuthorizeProjectCopy("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation);
 ]]></code>
-This sample shows how to call CopyProjectAuthorization with all parameters.
+This sample shows how to call AuthorizeProjectCopy with all parameters.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-Response<CopyProjectDetails> response = client.CopyProjectAuthorization("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
+Response<CopyProjectDetails> response = client.AuthorizeProjectCopy("<projectName>", AnalyzeConversationAuthoringProjectKind.Conversation, storageInputContainerName: "<storageInputContainerName>", allowOverwrite: true);
 ]]></code></example>
     </member>
-    <member name="CopyProjectAuthorizationAsync(string,RequestContent,RequestContext)">
+    <member name="AuthorizeProjectCopyAsync(string,RequestContent,RequestContext)">
       <example>
-This sample shows how to call CopyProjectAuthorizationAsync and parse the result.
+This sample shows how to call AuthorizeProjectCopyAsync and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -687,7 +687,7 @@ using RequestContent content = RequestContent.Create(new
 {
     projectKind = "Conversation",
 });
-Response response = await client.CopyProjectAuthorizationAsync("<projectName>", content);
+Response response = await client.AuthorizeProjectCopyAsync("<projectName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectKind").ToString());
@@ -697,7 +697,7 @@ Console.WriteLine(result.GetProperty("expiresAt").ToString());
 Console.WriteLine(result.GetProperty("targetResourceId").ToString());
 Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
 ]]></code>
-This sample shows how to call CopyProjectAuthorizationAsync with all parameters and request content and parse the result.
+This sample shows how to call AuthorizeProjectCopyAsync with all parameters and request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -709,7 +709,7 @@ using RequestContent content = RequestContent.Create(new
     storageInputContainerName = "<storageInputContainerName>",
     allowOverwrite = true,
 });
-Response response = await client.CopyProjectAuthorizationAsync("<projectName>", content);
+Response response = await client.AuthorizeProjectCopyAsync("<projectName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectKind").ToString());
@@ -720,9 +720,9 @@ Console.WriteLine(result.GetProperty("targetResourceId").ToString());
 Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
 ]]></code></example>
     </member>
-    <member name="CopyProjectAuthorization(string,RequestContent,RequestContext)">
+    <member name="AuthorizeProjectCopy(string,RequestContent,RequestContext)">
       <example>
-This sample shows how to call CopyProjectAuthorization and parse the result.
+This sample shows how to call AuthorizeProjectCopy and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -732,7 +732,7 @@ using RequestContent content = RequestContent.Create(new
 {
     projectKind = "Conversation",
 });
-Response response = client.CopyProjectAuthorization("<projectName>", content);
+Response response = client.AuthorizeProjectCopy("<projectName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectKind").ToString());
@@ -742,7 +742,7 @@ Console.WriteLine(result.GetProperty("expiresAt").ToString());
 Console.WriteLine(result.GetProperty("targetResourceId").ToString());
 Console.WriteLine(result.GetProperty("targetResourceRegion").ToString());
 ]]></code>
-This sample shows how to call CopyProjectAuthorization with all parameters and request content and parse the result.
+This sample shows how to call AuthorizeProjectCopy with all parameters and request content and parse the result.
 <code><![CDATA[
 Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
@@ -754,7 +754,7 @@ using RequestContent content = RequestContent.Create(new
     storageInputContainerName = "<storageInputContainerName>",
     allowOverwrite = true,
 });
-Response response = client.CopyProjectAuthorization("<projectName>", content);
+Response response = client.AuthorizeProjectCopy("<projectName>", content);
 
 JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
 Console.WriteLine(result.GetProperty("projectKind").ToString());

@@ -594,14 +594,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='CopyProjectAuthorizationAsync(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<CopyProjectDetails>> CopyProjectAuthorizationAsync(string projectName, AnalyzeConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='AuthorizeProjectCopyAsync(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)']/*" />
+        public virtual async Task<Response<CopyProjectDetails>> AuthorizeProjectCopyAsync(string projectName, AnalyzeConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await CopyProjectAuthorizationAsync(projectName, copyProjectAuthorizationRequest.ToRequestContent(), context).ConfigureAwait(false);
+            Response response = await AuthorizeProjectCopyAsync(projectName, copyProjectAuthorizationRequest.ToRequestContent(), context).ConfigureAwait(false);
             return Response.FromValue(CopyProjectDetails.FromResponse(response), response);
         }
 
@@ -613,14 +613,14 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='CopyProjectAuthorization(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)']/*" />
-        public virtual Response<CopyProjectDetails> CopyProjectAuthorization(string projectName, AnalyzeConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='AuthorizeProjectCopy(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)']/*" />
+        public virtual Response<CopyProjectDetails> AuthorizeProjectCopy(string projectName, AnalyzeConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
 
             CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
             RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = CopyProjectAuthorization(projectName, copyProjectAuthorizationRequest.ToRequestContent(), context);
+            Response response = AuthorizeProjectCopy(projectName, copyProjectAuthorizationRequest.ToRequestContent(), context);
             return Response.FromValue(CopyProjectDetails.FromResponse(response), response);
         }
 
@@ -634,7 +634,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CopyProjectAuthorizationAsync(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AuthorizeProjectCopyAsync(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -646,17 +646,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='CopyProjectAuthorizationAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CopyProjectAuthorizationAsync(string projectName, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='AuthorizeProjectCopyAsync(string,RequestContent,RequestContext)']/*" />
+        public virtual async Task<Response> AuthorizeProjectCopyAsync(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjects.CopyProjectAuthorization");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjects.AuthorizeProjectCopy");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCopyProjectAuthorizationRequest(projectName, content, context);
+                using HttpMessage message = CreateAuthorizeProjectCopyRequest(projectName, content, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -676,7 +676,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// </item>
         /// <item>
         /// <description>
-        /// Please try the simpler <see cref="CopyProjectAuthorization(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
+        /// Please try the simpler <see cref="AuthorizeProjectCopy(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)"/> convenience overload with strongly typed models first.
         /// </description>
         /// </item>
         /// </list>
@@ -688,17 +688,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='CopyProjectAuthorization(string,RequestContent,RequestContext)']/*" />
-        public virtual Response CopyProjectAuthorization(string projectName, RequestContent content, RequestContext context = null)
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='AuthorizeProjectCopy(string,RequestContent,RequestContext)']/*" />
+        public virtual Response AuthorizeProjectCopy(string projectName, RequestContent content, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjects.CopyProjectAuthorization");
+            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjects.AuthorizeProjectCopy");
             scope.Start();
             try
             {
-                using HttpMessage message = CreateCopyProjectAuthorizationRequest(projectName, content, context);
+                using HttpMessage message = CreateAuthorizeProjectCopyRequest(projectName, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -1670,7 +1670,7 @@ namespace Azure.AI.Language.Conversations.Authoring
             return message;
         }
 
-        internal HttpMessage CreateCopyProjectAuthorizationRequest(string projectName, RequestContent content, RequestContext context)
+        internal HttpMessage CreateAuthorizeProjectCopyRequest(string projectName, RequestContent content, RequestContext context)
         {
             var message = _pipeline.CreateMessage(context, ResponseClassifier200);
             var request = message.Request;
