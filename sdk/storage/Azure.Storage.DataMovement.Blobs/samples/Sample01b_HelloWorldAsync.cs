@@ -361,7 +361,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 TransferOptions options = new TransferOptions()
                 {
                     MaximumTransferChunkSize = 4 * Constants.MB,
-                    CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
+                    CreationMode = StorageResourceCreationMode.OverwriteIfExists,
                 };
                 TransferManager transferManager = new TransferManager(transferManagerOptions);
 
@@ -1015,7 +1015,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         },
                         TransferOptions = new TransferOptions()
                         {
-                            CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
+                            CreationMode = StorageResourceCreationMode.OverwriteIfExists,
                         }
                     };
 
@@ -1085,7 +1085,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                         },
                         TransferOptions = new TransferOptions()
                         {
-                            CreationPreference = StorageResourceCreationMode.OverwriteIfExists,
+                            CreationMode = StorageResourceCreationMode.OverwriteIfExists,
                         }
                     };
 

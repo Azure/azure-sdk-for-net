@@ -33,6 +33,7 @@
     - `TransferItemSkippedEventArgs.SourceResource` -> `TransferItemSkippedEventArgs.Source` and `TransferItemSkippedEventArgs.DestinationResource` -> `TransferItemSkippedEventArgs.Destination`
     - `TransferCheckpointStoreOptions.Local` -> `TransferCheckpointStoreOptions.CreateLocalStore`
     - `TransferCheckpointStoreOptions.Disabled` -> `TransferCheckpointStoreOptions.DisableCheckpoint`
+- Renamed `TransferOptions.CreationPreference` to `TransferOptions.CreateMode`
 - Removed properties from `StorageResourceItemProperties` constructor since properties are settable.
 - Changed type of `StorageResourceItemProperties.RawProperties` to `IDictionary`.
 - Changed `List<StorageResourceProvider> TransferManagerOptions.ResumeProviders` to `IList<StorageResourceProvider> TransferManagerOptions.ProvidersForResuming`

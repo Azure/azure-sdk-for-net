@@ -449,7 +449,7 @@ namespace Azure.Storage.DataMovement.Tests
             TransferOptions resumeOptions = new TransferOptions()
             {
                 // Enable overwrite on resume, to overwrite destination.
-                CreationPreference = StorageResourceCreationMode.OverwriteIfExists
+                CreationMode = StorageResourceCreationMode.OverwriteIfExists
             };
             TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
             TransferOperation resumeTransfer = await transferManager.ResumeTransferAsync(
@@ -994,7 +994,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Act - Resume Job
             TransferOptions resumeOptions = new()
             {
-                CreationPreference = StorageResourceCreationMode.OverwriteIfExists
+                CreationMode = StorageResourceCreationMode.OverwriteIfExists
             };
             TestEventsRaised testEventRaised2 = new TestEventsRaised(resumeOptions);
             TransferOperation resumeTransfer = await transferManager.ResumeTransferAsync(
@@ -1079,7 +1079,7 @@ namespace Azure.Storage.DataMovement.Tests
             // Act - Resume Job
             TransferOptions resumeOptions = new()
             {
-                CreationPreference = StorageResourceCreationMode.OverwriteIfExists
+                CreationMode = StorageResourceCreationMode.OverwriteIfExists
             };
             TestEventsRaised testEventsRaised2 = new TestEventsRaised(resumeOptions);
             TransferOperation resumeTransfer = await transferManager.ResumeTransferAsync(
