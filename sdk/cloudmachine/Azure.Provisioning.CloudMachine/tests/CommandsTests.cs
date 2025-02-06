@@ -12,14 +12,14 @@ public class CommandsTests
     [Test]
     public void ListModels()
     {
-        CloudMachineInfrastructure cm = new();
+        ProjectInfrastructure cm = new();
         cm.TryExecuteCommand(["-ai", "chat"]);
     }
 
     [Test]
     public void GenerateBicep()
     {
-        CloudMachineInfrastructure cm = new();
+        ProjectInfrastructure cm = new();
         cm.AddFeature(new KeyVaultFeature());
         cm.TryExecuteCommand(["-bicep"]);
     }
@@ -27,7 +27,7 @@ public class CommandsTests
     [Test]
     public void DoInit()
     {
-        CloudMachineInfrastructure cm = new();
+        ProjectInfrastructure cm = new();
         cm.TryExecuteCommand(["-init", "demo.csproj"]);
     }
 }

@@ -79,7 +79,7 @@ namespace Azure.Storage.DataMovement.Tests
 
             TransferOptions transferOptions = new TransferOptions()
             {
-                CreationPreference = StorageResourceCreationMode.FailIfExists
+                CreationMode = StorageResourceCreationMode.FailIfExists
             };
 
             // Start transfer and await for completion. This transfer will fail

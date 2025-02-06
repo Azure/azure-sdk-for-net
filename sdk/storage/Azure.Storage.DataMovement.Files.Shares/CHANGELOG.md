@@ -31,6 +31,7 @@
   - Changed `FromClient` methods to `static` methods.
 
 ### Bugs Fixed
+- Fixed File Attributes with ReadOnly does not transfer / copy correctly bug #2167
 
 ### Other Changes
 
