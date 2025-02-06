@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
-    /// <summary> Client options for Azure.AI.ContentSafety library clients. </summary>
+    /// <summary> Client options for ContentSafety library clients. </summary>
     public partial class ContentSafetyClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2023_10_01;
