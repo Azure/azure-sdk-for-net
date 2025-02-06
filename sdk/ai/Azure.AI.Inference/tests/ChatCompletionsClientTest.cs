@@ -549,7 +549,7 @@ namespace Azure.AI.Inference.Tests
             {
                 Messages =
                 {
-                    new ChatRequestSystemMessage("You are a helpful assistant that helps describe images."),
+                    new ChatRequestSystemMessage("You are a helpful assistant that helps provide translations."),
                     new ChatRequestUserMessage(
                         new ChatMessageTextContentItem("Please translate this audio snippet to spanish."),
                         audioContentItem),

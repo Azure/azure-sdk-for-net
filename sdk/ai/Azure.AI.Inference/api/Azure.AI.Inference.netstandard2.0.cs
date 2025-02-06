@@ -17,9 +17,27 @@ namespace Azure.AI.Inference
         public static Azure.AI.Inference.ImageEmbeddingInput ImageEmbeddingInput(string image = null, string text = null) { throw null; }
         public static Azure.AI.Inference.ModelInfo ModelInfo(string modelName = null, Azure.AI.Inference.ModelType modelType = default(Azure.AI.Inference.ModelType), string modelProviderName = null) { throw null; }
         public static Azure.AI.Inference.StreamingChatChoiceUpdate StreamingChatChoiceUpdate(int index = 0, Azure.AI.Inference.CompletionsFinishReason? finishReason = default(Azure.AI.Inference.CompletionsFinishReason?), Azure.AI.Inference.StreamingChatResponseMessageUpdate delta = null) { throw null; }
-        public static Azure.AI.Inference.StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id = null, System.DateTimeOffset created = default(System.DateTimeOffset), string model = null, Azure.AI.Inference.CompletionsUsage usage = null, System.Collections.Generic.IEnumerable<Azure.AI.Inference.StreamingChatChoiceUpdate> choices = null) { throw null; }
+        public static Azure.AI.Inference.StreamingChatCompletionsUpdate StreamingChatCompletionsUpdate(string id = null, System.DateTimeOffset created = default(System.DateTimeOffset), string model = null, System.Collections.Generic.IEnumerable<Azure.AI.Inference.StreamingChatChoiceUpdate> choices = null, Azure.AI.Inference.CompletionsUsage usage = null) { throw null; }
         public static Azure.AI.Inference.StreamingChatResponseMessageUpdate StreamingChatResponseMessageUpdate(Azure.AI.Inference.ChatRole? role = default(Azure.AI.Inference.ChatRole?), string content = null, System.Collections.Generic.IEnumerable<Azure.AI.Inference.StreamingChatResponseToolCallUpdate> toolCalls = null) { throw null; }
         public static Azure.AI.Inference.StreamingChatResponseToolCallUpdate StreamingChatResponseToolCallUpdate(string id = null, Azure.AI.Inference.FunctionCall function = null) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AudioContentFormat : System.IEquatable<Azure.AI.Inference.AudioContentFormat>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AudioContentFormat(string value) { throw null; }
+        public static Azure.AI.Inference.AudioContentFormat Mp3 { get { throw null; } }
+        public static Azure.AI.Inference.AudioContentFormat Wav { get { throw null; } }
+        public bool Equals(Azure.AI.Inference.AudioContentFormat other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.AI.Inference.AudioContentFormat left, Azure.AI.Inference.AudioContentFormat right) { throw null; }
+        public static implicit operator Azure.AI.Inference.AudioContentFormat (string value) { throw null; }
+        public static bool operator !=(Azure.AI.Inference.AudioContentFormat left, Azure.AI.Inference.AudioContentFormat right) { throw null; }
+        public override string ToString() { throw null; }
     }
     public partial class AzureAIInferenceClientOptions : Azure.Core.ClientOptions
     {
@@ -269,6 +287,18 @@ namespace Azure.AI.Inference
         public static bool operator !=(Azure.AI.Inference.ChatCompletionsToolDefinitionType left, Azure.AI.Inference.ChatCompletionsToolDefinitionType right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ChatMessageAudioContentItem : Azure.AI.Inference.ChatMessageContentItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatMessageAudioContentItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageAudioContentItem>
+    {
+        public ChatMessageAudioContentItem(System.BinaryData bytes, Azure.AI.Inference.AudioContentFormat audioFormat) { }
+        public ChatMessageAudioContentItem(System.IO.Stream stream, Azure.AI.Inference.AudioContentFormat audioFormat) { }
+        public ChatMessageAudioContentItem(string audioFilePath, Azure.AI.Inference.AudioContentFormat audioFormat) { }
+        public ChatMessageAudioContentItem(System.Uri audioUri) { }
+        Azure.AI.Inference.ChatMessageAudioContentItem System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatMessageAudioContentItem>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatMessageAudioContentItem>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Inference.ChatMessageAudioContentItem System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageAudioContentItem>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageAudioContentItem>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageAudioContentItem>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public abstract partial class ChatMessageContentItem : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatMessageContentItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageContentItem>
     {
         protected ChatMessageContentItem() { }
@@ -310,6 +340,19 @@ namespace Azure.AI.Inference
         public static implicit operator Azure.AI.Inference.ChatMessageImageDetailLevel (string value) { throw null; }
         public static bool operator !=(Azure.AI.Inference.ChatMessageImageDetailLevel left, Azure.AI.Inference.ChatMessageImageDetailLevel right) { throw null; }
         public override string ToString() { throw null; }
+    }
+    public partial class ChatMessageInputAudio : System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatMessageInputAudio>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageInputAudio>
+    {
+        public ChatMessageInputAudio(string data, Azure.AI.Inference.AudioContentFormat format) { }
+        public string Data { get { throw null; } }
+        public Azure.AI.Inference.AudioContentFormat Format { get { throw null; } }
+        protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        public static Azure.AI.Inference.ChatMessageInputAudio Load(string path, Azure.AI.Inference.AudioContentFormat format) { throw null; }
+        Azure.AI.Inference.ChatMessageInputAudio System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatMessageInputAudio>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatMessageInputAudio>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.AI.Inference.ChatMessageInputAudio System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageInputAudio>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageInputAudio>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageInputAudio>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ChatMessageTextContentItem : Azure.AI.Inference.ChatMessageContentItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.Inference.ChatMessageTextContentItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Inference.ChatMessageTextContentItem>
     {

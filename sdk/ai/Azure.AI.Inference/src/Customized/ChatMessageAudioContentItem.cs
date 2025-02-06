@@ -29,11 +29,8 @@ namespace Azure.AI.Inference
         { }
 
         public ChatMessageAudioContentItem(string audioFilePath, AudioContentFormat audioFormat)
-        {
-            byte[] bytes = File.ReadAllBytes(audioFilePath);
-            string base64AudioData = Convert.ToBase64String(bytes);
-            _dataContentItem = new ChatMessageAudioDataContentItem(new ChatMessageInputAudio(base64AudioData, audioFormat));
-        }
+            : this(File.OpenRead(audioFilePath), audioFormat)
+        { }
 
         /// <summary> Initializes a new instance of <see cref="ChatMessageAudioDataContentItem"/> for deserialization. </summary>
         internal ChatMessageAudioContentItem()
