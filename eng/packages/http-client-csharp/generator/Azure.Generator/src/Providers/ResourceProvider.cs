@@ -228,13 +228,17 @@ namespace Azure.Generator.Providers
                 convenienceMethod.Signature.ExplicitInterface,
                 convenienceMethod.Signature.NonDocumentComment);
 
-            var bodyStatements = new MethodBodyStatement[]
-            {
-                UsingDeclare("scope", typeof(DiagnosticScope), ((MemberExpression)_clientDiagonosticsField).Invoke(nameof(ClientDiagnostics.CreateScope), Literal($"{Namespace}.{operation.Name}")), out var scopeVariable),
-                scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate(),
-                new TryCatchFinallyStatement
-                (BuildTryStatement(convenienceMethod, isAsync, isLongRunning, operation), Catch(Declare<Exception>("e", out var exceptionVarialble), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVarialble).Terminate(), Throw()]))
-            };
+            // TODO: implement body for LRO
+            var bodyStatements =
+                isLongRunning
+                ? [Throw(New.Instance<NotImplementedException>())]
+                : new MethodBodyStatement[]
+                {
+                    UsingDeclare("scope", typeof(DiagnosticScope), ((MemberExpression)_clientDiagonosticsField).Invoke(nameof(ClientDiagnostics.CreateScope), Literal($"{Namespace}.{operation.Name}")), out var scopeVariable),
+                    scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate(),
+                    new TryCatchFinallyStatement
+                    (BuildTryStatement(convenienceMethod, isAsync, isLongRunning, operation), Catch(Declare<Exception>("e", out var exceptionVarialble), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVarialble).Terminate(), Throw()]))
+                };
 
             return new MethodProvider(signature, bodyStatements, this);
         }

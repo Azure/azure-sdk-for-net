@@ -148,13 +148,13 @@ namespace Azure.Generator.Tests.Common
         {
             return new InputModelProperty(
                 name,
-                wireName ?? name,
                 summary,
                 description ?? $"Description for {name}",
                 type,
                 isRequired,
                 isReadOnly,
-                isDiscriminator);
+                isDiscriminator,
+                new(json: new(wireName ?? name)));
         }
 
         public static InputModelType Model(
@@ -172,7 +172,7 @@ namespace Azure.Generator.Tests.Common
             IEnumerable<InputModelProperty> propertiesList = properties ?? [Property("StringProperty", InputPrimitiveType.String)];
             return new InputModelType(
                 name,
-                name,
+                "",
                 access,
                 null,
                 null,
@@ -185,7 +185,8 @@ namespace Azure.Generator.Tests.Common
                 propertiesList.FirstOrDefault(p => p.IsDiscriminator),
                 discriminatedModels is null ? new Dictionary<string, InputModelType>() : discriminatedModels.AsReadOnly(),
                 additionalProperties,
-                modelAsStruct);
+                modelAsStruct,
+                new());
         }
 
         public static InputType Array(InputType elementType)

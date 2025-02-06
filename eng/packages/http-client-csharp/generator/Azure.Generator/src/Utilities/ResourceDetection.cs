@@ -149,7 +149,7 @@ namespace Azure.Generator.Utilities
                     return true;
                 }
 
-                switch (property.SerializedName)
+                switch (property.Name)
                 {
                     case "id":
                         if (property.Type.GetImplementType() is InputPrimitiveType { Kind: InputPrimitiveTypeKind.String } inputPrimitiveType)

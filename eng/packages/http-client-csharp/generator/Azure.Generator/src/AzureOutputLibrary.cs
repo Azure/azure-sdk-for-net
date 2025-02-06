@@ -39,18 +39,7 @@ namespace Azure.Generator
                 {
                     var requestPath = operationSet.RequestPath;
                     var resourceType = ResourceDetection.GetResourceTypeFromPath(requestPath);
-                }
-            }
-            foreach (var model in AzureClientPlugin.Instance.InputLibrary.InputNamespace.Models)
-            {
-                if (IsResource(model.Name))
-                {
-                    // we are sure that the model is a resource, so we can cast it to ResourceDataProvider
-                    var resourceDataProvider = (ResourceDataProvider)AzureClientPlugin.Instance.TypeFactory.CreateModel(model)!;
-
-                    var operationSet = _specNameToOperationSetsMap[model.Name].First();
-                    var resourceType = ResourceDetection.GetResourceTypeFromPath(operationSet.RequestPath);
-                    var resource = new ResourceProvider(operationSet, model.Name, resourceDataProvider, resourceType);
+                    var resource = new ResourceProvider(operationSet, schemaName, resourceData, resourceType);
                     AzureClientPlugin.Instance.AddTypeToKeep(resource.Name);
                     result.Add(resource);
                 }
