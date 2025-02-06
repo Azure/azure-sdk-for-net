@@ -56,7 +56,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
-                writer.WriteStringValue(Dataset);
+                writer.WriteStringValue(Dataset.Value.ToString());
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -99,7 +99,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             string text = default;
             string language = default;
             string intent = default;
-            string dataset = default;
+            DatasetType? dataset = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
                 if (property.NameEquals("dataset"u8))
                 {
-                    dataset = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataset = new DatasetType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

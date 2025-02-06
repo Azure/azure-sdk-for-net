@@ -47,21 +47,21 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="AssignDeploymentResourcesDetails"/>. </summary>
-        /// <param name="resourcesMetadata"> Represents the metadata for the resources to be assigned. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourcesMetadata"/> is null. </exception>
-        public AssignDeploymentResourcesDetails(IEnumerable<ResourceMetadata> resourcesMetadata)
+        /// <param name="metadata"> Represents the metadata for the resources to be assigned. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="metadata"/> is null. </exception>
+        public AssignDeploymentResourcesDetails(IEnumerable<ResourceMetadata> metadata)
         {
-            Argument.AssertNotNull(resourcesMetadata, nameof(resourcesMetadata));
+            Argument.AssertNotNull(metadata, nameof(metadata));
 
-            ResourcesMetadata = resourcesMetadata.ToList();
+            Metadata = metadata.ToList();
         }
 
         /// <summary> Initializes a new instance of <see cref="AssignDeploymentResourcesDetails"/>. </summary>
-        /// <param name="resourcesMetadata"> Represents the metadata for the resources to be assigned. </param>
+        /// <param name="metadata"> Represents the metadata for the resources to be assigned. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AssignDeploymentResourcesDetails(IList<ResourceMetadata> resourcesMetadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AssignDeploymentResourcesDetails(IList<ResourceMetadata> metadata, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            ResourcesMetadata = resourcesMetadata;
+            Metadata = metadata;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -71,6 +71,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         }
 
         /// <summary> Represents the metadata for the resources to be assigned. </summary>
-        public IList<ResourceMetadata> ResourcesMetadata { get; }
+        public IList<ResourceMetadata> Metadata { get; }
     }
 }

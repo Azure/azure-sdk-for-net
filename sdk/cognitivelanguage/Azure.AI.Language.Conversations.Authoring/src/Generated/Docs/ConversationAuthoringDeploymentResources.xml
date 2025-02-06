@@ -549,7 +549,7 @@ ConversationAuthoringDeploymentResources client = new ConversationAnalysisAuthor
 
 using RequestContent content = RequestContent.Create(new
 {
-    resourcesMetadata = new object[]
+    metadata = new object[]
     {
         new
         {
@@ -569,7 +569,7 @@ ConversationAuthoringDeploymentResources client = new ConversationAnalysisAuthor
 
 using RequestContent content = RequestContent.Create(new
 {
-    resourcesMetadata = new object[]
+    metadata = new object[]
     {
         new
         {
@@ -592,7 +592,7 @@ ConversationAuthoringDeploymentResources client = new ConversationAnalysisAuthor
 
 using RequestContent content = RequestContent.Create(new
 {
-    resourcesMetadata = new object[]
+    metadata = new object[]
     {
         new
         {
@@ -612,7 +612,7 @@ ConversationAuthoringDeploymentResources client = new ConversationAnalysisAuthor
 
 using RequestContent content = RequestContent.Create(new
 {
-    resourcesMetadata = new object[]
+    metadata = new object[]
     {
         new
         {

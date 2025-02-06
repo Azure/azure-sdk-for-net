@@ -551,7 +551,7 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <param name="intent"> The intent of the utterance. </param>
         /// <param name="dataset"> The dataset for this utterance. Allowed values are 'Train' and 'Test'. </param>
         /// <returns> A new <see cref="Models.ConversationExportedUtterance"/> instance for mocking. </returns>
-        public static ConversationExportedUtterance ConversationExportedUtterance(IEnumerable<ExportedUtteranceEntityLabel> entities = null, string text = null, string language = null, string intent = null, string dataset = null)
+        public static ConversationExportedUtterance ConversationExportedUtterance(IEnumerable<ExportedUtteranceEntityLabel> entities = null, string text = null, string language = null, string intent = null, DatasetType? dataset = null)
         {
             entities ??= new List<ExportedUtteranceEntityLabel>();
 

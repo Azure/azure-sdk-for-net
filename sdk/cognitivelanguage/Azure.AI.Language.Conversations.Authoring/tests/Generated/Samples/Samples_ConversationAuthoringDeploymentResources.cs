@@ -559,7 +559,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
 
             using RequestContent content = RequestContent.Create(new
             {
-                resourcesMetadata = new object[]
+                metadata = new object[]
             {
 new
 {
@@ -582,7 +582,7 @@ region = "<region>",
 
             using RequestContent content = RequestContent.Create(new
             {
-                resourcesMetadata = new object[]
+                metadata = new object[]
             {
 new
 {
@@ -635,7 +635,7 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
 
             using RequestContent content = RequestContent.Create(new
             {
-                resourcesMetadata = new object[]
+                metadata = new object[]
             {
 new
 {
@@ -658,7 +658,7 @@ region = "<region>",
 
             using RequestContent content = RequestContent.Create(new
             {
-                resourcesMetadata = new object[]
+                metadata = new object[]
             {
 new
 {

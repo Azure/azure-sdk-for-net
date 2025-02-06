@@ -34,9 +34,9 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 throw new FormatException($"The model {nameof(AssignDeploymentResourcesDetails)} does not support writing '{format}' format.");
             }
 
-            writer.WritePropertyName("resourcesMetadata"u8);
+            writer.WritePropertyName("metadata"u8);
             writer.WriteStartArray();
-            foreach (var item in ResourcesMetadata)
+            foreach (var item in Metadata)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -78,19 +78,19 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
             {
                 return null;
             }
-            IList<ResourceMetadata> resourcesMetadata = default;
+            IList<ResourceMetadata> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("resourcesMetadata"u8))
+                if (property.NameEquals("metadata"u8))
                 {
                     List<ResourceMetadata> array = new List<ResourceMetadata>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
                         array.Add(ResourceMetadata.DeserializeResourceMetadata(item, options));
                     }
-                    resourcesMetadata = array;
+                    metadata = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -99,7 +99,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 }
             }
             serializedAdditionalRawData = rawDataDictionary;
-            return new AssignDeploymentResourcesDetails(resourcesMetadata, serializedAdditionalRawData);
+            return new AssignDeploymentResourcesDetails(metadata, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AssignDeploymentResourcesDetails>.Write(ModelReaderWriterOptions options)
