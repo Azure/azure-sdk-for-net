@@ -1,16 +1,23 @@
-# Microsoft Azure IoT Operations management client library for .NET
+# Microsoft Azure IotOperations management client library for .NET
 
+**[Describe the service briefly first.]**
 
-Azure IoT Operations is a unified data plane for the edge. It's a collection of modular, scalable, and highly available data services that run on Azure Arc-enabled edge Kubernetes clusters such as AKS Edge Essentials. It enables data capture from various different systems and integrates with data modeling applications such as Microsoft Fabric to help organizations deploy the industrial metaverse.
+This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
-## Getting started
+    - Support MSAL.NET, Azure.Identity is out of box for supporting MSAL.NET.
+    - Support [OpenTelemetry](https://opentelemetry.io/) for distributed tracing.
+    - HTTP pipeline with custom policies.
+    - Better error-handling.
+    - Support uniform telemetry across all languages.
+
+## Getting started 
 
 ### Install the package
 
-Install the Microsoft Azure IoT Operations management library for .NET with [NuGet](https://www.nuget.org/ ):
+Install the Microsoft Azure IotOperations management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Azure.ResourceManager.IotOperations
+dotnet add package Azure.ResourceManager.IotOperations --prerelease
 ```
 
 ### Prerequisites
@@ -23,7 +30,15 @@ To create an authenticated client and start interacting with Microsoft Azure res
 
 ## Key concepts
 
-Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html).
+Key concepts of the Microsoft Azure SDK for .NET can be found [here](https://azure.github.io/azure-sdk/dotnet_introduction.html)
+
+## Documentation
+
+Documentation is available to help you learn how to use this package:
+
+- [Quickstart](https://github.com/Azure/azure-sdk-for-net/blob/main/doc/dev/mgmt_quickstart.md).
+- [API References](https://learn.microsoft.com/dotnet/api/?view=azure-dotnet).
+- [Authentication](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md).
 
 ## Examples
 

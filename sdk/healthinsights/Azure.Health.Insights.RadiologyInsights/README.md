@@ -1,134 +1,107 @@
-# Azure Cognitive Services Health Insights RadiologyInsights client library for .NET
+# Azure.Health.Insights.RadiologyInsights client library for .NET
 
-[Health Insights][health_insights] is an Azure Applied AI Service built with the Azure Cognitive Services Framework, that leverages multiple Cognitive Services, Healthcare API services and other Azure resources.
+Azure.Health.Insights.RadiologyInsights is a managed service that helps developers get secret simply and securely.
 
-[Radiology Insights][radiology_insights_docs] is a model that aims to provide quality checks as feedback on errors and inconsistencies (mismatches) and ensures critical findings are identified and communicated using the full context of the report. Follow-up recommendations and clinical findings with measurements (sizes) documented by the radiologist are also identified.
+Use the client library for to:
 
-[Source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/src) | [Package (NuGet)](https://www.nuget.org/packages/Azure.Health.Insights.RadiologyInsights/) | [API reference documentation](https://learn.microsoft.com/en-in/rest/api/cognitiveservices/healthinsights/radiology-insights) | [Product documentation](https://learn.microsoft.com/azure/azure-health-insights/radiology-insights/) | [Samples][sample_folder]
+* [Get secret](https://docs.microsoft.com/azure)
+
+[Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
+
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
+
 ## Getting started
 
-### Prerequisites
-
-- You need an [Azure subscription][azure_sub] to use this package.
-- An existing Cognitive Services Health Insights instance.
+This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
 
 ### Install the package
 
-Install the Azure Health Insights client Radiology Insights library for .NET with [NuGet][nuget]:
+First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `dotnet add package package-name`, but should enable a developer to successfully install the package from NuGet, npm, or even cloning a GitHub repository.
+
+Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
-dotnet add package Azure.Health.Insights.RadiologyInsights
+dotnet add package Azure.Health.Insights.RadiologyInsights --prerelease
 ```
 
-This table shows the relationship between SDK versions and supported API versions of the service:
+### Prerequisites
 
-|SDK version|Supported API version of service |
-|-------------|---------------|
-|1.0.0 | 2024-04-01|
+Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
+
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
 
 ### Authenticate the client
 
-You can find the endpoint for your Health Insights service resource using the [Azure Portal][azure_portal] or [Azure CLI][azure_cli]
+If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
 
-```bash
-# Get the endpoint for the Health Insights service resource
-az cognitiveservices account show --name "resource-name" --resource-group "resource-group-name" --query "properties.endpoint"
+For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
+
+### Service API versions
+
+The client library targets the latest service API version by default. A client instance accepts an optional service API version parameter from its options to specify which API version service to communicate.
+
+#### Select a service API version
+
+You have the flexibility to explicitly select a supported service API version when instantiating a client by configuring its associated options. This ensures that the client can communicate with services using the specified API version.
+
+For example,
+
+```C# Snippet:Create<YourService>ClientForSpecificApiVersion
+Uri endpoint = new Uri("<your endpoint>");
+DefaultAzureCredential credential = new DefaultAzureCredential();
+<YourService>ClientOptions options = new <YourService>ClientOptions(<YourService>ClientOptions.ServiceVersion.<API Version>)
+var client = new <YourService>Client(endpoint, credential, options);
 ```
 
-#### Create RadiologyInsightsClient using Azure Active Directory authentication
+When selecting an API version, it's important to verify that there are no breaking changes compared to the latest API version. If there are significant differences, API calls may fail due to incompatibility.
 
-You can also create a `RadiologyInsightsClient` using Azure Active Directory (AAD) authentication. Your user or service principal must be assigned the "Cognitive Services Language Reader" role.
-Using the [DefaultAzureCredential] you can authenticate a service using Managed Identity or a service principal, authenticate as a developer working on an application, and more all without changing code.
-
-Before you can use the `DefaultAzureCredential`, or any credential type from [Azure.Identity][azure_identity], you'll first need to [install the Azure.Identity package][azure_identity_install].
-
-To use `DefaultAzureCredential` with a client ID and secret, you'll need to set the `AZURE_TENANT_ID`, `AZURE_CLIENT_ID`, and `AZURE_CLIENT_SECRET` environment variables; alternatively, you can pass those values
-to the `ClientSecretCredential` also in Azure.Identity.
-
-Make sure you use the right namespace for `DefaultAzureCredential` at the top of your source file:
-
-```C# Snippet:Age_Mismatch_SyncCreateWithDefaultAzureCredential
-using Azure.Identity;
-```
-
-Then you can create an instance of `DefaultAzureCredential` and pass it to a new instance of your client:
-
-```C# Snippet:Age_Mismatch_Sync_Tests_Samples_TokenCredential
-Uri endpointUri = new Uri(endpoint);
-TokenCredential cred = new DefaultAzureCredential();
-RadiologyInsightsClient client = new RadiologyInsightsClient(endpointUri, cred);
-```
+Always ensure that the chosen API version is fully supported and operational for your specific use case and that it aligns with the service's versioning policy.
 
 ## Key concepts
 
-Once you've initialized a `RadiologyInsightsClient`, you can use it to analyse document text by displaying inferences found within the text.
-* Age Mismatch
-* Laterality Discrepancy
-* Sex Mismatch
-* Complete Order Discrepancy
-* Limited Order Discrepancy
-* Finding
-* Critical Result
-* Follow-up Recommendation
-* Communication
-* Radiology Procedure
+The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
 
-Radiology Insights currently supports one document from one patient. Please take a look [here] for more detailed information about the inferences this service produces.
+Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
+
+### Thread safety
+
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
+
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
 
 ## Examples
 
-For each inference samples are available showing how to retrieve the extracted information either synchronously or asynchronously. Examples on how to create a client, a request and retrieve the results are avaible in the samples folder.
-
-- Working samples: [samples folder][sample_folder].
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/samples).
 
 ## Troubleshooting
 
-### Setting up console logging
+Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
 
-The simplest way to see the logs is to enable the console logging.
-To create an Azure SDK log listener that outputs messages to console use the AzureEventSourceListener.CreateConsoleLogger method.
+Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
 
-```C#
-// Setup a listener to monitor logged events.
-using AzureEventSourceListener listener = AzureEventSourceListener.CreateConsoleLogger();
-```
-
-To learn more about other logging mechanisms see [Diagnostics Samples][logging].
+If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
 
 ## Next steps
 
-### Additional documentation
-
-For more extensive documentation on Azure Health Insights Radiology Insights, see the [Radiology Insights documentation][radiology_insights_docs] on learn.microsoft.com.
+* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
+* If appropriate, point users to other packages that might be useful.
+* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
 
 ## Contributing
 
-This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit [cla.microsoft.com][cla].
-
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
+This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
 
 <!-- LINKS -->
-[azure_sub]: https://azure.microsoft.com/free/dotnet/
-[nuget]: https://www.nuget.org
-[azure_portal]: https://portal.azure.com
-[azure_cli]: https://learn.microsoft.com/cli/azure
-[health_insights]: https://learn.microsoft.com/azure/azure-health-insights/overview?branch=main
-[style-guide-msft]: https://learn.microsoft.com/style-guide/capitalization
+[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
-[radiology_insights_docs]: https://learn.microsoft.com/azure/azure-health-insights/radiology-insights/
-[code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
-[coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
-[cla]: https://cla.microsoft.com
-[logging]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/core/Azure.Core/samples/Diagnostics.md
-[coc_contact]: mailto:opencode@microsoft.com
-[here]: https://learn.microsoft.com/azure/azure-health-insights/radiology-insights/inferences
-[sample_folder]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/samples
-[azure_sub]: https://azure.microsoft.com/free
-[nuget]: https://www.nuget.org
-[azure_portal]:https://learn.microsoft.com/azure/search/search-create-service-portal
-[azure_cli]:https://learn.microsoft.com/cli/azure
-[azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
-[azure_identity_install]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#install-the-package
-[DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/healthinsights/Azure.Health.Insights.RadiologyInsights/README.png)

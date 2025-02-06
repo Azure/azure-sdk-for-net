@@ -2,7 +2,7 @@
   <PropertyGroup />
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Azure.ResourceManager.Fabric.csproj" />
+    <ProjectReference Include="..\src\Azure.ResourceManager.HealthDataAIServices.csproj" />
   </ItemGroup>
 
   <ItemGroup>
