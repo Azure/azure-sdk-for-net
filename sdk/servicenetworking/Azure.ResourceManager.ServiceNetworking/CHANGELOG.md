@@ -1,6 +1,6 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2025-02-06)
 
 ### Features Added
 
@@ -8,12 +8,6 @@
 - Exposed `JsonModelWriteCore` for model serialization procedure.
 - Added CRUD Operations for Application Gateway for Containers (AGC) Security Policy
 - Bumped api-version to `2025-01-01`
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.1 (2023-11-30)
 
