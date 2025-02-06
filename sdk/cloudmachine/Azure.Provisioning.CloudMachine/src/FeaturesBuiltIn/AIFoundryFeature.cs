@@ -65,7 +65,7 @@ namespace Azure.CloudMachine.AIFoundry
         /// <summary>
         /// Emit any necessary resources for provisioning (currently no-op).
         /// </summary>
-        /// <param name="cm">The CloudMachineInfrastructure context.</param>
+        /// <param name="cm">The ProjectInfrastructure context.</param>
         /// <returns>A placeholder or no-op resource, as provisioning is out-of-band for now.</returns>
         protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
         {
