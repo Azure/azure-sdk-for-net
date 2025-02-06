@@ -17,15 +17,13 @@ using Azure.ResourceManager;
 
 namespace MgmtTypeSpec
 {
-    /// <summary></summary>
-    public partial class MgmtTypeSpecArmOperation : Azure.ResourceManager.ArmOperation
+    internal partial class MgmtTypeSpecArmOperation : Azure.ResourceManager.ArmOperation
     {
         private readonly OperationInternal _operation;
         private readonly RehydrationToken? _completeRehydrationToken;
         private readonly NextLinkOperationImplementation _nextLinkOperation;
         private readonly string _operationId;
 
-        /// <summary> Initializes a new instance of MgmtTypeSpecArmOperation for mocking. </summary>
         protected MgmtTypeSpecArmOperation()
         {
         }

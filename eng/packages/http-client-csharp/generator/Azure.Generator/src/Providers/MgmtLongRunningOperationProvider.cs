@@ -229,5 +229,7 @@ namespace Azure.Generator.Providers
 
             return [idProperty, hasCompletedProperty];
         }
+
+        protected override TypeSignatureModifiers BuildDeclarationModifiers() => TypeSignatureModifiers.Internal;
     }
 }
