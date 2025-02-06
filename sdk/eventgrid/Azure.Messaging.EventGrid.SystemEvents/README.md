@@ -1,15 +1,22 @@
-# Azure Event Grid System Events client library for .NET
+# Azure.Messaging.EventGrid.SystemEvents client library for .NET
 
-Azure Event Grid allows you to build applications with event-based architectures. The Event Grid service fully manages all routing of events from any source to any destination, for any application. Azure service events and custom events can be published directly to the service, where the events can then be filtered and sent to various recipients, such as built-in handlers or custom webhooks. To learn more about Azure Event Grid: [What is Event Grid?](https://learn.microsoft.com/azure/event-grid/overview)
+Azure.Messaging.EventGrid.SystemEvents is a managed service that helps developers get secret simply and securely.
 
-Use the client library for Azure Event Grid System Events to:
-- Deserialize Event Grid system events into strongly typed models.
+Use the client library for to:
 
-  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://learn.microsoft.com/dotnet/api/overview/azure/messaging.eventgrid-readme?view=azure-dotnet) | [Product documentation](https://learn.microsoft.com/azure/event-grid/pull-delivery-overview)
+* [Get secret](https://docs.microsoft.com/azure)
+
+[Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
+
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
 
 ## Getting started
 
+This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
+
 ### Install the package
+
+First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `dotnet add package package-name`, but should enable a developer to successfully install the package from NuGet, npm, or even cloning a GitHub repository.
 
 Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
@@ -19,98 +26,42 @@ dotnet add package Azure.Messaging.EventGrid.SystemEvents --prerelease
 
 ### Prerequisites
 
-You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and an Azure resource group with a custom Event Grid topic or domain. Follow this [step-by-step tutorial](https://learn.microsoft.com/azure/event-grid/custom-event-quickstart-portal) to register the Event Grid resource provider and create Event Grid topics using the [Azure portal](https://portal.azure.com/). There is a [similar tutorial](https://learn.microsoft.com/azure/event-grid/custom-event-quickstart) using [Azure CLI](https://learn.microsoft.com/cli/azure).
+Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
 
-### Receiving and Deserializing Events
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
 
-There are several different Azure services that act as [event handlers](https://learn.microsoft.com/azure/event-grid/event-handlers).
+### Authenticate the client
 
-Note: if using Webhooks for event delivery of the *Event Grid schema*, Event Grid requires you to prove ownership of your Webhook endpoint before it starts delivering events to that endpoint. At the time of event subscription creation, Event Grid sends a subscription validation event to your endpoint, as seen below. Learn more about completing the handshake here: [Webhook event delivery](https://learn.microsoft.com/azure/event-grid/webhook-event-delivery). For the *CloudEvents schema*, the service validates the connection using the HTTP options method. Learn more here: [CloudEvents validation](https://github.com/cloudevents/spec/blob/v1.0/http-webhook.md#4-abuse-protection).
+If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
 
-Once events are delivered to the event handler, we can deserialize the JSON payload into a list of events.
+For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
 
-```C# Snippet:SystemEventsCloudEventParseJson
-var bytes = await httpContent.ReadAsByteArrayAsync();
-// Parse the JSON payload into a list of events
-CloudEvent[] cloudEvents = CloudEvent.ParseMany(new BinaryData(bytes));
-```
-#### Deserializing event data
+### Service API versions
 
-##### Deserializing using `ToObjectFromJson<T>()`:
+The client library targets the latest service API version by default. A client instance accepts an optional service API version parameter from its options to specify which API version service to communicate.
 
-From here, one can access the event data by deserializing to a specific type by calling `ToObjectFromJson<T>()` on the `Data` property. In order to deserialize to the correct type, the `Type` property helps distinguish between different events. Custom event data should be deserialized using the generic method `ToObjectFromJson<T>()`. There is also an extension method `ToObject<T>()` that accepts a custom `ObjectSerializer` to deserialize the event data.
+#### Select a service API version
 
-```C# Snippet:SystemEventsDeserializePayloadUsingGenericGetData
-foreach (CloudEvent cloudEvent in cloudEvents)
-{
-    switch (cloudEvent.Type)
-    {
-        case "Contoso.Items.ItemReceived":
-            // By default, ToObjectFromJson<T> uses System.Text.Json to deserialize the payload
-            ContosoItemReceivedEventData itemReceived = cloudEvent.Data.ToObjectFromJson<ContosoItemReceivedEventData>();
-            Console.WriteLine(itemReceived.ItemSku);
-            break;
-        case "MyApp.Models.CustomEventType":
-            // One can also specify a custom ObjectSerializer as needed to deserialize the payload correctly
-            TestPayload testPayload = cloudEvent.Data.ToObject<TestPayload>(myCustomSerializer);
-            Console.WriteLine(testPayload.Name);
-            break;
-        case SystemEventNames.StorageBlobDeleted:
-            // Example for deserializing system events using ToObjectFromJson<T>
-            StorageBlobDeletedEventData blobDeleted = cloudEvent.Data.ToObjectFromJson<StorageBlobDeletedEventData>();
-            Console.WriteLine(blobDeleted.BlobType);
-            break;
-    }
-}
+You have the flexibility to explicitly select a supported service API version when instantiating a client by configuring its associated options. This ensures that the client can communicate with services using the specified API version.
+
+For example,
+
+```C# Snippet:Create<YourService>ClientForSpecificApiVersion
+Uri endpoint = new Uri("<your endpoint>");
+DefaultAzureCredential credential = new DefaultAzureCredential();
+<YourService>ClientOptions options = new <YourService>ClientOptions(<YourService>ClientOptions.ServiceVersion.<API Version>)
+var client = new <YourService>Client(endpoint, credential, options);
 ```
 
-##### Deserializing using `TryGetSystemEventData()`:
+When selecting an API version, it's important to verify that there are no breaking changes compared to the latest API version. If there are significant differences, API calls may fail due to incompatibility.
 
-If expecting mostly system events, it may be cleaner to switch on `TryGetSystemEventData()` and use pattern matching to act on the individual events. If an event is not a system event, the method will return false and the out parameter will be null.
-
-*As a caveat, if you are using a custom event type with an EventType value that later gets added as a system event by the service and SDK, the return value of `TryGetSystemEventData` would change from `false` to `true`. This could come up if you are pre-emptively creating your own custom events for events that are already being sent by the service, but have not yet been added to the SDK. In this case, it is better to use the generic `ToObjectFromJson<T>` method on the `Data` property so that your code flow doesn't change automatically after upgrading (of course, you may still want to modify your code to consume the newly released system event model as opposed to your custom model).*
-
-```C# Snippet:SystemEventsDeserializePayloadUsingTryGetSystemEventData
-foreach (CloudEvent cloudEvent in cloudEvents)
-{
-    // If the event is a system event, TryGetSystemEventData will return the deserialized system event
-    if (cloudEvent.TryGetSystemEventData(out object systemEvent))
-    {
-        switch (systemEvent)
-        {
-            case SubscriptionValidationEventData subscriptionValidated:
-                Console.WriteLine(subscriptionValidated.ValidationCode);
-                break;
-            case StorageBlobCreatedEventData blobCreated:
-                Console.WriteLine(blobCreated.BlobType);
-                break;
-            // Handle any other system event type
-            default:
-                Console.WriteLine(cloudEvent.Type);
-                // we can get the raw Json for the event using Data
-                Console.WriteLine(cloudEvent.Data.ToString());
-                break;
-        }
-    }
-    else
-    {
-        switch (cloudEvent.Type)
-        {
-            case "MyApp.Models.CustomEventType":
-                TestPayload deserializedEventData = cloudEvent.Data.ToObjectFromJson<TestPayload>();
-                Console.WriteLine(deserializedEventData.Name);
-                break;
-            // Handle any other custom event type
-            default:
-                Console.Write(cloudEvent.Type);
-                Console.WriteLine(cloudEvent.Data.ToString());
-                break;
-        }
-    }
-}
-```
+Always ensure that the chosen API version is fully supported and operational for your specific use case and that it aligns with the service's versioning policy.
 
 ## Key concepts
+
+The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
+
+Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
 
 ### Thread safety
 
@@ -129,7 +80,7 @@ We guarantee that all client instance methods are thread-safe and independent of
 
 ## Examples
 
-You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces/samples).
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents/samples).
 
 ## Troubleshooting
 
@@ -141,21 +92,16 @@ If the package or a related package supports it, include tips for logging or ena
 
 ## Next steps
 
-View more https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces/samples here for common usages of the Event Grid client library: [Event Grid Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/eventgrid/Azure.Messaging.EventGrid.Namespaces/samples).
+* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
+* If appropriate, point users to other packages that might be useful.
+* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
 
 ## Contributing
 
-This project welcomes contributions and suggestions.
-Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution.
-For details, visit [Contributor License Agreements](https://opensource.microsoft.com/cla/).
-
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment).
-Simply follow the instructions provided by the bot.
-You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
 
 <!-- LINKS -->
-[style-guide-msft]: https://learn.microsoft.com/style-guide/capitalization
+[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
 [style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/eventgrid/Azure.Messaging.EventGrid.SystemEvents/README.png)

@@ -10,7 +10,7 @@ using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
-    /// <summary> Client options for Azure.AI.DocumentIntelligence library clients. </summary>
+    /// <summary> Client options for DocumentIntelligence library clients. </summary>
     public partial class DocumentIntelligenceClientOptions : ClientOptions
     {
         private const ServiceVersion LatestVersion = ServiceVersion.V2024_11_30;
