@@ -223,7 +223,7 @@ namespace Azure.Generator.Tests.Common
                 "GET",
                 BodyMediaType.Json,
                 "",
-                "",
+                "/providers/a",
                 null,
                 requestMediaTypes is null ? null : [.. requestMediaTypes],
                 false,
