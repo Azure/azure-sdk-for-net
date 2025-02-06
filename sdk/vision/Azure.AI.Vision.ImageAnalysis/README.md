@@ -1,262 +1,107 @@
-# Azure Image Analysis client library for .NET
+# Azure.AI.Vision.ImageAnalysis client library for .NET
 
-The Azure.AI.Vision.ImageAnalysis client library provides AI algorithms for processing images and returning information about their content. It enables you to extract one or more visual features from an image simultaneously, including getting a caption for the image, extracting text shown in the image (OCR), and detecting objects. For more information on the service and the supported visual features, see [Image Analysis overview][image_analysis_overview], and the [Concepts][image_analysis_concepts] page.
+Azure.AI.Vision.ImageAnalysis is a managed service that helps developers get secret simply and securely.
 
-Use the Image Analysis client library to:
-* Authenticate against the service
-* Select which features you would like to extract
-* Upload an image for analysis, or provide an image URL
-* Get the analysis result
+Use the client library for to:
 
-[Product documentation][image_analysis_overview]
-| [Samples](https://aka.ms/azsdk/image-analysis/samples/csharp)
-| [Vision Studio][vision_studio]
-| [API reference documentation](https://aka.ms/azsdk/image-analysis/ref-docs/csharp)
-| [Package (NuGet)](https://aka.ms/azsdk/image-analysis/package/nuget)
-| [SDK source code](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/vision/Azure.AI.Vision.ImageAnalysis)
+* [Get secret](https://docs.microsoft.com/azure)
+
+[Source code][source_root] | [Package (NuGet)][package] | [API reference documentation][reference_docs] | [Product documentation][azconfig_docs] | [Samples][source_samples]
+
+  [Source code](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/src) | [Package (NuGet)](https://www.nuget.org/packages) | [API reference documentation](https://azure.github.io/azure-sdk-for-net) | [Product documentation](https://docs.microsoft.com/azure)
 
 ## Getting started
 
-### Prerequisites
-
-* An [Azure subscription](https://azure.microsoft.com/free/dotnet/).
-* A [Computer Vision resource](https://portal.azure.com/#create/Microsoft.CognitiveServicesComputerVision) in your Azure subscription.
-  * You will need the key and endpoint from this resource to authenticate against the service.
-  * You can use the free pricing tier (`F0`) to try the service, and upgrade later to a paid tier for production.
-  * Note that in order to run Image Analysis with the `Caption` or `Dense Captions` features, the Azure resource needs to be from a GPU-supported region. See the note [here](https://learn.microsoft.com/azure/ai-services/computer-vision/concept-describe-images-40) for a list of supported regions.
+This section should include everything a developer needs to do to install and create their first client connection *very quickly*.
 
 ### Install the package
+
+First, provide instruction for obtaining and installing the package or library. This section might include only a single line of code, like `dotnet add package package-name`, but should enable a developer to successfully install the package from NuGet, npm, or even cloning a GitHub repository.
+
+Install the client library for .NET with [NuGet](https://www.nuget.org/ ):
 
 ```dotnetcli
 dotnet add package Azure.AI.Vision.ImageAnalysis --prerelease
 ```
 
+### Prerequisites
+
+Include a section after the install command that details any requirements that must be satisfied before a developer can [authenticate](#authenticate-the-client) and test all of the snippets in the [Examples](#examples) section. For example, for Cosmos DB:
+
+> You must have an [Azure subscription](https://azure.microsoft.com/free/dotnet/) and [Cosmos DB account](https://docs.microsoft.com/azure/cosmos-db/account-overview) (SQL API). In order to take advantage of the C# 8.0 syntax, it is recommended that you compile using the [.NET Core SDK](https://dotnet.microsoft.com/download) 3.0 or higher with a [language version](https://docs.microsoft.com/dotnet/csharp/language-reference/configure-language-version#override-a-default) of `latest`.  It is also possible to compile with the .NET Core SDK 2.1.x using a language version of `preview`.
+
 ### Authenticate the client
 
-In order to interact with Azure Image Analysis, you'll need to create an instance of the [ImageAnalysisClient][imageanalysis_client_class]
-class. To configure a client for use with Azure Image Analysis, provide a valid endpoint URI to an Azure Computer Vision resource
-along with a corresponding key credential authorized to use the Azure Computer Vision resource.
+If your library requires authentication for use, such as for Azure services, include instructions and example code needed for initializing and authenticating.
 
-```C# Snippet:ImageAnalysisUsing
-using Azure;
-using Azure.AI.Vision.ImageAnalysis;
-using System;
-using System.IO;
-```
-```C# Snippet:ImageAnalysisAuth
-string endpoint = Environment.GetEnvironmentVariable("VISION_ENDPOINT");
-string key = Environment.GetEnvironmentVariable("VISION_KEY");
+For example, include details on obtaining an account key and endpoint URI, setting environment variables for each, and initializing the client object.
 
-// Create an Image Analysis client.
-ImageAnalysisClient client = new ImageAnalysisClient(new Uri(endpoint), new AzureKeyCredential(key));
-```
+### Service API versions
 
-Here we are using environment variables to hold the endpoint and key for the Computer Vision Resource.
+The client library targets the latest service API version by default. A client instance accepts an optional service API version parameter from its options to specify which API version service to communicate.
 
-#### Create ImageAnalysisClient with a Microsoft Entra ID Credential
+#### Select a service API version
 
-**Prerequisites for Entra ID Authentication**:
-- The role `Cognitive Services User` assigned to you. Role assignment can be done via the "Access Control (IAM)" tab of your Computer Vision resource in the Azure portal.
-- [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) installed.
-- You are logged into your Azure account by running `az login`.
+You have the flexibility to explicitly select a supported service API version when instantiating a client by configuring its associated options. This ensures that the client can communicate with services using the specified API version.
 
-Also note that if you have multiple Azure subscriptions, the subscription that contains your Computer Vision resource must be your default subscription. Run `az account list --output table` to list all your subscriptions and see which one is the default. Run `az account set --subscription "Your Subscription ID or Name"` to change your default subscription.
+For example,
 
-Client subscription key authentication is used in most of the examples in this getting started guide, but you can also authenticate with Microsoft Entra ID (formerly Azure Active Directory) using the [Azure Identity library][azure_identity]. To use the [DefaultAzureCredential][azure_identity_dac] provider shown below, or other credential providers provided with the Azure SDK, please install the Azure.Identity package:
-
-```dotnetcli
-dotnet add package Azure.Identity
+```C# Snippet:Create<YourService>ClientForSpecificApiVersion
+Uri endpoint = new Uri("<your endpoint>");
+DefaultAzureCredential credential = new DefaultAzureCredential();
+<YourService>ClientOptions options = new <YourService>ClientOptions(<YourService>ClientOptions.ServiceVersion.<API Version>)
+var client = new <YourService>Client(endpoint, credential, options);
 ```
 
-```C# Snippet:ImageAnalysisEntraIDAuth
-string endpoint = Environment.GetEnvironmentVariable("VISION_ENDPOINT");
+When selecting an API version, it's important to verify that there are no breaking changes compared to the latest API version. If there are significant differences, API calls may fail due to incompatibility.
 
-ImageAnalysisClient client = new ImageAnalysisClient(new Uri(endpoint), new DefaultAzureCredential());
-```
+Always ensure that the chosen API version is fully supported and operational for your specific use case and that it aligns with the service's versioning policy.
 
 ## Key concepts
 
-Once you've initialized an `ImageAnalysisClient`, you need to select one or more visual features to analyze. The options are specified by the enum class `VisualFeatures`. The following features are supported:
+The *Key concepts* section should describe the functionality of the main classes. Point out the most important and useful classes in the package (with links to their reference pages) and explain how those classes work together. Feel free to use bulleted lists, tables, code blocks, or even diagrams for clarity.
 
-1. `VisualFeatures.Caption` ([Examples](#generate-an-image-caption-for-an-image-file) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample01_HellowWorld.md)): Generate a human-readable sentence that describes the content of an image.
-1. `VisualFeatures.Read` ([Examples](#extract-text-from-the-image-file) | [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md)): Also known as Optical Character Recognition (OCR). Extract printed or handwritten text from images.
-1. `VisualFeatures.DenseCaptions` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample02_DenseCaptions.md)): Dense Captions provides more details by generating one-sentence captions for up to 10 different regions in the image, including one for the whole image.
-1. `VisualFeatures.Tags` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample03_Tags.md)): Extract content tags for thousands of recognizable objects, living beings, scenery, and actions that appear in images.
-1. `VisualFeatures.Objects` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample04_Objects.md)): Object detection. This is similar to tagging, but focused on detecting physical objects in the image and returning their location.
-1. `VisualFeatures.SmartCrops` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample05_SmartCrops.md)): Used to find a representative sub-region of the image for thumbnail generation, with priority given to include faces.
-1. `VisualFeatures.People` ([Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/Sample06_People.md)): Locate people in the image and return their location.
+Include the *Thread safety* and *Additional concepts* sections below at the end of your *Key concepts* section. You may remove or add links depending on what your library makes use of:
 
-For more information about these features, see [Image Analysis overview][image_analysis_overview], and the [Concepts][image_analysis_concepts] page.
+### Thread safety
 
-### Analyze from image buffer or URL
+We guarantee that all client instance methods are thread-safe and independent of each other ([guideline](https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods-thread-safety)). This ensures that the recommendation of reusing client instances is always safe, even across threads.
 
-The `ImageAnalysisClient` contains an `Analyze` method that has two overloads:
-* `Analyze (BinaryData ...`: Analyze an image from an input [BinaryData](https://learn.microsoft.com/dotnet/api/system.binarydata) object. The client will upload the image to the service as part of the REST request.
-* `Analyze (Uri ...)`: Analyze an image from a publicly-accessible URL, via the `Uri` object. The client will send the image URL to the service. The service will download the image.
-
-The examples below demonstrate both. The `Analyze` examples populate the input [BinaryData](https://learn.microsoft.com/dotnet/api/system.binarydata) object by loading an image from a file from disk.
-
-### Supported image formats
-
-Image Analysis works on images that meet the following requirements:
-* The image must be presented in JPEG, PNG, GIF, BMP, WEBP, ICO, TIFF, or MPO format
-* The file size of the image must be less than 20 megabytes (MB)
-* The dimensions of the image must be greater than 50 x 50 pixels and less than 16,000 x 16,000 pixels
+### Additional concepts
+<!-- CLIENT COMMON BAR -->
+[Client options](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#configuring-service-clients-using-clientoptions) |
+[Accessing the response](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#accessing-http-response-details-using-responset) |
+[Long-running operations](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#consuming-long-running-operations-using-operationt) |
+[Handling failures](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#reporting-errors-requestfailedexception) |
+[Diagnostics](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md) |
+[Mocking](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/README.md#mocking) |
+[Client lifetime](https://devblogs.microsoft.com/azure-sdk/lifetime-management-and-thread-safety-guarantees-of-azure-sdk-net-clients/)
+<!-- CLIENT COMMON BAR -->
 
 ## Examples
 
-The following sections provide code snippets covering these common Image Analysis scenarios:
+You can familiarize yourself with different APIs using [Samples](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples).
 
-* [Generate an image caption for an image file](#generate-an-image-caption-for-an-image-file)
-* [Generate an image caption for an image URL](#generate-an-image-caption-for-an-image-url)
-* [Extract text (OCR) from an image file](#extract-text-from-an-image-file)
-* [Extract text (OCR) from an image URL](#extract-text-from-an-image-url)
-
-These snippets use the `client` from [Create and authenticate the client](#create-and-authenticate-the-client).
-
-See the [Samples](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md) folder for fully working samples for all visual features, including asynchronous calls.
-
-### Generate an image caption for an image file
-
-This example demonstrates how to generate a one-sentence caption for the image file [sample.jpg](https://aka.ms/azsdk/image-analysis/sample.jpg) using the `ImageAnalysisClient`. The synchronous  `Analyze` method call returns a `CaptionResult` object, which contains the generated caption and its confidence score in the range [0, 1]. By default, the caption may contain gender terms (for example: "man", "woman", "boy", "girl"). You have the option to request gender-neutral terms (for example: "person", "child") by setting `genderNeutralCaption = True` when calling `Analyze`.
-
-Notes:
-* Caption is only available in some Azure regions. See [Prerequisites](#prerequisites).
-* Caption is only supported in English at the moment.
-
-```C# Snippet:ImageAnalysisGenerateCaptionFromFile
-// Use a file stream to pass the image data to the analyze call
-using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
-
-// Get a caption for the image.
-ImageAnalysisResult result = client.Analyze(
-    BinaryData.FromStream(stream),
-    VisualFeatures.Caption,
-    new ImageAnalysisOptions { GenderNeutralCaption = true });
-
-// Print caption results to the console
-Console.WriteLine($"Image analysis results:");
-Console.WriteLine($" Caption:");
-Console.WriteLine($"   '{result.Caption.Text}', Confidence {result.Caption.Confidence:F4}");
-```
-
-### Generate an image caption for an image URL
-
-This example is similar to the above, expect it calls the `Analyze` method and provides a [publicly accessible image URL](https://aka.ms/azsdk/image-analysis/sample.jpg) instead of a file name.
-
-```C# Snippet:ImageAnalysisGenerateCaptionFromUrl
-// Get a caption for the image.
-ImageAnalysisResult result = client.Analyze(
-    new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
-    VisualFeatures.Caption,
-    new ImageAnalysisOptions { GenderNeutralCaption = true });
-
-// Print caption results to the console
-Console.WriteLine($"Image analysis results:");
-Console.WriteLine($" Caption:");
-Console.WriteLine($"   '{result.Caption.Text}', Confidence {result.Caption.Confidence:F4}");
-```
-
-### Extract text from an image file
-
-This example demonstrates how to extract printed or hand-written text for the image file [sample.jpg](https://aka.ms/azsdk/image-analysis/sample.jpg) using the `ImageAnalysisClient`. The synchronous (blocking) `Analyze` method call returns a `ReadResult` object. This object includes a list of text lines and a bounding polygon surrounding each text line. For each line, it also returns a list of words in the text line and a bounding polygon surrounding each word.
-
-```C# Snippet:ImageAnalysisExtractTextFromFile
-// Load image to analyze into a stream
-using FileStream stream = new FileStream("image-analysis-sample.jpg", FileMode.Open);
-
-// Extract text (OCR) from an image stream.
-ImageAnalysisResult result = client.Analyze(
-    BinaryData.FromStream(stream),
-    VisualFeatures.Read);
-
-// Print text (OCR) analysis results to the console
-Console.WriteLine("Image analysis results:");
-Console.WriteLine(" Read:");
-
-foreach (DetectedTextBlock block in result.Read.Blocks)
-    foreach (DetectedTextLine line in block.Lines)
-    {
-        Console.WriteLine($"   Line: '{line.Text}', Bounding Polygon: [{string.Join(" ", line.BoundingPolygon)}]");
-        foreach (DetectedTextWord word in line.Words)
-        {
-            Console.WriteLine($"     Word: '{word.Text}', Confidence {word.Confidence.ToString("#.####")}, Bounding Polygon: [{string.Join(" ", word.BoundingPolygon)}]");
-        }
-    }
-```
-
-### Extract text from an image URL
-
-This example demonstrates how to extract printed or hand-written text for a [publicly accessible image URL](https://aka.ms/azsdk/image-analysis/sample.jpg).
-
-```C# Snippet:ImageAnalysisExtractTextFromUrl
-// Extract text (OCR) from an image stream.
-ImageAnalysisResult result = client.Analyze(
-    new Uri("https://aka.ms/azsdk/image-analysis/sample.jpg"),
-    VisualFeatures.Read);
-
-// Print text (OCR) analysis results to the console
-Console.WriteLine("Image analysis results:");
-Console.WriteLine(" Read:");
-
-foreach (DetectedTextBlock block in result.Read.Blocks)
-    foreach (DetectedTextLine line in block.Lines)
-    {
-        Console.WriteLine($"   Line: '{line.Text}', Bounding Polygon: [{string.Join(" ", line.BoundingPolygon)}]");
-        foreach (DetectedTextWord word in line.Words)
-        {
-            Console.WriteLine($"     Word: '{word.Text}', Confidence {word.Confidence.ToString("#.####")}, Bounding Polygon: [{string.Join(" ", word.BoundingPolygon)}]");
-        }
-    }
-```
 ## Troubleshooting
 
-### Common errors
+Describe common errors and exceptions, how to "unpack" them if necessary, and include guidance for graceful handling and recovery.
 
-When you interact with Image Analysis using the .NET SDK, errors returned by the service correspond to the same HTTP status codes returned for REST API requests. For example, if you try to analyze an image that is not accessible due to a broken URL, a `400` status is returned, indicating a bad request.
+Provide information to help developers avoid throttling or other service-enforced errors they might encounter. For example, provide guidance and examples for using retry or connection policies in the API.
 
-### Handling exceptions
-
-In the following snippet, the error is handled gracefully by catching the exception and displaying additional information about the error.
-
-```C# Snippet:ImageAnalysisException
-var imageUrl = new Uri("https://aka.ms.invalid/azai/vision/image-analysis-sample.jpg");
-
-try
-{
-    var result = client.Analyze(imageUrl, VisualFeatures.Caption);
-}
-catch (RequestFailedException e)
-{
-    if (e.Status == 400)
-    {
-        Console.WriteLine("Error analyzing image.");
-        Console.WriteLine($"HTTP status code {e.Status}: {e.Message}");
-    }
-    else
-    {
-        throw;
-    }
-}
-```
-You can learn more about how to enable SDK logging [here](https://learn.microsoft.com/dotnet/azure/sdk/logging).
+If the package or a related package supports it, include tips for logging or enabling instrumentation to help them debug their code.
 
 ## Next steps
 
-Beyond the introductory scenarios discussed, the Azure Image Analysis client library offers support for additional scenarios to help take advantage of the full feature set of the Azure Image Analysis service. In order to help explore some of these scenarios, the Image Analysis client library offers a project of samples to serve as an illustration for common scenarios. Please see the [samples README](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/samples/README.md) for details.
+* Provide a link to additional code examples, ideally to those sitting alongside the README in the package's `/samples` directory.
+* If appropriate, point users to other packages that might be useful.
+* If you think there's a good chance that developers might stumble across your package in error (because they're searching for specific functionality and mistakenly think the package provides that functionality), point them to the packages they might be looking for.
 
 ## Contributing
 
-This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
-
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+This is a template, but your SDK readme should include details on how to contribute code to the repo/package.
 
 <!-- LINKS -->
-[image_analysis_overview]: https://learn.microsoft.com/azure/ai-services/computer-vision/overview-image-analysis?tabs=4-0
-[image_analysis_concepts]: https://learn.microsoft.com/azure/ai-services/computer-vision/concept-tag-images-40
-[vision_studio]: https://aka.ms/vision-studio/image-analysis
-[imageanalysis_client_class]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/vision/Azure.AI.Vision.ImageAnalysis/src/Generated/ImageAnalysisClient.cs
-[azure_identity]: https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet
-[azure_identity_dac]: https://learn.microsoft.com/dotnet/api/azure.identity.defaultazurecredential?view=azure-dotnet
+[style-guide-msft]: https://docs.microsoft.com/style-guide/capitalization
+[style-guide-cloud]: https://aka.ms/azsdk/cloud-style-guide
+
+![Impressions](https://azure-sdk-impressions.azurewebsites.net/api/impressions/azure-sdk-for-net/sdk/vision/Azure.AI.Vision.ImageAnalysis/README.png)
