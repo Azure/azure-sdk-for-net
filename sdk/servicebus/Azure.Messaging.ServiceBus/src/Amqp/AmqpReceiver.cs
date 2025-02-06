@@ -373,14 +373,39 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 // The session won't be closed in the case that MaxConcurrentCallsPerSession > 1, but with concurrency, it is not possible to guarantee ordering.
                 if (_isSessionReceiver && (!_isProcessor || SessionId != null) && messageList.Count < maxMessages)
                 {
-                    await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
-
-                    // These workarounds are necessary in order to resume prefetching after the link has been drained
-                    // https://github.com/Azure/azure-amqp/issues/252#issuecomment-1942734342
-                    if (_prefetchCount > 0)
+                    try
                     {
-                        link.Settings.TotalLinkCredit = 0;
-                        link.SetTotalLinkCredit((uint)_prefetchCount, true, true);
+                        ServiceBusEventSource.Log.DrainLinkStart(Identifier);
+                        await link.DrainAsyc(cancellationToken).ConfigureAwait(false);
+                        ServiceBusEventSource.Log.DrainLinkComplete(Identifier);
+                    }
+                    catch (Exception ex)
+                    {
+                        ServiceBusEventSource.Log.DrainLinkException(Identifier, ex.ToString());
+
+                        // Drain failure that does not fault AMQP link will cause ordering to be violated. Force close
+                        // AMQP link to ensure ordering is maintained.
+                        // Detailed explanation as to why ordering is violated: https://github.com/Azure/azure-sdk-for-net/issues/47822
+                        if (_prefetchCount > 0)
+                        {
+                            try
+                            {
+                                await link.CloseAsync(CancellationToken.None).ConfigureAwait(false);
+                                ServiceBusEventSource.Log.CloseLinkComplete(Identifier);
+                            }
+                            catch (Exception closeEx)
+                            {
+                                ServiceBusEventSource.Log.CloseLinkException(Identifier, closeEx.ToString());
+                            }
+                        }
+
+                        // These workarounds are necessary in order to resume prefetching after the link has been drained
+                        // https://github.com/Azure/azure-amqp/issues/252#issuecomment-1942734342
+                        if (_prefetchCount > 0)
+                        {
+                            link.Settings.TotalLinkCredit = 0;
+                            link.SetTotalLinkCredit((uint)_prefetchCount, true, true);
+                        }
                     }
                 }
 

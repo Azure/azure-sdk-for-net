@@ -208,6 +208,13 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
         internal const int ReceiverAcceptSessionTimeoutEvent = 122;
         internal const int ReceiverAcceptSessionCanceledEvent = 123;
 
+        internal const int DrainLinkStartEvent = 124;
+        internal const int DrainLinkCompleteEvent = 125;
+        internal const int DrainLinkExceptionEvent = 126;
+        internal const int CloseLinkStartEvent = 127;
+        internal const int CloseLinkCompleteEvent = 128;
+        internal const int CloseLinkExceptionEvent = 129;
+
         #endregion
         // add new event numbers here incrementing from previous
 
@@ -1540,6 +1547,60 @@ namespace Azure.Messaging.ServiceBus.Diagnostics
             if (IsEnabled())
             {
                 WriteEvent(RequestAuthorizationExceptionEvent, identifier, endpoint, exception);
+            }
+        }
+
+        [Event(DrainLinkStartEvent, Level = EventLevel.Informational, Message = "{0}: Starting drain operation.")]
+        public void DrainLinkStart(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(DrainLinkStartEvent, identifier);
+            }
+        }
+
+        [Event(DrainLinkCompleteEvent, Level = EventLevel.Informational, Message = "{0}: Drain operation completed.")]
+        public void DrainLinkComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(DrainLinkCompleteEvent, identifier);
+            }
+        }
+
+        [Event(DrainLinkExceptionEvent, Level = EventLevel.Error, Message = "{0}: Drain operation failed with exception: {1}")]
+        public void DrainLinkException(string identifier, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(DrainLinkExceptionEvent, identifier, exception);
+            }
+        }
+
+        [Event(CloseLinkStartEvent, Level = EventLevel.Informational, Message = "{0}: Starting disposal of AMQP link.")]
+        public void CloseLinkStart(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(CloseLinkStartEvent, identifier);
+            }
+        }
+
+        [Event(CloseLinkCompleteEvent, Level = EventLevel.Informational, Message = "{0}: Disposal of AMQP link completed.")]
+        public void CloseLinkComplete(string identifier)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(CloseLinkCompleteEvent, identifier);
+            }
+        }
+
+        [Event(CloseLinkExceptionEvent, Level = EventLevel.Error, Message = "{0}: Disposal of AMQP link failed with exception: {1}")]
+        public void CloseLinkException(string identifier, string exception)
+        {
+            if (IsEnabled())
+            {
+                WriteEvent(CloseLinkExceptionEvent, identifier, exception);
             }
         }
         #endregion
