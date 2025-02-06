@@ -1,6 +1,6 @@
 # Release History
 
-## 1.6.0-beta.1 (Unreleased)
+## 1.6.0-beta.1 (2025-02-07)
 
 ### Features Added
 
@@ -10,7 +10,7 @@
 
 ### Bugs Fixed
 
-Convert properties of type Uri to type string in DataProtectionIdentityDetails. Issue at https://github.com/Azure/azure-sdk-for-net/issues/47031
+- Added a new property `UserAssignedIdentityId` in `DataProtectionIdentityDetails` to replace the old property `UserAssignedIdentityArmUri` with wrong type (https://github.com/Azure/azure-sdk-for-net/issues/47031).
 
 ### Other Changes
 
