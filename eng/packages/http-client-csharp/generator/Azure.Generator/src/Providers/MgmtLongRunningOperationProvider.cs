@@ -61,7 +61,7 @@ namespace Azure.Generator.Providers
         {
             var getRehydrationTokenMethod = new MethodProvider(
                 new MethodSignature("GetRehydrationToken", null, MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, new CSharpType(typeof(RehydrationToken), true), null, []),
-                ((MemberExpression)_nextLinkOperationField).NullConditional().Invoke(nameof(NextLinkOperationImplementation.GetRehydrationToken)).NullCoalesce(_rehydrationTokenField),
+                _nextLinkOperationField.NullConditional().Invoke(nameof(NextLinkOperationImplementation.GetRehydrationToken)).NullCoalesce(_rehydrationTokenField),
                 this, XmlDocProvider.InheritDocs);
             var getRawResponseMethod = new MethodProvider(
                 new MethodSignature("GetRawResponse", null, MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, typeof(Response), null, []),
@@ -210,7 +210,7 @@ namespace Azure.Generator.Providers
 
         protected override PropertyProvider[] BuildProperties()
         {
-            var idProperty = new PropertyProvider(null, MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, typeof(string), "Id", new ExpressionPropertyBody(((MemberExpression)_operationIdField).NullCoalesce(Static<NextLinkOperationImplementation>().Property(nameof(NextLinkOperationImplementation.NotSet)))), this);
+            var idProperty = new PropertyProvider(null, MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, typeof(string), "Id", new ExpressionPropertyBody(_operationIdField.NullCoalesce(Static<NextLinkOperationImplementation>().Property(nameof(NextLinkOperationImplementation.NotSet)))), this);
             var hasCompletedProperty = new PropertyProvider(null, MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, typeof(bool), "HasCompleted", new ExpressionPropertyBody(_operationField.Property("HasCompleted")), this);
 
             if (_isGeneric)
