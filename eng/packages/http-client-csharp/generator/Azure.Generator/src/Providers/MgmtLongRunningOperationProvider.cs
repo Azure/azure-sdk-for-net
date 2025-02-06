@@ -41,7 +41,7 @@ namespace Azure.Generator.Providers
         }
 
         private readonly string _serviceName = AzureClientPlugin.Instance.InputLibrary.InputNamespace.Name.Split('.').Last();
-        protected override string BuildName() => /*_isGeneric ? $"{_serviceName}ArmOperation<T>" : */$"{_serviceName}ArmOperation";
+        protected override string BuildName() => $"{_serviceName}ArmOperation";
 
         protected override CSharpType[] GetTypeArguments() => _isGeneric ? new CSharpType[] { _t } : base.GetTypeArguments();
 
@@ -63,19 +63,23 @@ namespace Azure.Generator.Providers
                 new MethodSignature("GetRehydrationToken", null, MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, new CSharpType(typeof(RehydrationToken), true), null, []),
                 _nextLinkOperationField.NullConditional().Invoke(nameof(NextLinkOperationImplementation.GetRehydrationToken)).NullCoalesce(_rehydrationTokenField),
                 this, XmlDocProvider.InheritDocs);
+
             var getRawResponseMethod = new MethodProvider(
                 new MethodSignature("GetRawResponse", null, MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, typeof(Response), null, []),
                 _operationField.Property("RawResponse"),
                 this, XmlDocProvider.InheritDocs);
+
             var cancellationTokenParameter = new ParameterProvider("cancellationToken", $"", typeof(CancellationToken), Default);
             var updateStatusMethod = new MethodProvider(
                 new MethodSignature("UpdateStatus", null, MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, typeof(Response), null, [cancellationTokenParameter]),
                 _operationField.Invoke("UpdateStatus", [cancellationTokenParameter]),
                 this, XmlDocProvider.InheritDocs);
+
             var updateStatusAsyncMethod = new MethodProvider(
                 new MethodSignature("UpdateStatusAsync", null, MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, new CSharpType(typeof(ValueTask), typeof(Response)), null, [cancellationTokenParameter]),
                 _operationField.Invoke("UpdateStatusAsync", [cancellationTokenParameter]),
                 this, XmlDocProvider.InheritDocs);
+
             var waitForCompletionResponseMethod = _isGeneric
                 ? new MethodProvider(
                     new MethodSignature("WaitForCompletion", null, MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, new CSharpType(typeof(Response), _t), null, [cancellationTokenParameter]),
@@ -85,6 +89,7 @@ namespace Azure.Generator.Providers
                     new MethodSignature("WaitForCompletionResponse", null, MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, typeof(Response), null, [cancellationTokenParameter]),
                     _operationField.Invoke("WaitForCompletionResponse", [cancellationTokenParameter]),
                     this, XmlDocProvider.InheritDocs);
+
             var timeSpanParameter = new ParameterProvider("pollingInterval", $"", typeof(TimeSpan));
             var waitForCompletionResponseWithPolingMethod = _isGeneric
                 ? new MethodProvider(
@@ -95,6 +100,7 @@ namespace Azure.Generator.Providers
                     new MethodSignature("WaitForCompletionResponse", null, MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, typeof(Response), null, [timeSpanParameter, cancellationTokenParameter]),
                     _operationField.Invoke("WaitForCompletionResponse", [timeSpanParameter, cancellationTokenParameter]),
                     this, XmlDocProvider.InheritDocs);
+
             var waitForCompletionResponseAsyncMethod = _isGeneric
                 ? new MethodProvider(
                     new MethodSignature("WaitForCompletionAsync", null, MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, new CSharpType(typeof(ValueTask), new CSharpType(typeof(Response), _t)), null, [cancellationTokenParameter]),
@@ -104,6 +110,7 @@ namespace Azure.Generator.Providers
                     new MethodSignature("WaitForCompletionResponseAsync", null, MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, new CSharpType(typeof(ValueTask), typeof(Response)), null, [cancellationTokenParameter]),
                     _operationField.Invoke("WaitForCompletionResponseAsync", [cancellationTokenParameter]),
                     this, XmlDocProvider.InheritDocs);
+
             var waitForCompletionResponseWithPollingAsyncMethod = _isGeneric
                 ? new MethodProvider(
                     new MethodSignature("WaitForCompletionAsync", null, MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, new CSharpType(typeof(ValueTask), new CSharpType(typeof(Response), _t)), null, [timeSpanParameter, cancellationTokenParameter]),
@@ -113,13 +120,14 @@ namespace Azure.Generator.Providers
                     new MethodSignature("WaitForCompletionResponseAsync", null, MethodSignatureModifiers.Public | MethodSignatureModifiers.Override, new CSharpType(typeof(ValueTask), typeof(Response)), null, [timeSpanParameter, cancellationTokenParameter]),
                     _operationField.Invoke("WaitForCompletionResponseAsync", [timeSpanParameter, cancellationTokenParameter]),
                     this, XmlDocProvider.InheritDocs);
+
             return [BuildGetOperationIdMethod(), getRehydrationTokenMethod, getRawResponseMethod, updateStatusMethod, updateStatusAsyncMethod, waitForCompletionResponseMethod, waitForCompletionResponseWithPolingMethod, waitForCompletionResponseAsyncMethod, waitForCompletionResponseWithPollingAsyncMethod];
         }
 
         private const string GetOperationIdName = "GetOperationId";
         private MethodProvider BuildGetOperationIdMethod()
         {
-            var rehydrationTokenParaemter = new ParameterProvider("rehydrationToken", $"", new CSharpType(typeof(RehydrationToken), true));
+            var rehydrationTokenParaemter = new ParameterProvider("rehydrationToken", $"The token to rehydrate a long-running operation", new CSharpType(typeof(RehydrationToken), true));
             var signature = new MethodSignature(GetOperationIdName, null, MethodSignatureModifiers.Private, typeof(string), null, [rehydrationTokenParaemter]);
             var body = new MethodBodyStatement[]
             {

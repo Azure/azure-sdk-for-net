@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Azure.Core" />
-		<PackageReference Include="Azure.ResourceManager" />
+	<PackageReference Include="Azure.ResourceManager" />
     <PackageReference Include="Microsoft.Generator.CSharp.ClientModel" />
   </ItemGroup>
 

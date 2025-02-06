@@ -81,8 +81,10 @@ namespace Azure.Generator
             if (AzureClientPlugin.Instance.IsAzureArm.Value == true)
             {
                 var armOperation = new MgmtLongRunningOperationProvider(false);
-                AzureClientPlugin.Instance.AddTypeToKeep(armOperation.Name);
                 var genericArmOperation = new MgmtLongRunningOperationProvider(true);
+
+                // TODO: remove them once they are referenced in Resource operation implementation
+                AzureClientPlugin.Instance.AddTypeToKeep(armOperation.Name);
                 AzureClientPlugin.Instance.AddTypeToKeep(genericArmOperation.Name);
                 return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition(), armOperation, genericArmOperation];
             }
