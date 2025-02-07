@@ -1,0 +1,9 @@
+# FUNDING.yml - Configure funding options for your GitHub repository
+
+github: ["abbc400"] # You can add up to 4 GitHub Sponsors usernames
+patreon: "abbc400"  # Replace with your Patreon username
+open_collective: "abbc400"  # Replace with your Open Collective username
+ko_fi: "abbc400"  # Replace with your Ko-Fi username
+buy_me_a_coffee: "abbc400"  # Replace with your Buy Me a Coffee username
+liberapay: "abbc400"  # Replace with your Liberapay username
+custom: ["https://yourcustomfundingpage.com"]  # Replace with up to 4 custom sponsorship URLs
