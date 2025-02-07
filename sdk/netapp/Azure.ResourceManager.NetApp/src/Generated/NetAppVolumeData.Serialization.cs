@@ -164,11 +164,6 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("dataProtection"u8);
                 writer.WriteObjectValue(DataProtection, options);
             }
-            if (Optional.IsDefined(AcceptGrowCapacityPoolForShortTermCloneSplit))
-            {
-                writer.WritePropertyName("acceptGrowCapacityPoolForShortTermCloneSplit"u8);
-                writer.WriteStringValue(AcceptGrowCapacityPoolForShortTermCloneSplit.Value.ToString());
-            }
             if (Optional.IsDefined(IsRestoring))
             {
                 writer.WritePropertyName("isRestoring"u8);
@@ -262,6 +257,11 @@ namespace Azure.ResourceManager.NetApp
             {
                 writer.WritePropertyName("coolAccessRetrievalPolicy"u8);
                 writer.WriteStringValue(CoolAccessRetrievalPolicy.Value.ToString());
+            }
+            if (Optional.IsDefined(CoolAccessTieringPolicy))
+            {
+                writer.WritePropertyName("coolAccessTieringPolicy"u8);
+                writer.WriteStringValue(CoolAccessTieringPolicy.Value.ToString());
             }
             if (Optional.IsDefined(UnixPermissions))
             {
@@ -406,30 +406,6 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("originatingResourceId");
                 }
             }
-            if (options.Format != "W" && Optional.IsDefined(InheritedSizeInBytes))
-            {
-                if (InheritedSizeInBytes != null)
-                {
-                    writer.WritePropertyName("inheritedSizeInBytes"u8);
-                    writer.WriteNumberValue(InheritedSizeInBytes.Value);
-                }
-                else
-                {
-                    writer.WriteNull("inheritedSizeInBytes");
-                }
-            }
-            if (Optional.IsDefined(Language))
-            {
-                if (Language != null)
-                {
-                    writer.WritePropertyName("language"u8);
-                    writer.WriteStringValue(Language.Value.ToString());
-                }
-                else
-                {
-                    writer.WriteNull("language");
-                }
-            }
             writer.WriteEndObject();
         }
 
@@ -480,7 +456,6 @@ namespace Azure.ResourceManager.NetApp
             IReadOnlyList<NetAppVolumeMountTarget> mountTargets = default;
             string volumeType = default;
             NetAppVolumeDataProtection dataProtection = default;
-            AcceptGrowCapacityPoolForShortTermCloneSplit? acceptGrowCapacityPoolForShortTermCloneSplit = default;
             bool? isRestoring = default;
             bool? snapshotDirectoryVisible = default;
             bool? kerberosEnabled = default;
@@ -497,6 +472,7 @@ namespace Azure.ResourceManager.NetApp
             bool? coolAccess = default;
             int? coolnessPeriod = default;
             CoolAccessRetrievalPolicy? coolAccessRetrievalPolicy = default;
+            CoolAccessTieringPolicy? coolAccessTieringPolicy = default;
             string unixPermissions = default;
             int? cloneProgress = default;
             NetAppFileAccessLog? fileAccessLogs = default;
@@ -517,8 +493,6 @@ namespace Azure.ResourceManager.NetApp
             string provisionedAvailabilityZone = default;
             bool? isLargeVolume = default;
             ResourceIdentifier originatingResourceId = default;
-            long? inheritedSizeInBytes = default;
-            NetAppVolumeLanguage? language = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -757,15 +731,6 @@ namespace Azure.ResourceManager.NetApp
                             dataProtection = NetAppVolumeDataProtection.DeserializeNetAppVolumeDataProtection(property0.Value, options);
                             continue;
                         }
-                        if (property0.NameEquals("acceptGrowCapacityPoolForShortTermCloneSplit"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            acceptGrowCapacityPoolForShortTermCloneSplit = new AcceptGrowCapacityPoolForShortTermCloneSplit(property0.Value.GetString());
-                            continue;
-                        }
                         if (property0.NameEquals("isRestoring"u8))
                         {
                             if (property0.Value.ValueKind == JsonValueKind.Null)
@@ -910,6 +875,15 @@ namespace Azure.ResourceManager.NetApp
                                 continue;
                             }
                             coolAccessRetrievalPolicy = new CoolAccessRetrievalPolicy(property0.Value.GetString());
+                            continue;
+                        }
+                        if (property0.NameEquals("coolAccessTieringPolicy"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            coolAccessTieringPolicy = new CoolAccessTieringPolicy(property0.Value.GetString());
                             continue;
                         }
                         if (property0.NameEquals("unixPermissions"u8))
@@ -1101,26 +1075,6 @@ namespace Azure.ResourceManager.NetApp
                             originatingResourceId = new ResourceIdentifier(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("inheritedSizeInBytes"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                inheritedSizeInBytes = null;
-                                continue;
-                            }
-                            inheritedSizeInBytes = property0.Value.GetInt64();
-                            continue;
-                        }
-                        if (property0.NameEquals("language"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                language = null;
-                                continue;
-                            }
-                            language = new NetAppVolumeLanguage(property0.Value.GetString());
-                            continue;
-                        }
                     }
                     continue;
                 }
@@ -1158,7 +1112,6 @@ namespace Azure.ResourceManager.NetApp
                 mountTargets ?? new ChangeTrackingList<NetAppVolumeMountTarget>(),
                 volumeType,
                 dataProtection,
-                acceptGrowCapacityPoolForShortTermCloneSplit,
                 isRestoring,
                 snapshotDirectoryVisible,
                 kerberosEnabled,
@@ -1175,6 +1128,7 @@ namespace Azure.ResourceManager.NetApp
                 coolAccess,
                 coolnessPeriod,
                 coolAccessRetrievalPolicy,
+                coolAccessTieringPolicy,
                 unixPermissions,
                 cloneProgress,
                 fileAccessLogs,
@@ -1195,8 +1149,6 @@ namespace Azure.ResourceManager.NetApp
                 provisionedAvailabilityZone,
                 isLargeVolume,
                 originatingResourceId,
-                inheritedSizeInBytes,
-                language,
                 serializedAdditionalRawData);
         }
 
