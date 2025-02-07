@@ -1,6 +1,5 @@
 {
   "output-folder": ".",
   "namespace": "MgmtTypeSpec",
-  "library-name": "MgmtTypeSpec",
-  "use-model-reader-writer": true
+  "library-name": "MgmtTypeSpec"
 }
