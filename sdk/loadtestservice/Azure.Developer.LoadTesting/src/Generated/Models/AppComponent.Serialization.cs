@@ -100,7 +100,7 @@ namespace Azure.Developer.LoadTesting.Models
             {
                 return null;
             }
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             string resourceName = default;
             string resourceType = default;
             string displayName = default;
@@ -113,7 +113,7 @@ namespace Azure.Developer.LoadTesting.Models
             {
                 if (property.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("resourceName"u8))

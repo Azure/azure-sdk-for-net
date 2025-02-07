@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Developer.LoadTesting.Models
 {
@@ -67,7 +68,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="subscriptionId"> Subscription Id of the Azure resource. </param>
         /// <param name="kind"> Kind of Azure resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AppComponent(string resourceId, string resourceName, string resourceType, string displayName, string resourceGroup, string subscriptionId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AppComponent(ResourceIdentifier resourceId, string resourceName, string resourceType, string displayName, string resourceGroup, string subscriptionId, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             ResourceName = resourceName;
@@ -85,7 +86,7 @@ namespace Azure.Developer.LoadTesting.Models
         }
 
         /// <summary> fully qualified resource Id e.g subscriptions/{subId}/resourceGroups/{rg}/providers/Microsoft.LoadTestService/loadtests/{resName}. </summary>
-        public string ResourceId { get; }
+        public ResourceIdentifier ResourceId { get; }
         /// <summary> Azure resource name, required while creating the app component. </summary>
         public string ResourceName { get; set; }
         /// <summary> Azure resource type, required while creating the app component. </summary>

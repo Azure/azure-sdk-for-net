@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Developer.LoadTesting.Models
 {
@@ -79,7 +80,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestProfileRun(string testProfileRunId, string displayName, string description, string testProfileId, string targetResourceId, TargetResourceConfigurations targetResourceConfigurations, TestProfileRunStatus? status, IReadOnlyList<ErrorDetails> errorDetails, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, long? durationInSeconds, IReadOnlyDictionary<string, TestRunDetail> testRunDetails, IReadOnlyList<TestProfileRunRecommendation> recommendations, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TestProfileRun(string testProfileRunId, string displayName, string description, string testProfileId, ResourceIdentifier targetResourceId, TargetResourceConfigurations targetResourceConfigurations, TestProfileRunStatus? status, IReadOnlyList<ErrorDetails> errorDetails, DateTimeOffset? startDateTime, DateTimeOffset? endDateTime, long? durationInSeconds, IReadOnlyDictionary<string, TestRunDetail> testRunDetails, IReadOnlyList<TestProfileRunRecommendation> recommendations, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TestProfileRunId = testProfileRunId;
             DisplayName = displayName;
@@ -110,7 +111,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Associated test profile ID for the test profile run. This is required to create a test profile run and can't be updated. </summary>
         public string TestProfileId { get; set; }
         /// <summary> Target resource ID on which the test profile run is created. </summary>
-        public string TargetResourceId { get; }
+        public ResourceIdentifier TargetResourceId { get; }
         /// <summary>
         /// Configurations of the target resource on which the test profile ran.
         /// Please note <see cref="Models.TargetResourceConfigurations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

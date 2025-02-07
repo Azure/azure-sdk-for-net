@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure.Core;
 
 namespace Azure.Developer.LoadTesting.Models
 {
@@ -123,7 +124,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="actualValue"> The actual value of the server metric. </param>
         /// <param name="result"> Outcome of the test run. </param>
         /// <returns> A new <see cref="Models.PassFailServerMetric"/> instance for mocking. </returns>
-        public static PassFailServerMetric PassFailServerMetric(string resourceId = null, string metricNamespace = null, string metricName = null, string aggregation = null, string condition = null, double value = default, PFAction? action = null, double? actualValue = null, PFResult? result = null)
+        public static PassFailServerMetric PassFailServerMetric(ResourceIdentifier resourceId = null, string metricNamespace = null, string metricName = null, string aggregation = null, string condition = null, double value = default, PFAction? action = null, double? actualValue = null, PFResult? result = null)
         {
             return new PassFailServerMetric(
                 resourceId,
@@ -215,7 +216,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="subscriptionId"> Subscription Id of the Azure resource. </param>
         /// <param name="kind"> Kind of Azure resource type. </param>
         /// <returns> A new <see cref="Models.AppComponent"/> instance for mocking. </returns>
-        public static AppComponent AppComponent(string resourceId = null, string resourceName = null, string resourceType = null, string displayName = null, string resourceGroup = null, string subscriptionId = null, string kind = null)
+        public static AppComponent AppComponent(ResourceIdentifier resourceId = null, string resourceName = null, string resourceType = null, string displayName = null, string resourceGroup = null, string subscriptionId = null, string kind = null)
         {
             return new AppComponent(
                 resourceId,
@@ -264,7 +265,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="unit"> Metric unit. </param>
         /// <param name="resourceType"> Azure resource type. </param>
         /// <returns> A new <see cref="Models.ResourceMetric"/> instance for mocking. </returns>
-        public static ResourceMetric ResourceMetric(string id = null, string resourceId = null, string metricNamespace = null, string displayDescription = null, string name = null, string aggregation = null, string unit = null, string resourceType = null)
+        public static ResourceMetric ResourceMetric(string id = null, ResourceIdentifier resourceId = null, string metricNamespace = null, string displayDescription = null, string name = null, string aggregation = null, string unit = null, string resourceType = null)
         {
             return new ResourceMetric(
                 id,
@@ -294,7 +295,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="Models.TestProfile"/> instance for mocking. </returns>
-        public static TestProfile TestProfile(string testProfileId = null, string displayName = null, string description = null, string testId = null, string targetResourceId = null, TargetResourceConfigurations targetResourceConfigurations = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
+        public static TestProfile TestProfile(string testProfileId = null, string displayName = null, string description = null, string testId = null, ResourceIdentifier targetResourceId = null, TargetResourceConfigurations targetResourceConfigurations = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
         {
             return new TestProfile(
                 testProfileId,
@@ -719,7 +720,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <returns> A new <see cref="Models.TestProfileRun"/> instance for mocking. </returns>
-        public static TestProfileRun TestProfileRun(string testProfileRunId = null, string displayName = null, string description = null, string testProfileId = null, string targetResourceId = null, TargetResourceConfigurations targetResourceConfigurations = null, TestProfileRunStatus? status = null, IEnumerable<ErrorDetails> errorDetails = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, long? durationInSeconds = null, IReadOnlyDictionary<string, TestRunDetail> testRunDetails = null, IEnumerable<TestProfileRunRecommendation> recommendations = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
+        public static TestProfileRun TestProfileRun(string testProfileRunId = null, string displayName = null, string description = null, string testProfileId = null, ResourceIdentifier targetResourceId = null, TargetResourceConfigurations targetResourceConfigurations = null, TestProfileRunStatus? status = null, IEnumerable<ErrorDetails> errorDetails = null, DateTimeOffset? startDateTime = null, DateTimeOffset? endDateTime = null, long? durationInSeconds = null, IReadOnlyDictionary<string, TestRunDetail> testRunDetails = null, IEnumerable<TestProfileRunRecommendation> recommendations = null, DateTimeOffset? createdDateTime = null, string createdBy = null, DateTimeOffset? lastModifiedDateTime = null, string lastModifiedBy = null)
         {
             errorDetails ??= new List<ErrorDetails>();
             testRunDetails ??= new Dictionary<string, TestRunDetail>();

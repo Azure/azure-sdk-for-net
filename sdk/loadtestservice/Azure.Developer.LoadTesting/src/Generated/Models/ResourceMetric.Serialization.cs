@@ -97,7 +97,7 @@ namespace Azure.Developer.LoadTesting.Models
                 return null;
             }
             string id = default;
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             string metricNamespace = default;
             string displayDescription = default;
             string name = default;
@@ -115,7 +115,7 @@ namespace Azure.Developer.LoadTesting.Models
                 }
                 if (property.NameEquals("resourceId"u8))
                 {
-                    resourceId = property.Value.GetString();
+                    resourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("metricNamespace"u8))

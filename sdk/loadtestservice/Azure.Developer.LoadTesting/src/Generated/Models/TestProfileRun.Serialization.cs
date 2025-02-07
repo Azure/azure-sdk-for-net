@@ -176,7 +176,7 @@ namespace Azure.Developer.LoadTesting.Models
             string displayName = default;
             string description = default;
             string testProfileId = default;
-            string targetResourceId = default;
+            ResourceIdentifier targetResourceId = default;
             TargetResourceConfigurations targetResourceConfigurations = default;
             TestProfileRunStatus? status = default;
             IReadOnlyList<ErrorDetails> errorDetails = default;
@@ -215,7 +215,11 @@ namespace Azure.Developer.LoadTesting.Models
                 }
                 if (property.NameEquals("targetResourceId"u8))
                 {
-                    targetResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetResourceConfigurations"u8))

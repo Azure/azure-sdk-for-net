@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Developer.LoadTesting.Models
 {
@@ -53,7 +54,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="condition"> The comparison operator. Supported types ‘&gt;’, ‘&lt;’. </param>
         /// <param name="value"> The value to compare with the server metric. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="metricNamespace"/>, <paramref name="metricName"/>, <paramref name="aggregation"/> or <paramref name="condition"/> is null. </exception>
-        public PassFailServerMetric(string resourceId, string metricNamespace, string metricName, string aggregation, string condition, double value)
+        public PassFailServerMetric(ResourceIdentifier resourceId, string metricNamespace, string metricName, string aggregation, string condition, double value)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
@@ -80,7 +81,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="actualValue"> The actual value of the server metric. </param>
         /// <param name="result"> Outcome of the test run. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PassFailServerMetric(string resourceId, string metricNamespace, string metricName, string aggregation, string condition, double value, PFAction? action, double? actualValue, PFResult? result, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PassFailServerMetric(ResourceIdentifier resourceId, string metricNamespace, string metricName, string aggregation, string condition, double value, PFAction? action, double? actualValue, PFResult? result, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ResourceId = resourceId;
             MetricNamespace = metricNamespace;
@@ -100,7 +101,7 @@ namespace Azure.Developer.LoadTesting.Models
         }
 
         /// <summary> The resource id of the resource emitting the metric. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> The server metric namespace. </summary>
         public string MetricNamespace { get; set; }
         /// <summary> The server metric name. </summary>

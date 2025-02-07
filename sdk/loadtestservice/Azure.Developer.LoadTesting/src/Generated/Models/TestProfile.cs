@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Developer.LoadTesting.Models
 {
@@ -66,7 +67,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="lastModifiedDateTime"> The last Modified datetime(RFC 3339 literal format). </param>
         /// <param name="lastModifiedBy"> The user that last modified. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal TestProfile(string testProfileId, string displayName, string description, string testId, string targetResourceId, TargetResourceConfigurations targetResourceConfigurations, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal TestProfile(string testProfileId, string displayName, string description, string testId, ResourceIdentifier targetResourceId, TargetResourceConfigurations targetResourceConfigurations, DateTimeOffset? createdDateTime, string createdBy, DateTimeOffset? lastModifiedDateTime, string lastModifiedBy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             TestProfileId = testProfileId;
             DisplayName = displayName;
@@ -90,7 +91,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Associated test ID for the test profile. This property is required for creating a Test Profile and it's not allowed to be updated. </summary>
         public string TestId { get; set; }
         /// <summary> Target resource ID on which the test profile is created. This property is required for creating a Test Profile and it's not allowed to be updated. </summary>
-        public string TargetResourceId { get; set; }
+        public ResourceIdentifier TargetResourceId { get; set; }
         /// <summary>
         /// Configurations of the target resource on which testing would be done.
         /// Please note <see cref="Models.TargetResourceConfigurations"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.

@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Developer.LoadTesting.Models
 {
@@ -52,11 +53,8 @@ namespace Azure.Developer.LoadTesting.Models
         /// The region name should of format accepted by ARM, and should be a region supported by Azure Load Testing. For example, East US should be passed as "eastus".
         /// The region name must match one of the strings in the "Name" column returned from running the "az account list-locations -o table" Azure CLI command.
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="region"/> is null. </exception>
-        public RegionalConfiguration(int engineInstances, string region)
+        public RegionalConfiguration(int engineInstances, AzureLocation region)
         {
-            Argument.AssertNotNull(region, nameof(region));
-
             EngineInstances = engineInstances;
             Region = region;
         }
@@ -69,7 +67,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// The region name must match one of the strings in the "Name" column returned from running the "az account list-locations -o table" Azure CLI command.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RegionalConfiguration(int engineInstances, string region, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RegionalConfiguration(int engineInstances, AzureLocation region, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             EngineInstances = engineInstances;
             Region = region;
@@ -88,6 +86,6 @@ namespace Azure.Developer.LoadTesting.Models
         /// The region name should of format accepted by ARM, and should be a region supported by Azure Load Testing. For example, East US should be passed as "eastus".
         /// The region name must match one of the strings in the "Name" column returned from running the "az account list-locations -o table" Azure CLI command.
         /// </summary>
-        public string Region { get; set; }
+        public AzureLocation Region { get; set; }
     }
 }

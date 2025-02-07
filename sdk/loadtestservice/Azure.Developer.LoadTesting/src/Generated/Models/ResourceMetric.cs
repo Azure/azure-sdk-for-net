@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.Developer.LoadTesting.Models
 {
@@ -56,7 +57,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="aggregation"> Metric aggregation. </param>
         /// <param name="resourceType"> Azure resource type. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceId"/>, <paramref name="metricNamespace"/>, <paramref name="name"/>, <paramref name="aggregation"/> or <paramref name="resourceType"/> is null. </exception>
-        public ResourceMetric(string resourceId, string metricNamespace, string name, string aggregation, string resourceType)
+        public ResourceMetric(ResourceIdentifier resourceId, string metricNamespace, string name, string aggregation, string resourceType)
         {
             Argument.AssertNotNull(resourceId, nameof(resourceId));
             Argument.AssertNotNull(metricNamespace, nameof(metricNamespace));
@@ -81,7 +82,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <param name="unit"> Metric unit. </param>
         /// <param name="resourceType"> Azure resource type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceMetric(string id, string resourceId, string metricNamespace, string displayDescription, string name, string aggregation, string unit, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ResourceMetric(string id, ResourceIdentifier resourceId, string metricNamespace, string displayDescription, string name, string aggregation, string unit, string resourceType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Id = id;
             ResourceId = resourceId;
@@ -102,7 +103,7 @@ namespace Azure.Developer.LoadTesting.Models
         /// <summary> Unique name for metric. </summary>
         public string Id { get; }
         /// <summary> Azure resource id. </summary>
-        public string ResourceId { get; set; }
+        public ResourceIdentifier ResourceId { get; set; }
         /// <summary> Metric name space. </summary>
         public string MetricNamespace { get; set; }
         /// <summary> Metric description. </summary>

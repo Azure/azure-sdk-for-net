@@ -1812,9 +1812,9 @@ namespace Azure.Developer.LoadTesting
         public virtual AsyncPageable<TestRun> GetTestRunsAsync(string orderby = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TestRun.DeserializeTestRun(e), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TestRun.DeserializeTestRun(e), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Get all test runs for the given filters. </summary>
@@ -1836,9 +1836,9 @@ namespace Azure.Developer.LoadTesting
         public virtual Pageable<TestRun> GetTestRuns(string orderby = null, string search = null, string testId = null, DateTimeOffset? executionFrom = null, DateTimeOffset? executionTo = null, string status = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, maxpagesize, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TestRun.DeserializeTestRun(e), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestRunsRequest(orderby, search, testId, executionFrom, executionTo, status, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestRunsNextPageRequest(nextLink, orderby, search, testId, executionFrom, executionTo, status, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TestRun.DeserializeTestRun(e), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestRuns", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> List test profile runs. </summary>
@@ -1858,9 +1858,9 @@ namespace Azure.Developer.LoadTesting
         public virtual AsyncPageable<TestProfileRun> GetTestProfileRunsAsync(int? maxpagesize = null, DateTimeOffset? minStartDateTime = null, DateTimeOffset? maxStartDateTime = null, DateTimeOffset? minEndDateTime = null, DateTimeOffset? maxEndDateTime = null, DateTimeOffset? createdDateStartTime = null, DateTimeOffset? createdDateEndTime = null, IEnumerable<string> testProfileRunIds = null, IEnumerable<string> testProfileIds = null, IEnumerable<string> statuses = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfileRunsRequest(maxpagesize, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestProfileRunsNextPageRequest(nextLink, maxpagesize, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TestProfileRun.DeserializeTestProfileRun(e), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestProfileRuns", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfileRunsRequest(pageSizeHint, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestProfileRunsNextPageRequest(nextLink, pageSizeHint, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TestProfileRun.DeserializeTestProfileRun(e), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestProfileRuns", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> List test profile runs. </summary>
@@ -1880,9 +1880,9 @@ namespace Azure.Developer.LoadTesting
         public virtual Pageable<TestProfileRun> GetTestProfileRuns(int? maxpagesize = null, DateTimeOffset? minStartDateTime = null, DateTimeOffset? maxStartDateTime = null, DateTimeOffset? minEndDateTime = null, DateTimeOffset? maxEndDateTime = null, DateTimeOffset? createdDateStartTime = null, DateTimeOffset? createdDateEndTime = null, IEnumerable<string> testProfileRunIds = null, IEnumerable<string> testProfileIds = null, IEnumerable<string> statuses = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfileRunsRequest(maxpagesize, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestProfileRunsNextPageRequest(nextLink, maxpagesize, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TestProfileRun.DeserializeTestProfileRun(e), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestProfileRuns", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfileRunsRequest(pageSizeHint, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestProfileRunsNextPageRequest(nextLink, pageSizeHint, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TestProfileRun.DeserializeTestProfileRun(e), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestProfileRuns", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -1916,9 +1916,9 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestProfileRunsAsync(int?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetTestProfileRunsAsync(int? maxpagesize, DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, DateTimeOffset? createdDateStartTime, DateTimeOffset? createdDateEndTime, IEnumerable<string> testProfileRunIds, IEnumerable<string> testProfileIds, IEnumerable<string> statuses, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfileRunsRequest(maxpagesize, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestProfileRunsNextPageRequest(nextLink, maxpagesize, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestProfileRuns", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfileRunsRequest(pageSizeHint, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestProfileRunsNextPageRequest(nextLink, pageSizeHint, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestProfileRuns", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary>
@@ -1952,9 +1952,9 @@ namespace Azure.Developer.LoadTesting
         /// <include file="Docs/LoadTestRunClient.xml" path="doc/members/member[@name='GetTestProfileRuns(int?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetTestProfileRuns(int? maxpagesize, DateTimeOffset? minStartDateTime, DateTimeOffset? maxStartDateTime, DateTimeOffset? minEndDateTime, DateTimeOffset? maxEndDateTime, DateTimeOffset? createdDateStartTime, DateTimeOffset? createdDateEndTime, IEnumerable<string> testProfileRunIds, IEnumerable<string> testProfileIds, IEnumerable<string> statuses, RequestContext context)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfileRunsRequest(maxpagesize, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestProfileRunsNextPageRequest(nextLink, maxpagesize, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestProfileRuns", "value", "nextLink", context);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTestProfileRunsRequest(pageSizeHint, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTestProfileRunsNextPageRequest(nextLink, pageSizeHint, minStartDateTime, maxStartDateTime, minEndDateTime, maxEndDateTime, createdDateStartTime, createdDateEndTime, testProfileRunIds, testProfileIds, statuses, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "LoadTestRunClient.GetTestProfileRuns", "value", "nextLink", maxpagesize, context);
         }
 
         internal HttpMessage CreateCreateOrUpdateTestRunRequest(string testRunId, RequestContent content, string oldTestRunId, RequestContext context)

@@ -125,7 +125,7 @@ namespace Azure.Developer.LoadTesting.Models
             string displayName = default;
             string description = default;
             string testId = default;
-            string targetResourceId = default;
+            ResourceIdentifier targetResourceId = default;
             TargetResourceConfigurations targetResourceConfigurations = default;
             DateTimeOffset? createdDateTime = default;
             string createdBy = default;
@@ -157,7 +157,11 @@ namespace Azure.Developer.LoadTesting.Models
                 }
                 if (property.NameEquals("targetResourceId"u8))
                 {
-                    targetResourceId = property.Value.GetString();
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    targetResourceId = new ResourceIdentifier(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("targetResourceConfigurations"u8))
