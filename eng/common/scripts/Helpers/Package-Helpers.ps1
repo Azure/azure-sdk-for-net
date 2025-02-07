@@ -210,14 +210,28 @@ function Group-ByObjectKey {
   $groupedDictionary = @{}
 
   foreach ($item in $Items) {
-    $key = Get-ObjectKey $item."$GroupByProperty"
+    if ($item."$GroupByProperty" -is [array]) {
+      foreach ($GroupByPropertyValue in $item."$GroupByProperty") {
+        $key = Get-ObjectKey $GroupByPropertyValue
 
-    if (-not $groupedDictionary.ContainsKey($key)) {
-      $groupedDictionary[$key] = @()
+        if (-not $groupedDictionary.ContainsKey($key)) {
+          $groupedDictionary[$key] = @()
+        }
+
+        # Add the current item to the array for this key
+        $groupedDictionary[$key] += $item
+      }
     }
+    else {
+      $key = Get-ObjectKey $item."$GroupByProperty"
 
-    # Add the current item to the array for this key
-    $groupedDictionary[$key] += $item
+      if (-not $groupedDictionary.ContainsKey($key)) {
+        $groupedDictionary[$key] = @()
+      }
+
+      # Add the current item to the array for this key
+      $groupedDictionary[$key] += $item
+    }
   }
 
   return $groupedDictionary
