@@ -655,8 +655,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
-Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", body);
+SwapDeploymentsDetails details = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
+Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", details);
 ]]></code>
 This sample shows how to call SwapDeploymentsAsync with all parameters.
 <code><![CDATA[
@@ -664,8 +664,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
-Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", body);
+SwapDeploymentsDetails details = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
+Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", details);
 ]]></code></example>
     </member>
     <member name="SwapDeployments(WaitUntil,string,SwapDeploymentsDetails,CancellationToken)">
@@ -676,8 +676,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
-Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", body);
+SwapDeploymentsDetails details = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
+Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", details);
 ]]></code>
 This sample shows how to call SwapDeployments with all parameters.
 <code><![CDATA[
@@ -685,8 +685,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
-Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", body);
+SwapDeploymentsDetails details = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
+Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", details);
 ]]></code></example>
     </member>
     <member name="SwapDeploymentsAsync(WaitUntil,string,RequestContent,RequestContext)">
@@ -755,8 +755,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>");
-Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
+CreateDeploymentDetails details = new CreateDeploymentDetails("<trainedModelLabel>");
+Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", details);
 ]]></code>
 This sample shows how to call DeployProjectAsync with all parameters.
 <code><![CDATA[
@@ -764,11 +764,11 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>")
+CreateDeploymentDetails details = new CreateDeploymentDetails("<trainedModelLabel>")
 {
     AssignedResourceIds = { "<assignedResourceIds>" },
 };
-Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
+Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", details);
 ]]></code></example>
     </member>
     <member name="DeployProject(WaitUntil,string,string,CreateDeploymentDetails,CancellationToken)">
@@ -779,8 +779,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>");
-Operation operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
+CreateDeploymentDetails details = new CreateDeploymentDetails("<trainedModelLabel>");
+Operation operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", details);
 ]]></code>
 This sample shows how to call DeployProject with all parameters.
 <code><![CDATA[
@@ -788,11 +788,11 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>")
+CreateDeploymentDetails details = new CreateDeploymentDetails("<trainedModelLabel>")
 {
     AssignedResourceIds = { "<assignedResourceIds>" },
 };
-Operation operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
+Operation operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", details);
 ]]></code></example>
     </member>
     <member name="DeployProjectAsync(WaitUntil,string,string,RequestContent,RequestContext)">
@@ -903,8 +903,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-DeleteDeploymentDetails body = new DeleteDeploymentDetails();
-Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
+DeleteDeploymentDetails details = new DeleteDeploymentDetails();
+Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", details);
 ]]></code>
 This sample shows how to call DeleteDeploymentFromResourcesAsync with all parameters.
 <code><![CDATA[
@@ -912,11 +912,11 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-DeleteDeploymentDetails body = new DeleteDeploymentDetails
+DeleteDeploymentDetails details = new DeleteDeploymentDetails
 {
     AssignedResourceIds = { "<assignedResourceIds>" },
 };
-Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
+Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", details);
 ]]></code></example>
     </member>
     <member name="DeleteDeploymentFromResources(WaitUntil,string,string,DeleteDeploymentDetails,CancellationToken)">
@@ -927,8 +927,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-DeleteDeploymentDetails body = new DeleteDeploymentDetails();
-Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
+DeleteDeploymentDetails details = new DeleteDeploymentDetails();
+Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", details);
 ]]></code>
 This sample shows how to call DeleteDeploymentFromResources with all parameters.
 <code><![CDATA[
@@ -936,11 +936,11 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-DeleteDeploymentDetails body = new DeleteDeploymentDetails
+DeleteDeploymentDetails details = new DeleteDeploymentDetails
 {
     AssignedResourceIds = { "<assignedResourceIds>" },
 };
-Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
+Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", details);
 ]]></code></example>
     </member>
     <member name="DeleteDeploymentFromResourcesAsync(WaitUntil,string,string,RequestContent,RequestContext)">

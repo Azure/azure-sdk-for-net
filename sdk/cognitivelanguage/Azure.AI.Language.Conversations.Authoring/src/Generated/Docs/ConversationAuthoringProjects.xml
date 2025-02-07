@@ -1253,8 +1253,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>"));
-Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", body);
+ExportedProject exportedProject = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>"));
+Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", exportedProject);
 ]]></code>
 This sample shows how to call ImportAsync with all parameters.
 <code><![CDATA[
@@ -1262,7 +1262,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>")
+ExportedProject exportedProject = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>")
 {
     Settings = new ProjectSettings(123.45F),
     StorageInputContainerName = "<storageInputContainerName>",
@@ -1308,7 +1308,7 @@ ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexTy
         }},
     },
 };
-Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", body, exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation);
+Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", exportedProject, exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation);
 ]]></code></example>
     </member>
     <member name="Import(WaitUntil,string,ExportedProject,AnalyzeConversationAuthoringExportedProjectFormat?,CancellationToken)">
@@ -1319,8 +1319,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>"));
-Operation operation = client.Import(WaitUntil.Completed, "<projectName>", body);
+ExportedProject exportedProject = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>"));
+Operation operation = client.Import(WaitUntil.Completed, "<projectName>", exportedProject);
 ]]></code>
 This sample shows how to call Import with all parameters.
 <code><![CDATA[
@@ -1328,7 +1328,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>")
+ExportedProject exportedProject = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>")
 {
     Settings = new ProjectSettings(123.45F),
     StorageInputContainerName = "<storageInputContainerName>",
@@ -1374,7 +1374,7 @@ ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexTy
         }},
     },
 };
-Operation operation = client.Import(WaitUntil.Completed, "<projectName>", body, exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation);
+Operation operation = client.Import(WaitUntil.Completed, "<projectName>", exportedProject, exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation);
 ]]></code></example>
     </member>
     <member name="ImportAsync(WaitUntil,string,RequestContent,string,RequestContext)">
@@ -1645,14 +1645,14 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-CopyProjectDetails body = new CopyProjectDetails(
+CopyProjectDetails details = new CopyProjectDetails(
 AnalyzeConversationAuthoringProjectKind.Conversation,
 "<targetProjectName>",
 "<accessToken>",
 DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 "<targetResourceId>",
 "<targetResourceRegion>");
-Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<projectName>", body);
+Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<projectName>", details);
 ]]></code>
 This sample shows how to call CopyProjectAsync with all parameters.
 <code><![CDATA[
@@ -1660,14 +1660,14 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-CopyProjectDetails body = new CopyProjectDetails(
+CopyProjectDetails details = new CopyProjectDetails(
 AnalyzeConversationAuthoringProjectKind.Conversation,
 "<targetProjectName>",
 "<accessToken>",
 DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 "<targetResourceId>",
 "<targetResourceRegion>");
-Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<projectName>", body);
+Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<projectName>", details);
 ]]></code></example>
     </member>
     <member name="CopyProject(WaitUntil,string,CopyProjectDetails,CancellationToken)">
@@ -1678,14 +1678,14 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-CopyProjectDetails body = new CopyProjectDetails(
+CopyProjectDetails details = new CopyProjectDetails(
 AnalyzeConversationAuthoringProjectKind.Conversation,
 "<targetProjectName>",
 "<accessToken>",
 DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 "<targetResourceId>",
 "<targetResourceRegion>");
-Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", body);
+Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", details);
 ]]></code>
 This sample shows how to call CopyProject with all parameters.
 <code><![CDATA[
@@ -1693,14 +1693,14 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-CopyProjectDetails body = new CopyProjectDetails(
+CopyProjectDetails details = new CopyProjectDetails(
 AnalyzeConversationAuthoringProjectKind.Conversation,
 "<targetProjectName>",
 "<accessToken>",
 DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
 "<targetResourceId>",
 "<targetResourceRegion>");
-Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", body);
+Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", details);
 ]]></code></example>
     </member>
     <member name="CopyProjectAsync(WaitUntil,string,RequestContent,RequestContext)">

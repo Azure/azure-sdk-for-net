@@ -1433,8 +1433,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>"));
-            Operation operation = client.Import(WaitUntil.Completed, "<projectName>", body);
+            ExportedProject exportedProject = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>"));
+            Operation operation = client.Import(WaitUntil.Completed, "<projectName>", exportedProject);
         }
 
         [Test]
@@ -1445,8 +1445,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>"));
-            Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", body);
+            ExportedProject exportedProject = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>"));
+            Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", exportedProject);
         }
 
         [Test]
@@ -1679,7 +1679,7 @@ dataset = "Train",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>")
+            ExportedProject exportedProject = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>")
             {
                 Settings = new ProjectSettings(123.45F),
                 StorageInputContainerName = "<storageInputContainerName>",
@@ -1725,7 +1725,7 @@ Dataset = DatasetType.Train,
 }},
                 },
             };
-            Operation operation = client.Import(WaitUntil.Completed, "<projectName>", body, exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation);
+            Operation operation = client.Import(WaitUntil.Completed, "<projectName>", exportedProject, exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation);
         }
 
         [Test]
@@ -1736,7 +1736,7 @@ Dataset = DatasetType.Train,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            ExportedProject body = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>")
+            ExportedProject exportedProject = new ExportedProject("<projectFileVersion>", StringIndexType.Utf16CodeUnit, new CreateProjectDetails(AnalyzeConversationAuthoringProjectKind.Conversation, "<projectName>", "<language>")
             {
                 Settings = new ProjectSettings(123.45F),
                 StorageInputContainerName = "<storageInputContainerName>",
@@ -1782,7 +1782,7 @@ Dataset = DatasetType.Train,
 }},
                 },
             };
-            Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", body, exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation);
+            Operation operation = await client.ImportAsync(WaitUntil.Completed, "<projectName>", exportedProject, exportedProjectFormat: AnalyzeConversationAuthoringExportedProjectFormat.Conversation);
         }
 
         [Test]
@@ -1833,14 +1833,14 @@ Dataset = DatasetType.Train,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            CopyProjectDetails body = new CopyProjectDetails(
+            CopyProjectDetails details = new CopyProjectDetails(
                 AnalyzeConversationAuthoringProjectKind.Conversation,
                 "<targetProjectName>",
                 "<accessToken>",
                 DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
                 "<targetResourceId>",
                 "<targetResourceRegion>");
-            Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", body);
+            Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", details);
         }
 
         [Test]
@@ -1851,14 +1851,14 @@ Dataset = DatasetType.Train,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            CopyProjectDetails body = new CopyProjectDetails(
+            CopyProjectDetails details = new CopyProjectDetails(
                 AnalyzeConversationAuthoringProjectKind.Conversation,
                 "<targetProjectName>",
                 "<accessToken>",
                 DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
                 "<targetResourceId>",
                 "<targetResourceRegion>");
-            Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<projectName>", body);
+            Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<projectName>", details);
         }
 
         [Test]
@@ -1909,14 +1909,14 @@ Dataset = DatasetType.Train,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            CopyProjectDetails body = new CopyProjectDetails(
+            CopyProjectDetails details = new CopyProjectDetails(
                 AnalyzeConversationAuthoringProjectKind.Conversation,
                 "<targetProjectName>",
                 "<accessToken>",
                 DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
                 "<targetResourceId>",
                 "<targetResourceRegion>");
-            Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", body);
+            Operation operation = client.CopyProject(WaitUntil.Completed, "<projectName>", details);
         }
 
         [Test]
@@ -1927,14 +1927,14 @@ Dataset = DatasetType.Train,
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringProjects client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringProjectsClient(apiVersion: "2024-11-15-preview");
 
-            CopyProjectDetails body = new CopyProjectDetails(
+            CopyProjectDetails details = new CopyProjectDetails(
                 AnalyzeConversationAuthoringProjectKind.Conversation,
                 "<targetProjectName>",
                 "<accessToken>",
                 DateTimeOffset.Parse("2022-05-10T18:57:31.2311892Z"),
                 "<targetResourceId>",
                 "<targetResourceRegion>");
-            Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<projectName>", body);
+            Operation operation = await client.CopyProjectAsync(WaitUntil.Completed, "<projectName>", details);
         }
     }
 }

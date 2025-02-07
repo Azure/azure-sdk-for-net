@@ -1215,18 +1215,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="body"> The project data to import. </param>
+        /// <param name="exportedProject"> The project data to import. </param>
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedProject"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='ImportAsync(WaitUntil,string,ExportedProject,AnalyzeConversationAuthoringExportedProjectFormat?,CancellationToken)']/*" />
-        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, ExportedProject body, AnalyzeConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> ImportAsync(WaitUntil waitUntil, string projectName, ExportedProject exportedProject, AnalyzeConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(exportedProject, nameof(exportedProject));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = exportedProject.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             return await ImportAsync(waitUntil, projectName, content, exportedProjectFormat?.ToString(), context).ConfigureAwait(false);
         }
@@ -1234,18 +1234,18 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Triggers a job to import a project. If a project with the same name already exists, the data of that project is replaced. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="body"> The project data to import. </param>
+        /// <param name="exportedProject"> The project data to import. </param>
         /// <param name="exportedProjectFormat"> The format of the exported project file to use. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="exportedProject"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='Import(WaitUntil,string,ExportedProject,AnalyzeConversationAuthoringExportedProjectFormat?,CancellationToken)']/*" />
-        public virtual Operation Import(WaitUntil waitUntil, string projectName, ExportedProject body, AnalyzeConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
+        public virtual Operation Import(WaitUntil waitUntil, string projectName, ExportedProject exportedProject, AnalyzeConversationAuthoringExportedProjectFormat? exportedProjectFormat = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(exportedProject, nameof(exportedProject));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = exportedProject.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             return Import(waitUntil, projectName, content, exportedProjectFormat?.ToString(), context);
         }
@@ -1341,17 +1341,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Copies an existing project to another Azure resource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="body"> The copy project info. </param>
+        /// <param name="details"> The copy project info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="details"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='CopyProjectAsync(WaitUntil,string,CopyProjectDetails,CancellationToken)']/*" />
-        public virtual async Task<Operation> CopyProjectAsync(WaitUntil waitUntil, string projectName, CopyProjectDetails body, CancellationToken cancellationToken = default)
+        public virtual async Task<Operation> CopyProjectAsync(WaitUntil waitUntil, string projectName, CopyProjectDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             return await CopyProjectAsync(waitUntil, projectName, content, context).ConfigureAwait(false);
         }
@@ -1359,17 +1359,17 @@ namespace Azure.AI.Language.Conversations.Authoring
         /// <summary> Copies an existing project to another Azure resource. </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
         /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="body"> The copy project info. </param>
+        /// <param name="details"> The copy project info. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="body"/> is null. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="details"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='CopyProject(WaitUntil,string,CopyProjectDetails,CancellationToken)']/*" />
-        public virtual Operation CopyProject(WaitUntil waitUntil, string projectName, CopyProjectDetails body, CancellationToken cancellationToken = default)
+        public virtual Operation CopyProject(WaitUntil waitUntil, string projectName, CopyProjectDetails details, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(details, nameof(details));
 
-            using RequestContent content = body.ToRequestContent();
+            using RequestContent content = details.ToRequestContent();
             RequestContext context = FromCancellationToken(cancellationToken);
             return CopyProject(waitUntil, projectName, content, context);
         }

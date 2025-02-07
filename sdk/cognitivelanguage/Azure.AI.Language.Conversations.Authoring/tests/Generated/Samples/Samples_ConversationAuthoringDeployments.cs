@@ -763,8 +763,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
-            Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", body);
+            SwapDeploymentsDetails details = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
+            Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", details);
         }
 
         [Test]
@@ -775,8 +775,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
-            Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", body);
+            SwapDeploymentsDetails details = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
+            Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", details);
         }
 
         [Test]
@@ -819,8 +819,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
-            Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", body);
+            SwapDeploymentsDetails details = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
+            Operation operation = client.SwapDeployments(WaitUntil.Completed, "<projectName>", details);
         }
 
         [Test]
@@ -831,8 +831,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            SwapDeploymentsDetails body = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
-            Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", body);
+            SwapDeploymentsDetails details = new SwapDeploymentsDetails("<firstDeploymentName>", "<secondDeploymentName>");
+            Operation operation = await client.SwapDeploymentsAsync(WaitUntil.Completed, "<projectName>", details);
         }
 
         [Test]
@@ -873,8 +873,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>");
-            Operation operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
+            CreateDeploymentDetails details = new CreateDeploymentDetails("<trainedModelLabel>");
+            Operation operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", details);
         }
 
         [Test]
@@ -885,8 +885,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>");
-            Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
+            CreateDeploymentDetails details = new CreateDeploymentDetails("<trainedModelLabel>");
+            Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", details);
         }
 
         [Test]
@@ -935,11 +935,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>")
+            CreateDeploymentDetails details = new CreateDeploymentDetails("<trainedModelLabel>")
             {
                 AssignedResourceIds = { "<assignedResourceIds>" },
             };
-            Operation operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
+            Operation operation = client.DeployProject(WaitUntil.Completed, "<projectName>", "<deploymentName>", details);
         }
 
         [Test]
@@ -950,11 +950,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            CreateDeploymentDetails body = new CreateDeploymentDetails("<trainedModelLabel>")
+            CreateDeploymentDetails details = new CreateDeploymentDetails("<trainedModelLabel>")
             {
                 AssignedResourceIds = { "<assignedResourceIds>" },
             };
-            Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
+            Operation operation = await client.DeployProjectAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", details);
         }
 
         [Test]
@@ -1033,8 +1033,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            DeleteDeploymentDetails body = new DeleteDeploymentDetails();
-            Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
+            DeleteDeploymentDetails details = new DeleteDeploymentDetails();
+            Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", details);
         }
 
         [Test]
@@ -1045,8 +1045,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            DeleteDeploymentDetails body = new DeleteDeploymentDetails();
-            Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
+            DeleteDeploymentDetails details = new DeleteDeploymentDetails();
+            Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", details);
         }
 
         [Test]
@@ -1093,11 +1093,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            DeleteDeploymentDetails body = new DeleteDeploymentDetails
+            DeleteDeploymentDetails details = new DeleteDeploymentDetails
             {
                 AssignedResourceIds = { "<assignedResourceIds>" },
             };
-            Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
+            Operation operation = client.DeleteDeploymentFromResources(WaitUntil.Completed, "<projectName>", "<deploymentName>", details);
         }
 
         [Test]
@@ -1108,11 +1108,11 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeployments client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentsClient(apiVersion: "2024-11-15-preview");
 
-            DeleteDeploymentDetails body = new DeleteDeploymentDetails
+            DeleteDeploymentDetails details = new DeleteDeploymentDetails
             {
                 AssignedResourceIds = { "<assignedResourceIds>" },
             };
-            Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", body);
+            Operation operation = await client.DeleteDeploymentFromResourcesAsync(WaitUntil.Completed, "<projectName>", "<deploymentName>", details);
         }
     }
 }

@@ -457,8 +457,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
 
-TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", AnalyzeConversationAuthoringTrainingMode.Advanced);
-Operation<TrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", body);
+TrainingJobDetails details = new TrainingJobDetails("<modelLabel>", AnalyzeConversationAuthoringTrainingMode.Advanced);
+Operation<TrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", details);
 TrainingJobResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call TrainAsync with all parameters.
@@ -467,7 +467,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
 
-TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", AnalyzeConversationAuthoringTrainingMode.Advanced)
+TrainingJobDetails details = new TrainingJobDetails("<modelLabel>", AnalyzeConversationAuthoringTrainingMode.Advanced)
 {
     TrainingConfigVersion = "<trainingConfigVersion>",
     EvaluationOptions = new EvaluationDetails
@@ -477,7 +477,7 @@ TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", AnalyzeConversa
         TestingSplitPercentage = 1234,
     },
 };
-Operation<TrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", body);
+Operation<TrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", details);
 TrainingJobResult responseData = operation.Value;
 ]]></code></example>
     </member>
@@ -489,8 +489,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
 
-TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", AnalyzeConversationAuthoringTrainingMode.Advanced);
-Operation<TrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", body);
+TrainingJobDetails details = new TrainingJobDetails("<modelLabel>", AnalyzeConversationAuthoringTrainingMode.Advanced);
+Operation<TrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", details);
 TrainingJobResult responseData = operation.Value;
 ]]></code>
 This sample shows how to call Train with all parameters.
@@ -499,7 +499,7 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
 
-TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", AnalyzeConversationAuthoringTrainingMode.Advanced)
+TrainingJobDetails details = new TrainingJobDetails("<modelLabel>", AnalyzeConversationAuthoringTrainingMode.Advanced)
 {
     TrainingConfigVersion = "<trainingConfigVersion>",
     EvaluationOptions = new EvaluationDetails
@@ -509,7 +509,7 @@ TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", AnalyzeConversa
         TestingSplitPercentage = 1234,
     },
 };
-Operation<TrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", body);
+Operation<TrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", details);
 TrainingJobResult responseData = operation.Value;
 ]]></code></example>
     </member>

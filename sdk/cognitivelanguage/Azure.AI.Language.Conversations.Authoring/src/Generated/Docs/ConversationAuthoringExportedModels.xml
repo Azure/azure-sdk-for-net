@@ -409,8 +409,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringExportedModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
-ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
-Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
+ExportedModelDetails details = new ExportedModelDetails("<trainedModelLabel>");
+Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>", details);
 ]]></code>
 This sample shows how to call CreateOrUpdateExportedModelAsync with all parameters.
 <code><![CDATA[
@@ -418,8 +418,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringExportedModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
-ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
-Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
+ExportedModelDetails details = new ExportedModelDetails("<trainedModelLabel>");
+Operation operation = await client.CreateOrUpdateExportedModelAsync(WaitUntil.Completed, "<projectName>", "<exportedModelName>", details);
 ]]></code></example>
     </member>
     <member name="CreateOrUpdateExportedModel(WaitUntil,string,string,ExportedModelDetails,CancellationToken)">
@@ -430,8 +430,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringExportedModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
-ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
-Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
+ExportedModelDetails details = new ExportedModelDetails("<trainedModelLabel>");
+Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>", details);
 ]]></code>
 This sample shows how to call CreateOrUpdateExportedModel with all parameters.
 <code><![CDATA[
@@ -439,8 +439,8 @@ Uri endpoint = new Uri("<endpoint>");
 AzureKeyCredential credential = new AzureKeyCredential("<key>");
 ConversationAuthoringExportedModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringExportedModelsClient(apiVersion: "2024-11-15-preview");
 
-ExportedModelDetails body = new ExportedModelDetails("<trainedModelLabel>");
-Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>", body);
+ExportedModelDetails details = new ExportedModelDetails("<trainedModelLabel>");
+Operation operation = client.CreateOrUpdateExportedModel(WaitUntil.Completed, "<projectName>", "<exportedModelName>", details);
 ]]></code></example>
     </member>
     <member name="CreateOrUpdateExportedModelAsync(WaitUntil,string,string,RequestContent,RequestContext)">

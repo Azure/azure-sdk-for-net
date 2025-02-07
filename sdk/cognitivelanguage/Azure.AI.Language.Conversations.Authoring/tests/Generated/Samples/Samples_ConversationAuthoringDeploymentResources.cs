@@ -603,11 +603,11 @@ region = "<region>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeploymentResources client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
-            AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
+            AssignDeploymentResourcesDetails details = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
             {
 new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             });
-            Operation operation = client.AssignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
+            Operation operation = client.AssignDeploymentResources(WaitUntil.Completed, "<projectName>", details);
         }
 
         [Test]
@@ -618,11 +618,11 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeploymentResources client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
-            AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
+            AssignDeploymentResourcesDetails details = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
             {
 new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             });
-            Operation operation = await client.AssignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
+            Operation operation = await client.AssignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", details);
         }
 
         [Test]
@@ -679,11 +679,11 @@ region = "<region>",
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeploymentResources client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
-            AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
+            AssignDeploymentResourcesDetails details = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
             {
 new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             });
-            Operation operation = client.AssignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
+            Operation operation = client.AssignDeploymentResources(WaitUntil.Completed, "<projectName>", details);
         }
 
         [Test]
@@ -694,11 +694,11 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeploymentResources client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
-            AssignDeploymentResourcesDetails body = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
+            AssignDeploymentResourcesDetails details = new AssignDeploymentResourcesDetails(new ResourceMetadata[]
             {
 new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             });
-            Operation operation = await client.AssignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
+            Operation operation = await client.AssignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", details);
         }
 
         [Test]
@@ -745,8 +745,8 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeploymentResources client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
-            UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
-            Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
+            UnassignDeploymentResourcesDetails details = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
+            Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", details);
         }
 
         [Test]
@@ -757,8 +757,8 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeploymentResources client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
-            UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
-            Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
+            UnassignDeploymentResourcesDetails details = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
+            Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", details);
         }
 
         [Test]
@@ -805,8 +805,8 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeploymentResources client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
-            UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
-            Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", body);
+            UnassignDeploymentResourcesDetails details = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
+            Operation operation = client.UnassignDeploymentResources(WaitUntil.Completed, "<projectName>", details);
         }
 
         [Test]
@@ -817,8 +817,8 @@ new ResourceMetadata("<azureResourceId>", "<customDomain>", "<region>")
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringDeploymentResources client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringDeploymentResourcesClient(apiVersion: "2024-11-15-preview");
 
-            UnassignDeploymentResourcesDetails body = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
-            Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", body);
+            UnassignDeploymentResourcesDetails details = new UnassignDeploymentResourcesDetails(new string[] { "<assignedResourceIds>" });
+            Operation operation = await client.UnassignDeploymentResourcesAsync(WaitUntil.Completed, "<projectName>", details);
         }
     }
 }

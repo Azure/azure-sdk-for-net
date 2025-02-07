@@ -1057,8 +1057,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            EvaluationDetails body = new EvaluationDetails();
-            Operation<EvaluationJobResult> operation = client.EvaluateModel(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
+            EvaluationDetails details = new EvaluationDetails();
+            Operation<EvaluationJobResult> operation = client.EvaluateModel(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", details);
             EvaluationJobResult responseData = operation.Value;
         }
 
@@ -1070,8 +1070,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            EvaluationDetails body = new EvaluationDetails();
-            Operation<EvaluationJobResult> operation = await client.EvaluateModelAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
+            EvaluationDetails details = new EvaluationDetails();
+            Operation<EvaluationJobResult> operation = await client.EvaluateModelAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", details);
             EvaluationJobResult responseData = operation.Value;
         }
 
@@ -1135,13 +1135,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            EvaluationDetails body = new EvaluationDetails
+            EvaluationDetails details = new EvaluationDetails
             {
                 Kind = AnalyzeConversationAuthoringEvaluationKind.Percentage,
                 TrainingSplitPercentage = 1234,
                 TestingSplitPercentage = 1234,
             };
-            Operation<EvaluationJobResult> operation = client.EvaluateModel(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
+            Operation<EvaluationJobResult> operation = client.EvaluateModel(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", details);
             EvaluationJobResult responseData = operation.Value;
         }
 
@@ -1153,13 +1153,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringModels client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringModelsClient(apiVersion: "2024-11-15-preview");
 
-            EvaluationDetails body = new EvaluationDetails
+            EvaluationDetails details = new EvaluationDetails
             {
                 Kind = AnalyzeConversationAuthoringEvaluationKind.Percentage,
                 TrainingSplitPercentage = 1234,
                 TestingSplitPercentage = 1234,
             };
-            Operation<EvaluationJobResult> operation = await client.EvaluateModelAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", body);
+            Operation<EvaluationJobResult> operation = await client.EvaluateModelAsync(WaitUntil.Completed, "<projectName>", "<trainedModelLabel>", details);
             EvaluationJobResult responseData = operation.Value;
         }
 

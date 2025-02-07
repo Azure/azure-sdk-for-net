@@ -555,8 +555,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
 
-            TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", AnalyzeConversationAuthoringTrainingMode.Advanced);
-            Operation<TrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", body);
+            TrainingJobDetails details = new TrainingJobDetails("<modelLabel>", AnalyzeConversationAuthoringTrainingMode.Advanced);
+            Operation<TrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", details);
             TrainingJobResult responseData = operation.Value;
         }
 
@@ -568,8 +568,8 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
 
-            TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", AnalyzeConversationAuthoringTrainingMode.Advanced);
-            Operation<TrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", body);
+            TrainingJobDetails details = new TrainingJobDetails("<modelLabel>", AnalyzeConversationAuthoringTrainingMode.Advanced);
+            Operation<TrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", details);
             TrainingJobResult responseData = operation.Value;
         }
 
@@ -657,7 +657,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
 
-            TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", AnalyzeConversationAuthoringTrainingMode.Advanced)
+            TrainingJobDetails details = new TrainingJobDetails("<modelLabel>", AnalyzeConversationAuthoringTrainingMode.Advanced)
             {
                 TrainingConfigVersion = "<trainingConfigVersion>",
                 EvaluationOptions = new EvaluationDetails
@@ -667,7 +667,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
                     TestingSplitPercentage = 1234,
                 },
             };
-            Operation<TrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", body);
+            Operation<TrainingJobResult> operation = client.Train(WaitUntil.Completed, "<projectName>", details);
             TrainingJobResult responseData = operation.Value;
         }
 
@@ -679,7 +679,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             ConversationAuthoringTraining client = new ConversationAnalysisAuthoringClient(endpoint, credential).GetConversationAuthoringTrainingClient(apiVersion: "2024-11-15-preview");
 
-            TrainingJobDetails body = new TrainingJobDetails("<modelLabel>", AnalyzeConversationAuthoringTrainingMode.Advanced)
+            TrainingJobDetails details = new TrainingJobDetails("<modelLabel>", AnalyzeConversationAuthoringTrainingMode.Advanced)
             {
                 TrainingConfigVersion = "<trainingConfigVersion>",
                 EvaluationOptions = new EvaluationDetails
@@ -689,7 +689,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Samples
                     TestingSplitPercentage = 1234,
                 },
             };
-            Operation<TrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", body);
+            Operation<TrainingJobResult> operation = await client.TrainAsync(WaitUntil.Completed, "<projectName>", details);
             TrainingJobResult responseData = operation.Value;
         }
 
