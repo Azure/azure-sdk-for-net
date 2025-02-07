@@ -142,7 +142,6 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         Assert.That(sourcesFromOptions[1], Is.InstanceOf<CosmosChatDataSource>());
     }
 
-#if !AZURE_OPENAI_GA
     [Test]
     [Category("Smoke")]
     public async Task MaxTokensSerializationConfigurationWorks()
@@ -203,7 +202,6 @@ public partial class ChatTests : AoaiTestBase<ChatClient>
         options.MaxOutputTokenCount = 42;
         await AssertExpectedSerializationAsync(true, false);
     }
-#endif
 
     [RecordedTest]
     public async Task ChatCompletionBadKeyGivesHelpfulError()

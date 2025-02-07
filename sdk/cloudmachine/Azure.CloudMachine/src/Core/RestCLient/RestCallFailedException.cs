@@ -4,7 +4,7 @@
 using System;
 using System.ClientModel.Primitives;
 
-namespace Azure
+namespace Azure.Core.Rest
 {
     /// <summary>
     /// Exception thrown when a REST call fails.

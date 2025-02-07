@@ -21,6 +21,11 @@ namespace Azure.Communication.CallAutomation
                     GroupCallId = groupCallLocator.Id,
                     Kind = CallLocatorKindInternal.GroupCallLocator,
                 },
+                RoomCallLocator roomCallLocator => new CallLocatorInternal
+                {
+                    RoomId = roomCallLocator.Id,
+                    Kind = CallLocatorKindInternal.RoomCallLocator,
+                },
                 _ => throw new NotSupportedException(),
             };
 
@@ -36,6 +41,9 @@ namespace Azure.Communication.CallAutomation
 
             if (identifier.Kind.Value == CallLocatorKindInternal.GroupCallLocator)
                 return new GroupCallLocator(AssertNotNull(identifier.GroupCallId, nameof(identifier.GroupCallId), nameof(identifier.GroupCallId)));
+
+            if (identifier.Kind.Value == CallLocatorKindInternal.RoomCallLocator)
+                return new RoomCallLocator(AssertNotNull(identifier.RoomId, nameof(identifier.RoomId), nameof(identifier.RoomId)));
 
             throw new JsonException("Unknown type present in CallLocatorModel");
         }

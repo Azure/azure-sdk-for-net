@@ -74,10 +74,10 @@ namespace Azure.AI.Language.Text
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(RedactionCharacter))
+            if (Optional.IsDefined(RedactionPolicy))
             {
-                writer.WritePropertyName("redactionCharacter"u8);
-                writer.WriteStringValue(RedactionCharacter.Value.ToString());
+                writer.WritePropertyName("redactionPolicy"u8);
+                writer.WriteObjectValue(RedactionPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -122,7 +122,7 @@ namespace Azure.AI.Language.Text
             IList<PiiCategory> piiCategories = default;
             StringIndexType? stringIndexType = default;
             IList<PiiCategoriesExclude> excludePiiCategories = default;
-            RedactionCharacter? redactionCharacter = default;
+            BaseRedactionPolicy redactionPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -187,13 +187,13 @@ namespace Azure.AI.Language.Text
                     excludePiiCategories = array;
                     continue;
                 }
-                if (property.NameEquals("redactionCharacter"u8))
+                if (property.NameEquals("redactionPolicy"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    redactionCharacter = new RedactionCharacter(property.Value.GetString());
+                    redactionPolicy = BaseRedactionPolicy.DeserializeBaseRedactionPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -209,7 +209,7 @@ namespace Azure.AI.Language.Text
                 piiCategories ?? new ChangeTrackingList<PiiCategory>(),
                 stringIndexType,
                 excludePiiCategories ?? new ChangeTrackingList<PiiCategoriesExclude>(),
-                redactionCharacter,
+                redactionPolicy,
                 serializedAdditionalRawData);
         }
 

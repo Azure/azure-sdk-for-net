@@ -1,10 +1,8 @@
 # Release History
 
-## 1.0.0-beta.2 (Unreleased)
+## 1.0.0-beta.3 (Unreleased)
 
 ### Features Added
-
-- Exposed `JsonModelWriteCore` for model serialization procedure.
 
 ### Breaking Changes
 
@@ -12,9 +10,19 @@
 
 ### Other Changes
 
+## 1.0.0-beta.2 (2025-01-24)
+
+### Features Added
+
+- Added `DiscoveredAssets` and `DiscoveredAssetEndpointProfiles` resource types from Microsoft.DeviceRegistry OpenAPI spec version `2024-09-01-preview`.
+- Added `SchemaRegistries`, `SchemaRegistries/Schemas` and `SchemaRegistries/Schemas/SchemaVersions` resource types from Microsoft.DeviceRegistry OpenAPI spec version `2024-09-01-preview`.
+- Added `BillingContainers` resource type from Microsoft.DeviceRegistry OpenAPI spec version `2024-09-01-preview`.
+- Updated `Assets` and `AssetEndpointProfiles` resource types to align to Microsoft.DeviceRegistry OpenAPI spec version `2024-09-01-preview`.
+- Exposed `JsonModelWriteCore` for model serialization procedure.
+
 ## 1.0.0-beta.1 (2024-03-27)
 
-### General New Features
+### Features Added
 
 This package follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -26,4 +34,4 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
-> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://docs.microsoft.com//dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
+> NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).

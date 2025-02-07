@@ -35,9 +35,9 @@ namespace Azure.ResourceManager.Elastic.Mocking
 
         /// <summary> Gets a collection of ElasticMonitorResources in the ResourceGroupResource. </summary>
         /// <returns> An object representing collection of ElasticMonitorResources and their operations over a ElasticMonitorResource. </returns>
-        public virtual ElasticMonitorResourceCollection GetElasticMonitorResources()
+        public virtual ElasticMonitorCollection GetElasticMonitors()
         {
-            return GetCachedClient(client => new ElasticMonitorResourceCollection(client, Id));
+            return GetCachedClient(client => new ElasticMonitorCollection(client, Id));
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-15-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -66,9 +66,9 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ElasticMonitorResource>> GetElasticMonitorResourceAsync(string monitorName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ElasticMonitorResource>> GetElasticMonitorAsync(string monitorName, CancellationToken cancellationToken = default)
         {
-            return await GetElasticMonitorResources().GetAsync(monitorName, cancellationToken).ConfigureAwait(false);
+            return await GetElasticMonitors().GetAsync(monitorName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-06-15-preview</description>
+        /// <description>2024-03-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -97,9 +97,9 @@ namespace Azure.ResourceManager.Elastic.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="monitorName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="monitorName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ElasticMonitorResource> GetElasticMonitorResource(string monitorName, CancellationToken cancellationToken = default)
+        public virtual Response<ElasticMonitorResource> GetElasticMonitor(string monitorName, CancellationToken cancellationToken = default)
         {
-            return GetElasticMonitorResources().Get(monitorName, cancellationToken);
+            return GetElasticMonitors().Get(monitorName, cancellationToken);
         }
     }
 }

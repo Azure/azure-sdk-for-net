@@ -18,102 +18,62 @@ namespace Azure.AI.DocumentIntelligence.Samples
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentIntelligenceClient_GetAnalyzeResultPdf_GetAnalyzeDocumentResultPDF()
+        public void Example_DocumentIntelligenceClient_GetAnalyzeBatchResults_ListAnalyzeBatchDocumentsResults()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            Response response = client.GetAnalyzeResultPdf("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"), null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
+            foreach (BinaryData item in client.GetAnalyzeBatchResults("prebuilt-invoice", null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentIntelligenceClient_GetAnalyzeResultPdf_GetAnalyzeDocumentResultPDF_Async()
+        public async Task Example_DocumentIntelligenceClient_GetAnalyzeBatchResults_ListAnalyzeBatchDocumentsResults_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            Response response = await client.GetAnalyzeResultPdfAsync("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"), null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
+            await foreach (BinaryData item in client.GetAnalyzeBatchResultsAsync("prebuilt-invoice", null))
+            {
+                JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+                Console.WriteLine(result.GetProperty("status").ToString());
+                Console.WriteLine(result.GetProperty("createdDateTime").ToString());
+                Console.WriteLine(result.GetProperty("lastUpdatedDateTime").ToString());
+            }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentIntelligenceClient_GetAnalyzeResultPdf_GetAnalyzeDocumentResultPDF_Convenience()
+        public void Example_DocumentIntelligenceClient_GetAnalyzeBatchResults_ListAnalyzeBatchDocumentsResults_Convenience()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            Response<BinaryData> response = client.GetAnalyzeResultPdf("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"));
+            foreach (AnalyzeBatchOperationDetails item in client.GetAnalyzeBatchResults("prebuilt-invoice"))
+            {
+            }
         }
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentIntelligenceClient_GetAnalyzeResultPdf_GetAnalyzeDocumentResultPDF_Convenience_Async()
+        public async Task Example_DocumentIntelligenceClient_GetAnalyzeBatchResults_ListAnalyzeBatchDocumentsResults_Convenience_Async()
         {
             Uri endpoint = new Uri("<endpoint>");
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            Response<BinaryData> response = await client.GetAnalyzeResultPdfAsync("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"));
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentIntelligenceClient_GetAnalyzeResultFigure_GetAnalyzeDocumentResultFigure()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
-
-            Response response = client.GetAnalyzeResultFigure("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"), "1.0", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentIntelligenceClient_GetAnalyzeResultFigure_GetAnalyzeDocumentResultFigure_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
-
-            Response response = await client.GetAnalyzeResultFigureAsync("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"), "1.0", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_DocumentIntelligenceClient_GetAnalyzeResultFigure_GetAnalyzeDocumentResultFigure_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
-
-            Response<BinaryData> response = client.GetAnalyzeResultFigure("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"), "1.0");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_DocumentIntelligenceClient_GetAnalyzeResultFigure_GetAnalyzeDocumentResultFigure_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
-
-            Response<BinaryData> response = await client.GetAnalyzeResultFigureAsync("prebuilt-invoice", Guid.Parse("3b31320d-8bab-4f88-b19c-2322a7f11034"), "1.0");
+            await foreach (AnalyzeBatchOperationDetails item in client.GetAnalyzeBatchResultsAsync("prebuilt-invoice"))
+            {
+            }
         }
 
         [Test]
@@ -174,7 +134,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            Operation<AnalyzeResult> operation = client.AnalyzeDocument(WaitUntil.Completed, "prebuilt-layout");
+            AnalyzeDocumentOptions analyzeRequest = new AnalyzeDocumentOptions();
+            Operation<AnalyzeResult> operation = client.AnalyzeDocument(WaitUntil.Completed, "prebuilt-layout", analyzeRequest);
             AnalyzeResult responseData = operation.Value;
         }
 
@@ -186,7 +147,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout");
+            AnalyzeDocumentOptions analyzeRequest = new AnalyzeDocumentOptions();
+            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "prebuilt-layout", analyzeRequest);
             AnalyzeResult responseData = operation.Value;
         }
 
@@ -248,7 +210,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            Operation<AnalyzeResult> operation = client.AnalyzeDocument(WaitUntil.Completed, "customModel");
+            AnalyzeDocumentOptions analyzeRequest = new AnalyzeDocumentOptions();
+            Operation<AnalyzeResult> operation = client.AnalyzeDocument(WaitUntil.Completed, "customModel", analyzeRequest);
             AnalyzeResult responseData = operation.Value;
         }
 
@@ -260,7 +223,8 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "customModel");
+            AnalyzeDocumentOptions analyzeRequest = new AnalyzeDocumentOptions();
+            Operation<AnalyzeResult> operation = await client.AnalyzeDocumentAsync(WaitUntil.Completed, "customModel", analyzeRequest);
             AnalyzeResult responseData = operation.Value;
         }
 
@@ -290,8 +254,6 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("succeededCount").ToString());
             Console.WriteLine(result.GetProperty("failedCount").ToString());
             Console.WriteLine(result.GetProperty("skippedCount").ToString());
-            Console.WriteLine(result.GetProperty("details")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("details")[0].GetProperty("sourceUrl").ToString());
         }
 
         [Test]
@@ -320,8 +282,6 @@ namespace Azure.AI.DocumentIntelligence.Samples
             Console.WriteLine(result.GetProperty("succeededCount").ToString());
             Console.WriteLine(result.GetProperty("failedCount").ToString());
             Console.WriteLine(result.GetProperty("skippedCount").ToString());
-            Console.WriteLine(result.GetProperty("details")[0].GetProperty("status").ToString());
-            Console.WriteLine(result.GetProperty("details")[0].GetProperty("sourceUrl").ToString());
         }
 
         [Test]
@@ -332,7 +292,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            Operation<AnalyzeBatchResult> operation = client.AnalyzeBatchDocuments(WaitUntil.Completed, "customModel");
+            AnalyzeBatchDocumentsOptions analyzeBatchRequest = new AnalyzeBatchDocumentsOptions(new Uri("https://myStorageAccount.blob.core.windows.net/myOutputContainer?mySasToken"))
+            {
+                ResultPrefix = "trainingDocsResult/",
+                OverwriteExisting = true,
+            };
+            Operation<AnalyzeBatchResult> operation = client.AnalyzeBatchDocuments(WaitUntil.Completed, "customModel", analyzeBatchRequest);
             AnalyzeBatchResult responseData = operation.Value;
         }
 
@@ -344,7 +309,12 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            Operation<AnalyzeBatchResult> operation = await client.AnalyzeBatchDocumentsAsync(WaitUntil.Completed, "customModel");
+            AnalyzeBatchDocumentsOptions analyzeBatchRequest = new AnalyzeBatchDocumentsOptions(new Uri("https://myStorageAccount.blob.core.windows.net/myOutputContainer?mySasToken"))
+            {
+                ResultPrefix = "trainingDocsResult/",
+                OverwriteExisting = true,
+            };
+            Operation<AnalyzeBatchResult> operation = await client.AnalyzeBatchDocumentsAsync(WaitUntil.Completed, "customModel", analyzeBatchRequest);
             AnalyzeBatchResult responseData = operation.Value;
         }
 
@@ -406,9 +376,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent
+            ClassifyDocumentOptions classifyRequest = new ClassifyDocumentOptions
             {
-                UrlSource = new Uri("http://host.com/doc.pdf"),
+                UriSource = new Uri("http://host.com/doc.pdf"),
             };
             Operation<AnalyzeResult> operation = client.ClassifyDocument(WaitUntil.Completed, "classifierId", classifyRequest);
             AnalyzeResult responseData = operation.Value;
@@ -422,9 +392,9 @@ namespace Azure.AI.DocumentIntelligence.Samples
             AzureKeyCredential credential = new AzureKeyCredential("<key>");
             DocumentIntelligenceClient client = new DocumentIntelligenceClient(endpoint, credential);
 
-            ClassifyDocumentContent classifyRequest = new ClassifyDocumentContent
+            ClassifyDocumentOptions classifyRequest = new ClassifyDocumentOptions
             {
-                UrlSource = new Uri("http://host.com/doc.pdf"),
+                UriSource = new Uri("http://host.com/doc.pdf"),
             };
             Operation<AnalyzeResult> operation = await client.ClassifyDocumentAsync(WaitUntil.Completed, "classifierId", classifyRequest);
             AnalyzeResult responseData = operation.Value;

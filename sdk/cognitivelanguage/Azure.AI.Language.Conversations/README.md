@@ -482,6 +482,225 @@ foreach (AnalyzeConversationOperationResult operationResult in operationState.Ac
 }
 ```
 
+### Extract PII from a conversation With Character Mask Policy
+
+To detect and redact PII in a conversation using Character Mask Policy, you can use the `AnalyzeConversationsAsync` method overload with an action of type `PiiOperationAction` and utilize `CharacterMaskPolicyType` to define the RedactionCharacter (e.g., an asterisk *) to replace sensitive information. The method returns a `Response<AnalyzeConversationOperationState>`::
+
+```C# Snippet:AnalyzeConversation_ConversationPiiWithCharacterMaskPolicy
+var redactionPolicy = new CharacterMaskPolicyType
+{
+    RedactionCharacter = RedactionCharacter.Asterisk
+};
+
+// Simulate input conversation
+MultiLanguageConversationInput input = new MultiLanguageConversationInput(
+    new List<ConversationInput>
+    {
+        new TextConversation("1", "en", new List<TextConversationItem>
+        {
+            new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide your name?"),
+            new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
+            new TextConversationItem(id: "3", participantId: "Agent_1", text: "Thank you John, that has been updated in our system.")
+        })
+    });
+
+// Add action with CharacterMaskPolicyType
+List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
+{
+    new PiiOperationAction
+    {
+        ActionContent = new ConversationPiiActionContent
+        {
+            RedactionPolicy = redactionPolicy
+        },
+        Name = "Conversation PII with Character Mask Policy"
+    }
+};
+
+// Create input for analysis
+AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
+
+// Act: Perform the PII analysis
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
+AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
+// Assert: Validate the results
+foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
+{
+    Console.WriteLine($"Operation action name: {operationResult.Name}");
+
+    if (operationResult is ConversationPiiOperationResult piiOperationResult)
+    {
+        foreach (ConversationalPiiResult conversation in piiOperationResult.Results.Conversations)
+        {
+            Console.WriteLine($"Conversation: #{conversation.Id}");
+            foreach (ConversationPiiItemResult item in conversation.ConversationItems)
+            {
+                string redactedText = item.RedactedContent?.Text ?? string.Empty;
+                Console.WriteLine($"Redacted Text: {redactedText}");
+
+                // Only verify redaction if the original sentence had PII
+                if (item.Entities.Any())
+                {
+                    foreach (var entity in item.Entities)
+                    {
+                        Assert.That(redactedText, Does.Not.Contain(entity.Text),
+                            $"Expected entity '{entity.Text}' to be redacted but found in: {redactedText}");
+
+                        Assert.That(redactedText, Does.Contain("*"),
+                            $"Expected redacted text to contain '*' but got: {redactedText}");
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+### Extract PII from a conversation With Entity Mask Policy
+
+To detect and redact PII in a conversation using Character Mask Policy, you can use the `AnalyzeConversationsAsync` method overload with an action of type `PiiOperationAction` and utilize `EntityMaskTypePolicyType` as Mask Policy to replace sensitive information. The method returns a `Response<AnalyzeConversationOperationState>`::
+
+```C# Snippet:AnalyzeConversation_ConversationPiiWithEntityMaskPolicy
+var redactionPolicy = new EntityMaskTypePolicyType();
+
+MultiLanguageConversationInput input = new MultiLanguageConversationInput(
+    new List<ConversationInput>
+    {
+        new TextConversation("1", "en", new List<TextConversationItem>
+        {
+            new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide your name?"),
+            new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
+            new TextConversationItem(id: "3", participantId: "Agent_1", text: "Thank you John, that has been updated in our system.")
+        })
+    });
+
+// Add action with EntityMaskTypePolicyType
+List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
+{
+    new PiiOperationAction
+    {
+        ActionContent = new ConversationPiiActionContent
+        {
+            RedactionPolicy = redactionPolicy
+        },
+        Name = "Conversation PII with Entity Mask Policy"
+    }
+};
+
+// Create input for analysis
+AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
+
+// Act: Perform the PII analysis
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
+AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
+
+// Assert: Validate the results
+foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
+{
+    Console.WriteLine($"Operation action name: {operationResult.Name}");
+
+    if (operationResult is ConversationPiiOperationResult piiOperationResult)
+    {
+        foreach (ConversationalPiiResult conversation in piiOperationResult.Results.Conversations)
+        {
+            Console.WriteLine($"Conversation: #{conversation.Id}");
+            foreach (ConversationPiiItemResult item in conversation.ConversationItems)
+            {
+                string redactedText = item.RedactedContent?.Text ?? string.Empty;
+                Console.WriteLine($"Redacted Text: {redactedText}");
+
+                // Only verify redaction if the original sentence had PII
+                if (item.Entities.Any())
+                {
+                    foreach (var entity in item.Entities)
+                    {
+                        Assert.That(redactedText, Does.Not.Contain(entity.Text),
+                        $"Expected entity '{entity.Text}' to be redacted but found in: {redactedText}");
+
+                        // Case-insensitive pattern to match entity mask variations
+                        string expectedMaskPattern = $@"\[{entity.Category}-?\d*\]";
+
+                        // Perform case-insensitive regex match
+                        StringAssert.IsMatch("(?i)" + expectedMaskPattern, redactedText,
+                        $"Expected redacted text to contain an entity mask similar to '[{entity.Category}]' but got: {redactedText}");
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+### Extract PII from a conversation With Character Mask Policy
+
+To detect and redact PII in a conversation using No Mask Policy, you can use the `AnalyzeConversationsAsync` method overload with an action of type `PiiOperationAction` and utilize `NoMaskPolicyType` as Mask Policy. The method returns a `Response<AnalyzeConversationOperationState>`::
+
+```C# Snippet:AnalyzeConversation_ConversationPiiWithNoMaskPolicy
+var redactionPolicy = new NoMaskPolicyType();
+
+// Simulate input conversation
+MultiLanguageConversationInput input = new MultiLanguageConversationInput(
+    new List<ConversationInput>
+    {
+        new TextConversation("1", "en", new List<TextConversationItem>
+        {
+            new TextConversationItem(id: "1", participantId: "Agent_1", text: "Can you provide your name?"),
+            new TextConversationItem(id: "2", participantId: "Customer_1", text: "Hi, my name is John Doe."),
+            new TextConversationItem(id: "3", participantId: "Agent_1", text: "Thank you John, that has been updated in our system.")
+        })
+    });
+
+// Add action with NoMaskPolicyType
+List<AnalyzeConversationOperationAction> actions = new List<AnalyzeConversationOperationAction>
+{
+    new PiiOperationAction
+    {
+        ActionContent = new ConversationPiiActionContent
+        {
+            RedactionPolicy = redactionPolicy
+        },
+        Name = "Conversation PII with No Mask Policy"
+    }
+};
+
+// Create input for analysis
+AnalyzeConversationOperationInput data = new AnalyzeConversationOperationInput(input, actions);
+
+// Act: Perform the PII analysis
+Response<AnalyzeConversationOperationState> analyzeConversationOperation = await client.AnalyzeConversationsAsync(data);
+AnalyzeConversationOperationState operationState = analyzeConversationOperation.Value;
+
+// Assert: Validate the results
+foreach (AnalyzeConversationOperationResult operationResult in operationState.Actions.Items)
+{
+    Console.WriteLine($"Operation action name: {operationResult.Name}");
+
+    if (operationResult is ConversationPiiOperationResult piiOperationResult)
+    {
+        foreach (ConversationalPiiResult conversation in piiOperationResult.Results.Conversations)
+        {
+            Console.WriteLine($"Conversation: #{conversation.Id}");
+            foreach (ConversationPiiItemResult item in conversation.ConversationItems)
+            {
+                string originalText = item.RedactedContent?.Text ?? string.Empty;
+                Console.WriteLine($"Original Text: {originalText}");
+
+                // Ensure PII is detected
+                if (item.Entities.Any())
+                {
+                    foreach (var entity in item.Entities)
+                    {
+                        detectedEntities.Add(entity.Text);
+                        Assert.That(originalText, Does.Contain(entity.Text),
+                            $"Expected entity '{entity.Text}' to be present but was not found in: {originalText}");
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
 ### Additional samples
 
 Browse our [samples][conversationanalysis_samples] for more examples of how to analyze conversations.
@@ -586,7 +805,7 @@ When you submit a pull request, a CLA-bot will automatically determine whether y
 This project has adopted the [Microsoft Open Source Code of Conduct][code_of_conduct]. For more information see the [Code of Conduct FAQ][coc_faq] or contact [opencode@microsoft.com][coc_contact] with any additional questions or comments.
 
 <!-- LINKS -->
-[azure_cli]: https://docs.microsoft.com/cli/azure/
+[azure_cli]: https://learn.microsoft.com/cli/azure/
 [azure_identity]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md
 [azure_identity_install]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#install-the-package
 [azure_portal]: https://portal.azure.com/
@@ -595,10 +814,10 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [coc_contact]: mailto:opencode@microsoft.com
 [coc_faq]: https://opensource.microsoft.com/codeofconduct/faq/
 [code_of_conduct]: https://opensource.microsoft.com/codeofconduct/
-[cognitive_auth]: https://docs.microsoft.com/azure/cognitive-services/authentication/
+[cognitive_auth]: https://learn.microsoft.com/azure/cognitive-services/authentication/
 [contributing]: https://github.com/Azure/azure-sdk-for-net/blob/main/CONTRIBUTING.md
 [core_logging]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/Diagnostics.md
-[custom_domain]: https://docs.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
+[custom_domain]: https://learn.microsoft.com/azure/cognitive-services/authentication#create-a-resource-with-a-custom-subdomain
 [DefaultAzureCredential]: https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/identity/Azure.Identity/README.md#defaultazurecredential
 [language_studio]: https://language.cognitive.azure.com/
 [nuget]: https://www.nuget.org/
@@ -607,9 +826,9 @@ This project has adopted the [Microsoft Open Source Code of Conduct][code_of_con
 [conversationanalysis_client_src]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/src/
 [conversationanalysis_samples]: https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/cognitivelanguage/Azure.AI.Language.Conversations/samples/
 [conversationanalysis_nuget_package]: https://www.nuget.org/packages/Azure.AI.Language.Conversations/
-[conversationanalysis_docs]: https://docs.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/overview
-[conversationanalysis_docs_demos]: https://docs.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/quickstart
-[conversationanalysis_docs_features]: https://docs.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/overview
-[conversationanalysis_refdocs]: https://docs.microsoft.com/dotnet/api/azure.ai.language.conversations
+[conversationanalysis_docs]: https://learn.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/overview
+[conversationanalysis_docs_demos]: https://learn.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/quickstart
+[conversationanalysis_docs_features]: https://learn.microsoft.com/azure/cognitive-services/language-service/conversational-language-understanding/overview
+[conversationanalysis_refdocs]: https://learn.microsoft.com/dotnet/api/azure.ai.language.conversations
 [conversationanalysis_restdocs]: https://learn.microsoft.com/rest/api/language/
 [conversationalauthoring_samples]: https://github.com/Azure/azure-sdk-for-net/tree/Azure.AI.Language.Conversations_1.1.0/sdk/cognitivelanguage/Azure.AI.Language.Conversations#create-a-conversationauthoringclient

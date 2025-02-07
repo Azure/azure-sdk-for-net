@@ -59,9 +59,13 @@ namespace Azure.AI.Language.Text
         /// <param name="piiCategories"> Enumeration of PII categories to be returned in the response. </param>
         /// <param name="stringIndexType"> StringIndexType to be used for analysis. </param>
         /// <param name="excludePiiCategories"> Enumeration of PII categories to be excluded in the response. </param>
-        /// <param name="redactionCharacter"> Character to be used for redaction. Default in '*'. </param>
+        /// <param name="redactionPolicy">
+        /// RedactionPolicy to be used on the input.
+        /// Please note <see cref="BaseRedactionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskPolicyType"/> and <see cref="NoMaskPolicyType"/>.
+        /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PiiActionContent(bool? loggingOptOut, string modelVersion, PiiDomain? domain, IList<PiiCategory> piiCategories, StringIndexType? stringIndexType, IList<PiiCategoriesExclude> excludePiiCategories, RedactionCharacter? redactionCharacter, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal PiiActionContent(bool? loggingOptOut, string modelVersion, PiiDomain? domain, IList<PiiCategory> piiCategories, StringIndexType? stringIndexType, IList<PiiCategoriesExclude> excludePiiCategories, BaseRedactionPolicy redactionPolicy, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LoggingOptOut = loggingOptOut;
             ModelVersion = modelVersion;
@@ -69,7 +73,7 @@ namespace Azure.AI.Language.Text
             PiiCategories = piiCategories;
             StringIndexType = stringIndexType;
             ExcludePiiCategories = excludePiiCategories;
-            RedactionCharacter = redactionCharacter;
+            RedactionPolicy = redactionPolicy;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
@@ -85,7 +89,11 @@ namespace Azure.AI.Language.Text
         public StringIndexType? StringIndexType { get; set; }
         /// <summary> Enumeration of PII categories to be excluded in the response. </summary>
         public IList<PiiCategoriesExclude> ExcludePiiCategories { get; }
-        /// <summary> Character to be used for redaction. Default in '*'. </summary>
-        public RedactionCharacter? RedactionCharacter { get; set; }
+        /// <summary>
+        /// RedactionPolicy to be used on the input.
+        /// Please note <see cref="BaseRedactionPolicy"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CharacterMaskPolicyType"/>, <see cref="EntityMaskPolicyType"/> and <see cref="NoMaskPolicyType"/>.
+        /// </summary>
+        public BaseRedactionPolicy RedactionPolicy { get; set; }
     }
 }
