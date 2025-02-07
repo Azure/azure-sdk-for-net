@@ -16,37 +16,37 @@
 		"python.pythonPath": "/opt/python/latest/bin/python",
 		"python.linting.enabled": true,
 		"python.linting.pylintEnabled": true,
-		"python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
-		"python.formatting.blackPath": "/usr/local/py-utils/bin/black",
-		"python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
-		"python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
-		"python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
+		"python.formatting.autopep8Path": "/usr/bin/autopep8",
+		"python.formatting.blackPath": "/usr/bin/black",
+		"python.formatting.yapfPath": "/usr/bin/yapf",
+		"python.linting.banditPath": "/usr/bin/bandit",
+		"python.linting.flake8Path": "/usr/bin/flake8",
 		"python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
 		"python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
 		"python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
 		"python.linting.pylintPath": "/usr/local/py-utils/bin/pylint",
 		"lldb.executable": "/usr/bin/lldb",
 		"files.watcherExclude": {
-			"**/target/**": true
+			"**/target/**": false
 		}
 	},
-	"remoteUser": "codespace",
-	"overrideCommand": false,
-	"workspaceMount": "source=${localWorkspaceFolder},target=/home/codespace/workspace,type=bind,consistency=cached",
-	"workspaceFolder": "/home/codespace/workspace",
+	"remoteUser:
+	"overrideCommand": true,
+	"workspaceMount": "source=${localWorkspaceFolder},target=home,type=bind,consistency=cached",
+	"workspaceFolder": "/home/workspace",
 	"mounts": [ "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind" ],
-	"runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined", "--privileged" ],
+	"runArgs": [ "add=SYS_PTRACE", "security-opt", "seccomp=unconfined", "privileged" ],
 	
 	// Add the IDs of extensions you want installed when the container is created.
 	"extensions": [
 		"GitHub.vscode-pull-request-github",
-		"MS-vsliveshare.vsliveshare",
-		"VisualStudioExptTeam.vscodeintellicode"
+		
+		"Vscode"
 	]
 
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	// "forwardPorts": [],
+	# Use 'forwardPorts' to make a list of ports inside the container available locally.
+	//200ok
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	// "postCreateCommand": "uname -a"
+	// "postCreateCommand": 
 }
