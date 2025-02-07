@@ -104,6 +104,75 @@ namespace Azure.ResourceManager.Network
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of IpamPoolResources in the NetworkManager. </summary>
+        /// <returns> An object representing collection of IpamPoolResources and their operations over a IpamPoolResource. </returns>
+        public virtual IpamPoolCollection GetIpamPools()
+        {
+            return GetCachedClient(client => new IpamPoolCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Gets the specific Pool resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/ipamPools/{poolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpamPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IpamPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolName"> Pool resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IpamPoolResource>> GetIpamPoolAsync(string poolName, CancellationToken cancellationToken = default)
+        {
+            return await GetIpamPools().GetAsync(poolName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specific Pool resource.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/ipamPools/{poolName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>IpamPools_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="IpamPoolResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="poolName"> Pool resource name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="poolName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="poolName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IpamPoolResource> GetIpamPool(string poolName, CancellationToken cancellationToken = default)
+        {
+            return GetIpamPools().Get(poolName, cancellationToken);
+        }
+
         /// <summary> Gets a collection of ConnectivityConfigurationResources in the NetworkManager. </summary>
         /// <returns> An object representing collection of ConnectivityConfigurationResources and their operations over a ConnectivityConfigurationResource. </returns>
         public virtual ConnectivityConfigurationCollection GetConnectivityConfigurations()
@@ -124,7 +193,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -155,7 +224,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -193,7 +262,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -224,7 +293,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -240,6 +309,75 @@ namespace Azure.ResourceManager.Network
         public virtual Response<NetworkGroupResource> GetNetworkGroup(string networkGroupName, CancellationToken cancellationToken = default)
         {
             return GetNetworkGroups().Get(networkGroupName, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of NetworkManagerRoutingConfigurationResources in the NetworkManager. </summary>
+        /// <returns> An object representing collection of NetworkManagerRoutingConfigurationResources and their operations over a NetworkManagerRoutingConfigurationResource. </returns>
+        public virtual NetworkManagerRoutingConfigurationCollection GetNetworkManagerRoutingConfigurations()
+        {
+            return GetCachedClient(client => new NetworkManagerRoutingConfigurationCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves a network manager routing configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkManagerRoutingConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerRoutingConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationName"> The name of the network manager Routing Configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<NetworkManagerRoutingConfigurationResource>> GetNetworkManagerRoutingConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
+        {
+            return await GetNetworkManagerRoutingConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves a network manager routing configuration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>NetworkManagerRoutingConfigurations_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-05-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="NetworkManagerRoutingConfigurationResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="configurationName"> The name of the network manager Routing Configuration. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<NetworkManagerRoutingConfigurationResource> GetNetworkManagerRoutingConfiguration(string configurationName, CancellationToken cancellationToken = default)
+        {
+            return GetNetworkManagerRoutingConfigurations().Get(configurationName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ScopeConnectionResources in the NetworkManager. </summary>
@@ -262,7 +400,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -293,7 +431,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -331,7 +469,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -362,7 +500,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -400,7 +538,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -431,7 +569,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -449,73 +587,73 @@ namespace Azure.ResourceManager.Network
             return GetNetworkManagerSecurityUserConfigurations().Get(configurationName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of NetworkManagerRoutingConfigurationResources in the NetworkManager. </summary>
-        /// <returns> An object representing collection of NetworkManagerRoutingConfigurationResources and their operations over a NetworkManagerRoutingConfigurationResource. </returns>
-        public virtual NetworkManagerRoutingConfigurationCollection GetNetworkManagerRoutingConfigurations()
+        /// <summary> Gets a collection of NetworkVerifierWorkspaceResources in the NetworkManager. </summary>
+        /// <returns> An object representing collection of NetworkVerifierWorkspaceResources and their operations over a NetworkVerifierWorkspaceResource. </returns>
+        public virtual NetworkVerifierWorkspaceCollection GetNetworkVerifierWorkspaces()
         {
-            return GetCachedClient(client => new NetworkManagerRoutingConfigurationCollection(client, Id));
+            return GetCachedClient(client => new NetworkVerifierWorkspaceCollection(client, Id));
         }
 
         /// <summary>
-        /// Retrieves a network manager routing configuration.
+        /// Gets Verifier Workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/verifierWorkspaces/{workspaceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkManagerRoutingConfigurations_Get</description>
+        /// <description>VerifierWorkspaces_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerRoutingConfigurationResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> The name of the network manager Routing Configuration. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NetworkManagerRoutingConfigurationResource>> GetNetworkManagerRoutingConfigurationAsync(string configurationName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NetworkVerifierWorkspaceResource>> GetNetworkVerifierWorkspaceAsync(string workspaceName, CancellationToken cancellationToken = default)
         {
-            return await GetNetworkManagerRoutingConfigurations().GetAsync(configurationName, cancellationToken).ConfigureAwait(false);
+            return await GetNetworkVerifierWorkspaces().GetAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
-        /// Retrieves a network manager routing configuration.
+        /// Gets Verifier Workspace.
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/routingConfigurations/{configurationName}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/networkManagers/{networkManagerName}/verifierWorkspaces/{workspaceName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>NetworkManagerRoutingConfigurations_Get</description>
+        /// <description>VerifierWorkspaces_Get</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="NetworkManagerRoutingConfigurationResource"/></description>
+        /// <description><see cref="NetworkVerifierWorkspaceResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="configurationName"> The name of the network manager Routing Configuration. </param>
+        /// <param name="workspaceName"> Workspace name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="configurationName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="configurationName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <exception cref="ArgumentNullException"> <paramref name="workspaceName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="workspaceName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NetworkManagerRoutingConfigurationResource> GetNetworkManagerRoutingConfiguration(string configurationName, CancellationToken cancellationToken = default)
+        public virtual Response<NetworkVerifierWorkspaceResource> GetNetworkVerifierWorkspace(string workspaceName, CancellationToken cancellationToken = default)
         {
-            return GetNetworkManagerRoutingConfigurations().Get(configurationName, cancellationToken);
+            return GetNetworkVerifierWorkspaces().Get(workspaceName, cancellationToken);
         }
 
         /// <summary>
@@ -531,7 +669,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -571,7 +709,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -611,7 +749,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -654,7 +792,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -697,7 +835,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -739,7 +877,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -781,7 +919,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -815,7 +953,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -849,7 +987,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -883,7 +1021,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -917,7 +1055,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -959,7 +1097,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1001,7 +1139,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1031,7 +1169,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1061,7 +1199,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1123,7 +1261,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1185,7 +1323,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1242,7 +1380,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1299,7 +1437,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1359,7 +1497,7 @@ namespace Azure.ResourceManager.Network
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2024-03-01</description>
+        /// <description>2024-05-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

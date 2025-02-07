@@ -3,16 +3,16 @@
 
 using System;
 using System.ComponentModel;
+using Azure.CloudMachine.Core;
 using Azure.Core;
-using Azure.Provisioning.CloudMachine;
 
 namespace Azure.CloudMachine;
 
 public static class CloudMachineClientExtensions
 {
-    public static void Configure(this CloudMachineClient client, Action<CloudMachineInfrastructure>? configure = default)
+    private static void Configure(this ProjectClient client, Action<ProjectInfrastructure>? configure = default)
     {
-        CloudMachineInfrastructure cmi = new(client.Id);
+        ProjectInfrastructure cmi = new(client.Id);
         if (configure != default)
         {
             configure(cmi);
@@ -24,20 +24,20 @@ public static class CloudMachineClientExtensions
         Azd.Init(cmi);
     }
 
-    public static T AddFeature<T>(this CloudMachineClient client, T feature) where T : CloudMachineFeature
+    public static T AddFeature<T>(this ProjectClient client, T feature) where T : CloudMachineFeature
     {
-        CloudMachineInfrastructure infra = client.GetInfrastructure();
+        ProjectInfrastructure infra = client.GetInfrastructure();
         infra.AddFeature(feature);
         CopyConnections(infra.Connections, client.Connections);
         return feature;
     }
 
     [EditorBrowsable(EditorBrowsableState.Never)]
-    public static CloudMachineInfrastructure GetInfrastructure(this CloudMachineClient client)
+    public static ProjectInfrastructure GetInfrastructure(this ProjectClient client)
     {
         return client.Subclients.Get(() =>
         {
-            CloudMachineInfrastructure infra = new CloudMachineInfrastructure(client.Id);
+            ProjectInfrastructure infra = new ProjectInfrastructure(client.Id);
             return infra;
         });
     }

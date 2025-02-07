@@ -407,6 +407,30 @@ namespace Azure.ResourceManager.Compute.Mocking
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="GalleryInVmAccessControlProfileResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GalleryInVmAccessControlProfileResource.CreateResourceIdentifier" /> to create a <see cref="GalleryInVmAccessControlProfileResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GalleryInVmAccessControlProfileResource"/> object. </returns>
+        public virtual GalleryInVmAccessControlProfileResource GetGalleryInVmAccessControlProfileResource(ResourceIdentifier id)
+        {
+            GalleryInVmAccessControlProfileResource.ValidateResourceId(id);
+            return new GalleryInVmAccessControlProfileResource(Client, id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="GalleryInVmAccessControlProfileVersionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="GalleryInVmAccessControlProfileVersionResource.CreateResourceIdentifier" /> to create a <see cref="GalleryInVmAccessControlProfileVersionResource"/> <see cref="ResourceIdentifier"/> from its components.
+        /// </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="GalleryInVmAccessControlProfileVersionResource"/> object. </returns>
+        public virtual GalleryInVmAccessControlProfileVersionResource GetGalleryInVmAccessControlProfileVersionResource(ResourceIdentifier id)
+        {
+            GalleryInVmAccessControlProfileVersionResource.ValidateResourceId(id);
+            return new GalleryInVmAccessControlProfileVersionResource(Client, id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="SharedGalleryResource"/> along with the instance operations that can be performed on it but with no data.
         /// You can use <see cref="SharedGalleryResource.CreateResourceIdentifier" /> to create a <see cref="SharedGalleryResource"/> <see cref="ResourceIdentifier"/> from its components.
         /// </summary>

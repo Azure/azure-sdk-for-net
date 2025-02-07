@@ -1,18 +1,14 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Collections.Generic;
-using System.Linq;
 using Azure.CloudMachine.Core;
 using Azure.Core;
-using Azure.Provisioning;
-using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 
-namespace Azure.CloudMachine;
+namespace Azure.CloudMachine.Storage;
 
 internal class StorageAccountFeature : CloudMachineFeature
 {
@@ -25,7 +21,7 @@ internal class StorageAccountFeature : CloudMachineFeature
         Name = accountName;
     }
 
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
         var storage = new StorageAccount("cm_storage", StorageAccount.ResourceVersions.V2023_01_01)
         {
@@ -34,6 +30,7 @@ internal class StorageAccountFeature : CloudMachineFeature
             Sku = new StorageSku { Name = _skuName },
             IsHnsEnabled = true,
             AllowBlobPublicAccess = false,
+            AllowSharedKeyAccess = false,
             Identity = new()
             {
                 ManagedServiceIdentityType = ManagedServiceIdentityType.UserAssigned,
@@ -63,7 +60,7 @@ internal class BlobContainerFeature : CloudMachineFeature
         ContainerName = containerName;
         Parent = parent;
     }
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure cm)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
     {
         BlobContainer container = new($"cm_storage_blobs_container_{ContainerName}", "2023-01-01")
         {
@@ -92,7 +89,7 @@ internal class BlobServiceFeature : CloudMachineFeature
     {
         Account = account;
     }
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure cm)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure cm)
     {
         BlobService blobs = new("cm_storage_blobs")
         {

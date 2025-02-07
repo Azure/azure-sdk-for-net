@@ -1,3 +1,19 @@
+parameters:
+  - name: Artifacts
+    type: object
+    default: []
+  - name: ServiceDirectory
+    type: string
+  - name: DocGenerationDir
+    type: string
+    default: "$(Build.SourcesDirectory)/doc/ApiDocGeneration"
+  - name: LibType
+    type: string
+    default: client
+  - name: PackageInfoFolder
+    type: string
+
+
 steps:
   - task: PowerShell@2
     displayName: Download and Extract Required Software
@@ -23,3 +39,42 @@ steps:
           -DocGenDir ${{parameters.DocGenerationDir}}
           -ArtifactStagingDirectory '$(Build.ArtifactStagingDirectory)'
           -verbose
+
+  # artifacts will only be blank if the template is called with no Artifact parameter,
+  # which should only happen in the case of a PR build. In this case we locate all that were directly
+  # changed and build their docs.
+  - ${{ if not(parameters.Artifacts) }}:
+    - pwsh: |
+        $failedBuild = $false
+
+        $targetedPackages = Get-ChildItem -Recurse "${{ parameters.PackageInfoFolder }}" *.json
+          | ForEach-Object { Get-Content -Raw _ | ConvertFrom-Json }
+          | Where-Object { $_.IncludedForValidation -ne $true }
+
+        if ($targetedPackages) {
+          foreach($pkg in $targetedPackages) {
+            $artifactDirectory = ($pkg.DirectoryPath -split '\\|/')[-1]
+
+            &"$(Build.SourcesDirectory)/doc/ApiDocGeneration/Generate-Api-Docs.ps1" `
+              -ArtifactName '$($pkg.name)' `
+              -ServiceDirectory '$($pkg.ServiceDirectory)' `
+              -ArtifactsDirectoryName '$artifactDirectory' `
+              -RepoRoot $(Build.SourcesDirectory) `
+              -BinDirectory $(Build.BinariesDirectory) `
+              -DocGenDir ${{parameters.DocGenerationDir}} `
+              -ArtifactStagingDirectory '$(Build.ArtifactStagingDirectory)' `
+              -verbose
+
+            if ($LASTEXITCODE -ne 0) {
+              $failedBuild = $true
+            }
+          }
+        }
+        else {
+          Write-Host "No directly targeted packages found. Skipping doc generation."
+        }
+
+        if ($failedBuild) {
+          exit 1
+        }
+      displayName: Generate Docs for Pull Request

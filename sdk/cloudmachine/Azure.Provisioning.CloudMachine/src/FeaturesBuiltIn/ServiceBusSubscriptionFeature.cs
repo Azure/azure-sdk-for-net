@@ -2,16 +2,16 @@
 // Licensed under the MIT License.
 
 using System;
+using Azure.CloudMachine.Core;
 using Azure.Core;
-using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.ServiceBus;
 
-namespace Azure.CloudMachine;
+namespace Azure.CloudMachine.ServiceBus;
 
-public class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature parent) : CloudMachineFeature
+internal class ServiceBusSubscriptionFeature(string name, ServiceBusTopicFeature parent) : CloudMachineFeature
 {
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure infrastructure)
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
         var subscription = new ServiceBusSubscription(name, "2021-11-01")
         {

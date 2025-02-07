@@ -18,7 +18,7 @@ namespace Azure.AI.Language.Text
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="results"> List of results. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="results"/> is null. </exception>
-        internal CustomSingleLabelClassificationOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, CustomLabelClassificationActionResult results) : base(lastUpdateDateTime, status)
+        internal CustomSingleLabelClassificationOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, CustomLabelClassificationResult results) : base(lastUpdateDateTime, status)
         {
             Argument.AssertNotNull(results, nameof(results));
 
@@ -33,7 +33,7 @@ namespace Azure.AI.Language.Text
         /// <param name="kind"> Kind of the task. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="results"> List of results. </param>
-        internal CustomSingleLabelClassificationOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, string name, AnalyzeTextOperationResultsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, CustomLabelClassificationActionResult results) : base(lastUpdateDateTime, status, name, kind, serializedAdditionalRawData)
+        internal CustomSingleLabelClassificationOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, string name, AnalyzeTextOperationResultsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, CustomLabelClassificationResult results) : base(lastUpdateDateTime, status, name, kind, serializedAdditionalRawData)
         {
             Results = results;
         }
@@ -44,6 +44,6 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> List of results. </summary>
-        public CustomLabelClassificationActionResult Results { get; }
+        public CustomLabelClassificationResult Results { get; }
     }
 }

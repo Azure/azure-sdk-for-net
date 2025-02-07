@@ -2,20 +2,21 @@
 // Licensed under the MIT License.
 
 using Azure.CloudMachine.Core;
-using Azure.Provisioning.CloudMachine;
 using Azure.Provisioning.EventGrid;
 using Azure.Provisioning.Expressions;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using Azure.Provisioning.Storage;
 
-namespace Azure.CloudMachine;
+namespace Azure.CloudMachine.EventGrid;
 
 internal class EventGridSystemTopicFeature(string topicName, CloudMachineFeature source, string topicType) : CloudMachineFeature
 {
-    protected override ProvisionableResource EmitResources(CloudMachineInfrastructure infrastructure)
+    internal const string EventGridTopicVersion = "2022-06-15";
+
+    protected override ProvisionableResource EmitResources(ProjectInfrastructure infrastructure)
     {
-        var topic = new SystemTopic("cm_eventgrid_topic", InternalConstants.EventGridTopicVersion)
+        var topic = new SystemTopic("cm_eventgrid_topic", EventGridTopicVersion)
         {
             TopicType = topicType,
             Source = EnsureEmits<StorageAccount>(source).Id,

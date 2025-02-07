@@ -13,7 +13,7 @@ namespace Azure.AI.Language.Text
     /// <summary>
     /// The result object for the analyze task.
     /// Please note <see cref="AnalyzeTextResult"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="AnalyzeTextDynamicClassificationResult"/>, <see cref="AnalyzeTextEntityLinkingResult"/>, <see cref="AnalyzeTextEntitiesResult"/>, <see cref="AnalyzeTextKeyPhraseResult"/>, <see cref="AnalyzeTextLanguageDetectionResult"/>, <see cref="AnalyzeTextPiiResult"/> and <see cref="AnalyzeTextSentimentResult"/>.
+    /// The available derived classes include <see cref="AnalyzeTextEntityLinkingResult"/>, <see cref="AnalyzeTextEntitiesResult"/>, <see cref="AnalyzeTextKeyPhraseResult"/>, <see cref="AnalyzeTextLanguageDetectionResult"/>, <see cref="AnalyzeTextPiiResult"/> and <see cref="AnalyzeTextSentimentResult"/>.
     /// </summary>
     public abstract partial class AnalyzeTextResult
     {
