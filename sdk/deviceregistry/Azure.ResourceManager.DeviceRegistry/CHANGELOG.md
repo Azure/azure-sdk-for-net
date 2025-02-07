@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0 (Unreleased)
+## 1.0.0-beta.3 (Unreleased)
 
 - Aligned resource types to Microsoft.DeviceRegistry API version `2024-11-01`.
 
