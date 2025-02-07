@@ -893,8 +893,10 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 await transferManager.PauseTransferAsync(transferId);
                 #endregion
 
+                #region Snippet:ResumeAllTransfers
                 // Resume all transfers
                 List<TransferOperation> transfers = await transferManager.ResumeAllTransfersAsync();
+                #endregion
 
                 // Resume a single transfer
                 #region Snippet:DataMovement_ResumeSingle
@@ -954,7 +956,7 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
                 #endregion
 
                 TransferOperation resumedTransfer = await transferManager.ResumeTransferAsync(
-                    transferId: transferOperation.Id);
+                transferId: transferOperation.Id);
 
                 // Wait for download to finish
                 await resumedTransfer.WaitForCompletionAsync();
@@ -1208,6 +1210,27 @@ namespace Azure.Storage.DataMovement.Blobs.Samples
             {
                 CreationMode = StorageResourceCreationMode.SkipIfExists,
             };
+            #endregion
+        }
+
+        public async Task ResumeTransfersStoredAsync()
+        {
+            #region Snippet:TransferManagerResumeTransfers
+            TokenCredential tokenCredential = new DefaultAzureCredential();
+            BlobsStorageResourceProvider blobs = new(tokenCredential);
+            TransferManager transferManager = new TransferManager(new TransferManagerOptions()
+            {
+                ProvidersForResuming = new List<StorageResourceProvider>() { blobs }
+            });
+            // Get resumable transfers from transfer manager
+            await foreach (TransferProperties properties in transferManager.GetResumableTransfersAsync())
+            {
+                // Resume the transfer
+                if (properties.SourceUri.AbsoluteUri == "https://storageaccount.blob.core.windows.net/containername/blobpath")
+                {
+                    await transferManager.ResumeTransferAsync(properties.TransferId);
+                }
+            }
             #endregion
         }
 

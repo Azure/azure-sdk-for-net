@@ -37,9 +37,9 @@ TransferManagerOptions options = new TransferManagerOptions()
  
 By persisting transfer progress to disk, DataMovement allows resuming of transfers that failed partway through, or were otherwise paused. To resume a transfer, the transfer manager needs to be setup in the first place with `StorageResourceProvider` instances (the same ones used above in [Starting New Transfers](#starting-new-transfers)) which are capable of reassembling the transfer components from persisted data.
 
-The below sample initializes the `TransferManager` such that it's capable of resuming transfers between the local filesystem and Azure Blob Storage, using the Azure.Storage.DataMovement.Blobs package.
+The below sample initializes the `TransferManager` such that it's capable of resuming transfers between the local filesystem and Azure Blob Storage, using the Azure.Storage.DataMovement.Blobs package. The `BlobsStorageResourceProvider` uses an `Azure.Core` token credential with permission to the appropriate resources.
 
-> **Important:** Credentials to storage providers are not persisted. Storage access which requires credentials will need its appropriate `StorageResourceProvider` to be configured with those credentials. Below uses an `Azure.Core` token credential with permission to the appropriate resources.
+> **Important:** Credentials to storage providers are not persisted. Storage access which requires credentials will need its appropriate `StorageResourceProvider` to be configured with those credentials. 
 
 ```C# Snippet:SetupTransferManagerForResume
 TokenCredential tokenCredential = new DefaultAzureCredential();
@@ -52,9 +52,44 @@ TransferManager transferManager = new(new TransferManagerOptions()
 
 To resume a transfer, provide the transfer's ID, as shown below. In the case where your application does not have the desired transfer ID available, use `TransferManager.GetTransfersAsync()` to find that transfer and it's ID.
 
+> **WARNING:** If your storage resource requires credentials, and the `TransferManagerOptions.ProvidersForResuming` was not configured correctly (e.g. providing correct credentials to the `StorageResourceProvider`, or failing to set `ProvidersForResuming`), and you attempt to resume, the transfer will most likely fail.
+
 ```C# Snippet:DataMovement_ResumeSingle
 TransferOperation resumedTransfer = await transferManager.ResumeTransferAsync(transferId);
 ```
+
+### Retrieve Resumable transfers stored in the Checkpointer
+
+To retrieve and resume specific transfers stored within the checkpointer, see the sample below.
+
+```C# Snippet:TransferManagerResumeTransfers
+TokenCredential tokenCredential = new DefaultAzureCredential();
+BlobsStorageResourceProvider blobs = new(tokenCredential);
+TransferManager transferManager = new TransferManager(new TransferManagerOptions()
+{
+    ProvidersForResuming = new List<StorageResourceProvider>() { blobs }
+});
+// Get resumable transfers from transfer manager
+await foreach (TransferProperties properties in transferManager.GetResumableTransfersAsync())
+{
+    // Resume the transfer
+    if (properties.SourceUri.AbsoluteUri == "https://storageaccount.blob.core.windows.net/containername/blobpath")
+    {
+        await transferManager.ResumeTransferAsync(properties.TransferId);
+    }
+}
+```
+
+To resume **all** transfers stored in the checkpointer, see the sample below.
+
+```C# Snippet:ResumeAllTransfers
+// Resume all transfers
+List<TransferOperation> transfers = await transferManager.ResumeAllTransfersAsync();
+```
+
+Each storage service has their respective `StorageResourceProvider`:
+- [Blob](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Blobs/README.md#)
+- [Share File](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement.Files.Shares/README.md#resume-using-sharefilesstorageresourceprovider)
 
 ## Pausing transfers
 

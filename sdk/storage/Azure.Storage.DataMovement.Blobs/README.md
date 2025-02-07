@@ -235,6 +235,30 @@ destinationResource: await blobs.FromContainerAsync(
 await transferOperation.WaitForCompletionAsync();
 ```
 
+### Resume using ShareFilesStorageResourceProvider
+
+To resume a transfer with Blob(s), valid credentials must be provided. See the sample below.
+
+```C# Snippet:TransferManagerResumeTransfers
+TokenCredential tokenCredential = new DefaultAzureCredential();
+BlobsStorageResourceProvider blobs = new(tokenCredential);
+TransferManager transferManager = new TransferManager(new TransferManagerOptions()
+{
+    ProvidersForResuming = new List<StorageResourceProvider>() { blobs }
+});
+// Get resumable transfers from transfer manager
+await foreach (TransferProperties properties in transferManager.GetResumableTransfersAsync())
+{
+    // Resume the transfer
+    if (properties.SourceUri.AbsoluteUri == "https://storageaccount.blob.core.windows.net/containername/blobpath")
+    {
+        await transferManager.ResumeTransferAsync(properties.TransferId);
+    }
+}
+```
+
+For more information regarding pause, resume, and/or checkpointing, see [Pause and Resume Checkpointing](https://github.com/Azure/azure-sdk-for-net/tree/main/sdk/storage/Azure.Storage.DataMovement/samples/PauseResumeCheckpointing.md).
+
 ### Extensions on `BlobContainerClient`
 
 For applications with preexisting code using Azure.Storage.Blobs, this package provides extension methods for `BlobContainerClient` to get some of the benefits of the `TransferManager` with minimal extra code.
