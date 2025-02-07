@@ -210,7 +210,9 @@ function Group-ByObjectKey {
   $groupedDictionary = @{}
 
   foreach ($item in $Items) {
-    if ($item."$GroupByProperty" -is [array]) {
+    # if the item is an array, we need to group by each element in the array
+    # however if it's an empty array we want to treat it as a single item
+    if ($item."$GroupByProperty" -and $item."$GroupByProperty" -is [array]) {
       foreach ($GroupByPropertyValue in $item."$GroupByProperty") {
         $key = Get-ObjectKey $GroupByPropertyValue
 
@@ -218,18 +220,21 @@ function Group-ByObjectKey {
           $groupedDictionary[$key] = @()
         }
 
-        # Add the current item to the array for this key
         $groupedDictionary[$key] += $item
       }
     }
     else {
-      $key = Get-ObjectKey $item."$GroupByProperty"
+      if ($item."$GroupByProperty") {
+        $key = Get-ObjectKey $item."$GroupByProperty"
+      }
+      else {
+        $key = "unset"
+      }
 
       if (-not $groupedDictionary.ContainsKey($key)) {
         $groupedDictionary[$key] = @()
       }
 
-      # Add the current item to the array for this key
       $groupedDictionary[$key] += $item
     }
   }
