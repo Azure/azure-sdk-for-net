@@ -192,8 +192,8 @@ namespace Azure.Generator.Providers
                         _operationIdField.Assign(This.Invoke(GetOperationIdName, _rehydrationTokenField)).Terminate(),
                     ])),
                 _operationField.Assign(_isGeneric
-                    ? New.Instance(new CSharpType(typeof(OperationInternal), _t), [Static<NextLinkOperationImplementation>().Invoke("Create", sourceParameter, nextLinkOperationVariable), clientDiagnosticsParameter, responseParameter, Literal("MgmtTypeSpecArmOperation"), Null, New.Instance(typeof(SequentialDelayStrategy))])
-                    : New.Instance(typeof(OperationInternal), [nextLinkOperationVariable, clientDiagnosticsParameter, responseParameter, Literal("MgmtTypeSpecArmOperation"), Null, New.Instance(typeof(SequentialDelayStrategy))])).Terminate(),
+                    ? New.Instance(new CSharpType(typeof(OperationInternal), _t), [Static<NextLinkOperationImplementation>().Invoke("Create", sourceParameter, nextLinkOperationVariable), clientDiagnosticsParameter, responseParameter, Literal(Name), Null, New.Instance(typeof(SequentialDelayStrategy))])
+                    : New.Instance(typeof(OperationInternal), [nextLinkOperationVariable, clientDiagnosticsParameter, responseParameter, Literal(Name), Null, New.Instance(typeof(SequentialDelayStrategy))])).Terminate(),
             };
             return new ConstructorProvider(signature, body, this);
         }
