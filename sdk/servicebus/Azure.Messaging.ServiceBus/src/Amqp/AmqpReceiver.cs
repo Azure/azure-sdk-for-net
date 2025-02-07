@@ -396,6 +396,7 @@ namespace Azure.Messaging.ServiceBus.Amqp
                             catch (Exception closeEx)
                             {
                                 ServiceBusEventSource.Log.CloseLinkException(Identifier, closeEx.ToString());
+                                throw;
                             }
                         }
 
