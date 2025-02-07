@@ -12,6 +12,40 @@ namespace Azure.Storage.Tests
 {
     public class StorageCrc64NonCryptographicHashAlgorithmTests
     {
+        private static readonly byte[] TestVectorBytes = Encoding.UTF8.GetBytes("Hello, World!");
+        private const ulong TestVectorExpectedCrc64 = 0xd4a9be4326add24d;
+
+        [Test]
+        public void StorageHashAlgorithm_GetCurrentHash()
+        {
+            var calculator = StorageCrc64HashAlgorithm.Create();
+            calculator.Append(TestVectorBytes);
+
+            byte[] actual = calculator.GetCurrentHash();
+            byte[] expected = BitConverter.GetBytes(TestVectorExpectedCrc64);
+
+            Assert.IsTrue(Enumerable.SequenceEqual(expected, actual));
+        }
+
+        [Test]
+        public void StorageHashAlgorithm_GetCurrentHashAsUInt64()
+        {
+            var calculator = StorageCrc64HashAlgorithm.Create();
+            calculator.Append(TestVectorBytes);
+
+            ulong actual = calculator.GetCurrentHashAsUInt64();
+
+            Assert.AreEqual(TestVectorExpectedCrc64, actual);
+        }
+
+        [Test]
+        public void StorageHashAlgorithm_HashToUInt64()
+        {
+            ulong actual = StorageCrc64HashAlgorithm.HashToUInt64(TestVectorBytes);
+
+            Assert.AreEqual(TestVectorExpectedCrc64, actual);
+        }
+
         [Test]
         public void UpdateHashManualAppends()
         {

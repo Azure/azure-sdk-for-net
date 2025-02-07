@@ -44,5 +44,21 @@ namespace Azure.Storage
         /// <inheritdoc/>
         protected override void GetCurrentHashCore(Span<byte> destination)
             => BitConverter.GetBytes(_uCRC).CopyTo(destination);
+
+        /// <summary>
+        /// Gets the current computed hash value without modifying accumulated state.
+        /// </summary>
+        /// <returns>The hash value for the data already provided.</returns>
+        public ulong GetCurrentHashAsUInt64() => _uCRC;
+
+        /// <summary>
+        /// Computes the Azure Storage CRC-64 hash of the provided data.
+        /// </summary>
+        /// <param name="source">The data to hash.</param>
+        /// <returns>The computed Azure Storage CRC-64 hash.</returns>
+        public static ulong HashToUInt64(ReadOnlySpan<byte> source)
+        {
+            return StorageCrc64Calculator.ComputeSlicedSafe(source, uCrc: 0);
+        }
     }
 }
