@@ -97,7 +97,26 @@ namespace Azure.Generator
 
         /// <inheritdoc/>
         // TODO: generate collections
-        protected override TypeProvider[] BuildTypeProviders() => [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition(), .. BuildResources()];
+        protected override TypeProvider[] BuildTypeProviders()
+        {
+            if (AzureClientPlugin.Instance.IsAzureArm.Value == true)
+            {
+                return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition(), .. BuildLROProviders(), .. BuildResources()];
+            }
+            return [.. base.BuildTypeProviders(), new RequestContextExtensionsDefinition()];
+        }
+
+        private static TypeProvider[] BuildLROProviders()
+        {
+            var armOperation = new MgmtLongRunningOperationProvider(false);
+            var genericArmOperation = new MgmtLongRunningOperationProvider(true);
+
+            // TODO: remove them once they are referenced in Resource operation implementation
+            AzureClientPlugin.Instance.AddTypeToKeep(armOperation.Name);
+            AzureClientPlugin.Instance.AddTypeToKeep(genericArmOperation.Name);
+
+            return [armOperation, genericArmOperation];
+        }
 
         internal bool IsResource(string name) => _specNameToOperationSetsMap.ContainsKey(name);
 

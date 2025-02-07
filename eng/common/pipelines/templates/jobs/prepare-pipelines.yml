@@ -32,6 +32,7 @@ jobs:
     AzureSDK_Maven_Release_Pipeline_Secrets: 1
     AzureSDK_Nuget_Release_Pipeline_Secrets: 13
     AzureSDK_CocoaPods_Release_Pipeline_Secrets: 98
+    AzureSDK_CratesIo_Release_Pipeline_Secrets: 150
     NPM_Registry_Authentication: 24
     Release_Secrets_for_GitHub: 58
     Secrets_for_Resource_Provisioner: 64
@@ -101,6 +102,11 @@ jobs:
           "python" {
             $generatePublicCIPipeline = 'false'
             $internalVariableGroups = '$(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
+            $testVariableGroups = '$(Secrets_for_Resource_Provisioner)'
+          }
+          "rust" {
+            $generatePublicCIPipeline = 'false'
+            $internalVariableGroups = '$(AzureSDK_CratesIo_Release_Pipeline_Secrets) $(Release_Secrets_for_GitHub) $(APIReview_AutoCreate_Configurations)'
             $testVariableGroups = '$(Secrets_for_Resource_Provisioner)'
           }
           "net" {
