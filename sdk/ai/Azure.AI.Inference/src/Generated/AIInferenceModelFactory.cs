@@ -22,6 +22,14 @@ namespace Azure.AI.Inference
             return new ChatRequestSystemMessage(ChatRole.System, serializedAdditionalRawData: null, content);
         }
 
+        /// <summary> Initializes a new instance of <see cref="Inference.ChatRequestDeveloperMessage"/>. </summary>
+        /// <param name="content"> The contents of the developer message. </param>
+        /// <returns> A new <see cref="Inference.ChatRequestDeveloperMessage"/> instance for mocking. </returns>
+        public static ChatRequestDeveloperMessage ChatRequestDeveloperMessage(string content = null)
+        {
+            return new ChatRequestDeveloperMessage(ChatRole.Developer, serializedAdditionalRawData: null, content);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Inference.ChatMessageTextContentItem"/>. </summary>
         /// <param name="text"> The content of the message. </param>
         /// <returns> A new <see cref="Inference.ChatMessageTextContentItem"/> instance for mocking. </returns>

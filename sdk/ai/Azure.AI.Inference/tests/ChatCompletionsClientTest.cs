@@ -55,21 +55,51 @@ namespace Azure.AI.Inference.Tests
         /* please refer to https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/template/Azure.Template/tests/TemplateClientLiveTests.cs to write tests. */
 
         [RecordedTest]
-        public async Task TestChatCompletions()
+        [TestCase(TargetModel.MistralSmall)]
+        [TestCase(TargetModel.GitHubGpt4o)]
+        [TestCase(TargetModel.AoaiGpt4o)]
+        public async Task TestChatCompletions(TargetModel targetModel)
         {
-            var mistralSmallEndpoint = new Uri(TestEnvironment.MistralSmallEndpoint);
-            var mistralSmallCredential = new AzureKeyCredential(TestEnvironment.MistralSmallApiKey);
+            var endpoint = targetModel switch
+            {
+                TargetModel.MistralSmall => new Uri(TestEnvironment.MistralSmallEndpoint),
+                TargetModel.GitHubGpt4o => new Uri(TestEnvironment.GithubEndpoint),
+                TargetModel.AoaiGpt4o => new Uri(TestEnvironment.AoaiEndpoint),
+                _ => throw new ArgumentException(nameof(targetModel)),
+            };
 
-            var client = CreateClient(mistralSmallEndpoint, mistralSmallCredential, new AzureAIInferenceClientOptions());
+            var credential = targetModel switch
+            {
+                TargetModel.MistralSmall => new AzureKeyCredential(TestEnvironment.MistralSmallApiKey),
+                TargetModel.GitHubGpt4o => new AzureKeyCredential(TestEnvironment.GithubToken),
+                TargetModel.AoaiGpt4o => new AzureKeyCredential(TestEnvironment.AoaiKey),
+                _ => throw new ArgumentException(nameof(targetModel)),
+            };
+
+            var client = CreateClient(endpoint, credential, new AzureAIInferenceClientOptions());
+
+            IList<ChatRequestMessage> messages = new List<ChatRequestMessage>();
+
+            if (targetModel == TargetModel.AoaiGpt4o)
+            {
+                messages.Add(new ChatRequestDeveloperMessage("You are a helpful assistant."));
+            }
+            else
+            {
+                messages.Add(new ChatRequestSystemMessage("You are a helpful assistant."));
+            }
+
+            messages.Add(new ChatRequestUserMessage("How many feet are in a mile?"));
 
             var requestOptions = new ChatCompletionsOptions()
             {
-                Messages =
-                {
-                    new ChatRequestSystemMessage("You are a helpful assistant."),
-                    new ChatRequestUserMessage("How many feet are in a mile?"),
-                },
+                Messages = messages,
             };
+
+            if (targetModel == TargetModel.GitHubGpt4o)
+            {
+                requestOptions.Model = "gpt-4o";
+            }
 
             Response<ChatCompletions> response = await client.CompleteAsync(requestOptions);
 

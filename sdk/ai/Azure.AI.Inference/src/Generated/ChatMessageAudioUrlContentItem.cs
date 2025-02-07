@@ -10,11 +10,11 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Inference
 {
-    /// <summary> A structured chat content item containing an audio content. </summary>
+    /// <summary> A structured chat content item for audio content passed as a url pointer. </summary>
     internal partial class ChatMessageAudioUrlContentItem : ChatMessageContentItem
     {
         /// <summary> Initializes a new instance of <see cref="ChatMessageAudioUrlContentItem"/>. </summary>
-        /// <param name="audioUrl"> The details of the audio content. </param>
+        /// <param name="audioUrl"> The details of the audio url pointer. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="audioUrl"/> is null. </exception>
         public ChatMessageAudioUrlContentItem(ChatMessageInputAudioUrl audioUrl)
         {
@@ -27,7 +27,7 @@ namespace Azure.AI.Inference
         /// <summary> Initializes a new instance of <see cref="ChatMessageAudioUrlContentItem"/>. </summary>
         /// <param name="type"> The discriminated object type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="audioUrl"> The details of the audio content. </param>
+        /// <param name="audioUrl"> The details of the audio url pointer. </param>
         internal ChatMessageAudioUrlContentItem(string type, IDictionary<string, BinaryData> serializedAdditionalRawData, ChatMessageInputAudioUrl audioUrl) : base(type, serializedAdditionalRawData)
         {
             AudioUrl = audioUrl;
@@ -38,7 +38,7 @@ namespace Azure.AI.Inference
         {
         }
 
-        /// <summary> The details of the audio content. </summary>
+        /// <summary> The details of the audio url pointer. </summary>
         public ChatMessageInputAudioUrl AudioUrl { get; }
     }
 }

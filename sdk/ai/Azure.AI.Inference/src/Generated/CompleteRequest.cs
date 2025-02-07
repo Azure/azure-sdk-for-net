@@ -21,7 +21,7 @@ namespace Azure.AI.Inference
         /// the behavior of the assistant, followed by alternating messages between the User and
         /// Assistant roles.
         /// Please note <see cref="ChatRequestMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestUserMessage"/>.
+        /// The available derived classes include <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestDeveloperMessage"/>, <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestUserMessage"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="messages"/> is null. </exception>
         internal CompleteRequest(IEnumerable<ChatRequestMessage> messages)
@@ -41,7 +41,7 @@ namespace Azure.AI.Inference
         /// the behavior of the assistant, followed by alternating messages between the User and
         /// Assistant roles.
         /// Please note <see cref="ChatRequestMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestUserMessage"/>.
+        /// The available derived classes include <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestDeveloperMessage"/>, <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestUserMessage"/>.
         /// </param>
         /// <param name="frequencyPenalty">
         /// A value that influences the probability of generated tokens appearing based on their cumulative
@@ -128,7 +128,7 @@ namespace Azure.AI.Inference
         /// the behavior of the assistant, followed by alternating messages between the User and
         /// Assistant roles.
         /// Please note <see cref="ChatRequestMessage"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestUserMessage"/>.
+        /// The available derived classes include <see cref="ChatRequestAssistantMessage"/>, <see cref="ChatRequestDeveloperMessage"/>, <see cref="ChatRequestSystemMessage"/>, <see cref="ChatRequestToolMessage"/> and <see cref="ChatRequestUserMessage"/>.
         /// </summary>
         public IReadOnlyList<ChatRequestMessage> Messages { get; }
         /// <summary>

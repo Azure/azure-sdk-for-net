@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.AI.Inference
 {
-    /// <summary> The details of an audio chat message content part. </summary>
+    /// <summary> The details of the input audio data. </summary>
     public partial class ChatMessageInputAudio
     {
         /// <summary>
