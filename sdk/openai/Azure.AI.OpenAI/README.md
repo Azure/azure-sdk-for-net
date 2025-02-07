@@ -66,7 +66,8 @@ AzureOpenAIClientOptions options = new()
 };
 AzureOpenAIClient azureClient = new(
     new Uri("https://your-azure-openai-resource.com"),
-    new DefaultAzureCredential());
+    new DefaultAzureCredential(),
+    options);
 ChatClient chatClient = azureClient.GetChatClient("my-gpt-4o-mini-deployment");
 ```
 
