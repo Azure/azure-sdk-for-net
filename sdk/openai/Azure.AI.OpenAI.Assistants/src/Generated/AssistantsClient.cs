@@ -31,7 +31,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal ClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
-        public virtual HttpPipeline Pipeline => _pipeline;
+        public HttpPipeline Pipeline => _pipeline;
 
         /// <summary> Initializes a new instance of AssistantsClient for mocking. </summary>
         protected AssistantsClient()

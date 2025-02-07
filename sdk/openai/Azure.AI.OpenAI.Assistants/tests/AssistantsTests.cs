@@ -17,6 +17,16 @@ public class AssistantsTests : AssistantsTestBase
     {
     }
 
+    [Test]
+    [TestCase(OpenAIClientServiceTarget.Azure)]
+    public void CanCreateClient(OpenAIClientServiceTarget target)
+    {
+AssistantsClient client = InstrumentClient<AssistantsClient>(
+    new(endpoint: new(AzureResourceUrl), AzureApiKeyCredential));
+Assert.That(client, Is.InstanceOf<AssistantsClient>());
+Assert.That(client.Pipeline, Is.Not.Null);
+    }
+
     [RecordedTest]
     [TestCase(OpenAIClientServiceTarget.NonAzure)]
     [TestCase(OpenAIClientServiceTarget.Azure)]

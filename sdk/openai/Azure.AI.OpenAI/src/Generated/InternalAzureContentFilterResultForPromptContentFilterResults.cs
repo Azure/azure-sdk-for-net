@@ -100,7 +100,7 @@ namespace Azure.AI.OpenAI
         /// the user.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal InternalAzureContentFilterResultForPromptContentFilterResults(ContentFilterSeverityResult sexual, ContentFilterSeverityResult hate, ContentFilterSeverityResult violence, ContentFilterSeverityResult selfHarm, ContentFilterDetectionResult profanity, ContentFilterBlocklistResult customBlocklists, InternalAzureContentFilterResultForPromptContentFilterResultsError error, ContentFilterDetectionResult jailbreak, ContentFilterDetectionResult indirectAttack, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal InternalAzureContentFilterResultForPromptContentFilterResults(ContentFilterSeverityResult sexual, ContentFilterSeverityResult hate, ContentFilterSeverityResult violence, ContentFilterSeverityResult selfHarm, ContentFilterDetectionResult profanity, ContentFilterBlocklistResult customBlocklists, InternalAzureContentFilterResultForChoiceError error, ContentFilterDetectionResult jailbreak, ContentFilterDetectionResult indirectAttack, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Sexual = sexual;
             Hate = hate;
@@ -151,7 +151,7 @@ namespace Azure.AI.OpenAI
         /// <summary> A collection of binary filtering outcomes for configured custom blocklists. </summary>
         internal ContentFilterBlocklistResult CustomBlocklists { get; set; }
         /// <summary> If present, details about an error that prevented content filtering from completing its evaluation. </summary>
-        internal InternalAzureContentFilterResultForPromptContentFilterResultsError Error { get; set; }
+        internal InternalAzureContentFilterResultForChoiceError Error { get; set; }
         /// <summary>
         /// A detection result that describes user prompt injection attacks, where malicious users deliberately exploit
         /// system vulnerabilities to elicit unauthorized behavior from the LLM. This could lead to inappropriate content
