@@ -61,12 +61,70 @@ namespace Azure.AI.Language.Conversations.Authoring
         }
 
         /// <summary> Initializes a new instance of ConversationAuthoringProjects. </summary>
-        public virtual ConversationAuthoringProjects GetProjects()
+        public virtual ConversationAuthoringProjects GetProjects(string projectName)
         {
             var resolvedApiVersion = _apiVersion ?? "2024-11-15-preview"; // Use _apiVersion if it exists, otherwise default to the latest version
             Argument.AssertNotNull(resolvedApiVersion, nameof(resolvedApiVersion));
 
-            return new ConversationAuthoringProjects(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion);
+            return new ConversationAuthoringProjects(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
+        }
+
+        /// <summary> Lists the existing projects. </summary>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProjectsAsync(int?,int?,int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<ProjectMetadata> GetProjectsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProjectMetadata.DeserializeProjectMetadata(e), ClientDiagnostics, _pipeline, "ConversationAuthoringProjects.GetProjects", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Lists the existing projects. </summary>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProjects(int?,int?,int?,CancellationToken)']/*" />
+        public virtual Pageable<ProjectMetadata> GetProjects(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProjectMetadata.DeserializeProjectMetadata(e), ClientDiagnostics, _pipeline, "ConversationAuthoringProjects.GetProjects", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Lists the supported languages for the given project type. </summary>
+        /// <param name="projectKind"> The project kind. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetSupportedLanguagesAsync(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<SupportedLanguage> GetSupportedLanguagesAsync(AnalyzeConversationAuthoringProjectKind projectKind, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedLanguagesRequest(projectKind.ToString(), maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedLanguagesNextPageRequest(nextLink, projectKind.ToString(), maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SupportedLanguage.DeserializeSupportedLanguage(e), ClientDiagnostics, _pipeline, "ConversationAuthoringProjects.GetSupportedLanguages", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Lists the supported languages for the given project type. </summary>
+        /// <param name="projectKind"> The project kind. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)']/*" />
+        public virtual Pageable<SupportedLanguage> GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind projectKind, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedLanguagesRequest(projectKind.ToString(), maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedLanguagesNextPageRequest(nextLink, projectKind.ToString(), maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SupportedLanguage.DeserializeSupportedLanguage(e), ClientDiagnostics, _pipeline, "ConversationAuthoringProjects.GetSupportedLanguages", "value", "nextLink", maxpagesize, context);
         }
 
         /// <summary> Initializes a new instance of ConversationAuthoringTraining. </summary>

@@ -56,36 +56,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             _apiVersion = apiVersion;
         }
 
-        /// <summary> Gets the details of a project. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProjectAsync(string,CancellationToken)']/*" />
-        public virtual async Task<Response<ProjectMetadata>> GetProjectAsync(string projectName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetProjectAsync(projectName, context).ConfigureAwait(false);
-            return Response.FromValue(ProjectMetadata.FromResponse(response), response);
-        }
-
-        /// <summary> Gets the details of a project. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProject(string,CancellationToken)']/*" />
-        public virtual Response<ProjectMetadata> GetProject(string projectName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetProject(projectName, context);
-            return Response.FromValue(ProjectMetadata.FromResponse(response), response);
-        }
-
         /// <summary>
         /// [Protocol Method] Gets the details of a project.
         /// <list type="bullet">
@@ -157,80 +127,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             try
             {
                 using HttpMessage message = CreateGetProjectRequest(projectName, context);
-                return _pipeline.ProcessMessage(message, context);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Creates a new project or updates an existing one.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='CreateProjectAsync(string,RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> CreateProjectAsync(string projectName, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjects.CreateProject");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateProjectRequest(projectName, content, context);
-                return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Creates a new project or updates an existing one.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="content"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='CreateProject(string,RequestContent,RequestContext)']/*" />
-        public virtual Response CreateProject(string projectName, RequestContent content, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(content, nameof(content));
-
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjects.CreateProject");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateCreateProjectRequest(projectName, content, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
@@ -350,40 +246,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Gets the status of an export job. Once job completes, returns the project metadata, and assets. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetExportStatusAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<ExportProjectOperationState>> GetExportStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetExportStatusAsync(projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(ExportProjectOperationState.FromResponse(response), response);
-        }
-
-        /// <summary> Gets the status of an export job. Once job completes, returns the project metadata, and assets. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetExportStatus(string,string,CancellationToken)']/*" />
-        public virtual Response<ExportProjectOperationState> GetExportStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetExportStatus(projectName, jobId, context);
-            return Response.FromValue(ExportProjectOperationState.FromResponse(response), response);
-        }
-
         /// <summary>
         /// [Protocol Method] Gets the status of an export job. Once job completes, returns the project metadata, and assets.
         /// <list type="bullet">
@@ -466,40 +328,6 @@ namespace Azure.AI.Language.Conversations.Authoring
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets the status for an import. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetImportStatusAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<ImportProjectOperationState>> GetImportStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetImportStatusAsync(projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(ImportProjectOperationState.FromResponse(response), response);
-        }
-
-        /// <summary> Gets the status for an import. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetImportStatus(string,string,CancellationToken)']/*" />
-        public virtual Response<ImportProjectOperationState> GetImportStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetImportStatus(projectName, jobId, context);
-            return Response.FromValue(ImportProjectOperationState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -586,44 +414,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Generates a copy project operation authorization to the current target Azure resource. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="projectKind"> Represents the project kind. </param>
-        /// <param name="storageInputContainerName"> The name of the storage container. </param>
-        /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='AuthorizeProjectCopyAsync(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)']/*" />
-        public virtual async Task<Response<CopyProjectDetails>> AuthorizeProjectCopyAsync(string projectName, AnalyzeConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await AuthorizeProjectCopyAsync(projectName, copyProjectAuthorizationRequest.ToRequestContent(), context).ConfigureAwait(false);
-            return Response.FromValue(CopyProjectDetails.FromResponse(response), response);
-        }
-
-        /// <summary> Generates a copy project operation authorization to the current target Azure resource. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="projectKind"> Represents the project kind. </param>
-        /// <param name="storageInputContainerName"> The name of the storage container. </param>
-        /// <param name="allowOverwrite"> Whether to allow an existing project to be overwritten using the resulting copy authorization. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='AuthorizeProjectCopy(string,AnalyzeConversationAuthoringProjectKind,string,bool?,CancellationToken)']/*" />
-        public virtual Response<CopyProjectDetails> AuthorizeProjectCopy(string projectName, AnalyzeConversationAuthoringProjectKind projectKind, string storageInputContainerName = null, bool? allowOverwrite = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            CopyProjectAuthorizationRequest copyProjectAuthorizationRequest = new CopyProjectAuthorizationRequest(projectKind, storageInputContainerName, allowOverwrite, null);
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = AuthorizeProjectCopy(projectName, copyProjectAuthorizationRequest.ToRequestContent(), context);
-            return Response.FromValue(CopyProjectDetails.FromResponse(response), response);
-        }
-
         /// <summary>
         /// [Protocol Method] Generates a copy project operation authorization to the current target Azure resource.
         /// <list type="bullet">
@@ -706,40 +496,6 @@ namespace Azure.AI.Language.Conversations.Authoring
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Gets the status of an existing copy project job. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetCopyProjectStatusAsync(string,string,CancellationToken)']/*" />
-        public virtual async Task<Response<CopyProjectOperationState>> GetCopyProjectStatusAsync(string projectName, string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = await GetCopyProjectStatusAsync(projectName, jobId, context).ConfigureAwait(false);
-            return Response.FromValue(CopyProjectOperationState.FromResponse(response), response);
-        }
-
-        /// <summary> Gets the status of an existing copy project job. </summary>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="jobId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> or <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetCopyProjectStatus(string,string,CancellationToken)']/*" />
-        public virtual Response<CopyProjectOperationState> GetCopyProjectStatus(string projectName, string jobId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
-
-            RequestContext context = FromCancellationToken(cancellationToken);
-            Response response = GetCopyProjectStatus(projectName, jobId, context);
-            return Response.FromValue(CopyProjectOperationState.FromResponse(response), response);
         }
 
         /// <summary>
@@ -826,34 +582,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             }
         }
 
-        /// <summary> Lists the existing projects. </summary>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProjectsAsync(int?,int?,int?,CancellationToken)']/*" />
-        public virtual AsyncPageable<ProjectMetadata> GetProjectsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProjectMetadata.DeserializeProjectMetadata(e), ClientDiagnostics, _pipeline, "ConversationAuthoringProjects.GetProjects", "value", "nextLink", maxpagesize, context);
-        }
-
-        /// <summary> Lists the existing projects. </summary>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetProjects(int?,int?,int?,CancellationToken)']/*" />
-        public virtual Pageable<ProjectMetadata> GetProjects(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetProjectsRequest(maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetProjectsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProjectMetadata.DeserializeProjectMetadata(e), ClientDiagnostics, _pipeline, "ConversationAuthoringProjects.GetProjects", "value", "nextLink", maxpagesize, context);
-        }
-
         /// <summary>
         /// [Protocol Method] Lists the existing projects.
         /// <list type="bullet">
@@ -927,21 +655,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => SupportedLanguage.DeserializeSupportedLanguage(e), ClientDiagnostics, _pipeline, "ConversationAuthoringProjects.GetSupportedLanguages", "value", "nextLink", maxpagesize, context);
         }
 
-        /// <summary> Lists the supported languages for the given project type. </summary>
-        /// <param name="projectKind"> The project kind. </param>
-        /// <param name="maxCount"> The number of result items to return. </param>
-        /// <param name="skip"> The number of result items to skip. </param>
-        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)']/*" />
-        public virtual Pageable<SupportedLanguage> GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind projectKind, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedLanguagesRequest(projectKind.ToString(), maxCount, skip, pageSizeHint, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedLanguagesNextPageRequest(nextLink, projectKind.ToString(), maxCount, skip, pageSizeHint, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => SupportedLanguage.DeserializeSupportedLanguage(e), ClientDiagnostics, _pipeline, "ConversationAuthoringProjects.GetSupportedLanguages", "value", "nextLink", maxpagesize, context);
-        }
-
         /// <summary>
         /// [Protocol Method] Lists the supported languages for the given project type.
         /// <list type="bullet">
@@ -1006,80 +719,6 @@ namespace Azure.AI.Language.Conversations.Authoring
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedLanguagesRequest(projectKind, maxCount, skip, pageSizeHint, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedLanguagesNextPageRequest(nextLink, projectKind, maxCount, skip, pageSizeHint, context);
             return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "ConversationAuthoringProjects.GetSupportedLanguages", "value", "nextLink", maxpagesize, context);
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Deletes a project.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='DeleteProjectAsync(WaitUntil,string,RequestContext)']/*" />
-        public virtual async Task<Operation> DeleteProjectAsync(WaitUntil waitUntil, string projectName, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjects.DeleteProject");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return await ProtocolOperationHelpers.ProcessMessageWithoutResponseValueAsync(_pipeline, message, ClientDiagnostics, "ConversationAuthoringProjects.DeleteProject", OperationFinalStateVia.OperationLocation, context, waitUntil).ConfigureAwait(false);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        // The convenience method is omitted here because it has exactly the same parameter list as the corresponding protocol method
-        /// <summary>
-        /// [Protocol Method] Deletes a project.
-        /// <list type="bullet">
-        /// <item>
-        /// <description>
-        /// This <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/ProtocolMethods.md">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios.
-        /// </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        /// <returns> The <see cref="Operation"/> representing an asynchronous operation on the service. </returns>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='DeleteProject(WaitUntil,string,RequestContext)']/*" />
-        public virtual Operation DeleteProject(WaitUntil waitUntil, string projectName, RequestContext context = null)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-
-            using var scope = ClientDiagnostics.CreateScope("ConversationAuthoringProjects.DeleteProject");
-            scope.Start();
-            try
-            {
-                using HttpMessage message = CreateDeleteProjectRequest(projectName, context);
-                return ProtocolOperationHelpers.ProcessMessageWithoutResponseValue(_pipeline, message, ClientDiagnostics, "ConversationAuthoringProjects.DeleteProject", OperationFinalStateVia.OperationLocation, context, waitUntil);
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
         }
 
         /// <summary> Triggers a job to export a project's data. </summary>
@@ -1336,42 +975,6 @@ namespace Azure.AI.Language.Conversations.Authoring
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        /// <summary> Copies an existing project to another Azure resource. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="details"> The copy project info. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="details"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='CopyProjectAsync(WaitUntil,string,CopyProjectDetails,CancellationToken)']/*" />
-        public virtual async Task<Operation> CopyProjectAsync(WaitUntil waitUntil, string projectName, CopyProjectDetails details, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(details, nameof(details));
-
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            return await CopyProjectAsync(waitUntil, projectName, content, context).ConfigureAwait(false);
-        }
-
-        /// <summary> Copies an existing project to another Azure resource. </summary>
-        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="projectName"> The name of the project to use. </param>
-        /// <param name="details"> The copy project info. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> or <paramref name="details"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/ConversationAuthoringProjects.xml" path="doc/members/member[@name='CopyProject(WaitUntil,string,CopyProjectDetails,CancellationToken)']/*" />
-        public virtual Operation CopyProject(WaitUntil waitUntil, string projectName, CopyProjectDetails details, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
-            Argument.AssertNotNull(details, nameof(details));
-
-            using RequestContent content = details.ToRequestContent();
-            RequestContext context = FromCancellationToken(cancellationToken);
-            return CopyProject(waitUntil, projectName, content, context);
         }
 
         /// <summary>
