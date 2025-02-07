@@ -26,6 +26,7 @@
         reference.
     -->
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" VersionOverride ="8.0.1" />
+
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
