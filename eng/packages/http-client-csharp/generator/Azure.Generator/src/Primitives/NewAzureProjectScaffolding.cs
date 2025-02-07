@@ -49,30 +49,38 @@ namespace Azure.Generator.Primitives
 
             if (hasLongRunningOperation)
             {
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("AppContextSwitchHelper.cs", pathSegmentCount), "Shared/Core"));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("AsyncLockWithValue.cs", pathSegmentCount), "Shared/Core"));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("FixedDelayWithNoJitterStrategy.cs", pathSegmentCount), "Shared/Core"));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("ClientDiagnostics.cs", pathSegmentCount), "Shared/Core"));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("DiagnosticScopeFactory.cs", pathSegmentCount), "Shared/Core"));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("DiagnosticScope.cs", pathSegmentCount), "Shared/Core"));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("HttpMessageSanitizer.cs", pathSegmentCount), "Shared/Core"));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("IOperationSource.cs", pathSegmentCount), "Shared/Core"));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("NextLinkOperationImplementation.cs", pathSegmentCount), "Shared/Core"));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("OperationFinalStateVia.cs", pathSegmentCount), "Shared/Core"));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("OperationInternal.cs", pathSegmentCount), "Shared/Core"));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("OperationInternalBase.cs", pathSegmentCount), "Shared/Core"));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("OperationInternalOfT.cs", pathSegmentCount), "Shared/Core"));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("OperationPoller.cs", pathSegmentCount), "Shared/Core"));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("SequentialDelayStrategy.cs", pathSegmentCount), "Shared/Core"));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("TaskExtensions.cs", pathSegmentCount), "Shared/Core"));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("TrimmingAttribute.cs", pathSegmentCount), "Shared/Core"));
-                builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude("VoidValue.cs", pathSegmentCount), "Shared/Core"));
+                foreach (var file in _lroSharedFiles)
+                {
+                    builder.CompileIncludes.Add(new CSharpProjectWriter.CSProjCompileInclude(GetCompileInclude(file, pathSegmentCount), "Shared/Core"));
+                }
             }
 
             return builder.Write();
         }
 
-        private void TraverseInput(out bool hasOperation, out bool hasLongRunningOperation)
+        private static readonly IReadOnlyList<string> _lroSharedFiles =
+        [
+            "AppContextSwitchHelper.cs",
+            "AsyncLockWithValue.cs",
+            "FixedDelayWithNoJitterStrategy.cs",
+            "ClientDiagnostics.cs",
+            "DiagnosticScopeFactory.cs",
+            "DiagnosticScope.cs",
+            "HttpMessageSanitizer.cs",
+            "IOperationSource.cs",
+            "NextLinkOperationImplementation.cs",
+            "OperationFinalStateVia.cs",
+            "OperationInternal.cs",
+            "OperationInternalBase.cs",
+            "OperationInternalOfT.cs",
+            "OperationPoller.cs",
+            "SequentialDelayStrategy.cs",
+            "TaskExtensions.cs",
+            "TrimmingAttribute.cs",
+            "VoidValue.cs"
+        ];
+
+        private static void TraverseInput(out bool hasOperation, out bool hasLongRunningOperation)
         {
             hasOperation = false;
             hasLongRunningOperation = false;
