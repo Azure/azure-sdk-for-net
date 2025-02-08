@@ -43,10 +43,10 @@ namespace Azure.Generator.Utilities
             if (singletonIdSuffix == null)
                 return null;
 
-            var segments = RequestPathUtils.GetPathSegments(singletonIdSuffix);
+            var segments = new RequestPath(singletonIdSuffix);
 
             // check if even segments
-            if (segments.Length % 2 != 0)
+            if (segments.Count % 2 != 0)
             {
                 throw new InvalidOperationException($"the singleton suffix set for operation set {operationSet.RequestPath} must have even segments, but got {singletonIdSuffix}");
             }
@@ -76,9 +76,9 @@ namespace Azure.Generator.Utilities
             // if we are a singleton resource,
             // we need to find the suffix which should be the difference between our path and our parent resource
             var parentRequestPath = AzureClientPlugin.Instance.ParentDetection.GetParentRequestPath(currentRequestPath);
-            var diff = RequestPathUtils.GetPathSegments(RequestPathUtils.TrimAncestorFrom(parentRequestPath, currentRequestPath));
+            var diff = parentRequestPath.TrimAncestorFrom(currentRequestPath);
             // if not all of the segment in difference are constant, we cannot be a singleton resource
-            if (!diff.Any() || !diff.All(s => RequestPathUtils.IsConstant(s)))
+            if (!diff.Any() || !diff.All(s => RequestPath.IsSegmentConstant(s)))
                 return false;
 
             //// see if the configuration says that we need to honor the dictionary for singletons
@@ -89,11 +89,10 @@ namespace Azure.Generator.Utilities
             //}
 
             // now we can ensure the last segment of the path is a constant
-            var segments = RequestPathUtils.GetPathSegments(currentRequestPath);
-            var lastSegment = segments.Last();
-            if (RequestPathUtils.IsConstant(lastSegment) && SingletonKeywords.Contains(lastSegment))
+            var lastSegment = currentRequestPath.Last();
+            if (RequestPath.IsSegmentConstant(lastSegment) && SingletonKeywords.Contains(lastSegment))
             {
-                singletonIdSuffix = string.Join('/', diff);
+                singletonIdSuffix = string.Join('/', (IReadOnlyList<string>)diff);
                 return true;
             }
 

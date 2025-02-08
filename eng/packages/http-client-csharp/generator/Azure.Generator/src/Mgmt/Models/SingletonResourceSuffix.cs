@@ -7,11 +7,11 @@ namespace Azure.Generator.Mgmt.Models
 {
     internal class SingletonResourceSuffix
     {
-        public static SingletonResourceSuffix Parse(string[] segments)
+        public static SingletonResourceSuffix Parse(IReadOnlyList<string> segments)
         {
             // put the segments in pairs
             var pairs = new List<(string Key, string Value)>();
-            for (int i = 0; i < segments.Length; i += 2)
+            for (int i = 0; i < segments.Count; i += 2)
             {
                 pairs.Add((segments[i], segments[i + 1]));
             }

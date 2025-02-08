@@ -20,7 +20,7 @@ namespace Azure.Generator.Mgmt.Models
         /// <summary>
         /// The raw request path of string of the operations in this <see cref="OperationSet"/>
         /// </summary>
-        public string RequestPath { get; }
+        public RequestPath RequestPath { get; }
 
         public InputClient InputClient { get; }
 
@@ -31,7 +31,7 @@ namespace Azure.Generator.Mgmt.Models
 
         public int Count => _operations.Count;
 
-        public OperationSet(string requestPath, InputClient inputClient)
+        public OperationSet(RequestPath requestPath, InputClient inputClient)
         {
             InputClient = inputClient;
             RequestPath = requestPath;
@@ -46,7 +46,7 @@ namespace Azure.Generator.Mgmt.Models
         public void Add(InputOperation operation)
         {
             var path = operation.GetHttpPath();
-            if (path != RequestPath)
+            if (!path.Equals(RequestPath))
                 throw new InvalidOperationException($"Cannot add operation with path {path} to OperationSet with path {RequestPath}");
             _operations.Add(operation);
         }

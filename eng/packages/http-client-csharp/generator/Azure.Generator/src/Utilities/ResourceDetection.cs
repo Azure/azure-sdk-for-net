@@ -19,38 +19,35 @@ namespace Azure.Generator.Utilities
         private const string SubscriptionScopePrefix = "/subscriptions";
         private const string TenantScopePrefix = "/tenants";
 
-        private ConcurrentDictionary<string, (string Name, InputModelType? InputModel)?> _resourceDataSchemaCache = new ConcurrentDictionary<string, (string Name, InputModelType? InputModel)?>();
+        private ConcurrentDictionary<RequestPath, (string Name, InputModelType? InputModel)?> _resourceDataSchemaCache = new ConcurrentDictionary<RequestPath, (string Name, InputModelType? InputModel)?>();
 
         public bool IsResource(OperationSet set) => TryGetResourceDataSchema(set, out _, out _);
 
-        private static InputModelType? FindObjectSchemaWithName(string name)
-            => AzureClientPlugin.Instance.InputLibrary.InputNamespace.Models.OfType<InputModelType>().FirstOrDefault(inputModel => inputModel.Name == name);
-
-        internal static string GetResourceTypeFromPath(string requestPath)
+        public static string GetResourceTypeFromPath(RequestPath requestPath)
         {
-            var index = requestPath.LastIndexOf(ProvidersSegment);
+            var index = ((string)requestPath).LastIndexOf(ProvidersSegment);
             if (index < 0)
             {
-                if (requestPath.StartsWith(ResourceGroupScopePrefix, StringComparison.OrdinalIgnoreCase))
+                if (((string)requestPath).StartsWith(ResourceGroupScopePrefix, StringComparison.OrdinalIgnoreCase))
                 {
                     return "Microsoft.Resources/resourceGroups";
                 }
-                else if (requestPath.StartsWith(SubscriptionScopePrefix, StringComparison.OrdinalIgnoreCase))
+                else if (((string)requestPath).StartsWith(SubscriptionScopePrefix, StringComparison.OrdinalIgnoreCase))
                 {
                     return "Microsoft.Resources/subscriptions";
                 }
-                else if (requestPath.StartsWith(TenantScopePrefix, StringComparison.OrdinalIgnoreCase))
+                else if (((string)requestPath).StartsWith(TenantScopePrefix, StringComparison.OrdinalIgnoreCase))
                 {
                     return "Microsoft.Resources/tenants";
                 }
                 throw new InvalidOperationException($"Cannot find resource type from path {requestPath}");
             }
 
-            var segments = RequestPathUtils.GetPathSegments(requestPath.Substring(index+ProvidersSegment.Length));
-            var result = new StringBuilder(segments[0]);
-            for (int i = 1; i < segments.Length; i += 2)
+            var left = new RequestPath(((string)requestPath).Substring(index+ProvidersSegment.Length));
+            var result = new StringBuilder(left[0]);
+            for (int i = 1; i < left.Count; i += 2)
             {
-                result.Append($"/{segments[i]}");
+                result.Append($"/{left[i]}");
             }
             return result.ToString();
         }
@@ -99,16 +96,15 @@ namespace Azure.Generator.Utilities
             return false;
         }
 
-        private static bool CheckEvenSegments(string requestPath)
+        private static bool CheckEvenSegments(RequestPath requestPath)
         {
-            var index = requestPath.LastIndexOf(ProvidersSegment);
+            var index = ((string)requestPath).LastIndexOf(ProvidersSegment);
             // this request path does not have providers segment - it can be a "ById" request, skip to next criteria
             if (index < 0)
                 return true;
             // get whatever following the providers
-            var following = requestPath.Substring(index);
-            var segments = RequestPathUtils.GetPathSegments(following);
-            return segments.Length % 2 == 0;
+            var following = new RequestPath(requestPath.Take(index));
+            return following.Count % 2 == 0;
         }
 
         private bool TryOperationWithMethod(OperationSet set, RequestMethod method, [MaybeNullWhen(false)] out InputModelType inputModel)

@@ -11,9 +11,6 @@ namespace Azure.Generator.Utilities
     {
         /// <summary>
         /// Return true if this operation is a list method. Also returns the itemType of what this operation is listing of.
-        /// This function will return true in the following circumstances:
-        /// 1. This operation is a paging method.
-        /// 2. This operation is not a paging method, but the return value is a collection type (IReadOnlyList)
         /// </summary>
         /// <param name="method"></param>
         /// <param name="itemType">The type of the item in the collection</param>

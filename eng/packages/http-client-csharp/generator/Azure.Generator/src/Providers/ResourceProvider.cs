@@ -55,7 +55,7 @@ namespace Azure.Generator.Providers
         private HashSet<string> GetContextualParameters(string contextualRequestPath)
         {
             var contextualParameters = new HashSet<string>();
-            var contextualSegments = RequestPathUtils.GetPathSegments(contextualRequestPath);
+            var contextualSegments = new RequestPath(contextualRequestPath);
             foreach (var segment in contextualSegments)
             {
                 if (segment.StartsWith("{"))

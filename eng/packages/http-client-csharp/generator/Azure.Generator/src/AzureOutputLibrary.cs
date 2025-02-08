@@ -16,7 +16,7 @@ namespace Azure.Generator
     /// <inheritdoc/>
     public class AzureOutputLibrary : ScmOutputLibrary
     {
-        private Dictionary<string, OperationSet> _pathToOperationSetMap;
+        private Dictionary<RequestPath, OperationSet> _pathToOperationSetMap;
         private Dictionary<string, HashSet<OperationSet>> _specNameToOperationSetsMap;
         private Dictionary<string, InputModelType> _inputTypeMap;
 
@@ -67,9 +67,9 @@ namespace Azure.Generator
             return result;
         }
 
-        private Dictionary<string, OperationSet> CategorizeClients()
+        private Dictionary<RequestPath, OperationSet> CategorizeClients()
         {
-            var result = new Dictionary<string, OperationSet>();
+            var result = new Dictionary<RequestPath, OperationSet>();
             foreach (var inputClient in AzureClientPlugin.Instance.InputLibrary.InputNamespace.Clients)
             {
                 foreach (var operation in inputClient.Operations)
