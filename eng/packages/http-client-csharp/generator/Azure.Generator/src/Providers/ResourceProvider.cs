@@ -7,7 +7,6 @@ using Azure.Generator.Mgmt.Models;
 using Azure.Generator.Primitives;
 using Azure.Generator.Utilities;
 using Azure.ResourceManager;
-using Microsoft.Generator.CSharp.ClientModel;
 using Microsoft.Generator.CSharp.ClientModel.Providers;
 using Microsoft.Generator.CSharp.Expressions;
 using Microsoft.Generator.CSharp.Input;
@@ -30,58 +29,33 @@ namespace Azure.Generator.Providers
     {
         private OperationSet _operationSet;
         private ResourceDataProvider _resourceData;
+        private ClientProvider _clientProvider;
         private string _specCleanName;
+        private readonly HashSet<string> _contextualParameters;
+
         private FieldProvider _dataField;
         private FieldProvider _clientDiagonosticsField;
         private FieldProvider _restClientField;
         private FieldProvider _resourcetypeField;
-        private PropertyProvider _hasDataProperty;
-        private PropertyProvider _dataProperty;
-        private ClientProvider _clientProvider;
-        private string _resrouceType;
-        private string _contextualRequestPath;
-        private readonly HashSet<string> _contextualParameters;
 
         public ResourceProvider(OperationSet operationSet, string specCleanName, ResourceDataProvider resourceData, string resrouceType)
         {
             _operationSet = operationSet;
             _specCleanName = specCleanName;
             _resourceData = resourceData;
-            _dataField = new FieldProvider(FieldModifiers.Private, _resourceData.Type, "_data", this);
-            _clientDiagonosticsField = new FieldProvider(FieldModifiers.Private, typeof(ClientDiagnostics), $"_{specCleanName.ToLower()}ClientDiagnostics", this);
             _clientProvider = AzureClientPlugin.Instance.TypeFactory.CreateClient(operationSet.InputClient)!;
+            _contextualParameters = GetContextualParameters(operationSet.RequestPath);
+
+            _dataField = new FieldProvider(FieldModifiers.Private, resourceData.Type, "_data", this);
+            _clientDiagonosticsField = new FieldProvider(FieldModifiers.Private, typeof(ClientDiagnostics), $"_{specCleanName.ToLower()}ClientDiagnostics", this);
             _restClientField = new FieldProvider(FieldModifiers.Private, _clientProvider.Type, "_restClient", this);
-            _resrouceType = resrouceType;
-            _resourcetypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(_resrouceType));
-            _hasDataProperty = new PropertyProvider(
-                $"Gets whether or not the current instance has data.",
-                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
-                typeof(bool),
-                "HasData",
-                new AutoPropertyBody(false),
-                this);
-            _dataProperty = new PropertyProvider(
-                $"Gets the data representing this Feature.",
-                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
-                _resourceData.Type,
-            "Data",
-                new MethodPropertyBody(new MethodBodyStatement[]
-                {
-                    new IfStatement(Not(_hasDataProperty))
-                    {
-                        Throw(New.Instance(typeof(InvalidOperationException), Literal("The current instance does not have data, you must call Get first.")))
-                    },
-                    Return(_dataField)
-                }),
-                this);
-            _contextualRequestPath = operationSet.RequestPath;
-            _contextualParameters = GetContextualParameters();
+            _resourcetypeField = new FieldProvider(FieldModifiers.Public | FieldModifiers.Static | FieldModifiers.ReadOnly, typeof(ResourceType), "ResourceType", this, description: $"Gets the resource type for the operations.", initializationValue: Literal(resrouceType));
         }
 
-        private HashSet<string> GetContextualParameters()
+        private HashSet<string> GetContextualParameters(string contextualRequestPath)
         {
             var contextualParameters = new HashSet<string>();
-            var contextualSegments = RequestPathUtils.GetPathSegments(_contextualRequestPath);
+            var contextualSegments = RequestPathUtils.GetPathSegments(contextualRequestPath);
             foreach (var segment in contextualSegments)
             {
                 if (segment.StartsWith("{"))
@@ -96,33 +70,45 @@ namespace Azure.Generator.Providers
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
-        protected override FieldProvider[] BuildFields()
-            => [_dataField, _clientDiagonosticsField, _restClientField, _resourcetypeField];
+        protected override FieldProvider[] BuildFields() => [_dataField, _clientDiagonosticsField, _restClientField, _resourcetypeField];
 
         protected override PropertyProvider[] BuildProperties()
         {
-            return [_hasDataProperty, _dataProperty];
+            var hasDataProperty = new PropertyProvider(
+                $"Gets whether or not the current instance has data.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+                typeof(bool),
+                "HasData",
+                new AutoPropertyBody(false),
+                this);
+
+            var dataProperty = new PropertyProvider(
+                $"Gets the data representing this Feature.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Virtual,
+                _resourceData.Type,
+                "Data",
+                new MethodPropertyBody(new MethodBodyStatement[]
+                {
+                    new IfStatement(Not(hasDataProperty))
+                    {
+                        Throw(New.Instance(typeof(InvalidOperationException), Literal("The current instance does not have data, you must call Get first.")))
+                    },
+                    Return(_dataField)
+                }),
+                this);
+
+            return [hasDataProperty, dataProperty];
         }
 
         protected override ConstructorProvider[] BuildConstructors()
-        {
-            return [BuildMockingConstructor(this), BuildPrimaryConstructor(), BuildInitializationConstructor(), ];
-        }
-
-        public static ConstructorProvider BuildMockingConstructor(TypeProvider enclosingType)
-        {
-            return new ConstructorProvider(
-                new ConstructorSignature(enclosingType.Type, $"Initializes a new instance of {enclosingType.Name} for mocking.", MethodSignatureModifiers.Protected, []),
-                new MethodBodyStatement[] { MethodBodyStatement.Empty },
-                enclosingType);
-        }
+            => [ConstructorProviderHelper.BuildMockingConstructor(this), BuildPrimaryConstructor(), BuildInitializationConstructor(),];
 
         private ConstructorProvider BuildPrimaryConstructor()
         {
             var clientParameter = new ParameterProvider("client", $"The client parameters to use in these operations.", typeof(ArmClient));
             var dataParameter = new ParameterProvider("data", $"The resource that is the target of operations.", _resourceData.Type);
 
-            var initializer = new ConstructorInitializer(false, [clientParameter, dataParameter.AsExpression().Property("Id")]);
+            var initializer = new ConstructorInitializer(false, [clientParameter, dataParameter.Property("Id")]);
             var signature = new ConstructorSignature(
                 Type,
                 $"Initializes a new instance of {Type:C} class.",
@@ -133,9 +119,10 @@ namespace Azure.Generator.Providers
 
             var bodyStatements = new MethodBodyStatement[]
             {
-                _hasDataProperty.Assign(Literal(true)).Terminate(),
+                This.Property("HasData").Assign(Literal(true)).Terminate(),
                 _dataField.Assign(dataParameter).Terminate(),
             };
+
             return new ConstructorProvider(signature, bodyStatements, this);
         }
 
@@ -202,7 +189,7 @@ namespace Azure.Generator.Providers
                     continue;
                 }
 
-                // exclude Create for non-singleton resource
+                // only update for non-singleton resource
                 var isUpdateOnly = operation.HttpMethod == HttpMethod.Put.ToString() && !AzureClientPlugin.Instance.SingletonDetection.IsSingletonResource(_operationSet);
                 operationMethods.Add(BuildOperationMethod(operation, convenienceMethod, false, isUpdateOnly));
                 var asyncConvenienceMethod = GetCorrespondingConvenienceMethod(operation, true);
@@ -219,7 +206,7 @@ namespace Azure.Generator.Providers
                 isUpdateOnly ? (isAsync ? "UpdateAsync" : "Update") : convenienceMethod.Signature.Name,
                 isUpdateOnly ? $"Update a {_specCleanName}" : convenienceMethod.Signature.Description,
                 convenienceMethod.Signature.Modifiers,
-                GetOperationMethodReturnType(isAsync, operation),
+                GetOperationMethodReturnType(isAsync, isLongRunning, operation.Responses),
                 convenienceMethod.Signature.ReturnDescription,
                 GetOperationMethodParameters(convenienceMethod, isLongRunning),
                 convenienceMethod.Signature.Attributes,
@@ -228,16 +215,15 @@ namespace Azure.Generator.Providers
                 convenienceMethod.Signature.ExplicitInterface,
                 convenienceMethod.Signature.NonDocumentComment);
 
-            // TODO: implement body for LRO
             var bodyStatements =
                 isLongRunning
-                ? [Throw(New.Instance<NotImplementedException>())]
+                ? [Throw(New.Instance<NotImplementedException>())] // TODO: implement body for LRO
                 : new MethodBodyStatement[]
                 {
-                    UsingDeclare("scope", typeof(DiagnosticScope), ((MemberExpression)_clientDiagonosticsField).Invoke(nameof(ClientDiagnostics.CreateScope), Literal($"{Namespace}.{operation.Name}")), out var scopeVariable),
+                    UsingDeclare("scope", typeof(DiagnosticScope), _clientDiagonosticsField.Invoke(nameof(ClientDiagnostics.CreateScope), [Literal($"{Namespace}.{operation.Name}")]), out var scopeVariable),
                     scopeVariable.Invoke(nameof(DiagnosticScope.Start)).Terminate(),
                     new TryCatchFinallyStatement
-                    (BuildTryStatement(convenienceMethod, isAsync, isLongRunning, operation), Catch(Declare<Exception>("e", out var exceptionVarialble), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVarialble).Terminate(), Throw()]))
+                    (BuildOperationMethodTryStatement(convenienceMethod, isAsync, isLongRunning, operation), Catch(Declare<Exception>("e", out var exceptionVarialble), [scopeVariable.Invoke(nameof(DiagnosticScope.Failed), exceptionVarialble).Terminate(), Throw()]))
                 };
 
             return new MethodProvider(signature, bodyStatements, this);
@@ -260,11 +246,11 @@ namespace Azure.Generator.Providers
             return result;
         }
 
-        private CSharpType GetOperationMethodReturnType(bool isAsync, InputOperation operation)
+        private CSharpType GetOperationMethodReturnType(bool isAsync, bool isLongRunningOperation, IReadOnlyList<OperationResponse> operationResponses)
         {
-            if (operation.LongRunning != null)
+            if (isLongRunningOperation)
             {
-                var response = operation.Responses.FirstOrDefault(r => !r.IsErrorResponse);
+                var response = operationResponses.FirstOrDefault(r => !r.IsErrorResponse);
                 var responseBodyType = response?.BodyType is null ? null : AzureClientPlugin.Instance.TypeFactory.CreateCSharpType(response.BodyType);
                 if (responseBodyType is null)
                 {
@@ -278,7 +264,7 @@ namespace Azure.Generator.Providers
             return isAsync ? new CSharpType(typeof(Task<>), new CSharpType(typeof(Response<>), Type)) : new CSharpType(typeof(Response<>), Type);
         }
 
-        private TryStatement BuildTryStatement(MethodProvider convenienceMethod, bool isAsync, bool isLongRunning, InputOperation operation)
+        private TryStatement BuildOperationMethodTryStatement(MethodProvider convenienceMethod, bool isAsync, bool isLongRunning, InputOperation operation)
         {
             var tryStatement = new TryStatement();
             var responseDeclaration = Declare("response", GetResponseType(convenienceMethod, isAsync), ((MemberExpression)_restClientField).Invoke(convenienceMethod.Signature.Name, PopulateArguments(convenienceMethod.Signature.Parameters), null, callAsAsync: isAsync, addConfigureAwaitFalse: isAsync), out var responseVariable);
@@ -307,10 +293,7 @@ namespace Azure.Generator.Providers
             return tryStatement;
         }
 
-        private static CSharpType GetResponseType(MethodProvider convenienceMethod, bool isAsync)
-        {
-            return isAsync ? convenienceMethod.Signature.ReturnType?.Arguments[0]! : convenienceMethod.Signature.ReturnType!;
-        }
+        private static CSharpType GetResponseType(MethodProvider convenienceMethod, bool isAsync) => isAsync ? convenienceMethod.Signature.ReturnType?.Arguments[0]! : convenienceMethod.Signature.ReturnType!;
 
         private ValueExpression[] PopulateArguments(IReadOnlyList<ParameterProvider> parameters)
         {
@@ -342,7 +325,11 @@ namespace Azure.Generator.Providers
 
         // TODO: get clean name of operation Name
         private MethodProvider GetCorrespondingConvenienceMethod(InputOperation operation, bool isAsync)
-            => _clientProvider.Methods.Single(m => m.Signature.Name.Equals(isAsync ? $"{operation.Name}Async" : operation.Name, StringComparison.OrdinalIgnoreCase) && m.Signature.Parameters.Any(p => p.Type.Equals(typeof(CancellationToken))));
+        {
+            var methods = _clientProvider.Methods;
+            return methods.Single(m => m.Signature.Name.Equals(isAsync ? $"{operation.Name}Async" : operation.Name, StringComparison.OrdinalIgnoreCase) && m.Signature.Parameters.Any(p => p.Type.Equals(typeof(CancellationToken))));
+        }
+        //=> _clientProvider.Methods.Single(m => m.Signature.Name.Equals(isAsync ? $"{operation.Name}Async" : operation.Name, StringComparison.OrdinalIgnoreCase) && m.Signature.Parameters.Any(p => p.Type.Equals(typeof(CancellationToken))));
 
         private MethodProvider GetCorrespondingRequestMethod(InputOperation operation)
             => _clientProvider.RestClient.Methods.Single(m => m.Signature.Name.Equals($"Create{operation.Name}Request", StringComparison.OrdinalIgnoreCase));

@@ -209,7 +209,8 @@ namespace Azure.Generator.Tests.Common
             string access = "public",
             IEnumerable<InputParameter>? parameters = null,
             IEnumerable<OperationResponse>? responses = null,
-            IEnumerable<string>? requestMediaTypes = null)
+            IEnumerable<string>? requestMediaTypes = null,
+            string? path = null)
         {
             return new InputOperation(
                 name,
@@ -222,8 +223,8 @@ namespace Azure.Generator.Tests.Common
                 responses is null ? [OperationResponse()] : [.. responses],
                 "GET",
                 BodyMediaType.Json,
-                "",
-                "/providers/a",
+                string.Empty,
+                path ?? string.Empty,
                 null,
                 requestMediaTypes is null ? null : [.. requestMediaTypes],
                 false,
@@ -245,15 +246,22 @@ namespace Azure.Generator.Tests.Common
                 ["application/json"]);
         }
 
-        public static InputClient Client(string name, IEnumerable<InputOperation>? operations = null, IEnumerable<InputParameter>? parameters = null, string? parent = null)
+        public static InputClient Client(string name, IEnumerable<InputOperation>? operations = null, IEnumerable<InputParameter>? parameters = null, string? parent = null, IReadOnlyList<InputDecoratorInfo>? decorators = null)
         {
-            return new InputClient(
+            var client = new InputClient(
                 name,
                 null,
                 $"{name} description",
                 operations is null ? [] : [.. operations],
                 parameters is null ? [] : [.. parameters],
                 parent);
+            if (decorators is not null)
+            {
+                var decoratorProperty = typeof(InputClient).GetProperty(nameof(InputClient.Decorators));
+                var setDecoratorMethod = decoratorProperty?.GetSetMethod(true);
+                setDecoratorMethod!.Invoke(client, [decorators]);
+            }
+            return client;
         }
     }
 }

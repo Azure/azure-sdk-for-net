@@ -15,7 +15,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 
-namespace sample.namespace
+namespace sample.test
 {
     internal partial class ArmOperation : global::Azure.ResourceManager.ArmOperation
     {

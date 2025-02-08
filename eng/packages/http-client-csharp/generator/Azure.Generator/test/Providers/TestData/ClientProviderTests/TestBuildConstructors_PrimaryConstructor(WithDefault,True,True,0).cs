@@ -1,7 +1,7 @@
-﻿global::sample.namespace.Argument.AssertNotNull(endpoint, nameof(endpoint));
-global::sample.namespace.Argument.AssertNotNull(keyCredential, nameof(keyCredential));
+﻿global::sample.test.Argument.AssertNotNull(endpoint, nameof(endpoint));
+global::sample.test.Argument.AssertNotNull(keyCredential, nameof(keyCredential));
 
-options ??= new global::sample.namespace.TestClientOptions();
+options ??= new global::sample.test.TestClientOptions();
 
 _endpoint = endpoint;
 _keyCredential = keyCredential;

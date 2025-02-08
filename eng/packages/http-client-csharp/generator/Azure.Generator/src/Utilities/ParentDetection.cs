@@ -10,7 +10,6 @@ namespace Azure.Generator.Utilities
     internal class ParentDetection
     {
         private ConcurrentDictionary<string, string> _requestPathToParentCache;
-        //private ConcurrentDictionary<ResourceProvider, IReadOnlyList<ResourceProvider>> _resourceParentsMap = new();
 
         public ParentDetection()
         {
