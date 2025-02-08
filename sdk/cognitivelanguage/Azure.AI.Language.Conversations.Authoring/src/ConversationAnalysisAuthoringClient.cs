@@ -165,5 +165,171 @@ namespace Azure.AI.Language.Conversations.Authoring
 
             return new ConversationAuthoringExportedModels(ClientDiagnostics, _pipeline, _keyCredential, _tokenCredential, _endpoint, resolvedApiVersion, projectName);
         }
+
+        /// <summary> Lists the deployments belonging to a project. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConversationAuthoringDeployments.xml" path="doc/members/member[@name='GetDeploymentsAsync(string,int?,int?,int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<ProjectDeployment> GetDeploymentsAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProjectDeployment.DeserializeProjectDeployment(e), ClientDiagnostics, _pipeline, "ConversationAuthoringDeployments.GetDeployments", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Lists the deployments belonging to a project. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConversationAuthoringDeployments.xml" path="doc/members/member[@name='GetDeployments(string,int?,int?,int?,CancellationToken)']/*" />
+        public virtual Pageable<ProjectDeployment> GetDeployments(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentsRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentsNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProjectDeployment.DeserializeProjectDeployment(e), ClientDiagnostics, _pipeline, "ConversationAuthoringDeployments.GetDeployments", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Lists the deployments to which an Azure resource is assigned. This doesn't return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources. </summary>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetAssignedResourceDeploymentsAsync(int?,int?,int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<AssignedProjectDeploymentsMetadata> GetAssignedResourceDeploymentsAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssignedResourceDeploymentsRequest(maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssignedResourceDeploymentsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AssignedProjectDeploymentsMetadata.DeserializeAssignedProjectDeploymentsMetadata(e), ClientDiagnostics, _pipeline, "ConversationAuthoringDeploymentResources.GetAssignedResourceDeployments", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Lists the deployments to which an Azure resource is assigned. This doesn't return deployments belonging to projects owned by this resource. It only returns deployments belonging to projects owned by other resources. </summary>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetAssignedResourceDeployments(int?,int?,int?,CancellationToken)']/*" />
+        public virtual Pageable<AssignedProjectDeploymentsMetadata> GetAssignedResourceDeployments(int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetAssignedResourceDeploymentsRequest(maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetAssignedResourceDeploymentsNextPageRequest(nextLink, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AssignedProjectDeploymentsMetadata.DeserializeAssignedProjectDeploymentsMetadata(e), ClientDiagnostics, _pipeline, "ConversationAuthoringDeploymentResources.GetAssignedResourceDeployments", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Lists the deployments resources assigned to the project. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetDeploymentResourcesAsync(string,int?,int?,int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<AssignedDeploymentResource> GetDeploymentResourcesAsync(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AssignedDeploymentResource.DeserializeAssignedDeploymentResource(e), ClientDiagnostics, _pipeline, "ConversationAuthoringDeploymentResources.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Lists the deployments resources assigned to the project. </summary>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="projectName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="projectName"/> is an empty string, and was expected to be non-empty. </exception>
+        /// <include file="Docs/ConversationAuthoringDeploymentResources.xml" path="doc/members/member[@name='GetDeploymentResources(string,int?,int?,int?,CancellationToken)']/*" />
+        public virtual Pageable<AssignedDeploymentResource> GetDeploymentResources(string projectName, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(projectName, nameof(projectName));
+
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetDeploymentResourcesRequest(projectName, maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetDeploymentResourcesNextPageRequest(nextLink, projectName, maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AssignedDeploymentResource.DeserializeAssignedDeploymentResource(e), ClientDiagnostics, _pipeline, "ConversationAuthoringDeploymentResources.GetDeploymentResources", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
+        /// <param name="multilingual"> Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConversationAuthoringPrebuilts.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntitiesAsync(int?,int?,int?,string,string,CancellationToken)']/*" />
+        public virtual AsyncPageable<PrebuiltEntity> GetSupportedPrebuiltEntitiesAsync(int? maxCount = null, int? skip = null, int? maxpagesize = null, string language = null, string multilingual = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedPrebuiltEntitiesRequest(maxCount, skip, pageSizeHint, language, multilingual, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, maxCount, skip, pageSizeHint, language, multilingual, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => PrebuiltEntity.DeserializePrebuiltEntity(e), ClientDiagnostics, _pipeline, "ConversationAuthoringPrebuilts.GetSupportedPrebuiltEntities", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Lists the supported prebuilt entities that can be used while creating composed entities. </summary>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="language"> The language to get supported prebuilt entities for. Required if multilingual is false. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
+        /// <param name="multilingual"> Whether to get the support prebuilt entities for multilingual or monolingual projects. If true, the language parameter is ignored. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConversationAuthoringPrebuilts.xml" path="doc/members/member[@name='GetSupportedPrebuiltEntities(int?,int?,int?,string,string,CancellationToken)']/*" />
+        public virtual Pageable<PrebuiltEntity> GetSupportedPrebuiltEntities(int? maxCount = null, int? skip = null, int? maxpagesize = null, string language = null, string multilingual = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedPrebuiltEntitiesRequest(maxCount, skip, pageSizeHint, language, multilingual, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedPrebuiltEntitiesNextPageRequest(nextLink, maxCount, skip, pageSizeHint, language, multilingual, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => PrebuiltEntity.DeserializePrebuiltEntity(e), ClientDiagnostics, _pipeline, "ConversationAuthoringPrebuilts.GetSupportedPrebuiltEntities", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Lists the support training config version for a given project type. </summary>
+        /// <param name="projectKind"> The project kind. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConversationAuthoringTraining.xml" path="doc/members/member[@name='GetTrainingConfigVersionsAsync(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)']/*" />
+        public virtual AsyncPageable<TrainingConfigVersion> GetTrainingConfigVersionsAsync(AnalyzeConversationAuthoringProjectKind projectKind, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingConfigVersionsRequest(projectKind.ToString(), maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind.ToString(), maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => TrainingConfigVersion.DeserializeTrainingConfigVersion(e), ClientDiagnostics, _pipeline, "ConversationAuthoringTraining.GetTrainingConfigVersions", "value", "nextLink", maxpagesize, context);
+        }
+
+        /// <summary> Lists the support training config version for a given project type. </summary>
+        /// <param name="projectKind"> The project kind. </param>
+        /// <param name="maxCount"> The number of result items to return. </param>
+        /// <param name="skip"> The number of result items to skip. </param>
+        /// <param name="maxpagesize"> The maximum number of result items per page. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <include file="Docs/ConversationAuthoringTraining.xml" path="doc/members/member[@name='GetTrainingConfigVersions(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)']/*" />
+        public virtual Pageable<TrainingConfigVersion> GetTrainingConfigVersions(AnalyzeConversationAuthoringProjectKind projectKind, int? maxCount = null, int? skip = null, int? maxpagesize = null, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTrainingConfigVersionsRequest(projectKind.ToString(), maxCount, skip, pageSizeHint, context);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTrainingConfigVersionsNextPageRequest(nextLink, projectKind.ToString(), maxCount, skip, pageSizeHint, context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => TrainingConfigVersion.DeserializeTrainingConfigVersion(e), ClientDiagnostics, _pipeline, "ConversationAuthoringTraining.GetTrainingConfigVersions", "value", "nextLink", maxpagesize, context);
+        }
     }
 }

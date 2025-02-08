@@ -19,6 +19,8 @@ namespace Azure.AI.Language.Conversations.Authoring
     [CodeGenSuppress("Train", typeof(WaitUntil), typeof(string), typeof(TrainingJobDetails), typeof(CancellationToken))]
     [CodeGenSuppress("CancelTrainingJobAsync", typeof(WaitUntil), typeof(string), typeof(string), typeof(CancellationToken))]
     [CodeGenSuppress("CancelTrainingJob", typeof(WaitUntil), typeof(string), typeof(string), typeof(CancellationToken))]
+    [CodeGenSuppress("GetTrainingConfigVersionsAsync", typeof(AnalyzeConversationAuthoringProjectKind), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
+    [CodeGenSuppress("GetTrainingConfigVersions", typeof(AnalyzeConversationAuthoringProjectKind), typeof(int?), typeof(int?), typeof(int?), typeof(CancellationToken))]
     public partial class ConversationAuthoringTraining
     {
         private readonly string _projectName;

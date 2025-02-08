@@ -15,61 +15,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ConversationAnalysisAuthoringModelFactory
     {
-        /// <summary> Initializes a new instance of <see cref="Models.ExportedTrainedModel"/>. </summary>
-        /// <param name="exportedModelName"> The exported model name. </param>
-        /// <param name="modelId"> The model ID. </param>
-        /// <param name="lastTrainedOn"> The last trained date time of the model. </param>
-        /// <param name="lastExportedModelOn"> The last exported date time of the model. </param>
-        /// <param name="modelExpirationDate"> The model expiration date. </param>
-        /// <param name="modelTrainingConfigVersion"> The model training config version. </param>
-        /// <returns> A new <see cref="Models.ExportedTrainedModel"/> instance for mocking. </returns>
-        public static ExportedTrainedModel ExportedTrainedModel(string exportedModelName = null, string modelId = null, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastExportedModelOn = default, DateTimeOffset modelExpirationDate = default, string modelTrainingConfigVersion = null)
-        {
-            return new ExportedTrainedModel(
-                exportedModelName,
-                modelId,
-                lastTrainedOn,
-                lastExportedModelOn,
-                modelExpirationDate,
-                modelTrainingConfigVersion,
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExportedModelOperationState"/>. </summary>
-        /// <param name="jobId"> The job ID. </param>
-        /// <param name="createdOn"> The creation date time of the job. </param>
-        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
-        /// <param name="expiresOn"> The expiration date time of the job. </param>
-        /// <param name="status"> The job status. </param>
-        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
-        /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <returns> A new <see cref="Models.ExportedModelOperationState"/> instance for mocking. </returns>
-        public static ExportedModelOperationState ExportedModelOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
-        {
-            warnings ??= new List<ResponseError>();
-            errors ??= new List<ResponseError>();
-
-            return new ExportedModelOperationState(
-                jobId,
-                createdOn,
-                lastUpdatedOn,
-                expiresOn,
-                status,
-                warnings?.ToList(),
-                errors?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PrebuiltEntity"/>. </summary>
-        /// <param name="category"> The prebuilt entity category. </param>
-        /// <param name="description"> The description. </param>
-        /// <param name="examples"> English examples for the entity. </param>
-        /// <returns> A new <see cref="Models.PrebuiltEntity"/> instance for mocking. </returns>
-        public static PrebuiltEntity PrebuiltEntity(string category = null, string description = null, string examples = null)
-        {
-            return new PrebuiltEntity(category, description, examples, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.ProjectTrainedModel"/>. </summary>
         /// <param name="label"> The trained model label. </param>
         /// <param name="modelId"> The model ID. </param>
@@ -314,49 +259,27 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TrainingJobDetails"/>. </summary>
-        /// <param name="modelLabel"> Represents the output model label. </param>
-        /// <param name="trainingConfigVersion"> Represents training config version. By default, "latest" value is used which uses the latest released training config version. </param>
-        /// <param name="trainingMode"> Represents the mode of the training operation. </param>
-        /// <param name="evaluationOptions"> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </param>
-        /// <returns> A new <see cref="Models.TrainingJobDetails"/> instance for mocking. </returns>
-        public static TrainingJobDetails TrainingJobDetails(string modelLabel = null, string trainingConfigVersion = null, AnalyzeConversationAuthoringTrainingMode trainingMode = default, EvaluationDetails evaluationOptions = null)
+        /// <summary> Initializes a new instance of <see cref="Models.ExportedTrainedModel"/>. </summary>
+        /// <param name="exportedModelName"> The exported model name. </param>
+        /// <param name="modelId"> The model ID. </param>
+        /// <param name="lastTrainedOn"> The last trained date time of the model. </param>
+        /// <param name="lastExportedModelOn"> The last exported date time of the model. </param>
+        /// <param name="modelExpirationDate"> The model expiration date. </param>
+        /// <param name="modelTrainingConfigVersion"> The model training config version. </param>
+        /// <returns> A new <see cref="Models.ExportedTrainedModel"/> instance for mocking. </returns>
+        public static ExportedTrainedModel ExportedTrainedModel(string exportedModelName = null, string modelId = null, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastExportedModelOn = default, DateTimeOffset modelExpirationDate = default, string modelTrainingConfigVersion = null)
         {
-            return new TrainingJobDetails(modelLabel, trainingConfigVersion, trainingMode, evaluationOptions, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TrainingJobResult"/>. </summary>
-        /// <param name="modelLabel"> Represents trained model label. </param>
-        /// <param name="trainingConfigVersion"> Represents training config version. </param>
-        /// <param name="trainingMode"> Represents the mode of the training operation. </param>
-        /// <param name="trainingStatus"> Represents the model training status. </param>
-        /// <param name="evaluationStatus"> Represents model evaluation status. </param>
-        /// <param name="estimatedEndOn"> Represents the estimated end date time for training and evaluation. </param>
-        /// <returns> A new <see cref="Models.TrainingJobResult"/> instance for mocking. </returns>
-        public static TrainingJobResult TrainingJobResult(string modelLabel = null, string trainingConfigVersion = null, AnalyzeConversationAuthoringTrainingMode? trainingMode = null, SubTrainingOperationState trainingStatus = null, SubTrainingOperationState evaluationStatus = null, DateTimeOffset? estimatedEndOn = null)
-        {
-            return new TrainingJobResult(
-                modelLabel,
-                trainingConfigVersion,
-                trainingMode,
-                trainingStatus,
-                evaluationStatus,
-                estimatedEndOn,
+            return new ExportedTrainedModel(
+                exportedModelName,
+                modelId,
+                lastTrainedOn,
+                lastExportedModelOn,
+                modelExpirationDate,
+                modelTrainingConfigVersion,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SubTrainingOperationState"/>. </summary>
-        /// <param name="percentComplete"> Represents progress percentage. </param>
-        /// <param name="startedOn"> Represents the start date time. </param>
-        /// <param name="endedOn"> Represents the end date time. </param>
-        /// <param name="status"> Represents the status of the sub-operation. </param>
-        /// <returns> A new <see cref="Models.SubTrainingOperationState"/> instance for mocking. </returns>
-        public static SubTrainingOperationState SubTrainingOperationState(int percentComplete = default, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, ConversationAuthoringOperationStatus status = default)
-        {
-            return new SubTrainingOperationState(percentComplete, startedOn, endedOn, status, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TrainingOperationState"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ExportedModelOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
         /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
@@ -364,14 +287,13 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         /// <param name="status"> The job status. </param>
         /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
         /// <param name="errors"> The errors encountered while executing the job. </param>
-        /// <param name="result"> Represents training tasks detailed result. </param>
-        /// <returns> A new <see cref="Models.TrainingOperationState"/> instance for mocking. </returns>
-        public static TrainingOperationState TrainingOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null, TrainingJobResult result = null)
+        /// <returns> A new <see cref="Models.ExportedModelOperationState"/> instance for mocking. </returns>
+        public static ExportedModelOperationState ExportedModelOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null)
         {
             warnings ??= new List<ResponseError>();
             errors ??= new List<ResponseError>();
 
-            return new TrainingOperationState(
+            return new ExportedModelOperationState(
                 jobId,
                 createdOn,
                 lastUpdatedOn,
@@ -379,17 +301,7 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 status,
                 warnings?.ToList(),
                 errors?.ToList(),
-                result,
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.TrainingConfigVersion"/>. </summary>
-        /// <param name="trainingConfigVersionProperty"> Represents the version of the config. </param>
-        /// <param name="modelExpirationDate"> Represents the training config version expiration date. </param>
-        /// <returns> A new <see cref="Models.TrainingConfigVersion"/> instance for mocking. </returns>
-        public static TrainingConfigVersion TrainingConfigVersion(string trainingConfigVersionProperty = null, DateTimeOffset modelExpirationDate = default)
-        {
-            return new TrainingConfigVersion(trainingConfigVersionProperty, modelExpirationDate, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProjectMetadata"/>. </summary>
@@ -669,6 +581,94 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 warnings?.ToList(),
                 errors?.ToList(),
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TrainingJobDetails"/>. </summary>
+        /// <param name="modelLabel"> Represents the output model label. </param>
+        /// <param name="trainingConfigVersion"> Represents training config version. By default, "latest" value is used which uses the latest released training config version. </param>
+        /// <param name="trainingMode"> Represents the mode of the training operation. </param>
+        /// <param name="evaluationOptions"> Represents the evaluation options. By default, the evaluation kind is percentage, with training split percentage as 80, and testing split percentage as 20. </param>
+        /// <returns> A new <see cref="Models.TrainingJobDetails"/> instance for mocking. </returns>
+        public static TrainingJobDetails TrainingJobDetails(string modelLabel = null, string trainingConfigVersion = null, AnalyzeConversationAuthoringTrainingMode trainingMode = default, EvaluationDetails evaluationOptions = null)
+        {
+            return new TrainingJobDetails(modelLabel, trainingConfigVersion, trainingMode, evaluationOptions, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TrainingJobResult"/>. </summary>
+        /// <param name="modelLabel"> Represents trained model label. </param>
+        /// <param name="trainingConfigVersion"> Represents training config version. </param>
+        /// <param name="trainingMode"> Represents the mode of the training operation. </param>
+        /// <param name="trainingStatus"> Represents the model training status. </param>
+        /// <param name="evaluationStatus"> Represents model evaluation status. </param>
+        /// <param name="estimatedEndOn"> Represents the estimated end date time for training and evaluation. </param>
+        /// <returns> A new <see cref="Models.TrainingJobResult"/> instance for mocking. </returns>
+        public static TrainingJobResult TrainingJobResult(string modelLabel = null, string trainingConfigVersion = null, AnalyzeConversationAuthoringTrainingMode? trainingMode = null, SubTrainingOperationState trainingStatus = null, SubTrainingOperationState evaluationStatus = null, DateTimeOffset? estimatedEndOn = null)
+        {
+            return new TrainingJobResult(
+                modelLabel,
+                trainingConfigVersion,
+                trainingMode,
+                trainingStatus,
+                evaluationStatus,
+                estimatedEndOn,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SubTrainingOperationState"/>. </summary>
+        /// <param name="percentComplete"> Represents progress percentage. </param>
+        /// <param name="startedOn"> Represents the start date time. </param>
+        /// <param name="endedOn"> Represents the end date time. </param>
+        /// <param name="status"> Represents the status of the sub-operation. </param>
+        /// <returns> A new <see cref="Models.SubTrainingOperationState"/> instance for mocking. </returns>
+        public static SubTrainingOperationState SubTrainingOperationState(int percentComplete = default, DateTimeOffset? startedOn = null, DateTimeOffset? endedOn = null, ConversationAuthoringOperationStatus status = default)
+        {
+            return new SubTrainingOperationState(percentComplete, startedOn, endedOn, status, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TrainingOperationState"/>. </summary>
+        /// <param name="jobId"> The job ID. </param>
+        /// <param name="createdOn"> The creation date time of the job. </param>
+        /// <param name="lastUpdatedOn"> The last date time the job was updated. </param>
+        /// <param name="expiresOn"> The expiration date time of the job. </param>
+        /// <param name="status"> The job status. </param>
+        /// <param name="warnings"> The warnings that were encountered while executing the job. </param>
+        /// <param name="errors"> The errors encountered while executing the job. </param>
+        /// <param name="result"> Represents training tasks detailed result. </param>
+        /// <returns> A new <see cref="Models.TrainingOperationState"/> instance for mocking. </returns>
+        public static TrainingOperationState TrainingOperationState(string jobId = null, DateTimeOffset createdOn = default, DateTimeOffset lastUpdatedOn = default, DateTimeOffset? expiresOn = null, ConversationAuthoringOperationStatus status = default, IEnumerable<ResponseError> warnings = null, IEnumerable<ResponseError> errors = null, TrainingJobResult result = null)
+        {
+            warnings ??= new List<ResponseError>();
+            errors ??= new List<ResponseError>();
+
+            return new TrainingOperationState(
+                jobId,
+                createdOn,
+                lastUpdatedOn,
+                expiresOn,
+                status,
+                warnings?.ToList(),
+                errors?.ToList(),
+                result,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TrainingConfigVersion"/>. </summary>
+        /// <param name="trainingConfigVersionProperty"> Represents the version of the config. </param>
+        /// <param name="modelExpirationDate"> Represents the training config version expiration date. </param>
+        /// <returns> A new <see cref="Models.TrainingConfigVersion"/> instance for mocking. </returns>
+        public static TrainingConfigVersion TrainingConfigVersion(string trainingConfigVersionProperty = null, DateTimeOffset modelExpirationDate = default)
+        {
+            return new TrainingConfigVersion(trainingConfigVersionProperty, modelExpirationDate, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PrebuiltEntity"/>. </summary>
+        /// <param name="category"> The prebuilt entity category. </param>
+        /// <param name="description"> The description. </param>
+        /// <param name="examples"> English examples for the entity. </param>
+        /// <returns> A new <see cref="Models.PrebuiltEntity"/> instance for mocking. </returns>
+        public static PrebuiltEntity PrebuiltEntity(string category = null, string description = null, string examples = null)
+        {
+            return new PrebuiltEntity(category, description, examples, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProjectDeployment"/>. </summary>
