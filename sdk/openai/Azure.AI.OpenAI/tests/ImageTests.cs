@@ -68,7 +68,6 @@ public class ImageTests(bool isAsync) : AoaiTestBase<ImageClient>(isAsync)
         GeneratedImage image = imageResult.Value;
         Assert.That(image, Is.Not.Null);
         Assert.That(image.ImageUri, Is.Not.Null);
-        Console.WriteLine($"RESPONSE--\n{imageResult.GetRawResponse().Content}");
         RequestImageContentFilterResult promptResults = image.GetRequestContentFilterResult();
         ResponseImageContentFilterResult responseResults = image.GetResponseContentFilterResult();
         Assert.That(promptResults?.Sexual?.Severity, Is.EqualTo(ContentFilterSeverity.Safe));
