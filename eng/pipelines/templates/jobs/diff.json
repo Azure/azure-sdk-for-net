@@ -1,0 +1,9 @@
+ {
+    "ChangedFiles": "sdk/signalr/Microsoft.Azure.WebJobs.Extensions.SignalRService/src/Microsoft.Azure.WebJobs.Extensions.SignalRService.csproj",
+    "ChangedServices": [
+      "signalr"
+    ],
+    "ExcludePaths": [],
+    "DeletedFiles": null,
+    "PRNumber": "48181"
+  }
