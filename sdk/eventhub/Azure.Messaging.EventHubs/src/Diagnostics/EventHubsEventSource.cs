@@ -2790,7 +2790,7 @@ namespace Azure.Messaging.EventHubs.Diagnostics
         }
 
         /// <summary>
-        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance has experienced an exception while processing events for a partition.
+        ///   Indicates that an <see cref="EventProcessor{TPartition}" /> instance used an invalid offset format from a legacy checkpoint when initializing a partition for processing.
         /// </summary>
         ///
         /// <param name="partitionId">The identifier of the Event Hub partition whose processing is taking place.</param>
