@@ -15,6 +15,39 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ConversationAnalysisAuthoringModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.ProjectDeployment"/>. </summary>
+        /// <param name="deploymentName"> Represents deployment name. </param>
+        /// <param name="modelId"> Represents deployment modelId. </param>
+        /// <param name="lastTrainedOn"> Represents deployment last trained time. </param>
+        /// <param name="lastDeployedOn"> Represents deployment last deployed time. </param>
+        /// <param name="deploymentExpirationDate"> Represents deployment expiration date in the runtime. </param>
+        /// <param name="modelTrainingConfigVersion"> Represents model training config version. </param>
+        /// <param name="assignedResources"> Represents the metadata of the assigned Azure resources. </param>
+        /// <returns> A new <see cref="Models.ProjectDeployment"/> instance for mocking. </returns>
+        public static ProjectDeployment ProjectDeployment(string deploymentName = null, string modelId = null, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpirationDate = default, string modelTrainingConfigVersion = null, IEnumerable<DeploymentResource> assignedResources = null)
+        {
+            assignedResources ??= new List<DeploymentResource>();
+
+            return new ProjectDeployment(
+                deploymentName,
+                modelId,
+                lastTrainedOn,
+                lastDeployedOn,
+                deploymentExpirationDate,
+                modelTrainingConfigVersion,
+                assignedResources?.ToList(),
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.DeploymentResource"/>. </summary>
+        /// <param name="resourceId"> Represents the Azure resource Id. </param>
+        /// <param name="region"> Represents the resource region. </param>
+        /// <returns> A new <see cref="Models.DeploymentResource"/> instance for mocking. </returns>
+        public static DeploymentResource DeploymentResource(string resourceId = null, string region = null)
+        {
+            return new DeploymentResource(resourceId, region, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ProjectMetadata"/>. </summary>
         /// <param name="createdOn"> Represents the project creation datetime. </param>
         /// <param name="lastModifiedOn"> Represents the project creation datetime. </param>
@@ -52,6 +85,55 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
         public static SupportedLanguage SupportedLanguage(string languageName = null, string languageCode = null)
         {
             return new SupportedLanguage(languageName, languageCode, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AssignedProjectDeploymentsMetadata"/>. </summary>
+        /// <param name="projectName"> Represents the project name. </param>
+        /// <param name="deploymentsMetadata"> Represents the resource region. </param>
+        /// <returns> A new <see cref="Models.AssignedProjectDeploymentsMetadata"/> instance for mocking. </returns>
+        public static AssignedProjectDeploymentsMetadata AssignedProjectDeploymentsMetadata(string projectName = null, IEnumerable<AssignedProjectDeploymentMetadata> deploymentsMetadata = null)
+        {
+            deploymentsMetadata ??= new List<AssignedProjectDeploymentMetadata>();
+
+            return new AssignedProjectDeploymentsMetadata(projectName, deploymentsMetadata?.ToList(), serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AssignedProjectDeploymentMetadata"/>. </summary>
+        /// <param name="deploymentName"> Represents the deployment name. </param>
+        /// <param name="lastDeployedOn"> Represents deployment last deployed time. </param>
+        /// <param name="deploymentExpiresOn"> Represents deployment expiration date in the runtime. </param>
+        /// <returns> A new <see cref="Models.AssignedProjectDeploymentMetadata"/> instance for mocking. </returns>
+        public static AssignedProjectDeploymentMetadata AssignedProjectDeploymentMetadata(string deploymentName = null, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpiresOn = default)
+        {
+            return new AssignedProjectDeploymentMetadata(deploymentName, lastDeployedOn, deploymentExpiresOn, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.AssignedDeploymentResource"/>. </summary>
+        /// <param name="resourceId"> The resource ID. </param>
+        /// <param name="region"> The resource region. </param>
+        /// <returns> A new <see cref="Models.AssignedDeploymentResource"/> instance for mocking. </returns>
+        public static AssignedDeploymentResource AssignedDeploymentResource(ResourceIdentifier resourceId = null, AzureLocation region = default)
+        {
+            return new AssignedDeploymentResource(resourceId, region, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PrebuiltEntity"/>. </summary>
+        /// <param name="category"> The prebuilt entity category. </param>
+        /// <param name="description"> The description. </param>
+        /// <param name="examples"> English examples for the entity. </param>
+        /// <returns> A new <see cref="Models.PrebuiltEntity"/> instance for mocking. </returns>
+        public static PrebuiltEntity PrebuiltEntity(string category = null, string description = null, string examples = null)
+        {
+            return new PrebuiltEntity(category, description, examples, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.TrainingConfigVersion"/>. </summary>
+        /// <param name="trainingConfigVersionProperty"> Represents the version of the config. </param>
+        /// <param name="modelExpirationDate"> Represents the training config version expiration date. </param>
+        /// <returns> A new <see cref="Models.TrainingConfigVersion"/> instance for mocking. </returns>
+        public static TrainingConfigVersion TrainingConfigVersion(string trainingConfigVersionProperty = null, DateTimeOffset modelExpirationDate = default)
+        {
+            return new TrainingConfigVersion(trainingConfigVersionProperty, modelExpirationDate, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ProjectTrainedModel"/>. </summary>
@@ -652,58 +734,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TrainingConfigVersion"/>. </summary>
-        /// <param name="trainingConfigVersionProperty"> Represents the version of the config. </param>
-        /// <param name="modelExpirationDate"> Represents the training config version expiration date. </param>
-        /// <returns> A new <see cref="Models.TrainingConfigVersion"/> instance for mocking. </returns>
-        public static TrainingConfigVersion TrainingConfigVersion(string trainingConfigVersionProperty = null, DateTimeOffset modelExpirationDate = default)
-        {
-            return new TrainingConfigVersion(trainingConfigVersionProperty, modelExpirationDate, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.PrebuiltEntity"/>. </summary>
-        /// <param name="category"> The prebuilt entity category. </param>
-        /// <param name="description"> The description. </param>
-        /// <param name="examples"> English examples for the entity. </param>
-        /// <returns> A new <see cref="Models.PrebuiltEntity"/> instance for mocking. </returns>
-        public static PrebuiltEntity PrebuiltEntity(string category = null, string description = null, string examples = null)
-        {
-            return new PrebuiltEntity(category, description, examples, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ProjectDeployment"/>. </summary>
-        /// <param name="deploymentName"> Represents deployment name. </param>
-        /// <param name="modelId"> Represents deployment modelId. </param>
-        /// <param name="lastTrainedOn"> Represents deployment last trained time. </param>
-        /// <param name="lastDeployedOn"> Represents deployment last deployed time. </param>
-        /// <param name="deploymentExpirationDate"> Represents deployment expiration date in the runtime. </param>
-        /// <param name="modelTrainingConfigVersion"> Represents model training config version. </param>
-        /// <param name="assignedResources"> Represents the metadata of the assigned Azure resources. </param>
-        /// <returns> A new <see cref="Models.ProjectDeployment"/> instance for mocking. </returns>
-        public static ProjectDeployment ProjectDeployment(string deploymentName = null, string modelId = null, DateTimeOffset lastTrainedOn = default, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpirationDate = default, string modelTrainingConfigVersion = null, IEnumerable<DeploymentResource> assignedResources = null)
-        {
-            assignedResources ??= new List<DeploymentResource>();
-
-            return new ProjectDeployment(
-                deploymentName,
-                modelId,
-                lastTrainedOn,
-                lastDeployedOn,
-                deploymentExpirationDate,
-                modelTrainingConfigVersion,
-                assignedResources?.ToList(),
-                serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.DeploymentResource"/>. </summary>
-        /// <param name="resourceId"> Represents the Azure resource Id. </param>
-        /// <param name="region"> Represents the resource region. </param>
-        /// <returns> A new <see cref="Models.DeploymentResource"/> instance for mocking. </returns>
-        public static DeploymentResource DeploymentResource(string resourceId = null, string region = null)
-        {
-            return new DeploymentResource(resourceId, region, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.SwapDeploymentsOperationState"/>. </summary>
         /// <param name="jobId"> The job ID. </param>
         /// <param name="createdOn"> The creation date time of the job. </param>
@@ -813,36 +843,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 warnings?.ToList(),
                 errors?.ToList(),
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AssignedDeploymentResource"/>. </summary>
-        /// <param name="resourceId"> The resource ID. </param>
-        /// <param name="region"> The resource region. </param>
-        /// <returns> A new <see cref="Models.AssignedDeploymentResource"/> instance for mocking. </returns>
-        public static AssignedDeploymentResource AssignedDeploymentResource(ResourceIdentifier resourceId = null, AzureLocation region = default)
-        {
-            return new AssignedDeploymentResource(resourceId, region, serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AssignedProjectDeploymentsMetadata"/>. </summary>
-        /// <param name="projectName"> Represents the project name. </param>
-        /// <param name="deploymentsMetadata"> Represents the resource region. </param>
-        /// <returns> A new <see cref="Models.AssignedProjectDeploymentsMetadata"/> instance for mocking. </returns>
-        public static AssignedProjectDeploymentsMetadata AssignedProjectDeploymentsMetadata(string projectName = null, IEnumerable<AssignedProjectDeploymentMetadata> deploymentsMetadata = null)
-        {
-            deploymentsMetadata ??= new List<AssignedProjectDeploymentMetadata>();
-
-            return new AssignedProjectDeploymentsMetadata(projectName, deploymentsMetadata?.ToList(), serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.AssignedProjectDeploymentMetadata"/>. </summary>
-        /// <param name="deploymentName"> Represents the deployment name. </param>
-        /// <param name="lastDeployedOn"> Represents deployment last deployed time. </param>
-        /// <param name="deploymentExpiresOn"> Represents deployment expiration date in the runtime. </param>
-        /// <returns> A new <see cref="Models.AssignedProjectDeploymentMetadata"/> instance for mocking. </returns>
-        public static AssignedProjectDeploymentMetadata AssignedProjectDeploymentMetadata(string deploymentName = null, DateTimeOffset lastDeployedOn = default, DateTimeOffset deploymentExpiresOn = default)
-        {
-            return new AssignedProjectDeploymentMetadata(deploymentName, lastDeployedOn, deploymentExpiresOn, serializedAdditionalRawData: null);
         }
     }
 }
