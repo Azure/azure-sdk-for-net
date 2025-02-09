@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+  <members>
+    <member name="GetProjectsAsync(int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetProjectsAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (ProjectMetadata item in client.GetProjectsAsync())
+{
+}
+]]></code>
+This sample shows how to call GetProjectsAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (ProjectMetadata item in client.GetProjectsAsync(maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetProjects(int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetProjects.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (ProjectMetadata item in client.GetProjects())
+{
+}
+]]></code>
+This sample shows how to call GetProjects with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (ProjectMetadata item in client.GetProjects(maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetProjectsAsync(int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetProjectsAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetProjectsAsync(null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("createdOn").ToString());
+    Console.WriteLine(result.GetProperty("lastModifiedOn").ToString());
+    Console.WriteLine(result.GetProperty("projectKind").ToString());
+    Console.WriteLine(result.GetProperty("projectName").ToString());
+    Console.WriteLine(result.GetProperty("language").ToString());
+}
+]]></code>
+This sample shows how to call GetProjectsAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetProjectsAsync(1234, 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("createdOn").ToString());
+    Console.WriteLine(result.GetProperty("lastModifiedOn").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
+    Console.WriteLine(result.GetProperty("lastDeployedOn").ToString());
+    Console.WriteLine(result.GetProperty("projectKind").ToString());
+    Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
+    Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
+    Console.WriteLine(result.GetProperty("projectName").ToString());
+    Console.WriteLine(result.GetProperty("multilingual").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("language").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetProjects(int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetProjects and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetProjects(null, null, null, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("createdOn").ToString());
+    Console.WriteLine(result.GetProperty("lastModifiedOn").ToString());
+    Console.WriteLine(result.GetProperty("projectKind").ToString());
+    Console.WriteLine(result.GetProperty("projectName").ToString());
+    Console.WriteLine(result.GetProperty("language").ToString());
+}
+]]></code>
+This sample shows how to call GetProjects with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetProjects(1234, 1234, 1234, null))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("createdOn").ToString());
+    Console.WriteLine(result.GetProperty("lastModifiedOn").ToString());
+    Console.WriteLine(result.GetProperty("lastTrainedOn").ToString());
+    Console.WriteLine(result.GetProperty("lastDeployedOn").ToString());
+    Console.WriteLine(result.GetProperty("projectKind").ToString());
+    Console.WriteLine(result.GetProperty("settings").GetProperty("confidenceThreshold").ToString());
+    Console.WriteLine(result.GetProperty("storageInputContainerName").ToString());
+    Console.WriteLine(result.GetProperty("projectName").ToString());
+    Console.WriteLine(result.GetProperty("multilingual").ToString());
+    Console.WriteLine(result.GetProperty("description").ToString());
+    Console.WriteLine(result.GetProperty("language").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetSupportedLanguagesAsync(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetSupportedLanguagesAsync.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (SupportedLanguage item in client.GetSupportedLanguagesAsync(AnalyzeConversationAuthoringProjectKind.Conversation))
+{
+}
+]]></code>
+This sample shows how to call GetSupportedLanguagesAsync with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (SupportedLanguage item in client.GetSupportedLanguagesAsync(AnalyzeConversationAuthoringProjectKind.Conversation, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind,int?,int?,int?,CancellationToken)">
+      <example>
+This sample shows how to call GetSupportedLanguages.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (SupportedLanguage item in client.GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind.Conversation))
+{
+}
+]]></code>
+This sample shows how to call GetSupportedLanguages with all parameters.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (SupportedLanguage item in client.GetSupportedLanguages(AnalyzeConversationAuthoringProjectKind.Conversation, maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+}
+]]></code></example>
+    </member>
+    <member name="GetSupportedLanguagesAsync(string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetSupportedLanguagesAsync and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetSupportedLanguagesAsync("Conversation"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("languageName").ToString());
+    Console.WriteLine(result.GetProperty("languageCode").ToString());
+}
+]]></code>
+This sample shows how to call GetSupportedLanguagesAsync with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+await foreach (BinaryData item in client.GetSupportedLanguagesAsync("Conversation", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("languageName").ToString());
+    Console.WriteLine(result.GetProperty("languageCode").ToString());
+}
+]]></code></example>
+    </member>
+    <member name="GetSupportedLanguages(string,int?,int?,int?,RequestContext)">
+      <example>
+This sample shows how to call GetSupportedLanguages and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetSupportedLanguages("Conversation"))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("languageName").ToString());
+    Console.WriteLine(result.GetProperty("languageCode").ToString());
+}
+]]></code>
+This sample shows how to call GetSupportedLanguages with all parameters and parse the result.
+<code><![CDATA[
+Uri endpoint = new Uri("<endpoint>");
+AzureKeyCredential credential = new AzureKeyCredential("<key>");
+ConversationAnalysisAuthoringClient client = new ConversationAnalysisAuthoringClient(endpoint, credential);
+
+foreach (BinaryData item in client.GetSupportedLanguages("Conversation", maxCount: 1234, skip: 1234, maxpagesize: 1234))
+{
+    JsonElement result = JsonDocument.Parse(item.ToStream()).RootElement;
+    Console.WriteLine(result.GetProperty("languageName").ToString());
+    Console.WriteLine(result.GetProperty("languageCode").ToString());
+}
+]]></code></example>
+    </member>
+  </members>
+</doc>

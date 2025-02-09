@@ -15,6 +15,45 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
     /// <summary> Model factory for models. </summary>
     public static partial class ConversationAnalysisAuthoringModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.ProjectMetadata"/>. </summary>
+        /// <param name="createdOn"> Represents the project creation datetime. </param>
+        /// <param name="lastModifiedOn"> Represents the project creation datetime. </param>
+        /// <param name="lastTrainedOn"> Represents the project last trained datetime. </param>
+        /// <param name="lastDeployedOn"> Represents the project last deployed datetime. </param>
+        /// <param name="projectKind"> Represents the project kind. </param>
+        /// <param name="settings"> The project settings. </param>
+        /// <param name="storageInputContainerName"> The storage container name in case of conversation summarization. </param>
+        /// <param name="projectName"> The new project name. </param>
+        /// <param name="multilingual"> Whether the project would be used for multiple languages or not. </param>
+        /// <param name="description"> The project description. </param>
+        /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
+        /// <returns> A new <see cref="Models.ProjectMetadata"/> instance for mocking. </returns>
+        public static ProjectMetadata ProjectMetadata(DateTimeOffset createdOn = default, DateTimeOffset lastModifiedOn = default, DateTimeOffset? lastTrainedOn = null, DateTimeOffset? lastDeployedOn = null, AnalyzeConversationAuthoringProjectKind projectKind = default, ProjectSettings settings = null, string storageInputContainerName = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
+        {
+            return new ProjectMetadata(
+                createdOn,
+                lastModifiedOn,
+                lastTrainedOn,
+                lastDeployedOn,
+                projectKind,
+                settings,
+                storageInputContainerName,
+                projectName,
+                multilingual,
+                description,
+                language,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.SupportedLanguage"/>. </summary>
+        /// <param name="languageName"> The language name. </param>
+        /// <param name="languageCode"> The language code. This is BCP-47 representation of a language. For example, "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
+        /// <returns> A new <see cref="Models.SupportedLanguage"/> instance for mocking. </returns>
+        public static SupportedLanguage SupportedLanguage(string languageName = null, string languageCode = null)
+        {
+            return new SupportedLanguage(languageName, languageCode, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.ProjectTrainedModel"/>. </summary>
         /// <param name="label"> The trained model label. </param>
         /// <param name="modelId"> The model ID. </param>
@@ -304,36 +343,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProjectMetadata"/>. </summary>
-        /// <param name="createdOn"> Represents the project creation datetime. </param>
-        /// <param name="lastModifiedOn"> Represents the project creation datetime. </param>
-        /// <param name="lastTrainedOn"> Represents the project last trained datetime. </param>
-        /// <param name="lastDeployedOn"> Represents the project last deployed datetime. </param>
-        /// <param name="projectKind"> Represents the project kind. </param>
-        /// <param name="settings"> The project settings. </param>
-        /// <param name="storageInputContainerName"> The storage container name in case of conversation summarization. </param>
-        /// <param name="projectName"> The new project name. </param>
-        /// <param name="multilingual"> Whether the project would be used for multiple languages or not. </param>
-        /// <param name="description"> The project description. </param>
-        /// <param name="language"> The project language. This is BCP-47 representation of a language. For example, use "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
-        /// <returns> A new <see cref="Models.ProjectMetadata"/> instance for mocking. </returns>
-        public static ProjectMetadata ProjectMetadata(DateTimeOffset createdOn = default, DateTimeOffset lastModifiedOn = default, DateTimeOffset? lastTrainedOn = null, DateTimeOffset? lastDeployedOn = null, AnalyzeConversationAuthoringProjectKind projectKind = default, ProjectSettings settings = null, string storageInputContainerName = null, string projectName = null, bool? multilingual = null, string description = null, string language = null)
-        {
-            return new ProjectMetadata(
-                createdOn,
-                lastModifiedOn,
-                lastTrainedOn,
-                lastDeployedOn,
-                projectKind,
-                settings,
-                storageInputContainerName,
-                projectName,
-                multilingual,
-                description,
-                language,
-                serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="Models.CreateProjectDetails"/>. </summary>
         /// <param name="projectKind"> Represents the project kind. </param>
         /// <param name="settings"> The project settings. </param>
@@ -379,15 +388,6 @@ namespace Azure.AI.Language.Conversations.Authoring.Models
                 warnings?.ToList(),
                 errors?.ToList(),
                 serializedAdditionalRawData: null);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.SupportedLanguage"/>. </summary>
-        /// <param name="languageName"> The language name. </param>
-        /// <param name="languageCode"> The language code. This is BCP-47 representation of a language. For example, "en" for English, "en-gb" for English (UK), "es" for Spanish etc. </param>
-        /// <returns> A new <see cref="Models.SupportedLanguage"/> instance for mocking. </returns>
-        public static SupportedLanguage SupportedLanguage(string languageName = null, string languageCode = null)
-        {
-            return new SupportedLanguage(languageName, languageCode, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ExportProjectOperationState"/>. </summary>
